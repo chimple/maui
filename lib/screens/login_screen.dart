@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:camera/camera.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/models/models.dart';
 import 'package:maui/components/user_list.dart';
