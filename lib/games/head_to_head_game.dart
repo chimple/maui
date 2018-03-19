@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'SingleGame.dart';
+import 'single_game.dart';
 
 class HeadToHeadGame extends StatelessWidget {
   String gameName;

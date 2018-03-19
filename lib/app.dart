@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
-import 'package:maui/games/SingleGame.dart';
-import 'package:maui/games/HeadToHeadGame.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/games/head_to_head_game.dart';
 
 import 'package:maui/games/reflex.dart';
 

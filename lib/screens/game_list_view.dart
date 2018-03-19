@@ -19,17 +19,13 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'reflex')),
           new RaisedButton(
               child: new Icon(Icons.cake, size: 64.0),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed('/games/choice')),
+              onPressed: () =>showModes(context, 'choice')),
           new RaisedButton(
               child: new Icon(Icons.camera, size: 64.0),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed('/games/memory')),
+              onPressed: () => showModes(context, 'memory')),
           new RaisedButton(
               child: new Icon(Icons.image, size: 64.0),
-              onPressed: () {
-
-              })
+              onPressed: () => showModes(context, 'connect_the_dots'))
         ]);
   }
 
