@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/reflex.dart';
+import 'package:maui/components/progress_bar.dart';
+
+enum GameMode { timed, iterations }
 
 class SingleGame extends StatefulWidget {
-  String gameName;
+  final String gameName;
+  final int maxIterations;
+  final int playTime;
+  final GameMode _gameMode;
 
-  SingleGame(this.gameName);
+  SingleGame(this.gameName, {this.maxIterations = 0, this.playTime = 0})
+      : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed;
 
   @override
   _SingleGameState createState() {
@@ -15,6 +22,7 @@ class SingleGame extends StatefulWidget {
 class _SingleGameState extends State<SingleGame> {
   int _score = 0;
   double _progress = 0.0;
+  int _iteration = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +34,9 @@ class _SingleGameState extends State<SingleGame> {
         ],
       ),
       body: new Column(children: <Widget>[
-        new LinearProgressIndicator(
-          value: _progress,
-        ),
+        widget._gameMode == GameMode.timed
+            ? new ProgressBar(time: widget.playTime, onEnd: _onGameEnd)
+            : new ProgressBar(progress: _progress),
         buildSingleGame()
       ]),
     );
@@ -41,18 +49,38 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   _onProgress(double progress) {
-    setState(() {
-      _progress = progress;
-    });
+    if (widget._gameMode == GameMode.iterations) {
+      setState(() {
+        _progress = (_iteration + progress) / widget.maxIterations;
+      });
+    }
+  }
+
+  _onEnd() {
+    if (widget._gameMode == GameMode.iterations) {
+      if (_iteration < widget.maxIterations) {
+        setState(() {
+          _iteration++;
+        });
+      } else {
+        _onGameEnd();
+      }
+    }
+  }
+
+  _onGameEnd() {
+    print('Game over');
   }
 
   Widget buildSingleGame() {
-    print(widget.gameName);
     switch (widget.gameName) {
       case 'reflex':
-        return new Reflex(onScore: _onScore, onProgress: _onProgress);
+        return new Reflex(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: _onEnd,
+            iteration: _iteration);
     }
     return null;
   }
 }
-

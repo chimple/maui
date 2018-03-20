@@ -31,7 +31,7 @@ class MauiApp extends StatelessWidget {
       if(path[3] == 'single') {
         return new MaterialPageRoute<Null>(
           settings: settings,
-          builder: (BuildContext context) => new SingleGame(path[2]),
+          builder: (BuildContext context) => new SingleGame(path[2], playTime: 5000,),
         );
       } else if(path[3] == 'h2h') {
         return new MaterialPageRoute<Null>(
