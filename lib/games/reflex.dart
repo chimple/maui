@@ -1,7 +1,6 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
-import 'dart:ui' show window;
 import 'package:maui/repos/game_data.dart';
 
 class Reflex extends StatefulWidget {
