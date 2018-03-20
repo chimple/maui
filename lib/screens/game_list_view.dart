@@ -74,21 +74,21 @@ class GameListView extends StatelessWidget {
                       alignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         new IconButton(
-                            icon: new Icon(Icons.alarm),
-                            onPressed: () => Navigator.of(context).pop('h2h')),
+                            icon: new Icon(Icons.accessibility),
+                            onPressed: () => Navigator.of(context).pop('single_iterations')),
                         new IconButton(
-                            icon: new Icon(Icons.cake),
-                            onPressed: () => Navigator.of(context).pop('single')),
+                            icon: new Icon(Icons.alarm),
+                            onPressed: () => Navigator.of(context).pop('single_timed')),
+                        new IconButton(
+                            icon: new Icon(Icons.people),
+                            onPressed: () => Navigator.of(context).pop('h2h_iterations')),
+                        new IconButton(
+                            icon: new Icon(Icons.av_timer),
+                            onPressed: () => Navigator.of(context).pop('h2h_timed')),
                       ])));
         });
-    switch(selected) {
-      case 'h2h':
-        Navigator.of(context).pushNamed('/games/$game/h2h');
-        break;
-      case 'single':
-        Navigator.of(context).pushNamed('/games/$game/single');
-        break;
-    }
+    if(selected.isNotEmpty)
+      Navigator.of(context).pushNamed('/games/$game/$selected');
   }
 
 }
