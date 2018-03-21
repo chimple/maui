@@ -18,7 +18,7 @@ class UserList extends StatelessWidget {
         crossAxisCount: 2,
         children: users
             .map((user) => new UserItem(
-                  key: new Key('user-${user.id}'),
+                  key: new Key('user-${user.name}'),
                   user: user,
                 ))
             .toList());

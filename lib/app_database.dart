@@ -62,6 +62,7 @@ class AppDatabase {
     new LessonDao().getLessonsBelowSeqAndByConceptId(100, [3,5]).then((r)=>print(r));
     new LessonUnitDao().getLessonUnitsByLessonId(1).then((r)=>print(r));
     new LessonUnitDao().getLessonUnitsBelowSeqAndByConceptId(100, 3).then((r)=>print(r));
-
+    new LessonUnitDao().getEagerLessonUnitsByLessonId(1).then((r)=>print(r));
+    new LessonUnitDao().getEagerLessonUnitsBelowSeqAndByConceptId(100, 3).then((r)=>print(r));
   }
 }
