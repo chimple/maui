@@ -24,7 +24,7 @@ void main() {
       final SerializableFinder game = find.text('Game');
       await driver.tap(game);
 
-      final SerializableFinder trueandfalse = find.byValueKey('reflex');
+      final SerializableFinder trueandfalse = find.byValueKey('memory');
       await driver.tap(trueandfalse);
 
       final SerializableFinder mode = find.byValueKey('single');
