@@ -77,7 +77,7 @@ class BingoState extends State<Bingo> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < bingos.length; i += _size * _size) {
+    for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
             ..shuffle());
