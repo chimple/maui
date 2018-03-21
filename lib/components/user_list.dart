@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/models/models.dart';
+import 'package:maui/db/entity/user.dart';
 import 'user_item.dart';
 
 class UserList extends StatelessWidget {
