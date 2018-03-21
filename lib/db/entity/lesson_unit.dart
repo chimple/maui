@@ -48,14 +48,14 @@ CREATE TABLE $table (
     };
   }
 
-  LessonUnit.fromMap(Map<String, dynamic> map)
+  LessonUnit.fromMap(Map<String, dynamic> map, {String prefix = ''})
       : this(
-            id: map[idCol],
-            lessonId: map[lessonIdCol],
-            seq: map[seqCol],
-            subjectUnitId: map[subjectUnitIdCol],
-            objectUnitId: map[objectUnitIdCol],
-            highlight: map[highlightCol]);
+            id: map[prefix+idCol],
+            lessonId: map[prefix+lessonIdCol],
+            seq: map[prefix+seqCol],
+            subjectUnitId: map[prefix+subjectUnitIdCol],
+            objectUnitId: map[prefix+objectUnitIdCol],
+            highlight: map[prefix+highlightCol]);
 
   @override
   int get hashCode =>
@@ -80,6 +80,6 @@ CREATE TABLE $table (
 
   @override
   String toString() {
-    return 'Unit{id: $id, lessonId: $lessonId, seq: $seq, subjectUnitId: $subjectUnitId, objectUnitId: $objectUnitId, highlight: $highlight}';
+    return 'LessonUnit{id: $id, lessonId: $lessonId, seq: $seq, subjectUnitId: $subjectUnitId, objectUnitId: $objectUnitId, highlight: $highlight}';
   }
 }
