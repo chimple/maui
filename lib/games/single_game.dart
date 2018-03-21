@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/reflex.dart';
+import 'package:maui/games/order_it.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/components/progress_bar.dart';
 
@@ -101,13 +102,20 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration);
         break;
+       case 'order_it':
+        return new OrderIt(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration);
+        break;
       case 'true_or_false':
         return new QuizPage(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: _onEnd,
             iteration: _iteration);
-        break;
+        break;    
     }
     return null;
   }
