@@ -8,9 +8,12 @@ class SingleGame extends StatefulWidget {
   final String gameName;
   final int maxIterations;
   final int playTime;
+  Function onGameEnd;
+  Function onScore;
   final GameMode _gameMode;
 
-  SingleGame(this.gameName, {this.maxIterations = 0, this.playTime = 0})
+  SingleGame(this.gameName,
+      {this.maxIterations = 0, this.playTime = 0, this.onGameEnd, this.onScore})
       : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed;
 
   @override
@@ -35,9 +38,10 @@ class _SingleGameState extends State<SingleGame> {
       ),
       body: new Column(children: <Widget>[
         widget._gameMode == GameMode.timed
-            ? new ProgressBar(time: widget.playTime, onEnd: _onGameEnd)
+            ? new ProgressBar(
+                time: widget.playTime, onEnd: () => _onGameEnd(context))
             : new ProgressBar(progress: _progress),
-        buildSingleGame()
+        buildSingleGame(context)
       ]),
     );
   }
@@ -46,6 +50,7 @@ class _SingleGameState extends State<SingleGame> {
     setState(() {
       _score += incrementScore;
     });
+    if (widget.onScore != null) widget.onScore(_score);
   }
 
   _onProgress(double progress) {
@@ -56,30 +61,45 @@ class _SingleGameState extends State<SingleGame> {
     }
   }
 
-  _onEnd() {
+  _onEnd(BuildContext context) {
     if (widget._gameMode == GameMode.iterations) {
-      if (_iteration < widget.maxIterations) {
+      if (_iteration + 1 < widget.maxIterations) {
         setState(() {
           _iteration++;
         });
       } else {
-        _onGameEnd();
+        _onGameEnd(context);
       }
+    } else {
+      setState(() {
+        _iteration++;
+      });
     }
   }
 
-  _onGameEnd() {
-    print('Game over');
+  _onGameEnd(BuildContext context) {
+    if (widget.onGameEnd != null) {
+      widget.onGameEnd(context);
+    } else {
+      showDialog<String>(
+          context: context,
+          child: new AlertDialog(
+            content: new Text('$_score'),
+          )).then<Null>((String s) {
+        Navigator.pop(context);
+      });
+    }
   }
 
-  Widget buildSingleGame() {
+  Widget buildSingleGame(BuildContext context) {
     switch (widget.gameName) {
       case 'reflex':
         return new Reflex(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd,
+            onEnd: () => _onEnd(context),
             iteration: _iteration);
+        break;
     }
     return null;
   }
