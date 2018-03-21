@@ -23,8 +23,13 @@ void main() {
       await driver.tap(user);
       final SerializableFinder game = find.text('Game');
       await driver.tap(game);
-      final SerializableFinder story = find.text('Story');
-      await driver.tap(story);
+
+      final SerializableFinder trueandfalse = find.byValueKey('reflex');
+      await driver.tap(trueandfalse);
+
+      final SerializableFinder mode = find.byValueKey('single');
+      await driver.tap(mode);
+
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
