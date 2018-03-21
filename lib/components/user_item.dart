@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/models/models.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class UserItem extends StatelessWidget {
@@ -11,6 +11,7 @@ class UserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(user);
     return new Center(
         child: new InkWell(
           onTap: () => AppStateContainer.of(context).setLoggedInUser(user),

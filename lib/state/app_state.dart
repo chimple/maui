@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:maui/models/models.dart';
+import 'package:maui/db/entity/user.dart';
 
 class AppState {
   User loggedInUser;
