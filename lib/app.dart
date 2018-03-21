@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
-import 'package:maui/games/single_game.dart';
-import 'package:maui/games/head_to_head_game.dart';
-
-import 'package:maui/games/reflex.dart';
 
 class MauiApp extends StatelessWidget {
   @override
@@ -28,16 +26,27 @@ class MauiApp extends StatelessWidget {
     if (path[0] != '')
       return null;
     if (path[1] == 'games' && path.length == 4) {
-      if(path[3] == 'single') {
-        return new MaterialPageRoute<Null>(
-          settings: settings,
-          builder: (BuildContext context) => new SingleGame(path[2]),
-        );
-      } else if(path[3] == 'h2h') {
-        return new MaterialPageRoute<Null>(
-          settings: settings,
-          builder: (BuildContext context) => new HeadToHeadGame(path[2]),
-        );
+      switch(path[3]) {
+        case 'single_iterations':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) => new SingleGame(path[2], maxIterations: 2,),
+          );
+        case 'single_timed':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) => new SingleGame(path[2], playTime: 30000,),
+          );
+        case 'h2h_iterations':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) => new HeadToHeadGame(path[2], maxIterations: 2),
+          );
+        case 'h2h_timed':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) => new HeadToHeadGame(path[2], playTime: 30000),
+          );
       }
     }
     return null;

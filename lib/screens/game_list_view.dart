@@ -19,13 +19,46 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'reflex')),
           new RaisedButton(
               child: new Icon(Icons.cake, size: 64.0),
-              onPressed: () =>showModes(context, 'choice')),
+              onPressed: () =>showModes(context, 'order_it')),
           new RaisedButton(
               child: new Icon(Icons.camera, size: 64.0),
               onPressed: () => showModes(context, 'memory')),
           new RaisedButton(
               child: new Icon(Icons.image, size: 64.0),
-              onPressed: () => showModes(context, 'connect_the_dots'))
+              onPressed: () => showModes(context, 'abacus')),
+          new RaisedButton(
+              child: new Icon(Icons.favorite, size: 64.0),
+              onPressed: () => showModes(context, 'crossword')),
+          new RaisedButton(
+              child: new Icon(Icons.adjust, size: 64.0),
+              onPressed: () =>showModes(context, 'drawing')),
+          new RaisedButton(
+              child: new Icon(Icons.call, size: 64.0),
+              onPressed: () => showModes(context, 'fill_in_the_blanks')),
+          new RaisedButton(
+              child: new Icon(Icons.add_circle, size: 64.0),
+              onPressed: () => showModes(context, 'calculate_numbers')),
+          new RaisedButton(
+              child: new Icon(Icons.airline_seat_legroom_extra, size: 64.0),
+              onPressed: () => showModes(context, 'casino')),
+          new RaisedButton(
+              child: new Icon(Icons.assistant_photo, size: 64.0),
+              onPressed: () =>showModes(context, 'match_the_following')),
+          new RaisedButton(
+              child: new Icon(Icons.add_to_queue, size: 64.0),
+              onPressed: () => showModes(context, 'bingo')),
+          new RaisedButton(
+              child: new Icon(Icons.arrow_right, size: 64.0),
+              onPressed: () => showModes(context, 'true_or_false')),
+          new RaisedButton(
+              child: new Icon(Icons.check_box_outline_blank, size: 64.0),
+              onPressed: () => showModes(context, 'tables')),
+          new RaisedButton(
+              child: new Icon(Icons.directions_run, size: 64.0),
+              onPressed: () => showModes(context, 'identify')),
+          new RaisedButton(
+              child: new Icon(Icons.broken_image, size: 64.0),
+              onPressed: () => showModes(context, 'fill_number'))
         ]);
   }
 
@@ -41,21 +74,21 @@ class GameListView extends StatelessWidget {
                       alignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         new IconButton(
-                            icon: new Icon(Icons.alarm),
-                            onPressed: () => Navigator.of(context).pop('h2h')),
+                            icon: new Icon(Icons.accessibility),
+                            onPressed: () => Navigator.of(context).pop('single_iterations')),
                         new IconButton(
-                            icon: new Icon(Icons.cake),
-                            onPressed: () => Navigator.of(context).pop('single')),
+                            icon: new Icon(Icons.alarm),
+                            onPressed: () => Navigator.of(context).pop('single_timed')),
+                        new IconButton(
+                            icon: new Icon(Icons.people),
+                            onPressed: () => Navigator.of(context).pop('h2h_iterations')),
+                        new IconButton(
+                            icon: new Icon(Icons.av_timer),
+                            onPressed: () => Navigator.of(context).pop('h2h_timed')),
                       ])));
         });
-    switch(selected) {
-      case 'h2h':
-        Navigator.of(context).pushNamed('/games/$game/h2h');
-        break;
-      case 'single':
-        Navigator.of(context).pushNamed('/games/$game/single');
-        break;
-    }
+    if(selected.isNotEmpty)
+      Navigator.of(context).pushNamed('/games/$game/$selected');
   }
 
 }

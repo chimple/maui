@@ -2,31 +2,31 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:meta/meta.dart';
-import 'package:maui/models/user.dart';
-import 'package:maui/tables/user_table.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/db/dao/user_dao.dart';
 
 class UserRepo {
-  static final UserTable userTable = new UserTable();
+  static final UserDao userDao = new UserDao();
 
   const UserRepo();
 
   Future<User> getUser(String id) async {
-      return await userTable.getUser(id);
+      return await userDao.getUser(id);
   }
 
   Future<List<User>> getUsers() async {
-    return await userTable.getUsers();
+    return await userDao.getUsers();
   }
 
   Future<User> insert(User user) async {
-    return await userTable.insert(user);
+    return await userDao.insert(user);
   }
 
   Future<int> delete(int id) async {
-    return await userTable.delete(id);
+    return await userDao.delete(id);
   }
 
   Future<int> update(User user) async {
-    return await userTable.update(user);
+    return await userDao.update(user);
   }
 }
