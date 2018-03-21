@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   charcode:
     dependency: transitive
     description:
@@ -159,11 +166,9 @@ packages:
   image_picker:
     dependency: "direct main"
     description:
-      path: "packages/image_picker"
-      ref: HEAD
-      resolved-ref: ca8a0af887149a1340b0e040114c4026374b76d2
-      url: "https://github.com/arok/plugins.git"
-    source: git
+      path: image_picker
+      relative: true
+    source: path
     version: "0.3.1"
   intl:
     dependency: transitive

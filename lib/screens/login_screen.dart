@@ -1,10 +1,10 @@
-import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:maui/repos/user_repo.dart';
-import 'package:maui/models/models.dart';
 import 'package:maui/components/user_list.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+
 import 'tab_home.dart';
 
 class LoginScreen extends StatefulWidget {

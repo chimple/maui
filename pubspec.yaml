@@ -9,9 +9,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   image_picker:
-    git:
-      url: https://github.com/arok/plugins.git
-      path: packages/image_picker
+    path: image_picker
+  camera: ^0.1.1
   xmlstream: ^0.10.0
   sqflite: any
   uuid: ^0.5.0
@@ -39,6 +38,10 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+
+  assets:
+    - assets/database.db
+    - assets/chimple_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

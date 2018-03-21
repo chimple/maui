@@ -1,47 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
-import 'dart:ui' show window;
+import 'package:maui/repos/game_data.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
   Function onProgress;
+  Function onEnd;
+  int iteration;
 
-  Reflex({key, this.onScore, this.onProgress}) : super(key: key);
+  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new ReflexState();
 }
 
 class ReflexState extends State<Reflex> {
-  final List<String> _allLetters = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z'
-  ];
   final int _size = 4;
+  List<String> _allLetters;
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
@@ -49,6 +26,13 @@ class ReflexState extends State<Reflex> {
   @override
   void initState() {
     super.initState();
+    _initBoard();
+  }
+
+  void _initBoard() {
+    _currentIndex = 0;
+    _allLetters = fetchSerialData(Category.letter);
+    _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
@@ -58,7 +42,18 @@ class ReflexState extends State<Reflex> {
     _letters = _shuffledLetters.sublist(0, _size * _size);
   }
 
+  @override
+  void didUpdateWidget(Reflex oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_allLetters);
+    }
+  }
+
   Widget _buildItem(int index, String text) {
+    print('_buildItem: $text');
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -72,7 +67,12 @@ class ReflexState extends State<Reflex> {
               _currentIndex++;
             });
             widget.onScore(1);
-            widget.onProgress(_currentIndex/_allLetters.length);
+            widget.onProgress(_currentIndex / _allLetters.length);
+            if (_currentIndex >= _allLetters.length) {
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                widget.onEnd();
+              });
+            }
           }
         });
   }
@@ -134,7 +134,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
+      _displayText = widget.text;
+      controller.forward();
+    } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
