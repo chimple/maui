@@ -12,18 +12,18 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    tearDownAll(() async {
-      if (driver != null)
-        await driver.close();
-    });
+    // tearDownAll(() async {
+    //   if (driver != null)
+    //     await driver.close();
+    // });
 
-    test('add a user', () async {
+    test('click on Game', () async {
       final Completer<Null> completer = new Completer<Null>();
-      final SerializableFinder addUser = find.byType('FloatingActionButton');
-      driver.waitFor(addUser).then<Null>((Null value) async {
+      final SerializableFinder addUser = find.byValueKey('user-Chimple');
         await driver.tap(addUser);
+        final SerializableFinder game = find.text('Game');
+        await driver.tap(game);
         completer.complete();
-      });
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
   });
