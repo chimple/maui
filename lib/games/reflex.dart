@@ -9,15 +9,16 @@ class Reflex extends StatefulWidget {
   Function onEnd;
   int iteration;
 
-  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration}) : super(key: key);
+  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new ReflexState();
 }
 
 class ReflexState extends State<Reflex> {
-  List<String> _allLetters;
   final int _size = 4;
+  List<String> _allLetters;
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
@@ -29,6 +30,7 @@ class ReflexState extends State<Reflex> {
   }
 
   void _initBoard() {
+    _currentIndex = 0;
     _allLetters = fetchSerialData(Category.letter);
     _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
@@ -44,13 +46,14 @@ class ReflexState extends State<Reflex> {
   void didUpdateWidget(Reflex oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
-    if(widget.iteration != oldWidget.iteration) {
+    if (widget.iteration != oldWidget.iteration) {
       _initBoard();
       print(_allLetters);
     }
   }
 
   Widget _buildItem(int index, String text) {
+    print('_buildItem: $text');
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -64,8 +67,8 @@ class ReflexState extends State<Reflex> {
               _currentIndex++;
             });
             widget.onScore(1);
-            widget.onProgress(_currentIndex/_allLetters.length);
-            if(_currentIndex >= _allLetters.length) {
+            widget.onProgress(_currentIndex / _allLetters.length);
+            if (_currentIndex >= _allLetters.length) {
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
               });
@@ -131,7 +134,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(oldWidget.text.isEmpty && widget.text.isNotEmpty) {
+    if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
+      _displayText = widget.text;
       controller.forward();
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
