@@ -5,14 +5,40 @@ import 'dart:ui' show window;
 class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
+  Function onEnd;
+  int iteration;
+  final String question;
+  final String answer;
 
-  Bingo({key, this.onScore, this.onProgress}) : super(key: key);
+  Bingo({key, this.onScore, this.onProgress,this.onEnd,this.iteration,this.question,this.answer}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new BingoState();
 }
 
 class BingoState extends State<Bingo> {
+
+//  List<Bingo> bingos = [
+//    Bingo(
+//        key:1, question: "1 + 2",answer: '3', ),
+//    Bingo(
+//      key:2, question: "1 + 3",answer: '4', ),
+//    Bingo(
+//      key:3, question: "1 + 4",answer: '5', ),
+//    Bingo(
+//      key:4, question: "1 + 6",answer: '7', ),
+//    Bingo(
+//      key:5, question: "1 + 7",answer: '8', ),
+//    Bingo(
+//      key:6, question: "1 + 8",answer: '9', ),
+//    Bingo(
+//      key:7, question: "1 + 10",answer: '11', ),
+//    Bingo(
+//      key:8, question: "1 + 11",answer: '12', ),
+//    Bingo(
+//      key:9, question: "1 + 12",answer: '13', ),
+//  ];
+
   final List<String> _allLetters = [
 //    'A',
 //    'B',
@@ -43,7 +69,7 @@ class BingoState extends State<Bingo> {
     '1','2','3','4','5','6','7','8','9' ,'1','2','3','4','5','6','7','8','9'
   ];
   final List<String> question = ['1 + 2','2 + 3','1 + 5' ];
-  final int _size = 4;
+  final int _size = 3;
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
@@ -51,7 +77,7 @@ class BingoState extends State<Bingo> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
+    for (var i = 0; i < bingos.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
             ..shuffle());

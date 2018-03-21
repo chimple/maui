@@ -117,11 +117,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
+        if (state == AnimationStatus.reverse) {
+          print('completed');
           if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
