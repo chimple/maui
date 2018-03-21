@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/state/app_state.dart';
-import 'package:maui/models/models.dart';
+import 'package:maui/db/entity/user.dart';
 
 class AppStateContainerController extends StatefulWidget {
   final AppState state;
