@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/reflex.dart';
+import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/components/progress_bar.dart';
 
 enum GameMode { timed, iterations }
@@ -98,6 +99,13 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            iteration: _iteration);
+        break;
+      case 'true_or_false':
+        return new QuizPage(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: _onEnd,
             iteration: _iteration);
         break;
     }
