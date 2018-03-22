@@ -333,21 +333,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
       rows.add(new TableRow(children: cells));
     }
 
-    /* return new Stack(
- children: <Widget>[
-
-   
- new Container(
-                    color: Colors.orange,
-                      height: height/14,
-                    width: width/7,
-                    child: new Center(
-                        child: new Text("$num1",
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 30.0))))
- ],
-  ); */
-
     return new Container(
         color: Colors.pink,
         child: new Column(
