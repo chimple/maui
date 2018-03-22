@@ -4,6 +4,7 @@ import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/drawing.dart';
+import 'package:maui/games/Memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
@@ -196,6 +197,13 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration);
         break;
+        case 'memory':
+        return new Memory(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: _onEnd,
+            iteration: _iteration);
+        break;       
     }
     return null;
   }
