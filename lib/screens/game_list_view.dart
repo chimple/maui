@@ -36,7 +36,7 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'crossword')),
           new RaisedButton(
               key: new Key('drawing'),
-              child: new Icon(Icons.adjust, size: 64.0),
+              child: new Icon(Icons.format_paint, size: 64.0),
               onPressed: () =>showModes(context, 'drawing')),
           new RaisedButton(
               key: new Key('fill_in_the_blancks'),
