@@ -26,6 +26,17 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
     new GameCategoryRepo()
         .getGameCategoriesByGame(widget.game)
         .then((gameCategories) {
+      if (gameCategories.isEmpty) {
+        gameCategories = <GameCategory>[
+          new GameCategory(
+              id: 1,
+              seq: 1,
+              game: widget.game,
+              conceptId: 1,
+              name: 'Todo Placeholder')
+        ];
+      }
+
       setState(() {
         _gameCategories = gameCategories;
         _isLoading = false;
