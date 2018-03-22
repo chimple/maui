@@ -34,9 +34,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
 
   final int _size = 3;
   List<String> _letters;
-
   String _preValue = ' ';
-  int num1 = 1, num2 = 4;
+  int num1 = 11, num2 = 4;
   String _output = ' ';
 
   List<num> reminder = [];
@@ -76,17 +75,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (calCount(num1 + num2) == 1) {
-            if (text == '1' ||
-                text == '2' ||
-                text == '3' ||
-                text == '4' ||
-                text == '5' ||
-                text == '6' ||
-                text == '7' ||
-                text == '8' ||
-                text == '9' ||
-                text == '0') {
+          if (text == '1' ||
+              text == '2' ||
+              text == '3' ||
+              text == '4' ||
+              text == '5' ||
+              text == '6' ||
+              text == '7' ||
+              text == '8' ||
+              text == '9' ||
+              text == '0') {
+            if (calCount(num1 + num2) == 1) {
               if (int.parse(text) == (num1 + num2)) {
                 print(text);
                 setState(() {
@@ -100,18 +99,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                   flag = false;
                 });
               }
-            }
-          } else if (calCount(num1 + num2) > 1) {
-            if (text == '1' ||
-                text == '2' ||
-                text == '3' ||
-                text == '4' ||
-                text == '5' ||
-                text == '6' ||
-                text == '7' ||
-                text == '8' ||
-                text == '9' ||
-                text == '0') {
+            } else {
               if (int.parse(text) == reminder[1] ||
                   int.parse(text) == reminder[0]) {
                 _preValue = text;
@@ -120,11 +108,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                 setState(() {
                   if (int.parse(_output) == (num1 + num2)) {
                     _output;
+                    flag = true;
                     print("OUTPUT: " + _output);
                   }
+                   });
+                   }
+                  else {
+                   setState(() {
+                      _preValue = text;
+                      _output = _output + _preValue;
+                  flag = false;
                 });
-              }
-            }
+                }
+             }
           }
           if (text == '✔') {
             try {
@@ -150,6 +146,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
               });
             } on FormatException {}
           }
+              
         });
   }
 
