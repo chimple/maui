@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/repos/game_category_repo.dart';
+import 'package:maui/components/game_category_list.dart';
 
 class GameCategoryListScreen extends StatefulWidget {
   String game;
@@ -22,7 +23,9 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-    new GameCategoryRepo().getGameCategoriesByGame(widget.game).then((gameCategories) {
+    new GameCategoryRepo()
+        .getGameCategoriesByGame(widget.game)
+        .then((gameCategories) {
       setState(() {
         _gameCategories = gameCategories;
         _isLoading = false;
@@ -33,18 +36,15 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: _isLoading
-          ? new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      )
-          : new Text('test'),
-      floatingActionButton: new FloatingActionButton(
-        key: new ValueKey('add-user'),
-        child: new Icon(Icons.add),
-        onPressed: () => null,
-      ),
-    );
+        body: _isLoading
+            ? new SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: new CircularProgressIndicator(),
+              )
+            : new Scaffold(
+                appBar: new AppBar(title: new Text('Categories')),
+                body: new GameCategoryList(gameCategories: _gameCategories),
+              ));
   }
 }
