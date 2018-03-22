@@ -12,25 +12,49 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-//    tearDownAll(() async {
-//      if (driver != null)
-//        await driver.close();
-//    });
+    tearDownAll(() async {
+      if (driver != null)
+        await driver.close();
+    });
 
     test('task', () async {
       final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder user = find.byValueKey('user-Chimple');
       await driver.tap(user);
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       final SerializableFinder game = find.text('Game');
       await driver.tap(game);
+      completer.complete();
+      await completer.future;
+    }, timeout: const Timeout(const Duration(minutes: 1)));
 
-      final SerializableFinder memory = find.byValueKey('memory');
-      await driver.scroll(memory, 0.0, -600.0, const Duration(milliseconds: 300));
-      final SerializableFinder true_or_false = find.byValueKey('true_or_false');
-      await driver.tap(true_or_false);
+
+    test('scrolling', () async {
+      final Completer<Null> completer = new Completer<Null>();
+      bool scroll = true;
+      final SerializableFinder menuItem = find.byValueKey('true_or_false');
+
+      driver.waitFor(menuItem).then<Null>((Null value) async {
+        scroll = false;
+        await new Future<Duration>.delayed(const Duration(seconds: 1));
+        await driver.tap(menuItem);
+        await new Future<Duration>.delayed(const Duration(seconds: 1));
+        completer.complete();
+      });
+      final SerializableFinder gs = find.byValueKey('Game_page');
+      while (scroll) {
+        await driver.scroll(gs, 0.0, -300.0, const Duration(milliseconds: 500));
+        await new Future<Null>.delayed(kWaitBetweenActions);
+      }
+      await completer.future;
+    }, timeout: const Timeout(const Duration(minutes: 1)));
+
+    test('playing the game', () async {
+      final Completer<Null> completer = new Completer<Null>();
+      //final SerializableFinder tile = find.text('Todo ');
+
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
-
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));

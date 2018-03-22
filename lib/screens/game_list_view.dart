@@ -8,6 +8,7 @@ class GameListView extends StatelessWidget {
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
     print(Navigator.of(context).toString());
     return new GridView.count(
+        key: new Key('Game_page'),
         primary: false,
         padding: const EdgeInsets.all(20.0),
         crossAxisSpacing: 20.0,
