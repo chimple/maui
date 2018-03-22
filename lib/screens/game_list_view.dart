@@ -48,7 +48,7 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'calculate_numbers')),
           new RaisedButton(
               key: new Key('casino'),
-              child: new Icon(Icons.airline_seat_legroom_extra, size: 64.0),
+              child: new Icon(Icons.developer_board, size: 64.0),
               onPressed: () => showModes(context, 'casino')),
           new RaisedButton(
               key: new Key('match_the_following'),
