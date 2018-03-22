@@ -12,4 +12,8 @@ class GameCategoryRepo {
   Future<List<GameCategory>> getGameCategoriesByGame(String game) async {
     return await gameCategoryDao.getGameCategoriesByGame(game);
   }
+
+  Future<GameCategory> getGameCategory(int gameCategoryId) async {
+    return await gameCategoryDao.getGameCategory(gameCategoryId);
+  }
 }

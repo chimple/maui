@@ -36,7 +36,7 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'crossword')),
           new RaisedButton(
               key: new Key('drawing'),
-              child: new Icon(Icons.adjust, size: 64.0),
+              child: new Icon(Icons.format_paint, size: 64.0),
               onPressed: () =>showModes(context, 'drawing')),
           new RaisedButton(
               key: new Key('fill_in_the_blancks'),
@@ -48,7 +48,7 @@ class GameListView extends StatelessWidget {
               onPressed: () => showModes(context, 'calculate_numbers')),
           new RaisedButton(
               key: new Key('casino'),
-              child: new Icon(Icons.airline_seat_legroom_extra, size: 64.0),
+              child: new Icon(Icons.developer_board, size: 64.0),
               onPressed: () => showModes(context, 'casino')),
           new RaisedButton(
               key: new Key('match_the_following'),
@@ -77,37 +77,7 @@ class GameListView extends StatelessWidget {
         ]);
   }
 
-  showModes(BuildContext context, String game) async {
-    String selected = await showModalBottomSheet<String>(
-        context: context,
-        builder: (BuildContext context) {
-          print(Navigator.of(context).toString());
-          return new Container(
-              child: new Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: new ButtonBar(
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        new IconButton(
-                            key: new Key('single'),
-                            icon: new Icon(Icons.accessibility),
-                            onPressed: () => Navigator.of(context).pop('single_iterations')),
-                        new IconButton(
-                            key: new Key('singletimed'),
-                            icon: new Icon(Icons.alarm),
-                            onPressed: () => Navigator.of(context).pop('single_timed')),
-                        new IconButton(
-                            key: new Key('h2h'),
-                            icon: new Icon(Icons.people),
-                            onPressed: () => Navigator.of(context).pop('h2h_iterations')),
-                        new IconButton(
-                            key: new Key('h2htimed'),
-                            icon: new Icon(Icons.av_timer),
-                            onPressed: () => Navigator.of(context).pop('h2h_timed')),
-                      ])));
-        });
-    if(selected.isNotEmpty)
-      Navigator.of(context).pushNamed('/games/$game/$selected');
+  showModes(BuildContext context, String game) {
+    Navigator.of(context).pushNamed('/categories/$game');
   }
-
 }
