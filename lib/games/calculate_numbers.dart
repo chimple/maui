@@ -35,9 +35,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   final int _size = 3;
   List<String> _letters;
   String _preValue = ' ';
-  int num1 =14, num2 = 2;
+  int num1 = 0, num2 = 1;
   String _output = ' ';
-  String _operator = '-';
+  String _operator = '+';
   List<num> reminder = [];
   int index = 0;
   bool flag;
@@ -64,15 +64,47 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     }
   }
 
-  void reminderForOperator(String operator){
-    switch(operator){
-      case '+': reminderS(num1+num2);
-      break;
-      case '-': reminderS(num1-num2);
-      break;
-      
+  void reminderForOperator(String operator) {
+    switch (operator) {
+      case '+':
+        reminderS(num1 + num2);
+        break;
+      case '-':
+        reminderS(num1 - num2);
+        break;
+      case '*':
+        reminderS(num1 * num2);
+        break;
     }
+  }
 
+  void wrongOrRight(String text, String output) {
+    if (text == '✔') {
+      try {
+        if (int.parse(output) == (num1 + num2)) {
+          setState(() {
+            _output = output;
+            print(_output);
+          });
+        } else {
+          print("Entering wrong data");
+          setState(() {
+            _output = "✖";
+            flag = false;
+          });
+        }
+      } on FormatException {}
+    }
+    if (text == '✖') {
+      print("Erasing content: " + output);
+      try {
+        setState(() {
+          _preValue = " ";
+          _output = " ";
+          flag = false;
+        });
+      } on FormatException {}
+    }
   }
 
   @override
@@ -132,32 +164,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             }
           }
         }
-        if (text == '✔') {
-          try {
-            if (int.parse(_output) == (num1 + num2)) {
-              setState(() {
-                _output;
-                print(_output);
-              });
-            } else {
-              print("Entering wrong data");
-              setState(() {
-                _output = "✖";
-                flag = false;
-              });
-            }
-          } on FormatException {}
-        }
-        if (text == '✖') {
-          print("Erasing content: " + _output);
-          try {
-            setState(() {
-              _preValue = " ";
-              _output = " ";
-              flag = false;
-            });
-          } on FormatException {}
-        }
+        wrongOrRight(text, _output);
         break;
       ////////////////////////////////////
       case '-':
@@ -207,32 +214,57 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             }
           }
         }
-        if (text == '✔') {
-          try {
-            if (int.parse(_output) == (num1 - num2)) {
+        wrongOrRight(text, _output);
+        break;
+      /////////////////////////////////
+      case '*':
+        if (text == '1' ||
+            text == '2' ||
+            text == '3' ||
+            text == '4' ||
+            text == '5' ||
+            text == '6' ||
+            text == '7' ||
+            text == '8' ||
+            text == '9' ||
+            text == '0') {
+          if (calCount(num1 * num2) == 1) {
+            if (int.parse(text) == (num1 * num2)) {
+              print(text);
               setState(() {
-                _output;
-                print(_output);
+                _output = text;
+                flag = true;
+                print("OUTPUT: " + text);
               });
             } else {
-              print("Entering wrong data");
               setState(() {
-                _output = "✖";
+                _output = text;
                 flag = false;
               });
             }
-          } on FormatException {}
+          } else {
+            if (int.parse(text) == reminder[1] ||
+                int.parse(text) == reminder[0]) {
+              _preValue = text;
+              _output = _output + _preValue;
+              print(_output);
+              setState(() {
+                if (int.parse(_output) == (num1 * num2)) {
+                  _output;
+                  flag = true;
+                  print("OUTPUT: " + _output);
+                }
+              });
+            } else {
+              setState(() {
+                _preValue = text;
+                _output = _output + _preValue;
+                flag = false;
+              });
+            }
+          }
         }
-        if (text == '✖') {
-          print("Erasing content: " + _output);
-          try {
-            setState(() {
-              _preValue = " ";
-              _output = " ";
-              flag = false;
-            });
-          } on FormatException {}
-        }
+        wrongOrRight(text, _output);
         break;
     }
   }
@@ -243,78 +275,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         text: text,
         onPress: () {
           operation(_operator, text);
-          /*  if (text == '1' ||
-              text == '2' ||
-              text == '3' ||
-              text == '4' ||
-              text == '5' ||
-              text == '6' ||
-              text == '7' ||
-              text == '8' ||
-              text == '9' ||
-              text == '0') {
-            if (calCount(num1 + num2) == 1) {
-              if (int.parse(text) == (num1 + num2)) {
-                print(text);
-                setState(() {
-                  _output = text;
-                  flag = true;
-                  print("OUTPUT: " + text);
-                });
-              } else {
-                setState(() {
-                  _output = text;
-                  flag = false;
-                });
-              }
-            } else {
-              if (int.parse(text) == reminder[1] ||
-                  int.parse(text) == reminder[0]) {
-                _preValue = text;
-                _output = _output + _preValue;
-                print(_output);
-                setState(() {
-                  if (int.parse(_output) == (num1 + num2)) {
-                    _output;
-                    flag = true;
-                    print("OUTPUT: " + _output);
-                  }
-                });
-              } else {
-                setState(() {
-                  _preValue = text;
-                  _output = _output + _preValue;
-                  flag = false;
-                });
-              }
-            }
-          }
-          if (text == '✔') {
-            try {
-              if (int.parse(_output) == (num1 + num2)) {
-                setState(() {
-                  _output;
-                  print(_output);
-                });
-              } else {
-                print("Entering wrong data");
-                setState(() {
-                  _output = "✖";
-                  flag = false;
-                });
-              }
-            } on FormatException {}
-          }
-          if (text == '✖') {
-            print("Erasing content: " + _output);
-            try {
-              setState(() {
-                _preValue = " ";
-                _output = " ";
-                flag = false;
-              });
-            } on FormatException {} */
-          //}
         });
   }
 
