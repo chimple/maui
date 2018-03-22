@@ -35,9 +35,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   final int _size = 3;
   List<String> _letters;
   String _preValue = ' ';
-  int num1 = 11, num2 = 4;
+  int num1 =14, num2 = 2;
   String _output = ' ';
-
+  String _operator = '-';
   List<num> reminder = [];
   int index = 0;
   bool flag;
@@ -51,6 +51,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   }
 
   int calCount(sum) {
+    print(sum);
     int count = 0;
     if (sum > 1) {
       while (sum != 0) {
@@ -63,11 +64,177 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     }
   }
 
+  void reminderForOperator(String operator){
+    switch(operator){
+      case '+': reminderS(num1+num2);
+      break;
+      case '-': reminderS(num1-num2);
+      break;
+      
+    }
+
+  }
+
   @override
   void initState() {
     super.initState();
-    reminderS(num1 + num2);
+    //reminderS(num1 + num2);
+    reminderForOperator(_operator);
     _letters = _allLetters.sublist(0, _size * (_size + 1));
+  }
+
+  void operation(String operator, String text) {
+    switch (operator) {
+      case '+':
+        if (text == '1' ||
+            text == '2' ||
+            text == '3' ||
+            text == '4' ||
+            text == '5' ||
+            text == '6' ||
+            text == '7' ||
+            text == '8' ||
+            text == '9' ||
+            text == '0') {
+          if (calCount(num1 + num2) == 1) {
+            if (int.parse(text) == (num1 + num2)) {
+              print(text);
+              setState(() {
+                _output = text;
+                flag = true;
+                print("OUTPUT: " + text);
+              });
+            } else {
+              setState(() {
+                _output = text;
+                flag = false;
+              });
+            }
+          } else {
+            if (int.parse(text) == reminder[1] ||
+                int.parse(text) == reminder[0]) {
+              _preValue = text;
+              _output = _output + _preValue;
+              print(_output);
+              setState(() {
+                if (int.parse(_output) == (num1 + num2)) {
+                  _output;
+                  flag = true;
+                  print("OUTPUT: " + _output);
+                }
+              });
+            } else {
+              setState(() {
+                _preValue = text;
+                _output = _output + _preValue;
+                flag = false;
+              });
+            }
+          }
+        }
+        if (text == '✔') {
+          try {
+            if (int.parse(_output) == (num1 + num2)) {
+              setState(() {
+                _output;
+                print(_output);
+              });
+            } else {
+              print("Entering wrong data");
+              setState(() {
+                _output = "✖";
+                flag = false;
+              });
+            }
+          } on FormatException {}
+        }
+        if (text == '✖') {
+          print("Erasing content: " + _output);
+          try {
+            setState(() {
+              _preValue = " ";
+              _output = " ";
+              flag = false;
+            });
+          } on FormatException {}
+        }
+        break;
+      ////////////////////////////////////
+      case '-':
+        if (text == '1' ||
+            text == '2' ||
+            text == '3' ||
+            text == '4' ||
+            text == '5' ||
+            text == '6' ||
+            text == '7' ||
+            text == '8' ||
+            text == '9' ||
+            text == '0') {
+          if (calCount(num1 - num2) == 1) {
+            if (int.parse(text) == (num1 - num2)) {
+              print(text);
+              setState(() {
+                _output = text;
+                flag = true;
+                print("OUTPUT: " + text);
+              });
+            } else {
+              setState(() {
+                _output = text;
+                flag = false;
+              });
+            }
+          } else {
+            if (int.parse(text) == reminder[1] ||
+                int.parse(text) == reminder[0]) {
+              _preValue = text;
+              _output = _output + _preValue;
+              print(_output);
+              setState(() {
+                if (int.parse(_output) == (num1 - num2)) {
+                  _output;
+                  flag = true;
+                  print("OUTPUT: " + _output);
+                }
+              });
+            } else {
+              setState(() {
+                _preValue = text;
+                _output = _output + _preValue;
+                flag = false;
+              });
+            }
+          }
+        }
+        if (text == '✔') {
+          try {
+            if (int.parse(_output) == (num1 - num2)) {
+              setState(() {
+                _output;
+                print(_output);
+              });
+            } else {
+              print("Entering wrong data");
+              setState(() {
+                _output = "✖";
+                flag = false;
+              });
+            }
+          } on FormatException {}
+        }
+        if (text == '✖') {
+          print("Erasing content: " + _output);
+          try {
+            setState(() {
+              _preValue = " ";
+              _output = " ";
+              flag = false;
+            });
+          } on FormatException {}
+        }
+        break;
+    }
   }
 
   Widget _buildItem(int index, String text) {
@@ -75,7 +242,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (text == '1' ||
+          operation(_operator, text);
+          /*  if (text == '1' ||
               text == '2' ||
               text == '3' ||
               text == '4' ||
@@ -111,16 +279,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                     flag = true;
                     print("OUTPUT: " + _output);
                   }
-                   });
-                   }
-                  else {
-                   setState(() {
-                      _preValue = text;
-                      _output = _output + _preValue;
+                });
+              } else {
+                setState(() {
+                  _preValue = text;
+                  _output = _output + _preValue;
                   flag = false;
                 });
-                }
-             }
+              }
+            }
           }
           if (text == '✔') {
             try {
@@ -133,6 +300,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                 print("Entering wrong data");
                 setState(() {
                   _output = "✖";
+                  flag = false;
                 });
               }
             } on FormatException {}
@@ -143,17 +311,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
               setState(() {
                 _preValue = " ";
                 _output = " ";
+                flag = false;
               });
-            } on FormatException {}
-          }
-              
+            } on FormatException {} */
+          //}
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.height;
-    print(width);
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size + 1; ++i) {
@@ -165,6 +333,21 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
       rows.add(new TableRow(children: cells));
     }
 
+    /* return new Stack(
+ children: <Widget>[
+
+   
+ new Container(
+                    color: Colors.orange,
+                      height: height/14,
+                    width: width/7,
+                    child: new Center(
+                        child: new Text("$num1",
+                            style: new TextStyle(
+                                color: Colors.black, fontSize: 30.0))))
+ ],
+  ); */
+
     return new Container(
         color: Colors.pink,
         child: new Column(
@@ -175,50 +358,50 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
               children: <Widget>[
                 new Container(
                     color: Colors.orange,
-                    height: 60.0,
-                    width: 70.0,
+                    height: height / 19,
+                    width: width / 11,
                     child: new Center(
                         child: new Text("$num1",
                             style: new TextStyle(
-                                color: Colors.black, fontSize: 30.0))))
+                                color: Colors.black, fontSize: 20.0))))
               ],
             ),
-            new Padding(padding: const EdgeInsets.only(top: 30.0)),
+            //  new Padding(padding: const EdgeInsets.only(top: 30.0)),
             new Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                new Padding(padding: const EdgeInsets.only(left: 60.0)),
+                new Padding(padding: const EdgeInsets.only(left: 150.0)),
                 new Container(
                     color: Colors.orange,
-                    height: 60.0,
-                    width: 70.0,
+                    height: height / 19,
+                    width: width / 11,
                     child: new Center(
-                        child: new Text("+",
+                        child: new Text(_operator,
                             style: new TextStyle(
-                                color: Colors.black, fontSize: 30.0)))),
-                new Padding(padding: const EdgeInsets.only(left: 40.0)),
+                                color: Colors.black, fontSize: 20.0)))),
+                // new Padding(padding: const EdgeInsets.only(left: 40.0)),
                 new Container(
                     color: Colors.orange,
-                    height: 60.0,
-                    width: 70.0,
+                    height: height / 19,
+                    width: width / 11,
                     child: new Center(
                         child: new Text("$num2",
                             style: new TextStyle(
-                                color: Colors.black, fontSize: 30.0))))
+                                color: Colors.black, fontSize: 20.0))))
               ],
             ),
-            new Padding(padding: const EdgeInsets.only(top: 50.0)),
+            // new Padding(padding: const EdgeInsets.only(top: 50.0)),
             new Container(
-                color: flag == true ? Colors.green : Colors.orange,
-                height: 60.0,
-                width: 120.0,
+                color: flag == true ? Colors.green : Colors.grey,
+                height: height / 19,
+                width: width / 11,
                 child: new Center(
                     child: new Text("$_output",
                         style: new TextStyle(
                           color: Colors.black,
-                          fontSize: 30.0,
+                          fontSize: 20.0,
                         )))),
-            new Padding(padding: const EdgeInsets.only(top: 50.0)),
+            // new Padding(padding: const EdgeInsets.only(top: 50.0)),
             new Table(children: rows),
           ],
         ));
@@ -248,17 +431,18 @@ class _MyButtonState extends State<MyButton>
   Widget build(BuildContext context) {
     return new TableCell(
       child: new Padding(
-          padding: new EdgeInsets.all(10.0),
+          // padding: new EdgeInsets.all(10.0),
+          padding: new EdgeInsets.all(0.0),
           child: new RaisedButton(
               onPressed: () => widget.onPress(),
               color: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius:
-                      const BorderRadius.all(const Radius.circular(20.0))),
+                      const BorderRadius.all(const Radius.circular(5.0))),
               child: new Center(
                   child: new Text(_displayText,
                       style: new TextStyle(
-                          color: Colors.black, fontSize: 30.0))))),
+                          color: Colors.black, fontSize: 20.0))))),
     );
   }
 }
