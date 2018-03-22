@@ -17,19 +17,12 @@ void main() {
 //        await driver.close();
 //    });
 
-    test('task', () async {
+    test('add a user', () async {
       final Completer<Null> completer = new Completer<Null>();
-      final SerializableFinder user = find.byValueKey('user-Chimple');
-      await driver.tap(user);
       final SerializableFinder game = find.text('Game');
       await driver.tap(game);
-
-      final SerializableFinder trueandfalse = find.byValueKey('reflex');
-      await driver.tap(trueandfalse);
-
-      final SerializableFinder mode = find.byValueKey('single');
-      await driver.tap(mode);
-
+      final SerializableFinder story = find.text('Story');
+      await driver.tap(story);
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));

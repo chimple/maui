@@ -6,6 +6,12 @@ class User {
   static const columnId = 'id';
   static const columnName = 'name';
   static const columnImage = 'image';
+  static const ddl = '''
+CREATE TABLE $table (
+  $columnId TEXT PRIMARY KEY, 
+  $columnName TEXT, 
+  $columnImage TEXT)
+''';
 
   String id;
   String name;
