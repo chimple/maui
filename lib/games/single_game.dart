@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/reflex.dart';
 import 'package:maui/games/order_it.dart';
+import 'package:maui/games/Memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/components/progress_bar.dart';
 
@@ -115,7 +116,14 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: _onEnd,
             iteration: _iteration);
-        break;    
+        break;
+        case 'memory':
+        return new Memory(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: _onEnd,
+            iteration: _iteration);
+        break;       
     }
     return null;
   }
