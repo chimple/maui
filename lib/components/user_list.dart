@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/models/models.dart';
+import 'package:maui/db/entity/user.dart';
 import 'user_item.dart';
 
 class UserList extends StatelessWidget {
@@ -18,7 +18,7 @@ class UserList extends StatelessWidget {
         crossAxisCount: 2,
         children: users
             .map((user) => new UserItem(
-                  key: new Key('user-${user.id}'),
+                  key: new Key('user-${user.name}'),
                   user: user,
                 ))
             .toList());
