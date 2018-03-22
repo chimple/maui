@@ -12,7 +12,7 @@ import 'package:maui/games/casino.dart';
 import 'package:maui/games/crossword.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/match_the_following.dart';
-import 'package:maui/games/calculate_the_numbers.dart';
+import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/components/progress_bar.dart';
 
 enum GameMode { timed, iterations }
@@ -190,7 +190,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration);
         break;
-      case 'calculate_the_numbers':
+      case 'calculate_numbers':
         return new CalculateTheNumbers(
             onScore: _onScore,
             onProgress: _onProgress,
