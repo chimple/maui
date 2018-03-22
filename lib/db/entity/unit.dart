@@ -44,14 +44,14 @@ CREATE TABLE $table (
     };
   }
 
-  Unit.fromMap(Map<String, dynamic> map)
+  Unit.fromMap(Map<String, dynamic> map, {String prefix=''})
       : this(
-            id: map[idCol],
-            name: map[nameCol],
-            type: UnitType.values[map[typeCol]],
-            image: map[imageCol],
-            sound: map[soundCol],
-            phonemeSound: map[phonemeSoundCol]);
+            id: map[prefix+idCol],
+            name: map[prefix+nameCol],
+            type: UnitType.values[map[prefix+typeCol]],
+            image: map[prefix+imageCol],
+            sound: map[prefix+soundCol],
+            phonemeSound: map[prefix+phonemeSoundCol]);
 
   @override
   int get hashCode =>
