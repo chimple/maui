@@ -1,12 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'dart:ui' show window;
+
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
 
 class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+
   final String question;
   final String answer;
 
@@ -191,20 +198,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
 
 
-      return new TableCell(
+    return new TableCell(
         child: new Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0) ,
             child: new ScaleTransition(
-                scale: animation,
+                scale: animation ,
                 child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.teal,
+                    onPressed: () => widget.onPress() ,
+                    padding: const EdgeInsets.all(8.0) ,
+                    color: Colors.teal ,
                     shape: new RoundedRectangleBorder(
                         borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText,
+                        const BorderRadius.all(const Radius.circular(8.0))) ,
+                    child: new Text(_displayText ,
                         style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+                            color: Colors.white , fontSize: 24.0))))));
   }
 }
+
+

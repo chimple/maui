@@ -58,6 +58,7 @@ void sortOrderables<T extends Orderable<U>, U>(
       else
         return xA.compareTo((xB - step));
     }
+    return null;
   }
 
   int orderableVSort(T a, T b) {
@@ -81,6 +82,7 @@ void sortOrderables<T extends Orderable<U>, U>(
       else
         return yA.compareTo((yB - step));
     }
+    return null;
   }
 
   items.sort(direction == Direction.Vertical ? orderableVSort : orderableHSort);
