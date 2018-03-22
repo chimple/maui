@@ -43,8 +43,9 @@ void main() {
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('true_or_false');
+      final SerializableFinder menuItem = find.byValueKey('fill_in_the_blanks');
 
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
@@ -55,7 +56,7 @@ void main() {
       });
       final SerializableFinder gs = find.byValueKey('Game_page');
       while (scroll) {
-        await driver.scroll(gs, 0.0, -300.0, const Duration(milliseconds: 500));
+        await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
         await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;
