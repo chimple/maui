@@ -78,7 +78,6 @@ class QuizPageState extends State<QuizPage> {
     return new Stack(
       fit: StackFit.loose,
       children: <Widget>[
-        new Center(
         new Column(
         mainAxisAlignment: MainAxisAlignment.center,       
            children: <Widget>[
