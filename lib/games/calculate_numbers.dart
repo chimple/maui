@@ -17,7 +17,7 @@ class CalculateTheNumbers extends StatefulWidget {
 }
 
 class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
-  final List<String> _allLetters = [
+  final List<String> _allNumbers = [
     '1',
     '2',
     '3',
@@ -33,11 +33,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   ];
 
   final int _size = 3;
-  List<String> _letters;
+  List<String> _numbers;
   String _preValue = ' ';
-  int num1 = 0, num2 = 1;
+  int num1 = 1, num2 = 1;
   String _output = ' ';
-  String _operator = '+';
+  String _operator = '-';
   List<num> reminder = [];
   int index = 0;
   bool flag;
@@ -78,10 +78,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     }
   }
 
-  void wrongOrRight(String text, String output) {
+  void wrongOrRight(String text, String output, sum) {
     if (text == '✔') {
       try {
-        if (int.parse(output) == (num1 + num2)) {
+        if (int.parse(output) == sum) {
           setState(() {
             _output = output;
             print(_output);
@@ -112,7 +112,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     super.initState();
     //reminderS(num1 + num2);
     reminderForOperator(_operator);
-    _letters = _allLetters.sublist(0, _size * (_size + 1));
+    _numbers = _allNumbers.sublist(0, _size * (_size + 1));
   }
 
   void operation(String operator, String text) {
@@ -164,9 +164,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             }
           }
         }
-        wrongOrRight(text, _output);
+        wrongOrRight(text, _output, (num1 + num2));
         break;
-      ////////////////////////////////////
       case '-':
         if (text == '1' ||
             text == '2' ||
@@ -214,9 +213,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             }
           }
         }
-        wrongOrRight(text, _output);
+        wrongOrRight(text, _output, (num1 - num2));
         break;
-      /////////////////////////////////
       case '*':
         if (text == '1' ||
             text == '2' ||
@@ -264,7 +262,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             }
           }
         }
-        wrongOrRight(text, _output);
+        wrongOrRight(text, _output, (num1 * num2));
         break;
     }
   }
@@ -278,21 +276,50 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         });
   }
 
-  @override
+
+   @override
+  Widget build(BuildContext context) {
+  return new Column(
+    children: <Widget>[
+      new Expanded(
+        child: new TextField(),
+      ),
+       new Expanded(
+        child: new TextField(),
+      )
+    ],
+  );
+   /*  return new Expanded(
+     child: new Column(
+       children: <Widget>[
+          new Container(
+          color: Colors.red,
+         child: new Text("sudha"),
+               ),
+          new Container(
+          color: Colors.green,
+          child: new Text("sudha"),
+       )
+       ],
+     ),
+    ); */
+  }
+}
+
+/*   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size + 1; ++i) {
-      List<Widget> cells = _letters
+      List<Widget> cells = _numbers
           .skip(i * _size)
           .take(_size)
           .map((e) => _buildItem(j++, e))
           .toList();
       rows.add(new TableRow(children: cells));
     }
-
     return new Container(
         color: Colors.pink,
         child: new Column(
@@ -349,10 +376,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
             // new Padding(padding: const EdgeInsets.only(top: 50.0)),
             new Table(children: rows),
           ],
-        ));
+        )); 
   }
 }
-
+ */
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.onPress}) : super(key: key);
   final String text;
