@@ -8,6 +8,7 @@ class GameListView extends StatelessWidget {
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
     print(Navigator.of(context).toString());
     return new GridView.count(
+        key: new Key('Game_page'),
         primary: false,
         padding: const EdgeInsets.all(20.0),
         crossAxisSpacing: 20.0,
@@ -39,7 +40,7 @@ class GameListView extends StatelessWidget {
               child: new Icon(Icons.format_paint, size: 64.0),
               onPressed: () =>showModes(context, 'drawing')),
           new RaisedButton(
-              key: new Key('fill_in_the_blancks'),
+              key: new Key('fill_in_the_blanks'),
               child: new Icon(Icons.call, size: 64.0),
               onPressed: () => showModes(context, 'fill_in_the_blanks')),
           new RaisedButton(
