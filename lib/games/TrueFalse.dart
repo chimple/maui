@@ -66,7 +66,7 @@ class QuizPageState extends State<QuizPage> {
     isCorrect = (currentQuestion.answer == answer);
     if (isCorrect) {
       widget.onScore(1);
-      widget.onProgress(1);
+      widget.onProgress((questionNumber/quiz.length)*2);
     }
     this.setState(() {
       overlayShouldBeVisible = true;
@@ -76,10 +76,10 @@ class QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     return new Stack(
-      fit: StackFit.passthrough,
+      fit: StackFit.loose,
       children: <Widget>[
         new Column(
-        mainAxisAlignment: MainAxisAlignment.end,       
+        mainAxisAlignment: MainAxisAlignment.center,       
            children: <Widget>[
              new Column(
                mainAxisAlignment: MainAxisAlignment.end,
