@@ -1,20 +1,33 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:math';
 import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
 import 'package:maui/db/entity/unit.dart';
 
-enum Category {
-  letter,
-  number
-}
+enum Category { letter, number }
 
 Future<List<Unit>> fetchSerialData(int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.lessonId != null) {
-    var eagerLessonUnits = await new LessonUnitRepo().getEagerLessonUnitsByLessonId(
-        gameCategory.lessonId);
+    var eagerLessonUnits = await new LessonUnitRepo()
+        .getEagerLessonUnitsByLessonId(gameCategory.lessonId);
     return eagerLessonUnits.map((e) => e.objectUnit).toList(growable: false);
+  }
+  return null;
+}
+
+Future<Map<Unit, Unit>> fetchPairData(int categoryId, int maxData) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.lessonId != null) {
+    var eagerLessonUnits = await new LessonUnitRepo()
+        .getEagerLessonUnitsByLessonId(gameCategory.lessonId);
+    eagerLessonUnits.shuffle();
+    return new Map<Unit, Unit>.fromIterable(
+        eagerLessonUnits.sublist(
+            0, max(maxData - 1, eagerLessonUnits.length - 1)),
+        key: (e) => e.objectUnit,
+        value: (e) => e.subjectUnit);
   }
   return null;
 }
