@@ -1,15 +1,18 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/db/entity/unit.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -17,11 +20,12 @@ class Reflex extends StatefulWidget {
 }
 
 class ReflexState extends State<Reflex> {
-  final int _size = 4;
-  List<String> _allLetters;
+  int _size = 4;
+  List<Unit> _allLetters;
   var _currentIndex = 0;
-  List<String> _shuffledLetters = [];
-  List<String> _letters;
+  List<Unit> _shuffledLetters = [];
+  List<Unit> _letters;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -29,9 +33,11 @@ class ReflexState extends State<Reflex> {
     _initBoard();
   }
 
-  void _initBoard() {
+  void _initBoard() async {
     _currentIndex = 0;
-    _allLetters = fetchSerialData(Category.letter);
+    setState(()=>_isLoading=true);
+    _allLetters = await fetchSerialData(widget.gameCategoryId);
+    _size = min(4, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
@@ -40,6 +46,7 @@ class ReflexState extends State<Reflex> {
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
+    setState(()=>_isLoading=false);
   }
 
   @override
@@ -52,18 +59,17 @@ class ReflexState extends State<Reflex> {
     }
   }
 
-  Widget _buildItem(int index, String text) {
-    print('_buildItem: $text');
+  Widget _buildItem(int index, Unit unit) {
     return new MyButton(
         key: new ValueKey<int>(index),
-        text: text,
+        unit: unit,
         onPress: () {
-          if (text == _allLetters[_currentIndex]) {
+          if (unit == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
                   _size * _size + _currentIndex < _allLetters.length
                       ? _shuffledLetters[_size * _size + _currentIndex]
-                      : "";
+                      : null;
               _currentIndex++;
             });
             widget.onScore(1);
@@ -82,6 +88,14 @@ class ReflexState extends State<Reflex> {
     print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
+    print(_isLoading);
+    if(_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size; ++i) {
@@ -97,9 +111,9 @@ class ReflexState extends State<Reflex> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.unit, this.onPress}) : super(key: key);
 
-  final String text;
+  final Unit unit;
   final VoidCallback onPress;
 
   @override
@@ -113,8 +127,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
+    print("_MyButtonState.initState: ${widget.unit}");
+    _displayText = widget.unit?.name;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
@@ -122,8 +136,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
+          if (widget.unit != null) {
+            setState(() => _displayText = widget.unit.name);
             controller.forward();
           }
         }
@@ -134,18 +148,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
-      _displayText = widget.text;
+    if (oldWidget.unit == null && widget.unit != null) {
+      _displayText = widget.unit.name;
       controller.forward();
-    } else if (oldWidget.text != widget.text) {
+    } else if (oldWidget.unit != widget.unit) {
       controller.reverse();
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  }
-
-  void _handleTouch() {
-    print(widget.text);
-    controller.reverse();
+    print("_MyButtonState.didUpdateWidget: ${widget.unit} ${oldWidget.unit}");
   }
 
   @override
