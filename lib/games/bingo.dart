@@ -1,19 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'dart:ui' show window;
-
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-
 
 class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-
   final String question;
   final String answer;
 
@@ -75,40 +68,64 @@ class BingoState extends State<Bingo> {
 //    'Z'
     '1','2','3','4','5','6','7','8','9' ,'1','2','3','4','5','6','7','8','9'
   ];
-  final List<String> question = ['1 + 2','2 + 3','1 + 5' ];
+  final List<String> question = [ "2","2 + 3","1 + 5", ];
+
   final int _size = 3;
   var _currentIndex = 0;
+  String  ques = "";
+  var num1= 0;
+  var i = 0;
+  List _copyQuestion = [];
   List<String> _shuffledLetters = [];
   List<String> _letters;
 
+  List<String>_copyVal= [];
+
+  var sum = 0;
+  bool _active = false;
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
+    ques= question[i];
+    print("this is a " + question[i]);
+    print("this is a $ques");
+
+    for (var i = 0; i < _size; i++) {
+      _allLetters.forEach((e) { _copyVal.add(e);});
+
+    }
+    for (var i = 0; i < _copyVal.length; i += _size * _size) {
       _shuffledLetters.addAll(
-          _allLetters.skip(i).take(_size * _size).toList(growable: false)
-            ..shuffle());
+          _copyVal.skip(i).take(_size * _size).toList(growable: true)..shuffle()
+      );
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
   }
 
+
+
   Widget _buildItem(int index, String text) {
+    final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (text == _allLetters[_currentIndex]) {
-            setState(() {
-              _letters[index] =
-              _size * _size + _currentIndex < _allLetters.length
-                  ? _shuffledLetters[_size * _size + _currentIndex]
-                  : "";
-              _currentIndex++;
-            });
-            widget.onScore(1);
-            widget.onProgress(_currentIndex/_allLetters.length);
-          }
+          setState(() {
+            print("this is a sum $sum");
+            num1 = int.parse(t1.text);
+            sum =  num1;
+            if(num1 == int.parse( question[i])){
+              print("after touch $_copyQuestion[i]");
+              i = i+1;
+              ques = question[i];
+            }
+            
+          });
+          widget.onScore(1);
+          widget.onProgress(_currentIndex/_allLetters.length);
+//          }
+
         });
   }
 
@@ -133,7 +150,7 @@ class BingoState extends State<Bingo> {
         children: <Widget>[
           new Container
             (color: Colors.orange,height: 60.0,width: 70.0,
-              child:new Center(child:new Text("$question", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
+              child:new Center(child:new Text("$ques", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
           new Table(children: rows),
 //          new Container
 //            (color: Colors.orange,height: 60.0,
@@ -142,13 +159,15 @@ class BingoState extends State<Bingo> {
       ),
     );
   }
+
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress()}) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
+
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -159,13 +178,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation;
   String _displayText;
 
+
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.linear,)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.completed) {
@@ -191,6 +211,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void _handleTouch() {
     print(widget.text);
     controller.reverse();
+
   }
 
   @override
@@ -200,20 +221,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     return new TableCell(
         child: new Padding(
-            padding: const EdgeInsets.all(8.0) ,
+            padding: const EdgeInsets.all(8.0),
             child: new ScaleTransition(
-                scale: animation ,
+                scale: animation,
                 child: new RaisedButton(
-                    onPressed: () => widget.onPress() ,
-                    padding: const EdgeInsets.all(8.0) ,
-                    color: Colors.teal ,
+                    onPressed: () => widget.onPress,
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.red,
                     shape: new RoundedRectangleBorder(
                         borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))) ,
-                    child: new Text(_displayText ,
+                        const BorderRadius.all(const Radius.circular(8.0))),
+                    child: new Text(_displayText,
                         style: new TextStyle(
-                            color: Colors.white , fontSize: 24.0))))));
+                            color: Colors.white, fontSize: 24.0))))));
   }
 }
-
 
