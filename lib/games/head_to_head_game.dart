@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'single_game.dart';
 
@@ -5,8 +6,12 @@ class HeadToHeadGame extends StatefulWidget {
   final String gameName;
   final int maxIterations;
   final int playTime;
+  final int gameCategoryId;
 
-  HeadToHeadGame(this.gameName, {this.maxIterations = 0, this.playTime = 0});
+  HeadToHeadGame(this.gameName,
+      {this.maxIterations = 0,
+      this.playTime = 0,
+      @required this.gameCategoryId});
 
   @override
   HeadToHeadGameState createState() {
@@ -55,6 +60,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                   widget.gameName,
                   maxIterations: widget.maxIterations,
                   playTime: widget.playTime,
+                  gameCategoryId: widget.gameCategoryId,
                   onScore: setOtherScore,
                   onGameEnd: onGameEnd,
                 ),
@@ -64,6 +70,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
           widget.gameName,
           maxIterations: widget.maxIterations,
           playTime: widget.playTime,
+          gameCategoryId: widget.gameCategoryId,
           onScore: setMyScore,
           onGameEnd: onGameEnd,
         ))
