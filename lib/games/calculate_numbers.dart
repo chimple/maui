@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -277,36 +276,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   }
 
 
-   @override
-  Widget build(BuildContext context) {
-  return new Column(
-    children: <Widget>[
-      new Expanded(
-        child: new TextField(),
-      ),
-       new Expanded(
-        child: new TextField(),
-      )
-    ],
-  );
-   /*  return new Expanded(
-     child: new Column(
-       children: <Widget>[
-          new Container(
-          color: Colors.red,
-         child: new Text("sudha"),
-               ),
-          new Container(
-          color: Colors.green,
-          child: new Text("sudha"),
-       )
-       ],
-     ),
-    ); */
-  }
-}
+  
 
-/*   @override
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -320,66 +292,68 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
-    return new Container(
-        color: Colors.pink,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Container(
-                    color: Colors.orange,
-                    height: height / 19,
-                    width: width / 11,
-                    child: new Center(
-                        child: new Text("$num1",
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 20.0))))
-              ],
-            ),
-            //  new Padding(padding: const EdgeInsets.only(top: 30.0)),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Padding(padding: const EdgeInsets.only(left: 150.0)),
-                new Container(
-                    color: Colors.orange,
-                    height: height / 19,
-                    width: width / 11,
-                    child: new Center(
-                        child: new Text(_operator,
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 20.0)))),
-                // new Padding(padding: const EdgeInsets.only(left: 40.0)),
-                new Container(
-                    color: Colors.orange,
-                    height: height / 19,
-                    width: width / 11,
-                    child: new Center(
-                        child: new Text("$num2",
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 20.0))))
-              ],
-            ),
-            // new Padding(padding: const EdgeInsets.only(top: 50.0)),
-            new Container(
-                color: flag == true ? Colors.green : Colors.grey,
-                height: height / 19,
-                width: width / 11,
-                child: new Center(
-                    child: new Text("$_output",
-                        style: new TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.0,
-                        )))),
-            // new Padding(padding: const EdgeInsets.only(top: 50.0)),
-            new Table(children: rows),
-          ],
-        )); 
+    return new Expanded(
+          child: new Container(
+          color: Colors.pink,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Container(
+                      color: Colors.orange,
+                      height: height / 19,
+                      width: width / 11,
+                      child: new Center(
+                          child: new Text("$num1",
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0))))
+                ],
+              ),
+              //  new Padding(padding: const EdgeInsets.only(top: 30.0)),
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  new Padding(padding: const EdgeInsets.only(left: 150.0)),
+                  new Container(
+                      color: Colors.orange,
+                      height: height / 19,
+                      width: width / 11,
+                      child: new Center(
+                          child: new Text(_operator,
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0)))),
+                  // new Padding(padding: const EdgeInsets.only(left: 40.0)),
+                  new Container(
+                      color: Colors.orange,
+                      height: height / 19,
+                      width: width / 11,
+                      child: new Center(
+                          child: new Text("$num2",
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0))))
+                ],
+              ),
+              // new Padding(padding: const EdgeInsets.only(top: 50.0)),
+              new Container(
+                  color: flag == true ? Colors.green : Colors.grey,
+                  height: height / 19,
+                  width: width / 11,
+                  child: new Center(
+                      child: new Text("$_output",
+                          style: new TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                          )))),
+              // new Padding(padding: const EdgeInsets.only(top: 50.0)),
+              new Table(children: rows),
+            ],
+          )),
+    ); 
   }
 }
- */
+ 
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.onPress}) : super(key: key);
   final String text;
