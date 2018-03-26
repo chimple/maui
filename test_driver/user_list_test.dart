@@ -12,10 +12,10 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    tearDownAll(() async {
+    /*tearDownAll(() async {
       if (driver != null)
         await driver.close();
-    });
+    });*/
 
     test('signin', () async {
 
@@ -66,6 +66,14 @@ void main() {
       final Completer<Null> completer = new Completer<Null>();
       //final SerializableFinder tile = find.text('Todo ');
 
+      final SerializableFinder todo = find.text('Todo Placeholder');
+      await driver.tap(todo);
+      completer.complete();
+      await completer.future;
+    }, timeout: const Timeout(const Duration(minutes: 1)));
+
+    test('categrory', () async {
+      final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
       completer.complete();

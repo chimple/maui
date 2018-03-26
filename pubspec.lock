@@ -176,7 +176,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.2"
+    version: "0.15.4"
   io:
     dependency: transitive
     description:
@@ -377,7 +377,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.3"
+    version: "0.8.4"
   stack_trace:
     dependency: transitive
     description:
