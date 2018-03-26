@@ -5,7 +5,7 @@ import 'package:maui/app_database.dart';
 import 'package:maui/db/entity/unit.dart';
 
 class UnitDao {
-  Future<Unit> getUnit(int id, {Database db}) async {
+  Future<Unit> getUnit(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Unit.table,
         columns: [
