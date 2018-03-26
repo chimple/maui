@@ -1,16 +1,14 @@
-
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class CalculateTheNumbers extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-
   CalculateTheNumbers(
       {key, this.onScore, this.onProgress, this.onEnd, this.iteration})
       : super(key: key);
-
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();
 }
@@ -34,47 +32,33 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   final int _size = 3;
   List<String> _numbers;
   String _preValue = ' ';
-  int num1 = 1, num2 = 1;
+  int num1 = 5, num2 = 2;
   String _output = ' ';
-  String _operator = '-';
+  String _operator = '*';
   List<num> reminder = [];
   int index = 0;
   bool flag;
 
-  void reminderS(sum) {
-    while (sum != 0) {
-      num rem = sum % 10;
-      sum = sum ~/ 10;
-      reminder.add(rem);
+  @override
+  void didUpdateWidget(CalculateTheNumbers oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
     }
   }
 
-  int calCount(sum) {
-    print(sum);
-    int count = 0;
-    if (sum > 1) {
-      while (sum != 0) {
-        sum = sum ~/ 10;
-        ++count;
-      }
-      return count;
-    } else {
-      return count = 1;
-    }
+  @override
+  void initState() {
+    super.initState();
+    _initBoard();
   }
 
-  void reminderForOperator(String operator) {
-    switch (operator) {
-      case '+':
-        reminderS(num1 + num2);
-        break;
-      case '-':
-        reminderS(num1 - num2);
-        break;
-      case '*':
-        reminderS(num1 * num2);
-        break;
-    }
+  void _initBoard() {
+    _numbers = _allNumbers.sublist(0, _size * (_size + 1));
+    num1;
+    num2;
+    _operator;
   }
 
   void wrongOrRight(String text, String output, sum) {
@@ -84,6 +68,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           setState(() {
             _output = output;
             print(_output);
+            widget.onScore(2);
+            widget.onProgress((num1 + num2) / 2);
+            new Future.delayed(const Duration(milliseconds: 2000), () {
+              _output = ' ';
+              flag = false;
+              widget.onEnd();
+            });
           });
         } else {
           print("Entering wrong data");
@@ -98,167 +89,93 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
       print("Erasing content: " + output);
       try {
         setState(() {
-          _preValue = " ";
-          _output = " ";
+          _output = _output.substring(0, _output.length - 1);
           flag = false;
         });
       } on FormatException {}
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    //reminderS(num1 + num2);
-    reminderForOperator(_operator);
-    _numbers = _allNumbers.sublist(0, _size * (_size + 1));
+  bool _zeoToNine(String text) {
+    if (text == '1' ||
+        text == '2' ||
+        text == '3' ||
+        text == '4' ||
+        text == '5' ||
+        text == '6' ||
+        text == '7' ||
+        text == '8' ||
+        text == '9' ||
+        text == '0') {
+      return true;
+    } else
+      return false;
   }
 
   void operation(String operator, String text) {
     switch (operator) {
       case '+':
-        if (text == '1' ||
-            text == '2' ||
-            text == '3' ||
-            text == '4' ||
-            text == '5' ||
-            text == '6' ||
-            text == '7' ||
-            text == '8' ||
-            text == '9' ||
-            text == '0') {
-          if (calCount(num1 + num2) == 1) {
-            if (int.parse(text) == (num1 + num2)) {
-              print(text);
-              setState(() {
-                _output = text;
+        if (_zeoToNine(text) == true) {
+          if(_output.length < 3){
+            _preValue = text;
+            _output = _output + _preValue;
+            print(_output);
+            setState(() {
+              if (int.parse(_output) == (num1 + num2)) {
+                _output;
                 flag = true;
-                print("OUTPUT: " + text);
-              });
-            } else {
-              setState(() {
-                _output = text;
-                flag = false;
-              });
-            }
-          } else {
-            if (int.parse(text) == reminder[1] ||
-                int.parse(text) == reminder[0]) {
-              _preValue = text;
-              _output = _output + _preValue;
-              print(_output);
-              setState(() {
-                if (int.parse(_output) == (num1 + num2)) {
-                  _output;
-                  flag = true;
-                  print("OUTPUT: " + _output);
-                }
-              });
-            } else {
-              setState(() {
-                _preValue = text;
-                _output = _output + _preValue;
-                flag = false;
-              });
-            }
+                print("OUTPUT: " + _output);
+              }
+            });
+          }
+           else {
+            setState(() {
+              flag = false;
+            });
           }
         }
         wrongOrRight(text, _output, (num1 + num2));
         break;
       case '-':
-        if (text == '1' ||
-            text == '2' ||
-            text == '3' ||
-            text == '4' ||
-            text == '5' ||
-            text == '6' ||
-            text == '7' ||
-            text == '8' ||
-            text == '9' ||
-            text == '0') {
-          if (calCount(num1 - num2) == 1) {
-            if (int.parse(text) == (num1 - num2)) {
-              print(text);
-              setState(() {
-                _output = text;
+        if (_zeoToNine(text) == true) {
+          if(_output.length < 3){
+            _preValue = text;
+            _output = _output + _preValue;
+            print(_output);
+            setState(() {
+              if (int.parse(_output) == (num1 - num2)) {
+                _output;
                 flag = true;
-                print("OUTPUT: " + text);
-              });
-            } else {
-              setState(() {
-                _output = text;
-                flag = false;
-              });
-            }
-          } else {
-            if (int.parse(text) == reminder[1] ||
-                int.parse(text) == reminder[0]) {
-              _preValue = text;
-              _output = _output + _preValue;
-              print(_output);
-              setState(() {
-                if (int.parse(_output) == (num1 - num2)) {
-                  _output;
-                  flag = true;
-                  print("OUTPUT: " + _output);
-                }
-              });
-            } else {
-              setState(() {
-                _preValue = text;
-                _output = _output + _preValue;
-                flag = false;
-              });
-            }
+                print("OUTPUT: " + _output);
+              }
+            });
+          }
+           else {
+            setState(() {
+              flag = false;
+            });
           }
         }
         wrongOrRight(text, _output, (num1 - num2));
         break;
       case '*':
-        if (text == '1' ||
-            text == '2' ||
-            text == '3' ||
-            text == '4' ||
-            text == '5' ||
-            text == '6' ||
-            text == '7' ||
-            text == '8' ||
-            text == '9' ||
-            text == '0') {
-          if (calCount(num1 * num2) == 1) {
-            if (int.parse(text) == (num1 * num2)) {
-              print(text);
-              setState(() {
-                _output = text;
+       if (_zeoToNine(text) == true) {
+          if(_output.length < 3){
+            _preValue = text;
+            _output = _output + _preValue;
+            print(_output);
+            setState(() {
+              if (int.parse(_output) == (num1 * num2)) {
+                _output;
                 flag = true;
-                print("OUTPUT: " + text);
-              });
-            } else {
-              setState(() {
-                _output = text;
-                flag = false;
-              });
-            }
-          } else {
-            if (int.parse(text) == reminder[1] ||
-                int.parse(text) == reminder[0]) {
-              _preValue = text;
-              _output = _output + _preValue;
-              print(_output);
-              setState(() {
-                if (int.parse(_output) == (num1 * num2)) {
-                  _output;
-                  flag = true;
-                  print("OUTPUT: " + _output);
-                }
-              });
-            } else {
-              setState(() {
-                _preValue = text;
-                _output = _output + _preValue;
-                flag = false;
-              });
-            }
+                print("OUTPUT: " + _output);
+              }
+            });
+          }
+           else {
+            setState(() {
+              flag = false;
+            });
           }
         }
         wrongOrRight(text, _output, (num1 * num2));
@@ -275,13 +192,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         });
   }
 
-
-  
-
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height1 = MediaQuery.of(context).size.height;
+    double width1 = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
+    print(height1);
+    print(width1);
+    print(size);
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size + 1; ++i) {
@@ -292,68 +210,101 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
+
     return new Expanded(
-          child: new Container(
-          color: Colors.pink,
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Container(
-                      color: Colors.orange,
-                      height: height / 19,
-                      width: width / 11,
-                      child: new Center(
-                          child: new Text("$num1",
-                              style: new TextStyle(
-                                  color: Colors.black, fontSize: 20.0))))
-                ],
-              ),
-              //  new Padding(padding: const EdgeInsets.only(top: 30.0)),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  new Padding(padding: const EdgeInsets.only(left: 150.0)),
-                  new Container(
-                      color: Colors.orange,
-                      height: height / 19,
-                      width: width / 11,
-                      child: new Center(
-                          child: new Text(_operator,
-                              style: new TextStyle(
-                                  color: Colors.black, fontSize: 20.0)))),
-                  // new Padding(padding: const EdgeInsets.only(left: 40.0)),
-                  new Container(
-                      color: Colors.orange,
-                      height: height / 19,
-                      width: width / 11,
-                      child: new Center(
-                          child: new Text("$num2",
-                              style: new TextStyle(
-                                  color: Colors.black, fontSize: 20.0))))
-                ],
-              ),
-              // new Padding(padding: const EdgeInsets.only(top: 50.0)),
-              new Container(
-                  color: flag == true ? Colors.green : Colors.grey,
-                  height: height / 19,
-                  width: width / 11,
-                  child: new Center(
-                      child: new Text("$_output",
-                          style: new TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                          )))),
-              // new Padding(padding: const EdgeInsets.only(top: 50.0)),
-              new Table(children: rows),
-            ],
-          )),
-    ); 
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Expanded(
+              flex: 1,
+              child: new Container(
+                color: Colors.pink,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                            color: Colors.pink,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text(" "),
+                            )),
+                        new Container(
+                            color: Colors.lime,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text('$num1',
+                                  style: new TextStyle(
+                                      color: Colors.black, fontSize: 20.0)),
+                            ))
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                            color: Colors.lime,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text(_operator,
+                                  style: new TextStyle(
+                                      color: Colors.black, fontSize: 20.0)),
+                            )),
+                        new Container(
+                            color: Colors.lime,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text('$num2',
+                                  style: new TextStyle(
+                                      color: Colors.black, fontSize: 20.0)),
+                            )),
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                            color: Colors.pink,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text(""),
+                            )),
+                        new Container(
+                            color: flag == true ? Colors.green : Colors.grey,
+                            height: height1 / 18,
+                            width: width1 / 7,
+                            child: new Center(
+                              child: new Text(_output,
+                                  style: new TextStyle(
+                                      color: Colors.black, fontSize: 20.0)),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+          new Expanded(
+              //  flex: 1,
+              child: new Container(
+            padding: const EdgeInsets.all(5.0),
+            color: Colors.pink,
+            child: new Center(
+              child: new Table(children: rows),
+            ),
+          ))
+        ],
+      ),
+    );
   }
 }
- 
+
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.onPress}) : super(key: key);
   final String text;
