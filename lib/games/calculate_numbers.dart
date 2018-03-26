@@ -32,11 +32,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   final int _size = 3;
   List<String> _numbers;
   String _preValue = ' ';
-  int num1 = 5, num2 = 2;
+  int num1 = 5, num2 = 12;
   String _output = ' ';
   String _operator = '*';
-  List<num> reminder = [];
-  int index = 0;
   bool flag;
 
   @override
@@ -87,12 +85,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     }
     if (text == '✖') {
       print("Erasing content: " + output);
+      if(_output.length>0){
       try {
         setState(() {
           _output = _output.substring(0, _output.length - 1);
           flag = false;
         });
+      
       } on FormatException {}
+    }
     }
   }
 
