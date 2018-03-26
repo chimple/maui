@@ -18,20 +18,34 @@ class Tables extends StatefulWidget {
 
 class _TablesState extends State<Tables> {
   final int _size = 3;
-  String str = "";
+  String _question = "";
+  String _result = "";
+  int count = 0;
   final List<String> _allLetters = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '<-',
-      '0',
-      'X'
+    'submit',
+    '0',
+    'C',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+  ];
+
+  final List<int> _data = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
   ];
   List<String> _letters;
 
@@ -43,9 +57,8 @@ class _TablesState extends State<Tables> {
 
   void _initBoard() {
     _letters = _allLetters.sublist(0, _size * (_size + 1));
-    var i = 2;
-    var j = 3;
-    str= "$i X $j";
+    int temp = _data[count];
+    _question= "$temp X $temp";
   }
 
   Widget _buildItem(int index, String text) {
@@ -54,23 +67,51 @@ class _TablesState extends State<Tables> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
+          if(text=='C') {
+              setState(() {
+                _result = _result.substring(0, _result.length - 1);
+              });
+          }
+          else if(text == 'submit') {
+            if(int.parse(_result) == (_data[count] * _data[count])) {
+              setState(() {
+                count = count + 1;
+                int temp = _data[count];
+                _question = "$temp X $temp";
+                _result = "";
+              });
+            }
+            else{
+              setState((){
+                _result = "";
+              });
+            }
+          }
+          else {
+            setState(() {
+              if (_result.length < 3) {
+                _result = _result + text;
+              }
+            });
+          }
+
         });
   }
 
-  Widget subTile = new Container (
-    padding: new EdgeInsets.all(45.0),
-    alignment: Alignment.center,
-    color: new Color(0X00000000),
-    child: new Text(
-      "$str",
-      style: new TextStyle(
-        fontSize: 60.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        decorationStyle: TextDecorationStyle.wavy,
-      ),
-    ),
-  );
+//  Widget subTile = new Container (
+//    padding: new EdgeInsets.all(45.0),
+//    alignment: Alignment.center,
+//    color: new Color(0X00000000),
+//    child: new Text(
+//      "$str",
+//      style: new TextStyle(
+//        fontSize: 60.0,
+//        fontWeight: FontWeight.bold,
+//        color: Colors.black,
+//        decorationStyle: TextDecorationStyle.wavy,
+//      ),
+//    ),
+//  );
 
   @override
   void didUpdateWidget(Tables oldWidget) {
@@ -91,26 +132,39 @@ class _TablesState extends State<Tables> {
     }
 
     return new Container(
+      alignment: Alignment.bottomCenter,
       child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             new Container (
-            padding: new EdgeInsets.all(45.0),
-            alignment: Alignment.center,
-            color: new Color(0X00000000),
-            child: new Text(
-              '$str',
-              style: new TextStyle(
-                fontSize: 60.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                decorationStyle: TextDecorationStyle.wavy,
+              height: 125.0,
+              width: 800.0,
+              alignment: Alignment.center,
+              color: new Color(0X00000000),
+              child: new Text(
+                '$_question',
+                style: new TextStyle(
+                  fontSize: 60.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
-            ),
+            new Container(
+                height: 60.0,
+                width: 120.0,
+                margin: new EdgeInsets.only(bottom: 20.0),
+                color: Colors.teal,
+                child: new Center(
+                    child: new Text("$_result",
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                        )))),
             new Table(children: rows),
           ]
-    ),
+      ),
     );
   }
 }
