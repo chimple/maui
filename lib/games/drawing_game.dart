@@ -18,11 +18,10 @@ class Drawing extends StatefulWidget {
 }
 
 class DrawScreen extends State<Drawing> {
-  DrawScreen({this.points, this.currentPainter, this.getPng});
-
-  List<Offset> points;
-  final VoidCallback currentPainter;
-  final getPng;
+  DrawPadController _padController;
+  void initState() {
+    _padController = new DrawPadController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class DrawScreen extends State<Drawing> {
                   new RaisedButton(
                     child: new Text("Clear"),
                     color: Colors.blue,
-                    onPressed: onClear,
+                    onPressed: _onClear,
                   ),
                   new RaisedButton(
                       child: new Text("Undo"),
@@ -53,7 +52,7 @@ class DrawScreen extends State<Drawing> {
                   new RaisedButton(
                     child: new Text("Send"),
                     color: Colors.blue,
-                    onPressed: getPngImage,
+                    onPressed: null,
                   ),
                 ]),
           ]),
@@ -67,23 +66,17 @@ class DrawScreen extends State<Drawing> {
               new FittedBox(
                 fit: BoxFit.fill,
                 // otherwise the logo will be tiny
-                child: new MyDrawingPage(),
+                child: new MyDrawPage(_padController,),
               ),
             ],
           ),
 //                    ),
         ]));
   }
-
-  onClear() {
-
-      print("btnnnnn");
-
+  void _onClear() {
+    _padController.clear();
+    print("this is clear methode");
   }
 
-  getPngImage() {
-    print("savinggggg");
-//    return currentPainter.getPng();
-  }
 }
 
