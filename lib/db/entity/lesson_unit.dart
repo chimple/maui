@@ -14,19 +14,19 @@ CREATE TABLE $table (
   $idCol INTEGER PRIMARY KEY, 
   $lessonIdCol INTEGER, 
   $seqCol INTEGER, 
-  $subjectUnitIdCol INTEGER, 
-  $objectUnitIdCol INTEGER, 
+  $subjectUnitIdCol TEXT, 
+  $objectUnitIdCol TEXT, 
   $highlightCol TEXT,
   FOREIGN KEY ($lessonIdCol) REFERENCES ${Lesson.table}(${Lesson.idCol}),
-  FOREIGN KEY ($subjectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}),
-  FOREIGN KEY ($objectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}))
+--  FOREIGN KEY ($subjectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}),
+--  FOREIGN KEY ($objectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}))
 ''';
 
   int id;
   int lessonId;
   int seq;
-  int subjectUnitId;
-  int objectUnitId;
+  String subjectUnitId;
+  String objectUnitId;
   String highlight;
 
   LessonUnit(

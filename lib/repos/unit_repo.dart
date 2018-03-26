@@ -9,7 +9,7 @@ class UnitRepo {
 
   const UnitRepo();
 
-  Future<Unit> getUnit(int id) async {
+  Future<Unit> getUnit(String id) async {
     return unitDao.getUnit(id);
   }
 
