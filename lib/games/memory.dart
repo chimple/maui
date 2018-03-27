@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 //import 'dart:ui' show window;
 
-
-
 class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -16,6 +14,8 @@ class Memory extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new MemoryState();
 }
+
+enum Status {Hidden, Visible, Disappear}
 
 class MemoryState extends State<Memory> with TickerProviderStateMixin {
   final List<String> _allLetters = [
@@ -36,13 +36,16 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
     'H',
     'H'
   ];
+  
   final int _size = 4;
-  var _currentIndex = 0;
+  var _matched = 0;
+  var _progressCnt = 1;
   var _pressedTile ;
   var _pressedTileIndex ;
   var cnt = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
+  List<Status> _statuses;
 
   @override
   void initState() {
@@ -54,20 +57,23 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
+    _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
   }
 
-  Widget _buildItem(int index, String text) {
+  Widget _buildItem(int index, String text , Status status) {
     return new MyButton(
         key:new ValueKey<int>(index),
         text: text,
+        status: status,
         onPress: () {
           cnt++;
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
 
           setState((){
-            
-             });
+            _statuses[index] = Status.Visible;
+          });
+
 
           if(_pressedTileIndex == index)
             return;
@@ -76,16 +82,28 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
           {
             if(_pressedTile == text)
             {
+                _matched++;
+
+               widget.onScore(2);
+               widget.onProgress((_progressCnt) / (_allLetters.length/2));
+               _progressCnt++;
+
                setState((){
                _letters[_pressedTileIndex] = '';
                _letters[index] = '';
                });
+               
 
                print("Matched");
             }
              
             else
             {
+               setState((){
+               _statuses[_pressedTileIndex] = Status.Hidden;
+               _statuses[index] = Status.Hidden;
+               });
+
               print("Unmatched"); 
             }  
 
@@ -113,7 +131,7 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
       List<Widget> cells = _letters
           .skip(i * _size)
           .take(_size)
-          .map((e) => _buildItem(j++, e))
+          .map((e) => _buildItem(j, e, _statuses[j++]))
           .toList();
       rows.add(new TableRow(children: cells));
     }
@@ -122,9 +140,10 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.status, this.onPress}) : super(key: key);
 
   final String text;
+  Status status;
   final VoidCallback onPress;
 
   @override
@@ -136,7 +155,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation;
   String _displayText;
   
-
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
@@ -187,8 +205,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         borderRadius:new BorderRadius.all(new Radius.circular(8.0))),
                     child: new Text(_displayText,
                         style:
-                           new TextStyle(color: Colors.white, fontSize: 24.0))))));;
+                           widget.status == Status.Visible ? new TextStyle(color: Colors.white, fontSize: 24.0) : new TextStyle(color: Colors.teal, fontSize: 24.0))))));;
   }
 }
-
-	
