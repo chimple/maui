@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:maui/repos/game_data.dart';
+import 'dart:async';
+import 'dart:math';
 
 const List<String> letters = const <String>[
   'A',
@@ -30,29 +33,36 @@ const List<String> letters = const <String>[
   'Z'
 ];
 String value = 'APPLE';
-  class CasinoButton extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() => new CasinoButtonState();    // TODO: implement createState
+//   class CasinoButton extends StatefulWidget{
+//   @override
+//   State<StatefulWidget> createState() => new CasinoButtonState();    // TODO: implement createState
 
-}
-class CasinoButtonState extends State<CasinoButton> {
-  @override
-  Widget build(BuildContext context) {
-    for(var i=0;i<5;i++)
-    {
-       if(value.contains(letters[i])){
-       }
-    }
-  }
+// }
+// class CasinoButtonState extends State<CasinoButton> {
+//   @override
+//   Widget build(BuildContext context) {
+//     for(var i=0;i<5;i++)
+//     {
+//        if(value.contains(letters[i])){
+//        }
+//     }
+//   }
 
-}
+// }
 class Casino extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  Casino({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Casino(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -61,6 +71,11 @@ class Casino extends StatefulWidget {
 
 class _CasinoState extends State<Casino> {
   int _selectedItemIndex = 0;
+  List<List<String>> data;
+  void _numOfButtons() async {
+    data = await fetchRollingData(widget.gameCategoryId,5);
+    print(data);
+  }
 
   Widget _buildScrollButton() {
     final FixedExtentScrollController scrollController =
