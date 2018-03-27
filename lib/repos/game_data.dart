@@ -27,7 +27,7 @@ Future<Map<String, String>> fetchPairData(int categoryId, int maxData) async {
     lessonUnits.shuffle();
     //TODO: get only unique objects and subjects
     return new Map<String, String>.fromIterable(
-        lessonUnits.sublist(0, max(maxData - 1, lessonUnits.length - 1)),
+        lessonUnits.sublist(0, min(maxData, lessonUnits.length)),
         key: (e) => e.objectUnitId,
         value: (e) => e.subjectUnitId);
   }
@@ -101,5 +101,27 @@ Future<Tuple2<String, String>> fetchFillInTheBlanksData(int categoryId) async {
     var lu = lessonUnits[new Random().nextInt(lessonUnits.length)];
     return new Tuple2(lu.subjectUnitId, lu.objectUnitId);
   }
+  return null;
+}
+
+Future<List<Tuple2<String, String>>> fetchWordWithBlanksData(
+    int categoryId) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.lessonId != null) {
+    var lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsByLessonId(gameCategory.lessonId);
+    var rand = new Random();
+    var lu = lessonUnits[rand.nextInt(lessonUnits.length)];
+    var runes = lu.subjectUnitId.runes;
+    return Future.wait(runes.map((r) async {
+      var rune = new String.fromCharCode(r);
+      if (rand.nextBool()) {
+        return new Tuple2('', rune);
+      }
+      var otherUnits = await new UnitRepo().getUnitsOfSameTypeAs(rune);
+      return new Tuple2(rune, otherUnits[rand.nextInt(otherUnits.length)].name);
+    }).toList(growable: false));
+  }
+  //TODO: gameCategory.conceptId
   return null;
 }

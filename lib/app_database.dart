@@ -68,5 +68,6 @@ class AppDatabase {
     fetchPairData(1, 16).then((p)=>print(p));
     fetchTrueOrFalse(12).then((t)=>print(t));
     fetchRollingData(13, 5).then((r)=>print(r));
+    fetchWordWithBlanksData(13).then((c)=>print(c));
   }
 }
