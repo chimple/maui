@@ -177,7 +177,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-      
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
