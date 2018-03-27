@@ -45,7 +45,7 @@ void main() {
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 2));
       bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('fill_in_the_blanks');
+      final SerializableFinder menuItem = find.byValueKey('true_or_false');
 
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
@@ -64,8 +64,9 @@ void main() {
 
     test('playing the game', () async {
       final Completer<Null> completer = new Completer<Null>();
-      //final SerializableFinder tile = find.text('Todo ');
-
+      String s = 'Upper Case Letter to Lower Case Letter';
+      final SerializableFinder option = find.text(s);
+      await driver.tap(option);
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
       completer.complete();
