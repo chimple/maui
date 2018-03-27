@@ -75,11 +75,13 @@ class QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Stack(
-      fit: StackFit.loose,
+    return new Container(
+      alignment: Alignment.center,
+      child: new Stack(
+        fit: StackFit.loose,
       children: <Widget>[
         new Column(
-        mainAxisAlignment: MainAxisAlignment.center,       
+        mainAxisAlignment: MainAxisAlignment.end,       
            children: <Widget>[
              new Column(
                mainAxisAlignment: MainAxisAlignment.end,
@@ -131,6 +133,7 @@ class QuizPageState extends State<QuizPage> {
             }
         ) : new Container()
       ],
+    ),
     );
   }
     
