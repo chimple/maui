@@ -14,19 +14,19 @@ CREATE TABLE $table (
   $idCol INTEGER PRIMARY KEY, 
   $lessonIdCol INTEGER, 
   $seqCol INTEGER, 
-  $subjectUnitIdCol INTEGER, 
-  $objectUnitIdCol INTEGER, 
+  $subjectUnitIdCol TEXT, 
+  $objectUnitIdCol TEXT, 
   $highlightCol TEXT,
   FOREIGN KEY ($lessonIdCol) REFERENCES ${Lesson.table}(${Lesson.idCol}),
-  FOREIGN KEY ($subjectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}),
-  FOREIGN KEY ($objectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}))
+--  FOREIGN KEY ($subjectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}),
+--  FOREIGN KEY ($objectUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}))
 ''';
 
   int id;
   int lessonId;
   int seq;
-  int subjectUnitId;
-  int objectUnitId;
+  String subjectUnitId;
+  String objectUnitId;
   String highlight;
 
   LessonUnit(
@@ -48,14 +48,14 @@ CREATE TABLE $table (
     };
   }
 
-  LessonUnit.fromMap(Map<String, dynamic> map)
+  LessonUnit.fromMap(Map<String, dynamic> map, {String prefix = ''})
       : this(
-            id: map[idCol],
-            lessonId: map[lessonIdCol],
-            seq: map[seqCol],
-            subjectUnitId: map[subjectUnitIdCol],
-            objectUnitId: map[objectUnitIdCol],
-            highlight: map[highlightCol]);
+            id: map[prefix+idCol],
+            lessonId: map[prefix+lessonIdCol],
+            seq: map[prefix+seqCol],
+            subjectUnitId: map[prefix+subjectUnitIdCol],
+            objectUnitId: map[prefix+objectUnitIdCol],
+            highlight: map[prefix+highlightCol]);
 
   @override
   int get hashCode =>
@@ -80,6 +80,6 @@ CREATE TABLE $table (
 
   @override
   String toString() {
-    return 'Unit{id: $id, lessonId: $lessonId, seq: $seq, subjectUnitId: $subjectUnitId, objectUnitId: $objectUnitId, highlight: $highlight}';
+    return 'LessonUnit{id: $id, lessonId: $lessonId, seq: $seq, subjectUnitId: $subjectUnitId, objectUnitId: $objectUnitId, highlight: $highlight}';
   }
 }

@@ -1,43 +1,52 @@
-import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
+//import 'dart:ui' show window;
 
-class Reflex extends StatefulWidget {
+
+
+class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
 
-  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+  Memory({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
       : super(key: key);
-
   @override
-  State<StatefulWidget> createState() => new ReflexState();
+  State<StatefulWidget> createState() => new MemoryState();
 }
 
-class ReflexState extends State<Reflex> {
-  int _size = 4;
-  List<String> _allLetters;
+class MemoryState extends State<Memory> with TickerProviderStateMixin {
+  final List<String> _allLetters = [
+    'A',
+    'A',
+    'B',
+    'B',
+    'C',
+    'C',
+    'D',
+    'D',
+    'E',
+    'E',
+    'F',
+    'F',
+    'G',
+    'G',
+    'H',
+    'H'
+  ];
+  final int _size = 4;
   var _currentIndex = 0;
+  var _pressedTile ;
+  var _pressedTileIndex ;
+  var cnt = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
-  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _initBoard();
-  }
-
-  void _initBoard() async {
-    _currentIndex = 0;
-    setState(()=>_isLoading=true);
-    _allLetters = await fetchSerialData(widget.gameCategoryId);
-    _size = min(4, sqrt(_allLetters.length).floor());
-    _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
@@ -45,55 +54,59 @@ class ReflexState extends State<Reflex> {
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
-    setState(()=>_isLoading=false);
-  }
-
-  @override
-  void didUpdateWidget(Reflex oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-      print(_allLetters);
-    }
   }
 
   Widget _buildItem(int index, String text) {
     return new MyButton(
-        key: new ValueKey<int>(index),
+        key:new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (text == _allLetters[_currentIndex]) {
-            setState(() {
-              _letters[index] =
-                  _size * _size + _currentIndex < _allLetters.length
-                      ? _shuffledLetters[_size * _size + _currentIndex]
-                      : null;
-              _currentIndex++;
-            });
-            widget.onScore(1);
-            widget.onProgress(_currentIndex / _allLetters.length);
-            if (_currentIndex >= _allLetters.length) {
-              new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd();
-              });
+          cnt++;
+          print("Pressed Index: ${index}");
+          print("Pressed Text: ${text}");
+
+          setState((){
+            
+             });
+
+          if(_pressedTileIndex == index)
+            return;
+
+          if(cnt == 2)
+          {
+            if(_pressedTile == text)
+            {
+               setState((){
+               _letters[_pressedTileIndex] = '';
+               _letters[index] = '';
+               });
+
+               print("Matched");
             }
-          }
+             
+            else
+            {
+              print("Unmatched"); 
+            }  
+
+            _pressedTileIndex = -1;
+            _pressedTile = null;
+            cnt = 0;
+            return;
+
+          }    
+
+          _pressedTileIndex = index;
+          _pressedTile = text; 
+            
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("MyTableState.build");
+    print("MemoryState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-    if(_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size; ++i) {
@@ -122,19 +135,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
+  
 
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 250), vsync: this);
+    controller = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (widget.text != null) {
+          if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
           }
@@ -146,32 +159,35 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == null && widget.text != null) {
-      _displayText = widget.text;
-      controller.forward();
-    } else if (oldWidget.text != widget.text) {
+    if (oldWidget.text != widget.text) {
       controller.reverse();
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
+  }
+
+  void _handleTouch() {
+    print(widget.text);
+    controller.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
     return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
+        child:new Padding(
+            padding: new EdgeInsets.all(8.0),
             child: new ScaleTransition(
                 scale: animation,
-                child: new RaisedButton(
+                child:new RaisedButton(
                     onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
+                    padding:new  EdgeInsets.all(8.0),
                     color: Colors.teal,
                     shape: new RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(const Radius.circular(8.0))),
+                        borderRadius:new BorderRadius.all(new Radius.circular(8.0))),
                     child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+                        style:
+                           new TextStyle(color: Colors.white, fontSize: 24.0))))));;
   }
 }
+
+	

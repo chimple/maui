@@ -12,6 +12,7 @@ import 'package:maui/db/dao/lesson_dao.dart';
 import 'package:maui/db/dao/lesson_unit_dao.dart';
 import 'package:maui/db/dao/unit_dao.dart';
 import 'package:maui/db/dao/unit_part_dao.dart';
+import 'package:maui/repos/game_data.dart';
 
 class AppDatabase {
   static final AppDatabase _appDatabase = new AppDatabase._internal();
@@ -56,12 +57,16 @@ class AppDatabase {
     }
 
     didInit = true;
-    new UnitDao().getUnit(1).then((r)=>print(r));
+    new UnitDao().getUnit('a').then((r)=>print(r));
     new LessonDao().getLesson(1).then((r)=>print(r));
     new LessonDao().getLessonBySeq(1).then((r)=>print(r));
     new LessonDao().getLessonsBelowSeqAndByConceptId(100, [3,5]).then((r)=>print(r));
     new LessonUnitDao().getLessonUnitsByLessonId(1).then((r)=>print(r));
     new LessonUnitDao().getLessonUnitsBelowSeqAndByConceptId(100, 3).then((r)=>print(r));
-
+    new LessonUnitDao().getEagerLessonUnitsByLessonId(1).then((r)=>print(r));
+    new LessonUnitDao().getEagerLessonUnitsBelowSeqAndByConceptId(100, 3).then((r)=>print(r));
+    fetchPairData(1, 16).then((p)=>print(p));
+    fetchTrueOrFalse(12).then((t)=>print(t));
+    fetchRollingData(13, 5).then((r)=>print(r));
   }
 }
