@@ -16,11 +16,14 @@ class Tables extends StatefulWidget {
   State<StatefulWidget> createState() => new _TablesState();
 }
 
-class _TablesState extends State<Tables> {
+class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
   String _question = "";
   String _result = "";
   int count = 0;
+  Animation animation;
+  AnimationController animationController;
+
   final List<String> _allLetters = [
     '1',
     '2',
@@ -51,14 +54,29 @@ class _TablesState extends State<Tables> {
 
   @override
   void initState() {
+    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     super.initState();
     _initBoard();
   }
 
   void _initBoard() {
+
     _letters = _allLetters.sublist(0, _size * (_size + 1));
     int temp = _data[count];
     _question= "$temp X $temp";
+  }
+
+  void _myAnim() {
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+    animationController.forward();
+    print('Pushed the Button');
   }
 
   Widget _buildItem(int index, String text) {
@@ -68,12 +86,13 @@ class _TablesState extends State<Tables> {
         text: text,
         onPress: () {
           if(text=='C') {
-              setState(() {
-                _result = _result.substring(0, _result.length - 1);
-              });
+            setState(() {
+              _result = _result.substring(0, _result.length - 1);
+            });
           }
           else if(text == 'submit') {
             if(int.parse(_result) == (_data[count] * _data[count])) {
+              widget.onScore(1);
               setState(() {
                 count = count + 1;
                 int temp = _data[count];
@@ -82,8 +101,12 @@ class _TablesState extends State<Tables> {
               });
             }
             else{
-              setState((){
-                _result = "";
+              _myAnim();
+              new Future.delayed(const Duration(milliseconds: 700), () {
+                setState((){
+                  _result = "";
+                });
+                animationController.stop();
               });
             }
           }
@@ -94,7 +117,6 @@ class _TablesState extends State<Tables> {
               }
             });
           }
-
         });
   }
 
@@ -136,22 +158,20 @@ class _TablesState extends State<Tables> {
                 ),
               ),
             ),
-            new Container(
-                height: 60.0,
-                width: 120.0,
-                margin: new EdgeInsets.only(bottom: 20.0),
-                color: Colors.teal,
-                child: new Center(
-                    child: new Text("$_result",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                        )))),
+            new TextAnimation(
+              animation: animation,
+              text: _result
+            ),
             new Table(children: rows),
           ]
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 
@@ -220,6 +240,30 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: new Text(_displayText,
                         style: new TextStyle(
                             color: Colors.white, fontSize: 24.0))))));
+  }
+}
+
+class TextAnimation extends AnimatedWidget {
+  TextAnimation({Key key, Animation animation, this.text}) : super(key: key, listenable: animation);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    Animation animation = listenable;
+    return new Center(
+      child: new Container(
+        height: 60.0,
+        width: 120.0,
+        alignment: Alignment.center,
+        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: 20.0),
+        child:  new Text(text,
+            style: new TextStyle(
+            color: Colors.white,
+            fontSize: 40.0,
+            fontWeight: FontWeight.bold,)),
+            color: Colors.teal,
+        ),
+    );
   }
 }
 
