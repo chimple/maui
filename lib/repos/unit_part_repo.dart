@@ -11,12 +11,12 @@ class UnitPartRepo {
 
   const UnitPartRepo();
 
-  Future<List<UnitPart>> getUnitPartsByUnitIdAndType(int unitId,
+  Future<List<UnitPart>> getUnitPartsByUnitIdAndType(String unitId,
       UnitType type) async {
     return unitPartDao.getUnitPartsByUnitIdAndType(unitId, type);
   }
 
-  Future<List<EagerUnitPart>> getEagerUnitPartsByUnitIdAndType(int unitId,
+  Future<List<EagerUnitPart>> getEagerUnitPartsByUnitIdAndType(String unitId,
       UnitType type) async {
     return unitPartDao.getEagerUnitPartsByUnitIdAndType(unitId, type);
   }
