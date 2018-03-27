@@ -67,5 +67,7 @@ class AppDatabase {
     new LessonUnitDao().getEagerLessonUnitsBelowSeqAndByConceptId(100, 3).then((r)=>print(r));
     fetchPairData(1, 16).then((p)=>print(p));
     fetchTrueOrFalse(12).then((t)=>print(t));
+    fetchRollingData(13, 5).then((r)=>print(r));
+    fetchWordWithBlanksData(13).then((c)=>print(c));
   }
 }
