@@ -120,8 +120,7 @@ class QuizPageState extends State<QuizPage> {
               ]
             ),
 
-            overlayShouldBeVisible == true ? new Expanded(
-              child: new Container(
+            overlayShouldBeVisible == true ? new Container(
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[new CorrectWrongOverlay(
@@ -138,7 +137,7 @@ class QuizPageState extends State<QuizPage> {
                 questionNumber = quiz.questionNumber;
               });
             }
-        )]))) : new Container()
+        )])) : new Container()
 
           ],
         ),
