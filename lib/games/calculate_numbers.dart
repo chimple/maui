@@ -32,9 +32,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
   final int _size = 3;
   List<String> _numbers;
   String _preValue = ' ';
-  int num1 = 5, num2 = 12;
+  int num1 = 5, num2 = 2;
   String _output = ' ';
-  String _operator = '*';
+  String _operator = '+';
   bool flag;
 
   @override
@@ -66,6 +66,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           setState(() {
             _output = output;
             print(_output);
+
             widget.onScore(2);
             widget.onProgress((num1 + num2) / 2);
             new Future.delayed(const Duration(milliseconds: 2000), () {
@@ -176,6 +177,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           }
         }
         wrongOrRight(text, _output, (num1 * num2));
+
         break;
     }
   }
@@ -187,6 +189,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         onPress: () {
           operation(_operator, text);
         });
+  }
+
+  Widget _container(String text) {
+    return new Container(
+      height: 30.0,
+      width: 30.0,
+      color: Colors.lime,
+      child: new Text(text),
+    );
   }
 
   @override
@@ -207,90 +218,213 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
-    return new Expanded(
+    /*  return new Expanded(
       child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           new Expanded(
-              flex: 1,
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Expanded(
+                    child: new Center(
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                              child: new FittedBox(
+                            child: new Container(
+                                height: 30.0, width: 30.0, child: new Text("")),
+                          )),
+                          new Expanded(
+                            child: new FittedBox(
+                              fit: BoxFit.contain,
+                              child: new Container(
+                                height: 30.0,
+                                width: 30.0,
+                                color: Colors.pink,
+                                child: new Center(
+                                  child: new Text('$num1',
+                                      style: new TextStyle(
+                                          color: Colors.black, fontSize: 12.0)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  new Expanded(
+                    child: new Center(
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                            child: new FittedBox(
+                              fit: BoxFit.contain,
+                              child: new Container(
+                                height: 30.0,
+                                width: 30.0,
+                                color: Colors.pink,
+                                child: new Center(
+                                  child: new Text(_operator,
+                                      style: new TextStyle(
+                                          color: Colors.black, fontSize: 12.0)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          new Expanded(
+                            child: new FittedBox(
+                              fit: BoxFit.contain,
+                              child: new Container(
+                                color: Colors.pink,
+                                height: 30.0,
+                                width: 30.0,
+                                child: new Center(
+                                  child: new Text('$num2',
+                                      style: new TextStyle(
+                                          color: Colors.black, fontSize: 12.0)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  new Expanded(
+                    child: new Center(
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                            child: new FittedBox(
+                              fit: BoxFit.contain,
+                              child: new Container(
+                                height: 30.0,
+                                width: 30.0,
+                                child: new Text(" ",
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 12.0)),
+                              ),
+                            ),
+                          ),
+                          new Expanded(
+                            child: new FittedBox(
+                              fit: BoxFit.contain,
+                              child: new Container(
+                                color:
+                                    flag == true ? Colors.green : Colors.grey,
+                                height: 30.0,
+                                width: 30.0,
+                                child: new Center(
+                                  child: new Text(_output,
+                                      style: new TextStyle(
+                                          color: Colors.black, fontSize: 12.0)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          new Expanded(
+              child: new Center(
+                child: new Table(
+                    children: rows,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    ); */
+    return new Expanded(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Container(
               child: new Container(
-                color: Colors.pink,
-                child: new Column(
+            color: Colors.pink,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                            color: Colors.pink,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Text(" "),
-                            )),
-                        new Container(
-                            color: Colors.lime,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Text('$num1',
-                                  style: new TextStyle(
-                                      color: Colors.black, fontSize: 20.0)),
-                            ))
-                      ],
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                            color: Colors.lime,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Text(_operator,
-                                  style: new TextStyle(
-                                      color: Colors.black, fontSize: 20.0)),
-                            )),
-                        new Container(
-                            color: Colors.lime,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Text('$num2',
-                                  style: new TextStyle(
-                                      color: Colors.black, fontSize: 20.0)),
-                            )),
-                      ],
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                            color: Colors.pink,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Text(""),
-                            )),
-                        new Container(
-                            color: flag == true ? Colors.green : Colors.grey,
-                            height: height1 / 18,
-                            width: width1 / 7,
-                            child: new Center(
-                              child: new Output(flag: flag),
-                              /* child: new Text(_output,
-                                  style: new TextStyle(
-                                      color: Colors.black, fontSize: 20.0)),*/
-                            ) ),
-                      ],
-                    ),
+                    new Container(
+                        color: Colors.pink,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text(" "),
+                        )),
+                    new Container(
+                        color: Colors.lime,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text('$num1',
+                        key: new Key('$num1'),
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0)),
+                        ))
                   ],
                 ),
-              )),
-          new Expanded(
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(
+                        color: Colors.lime,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text(_operator,
+                           key: new Key(_operator),
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0)),
+                        )),
+                    new Container(
+                        color: Colors.lime,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text('$num2',
+                           key: new Key('$num2'),
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0)),
+                        )),
+                  ],
+                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(
+                        color: Colors.pink,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text(""),
+                        )),
+                    new Container(
+                        color: flag == true ? Colors.green : Colors.grey,
+                        height: height1 / 20,
+                        width: width1 / 12,
+                        child: new Center(
+                          child: new Text(_output,
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 20.0)),
+                        )),
+                  ],
+                ),
+              ],
+            ),
+          )),
+          new Container(
               //  flex: 1,
               child: new Container(
-            padding: const EdgeInsets.all(5.0),
             color: Colors.pink,
             child: new Center(
               child: new Table(children: rows),
@@ -312,53 +446,55 @@ class MyButton extends StatefulWidget {
   _MyButtonState createState() => new _MyButtonState();
 }
 
-class _MyButtonState extends State<MyButton>
-    with SingleTickerProviderStateMixin {
+class _MyButtonState extends State<MyButton> {
   String _displayText;
-  bool _flag;
 
   @override
   initState() {
     super.initState();
     _displayText = widget.text;
-    _flag=widget.flag;
   }
 
   @override
   Widget build(BuildContext context) {
     return new TableCell(
-    //  child: new Padding(
-          // padding: new EdgeInsets.all(10.0),
-        //  padding: _flag==true?new EdgeInsets.all(5.0):new EdgeInsets.all(10.0),
-         // padding: new EdgeInsets.all(0.0),
-          child: new RaisedButton(
-              onPressed: () => widget.onPress(),
-              color: Colors.white,
-              shape: new RoundedRectangleBorder(
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(5.0))),
-              child: new Center(
-                  child: new Text(_displayText,
-                      style: new TextStyle(
-                          color: Colors.black, fontSize: 20.0)))),
+      child: new RaisedButton(
+          onPressed: () => widget.onPress(),
+          color: Colors.lime,
+          shape: new RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(const Radius.circular(2.0))),
+          child: new Container(
+            child: new Center(
+                child: new Text(_displayText,
+                    style: new TextStyle(color: Colors.black, fontSize: 20.0))),
+          )),
     );
   }
 }
 
-
-class Output extends AnimatedWidget{
-  Output({Key key, Animation animation, this.flag}) : super(key: key, listenable: animation);
-   bool flag;
-
-   @override
-    Widget build(BuildContext context) {
-    Animation animation = listenable;
-    return new Center(
-      child: new Container(
-        margin: new EdgeInsets.only(left: animation.value ?? 0),
-        
-      ),
-    );
-    }
+class CorrectWrong extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new CorrectWrongState();
 }
 
+class CorrectWrongState extends State<CorrectWrong> {
+  @override
+  Widget build(BuildContext context) {
+    return new Material(
+      color: Colors.transparent,
+      child: new InkWell(
+        onTap: () => print('you are coorect'),
+        child: new Column(
+          children: <Widget>[
+            new Container(
+              child: new Icon(
+                Icons.done,
+                size: 50.0,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
