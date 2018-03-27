@@ -74,7 +74,7 @@ Future<List<List<String>>> fetchRollingData(
     var lessonUnits = await new LessonUnitRepo()
         .getLessonUnitsByLessonId(gameCategory.lessonId);
     var lu = lessonUnits[new Random().nextInt(lessonUnits.length)];
-    return await Future.wait(await lu.subjectUnitId.runes.map((r) async {
+    return Future.wait(lu.subjectUnitId.runes.map((r) async {
       var rune = new String.fromCharCode(r);
       var otherUnits = await new UnitRepo().getUnitsOfSameTypeAs(rune);
       var otherRunes = otherUnits.map((u) => u.name).toList(growable: false);
@@ -102,9 +102,10 @@ Future<Tuple2<String, String>> fetchFillInTheBlanksData(int categoryId) async {
         .getLessonUnitsByLessonId(gameCategory.lessonId);
     var lu = lessonUnits[new Random().nextInt(lessonUnits.length)];
     return new Tuple2(lu.subjectUnitId, lu.objectUnitId);
-  } else if (gameCategory.conceptId != null) {
-    var units = await new UnitRepo().getUnitsByType(type)
   }
   return null;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
