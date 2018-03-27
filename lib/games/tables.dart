@@ -22,9 +22,6 @@ class _TablesState extends State<Tables> {
   String _result = "";
   int count = 0;
   final List<String> _allLetters = [
-    'submit',
-    '0',
-    'C',
     '1',
     '2',
     '3',
@@ -34,6 +31,9 @@ class _TablesState extends State<Tables> {
     '7',
     '8',
     '9',
+    'C',
+    '0',
+    'submit',
   ];
 
   final List<int> _data = [
@@ -98,20 +98,6 @@ class _TablesState extends State<Tables> {
         });
   }
 
-//  Widget subTile = new Container (
-//    padding: new EdgeInsets.all(45.0),
-//    alignment: Alignment.center,
-//    color: new Color(0X00000000),
-//    child: new Text(
-//      "$str",
-//      style: new TextStyle(
-//        fontSize: 60.0,
-//        fontWeight: FontWeight.bold,
-//        color: Colors.black,
-//        decorationStyle: TextDecorationStyle.wavy,
-//      ),
-//    ),
-//  );
 
   @override
   void didUpdateWidget(Tables oldWidget) {
