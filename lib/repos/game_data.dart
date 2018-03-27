@@ -5,6 +5,7 @@ import 'package:tuple/tuple.dart';
 import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
 import 'unit_repo.dart';
+import 'concept_repo.dart';
 
 enum Category { letter, number }
 
@@ -123,5 +124,137 @@ Future<List<Tuple2<String, String>>> fetchWordWithBlanksData(
     }).toList(growable: false));
   }
   //TODO: gameCategory.conceptId
+  return null;
+}
+
+Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    switch (category?.name) {
+      case 'Single digit addition without carryover':
+        var firstNum = rand.nextInt(8) + 1;
+        var secondNum = rand.nextInt(9 - firstNum) + 1;
+        var sum = firstNum + secondNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Single digit addition with carryover':
+        var firstNum = rand.nextInt(9) + 1;
+        var sum = rand.nextInt(firstNum) + 10;
+        var secondNum = sum - firstNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Double digit addition without carryover':
+        var firstNum = rand.nextInt(98) + 1;
+        var secondNum = rand.nextInt(99 - firstNum) + 1;
+        var sum = firstNum + secondNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Double digit addition with carryover':
+        var firstNum = rand.nextInt(98) + 1;
+        var sum = rand.nextInt(firstNum) + 100;
+        var secondNum = sum - firstNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Triple digit addition without carryover':
+        var firstNum = rand.nextInt(998) + 1;
+        var secondNum = rand.nextInt(999 - firstNum) + 1;
+        var sum = firstNum + secondNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Triple digit addition with carryover':
+        var firstNum = rand.nextInt(998) + 1;
+        var sum = rand.nextInt(firstNum) + 1000;
+        var secondNum = sum - firstNum;
+        return new Tuple4(firstNum, '+', secondNum, sum);
+        break;
+      case 'Single digit subtraction without borrow':
+        var firstNum = rand.nextInt(8) + 2;
+        var secondNum = rand.nextInt(firstNum - 1) + 1;
+        var sum = firstNum - secondNum;
+        return new Tuple4(firstNum, '-', secondNum, sum);
+        break;
+      case 'Double digit subtraction without borrow':
+        var firstNumTens = rand.nextInt(9) + 1;
+        var firstNumUnits = rand.nextInt(9) + 1;
+        var firstNum = firstNumTens * 10 + firstNumUnits;
+        var secondNumTens = rand.nextInt(firstNumTens) + 1;
+        var secondNumUnits = rand.nextInt(firstNumUnits) + 1;
+        var secondNum = secondNumTens * 10 + secondNumUnits;
+        var sum = firstNum - secondNum;
+        return new Tuple4(firstNum, '-', secondNum, sum);
+        break;
+      case 'Double digit subtraction with borrow':
+        var firstNumTens = rand.nextInt(8) + 2;
+        var firstNumUnits = rand.nextInt(8) + 1;
+        var firstNum = firstNumTens * 10 + firstNumUnits;
+        var secondNumTens = rand.nextInt(firstNumTens - 1) + 1;
+        var secondNumUnits = rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
+        var secondNum = secondNumTens * 10 + secondNumUnits;
+        var sum = firstNum - secondNum;
+        return new Tuple4(firstNum, '-', secondNum, sum);
+        break;
+      case 'Triple digit subtraction without borrow':
+        var firstNumHundreds = rand.nextInt(9) + 1;
+        var firstNumTens = rand.nextInt(9) + 1;
+        var firstNumUnits = rand.nextInt(9) + 1;
+        var firstNum = firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
+        var secondNumHundreds = rand.nextInt(firstNumHundreds) + 1;
+        var secondNumTens = rand.nextInt(firstNumTens) + 1;
+        var secondNumUnits = rand.nextInt(firstNumUnits) + 1;
+        var secondNum = secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
+        var sum = firstNum - secondNum;
+        return new Tuple4(firstNum, '-', secondNum, sum);
+        break;
+      case 'Triple digit subtraction with borrow':
+        var firstNumHundreds = rand.nextInt(8) + 2;
+        var firstNumTens = rand.nextInt(8) + 1;
+        var firstNumUnits = rand.nextInt(8) + 1;
+        var firstNum = firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
+        var secondNumHundreds = rand.nextInt(firstNumHundreds - 1) + 1;
+        var secondNumTens = rand.nextInt(9 - firstNumTens) + firstNumTens + 1;
+        var secondNumUnits = rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
+        var secondNum = secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
+        var sum = firstNum - secondNum;
+        return new Tuple4(firstNum, '-', secondNum, sum);
+        break;
+      case 'Single digit multiplication':
+        var firstNum = rand.nextInt(9) + 1;
+        var secondNum = rand.nextInt(9) + 1;
+        var product = firstNum * secondNum;
+        return new Tuple4(firstNum, '*', secondNum, product);
+        break;
+      case 'Single digit with double digit multiplication':
+        var firstNum = rand.nextInt(9) + 1;
+        var secondNum = rand.nextInt(90) + 10;
+        var product = firstNum * secondNum;
+        return new Tuple4(firstNum, '*', secondNum, product);
+        break;
+      case 'Double digit multiplication':
+        var firstNum = rand.nextInt(90) + 10;
+        var secondNum = rand.nextInt(90) + 10;
+        var product = firstNum * secondNum;
+        return new Tuple4(firstNum, '*', secondNum, product);
+        break;
+    }
+  }
+  return null;
+}
+
+Future<List<Tuple4<int, String, int, int>>> fetchTablesData(int categoryId) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    if (category?.name.endsWith('Tables')) {
+      var number = int.parse(category.name.substring(0, 1));
+      var table = <Tuple4<int, String, int, int>>[];
+      for (var i = 1; i <= 10; i++) {
+        table.add(new Tuple4(number, '*', i, number * i));
+      }
+      return table;
+    }
+  }
   return null;
 }
