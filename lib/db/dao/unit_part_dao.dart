@@ -7,7 +7,7 @@ import 'package:maui/db/entity/unit_part.dart';
 import 'package:maui/db/entity/eager_unit_part.dart';
 
 class UnitPartDao {
-  Future<List<UnitPart>> getUnitPartsByUnitIdAndType(int unitId, UnitType type, {Database db}) async {
+  Future<List<UnitPart>> getUnitPartsByUnitIdAndType(String unitId, UnitType type, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(UnitPart.table,
         columns: [
@@ -21,7 +21,7 @@ class UnitPartDao {
     return maps.map((el) => new UnitPart.fromMap(el));
   }
 
-  Future<List<EagerUnitPart>> getEagerUnitPartsByUnitIdAndType(int unitId, UnitType type, {Database db}) async {
+  Future<List<EagerUnitPart>> getEagerUnitPartsByUnitIdAndType(String unitId, UnitType type, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
         '${UnitPart.table} up, ${Unit.table} u, ${Unit.table} p',

@@ -8,8 +8,8 @@ class UnitPart {
   static const seqCol = 'seq';
   static const ddl = '''
 CREATE TABLE $table (
-  $unitIdCol INTEGER, 
-  $partUnitIdCol INTEGER, 
+  $unitIdCol TEXT, 
+  $partUnitIdCol TEXT, 
   $typeCol INTEGER, 
   $seqCol INTEGER, 
   PRIMARY KEY ($unitIdCol, $typeCol, $seqCol), 
@@ -17,8 +17,8 @@ CREATE TABLE $table (
   FOREIGN KEY ($partUnitIdCol) REFERENCES ${Unit.table}(${Unit.idCol}))
 ''';
 
-  int unitId;
-  int partUnitId;
+  String unitId;
+  String partUnitId;
   UnitType type;
   int seq;
 
