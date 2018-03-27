@@ -29,7 +29,23 @@ const List<String> letters = const <String>[
   'Y',
   'Z'
 ];
+String value = 'APPLE';
+  class CasinoButton extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() => new CasinoButtonState();    // TODO: implement createState
 
+}
+class CasinoButtonState extends State<CasinoButton> {
+  @override
+  Widget build(BuildContext context) {
+    for(var i=0;i<5;i++)
+    {
+       if(value.contains(letters[i])){
+       }
+    }
+  }
+
+}
 class Casino extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -90,7 +106,7 @@ class _CasinoState extends State<Casino> {
                 color: Colors.pinkAccent,
                 child: new Center(
                     child: new Text(
-                  'APPLE',
+                  value,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: new TextStyle(
