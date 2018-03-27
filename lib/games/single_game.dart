@@ -3,7 +3,7 @@ import 'package:maui/games/reflex.dart';
 import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/abacus.dart';
-import 'package:maui/games/drawing.dart';
+import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/Memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/bingo.dart';
