@@ -85,15 +85,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     }
     if (text == '✖') {
       print("Erasing content: " + output);
-      if(_output.length>0){
-      try {
-        setState(() {
-          _output = _output.substring(0, _output.length - 1);
-          flag = false;
-        });
-      
-      } on FormatException {}
-    }
+      if (_output.length > 0) {
+        try {
+          setState(() {
+            _output = _output.substring(0, _output.length - 1);
+            flag = false;
+          });
+        } on FormatException {}
+      }
     }
   }
 
@@ -117,7 +116,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
     switch (operator) {
       case '+':
         if (_zeoToNine(text) == true) {
-          if(_output.length < 3){
+          if (_output.length < 3) {
             _preValue = text;
             _output = _output + _preValue;
             print(_output);
@@ -128,8 +127,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                 print("OUTPUT: " + _output);
               }
             });
-          }
-           else {
+          } else {
             setState(() {
               flag = false;
             });
@@ -139,7 +137,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         break;
       case '-':
         if (_zeoToNine(text) == true) {
-          if(_output.length < 3){
+          if (_output.length < 3) {
             _preValue = text;
             _output = _output + _preValue;
             print(_output);
@@ -150,8 +148,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                 print("OUTPUT: " + _output);
               }
             });
-          }
-           else {
+          } else {
             setState(() {
               flag = false;
             });
@@ -160,8 +157,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
         wrongOrRight(text, _output, (num1 - num2));
         break;
       case '*':
-       if (_zeoToNine(text) == true) {
-          if(_output.length < 3){
+        if (_zeoToNine(text) == true) {
+          if (_output.length < 3) {
             _preValue = text;
             _output = _output + _preValue;
             print(_output);
@@ -172,8 +169,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                 print("OUTPUT: " + _output);
               }
             });
-          }
-           else {
+          } else {
             setState(() {
               flag = false;
             });
@@ -211,7 +207,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
-
     return new Expanded(
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -282,10 +277,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                             height: height1 / 18,
                             width: width1 / 7,
                             child: new Center(
-                              child: new Text(_output,
+                              child: new Output(flag: flag),
+                              /* child: new Text(_output,
                                   style: new TextStyle(
-                                      color: Colors.black, fontSize: 20.0)),
-                            )),
+                                      color: Colors.black, fontSize: 20.0)),*/
+                            ) ),
                       ],
                     ),
                   ],
@@ -309,6 +305,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.onPress}) : super(key: key);
   final String text;
+  bool flag;
   final VoidCallback onPress;
 
   @override
@@ -318,19 +315,22 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton>
     with SingleTickerProviderStateMixin {
   String _displayText;
+  bool _flag;
 
   @override
   initState() {
     super.initState();
     _displayText = widget.text;
+    _flag=widget.flag;
   }
 
   @override
   Widget build(BuildContext context) {
     return new TableCell(
-      child: new Padding(
+    //  child: new Padding(
           // padding: new EdgeInsets.all(10.0),
-          padding: new EdgeInsets.all(0.0),
+        //  padding: _flag==true?new EdgeInsets.all(5.0):new EdgeInsets.all(10.0),
+         // padding: new EdgeInsets.all(0.0),
           child: new RaisedButton(
               onPressed: () => widget.onPress(),
               color: Colors.white,
@@ -340,7 +340,25 @@ class _MyButtonState extends State<MyButton>
               child: new Center(
                   child: new Text(_displayText,
                       style: new TextStyle(
-                          color: Colors.black, fontSize: 20.0))))),
+                          color: Colors.black, fontSize: 20.0)))),
     );
   }
 }
+
+
+class Output extends AnimatedWidget{
+  Output({Key key, Animation animation, this.flag}) : super(key: key, listenable: animation);
+   bool flag;
+
+   @override
+    Widget build(BuildContext context) {
+    Animation animation = listenable;
+    return new Center(
+      child: new Container(
+        margin: new EdgeInsets.only(left: animation.value ?? 0),
+        
+      ),
+    );
+    }
+}
+
