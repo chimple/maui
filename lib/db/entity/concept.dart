@@ -1,25 +1,25 @@
 class Concept {
   static const table = 'concept';
-  static const idCol = 'id';
-  static const nameCol = 'name';
+  static const columnId = 'id';
+  static const columnName = 'name';
   static const ddl = '''
 CREATE TABLE $table (
-  $idCol INTEGER PRIMARY KEY, 
-  $nameCol TEXT)
+  $columnId INTEGER PRIMARY KEY, 
+  $columnName TEXT)
 ''';
 
-  int id;
+  String id;
   String name;
 
   Concept({this.id, this.name});
 
   Map<String, dynamic> toMap() {
-    return {idCol: id, nameCol: name};
+    return {columnId: id, columnName: name};
   }
 
   Concept.fromMap(Map<String, dynamic> map) : this (
-      id: map[idCol],
-      name: map[nameCol]
+      id: map[columnId],
+      name: map[columnName]
   );
 
   @override
