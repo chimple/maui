@@ -10,6 +10,7 @@ void main() {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
     });
+    
 
 //    tearDownAll(() async {
 //      if (driver != null)
@@ -45,6 +46,8 @@ void main() {
       await driver.tap(option);
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
+      final SerializableFinder back = find.byTooltip('Back');
+      await driver.tap(back);
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
