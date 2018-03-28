@@ -73,63 +73,67 @@ class QuizPageState extends State<QuizPage> {
     });
   }
 
-  @override
+  
+    @override
   Widget build(BuildContext context) {
-    return new Container(
-        child: new Column(
-          children: <Widget>[
-            new Column(
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
+
+    return new Material(
+      child: new Stack(
+      fit: StackFit.loose,
+      children: <Widget>[
+        new Column(
+        mainAxisAlignment: MainAxisAlignment.end,       
+           children: <Widget>[
+             new Column(
+               mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[new Column( 
+               mainAxisAlignment: MainAxisAlignment.end,
+             children: <Widget>[ 
+               new Padding(
+              padding: new EdgeInsets.all(wd*0.15),
+            ),
+               new QuestionText(questionText, questionNumber),
+              new Padding(
+              padding: new EdgeInsets.all(85.0),
+            ),
+             ]
+           ),
+              ],
+             ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 new Padding(
-                          padding: new EdgeInsets.all(85.0),
-                        ),
-                new Container(
-                    height: 100.0,
-                    width: 200.0,
-                    child: new Center(
-                        child: new QuestionText(questionText, questionNumber),
-                    ),
-                ),
-
-                new Padding(
-                          padding: new EdgeInsets.all(85.0),
-                        ),
-
-                new Container(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        new Padding(
-                          padding: new EdgeInsets.all(15.0),
-                        ),
-
-                      new AnswerButton(true, () => handleAnswer(true)), //true button
-
-                      new Padding(
-                          padding: new EdgeInsets.all(15.0),
-                        ),
-                      
-                      new AnswerButton(false, () => handleAnswer(false)), //false button
-
-                      new Padding(
-                          padding: new EdgeInsets.all(15.0),
-                        ),
-                    ],
-                    ),
-                  )
-              ]
+                    padding: new EdgeInsets.all(15.0),
+                  ),
+                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new Padding(
+                    padding: new EdgeInsets.all(15.0),
+                  ),
+                  new AnswerButton(false, () => handleAnswer(false)), 
+                  new Padding(
+                    padding: new EdgeInsets.all(15.0),
+                  ),// false button
+                ],
             ),
-
-            overlayShouldBeVisible == true ? new Container(
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[new CorrectWrongOverlay(
-                  isCorrect,
-                  () {
-                  if (quiz.length == questionNumber) {
-                  widget.onEnd();
-                  return;
-                  }
+            new Padding(
+              padding: new EdgeInsets.only(bottom: 100.0),
+            ),
+          ],
+        ),
+        overlayShouldBeVisible == true ? new Container(
+          height: (ht - 86.0),
+          width: wd,
+          child: new CorrectWrongOverlay(
+            isCorrect,
+                () {
+              if (quiz.length == questionNumber) {
+                widget.onEnd();
+                return;
+              }
               currentQuestion = quiz.nextQuestion;
               this.setState(() {
                 overlayShouldBeVisible = false;
@@ -137,11 +141,9 @@ class QuizPageState extends State<QuizPage> {
                 questionNumber = quiz.questionNumber;
               });
             }
-        )])) : new Container()
-
-          ],
-        ),
-            
+        )) : new Container()
+      ],
+    ),
     );
   }
     
