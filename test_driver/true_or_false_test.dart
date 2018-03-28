@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+import 'common_functions.dart';
 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
@@ -9,13 +10,8 @@ void main() {
     FlutterDriver driver;
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      goToGame('true_or_false');
     });
-    
-
-//    tearDownAll(() async {
-//      if (driver != null)
-//        await driver.close();
-//    });
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
