@@ -16,7 +16,6 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-  String caughtText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,9 @@ class _IdentifyGameState extends State<IdentifyGame> {
           new DragBox(new Offset(0.0, 400.0), 'a', Colors.red),
           new DragBox(new Offset(150.0, 400.0), 'b', Colors.orange),
           new DragBox(new Offset(300.0, 400.0), 'c', Colors.lightBlue),
-          new DropTarget(new Offset(0.0, 0.0), 'c'),
-          new DropTarget(new Offset(150.0, 0.0), 'a'),
-          new DropTarget(new Offset(300.0, 0.0), 'b'),
+          new DropTarget(new Offset(0.0, 0.0), 'c', Colors.lightBlue),
+          new DropTarget(new Offset(150.0, 0.0), 'a', Colors.red),
+          new DropTarget(new Offset(300.0, 0.0), 'b', Colors.orange),
         ],
       ),
     );
@@ -38,8 +37,9 @@ class _IdentifyGameState extends State<IdentifyGame> {
 class DropTarget extends StatefulWidget {
   final Offset initPos;
   final String label;
+  final Color dropColor;
 
-  DropTarget(this.initPos, this.label);
+  DropTarget(this.initPos, this.label, this.dropColor);
 
   @override
   DropTargetState createState() => new DropTargetState();
@@ -48,12 +48,17 @@ class DropTarget extends StatefulWidget {
 class DropTargetState extends State<DropTarget> {
   String caughtText = '';
   Offset position = new Offset(0.0, 0.0);
+  String expectedText = '';
+  Color targetColor = Colors.cyan;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     position = widget.initPos;
+    expectedText = widget.label;
+    targetColor = widget.dropColor;
+
   }
 
   @override
@@ -75,7 +80,7 @@ class DropTargetState extends State<DropTarget> {
                   height: 120.0,
                   decoration: new BoxDecoration(
                     // color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-                    color: Colors.green,
+                    color: targetColor,
                   ),
                   child: new Center(
                     child: new Text(
@@ -132,11 +137,11 @@ class DragBoxState extends State<DragBox> {
             ),
           ),
         ),
-        onDraggableCanceled: (velocity, offset) {
-          setState(() {
-            position = offset;
-          });
-        },
+        // onDraggableCanceled: (velocity, offset) {
+        //   setState(() {
+        //     //position = offset;
+        //   });
+        // },
         feedback: new Container(
           width: 120.0,
           height: 120.0,

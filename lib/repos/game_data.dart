@@ -258,3 +258,21 @@ Future<List<Tuple4<int, String, int, int>>> fetchTablesData(int categoryId) asyn
   }
   return null;
 }
+
+Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    var number = int.parse(category?.name);
+    var fillNumbers = [];
+    for (var i = 0; i < size; i++) {
+      fillNumbers.add(<int>[]);
+      for (var j = 0; j < size; j++) {
+        fillNumbers[i].add(rand.nextInt(number) + 1);
+      }
+    }
+    return fillNumbers;
+  }
+  return null;
+}
