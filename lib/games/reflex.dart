@@ -137,7 +137,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           if (widget.text != null) {
             setState(() => _displayText = widget.text);
             controller.forward();
-          }
+          } 
         }
       });
     controller.forward();
