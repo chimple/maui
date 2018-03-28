@@ -27,7 +27,7 @@ Future<Map<String, String>> fetchPairData(int categoryId, int maxData) async {
     lessonUnits.shuffle();
     //TODO: get only unique objects and subjects
     return new Map<String, String>.fromIterable(
-        lessonUnits.sublist(0, max(maxData - 1, lessonUnits.length - 1)),
+        lessonUnits.sublist(0, min(maxData, lessonUnits.length)),
         key: (e) => e.objectUnitId,
         value: (e) => e.subjectUnitId);
   }
