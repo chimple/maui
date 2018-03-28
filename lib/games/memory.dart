@@ -17,7 +17,7 @@ class Memory extends StatefulWidget {
   State<StatefulWidget> createState() => new MemoryState();
 }
 
-enum Status {Hidden, Visible, Disappear}
+enum Status {Hidden, Visible, VtoH}
 
 class MemoryState extends State<Memory> {
   int _size = 4;
@@ -81,25 +81,24 @@ class MemoryState extends State<Memory> {
         key: new ValueKey<int>(index),
         text: text,
         status: status,
-       onPress: () {
+       onPress: () {       
           cnt++;
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
+           print("Pressed Statuses: ${_statuses}");
 
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || _statuses[index] == Status.VtoH)  
+            return;
+       
           setState((){
             _statuses[index] = Status.Visible;
           });
-
-
-          if(_pressedTileIndex == index)
-            return;
-
+           
           if(cnt == 2)
           {
             if(_pressedTile == text)
             {
                 _matched++;
-
                widget.onScore(2);
                widget.onProgress((_progressCnt) / (_allLetters.length/2));
                _progressCnt++;
@@ -107,38 +106,38 @@ class MemoryState extends State<Memory> {
                setState((){
                _letters[_pressedTileIndex] = '';
                _letters[index] = '';
+               _pressedTileIndex = -1;
+               _pressedTile = null;
+                cnt = 0;
                });
                
-
                print("Matched");
             }
              
             else
-            {
-              //print("Outside future delay");
-              new Future.delayed(const Duration(milliseconds: 250), () {
-               // print("Inside future delay");
-                  setState((){
-                //print("Inside set state future delay");    
+            { 
+              new Future.delayed(const Duration(milliseconds: 500), () {
+                  setState((){   
+                _statuses[_pressedTileIndex] = Status.VtoH;
+                _statuses[index] = Status.VtoH;
+                 _pressedTileIndex = -1;
+                _pressedTile = null;
+                 cnt = 0;
+                });
+              });
+
+               setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
                 _statuses[index] = Status.Hidden;
                 });
-              });
                
-
               print("Unmatched"); 
             }  
-
-            _pressedTileIndex = -1;
-            _pressedTile = null;
-            cnt = 0;
             return;
-
           }    
-
-          _pressedTileIndex = index;
+           _pressedTileIndex = index;
           _pressedTile = text; 
-            
+          
         });
   }
 
@@ -207,7 +206,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    if (oldWidget.text == null && widget.text != null) {
+      _displayText = widget.text;
+      controller.forward();
+    } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
