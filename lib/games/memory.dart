@@ -17,7 +17,7 @@ class Memory extends StatefulWidget {
   State<StatefulWidget> createState() => new MemoryState();
 }
 
-enum Status {Hidden, Visible, VtoH}
+enum Status {Hidden, Visible}
 
 class MemoryState extends State<Memory> {
   int _size = 4;
@@ -87,7 +87,7 @@ class MemoryState extends State<Memory> {
           print("Pressed Text: ${text}");
            print("Pressed Statuses: ${_statuses}");
 
-          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || _statuses[index] == Status.VtoH)  
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible)  
             return;
        
           setState((){
@@ -118,18 +118,13 @@ class MemoryState extends State<Memory> {
             { 
               new Future.delayed(const Duration(milliseconds: 500), () {
                   setState((){   
-                _statuses[_pressedTileIndex] = Status.VtoH;
-                _statuses[index] = Status.VtoH;
+                _statuses[_pressedTileIndex] = Status.Hidden;
+                _statuses[index] = Status.Hidden;
                  _pressedTileIndex = -1;
                 _pressedTile = null;
                  cnt = 0;
                 });
               });
-
-               setState((){   
-                _statuses[_pressedTileIndex] = Status.Hidden;
-                _statuses[index] = Status.Hidden;
-                });
                
               print("Unmatched"); 
             }  
