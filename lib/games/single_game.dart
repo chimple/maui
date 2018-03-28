@@ -129,7 +129,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: _onEnd,
             iteration: _iteration);
         break;
-      case 'identify_game':
+      case 'identify':
         return new IdentifyGame(
             onScore: _onScore,
             onProgress: _onProgress,
