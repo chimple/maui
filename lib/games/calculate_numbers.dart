@@ -367,7 +367,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                         width: width1 / 12,
                         child: new Center(
                           child: new Text('$num1',
-                        key: new Key('$num1'),
+                              key: new Key('$num1'),
                               style: new TextStyle(
                                   color: Colors.black, fontSize: 20.0)),
                         ))
@@ -382,7 +382,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                         width: width1 / 12,
                         child: new Center(
                           child: new Text(_operator,
-                           key: new Key(_operator),
+                              key: new Key(_operator),
                               style: new TextStyle(
                                   color: Colors.black, fontSize: 20.0)),
                         )),
@@ -392,7 +392,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                         width: width1 / 12,
                         child: new Center(
                           child: new Text('$num2',
-                           key: new Key('$num2'),
+                              key: new Key('$num2'),
                               style: new TextStyle(
                                   color: Colors.black, fontSize: 20.0)),
                         )),
