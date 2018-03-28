@@ -204,7 +204,8 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: _onEnd,
-            iteration: _iteration);
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;       
     }
     return null;

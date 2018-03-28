@@ -151,6 +151,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               color: new Color(0X00000000),
               child: new Text(
                 '$_question',
+                key: new Key('question'),
                 style: new TextStyle(
                   fontSize: 60.0,
                   fontWeight: FontWeight.bold,
