@@ -43,9 +43,10 @@ void main() {
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 2));
+      await new Future<Duration>.delayed(const Duration(seconds: 4));
       bool scroll = true;
       final SerializableFinder menuItem = find.byValueKey('tables');
+
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
         await new Future<Duration>.delayed(const Duration(seconds: 1));
@@ -72,7 +73,7 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
-  test('playing the game', () async {
+  test('playing the game hema', () async {
     final Completer<Null> completer = new Completer<Null>();
     final SerializableFinder question=find.byValueKey('question');
     await new Future<Null>.delayed(kWaitBetweenActions);
