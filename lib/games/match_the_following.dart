@@ -28,6 +28,39 @@ enum Status {
 }
 
 class _MatchTheFollowingState extends State<MatchTheFollowing> {
+
+  @override
+  Widget build(BuildContext context) {
+    return new Center(
+      child: new Column(children: <Widget>[
+        new Row(
+          children: <Widget>[
+            new Expanded(
+              child: new MyTable(),
+            ),
+            new Padding(
+              padding: const EdgeInsets.all(80.0),
+            ),
+            new Expanded(child: new MyTable()),
+          ],
+        ),
+      ]),
+    );
+  }
+}
+
+class MyTable extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new MyTableState();
+}
+
+var flag = 0;
+
+class MyTableState extends State<MyTable> {
+  final List<String> _nothing = ['', '', '', '', '', ''];
+  final List<String> _allLetters = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', // left side question
+    'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
   int c = 0;
   int start = 0, increament = 0;
   bool _next = false;
@@ -54,6 +87,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
     'T',
     'U',
     'V',
+
     'W',
     'X',
     'Y',
@@ -121,6 +155,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
   void initState() {
     print("first initState method");
     super.initState();
+    for (var i = 0; i < _size; i++) {
+      _shuffledLetters.addAll(
+          _allLetters.skip(i).take(_nextTask).toList(growable: false)
+            ..shuffle());
+      _shuffledLetters1.addAll(
+          _allLetters1.skip(i).take(_nextTask).toList(growable: false)
+            ..shuffle());
+
     for (var i = start; i < _leftSideletters.length; i++) {
       _shuffledLetters.addAll(
           _leftSideletters.skip(i).take(_nextTask).toList(growable: false)
@@ -146,6 +188,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
           .map((e) => _buildItemseft(j++, e))
           .toList();
       rows.add(new TableRow(children: cells));
+
     }
     return new Table(children: rows);
   }
@@ -153,6 +196,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
   Widget _buildItemseft(int index, String text) {
     // print("_Build Items Right::");
     return new MyButton(
+
+        key: new ValueKey<int>(index), text: text, onPress: () {});
+
         key: new ValueKey<int>(index),
         text: text,
         active: _active,
@@ -163,6 +209,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
           print("Left Index:: $indexText1");
           //setState(() {});
         });
+
   }
 
   void color(int getText) {
@@ -178,6 +225,25 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
     flag2 = 1;
     List<TableRow> rows = new List<TableRow>();
     List<Widget> cells;
+
+    int j = 0;
+    int j1 = _size;
+    if (flag == 0) {
+      for (var i = 0; i < _size; ++i) {
+        cells =
+            _letters.skip(i).take(1).map((e) => _buildItem(j++, e)).toList();
+        rows.add(new TableRow(children: cells));
+      }
+      flag = 1;
+    }
+    // else {
+    for (var i = 0; i < _size; ++i) {
+      cells =
+          _letters1.skip(i).take(1).map((e) => _buildItem(j1++, e)).toList();
+      rows.add(new TableRow(children: cells));
+    }
+    //}
+
     for (var i = start; i < _nextTask + increament; ++i) {
       cells = _lettersRight
           .skip(i)
@@ -186,6 +252,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
+
     return new Table(children: rows);
   }
 
@@ -246,15 +313,32 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
+
+  int _default = 300;
+  var _locationOfList = [];
+  AnimationController controller;
+  Animation<double> animationInvisible, animationShake, commonAnimation;
+
   int _default = 600;
   AnimationController controller, controller1;
   Animation<double> animationInvisible, commonAnimation, animationShake;
+
 
   initState() {
     // print("2nd initState::");
     super.initState();
     _displayText = widget.text;
     controller = new AnimationController(
+
+        duration: new Duration(milliseconds: 300), vsync: this);
+    animationInvisible =
+        new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+    animationShake = new Tween(begin: 0.0, end: 4.0).animate(controller)
+      ..addStatusListener((state) {
+        commonAnimation = animationInvisible;
+        // print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+
         duration: new Duration(milliseconds: 400), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -263,6 +347,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       if (state == AnimationStatus.dismissed) {
         if (widget.text == null) {
           setState(() => _displayText = widget.text);
+
           controller.forward();
         }
       }
@@ -280,6 +365,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    controller.forward();
+    if (oldWidget.text != widget.text) {}
+
     if (oldWidget.text != widget.text) {
       controller.reverse();
     } else {}

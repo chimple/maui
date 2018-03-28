@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:maui/repos/game_data.dart';
+import 'dart:async';
+// import 'dart:math';
 
 const List<String> letters = const <String>[
   'A',
@@ -29,14 +32,22 @@ const List<String> letters = const <String>[
   'Y',
   'Z'
 ];
+String value = 'APPLE';
 
 class Casino extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  Casino({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Casino(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -45,12 +56,28 @@ class Casino extends StatefulWidget {
 
 class _CasinoState extends State<Casino> {
   int _selectedItemIndex = 0;
+  List<List<String>> data;
+  @override
+  void initState() {
+    super.initState();
+    _lettersData();
+  }
+  void _lettersData() async {
+    data = await fetchRollingData(widget.gameCategoryId,5);
 
+    print("Ram $data ");
+  }
+int count=0;
   Widget _buildScrollButton() {
-    final FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: _selectedItemIndex);
+     FixedExtentScrollController scrollController ;
+       @override
+       initState(){
+         super.initState();
+         new FixedExtentScrollController(initialItem: _selectedItemIndex);
+       }   
 
     return new Container(
+      
       height: 100.0,
       width: 50.0,
       child: new DefaultTextStyle(
@@ -68,7 +95,11 @@ class _CasinoState extends State<Casino> {
             },
             children: new List<Widget>.generate(letters.length, (int index) {
               return new Center(
-                child: new Text(letters[index]),
+                key: new ValueKey<int>(count++),
+                child: new Text(
+                  
+                  
+                  letters[index]),
               );
             }),
           ),
@@ -80,9 +111,12 @@ class _CasinoState extends State<Casino> {
   @override
   Widget build(BuildContext context) {
     return new Expanded(
+
+      key:new ValueKey<String>('item'),
       child: new Container(
         color: Colors.blue,
         child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Container(
                 height: 100.0,
@@ -90,7 +124,7 @@ class _CasinoState extends State<Casino> {
                 color: Colors.pinkAccent,
                 child: new Center(
                     child: new Text(
-                  'APPLE',
+                  value,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: new TextStyle(
@@ -109,6 +143,7 @@ class _CasinoState extends State<Casino> {
                     _buildScrollButton(),
                     _buildScrollButton(),
                     _buildScrollButton(),
+                    
                   ],
                 ),
               ),

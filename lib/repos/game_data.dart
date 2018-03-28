@@ -1,4 +1,4 @@
-import 'dart:async';
+ import 'dart:async';
 import 'dart:core';
 import 'dart:math';
 import 'package:tuple/tuple.dart';
@@ -65,6 +65,8 @@ Future<Tuple2<String, bool>> fetchTrueOrFalse(int categoryId) async {
   }
   return null;
 }
+
+
 
 Future<List<List<String>>> fetchRollingData(
     int categoryId, int numChoices) async {
