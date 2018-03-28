@@ -1,52 +1,60 @@
-
+import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
-//import 'dart:ui' show window;
-
-
+import 'package:maui/repos/game_data.dart';
 
 class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  Memory({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Memory({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
       : super(key: key);
+
   @override
   State<StatefulWidget> createState() => new MemoryState();
 }
 
-class MemoryState extends State<Memory> with TickerProviderStateMixin {
-  final List<String> _allLetters = [
-    'A',
-    'A',
-    'B',
-    'B',
-    'C',
-    'C',
-    'D',
-    'D',
-    'E',
-    'E',
-    'F',
-    'F',
-    'G',
-    'G',
-    'H',
-    'H'
-  ];
-  final int _size = 4;
+enum Status {Hidden, Visible}
+
+class MemoryState extends State<Memory> {
+  int _size = 4;
+  List<String> _allLetters = [];
+  List<String> _shuffledLetters = [];
+  List<String> _letters;
+  List<Status> _statuses;
+  Map<String,String> _data;
+  bool _isLoading = true;
   var _currentIndex = 0;
+  var _matched = 0;
+  var _progressCnt = 1;
   var _pressedTile ;
   var _pressedTileIndex ;
   var cnt = 0;
-  List<String> _shuffledLetters = [];
-  List<String> _letters;
+ 
 
   @override
   void initState() {
     super.initState();
+    _initBoard();
+  }
+
+  void _initBoard() async {
+    _currentIndex = 0;
+    setState(()=>_isLoading=true);
+
+    _data = await fetchPairData(widget.gameCategoryId , 8);
+    print(_data);
+    _data.forEach((k,v){
+      _allLetters.add(k);
+      _allLetters.add(v);
+    });
+    print(_allLetters);
+
+    _size = min(4, sqrt(_allLetters.length).floor());
+    _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
@@ -54,66 +62,99 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
+    _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
+    setState(()=>_isLoading=false);
   }
 
-  Widget _buildItem(int index, String text) {
+  @override
+  void didUpdateWidget(Memory oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_allLetters);
+    }
+  }
+
+  Widget _buildItem(int index, String text , Status status) {
     return new MyButton(
-        key:new ValueKey<int>(index),
+        key: new ValueKey<int>(index),
         text: text,
-        onPress: () {
+        status: status,
+       onPress: () {       
           cnt++;
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
+           print("Pressed Statuses: ${_statuses}");
 
-          setState((){
-            
-             });
-
-          if(_pressedTileIndex == index)
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible)  
             return;
-
+       
+          setState((){
+            _statuses[index] = Status.Visible;
+          });
+           
           if(cnt == 2)
           {
             if(_pressedTile == text)
             {
+                _matched++;
+               widget.onScore(2);
+               widget.onProgress((_progressCnt) / (_allLetters.length/2));
+               _progressCnt++;
+
                setState((){
                _letters[_pressedTileIndex] = '';
                _letters[index] = '';
+               _pressedTileIndex = -1;
+               _pressedTile = null;
+                cnt = 0;
                });
-
+               
                print("Matched");
             }
              
             else
-            {
+            { 
+              new Future.delayed(const Duration(milliseconds: 500), () {
+                  setState((){   
+                _statuses[_pressedTileIndex] = Status.Hidden;
+                _statuses[index] = Status.Hidden;
+                 _pressedTileIndex = -1;
+                _pressedTile = null;
+                 cnt = 0;
+                });
+              });
+               
               print("Unmatched"); 
             }  
-
-            _pressedTileIndex = -1;
-            _pressedTile = null;
-            cnt = 0;
             return;
-
           }    
-
-          _pressedTileIndex = index;
+           _pressedTileIndex = index;
           _pressedTile = text; 
-            
+          
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("MemoryState.build");
+    print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
+    if(_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     List<TableRow> rows = new List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size; ++i) {
       List<Widget> cells = _letters
           .skip(i * _size)
           .take(_size)
-          .map((e) => _buildItem(j++, e))
+          .map((e) => _buildItem(j, e, _statuses[j++]))
           .toList();
       rows.add(new TableRow(children: cells));
     }
@@ -122,9 +163,10 @@ class MemoryState extends State<Memory> with TickerProviderStateMixin {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.status, this.onPress}) : super(key: key);
 
   final String text;
+  Status status;
   final VoidCallback onPress;
 
   @override
@@ -135,22 +177,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  
 
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
-    controller = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 500), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (!widget.text.isEmpty) {
+          if (widget.text == null) {
             setState(() => _displayText = widget.text);
             controller.forward();
-          }
+          } 
         }
       });
     controller.forward();
@@ -159,35 +201,32 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    if (oldWidget.text == null && widget.text != null) {
+      _displayText = widget.text;
+      controller.forward();
+    } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  }
-
-  void _handleTouch() {
-    print(widget.text);
-    controller.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
     return new TableCell(
-        child:new Padding(
-            padding: new EdgeInsets.all(8.0),
+        child: new Padding(
+            padding: const EdgeInsets.all(8.0),
             child: new ScaleTransition(
                 scale: animation,
-                child:new RaisedButton(
+                child: new RaisedButton(
                     onPressed: () => widget.onPress(),
-                    padding:new  EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     color: Colors.teal,
                     shape: new RoundedRectangleBorder(
-                        borderRadius:new BorderRadius.all(new Radius.circular(8.0))),
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
                     child: new Text(_displayText,
                         style:
-                           new TextStyle(color: Colors.white, fontSize: 24.0))))));;
+                           widget.status == Status.Visible ? new TextStyle(color: Colors.white, fontSize: 24.0) : new TextStyle(color: Colors.teal, fontSize: 24.0))))));
   }
 }
-
-	
