@@ -12,10 +12,10 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    // tearDownAll(() async {
-    //   if (driver != null)
-    //     await driver.close();
-    // });
+    tearDownAll(() async {
+      if (driver != null)
+        await driver.close();
+    });
 
     test('click on Game', () async {
       final Completer<Null> completer = new Completer<Null>();
