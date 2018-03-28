@@ -198,7 +198,7 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-           /*  gameCategoryId : widget.gameCategoryId */);
+             gameCategoryId : widget.gameCategoryId );
         break;
         case 'memory':
         return new Memory(
