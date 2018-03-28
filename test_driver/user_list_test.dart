@@ -41,7 +41,7 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
-<<<<<<< HEAD
+
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 4));
@@ -80,7 +80,5 @@ void main() {
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
-=======
->>>>>>> master
   });
 }
