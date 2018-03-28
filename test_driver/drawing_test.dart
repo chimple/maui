@@ -12,13 +12,12 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    /*tearDownAll(() async {
-      if (driver != null)
-        await driver.close();
-    });*/
+//    tearDownAll(() async {
+//      if (driver != null)
+//        await driver.close();
+//    });
 
     test('signin', () async {
-
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(milliseconds: 200));
 
@@ -29,8 +28,7 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
-    test('Game',() async{
-
+    test('Game', () async {
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 2));
 
@@ -43,10 +41,9 @@ void main() {
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 4));
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('tables');
-
+      final SerializableFinder menuItem = find.byValueKey('drawing');
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
         await new Future<Duration>.delayed(const Duration(seconds: 1));
@@ -56,7 +53,7 @@ void main() {
       });
       final SerializableFinder gs = find.byValueKey('Game_page');
       while (scroll) {
-        await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
+        await driver.scroll(gs, 0.0, -200.0, const Duration(milliseconds: 500));
         await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;
@@ -64,20 +61,16 @@ void main() {
 
     test('playing the game', () async {
       final Completer<Null> completer = new Completer<Null>();
-      //final SerializableFinder tile = find.text('Todo ');
+      final SerializableFinder tile = find.text('Todo Placeholder');
+      await driver.tap(tile);
 
-      final SerializableFinder todo = find.text('Todo Placeholder');
-      await driver.tap(todo);
-      completer.complete();
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
-
-    test('categrory', () async {
-      final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
+
+
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
   });
 }
+
