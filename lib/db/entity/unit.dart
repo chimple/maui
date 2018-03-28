@@ -10,7 +10,7 @@ class Unit {
   static const phonemeSoundCol = 'phonemeSound';
   static const ddl = '''
 CREATE TABLE $table (
-  $idCol INTEGER PRIMARY KEY, 
+  $idCol TEXT PRIMARY KEY, 
   $nameCol TEXT, 
   $typeCol INTEGER, 
   $imageCol TEXT, 
@@ -18,7 +18,7 @@ CREATE TABLE $table (
   $phonemeSoundCol TEXT)
 ''';
 
-  int id;
+  String id;
   String name;
   UnitType type;
   String image;

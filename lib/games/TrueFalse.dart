@@ -73,19 +73,28 @@ class QuizPageState extends State<QuizPage> {
     });
   }
 
-  @override
+  
+    @override
   Widget build(BuildContext context) {
-    return new Stack(
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
+
+    return new Material(
+      child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
         new Column(
-        mainAxisAlignment: MainAxisAlignment.center,       
+        mainAxisAlignment: MainAxisAlignment.end,       
            children: <Widget>[
              new Column(
                mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[new Column( 
                mainAxisAlignment: MainAxisAlignment.end,
              children: <Widget>[ 
+               new Padding(
+              padding: new EdgeInsets.all(wd*0.15),
+            ),
                new QuestionText(questionText, questionNumber),
               new Padding(
               padding: new EdgeInsets.all(85.0),
@@ -115,11 +124,14 @@ class QuizPageState extends State<QuizPage> {
             ),
           ],
         ),
-        overlayShouldBeVisible == true ? new CorrectWrongOverlay(
+        overlayShouldBeVisible == true ? new Container(
+          height: (ht - 86.0),
+          width: wd,
+          child: new CorrectWrongOverlay(
             isCorrect,
                 () {
               if (quiz.length == questionNumber) {
-                 widget.onEnd();
+                widget.onEnd();
                 return;
               }
               currentQuestion = quiz.nextQuestion;
@@ -129,8 +141,9 @@ class QuizPageState extends State<QuizPage> {
                 questionNumber = quiz.questionNumber;
               });
             }
-        ) : new Container()
+        )) : new Container()
       ],
+    ),
     );
   }
     
