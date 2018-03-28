@@ -66,17 +66,23 @@ class QuizPageState extends State<QuizPage> {
     isCorrect = (currentQuestion.answer == answer);
     if (isCorrect) {
       widget.onScore(1);
-      widget.onProgress(1);
+      widget.onProgress((questionNumber/quiz.length)*2);
     }
     this.setState(() {
       overlayShouldBeVisible = true;
     });
   }
 
-  @override
+  
+    @override
   Widget build(BuildContext context) {
-    return new Stack(
-      fit: StackFit.passthrough,
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
+
+    return new Material(
+      child: new Stack(
+      fit: StackFit.loose,
       children: <Widget>[
         new Column(
         mainAxisAlignment: MainAxisAlignment.end,       
@@ -86,6 +92,9 @@ class QuizPageState extends State<QuizPage> {
               children: <Widget>[new Column( 
                mainAxisAlignment: MainAxisAlignment.end,
              children: <Widget>[ 
+               new Padding(
+              padding: new EdgeInsets.all(wd*0.15),
+            ),
                new QuestionText(questionText, questionNumber),
               new Padding(
               padding: new EdgeInsets.all(85.0),
@@ -115,11 +124,14 @@ class QuizPageState extends State<QuizPage> {
             ),
           ],
         ),
-        overlayShouldBeVisible == true ? new CorrectWrongOverlay(
+        overlayShouldBeVisible == true ? new Container(
+          height: (ht - 86.0),
+          width: wd,
+          child: new CorrectWrongOverlay(
             isCorrect,
                 () {
               if (quiz.length == questionNumber) {
-                 widget.onEnd();
+                widget.onEnd();
                 return;
               }
               currentQuestion = quiz.nextQuestion;
@@ -129,8 +141,9 @@ class QuizPageState extends State<QuizPage> {
                 questionNumber = quiz.questionNumber;
               });
             }
-        ) : new Container()
+        )) : new Container()
       ],
+    ),
     );
   }
     

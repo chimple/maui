@@ -3,7 +3,7 @@ import 'package:maui/games/reflex.dart';
 import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/abacus.dart';
-import 'package:maui/games/drawing.dart';
+import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/Memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/bingo.dart';
@@ -12,7 +12,7 @@ import 'package:maui/games/casino.dart';
 import 'package:maui/games/crossword.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/match_the_following.dart';
-import 'package:maui/games/calculate_the_numbers.dart';
+import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/components/progress_bar.dart';
 
 enum GameMode { timed, iterations }
@@ -21,12 +21,13 @@ class SingleGame extends StatefulWidget {
   final String gameName;
   final int maxIterations;
   final int playTime;
+  final int gameCategoryId;
   Function onGameEnd;
   Function onScore;
   final GameMode _gameMode;
 
   SingleGame(this.gameName,
-      {this.maxIterations = 0, this.playTime = 0, this.onGameEnd, this.onScore})
+      {this.maxIterations = 0, this.playTime = 0, this.gameCategoryId, this.onGameEnd, this.onScore})
       : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed;
 
   @override
@@ -111,7 +112,8 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;
        case 'order_it':
         return new OrderIt(
@@ -127,7 +129,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: _onEnd,
             iteration: _iteration);
         break;
-      case 'identify_game':
+      case 'identify':
         return new IdentifyGame(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -190,7 +192,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration);
         break;
-      case 'calculate_the_numbers':
+      case 'calculate_numbers':
         return new CalculateTheNumbers(
             onScore: _onScore,
             onProgress: _onProgress,
