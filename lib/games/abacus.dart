@@ -11,9 +11,9 @@ class Abacus extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+ int gameCategoryId;
 
-
-  Abacus({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Abacus({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId})
       : super(key: key);
 
   @override
