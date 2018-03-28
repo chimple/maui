@@ -20,7 +20,7 @@ void main() {
     test('signin', () async {
 
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(milliseconds: 200));
+      await new Future<Duration>.delayed(const Duration(milliseconds: 300));
 
       final SerializableFinder user = find.byValueKey('user-Chimple');
       await driver.tap(user);
@@ -90,7 +90,7 @@ void main() {
        if (result > 10) {
           mul = result % 10;
           print(mul);
-          List list=new List();
+         // List list=new List();
           //list[0]=mul;
           mul1 = (result ~/ 10);
           print(mul1);
