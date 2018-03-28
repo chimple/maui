@@ -15,6 +15,7 @@ dependencies:
   sqflite: any
   uuid: ^0.5.0
   path_provider: ^0.4.0
+  tuple: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,7 @@ flutter:
   assets:
     - assets/database.db
     - assets/chimple_logo.png
+    - assets/apple.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

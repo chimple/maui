@@ -10,7 +10,7 @@ class Unit {
   static const phonemeSoundCol = 'phonemeSound';
   static const ddl = '''
 CREATE TABLE $table (
-  $idCol INTEGER PRIMARY KEY, 
+  $idCol TEXT PRIMARY KEY, 
   $nameCol TEXT, 
   $typeCol INTEGER, 
   $imageCol TEXT, 
@@ -18,7 +18,7 @@ CREATE TABLE $table (
   $phonemeSoundCol TEXT)
 ''';
 
-  int id;
+  String id;
   String name;
   UnitType type;
   String image;
@@ -44,14 +44,14 @@ CREATE TABLE $table (
     };
   }
 
-  Unit.fromMap(Map<String, dynamic> map)
+  Unit.fromMap(Map<String, dynamic> map, {String prefix=''})
       : this(
-            id: map[idCol],
-            name: map[nameCol],
-            type: UnitType.values[map[typeCol]],
-            image: map[imageCol],
-            sound: map[soundCol],
-            phonemeSound: map[phonemeSoundCol]);
+            id: map[prefix+idCol],
+            name: map[prefix+nameCol],
+            type: UnitType.values[map[prefix+typeCol]],
+            image: map[prefix+imageCol],
+            sound: map[prefix+soundCol],
+            phonemeSound: map[prefix+phonemeSoundCol]);
 
   @override
   int get hashCode =>
