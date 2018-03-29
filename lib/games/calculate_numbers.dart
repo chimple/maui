@@ -392,7 +392,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers> {
                         width: width1 / 12,
                         child: new Center(
                           child: new Text('$num2',
-                           key: new Key('$num2'),
+                           key: new Key('num2'),
                               style: new TextStyle(
                                   color: Colors.black, fontSize: 20.0)),
                         )),

@@ -223,7 +223,7 @@ test('playing the Single digit addition without carry', () async {
       }
       }
         await new Future<Duration>.delayed(const Duration(seconds: 1));
-        final SerializableFinder item10 = find.text('?');
+        final SerializableFinder item10 = find.text('✔');
         await driver.tap(item10);
         final SerializableFinder tool=find.byTooltip('Back');
         await driver.tap(tool);
