@@ -84,5 +84,6 @@ class AppDatabase {
     fetchMathData(27).then((m)=>print(m));
     fetchMathData(28).then((m)=>print(m));
     fetchTablesData(36).then((m)=>print(m));
+    fetchFillNumberData(57, 4).then((f)=>print(f));
   }
 }
