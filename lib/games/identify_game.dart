@@ -16,18 +16,28 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-
   @override
   Widget build(BuildContext context) {
     return new Expanded(
-      child: new Stack(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          new DragBox(new Offset(0.0, 400.0), 'a', Colors.red),
-          new DragBox(new Offset(150.0, 400.0), 'b', Colors.orange),
-          new DragBox(new Offset(300.0, 400.0), 'c', Colors.lightBlue),
-          new DropTarget(new Offset(0.0, 0.0), 'c', Colors.lightBlue),
-          new DropTarget(new Offset(150.0, 0.0), 'a', Colors.red),
-          new DropTarget(new Offset(300.0, 0.0), 'b', Colors.orange),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new DropTarget('c', Colors.lightBlue),
+              new DropTarget('a', Colors.red),
+              new DropTarget('b', Colors.orange),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new DragBox('a', Colors.red),
+              new DragBox('b', Colors.orange),
+              new DragBox('c', Colors.lightBlue),
+            ],
+          )
         ],
       ),
     );
@@ -35,11 +45,10 @@ class _IdentifyGameState extends State<IdentifyGame> {
 }
 
 class DropTarget extends StatefulWidget {
-  final Offset initPos;
-  final String label;
+  final String expectedLabel;
   final Color dropColor;
 
-  DropTarget(this.initPos, this.label, this.dropColor);
+  DropTarget(this.expectedLabel, this.dropColor);
 
   @override
   DropTargetState createState() => new DropTargetState();
@@ -47,7 +56,6 @@ class DropTarget extends StatefulWidget {
 
 class DropTargetState extends State<DropTarget> {
   String caughtText = '';
-  Offset position = new Offset(0.0, 0.0);
   String expectedText = '';
   Color targetColor = Colors.cyan;
 
@@ -55,105 +63,100 @@ class DropTargetState extends State<DropTarget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    position = widget.initPos;
-    expectedText = widget.label;
+    expectedText = widget.expectedLabel;
     targetColor = widget.dropColor;
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
-            left: position.dx,
-            top: position.dy,
-            child: new DragTarget(
-              onAccept: (String text) {
-                caughtText = text;
-              },
-              builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-              ) {
-                return new Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: new BoxDecoration(
-                    // color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-                    color: targetColor,
-                  ),
-                  child: new Center(
-                    child: new Text(
-                      accepted.isEmpty ? caughtText : '',
-                    ),
-                  ),
-                );
-              },
+    return new DragTarget(
+      onAccept: (String text) {
+        if (text == expectedText) {
+          caughtText = text;
+        } else {
+          caughtText = '';
+        }
+      },
+      builder: (
+        BuildContext context,
+        List<dynamic> accepted,
+        List<dynamic> rejected,
+      ) {
+        return new Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: new BoxDecoration(
+            // color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
+            color: targetColor,
+          ),
+          child: new Center(
+            child: new Text(
+              accepted.isEmpty ? caughtText : '',
             ),
-          );
+          ),
+        );
+      },
+    );
   }
 }
 
 class DragBox extends StatefulWidget {
-  final Offset initPos;
   final String label;
   final Color itemColor;
 
-  DragBox(this.initPos, this.label, this.itemColor);
+  DragBox(this.label, this.itemColor);
 
   @override
   DragBoxState createState() => new DragBoxState();
 }
 
 class DragBoxState extends State<DragBox> {
-  Offset position = new Offset(0.0, 0.0);
+  Color draggableColor;
+  String draggableText;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    position = widget.initPos;
+    draggableColor = widget.itemColor;
+    draggableText = widget.label;
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
-      left: position.dx,
-      top: position.dy,
-      child: new Draggable(
-        data: widget.label,
-        child: new Container(
-          width: 100.0,
-          height: 100.0,
-          color: widget.itemColor,
-          child: new Center(
-            child: new Text(
-              widget.label,
-              style: new TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.none,
-                fontSize: 20.0,
-              ),
+    return new Draggable(
+      data: draggableText,
+      child: new Container(
+        width: 100.0,
+        height: 100.0,
+        color: draggableColor,
+        child: new Center(
+          child: new Text(
+            draggableText,
+            style: new TextStyle(
+              color: Colors.white,
+              decoration: TextDecoration.none,
+              fontSize: 20.0,
             ),
           ),
         ),
-        // onDraggableCanceled: (velocity, offset) {
-        //   setState(() {
-        //     //position = offset;
-        //   });
-        // },
-        feedback: new Container(
-          width: 120.0,
-          height: 120.0,
-          color: widget.itemColor.withOpacity(0.5),
-          child: new Center(
-            child: new Text(
-              widget.label,
-              style: new TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.none,
-                fontSize: 18.0,
-              ),
+      ),
+      // onDraggableCanceled: (velocity, offset) {
+      //   setState(() {
+      //     //position = offset;
+      //   });
+      // },
+      feedback: new Container(
+        width: 120.0,
+        height: 120.0,
+        color: draggableColor.withOpacity(0.5),
+        child: new Center(
+          child: new Text(
+            draggableText,
+            style: new TextStyle(
+              color: Colors.white,
+              decoration: TextDecoration.none,
+              fontSize: 18.0,
             ),
           ),
         ),
