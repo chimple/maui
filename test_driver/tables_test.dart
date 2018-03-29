@@ -20,7 +20,7 @@ void main() {
     test('signin', () async {
 
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(milliseconds: 200));
+      await new Future<Duration>.delayed(const Duration(milliseconds: 300));
 
       final SerializableFinder user = find.byValueKey('user-Chimple');
       await driver.tap(user);
@@ -43,10 +43,9 @@ void main() {
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 4));
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       bool scroll = true;
       final SerializableFinder menuItem = find.byValueKey('tables');
-
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
         await new Future<Duration>.delayed(const Duration(seconds: 1));
@@ -73,7 +72,7 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
-  test('playing the game hema', () async {
+  test('playing the game', () async {
     final Completer<Null> completer = new Completer<Null>();
     final SerializableFinder question=find.byValueKey('question');
     await new Future<Null>.delayed(kWaitBetweenActions);
@@ -91,7 +90,7 @@ void main() {
        if (result > 10) {
           mul = result % 10;
           print(mul);
-          List list=new List();
+         // List list=new List();
           //list[0]=mul;
           mul1 = (result ~/ 10);
           print(mul1);

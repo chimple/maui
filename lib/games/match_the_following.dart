@@ -8,24 +8,29 @@ class MatchTheFollowing extends StatefulWidget {
   Function onEnd;
   int iteration;
   Function function;
-  
-  MatchTheFollowing(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.function,
-      })
+
+  MatchTheFollowing({
+    key,
+    this.onScore,
+    this.onProgress,
+    this.onEnd,
+    this.iteration,
+    this.function,
+  })
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _MatchTheFollowingState();
 }
 
+enum Status {
+  ColorChange,
+  Hidden,
+}
+
 class _MatchTheFollowingState extends State<MatchTheFollowing> {
   int c = 0;
   int start = 0, increament = 0;
-  bool _next = false;//_active=false;
+  bool _next = false;
   final List<String> _leftSideletters = [
     'A',
     'B',
@@ -89,11 +94,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
   int attem = 0;
   int _nextTask = 5;
   String text1, text2;
-  bool _active=true;
+  bool _active = true;
   @override
   Widget build(BuildContext context) {
-    var card;
-    //print("parent build::");
+    print("parent build::");
     return new Expanded(
       child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +108,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
                   child: _buildLeftSide(context),
                 ),
                 new Padding(
-                  padding: const EdgeInsets.all(80.0),
+                  padding: const EdgeInsets.all(100.0),
                 ),
                 new Expanded(child: _buildRightSide(context)),
               ],
@@ -115,24 +119,18 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
 
   @override
   void initState() {
-    //print("first initState method");
+    print("first initState method");
     super.initState();
     for (var i = start; i < _leftSideletters.length; i++) {
       _shuffledLetters.addAll(
           _leftSideletters.skip(i).take(_nextTask).toList(growable: false)
             ..shuffle());
-      // _shuffledLetters.add(_leftSideletters[i]);
-      // _shuffledLetters1.add(_rightSideLetters[i]);
       _shuffledLetters1.addAll(
           _rightSideLetters.skip(i).take(_nextTask).toList(growable: false)
             ..shuffle());
     }
-    _lettersLeft =
-        _shuffledLetters.sublist(start, _nextTask + increament);
-    _lettersRight =
-        _shuffledLetters1.sublist(start, _nextTask + increament);
-    // _lettersLeft.shuffle();
-    // _lettersRight.shuffle();
+    _lettersLeft = _shuffledLetters.sublist(start, _nextTask + increament);
+    _lettersRight = _shuffledLetters1.sublist(start, _nextTask + increament);
   }
 
   Widget _buildLeftSide(BuildContext context) {
@@ -141,7 +139,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
     flag1 = 1;
     List<TableRow> rows = new List<TableRow>();
     List<Widget> cells;
-    for (var i = start; i < _nextTask + increament; ++i) {
+    for (var i = 0; i < _nextTask; ++i) {
       cells = _lettersLeft
           .skip(i)
           .take(1)
@@ -157,24 +155,23 @@ class _MatchTheFollowingState extends State<MatchTheFollowing> {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
-        
+        active: _active,
         onPress: () {
-          setState((){
-            if (text!='')
-          _active=false;
-         });
-          _chageColor();
+          color(index);
           indexText1 = _lettersLeft.indexOf(text);
           text1 = text;
           print("Left Index:: $indexText1");
           //setState(() {});
         });
   }
-_chageColor() {
-  if (text1!=''){
-    
+
+  void color(int getText) {
+    // if (getText==1){
+    //   setState((){
+    //     _active=false;
+    //   });
+    // }
   }
-}
   Widget _buildRightSide(BuildContext context) {
     // print("Build Right side::");
     int j = 5;
@@ -209,22 +206,23 @@ _chageColor() {
             print("match::");
             attem++;
             widget.onScore(attem);
+            widget.onProgress(attem/5);
           }
-          widget.onProgress(1);
           if (attem == 5) {
             print("change::");
-            new Future.delayed(const Duration(milliseconds: 250), () {
-              
-            });
-            print("left:: $_lettersLeft");
-            print("right:: $_lettersRight");
+            //new Future.delayed(const Duration(milliseconds: 250), () {});
             attem = 0;
             _next = true;
+            setState((){
+              _lettersLeft = _shuffledLetters.sublist(5,10);
+              _lettersRight = _shuffledLetters1.sublist(5, 10);
+            });
+           print("left:: $_lettersLeft");
+           print("right:: $_lettersRight");
           }
           if (_next == true) {
             _next = false;
           }
-  
         });
   }
 }
@@ -234,14 +232,14 @@ class MyButton extends StatefulWidget {
     Key key,
     this.text,
     this.onPress,
-    this.active:true,
-    this.state,
+    this.active: true,
+    this.status,
   })
       : super(key: key);
   final String text;
   final VoidCallback onPress;
   bool active;
-  State state;
+  Status status;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -249,9 +247,8 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   int _default = 600;
-  String _locationOfList;
-  AnimationController controller,controller1;
-  Animation<double> animationInvisible, commonAnimation,animationShake;
+  AnimationController controller, controller1;
+  Animation<double> animationInvisible, commonAnimation, animationShake;
 
   initState() {
     // print("2nd initState::");
@@ -261,8 +258,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 400), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeIn);
-    animationShake = 
-        new Tween(begin: 0.0, end: 10.0).animate(controller);
+    animationShake = new Tween(begin: 0.0, end: 1.0).animate(controller);
     controller.addStatusListener((state) {
       if (state == AnimationStatus.dismissed) {
         if (widget.text == null) {
@@ -286,10 +282,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
       controller.reverse();
-    }
-    else {
-
-    }
+    } else {}
     //print("didUpadataeWidget::");
   }
 
@@ -307,25 +300,29 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     // print("Child Build method");
     Size media = MediaQuery.of(context).size;
     double _height, _width;
-    _height = media.height / 20;
+    _height = media.height / 18;
+    _width = media.width / 20;
     return new Padding(
-      padding: new EdgeInsets.all(9.0),
+      padding: new EdgeInsets.all(5.0),
       child: new ScaleTransition(
         scale: animationInvisible,
         child: new Container(
-          decoration: new BoxDecoration(),    
+            decoration: new BoxDecoration(
+              color: widget.active ? Colors.green[400] : Colors.green[600],
+            ),
             height: _height,
-            width: 50.0,
+            width: _width,
             child: new RaisedButton(
                 elevation: 8.0,
+                splashColor: Colors.red,
+                
                 //splashColor: Colors.green[_default],
                 onPressed: () => widget.onPress(),
                 padding: new EdgeInsets.only(left: animationShake.value ?? 0),
                 color: widget.active ? Colors.green[600] : Colors.green[400],
                 shape: new RoundedRectangleBorder(
-                borderRadius:
-                const BorderRadius.all(const Radius.circular(8.0))
-                ),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(_displayText,
                     style:
                         new TextStyle(color: Colors.white, fontSize: 30.0)))),
