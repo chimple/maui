@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'dart:ui' show window;
 import 'dart:math';
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
 var quest = 5;
 var result=0;
 
@@ -38,10 +40,11 @@ class AbacusState extends State<Abacus> {
     '1',
     ];
   final int _size = 3;
- 
+  
   List<String> _shuffledLetters = [];
   List _Index = [];
   List<String> _letters;
+   Tuple4<int,String,int,int> data;
  final List<String> _allLetters1=[
     '','','',
   ];
@@ -54,6 +57,12 @@ var u=1;
   @override
   void initState() {
     super.initState();
+   _initBoard();
+  }
+
+  void _initBoard() async{
+     data= await  fetchMathData(widget.gameCategoryId);
+    print('data is $data');
      for (var i = 0; i < 3; i ++) {
       _shuffledLetters.addAll(
           _allLetters1.skip(0).take(_size).toList(growable: true)
@@ -69,7 +78,7 @@ var u=1;
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _shuffledLetters.length);
     
-   
+   print(' data from database${fetchMathData(1)}');
   }
 
   Widget _buildItem(int index, String text) {
@@ -80,6 +89,7 @@ var u=1;
       text: text,
       index: index,
       onac: (index) {
+      
           print('control transfer');
           print('index$index');
            setState((){
@@ -188,10 +198,12 @@ class MyButton extends StatefulWidget {
 List<String> letters;
 int index;
   @override
+  
   _MyButtonState createState() => new _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+  
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
@@ -201,6 +213,7 @@ String let='';
  var val=0;
   initState() {
     super.initState();
+   
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller =new
