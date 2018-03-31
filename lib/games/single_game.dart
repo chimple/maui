@@ -3,7 +3,7 @@ import 'package:maui/games/reflex.dart';
 import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/abacus.dart';
-import 'package:maui/games/drawing.dart';
+import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/Memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/bingo.dart';
@@ -129,7 +129,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: _onEnd,
             iteration: _iteration);
         break;
-      case 'identify_game':
+      case 'identify':
         return new IdentifyGame(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -204,7 +204,8 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: _onEnd,
-            iteration: _iteration);
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;       
     }
     return null;

@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:maui/db/entity/unit.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -21,10 +20,10 @@ class Reflex extends StatefulWidget {
 
 class ReflexState extends State<Reflex> {
   int _size = 4;
-  List<Unit> _allLetters;
+  List<String> _allLetters;
   var _currentIndex = 0;
-  List<Unit> _shuffledLetters = [];
-  List<Unit> _letters;
+  List<String> _shuffledLetters = [];
+  List<String> _letters;
   bool _isLoading = true;
 
   @override
@@ -59,12 +58,12 @@ class ReflexState extends State<Reflex> {
     }
   }
 
-  Widget _buildItem(int index, Unit unit) {
+  Widget _buildItem(int index, String text) {
     return new MyButton(
         key: new ValueKey<int>(index),
-        unit: unit,
+        text: text,
         onPress: () {
-          if (unit == _allLetters[_currentIndex]) {
+          if (text == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
                   _size * _size + _currentIndex < _allLetters.length
@@ -88,7 +87,6 @@ class ReflexState extends State<Reflex> {
     print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-    print(_isLoading);
     if(_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -111,9 +109,9 @@ class ReflexState extends State<Reflex> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.unit, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress}) : super(key: key);
 
-  final Unit unit;
+  final String text;
   final VoidCallback onPress;
 
   @override
@@ -127,8 +125,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-    print("_MyButtonState.initState: ${widget.unit}");
-    _displayText = widget.unit?.name;
+    print("_MyButtonState.initState: ${widget.text}");
+    _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
@@ -136,10 +134,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (widget.unit != null) {
-            setState(() => _displayText = widget.unit.name);
+          if (widget.text != null) {
+            setState(() => _displayText = widget.text);
             controller.forward();
-          }
+          } 
         }
       });
     controller.forward();
@@ -148,13 +146,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.unit == null && widget.unit != null) {
-      _displayText = widget.unit.name;
+    if (oldWidget.text == null && widget.text != null) {
+      _displayText = widget.text;
       controller.forward();
-    } else if (oldWidget.unit != widget.unit) {
+    } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.unit} ${oldWidget.unit}");
+    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override

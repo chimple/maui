@@ -16,36 +16,67 @@ class Tables extends StatefulWidget {
   State<StatefulWidget> createState() => new _TablesState();
 }
 
-class _TablesState extends State<Tables> {
+class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
-  String str = "";
+  String _question = "";
+  String _result = "";
+  int count = 0;
+  Animation animation;
+  AnimationController animationController;
+
   final List<String> _allLetters = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '<-',
-      '0',
-      'X'
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'C',
+    '0',
+    'submit',
+  ];
+
+  final List<int> _data = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
   ];
   List<String> _letters;
 
   @override
   void initState() {
+    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     super.initState();
     _initBoard();
   }
 
   void _initBoard() {
+
     _letters = _allLetters.sublist(0, _size * (_size + 1));
-    var i = 2;
-    var j = 3;
-    str= "$i X $j";
+    int temp = _data[count];
+    _question= "$temp X $temp";
+  }
+
+  void _myAnim() {
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+    animationController.forward();
+    print('Pushed the Button');
   }
 
   Widget _buildItem(int index, String text) {
@@ -54,23 +85,41 @@ class _TablesState extends State<Tables> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
+          if(text=='C') {
+            setState(() {
+              _result = _result.substring(0, _result.length - 1);
+            });
+          }
+          else if(text == 'submit') {
+            if(int.parse(_result) == (_data[count] * _data[count])) {
+              widget.onScore(1);
+              setState(() {
+                count = count + 1;
+                int temp = _data[count];
+                _question = "$temp X $temp";
+                _result = "";
+              });
+            }
+            else{
+              _myAnim();
+              new Future.delayed(const Duration(milliseconds: 700), () {
+                setState((){
+                  _result = "";
+                });
+                animationController.stop();
+              });
+            }
+          }
+          else {
+            setState(() {
+              if (_result.length < 3) {
+                _result = _result + text;
+              }
+            });
+          }
         });
   }
 
-  Widget subTile = new Container (
-    padding: new EdgeInsets.all(45.0),
-    alignment: Alignment.center,
-    color: new Color(0X00000000),
-    child: new Text(
-      "$str",
-      style: new TextStyle(
-        fontSize: 60.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        decorationStyle: TextDecorationStyle.wavy,
-      ),
-    ),
-  );
 
   @override
   void didUpdateWidget(Tables oldWidget) {
@@ -91,27 +140,39 @@ class _TablesState extends State<Tables> {
     }
 
     return new Container(
+      alignment: Alignment.bottomCenter,
       child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             new Container (
-            padding: new EdgeInsets.all(45.0),
-            alignment: Alignment.center,
-            color: new Color(0X00000000),
-            child: new Text(
-              '$str',
-              style: new TextStyle(
-                fontSize: 60.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                decorationStyle: TextDecorationStyle.wavy,
+              height: 125.0,
+              width: 800.0,
+              alignment: Alignment.center,
+              color: new Color(0X00000000),
+              child: new Text(
+                '$_question',
+                key: new Key('question'),
+                style: new TextStyle(
+                  fontSize: 60.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
+            new TextAnimation(
+              animation: animation,
+              text: _result
             ),
             new Table(children: rows),
           ]
-    ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 
@@ -180,6 +241,30 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: new Text(_displayText,
                         style: new TextStyle(
                             color: Colors.white, fontSize: 24.0))))));
+  }
+}
+
+class TextAnimation extends AnimatedWidget {
+  TextAnimation({Key key, Animation animation, this.text}) : super(key: key, listenable: animation);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    Animation animation = listenable;
+    return new Center(
+      child: new Container(
+        height: 60.0,
+        width: 120.0,
+        alignment: Alignment.center,
+        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: 20.0),
+        child:  new Text(text,
+            style: new TextStyle(
+            color: Colors.white,
+            fontSize: 40.0,
+            fontWeight: FontWeight.bold,)),
+            color: Colors.teal,
+        ),
+    );
   }
 }
 
