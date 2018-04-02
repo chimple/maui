@@ -87,16 +87,19 @@ class _DropTargetState extends State<DropTarget> {
 //                             child: new Text(widget.item.country)),
                         new Center(
                             child: new SizedBox(
-                                 width: 54.0,
-                                 height: 54.0,
+                                //  width: 54.0,
+                                //  height: 54.0,
                                  child:  new Center(
                                       child: new Text(
                                         widget.selection.city,
+                                        style: new TextStyle(
+                                        color: Colors.black,fontSize: 23.0,
+                                        )
                                       ),
                                     ))),
                       ])
                     : 
-                    new Center(child: new Text(widget.item.country))));
+                    new Center(child: new Text(widget.item.country,style: new TextStyle(fontSize: 23.0),))));
       });
 
   void onDragCancelled(Velocity velocity, Offset offset) {
@@ -110,7 +113,7 @@ class _DropTargetState extends State<DropTarget> {
   Widget getCenteredAvatar() =>  new DragAvatarBorder(
         new Text(widget.selection?.city,
             style: new TextStyle(
-                fontSize: 20.0,
+                fontSize: 30.0,
                 color: Colors.white,
                 decoration: TextDecoration.none)),
         size: widget.itemSize,
