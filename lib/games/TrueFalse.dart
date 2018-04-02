@@ -1,54 +1,26 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-
-class Question {
-  final String question;
-  final bool answer;
-
-  Question(this.question, this.answer);
-}
-
-class Quiz {
-  List<Question> _questions;
-  int _currentQuestionIndex = -1;
-  int _score = 0;
-
-  Quiz(this._questions) {
-    _questions.shuffle();
-  }
-
-  List<Question> get questions => _questions;
-  int get length => _questions.length;
-  int get questionNumber => _currentQuestionIndex+1;
-  int get score => _score;
-
-  Question get nextQuestion {
-    _currentQuestionIndex++;
-    if (_currentQuestionIndex >= length) return null;
-    return _questions[_currentQuestionIndex];
-  }
-}
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
 
 class QuizPage extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration}) : super(key: key);
+
+  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
   
   @override
   State createState() => new QuizPageState();
 }
 
 class QuizPageState extends State<QuizPage> {
-
-  Question currentQuestion;
-  Quiz quiz = new Quiz([
-    new Question("Apple", true),
-    new Question("Zbera", false),
-    new Question("Kite", true)
-  ]);
+  bool _isLoading = true;
+ 
+ Tuple2<String, bool> _allques;
   String questionText;
   int questionNumber;
   bool isCorrect;
@@ -57,22 +29,26 @@ class QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-    currentQuestion = quiz.nextQuestion;
-    questionText = currentQuestion.question;
-    questionNumber = quiz.questionNumber;
+    _initBoard();
   }
 
-  void handleAnswer(bool answer) {
-    isCorrect = (currentQuestion.answer == answer);
-    if (isCorrect) {
-      widget.onScore(1);
-      widget.onProgress((questionNumber/quiz.length)*2);
-    }
-    this.setState(() {
-      overlayShouldBeVisible = true;
-    });
+  void _initBoard() async {
+    setState(()=>_isLoading=true);
+    _allques =  await fetchTrueOrFalse(widget.gameCategoryId);
+    print("this is my data  $_allques");
+   // print(_allques.item2);
   }
 
+  // void handleAnswer(bool answer) {
+  //   isCorrect = (_allques.item2 == answer);
+  //   if (isCorrect) {
+  //     widget.onScore(1);
+  //     widget.onProgress(1.0);
+  //   }
+  //   this.setState(() {
+  //     overlayShouldBeVisible = true;
+  //   });
+  // }
   
     @override
   Widget build(BuildContext context) {
@@ -84,7 +60,7 @@ class QuizPageState extends State<QuizPage> {
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
-        new Column(
+        ht > wd ? new Column(
         mainAxisAlignment: MainAxisAlignment.end,       
            children: <Widget>[
              new Column(
@@ -93,52 +69,96 @@ class QuizPageState extends State<QuizPage> {
                mainAxisAlignment: MainAxisAlignment.end,
              children: <Widget>[ 
                new Padding(
-              padding: new EdgeInsets.all(wd*0.15),
+              padding: new EdgeInsets.all(ht*0.12),
             ),
-               new QuestionText(questionText, questionNumber),
+
+            //  new QuestionText(_allques.item1),
+
               new Padding(
-              padding: new EdgeInsets.all(85.0),
+              padding: new EdgeInsets.all(ht*0.08),
             ),
              ]
            ),
               ],
              ),
+
             new Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  // new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  new AnswerButton(false, () => handleAnswer(false)), 
+                  // new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),// false button
                 ],
             ),
             new Padding(
-              padding: new EdgeInsets.only(bottom: 100.0),
+              padding: new EdgeInsets.only(bottom: ht * 0.1),
+            ),
+          ],
+        ) : new Column(
+        mainAxisAlignment: MainAxisAlignment.end,       
+           children: <Widget>[
+             new Column(
+               mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[new Column( 
+               mainAxisAlignment: MainAxisAlignment.end,
+             children: <Widget>[ 
+               new Padding(
+              padding: new EdgeInsets.all(ht * 0.06),
+            ),
+               
+
+              new Padding(
+              padding: new EdgeInsets.all(ht*0.05),
+            ),
+             ]
+           ),
+              ],
+             ),
+
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                new Padding(
+                    padding: new EdgeInsets.only(left: wd * 0.015),
+                  ),
+                  // new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new Padding(
+                    padding: new EdgeInsets.only(right: wd * 0.015),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.only(left: wd * 0.015),
+                  ),
+                  // new AnswerButton(false, () => handleAnswer(false)), 
+                  new Padding(
+                    padding: new EdgeInsets.only(right: wd * 0.015),
+                  ),// false button
+                ],
+            ),
+
+            new Padding(
+              padding: new EdgeInsets.only(bottom: ht * 0.01),
             ),
           ],
         ),
+
+
         overlayShouldBeVisible == true ? new Container(
           height: (ht - 86.0),
           width: wd,
           child: new CorrectWrongOverlay(
             isCorrect,
-                () {
-              if (quiz.length == questionNumber) {
+                () {             
                 widget.onEnd();
-                return;
-              }
-              currentQuestion = quiz.nextQuestion;
               this.setState(() {
                 overlayShouldBeVisible = false;
-                questionText = currentQuestion.question;
-                questionNumber = quiz.questionNumber;
               });
             }
         )) : new Container()
@@ -153,9 +173,8 @@ class QuizPageState extends State<QuizPage> {
 class QuestionText extends StatefulWidget {
 
   final String _question;
-  final int _questionNumber;
 
-  QuestionText(this._question, this._questionNumber);
+  QuestionText(this._question);
 
   @override
   State createState() => new QuestionTextState();
@@ -192,6 +211,9 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 
   @override
   Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
     return new Material(
       child: new Container(
             decoration: new BoxDecoration(
@@ -199,9 +221,18 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
               color: const Color(0xFF03A9F4),
                 ),
                 padding: new EdgeInsets.all(20.0),
-            child: new Text( widget._question,
+            child: new Container(
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(25.0),
+              color: const Color(0xFF03A9F4),
+                ),
+                padding: new EdgeInsets.all(20.0),
+            child: ht>wd ? new Text( widget._question,
               style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ) : new Text( widget._question,
+              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
             ),
+          ),
           ),
     );
   }
