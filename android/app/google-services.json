@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "648923185726",
+    "firebase_url": "https://maui-c3e69.firebaseio.com",
+    "project_id": "maui-c3e69",
+    "storage_bucket": "maui-c3e69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648923185726:android:9358b68225d8d8a9",
+        "android_client_info": {
+          "package_name": "sutara.org.maui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648923185726-05hv7r0va353sr1nlle58j79t3rn3817.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeMSs_eT5-dAL1IYZMgKldvUwHpLYH1m4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

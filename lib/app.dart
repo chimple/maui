@@ -4,6 +4,8 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
+import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class MauiApp extends StatelessWidget {
   @override
@@ -25,6 +27,15 @@ class MauiApp extends StatelessWidget {
     final List<String> path = settings.name.split('/');
     print(path);
     if (path[0] != '') return null;
+
+    if (path[1] == 'chat' && path.length == 4) {
+      return new MaterialPageRoute<Null>(
+          settings: settings,
+          builder: (BuildContext context) => new ChatScreen(
+              myId: AppStateContainer.of(context).state.loggedInUser.id,
+              friendId: path[2],
+              friendImageUrl: path[3].replaceAll(new RegExp(r'&#x2F;'), '/'),));
+    }
 
     if (path[1] == 'categories' && path.length == 3) {
       return new MaterialPageRoute<Null>(
