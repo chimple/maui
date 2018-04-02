@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/chat/chat_list_view.dart';
+import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/story/story_list_view.dart';
 
@@ -28,7 +28,7 @@ class TabHome extends StatelessWidget {
         ),
         body: new TabBarView(
           children: <Widget>[
-            new ChatListView(),
+            new FriendListView(),
             new GameListView(),
             new StoryListView()
           ],
