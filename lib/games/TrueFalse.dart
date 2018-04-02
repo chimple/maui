@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
@@ -22,7 +23,7 @@ class QuizPageState extends State<QuizPage> {
  
  Tuple2<String, bool> _allques;
   String questionText;
-  int questionNumber;
+  bool tf;
   bool isCorrect;
   bool overlayShouldBeVisible = false;
 
@@ -36,25 +37,39 @@ class QuizPageState extends State<QuizPage> {
     setState(()=>_isLoading=true);
     _allques =  await fetchTrueOrFalse(widget.gameCategoryId);
     print("this is my data  $_allques");
-   // print(_allques.item2);
+    print(_allques.item1);
+    questionText = _allques.item1;
+    print(_allques.item2);
+    tf = _allques.item2;
+    setState(()=>_isLoading=false);
   }
 
-  // void handleAnswer(bool answer) {
-  //   isCorrect = (_allques.item2 == answer);
-  //   if (isCorrect) {
-  //     widget.onScore(1);
-  //     widget.onProgress(1.0);
-  //   }
-  //   this.setState(() {
-  //     overlayShouldBeVisible = true;
-  //   });
-  // }
+  void handleAnswer(bool answer) {
+    isCorrect = (tf == answer);
+    if (isCorrect) {
+      widget.onScore(1);
+      widget.onProgress(1.0);
+    }
+    this.setState(() {
+      overlayShouldBeVisible = true;
+    });
+  }
   
     @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
     double ht=media.height;
     double wd = media.width;
+    print("Question text here $questionText");
+    print("Answer here $tf");
+
+    if(_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }    
 
     return new Material(
       child: new Stack(
@@ -72,7 +87,7 @@ class QuizPageState extends State<QuizPage> {
               padding: new EdgeInsets.all(ht*0.12),
             ),
 
-            //  new QuestionText(_allques.item1),
+             new QuestionText(questionText),
 
               new Padding(
               padding: new EdgeInsets.all(ht*0.08),
@@ -88,11 +103,11 @@ class QuizPageState extends State<QuizPage> {
                 new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  // new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  // new AnswerButton(false, () => handleAnswer(false)), 
+                  new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),// false button
@@ -129,17 +144,17 @@ class QuizPageState extends State<QuizPage> {
                 new Padding(
                     padding: new EdgeInsets.only(left: wd * 0.015),
                   ),
-                  // new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
                     padding: new EdgeInsets.only(right: wd * 0.015),
                   ),
                   new Padding(
                     padding: new EdgeInsets.only(left: wd * 0.015),
                   ),
-                  // new AnswerButton(false, () => handleAnswer(false)), 
+                  new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
                     padding: new EdgeInsets.only(right: wd * 0.015),
-                  ),// false button
+                  ),
                 ],
             ),
 
@@ -151,15 +166,17 @@ class QuizPageState extends State<QuizPage> {
 
 
         overlayShouldBeVisible == true ? new Container(
-          height: (ht - 86.0),
+          height: ht,
           width: wd,
           child: new CorrectWrongOverlay(
             isCorrect,
-                () {             
+                () {   
+                  new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
+              });
               this.setState(() {
                 overlayShouldBeVisible = false;
-              });
+              });          
             }
         )) : new Container()
       ],
