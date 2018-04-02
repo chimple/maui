@@ -29,6 +29,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   List<Tuple4<int, String, int, int>> _tableShuffledData = [];
   Animation animation;
   AnimationController animationController;
+  List<List<int>> shant;
 
   final List<String> _allLetters = [
     '1',
@@ -58,6 +59,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
 
     setState(()=>_isLoading=true);
     _tableData = await fetchTablesData(widget.gameCategoryId);
+    print("shant data $shant");
     _tableShuffledData = [];
 
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
@@ -172,8 +174,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       rows.add(new TableRow(children: cells));
     }
 
-    return new Container(
-      alignment: Alignment.bottomCenter,
+    return new Center(
       child: new Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
