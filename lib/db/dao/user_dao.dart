@@ -27,7 +27,6 @@ class UserDao {
 
   Future<User> insert(User user, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
-    user.id = new Uuid().v1();
     await db.insert(User.table, user.toMap());
     return user;
   }
