@@ -17,13 +17,10 @@ class QuizPage extends StatefulWidget {
   State createState() => new QuizPageState();
 }
 
-class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin {
+class QuizPageState extends State<QuizPage> {
   bool _isLoading = true;
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
-
  
-  Tuple2 _allques;
+ Tuple2<String, bool> _allques;
   String questionText;
   int questionNumber;
   bool isCorrect;
@@ -31,45 +28,27 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
 
   @override
   void initState() {
-    super.initState();  
-    _initBoard(); 
-    _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {}));
-    _fontSizeAnimationController.forward(); 
-  }
-
-   @override
-  void dispose() {
-    _fontSizeAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(QuizPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+    super.initState();
     _initBoard();
-    if (oldWidget._allques.item1 != _allques.item1) {
-      _fontSizeAnimationController.reset();
-      _fontSizeAnimationController.forward();
-    }
   }
 
   void _initBoard() async {
     setState(()=>_isLoading=true);
     _allques =  await fetchTrueOrFalse(widget.gameCategoryId);
+    print("this is my data  $_allques");
+   // print(_allques.item2);
   }
 
-  void handleAnswer(bool answer) {
-    isCorrect = (_allques.item2 == answer);
-    if (isCorrect) {
-      widget.onScore(1);
-      widget.onProgress(1.0);
-    }
-    this.setState(() {
-      overlayShouldBeVisible = true;
-    });
-  }
+  // void handleAnswer(bool answer) {
+  //   isCorrect = (_allques.item2 == answer);
+  //   if (isCorrect) {
+  //     widget.onScore(1);
+  //     widget.onProgress(1.0);
+  //   }
+  //   this.setState(() {
+  //     overlayShouldBeVisible = true;
+  //   });
+  // }
   
     @override
   Widget build(BuildContext context) {
@@ -92,18 +71,8 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
                new Padding(
               padding: new EdgeInsets.all(ht*0.12),
             ),
-               new Container(
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFF03A9F4),
-                ),
-                padding: new EdgeInsets.all(20.0),
-            child: ht>wd ? new Text( _allques.item1,
-              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ) : new Text( _allques.item1,
-              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ),
-          ),
+
+            //  new QuestionText(_allques.item1),
 
               new Padding(
               padding: new EdgeInsets.all(ht*0.08),
@@ -119,11 +88,11 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
                 new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  // new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  new AnswerButton(false, () => handleAnswer(false)), 
+                  // new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),// false button
@@ -144,18 +113,7 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
                new Padding(
               padding: new EdgeInsets.all(ht * 0.06),
             ),
-               new Container(
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFF03A9F4),
-                ),
-                padding: new EdgeInsets.all(20.0),
-            child: ht>wd ? new Text( _allques.item1,
-              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ) : new Text( _allques.item1,
-              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ),
-          ),
+               
 
               new Padding(
               padding: new EdgeInsets.all(ht*0.05),
@@ -171,14 +129,14 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
                 new Padding(
                     padding: new EdgeInsets.only(left: wd * 0.015),
                   ),
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  // new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
                     padding: new EdgeInsets.only(right: wd * 0.015),
                   ),
                   new Padding(
                     padding: new EdgeInsets.only(left: wd * 0.015),
                   ),
-                  new AnswerButton(false, () => handleAnswer(false)), 
+                  // new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
                     padding: new EdgeInsets.only(right: wd * 0.015),
                   ),// false button
@@ -211,6 +169,74 @@ class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin 
     
 }
 
+
+class QuestionText extends StatefulWidget {
+
+  final String _question;
+
+  QuestionText(this._question);
+
+  @override
+  State createState() => new QuestionTextState();
+}
+
+class QuestionTextState extends State<QuestionText> with SingleTickerProviderStateMixin {
+
+  Animation<double> _fontSizeAnimation;
+  AnimationController _fontSizeAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
+    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
+    _fontSizeAnimation.addListener(() => this.setState(() {}));
+    _fontSizeAnimationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _fontSizeAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(QuestionText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget._question != widget._question) {
+      _fontSizeAnimationController.reset();
+      _fontSizeAnimationController.forward();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
+    return new Material(
+      child: new Container(
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(25.0),
+              color: const Color(0xFF03A9F4),
+                ),
+                padding: new EdgeInsets.all(20.0),
+            child: new Container(
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(25.0),
+              color: const Color(0xFF03A9F4),
+                ),
+                padding: new EdgeInsets.all(20.0),
+            child: ht>wd ? new Text( widget._question,
+              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ) : new Text( widget._question,
+              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ),
+          ),
+          ),
+    );
+  }
+}
 
 class AnswerButton extends StatelessWidget {
 
