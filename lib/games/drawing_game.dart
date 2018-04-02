@@ -35,6 +35,7 @@ class DrawScreen extends State<Drawing> {
           new Column(children: <Widget>[
             image,
             new Text("APPLE",
+                key: new Key('imgtext'),
                 style:
                     new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
             new Row(
@@ -66,7 +67,8 @@ class DrawScreen extends State<Drawing> {
               new FittedBox(
                 fit: BoxFit.fill,
                 // otherwise the logo will be tiny
-                child: new MyDrawPage(_padController,),
+                child: new MyDrawPage(_padController),
+                key: new Key('draw_screen'),
               ),
             ],
           ),

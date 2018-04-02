@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
+const Duration kWaitBetweenActions = const Duration(milliseconds: 200);
 
 void main() {
   group('login', () {
@@ -12,10 +12,10 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    tearDownAll(() async {
-      if (driver != null)
-        await driver.close();
-    });
+   tearDownAll(() async {
+     if (driver != null)
+       await driver.close();
+   });
 
     test('signin', () async {
 
@@ -40,6 +40,7 @@ void main() {
       completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
+});
 
-  });
+
 }
