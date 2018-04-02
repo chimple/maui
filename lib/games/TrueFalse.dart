@@ -1,54 +1,29 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-
-class Question {
-  final String question;
-  final bool answer;
-
-  Question(this.question, this.answer);
-}
-
-class Quiz {
-  List<Question> _questions;
-  int _currentQuestionIndex = -1;
-  int _score = 0;
-
-  Quiz(this._questions) {
-    _questions.shuffle();
-  }
-
-  List<Question> get questions => _questions;
-  int get length => _questions.length;
-  int get questionNumber => _currentQuestionIndex+1;
-  int get score => _score;
-
-  Question get nextQuestion {
-    _currentQuestionIndex++;
-    if (_currentQuestionIndex >= length) return null;
-    return _questions[_currentQuestionIndex];
-  }
-}
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
 
 class QuizPage extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration}) : super(key: key);
+
+  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
   
   @override
   State createState() => new QuizPageState();
 }
 
-class QuizPageState extends State<QuizPage> {
+class QuizPageState extends State<QuizPage> with SingleTickerProviderStateMixin {
+  bool _isLoading = true;
+  Animation<double> _fontSizeAnimation;
+  AnimationController _fontSizeAnimationController;
 
-  Question currentQuestion;
-  Quiz quiz = new Quiz([
-    new Question("Apple", true),
-    new Question("Zbera", false),
-    new Question("Kite", true)
-  ]);
+ 
+  Tuple2 _allques;
   String questionText;
   int questionNumber;
   bool isCorrect;
@@ -56,23 +31,45 @@ class QuizPageState extends State<QuizPage> {
 
   @override
   void initState() {
-    super.initState();
-    currentQuestion = quiz.nextQuestion;
-    questionText = currentQuestion.question;
-    questionNumber = quiz.questionNumber;
+    super.initState();  
+    _initBoard(); 
+    _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
+    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
+    _fontSizeAnimation.addListener(() => this.setState(() {}));
+    _fontSizeAnimationController.forward(); 
+  }
+
+   @override
+  void dispose() {
+    _fontSizeAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(QuizPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _initBoard();
+    if (oldWidget._allques.item1 != _allques.item1) {
+      _fontSizeAnimationController.reset();
+      _fontSizeAnimationController.forward();
+    }
+  }
+
+  void _initBoard() async {
+    setState(()=>_isLoading=true);
+    _allques =  await fetchTrueOrFalse(widget.gameCategoryId);
   }
 
   void handleAnswer(bool answer) {
-    isCorrect = (currentQuestion.answer == answer);
+    isCorrect = (_allques.item2 == answer);
     if (isCorrect) {
       widget.onScore(1);
-      widget.onProgress((questionNumber/quiz.length)*2);
+      widget.onProgress(1.0);
     }
     this.setState(() {
       overlayShouldBeVisible = true;
     });
   }
-
   
     @override
   Widget build(BuildContext context) {
@@ -84,7 +81,7 @@ class QuizPageState extends State<QuizPage> {
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
-        new Column(
+        ht > wd ? new Column(
         mainAxisAlignment: MainAxisAlignment.end,       
            children: <Widget>[
              new Column(
@@ -93,52 +90,117 @@ class QuizPageState extends State<QuizPage> {
                mainAxisAlignment: MainAxisAlignment.end,
              children: <Widget>[ 
                new Padding(
-              padding: new EdgeInsets.all(wd*0.15),
+              padding: new EdgeInsets.all(ht*0.12),
             ),
-               new QuestionText(questionText, questionNumber),
+               new Container(
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(25.0),
+              color: const Color(0xFF03A9F4),
+                ),
+                padding: new EdgeInsets.all(20.0),
+            child: ht>wd ? new Text( _allques.item1,
+              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ) : new Text( _allques.item1,
+              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ),
+          ),
+
               new Padding(
-              padding: new EdgeInsets.all(85.0),
+              padding: new EdgeInsets.all(ht*0.08),
             ),
              ]
            ),
               ],
              ),
+
             new Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),
                   new AnswerButton(true, () => handleAnswer(true)), //true button
                   new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),
                   new AnswerButton(false, () => handleAnswer(false)), 
                   new Padding(
-                    padding: new EdgeInsets.all(15.0),
+                    padding: new EdgeInsets.all(wd * 0.015),
                   ),// false button
                 ],
             ),
             new Padding(
-              padding: new EdgeInsets.only(bottom: 100.0),
+              padding: new EdgeInsets.only(bottom: ht * 0.1),
+            ),
+          ],
+        ) : new Column(
+        mainAxisAlignment: MainAxisAlignment.end,       
+           children: <Widget>[
+             new Column(
+               mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[new Column( 
+               mainAxisAlignment: MainAxisAlignment.end,
+             children: <Widget>[ 
+               new Padding(
+              padding: new EdgeInsets.all(ht * 0.06),
+            ),
+               new Container(
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(25.0),
+              color: const Color(0xFF03A9F4),
+                ),
+                padding: new EdgeInsets.all(20.0),
+            child: ht>wd ? new Text( _allques.item1,
+              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ) : new Text( _allques.item1,
+              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+            ),
+          ),
+
+              new Padding(
+              padding: new EdgeInsets.all(ht*0.05),
+            ),
+             ]
+           ),
+              ],
+             ),
+
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                new Padding(
+                    padding: new EdgeInsets.only(left: wd * 0.015),
+                  ),
+                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new Padding(
+                    padding: new EdgeInsets.only(right: wd * 0.015),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.only(left: wd * 0.015),
+                  ),
+                  new AnswerButton(false, () => handleAnswer(false)), 
+                  new Padding(
+                    padding: new EdgeInsets.only(right: wd * 0.015),
+                  ),// false button
+                ],
+            ),
+
+            new Padding(
+              padding: new EdgeInsets.only(bottom: ht * 0.01),
             ),
           ],
         ),
+
+
         overlayShouldBeVisible == true ? new Container(
           height: (ht - 86.0),
           width: wd,
           child: new CorrectWrongOverlay(
             isCorrect,
-                () {
-              if (quiz.length == questionNumber) {
+                () {             
                 widget.onEnd();
-                return;
-              }
-              currentQuestion = quiz.nextQuestion;
               this.setState(() {
                 overlayShouldBeVisible = false;
-                questionText = currentQuestion.question;
-                questionNumber = quiz.questionNumber;
               });
             }
         )) : new Container()
@@ -149,63 +211,6 @@ class QuizPageState extends State<QuizPage> {
     
 }
 
-
-class QuestionText extends StatefulWidget {
-
-  final String _question;
-  final int _questionNumber;
-
-  QuestionText(this._question, this._questionNumber);
-
-  @override
-  State createState() => new QuestionTextState();
-}
-
-class QuestionTextState extends State<QuestionText> with SingleTickerProviderStateMixin {
-
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {}));
-    _fontSizeAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _fontSizeAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(QuestionText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.reset();
-      _fontSizeAnimationController.forward();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Material(
-      child: new Container(
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFF03A9F4),
-                ),
-                padding: new EdgeInsets.all(20.0),
-            child: new Text( widget._question,
-              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ),
-          ),
-    );
-  }
-}
 
 class AnswerButton extends StatelessWidget {
 
