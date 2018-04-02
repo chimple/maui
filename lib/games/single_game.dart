@@ -43,19 +43,19 @@ class _SingleGameState extends State<SingleGame> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    print(media);
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Icon(Icons.ac_unit),
-        actions: <Widget>[
-          new Chip(label: new Text('$_score')),
-        ],
-      ),
+      appBar: new PreferredSize(
+          child: new Chip(
+              label: new Text('$_score')),
+          preferredSize: new Size(100.0, 20.0)),
       body: new Column(children: <Widget>[
         widget._gameMode == GameMode.timed
             ? new ProgressBar(
                 time: widget.playTime, onEnd: () => _onGameEnd(context))
             : new ProgressBar(progress: _progress),
-        buildSingleGame(context)
+        new Expanded(child: buildSingleGame(context))
       ]),
     );
   }
@@ -130,7 +130,7 @@ class _SingleGameState extends State<SingleGame> {
             iteration: _iteration,
             gameCategoryId : widget.gameCategoryId);
         break;
-      case 'identify_game':
+      case 'identify':
         return new IdentifyGame(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -204,8 +204,9 @@ class _SingleGameState extends State<SingleGame> {
         return new Memory(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd,
-            iteration: _iteration);
+            onEnd: _onEnd(context),
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;       
     }
     return null;
