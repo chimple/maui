@@ -85,5 +85,6 @@ class AppDatabase {
     fetchMathData(28).then((m)=>print(m));
     fetchTablesData(36).then((m)=>print(m));
     fetchFillNumberData(57, 4).then((f)=>print(f));
+    fetchCrosswordData(1).then((c)=>print(c));
   }
 }
