@@ -50,6 +50,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   AnimationController animationController;
   Tuple4<int, String, int, int> data;
   bool _isLoading = true;
+  String options;
 
   @override
   void initState() {
@@ -58,6 +59,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     super.initState();
     _initBoard();
+    if(num1%10==0 && num2%1==0)
+    {
+      options='one';
+    }
   }
 
   void _initBoard() async {
