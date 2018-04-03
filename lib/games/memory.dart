@@ -27,7 +27,6 @@ class MemoryState extends State<Memory> {
   List<Status> _statuses;
   Map<String,String> _data;
   bool _isLoading = true;
-  var _currentIndex = 0;
   var _matched = 0;
   var _progressCnt = 1;
   var _pressedTile ;
@@ -41,7 +40,6 @@ class MemoryState extends State<Memory> {
   }
 
   void _initBoard() async {
-    _currentIndex = 0;
     setState(()=>_isLoading=true);
 
     _data = await fetchPairData(widget.gameCategoryId , 8);
@@ -111,6 +109,12 @@ class MemoryState extends State<Memory> {
                _pressedTile = null;
                 cnt = 0;
                });
+
+               if(_matched ==8) {
+                  new Future.delayed(const Duration(milliseconds: 250), () {
+                    widget.onEnd();
+                });
+               }
                print("Pressed Statuses2: ${_statuses}"); 
                print("Matched");
             }
