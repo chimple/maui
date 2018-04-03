@@ -13,7 +13,9 @@ import 'package:maui/games/crossword.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/calculate_numbers.dart';
+import 'package:maui/games/fill_number.dart';
 import 'package:maui/components/progress_bar.dart';
+
 
 enum GameMode { timed, iterations }
 
@@ -206,12 +208,21 @@ class _SingleGameState extends State<SingleGame> {
         break;
         case 'memory':
         return new Memory(
-            onScore: _onScore,
+             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd(context),
+            onEnd: () => _onEnd(context),
             iteration: _iteration,
             gameCategoryId : widget.gameCategoryId);
-        break;       
+        break;
+      case 'fill_number':
+        return new Fillnumber(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: _onEnd,
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId
+          );
+        break;
     }
     return null;
   }
