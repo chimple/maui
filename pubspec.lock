@@ -187,10 +187,10 @@ packages:
   image_picker:
     dependency: "direct main"
     description:
-      path: image_picker
-      relative: true
-    source: path
-    version: "0.3.1"
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   intl:
     dependency: transitive
     description:
@@ -405,7 +405,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4"
+    version: "0.8.5"
   stack_trace:
     dependency: transitive
     description:
@@ -526,5 +526,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.28.0 <=2.0.0-edge.0d5cf900b021bf5c9fa593ffa12b15bcd1cc5fe0"
+  dart: ">=2.0.0-dev.35 <=2.0.0-edge.0d5cf900b021bf5c9fa593ffa12b15bcd1cc5fe0"
   flutter: ">=0.1.4 <2.0.0"
