@@ -175,12 +175,14 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     }
 
     return new Center(
+      child: new Container(
       child: new Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             new Container (
-              height: media.size.height * 0.15,
-              width: media.size.width,
+                 margin: new EdgeInsets.only(bottom: media.size.height * 0.1),
+//              height: media.size.height * 0.4,
+//              width: media.size.width,
               alignment: Alignment.center,
               color: new Color(0X00000000),
               child: new Text(
@@ -197,10 +199,14 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               animation: animation,
               text: _result
             ),
-            new Table(children: rows),
+            new Container(
+              child: new Center(
+                child: new Table(children: rows),
+              ),)
           ]
       ),
-    );
+    ));
+
   }
 
   @override
@@ -261,22 +267,23 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
+    MediaQueryData media = MediaQuery.of(context);
     return new TableCell(
         child: new Padding(
-            padding: const EdgeInsets.all(3.0),
+            padding: new EdgeInsets.all(media.size.height * 0.005),
             child: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(2.0),
+                    padding: new EdgeInsets.all(media.size.height * 0.027),
                     color: Colors.teal,
                     shape: new RoundedRectangleBorder(
                         borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
+                        new BorderRadius.all(new Radius.circular(media.size.height * 0.09))),
                     child: new Text(_displayText,
                         key: new Key('keyPad$_count'),
                         style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+                            color: Colors.white, fontSize: media.size.height * 0.04))))));
   }
 }
 
@@ -290,14 +297,14 @@ class TextAnimation extends AnimatedWidget {
     MediaQueryData media = MediaQuery.of(context);
     return new Center(
       child: new Container(
-        height: media.size.height * 0.1,
+        height: media.size.height * 0.12,
         width: media.size.width / 3.0,
         alignment: Alignment.center,
-        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: media.size.height * 0.035),
+        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: media.size.height * 0.09),
         child:  new Text(text,
             style: new TextStyle(
             color: Colors.white,
-            fontSize: media.size.height * 0.067,
+            fontSize: media.size.height * 0.1,
             fontWeight: FontWeight.bold,)),
             color: Colors.teal,
         ),
