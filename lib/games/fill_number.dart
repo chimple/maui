@@ -128,8 +128,8 @@ class MyFillnumberState extends State<Fillnumber> {
   Widget _buildItem(int index, String text, Status status) {
 
     final TextEditingController t1= new TextEditingController(text: text);
-    return MyButton(
-        key: ValueKey<int>(index),
+    return new MyButton(
+        key: new  ValueKey<int>(index),
         text: text,
         status: status,
         onPress: () {
@@ -268,14 +268,14 @@ class MyFillnumberState extends State<Fillnumber> {
 
 
 
-    List<TableRow> rows = List<TableRow>();
+    List<TableRow> rows =new  List<TableRow>();
     var j = 0;
     for (var i = 0; i < _size; ++i) {
       List<Widget> cells = _letters
           .skip(i * _size)          .take(_size)
           .map((e) => _buildItem(j, e, _statuses[j++]))
           .toList();
-      rows.add(TableRow(children: cells));
+      rows.add(new TableRow(children: cells));
     }
     return new Container(
       child: new Column(
@@ -302,7 +302,7 @@ class MyButton extends StatefulWidget {
   final VoidCallback onPress;
 
   @override
-  _MyButtonState createState() => _MyButtonState();
+  _MyButtonState createState() =>new  _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
@@ -315,8 +315,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
+        new AnimationController(duration:new  Duration(milliseconds: 250), vsync: this);
+    animation =new  CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
@@ -347,19 +347,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return TableCell(
-        child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ScaleTransition(
+    return new TableCell(
+        child:new  Padding(
+            padding: new EdgeInsets.all(8.0),
+            child: new ScaleTransition(
                 scale: animation,
-                child: RaisedButton(
+                child: new RaisedButton(
                     onPressed: () => widget.onPress(),
-                    padding: EdgeInsets.all(8.0),
+                    padding:new  EdgeInsets.all(8.0),
                     color: widget.status == Status.Visible ? Colors.yellow : Colors.teal,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                    child: Text(_displayText,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.all(new Radius.circular(8.0))),
+                    child: new Text(_displayText,
                         style:
-                        TextStyle(color: Colors.white, fontSize: 24.0))))));
+                       new  TextStyle(color: Colors.white, fontSize: 24.0))))));
   }
 }
