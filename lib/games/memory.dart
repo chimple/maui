@@ -41,14 +41,15 @@ class MemoryState extends State<Memory> {
 
   void _initBoard() async {
     setState(()=>_isLoading=true);
-
     _data = await fetchPairData(widget.gameCategoryId , 8);
-    print(_data);
+    print("Rajesh-Data-initBoardCall: ${_data}");
+
+    _allLetters = [];
     _data.forEach((k,v){
       _allLetters.add(k);
       _allLetters.add(v);
     });
-    print(_allLetters);
+    print("Rajesh-Data-after-Mapping: ${_allLetters}");
 
     _size = min(4, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
@@ -57,7 +58,7 @@ class MemoryState extends State<Memory> {
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
             ..shuffle());
     }
-    print(_shuffledLetters);
+    print("Rajesh-Data-after-Shuffling: ${_shuffledLetters}");
     _letters = _shuffledLetters.sublist(0, _size * _size);
     _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
     setState(()=>_isLoading=false);
@@ -69,7 +70,7 @@ class MemoryState extends State<Memory> {
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print(_allLetters);
+      print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
   }
 
@@ -97,11 +98,6 @@ class MemoryState extends State<Memory> {
           {
             if(_pressedTile == text)
             {
-                _matched++;
-               widget.onScore(2);
-               widget.onProgress((_progressCnt) / (_allLetters.length/2));
-               _progressCnt++;
-
                setState((){
                _letters[_pressedTileIndex] = '';
                _letters[index] = '';
@@ -109,16 +105,22 @@ class MemoryState extends State<Memory> {
                _pressedTile = null;
                 cnt = 0;
                });
+                _matched++;
+               widget.onScore(2);
+               widget.onProgress((_progressCnt) / (_allLetters.length/2));
+               _progressCnt++;
 
-               if(_matched ==8) {
+               print("Rajesh-Matched${_matched}");
+               if(_matched == 8) {
+                 _matched = 0;
                   new Future.delayed(const Duration(milliseconds: 250), () {
+                    print("Rajesh Game-End");
                     widget.onEnd();
                 });
                }
                print("Pressed Statuses2: ${_statuses}"); 
                print("Matched");
             }
-             
             else
             { 
                setState((){   
@@ -130,7 +132,7 @@ class MemoryState extends State<Memory> {
                 });
 
               new Future.delayed(const Duration(milliseconds: 500), () {
-
+                  
               });
               
               print("Pressed Statuses3: ${_statuses}"); 
@@ -141,8 +143,7 @@ class MemoryState extends State<Memory> {
           }    
            _pressedTileIndex = index;
           _pressedTile = text; 
-          
-          
+                
         });
   }
 
@@ -211,7 +212,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == null && widget.text != null) {
+    if (oldWidget.text == '' && widget.text != '') {
       _displayText = widget.text;
       controller.forward();
     } else if (oldWidget.text != widget.text) {
