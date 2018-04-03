@@ -41,7 +41,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   final int _size = 3;
   List<String> _numbers;
   String _preValue = ' ';
-  int num1, num2;
+  int num1,
+      num2,
+      num1digit1,
+      num1digit2,
+      num1digit3,
+      num2digit1,
+      num2digit2,
+      num2digit3;
   int result;
   String _output = ' ';
   String _operator = '';
@@ -51,6 +58,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   Tuple4<int, String, int, int> data;
   bool _isLoading = true;
   String options;
+  List<num> reminder = [];
 
   @override
   void initState() {
@@ -59,10 +67,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     super.initState();
     _initBoard();
-    if(num1%10==0 && num2%1==0)
-    {
-      options='one';
-    }
   }
 
   void _initBoard() async {
@@ -75,12 +79,59 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     result = data.item4;
     _operator = data.item2;
     setState(() => _isLoading = false);
+    if (num1 % 10 == num1 && num2 % 10 == num2) {
+      options = 'one';
+    } else if (calCount(num1) == 2 || calCount(num2) == 2) {
+      options = 'doubleDigitWithoutCarry';
+      num1digit2 = num1 % 10;
+      num1 = num1 ~/ 10;
+      num1digit1 = num1 % 10;
+      num2digit2 = num2 % 10;
+      num2 = num2 ~/ 10;
+      num2digit1 = num2 % 10;
+    } else if (calCount(num1) == 3 || calCount(num2) == 3) {
+      options = 'tripleDigitWithoutCarry';
+      num1digit3 = num1 % 10;
+      num1 = num1 ~/ 10;
+      num1digit2 = num1 % 10;
+      num1 = num1 ~/ 10;
+      num1digit1 = num1 % 10;
+      num2digit3 = num2 % 10;
+      num2 = num2 ~/ 10;
+      num2digit2 = num2 % 10;
+      num2 = num2 ~/ 10;
+      num2digit1 = num2 % 10;
+    } else {
+      options = 'one';
+    }
+  }
+
+  void reminderS(sum) {
+    while (sum != 0) {
+      num rem = sum % 10;
+      sum = sum ~/ 10;
+      reminder.add(rem);
+    }
+  }
+
+  int calCount(sum) {
+    print(sum);
+    int count = 0;
+    if (sum > 1) {
+      while (sum != 0) {
+        sum = sum ~/ 10;
+        ++count;
+      }
+      return count;
+    } else {
+      return count = 1;
+    }
   }
 
   @override
   void didUpdateWidget(CalculateTheNumbers oldWidget) {
-   // print(oldWidget.iteration);
-  //  print(widget.iteration);
+    // print(oldWidget.iteration);
+    //  print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -117,7 +168,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         } else {
           _myAnim();
           print("Entering wrong data");
-          new Future.delayed(const Duration(milliseconds: 700), () {
+          new Future.delayed(const Duration(milliseconds: 300), () {
             setState(() {
               _output = " ";
               flag = false;
@@ -224,8 +275,215 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           .toList();
       rows.add(new TableRow(children: cells));
     }
-   
-    return new Container(
+    switch (options) {
+      case 'one':
+        return new Container(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                  child: new Container(
+                color: Colors.pink,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        _displayContainer(
+                            '$num1', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(
+                            _operator, Colors.lime, new Key('_operator')),
+                        _displayContainer(
+                            '$num2', Colors.lime, new Key('num2')),
+                      ],
+                    ),
+                    new Container(
+                      height: 10.0,
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        new Container(
+                          key: new Key('_outout'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+              new Container(
+                  color: Colors.pink, child: new Table(children: rows))
+            ],
+          ),
+        );
+        break;
+
+      case 'doubleDigitWithoutCarry':
+        return new Container(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                  child: new Container(
+                color: Colors.pink,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        new Container(
+                          color: Colors.pink,
+                          width: 2.0,
+                        ),
+                        _displayContainer(
+                            '$num1digit1', Colors.lime, new Key('num1')),
+                        new Container(color: Colors.pink, width: 2.0),
+                        _displayContainer(
+                            '$num1digit2', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Container(color: Colors.pink, height: 2.0),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(
+                            _operator, Colors.lime, new Key('_operator')),
+                        new Container(color: Colors.pink, width: 2.0),
+                        _displayContainer(
+                            '$num2digit1', Colors.lime, new Key('num2')),
+                        new Container(color: Colors.pink, width: 2.0),
+                        _displayContainer(
+                            '$num2digit2', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Container(
+                      height: 10.0,
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        new Container(
+                          key: new Key('_outout'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                        new Container(color: Colors.pink, width: 2.0),
+                        new Container(
+                          key: new Key('_outout1'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+              new Container(
+                  color: Colors.pink, child: new Table(children: rows))
+            ],
+          ),
+        );
+        break;
+
+      case 'tripleDigitWithoutCarry':
+        return new Container(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                  child: new Container(
+                color: Colors.pink,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        _displayContainer('', Colors.white, new Key('num1')),
+                        _displayContainer('', Colors.white, new Key('num1')),
+                        _displayContainer('', Colors.white, new Key('num1')),
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        _displayContainer(
+                            '$num1digit1', Colors.lime, new Key('num1')),
+                        _displayContainer(
+                            '$num1digit2', Colors.lime, new Key('num1')),
+                        _displayContainer(
+                            '$num1digit3', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(
+                            _operator, Colors.lime, new Key('_operator')),
+                        _displayContainer(
+                            '$num2digit1', Colors.lime, new Key('num2')),
+                        _displayContainer(
+                            '$num2digit2', Colors.lime, new Key('num1')),
+                        _displayContainer(
+                            '$num2digit3', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Container(
+                      height: 10.0,
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        new Container(
+                          key: new Key('_outout'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                        new Container(
+                          key: new Key('_outout1'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                        new Container(
+                          key: new Key('_outout2'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+              new Container(
+                  color: Colors.pink, child: new Table(children: rows))
+            ],
+          ),
+        );
+        break;
+
+      default:
+        return new Container(
+          color: Colors.black,
+        );
+        break;
+    }
+    /*  return new Container(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -271,7 +529,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                color: Colors.pink, child: new Table(children: rows))
             ],
           ),
-    );
+    ); */
   }
 }
 
@@ -327,22 +585,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-      child: new ScaleTransition(
-        scale: animation,
-        child: new RaisedButton(
-            onPressed: () => widget.onPress(),
-            color: Colors.lime,
-            shape: new RoundedRectangleBorder(
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(2.0))),
-            child: new Container(
-              child: new Center(
-                  child: new Text(_displayText,
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 20.0))),
-       ) )),
+      child: new Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: new ScaleTransition(
+            scale: animation,
+            child: new RaisedButton(
+                onPressed: () => widget.onPress(),
+                color: Colors.lime,
+                shape: new RoundedRectangleBorder(
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(2.0))),
+                child: new Container(
+                  child: new Center(
+                      child: new Text(_displayText,
+                          style: new TextStyle(
+                              color: Colors.black, fontSize: 20.0))),
+                ))),
       ),
     );
   }
@@ -360,10 +618,10 @@ class TextAnimation extends AnimatedWidget {
     return new Center(
       child: new Container(
           height: 50.0,
-          width: 70.0,
+          width: 50.0,
           alignment: Alignment.center,
           margin:
-              new EdgeInsets.only(right: animation.value ?? 0, bottom: 20.0),
+              new EdgeInsets.only(right: animation.value ?? 0, bottom: 10.0),
           child: new Text(text,
               style: new TextStyle(
                 color: Colors.white,
