@@ -27,13 +27,11 @@ class MemoryState extends State<Memory> {
   List<Status> _statuses;
   Map<String,String> _data;
   bool _isLoading = true;
-  var _currentIndex = 0;
   var _matched = 0;
   var _progressCnt = 1;
   var _pressedTile ;
   var _pressedTileIndex ;
   var cnt = 0;
- 
 
   @override
   void initState() {
@@ -42,7 +40,6 @@ class MemoryState extends State<Memory> {
   }
 
   void _initBoard() async {
-    _currentIndex = 0;
     setState(()=>_isLoading=true);
 
     _data = await fetchPairData(widget.gameCategoryId , 8);
@@ -82,17 +79,19 @@ class MemoryState extends State<Memory> {
         text: text,
         status: status,
        onPress: () {       
-          cnt++;
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
-           print("Pressed Statuses: ${_statuses}");
-
-          if(_pressedTileIndex == index || _statuses[index] == Status.Visible)  
-            return;
+           
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || cnt>2)  
+           return;
+        
+          cnt++;
        
           setState((){
             _statuses[index] = Status.Visible;
-          });
+          }); 
+
+        print("Pressed Statuses1: ${_statuses}");
            
           if(cnt == 2)
           {
@@ -110,28 +109,39 @@ class MemoryState extends State<Memory> {
                _pressedTile = null;
                 cnt = 0;
                });
-               
+
+               if(_matched ==8) {
+                  new Future.delayed(const Duration(milliseconds: 250), () {
+                    widget.onEnd();
+                });
+               }
+               print("Pressed Statuses2: ${_statuses}"); 
                print("Matched");
             }
              
             else
             { 
-              new Future.delayed(const Duration(milliseconds: 500), () {
-                  setState((){   
+               setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
                 _statuses[index] = Status.Hidden;
                  _pressedTileIndex = -1;
                 _pressedTile = null;
                  cnt = 0;
                 });
+
+              new Future.delayed(const Duration(milliseconds: 500), () {
+
               });
-               
+              
+              print("Pressed Statuses3: ${_statuses}"); 
               print("Unmatched"); 
             }  
+            print("Pressed Statuses4: ${_statuses}");
             return;
           }    
            _pressedTileIndex = index;
           _pressedTile = text; 
+          
           
         });
   }
