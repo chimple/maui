@@ -2,9 +2,8 @@
 import 'draggable_text.dart';
 import 'drop_target.dart';
 import 'package:flutter/material.dart';
-
 class GameView extends StatefulWidget {
-  List<Letters> items;
+ List<Letters> items;
 
   GameView(this.items);
 
@@ -21,19 +20,19 @@ class _GameViewState extends State<GameView> {
   int score = 0;
 
   Size getDraggableSize({Size areaSize, int numItems}) {
-  //   final landScape = areaSize.width > areaSize.height;
-  //   final targetWidth =
-  //       (areaSize.width - (2 * _margin) - (_gap * (numItems - 1))) / numItems;
-  //  return new Size(targetWidth, areaSize.height * (landScape ? 0.25 : 0.2));
-    return new Size.square(60.0);
+     final landScape = areaSize.width > areaSize.height;
+     final targetWidth =
+         (areaSize.width - (2 * _margin) - (_gap * (numItems - 1))) / numItems;
+    return new Size(targetWidth, areaSize.height * (landScape ? 0.25 : 0.1));
+  //  return new Size.square(60.0);
   }
 
   Size getTargetSize({Size areaSize, int numItems}) {
-    // final landScape = areaSize.width > areaSize.height;
-    // final targetWidth =
-    //     (areaSize.width - (2 * _margin) - (_gap * (numItems - 1))) / numItems;
-    // return new Size(targetWidth, areaSize.height * (landScape ? 0.45 : 0.3));
-    return new Size.square(60.0);
+     final landScape = areaSize.width > areaSize.height;
+     final targetWidth =
+         (areaSize.width - (2 * _margin) - (_gap * (numItems - 1))) / numItems;
+     return new Size(targetWidth, areaSize.height * (landScape ? 0.45 : 0.1));
+    //return new Size.square(60.0);
   }
 
   // Widget _buildButton(IconData icon, VoidCallback onPress) => new Padding(

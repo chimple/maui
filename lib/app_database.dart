@@ -47,7 +47,7 @@ class AppDatabase {
       await new File(imagePath).writeAsBytes(imageBytes);
 
       await new UserDao().insert(new User(
-        id: '1',
+        id: 'dbb24390-20f0-11e8-c6ee-c11cc1dabc53',
         name: 'Chimple',
         image: imagePath
       ));
@@ -85,5 +85,6 @@ class AppDatabase {
     fetchMathData(28).then((m)=>print(m));
     fetchTablesData(36).then((m)=>print(m));
     fetchFillNumberData(57, 4).then((f)=>print(f));
+    fetchCrosswordData(1).then((c)=>print(c));
   }
 }

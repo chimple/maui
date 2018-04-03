@@ -18,8 +18,7 @@ class IdentifyGame extends StatefulWidget {
 class _IdentifyGameState extends State<IdentifyGame> {
   @override
   Widget build(BuildContext context) {
-    return new Expanded(
-      child: new Column(
+    return new Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           new Row(
@@ -39,8 +38,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
             ],
           )
         ],
-      ),
-    );
+      );
   }
 }
 
