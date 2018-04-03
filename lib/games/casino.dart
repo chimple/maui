@@ -26,12 +26,13 @@ class Casino extends StatefulWidget {
 class _CasinoState extends State<Casino> {
   int _selectedItemIndex = 0;
   List<List<String>> data;
-
-  String word = " ";
+   
+  String givenWord = " ";
   bool _isLoading = true;
   String wd = " ";
-  var sData = new List();
+  var givenWordList = new List();
   int i = 0;
+  int initialIndex;
   @override
   void initState() {
     super.initState();
@@ -40,28 +41,30 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-
-    print("Ram Data $data");
+    initialIndex = 3;
+    print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
-      word += data[i][0];
-      sData.add(data[i][0]);
-
+      givenWord += data[i][0];
+      givenWordList.add(data[i][0]);
     }
 
-    print("comapareDATA $sData");
     for (var i = 0; i < data.length; i++) {
       data[i].shuffle();
+      // if (scrollingLetterList[initialIndex] == givenWordList[i]) {
+      //   data[i].shuffle();
+      // }
     }
-    print("Ram Data $data");
 
-    print("data $word");
+    print("data $givenWord");
+    print("===============");
+    print("shuffled Data $data");
 
     setState(() => _isLoading = false);
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
     FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: 3);
+        new FixedExtentScrollController(initialItem: initialIndex);
 
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
@@ -83,21 +86,20 @@ class _CasinoState extends State<Casino> {
                 _selectedItemIndex = index;
               });
 
-              if (sData[i] == scrollingLetterList[index]) {
-                if (i == sData.length - 1) {
+              if (givenWordList[i] == scrollingLetterList[index]) {
+                if (i == givenWordList.length - 1) {
                   widget.onScore(2);
-                  widget.onProgress(sData.length / data.length);
+                  widget.onProgress(givenWordList.length / data.length);
                   print("index $index");
-                  word=" ";
+                  givenWord = " ";
                   new Future.delayed(const Duration(milliseconds: 500), () {
                     _initletters();
                     widget.onEnd();
                   });
-
                   print("the end");
                 } else {
                   widget.onScore(2);
-                  widget.onProgress(sData.length / data.length);
+                  widget.onProgress(givenWordList.length / data.length);
                   print("index $index");
                 }
                 i++;
@@ -121,7 +123,7 @@ class _CasinoState extends State<Casino> {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
-    return new Expanded(
+    return new Container(
       child: new Container(
         color: Colors.blue,
         child: new Column(
@@ -133,7 +135,7 @@ class _CasinoState extends State<Casino> {
                 color: Colors.pinkAccent,
                 child: new Center(
                     child: new Text(
-                  word,
+                  givenWord,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: new TextStyle(
