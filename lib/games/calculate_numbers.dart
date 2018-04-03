@@ -191,8 +191,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   Widget _displayContainer(String text, Color color, Key key) {
     return new Container(
         color: color,
-        height: 40.0,
-        width: 40.0,
+        height: 50.0,
+        width: 50.0,
         child: new Center(
           child: new Text(text,
               key: key,
@@ -220,52 +220,52 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       rows.add(new TableRow(children: cells));
     }
    
-    return new Expanded(
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new Container(
-              child: new Container(
-            color: Colors.pink,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Row(
+    return new Container(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                  child: new Container(
+                color: Colors.pink,
+                child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _displayContainer(" ", Colors.pink, new Key(' ')),
-                    _displayContainer('$num1', Colors.lime, new Key('num1')),
-                  ],
-                ),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _displayContainer(
-                        _operator, Colors.lime, new Key('_operator')),
-                    _displayContainer('$num2', Colors.lime, new Key('num2')),
-                  ],
-                ),
-                new Container(
-                  height: 10.0,
-                ),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _displayContainer(" ", Colors.pink, new Key(' ')),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        _displayContainer('$num1', Colors.lime, new Key('num1')),
+                      ],
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(
+                            _operator, Colors.lime, new Key('_operator')),
+                        _displayContainer('$num2', Colors.lime, new Key('num2')),
+                      ],
+                    ),
                     new Container(
-                      key: new Key('_outout'),
-                      child: new TextAnimation(
-                          animation: animation, text: _output, flag: flag),
+                      height: 10.0,
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _displayContainer(" ", Colors.pink, new Key(' ')),
+                        new Container(
+                          key: new Key('_outout'),
+                          child: new TextAnimation(
+                              animation: animation, text: _output, flag: flag),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          )),
-          new Container(
-           color: Colors.pink, child: new Table(children: rows))
-        ],
-      ),
+              )),
+              new Container(
+               color: Colors.pink, child: new Table(children: rows))
+            ],
+          ),
     );
   }
 }
@@ -354,8 +354,8 @@ class TextAnimation extends AnimatedWidget {
     Animation animation = listenable;
     return new Center(
       child: new Container(
-          height: 40.0,
-          width: 60.0,
+          height: 50.0,
+          width: 70.0,
           alignment: Alignment.center,
           margin:
               new EdgeInsets.only(right: animation.value ?? 0, bottom: 20.0),

@@ -126,8 +126,7 @@ class CrosswordState extends State<Crossword> {
           .toList();
       rows1.add(new TableRow(children: cells));
     }
-    return new Expanded(
-       flex: 1,
+    return new Center(
       child:new Container(
       color: Colors.purple[300],
       child: new Column(

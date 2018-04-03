@@ -51,6 +51,7 @@ class QuizPageState extends State<QuizPage> {
       widget.onProgress(1.0);
     }
     this.setState(() {
+      print(4);
       overlayShouldBeVisible = true;
     });
   }
@@ -170,13 +171,15 @@ class QuizPageState extends State<QuizPage> {
           width: wd,
           child: new CorrectWrongOverlay(
             isCorrect,
-                () {   
-                  new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd();
-              });
+                () {                     
               this.setState(() {
+                print(1);
                 overlayShouldBeVisible = false;
-              });          
+              }); 
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                _initBoard();
+                widget.onEnd();
+              });         
             }
         )) : new Container()
       ],
@@ -207,7 +210,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     super.initState();
     _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
     _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {}));
+    _fontSizeAnimation.addListener(() => this.setState(() {print(2);}));
     _fontSizeAnimationController.forward();
   }
 
@@ -310,7 +313,7 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
     super.initState();
     _iconAnimationController = new AnimationController(duration: new Duration(seconds: 2), vsync: this);
     _iconAnimation = new CurvedAnimation(parent: _iconAnimationController, curve: Curves.elasticOut);
-    _iconAnimation.addListener(() => this.setState(() {}));
+    _iconAnimation.addListener(() => this.setState(() {print(3);}));
     _iconAnimationController.forward();
   }
 
