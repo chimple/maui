@@ -32,14 +32,17 @@ class _DraggableLetterState extends State<DraggableLetter> {
                 height: widget.size.height,
                 color: widget.item.selected ? Colors.grey : Colors.cyan,
                 child: new Center(
-                  child: new Text(widget.item.city,
-                      style: new TextStyle(color: Colors.black)),
+                  child: new Text(          // key pass here
+                    widget.item.city,
+                      style: new TextStyle(
+                        color: Colors.black,fontSize: 23.0,
+                        )),
                 )),
             data: widget.item,
             feedback: new DragAvatarBorder(
               new Text(widget.item.city,
                   style: new TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 35.0,
                       color: Colors.black,
                       decoration: TextDecoration.none)),
               size: widget.size,
