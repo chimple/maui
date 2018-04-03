@@ -128,7 +128,7 @@ class _SingleGameState extends State<SingleGame> {
         return new QuizPage(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd,
+            onEnd:() =>  _onEnd(context),
             iteration: _iteration,
             gameCategoryId : widget.gameCategoryId);
         break;
@@ -208,9 +208,9 @@ class _SingleGameState extends State<SingleGame> {
         break;
         case 'memory':
         return new Memory(
-            onScore: _onScore,
+             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd(context),
+            onEnd: () => _onEnd(context),
             iteration: _iteration,
             gameCategoryId : widget.gameCategoryId);
         break;
