@@ -190,7 +190,8 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var firstNumUnits = rand.nextInt(8) + 1;
         var firstNum = firstNumTens * 10 + firstNumUnits;
         var secondNumTens = rand.nextInt(firstNumTens - 1) + 1;
-        var secondNumUnits = rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
+        var secondNumUnits =
+            rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
         var secondNum = secondNumTens * 10 + secondNumUnits;
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
@@ -199,11 +200,13 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var firstNumHundreds = rand.nextInt(9) + 1;
         var firstNumTens = rand.nextInt(9) + 1;
         var firstNumUnits = rand.nextInt(9) + 1;
-        var firstNum = firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
+        var firstNum =
+            firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
         var secondNumHundreds = rand.nextInt(firstNumHundreds) + 1;
         var secondNumTens = rand.nextInt(firstNumTens) + 1;
         var secondNumUnits = rand.nextInt(firstNumUnits) + 1;
-        var secondNum = secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
+        var secondNum =
+            secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
@@ -211,11 +214,14 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var firstNumHundreds = rand.nextInt(8) + 2;
         var firstNumTens = rand.nextInt(8) + 1;
         var firstNumUnits = rand.nextInt(8) + 1;
-        var firstNum = firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
+        var firstNum =
+            firstNumHundreds * 100 + firstNumTens * 10 + firstNumUnits;
         var secondNumHundreds = rand.nextInt(firstNumHundreds - 1) + 1;
         var secondNumTens = rand.nextInt(9 - firstNumTens) + firstNumTens + 1;
-        var secondNumUnits = rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
-        var secondNum = secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
+        var secondNumUnits =
+            rand.nextInt(9 - firstNumUnits) + firstNumUnits + 1;
+        var secondNum =
+            secondNumHundreds * 100 + secondNumTens * 10 + secondNumUnits;
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
@@ -242,7 +248,8 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
   return null;
 }
 
-Future<List<Tuple4<int, String, int, int>>> fetchTablesData(int categoryId) async {
+Future<List<Tuple4<int, String, int, int>>> fetchTablesData(
+    int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
@@ -275,4 +282,20 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
     return fillNumbers;
   }
   return null;
+}
+
+enum Direction { across, down }
+Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
+    fetchCrosswordData(int categoryId) async {
+  return new Tuple2([
+    ['E', null, null, null, null],
+    ['A', null, null, null, null],
+    ['T', 'I', 'G', 'E', 'R'],
+    [null, null, null, null, 'A'],
+    [null, null, null, null, 'T']
+  ], [
+    new Tuple4('assets/apple.png', 0, 0, Direction.down),
+    new Tuple4('assets/apple.png', 2, 0, Direction.across),
+    new Tuple4('assets/apple.png', 2, 4, Direction.down),
+  ]);
 }
