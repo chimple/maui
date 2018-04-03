@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/repos/game_data.dart';
-// import 'dart:async';
+import 'dart:async';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -29,7 +29,9 @@ class _CasinoState extends State<Casino> {
 
   String word = " ";
   bool _isLoading = true;
-
+  String wd = " ";
+  var sData = new List();
+  int i = 0;
   @override
   void initState() {
     super.initState();
@@ -40,34 +42,31 @@ class _CasinoState extends State<Casino> {
     data = await fetchRollingData(widget.gameCategoryId, 6);
 
     print("Ram Data $data");
-
     for (var i = 0; i < data.length; i++) {
       word += data[i][0];
-      // data.removeWhere(test)
-    }
-   
-    print("data $word");
-    // List<String> _shuffledLetters = scrollingLetter.shuffle();
-    setState(() => _isLoading = false);
+      sData.add(data[i][0]);
 
-    // _buildScrollButton(dataLength);
+    }
+
+    print("comapareDATA $sData");
+    for (var i = 0; i < data.length; i++) {
+      data[i].shuffle();
+    }
+    print("Ram Data $data");
+
+    print("data $word");
+
+    setState(() => _isLoading = false);
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
     FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: _selectedItemIndex);
-    //     int score=1;
-    // if (word==scrollingData[1][1]){
-    //       widget.onScore(score++);
-    // }
+        new FixedExtentScrollController(initialItem: 3);
 
-    var scrollingLetter = new List();
-    for (var i = 1; i < scrollingData.length; i++) {
-      scrollingLetter.add(scrollingData[i]);
-    }
-    //  scrollingLetter.shuffle();
-    // print("scrollingData : ${scrollingData[1]}");
-    //  print("scrollingLetter : $scrollingLetter");
+    Set<String> scrollingLetter = new Set<String>.from(scrollingData);
+
+    List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
+
     return new Container(
       height: 100.0,
       width: 50.0,
@@ -77,17 +76,37 @@ class _CasinoState extends State<Casino> {
         child: new SafeArea(
           child: new CupertinoPicker(
             scrollController: scrollController,
-            itemExtent: 30.0,
+            itemExtent: 35.0,
             backgroundColor: CupertinoColors.white,
             onSelectedItemChanged: (int index) {
               setState(() {
                 _selectedItemIndex = index;
               });
+
+              if (sData[i] == scrollingLetterList[index]) {
+                if (i == sData.length - 1) {
+                  widget.onScore(2);
+                  widget.onProgress(sData.length / data.length);
+                  print("index $index");
+                  word=" ";
+                  new Future.delayed(const Duration(milliseconds: 500), () {
+                    _initletters();
+                    widget.onEnd();
+                  });
+
+                  print("the end");
+                } else {
+                  widget.onScore(2);
+                  widget.onProgress(sData.length / data.length);
+                  print("index $index");
+                }
+                i++;
+              }
             },
-            children:
-                new List<Widget>.generate(scrollingLetter.length, (int index) {
+            children: new List<Widget>.generate(scrollingLetterList.length,
+                (int index) {
               return new Center(
-                child: new Text(scrollingLetter[index]),
+                child: new Text(scrollingLetterList[index]),
               );
             }),
           ),
@@ -106,6 +125,7 @@ class _CasinoState extends State<Casino> {
       child: new Container(
         color: Colors.blue,
         child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             new Container(
                 height: 100.0,
@@ -115,7 +135,7 @@ class _CasinoState extends State<Casino> {
                     child: new Text(
                   word,
                   textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.clip,
                   style: new TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50.0,
