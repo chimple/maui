@@ -102,7 +102,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             }
             else{
               _myAnim();
-              new Future.delayed(const Duration(milliseconds: 700), () {
+              new Future.delayed(const Duration(milliseconds: 9000), () {
                 setState((){
                   _result = "";
                 });
