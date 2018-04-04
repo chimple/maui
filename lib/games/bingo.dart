@@ -153,6 +153,7 @@ class BingoState extends State<Bingo> {
           new Container
             (color: Colors.orange , height: 60.0 , width: 70.0 ,
               child: new Center(child: new Text("$ques" ,
+              key: new Key('question'),
                   style: new TextStyle(
                       color: Colors.black , fontSize: 30.0)))) ,
           new  Table(children: rows) ,
