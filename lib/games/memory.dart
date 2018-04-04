@@ -33,6 +33,7 @@ class MemoryState extends State<Memory> {
   var _pressedTile ;
   var _pressedTileIndex ;
   var cnt = 0;
+  var flag = 0; 
 
   @override
   void initState() {
@@ -83,8 +84,11 @@ class MemoryState extends State<Memory> {
        onPress: () {       
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
+
+          print("Pressed Statuses before checking: ${_statuses}");
+          int numOfVisible = _statuses.fold(0, (prev, element) => element==Status.Visible ? prev+1 : prev);
            
-          if(_pressedTileIndex == index || cnt>2)   
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || cnt>2)   
            return;
              
           cnt++;
@@ -127,17 +131,22 @@ class MemoryState extends State<Memory> {
             }
             else
             {
-              new Future.delayed(const Duration(milliseconds: 250), () {
+              setState((){ 
+                _statuses[index] = Status.Visible;
+                });
+
+              new Future.delayed(const Duration(milliseconds: 800), () {
                 setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
                 _statuses[index] = Status.Hidden;
-                 _pressedTileIndex = -1;
+                _pressedTileIndex = -1;
                 _pressedTile = null;
                  cnt = 0;
                 });
+                print("Pressed Statuses3: ${_statuses}"); 
               });
-                
-              print("Pressed Statuses3: ${_statuses}"); 
+ 
+              
               print("Unmatched"); 
             }  
             print("Pressed Statuses4: ${_statuses}");
@@ -258,7 +267,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     shape: new RoundedRectangleBorder(
                         borderRadius:
                             const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText, style: new TextStyle(color: Colors.teal, fontSize: 24.0) )))));
+                    child: new Text(' ', style: new TextStyle(color: Colors.teal, fontSize: 24.0) )))));
 
   }
 }
