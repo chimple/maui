@@ -4,40 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 
-//void main() {
-//  debugPaintSizeEnabled = false;
-//  runApp(new MyApp());
-//}
 
-//class Fillnumber extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return MaterialApp(
-//        title: 'Flutter Demo',
-//        home: LayoutBuilder(
-//          builder: _build,
-//        )
-//    );
-//  }
-//
-//  Widget _build(BuildContext context, BoxConstraints constraints) {
-//    print([constraints.maxWidth, constraints.maxHeight]);
-//    return Scaffold(
-//        appBar: AppBar(
-//            title: Text("this is my game")
-//        ),
-//        body: Column(
-//          mainAxisSize: MainAxisSize.min,
-//          children: <Widget>[
-//
-//            new  MyTable(),
-//
-//
-//
-//          ],
-//        ));
-//  }
-//}
 
 class Fillnumber extends StatefulWidget {
   Function onScore;
@@ -46,7 +13,9 @@ class Fillnumber extends StatefulWidget {
   int iteration;
   int gameCategoryId;
 
-  Fillnumber({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId})
+  Fillnumber({key, 
+  this.onScore,
+   this.onProgress, this.onEnd, this.iteration,this.gameCategoryId})
       : super(key: key);
   @override
   State<StatefulWidget> createState() =>new MyFillnumberState();
@@ -324,19 +293,21 @@ class MyFillnumberState extends State<Fillnumber> {
           .toList();
       rows.add(new TableRow(children: cells));
     }
+    return new LayoutBuilder(builder: (context, constraints) {
     return new Container(
       child: new Column(
         children: <Widget>[
           new Container
-            (color: Colors.orange,height: 60.0,width: 70.0,
-              child:new Center(child:new Text("$ans", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
+            (color: Colors.orange,height: 40.0,width: 40.0,
+              child:new Center(child:new Text("$ans", style: new TextStyle(color: Colors.black, fontSize: 25.0)))),
           new Table(children: rows),
           new Container
-            (color: Colors.orange,height: 60.0,
+            (color: Colors.orange,height: 40.0,
               child:new Center(child:new Text("$num3", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
         ],
       ),
     );
+    });
 
   }
 }
