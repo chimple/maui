@@ -35,7 +35,7 @@ class ResponsiveGridView extends StatelessWidget {
       }
       return new Center(
           child: new GridView.count(
-              crossAxisCount: portrait ? rows : cols,
+              crossAxisCount: portrait ? cols : rows,
               shrinkWrap: true,
               padding: padding,
               mainAxisSpacing: mainAxisSpacing,
