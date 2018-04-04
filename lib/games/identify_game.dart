@@ -38,9 +38,21 @@ class _IdentifyGameState extends State<IdentifyGame> {
         new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new DragBox('a', Colors.red),
-            new DragBox('b', Colors.orange),
-            new DragBox('c', Colors.lightBlue),
+            new Expanded(
+              flex: 1,
+              child: new DragBox('a', Colors.red), 
+            ),
+            new Expanded(
+              flex: 1,
+              child: new DragBox('b', Colors.orange), 
+            ),
+            new Expanded(
+              flex: 1,
+              child: new DragBox('c', Colors.lightBlue), 
+            )
+            // new DragBox('a', Colors.red),
+            // new DragBox('b', Colors.orange),
+            // new DragBox('c', Colors.lightBlue),
           ],
         )
       ],
@@ -178,8 +190,7 @@ class DragBoxState extends State<DragBox> with SingleTickerProviderStateMixin {
                 controller.stop();
               });
         }
-        
-      },
+      }
     );
   }
 }
@@ -232,7 +243,7 @@ class AnimatedDrag extends AnimatedWidget {
       width: 100.0,
       height: 100.0,
       color: draggableColor,
-      margin: new EdgeInsets.only(left: animation.value  ?? 0),
+      margin: new EdgeInsets.only(left: animation.value  ?? 0, right: animation.value ?? 0),
       child: new Center(
         child: new Text(
           draggableText,
