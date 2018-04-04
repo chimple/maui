@@ -11,14 +11,15 @@ class Shake extends AnimatedWidget {
 
   Animation<double> get animation => listenable;
   double get translateX {
-    const double shakeDelta = 0.0;
     final double t = animation.value;
-    // if (t <= 2.0)
+    const double shakeDelta = 2.0;
+    // if (t <= 0.25)
     //   return -t * shakeDelta;
-    // // else if (t < 0.75)
-    // //   return (t - 0.5) * shakeDelta;
-      //return (1.0 - t) * 4.0 * shakeDelta;
-      return t*1.2;
+    // else if (t < 0.75)
+    //   return (t - 0.5) * shakeDelta;
+    // else
+    //   return (1.0 - t) * 4.0 * shakeDelta;
+    return t*1.2;
   }
 
   @override

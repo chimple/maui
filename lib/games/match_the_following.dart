@@ -23,8 +23,8 @@ class MatchTheFollowing extends StatefulWidget {
   State<StatefulWidget> createState() => new _MatchTheFollowingState();
 }
 
-enum Status { Disable, Enable }
-enum StatusShake { Stopped, Shake }
+enum Status { Disable, Enable,ShakeLeft,Stopped0 }
+enum StatusShake { Stopped, ShakeRight }
 
 class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
@@ -39,7 +39,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   Map<String, String> _allLetters;
   String _leftSideText, _rightSideText;
   int indexText1, indexText2,indexLeftButton;
-  int attem = 0, i = 0,_oldIndexforLeftButton=0,_oldIndexforRightButton,_nextTask = 5;
+  int attem = 0, i = 0,_oldIndexforLeftButton=0,_oldIndexforRightButton=0,_nextTask = 5;
   bool _isLoading = true;
   int _size = 5, indexL,flag=0,flag1=0;
   @override
@@ -106,7 +106,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   }
 
   Widget _buildLeftSide(BuildContext context) {
-    // print("_buildLeftSidde method::");
     int j = 0;
     List<TableRow> rows = new List<TableRow>();
     List<Widget> cells;
@@ -119,12 +118,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       rows.add(new TableRow(children: cells));
     }
     return new Table(children: rows);
-
-    // return new Table(children: rows);
   }
 
   Widget _buildItemsLeft(int index, String text, Status colorstatus) {
-    // print("_Build Items Right::");
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -136,6 +132,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
             setState(() {
               _statusColorChange[index] = Status.Enable;
             });
+            
             flag=1; 
           }
           if (_oldIndexforLeftButton !=index && flag==1) {
@@ -176,42 +173,33 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   void match(int indexRightbutton) {
     int score = 2;
-    print("Right Index:: $indexText2");
     if (_leftSideletters.indexOf(_leftSideText) == _rightSideLetters.indexOf(_rightSideText)) {
       setState(() {
         _lettersLeft[indexText1] = '';
         _lettersRight[indexText2] = '';
       });
-      print("match::");
       attem++;
       widget.onScore(score);
       widget.onProgress(attem / 5);
       score = score + 2;
     } else {
-      if (_statusShake[indexRightbutton]!=StatusShake.Shake)
+      if (_statusShake[indexRightbutton]!=StatusShake.ShakeRight) {
       setState(() {
-        _statusShake[indexRightbutton] = StatusShake.Shake;
-        _statusColorChange[indexLeftButton]=Status.Enable;
+        _statusShake[indexRightbutton] = StatusShake.ShakeRight;
+        _statusColorChange[indexLeftButton]=Status.ShakeLeft;
         flag1=1;
          });
-         if (_oldIndexforRightButton!=indexRightbutton && flag1==1) {
-           _statusShake[_oldIndexforLeftButton]=StatusShake.Stopped;
-           flag1=0;
-         }
+      }
+         new Future.delayed(const Duration(milliseconds: 1400), () {
+           setState((){
+             _statusShake[indexRightbutton] = StatusShake.Stopped;
+             _statusColorChange[indexLeftButton]=Status.Enable;
+           });      
+              });
     }
      _oldIndexforRightButton=indexRightbutton;
-    // new Future.delayed(const Duration(milliseconds: 800), () {
-    //   setState(() {
-    //     _statuses1[indexR] = Status.Stopped;
-    //     _statuses[indexL] = Status.Disable;
-    //   });
-    // });
-
     if (attem == 5) {
-      print("change::");
       attem = 0;
-      print("left:: $_lettersLeft");
-      print("right:: $_lettersRight");
       _initBoard();
       setState(() {});
     }
@@ -244,14 +232,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller, controller1;
   Animation animationInvisible, animationShake;
-
   initState() {
     super.initState();
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 400), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
     controller1 = new AnimationController(
-        duration: new Duration(microseconds: 500), vsync: this);
+        duration: new Duration(microseconds: 1000), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeOut);
     animationShake = new Tween(begin: 0.0, end: 5.0).animate(controller1);
@@ -262,23 +249,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       }
     });
-    // controller1.addStatusListener((state1) {
-    //   print("shake is worked");
-    //   if (state1 == AnimationStatus.completed) {
-    //     new Future.delayed(const Duration(milliseconds: 50), () {
-    //       controller1.reverse();
-    //     });
-    //   } else if (state1 == AnimationStatus.dismissed) {
-    //     new Future.delayed(const Duration(milliseconds: 50), () {
-    //       controller1.forward();
-    //     });
-    //   }
-    // });
-    // controller1.forward();
-    // new Future.delayed(const Duration(milliseconds: 1000), () {
-    //   controller1.stop();
-    // });
     controller.forward();
+    shake();
   }
 
   @override
@@ -286,46 +258,38 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
       controller.reverse();
-    } else if (oldWidget.text == widget.text) {
-      controller1.addStatusListener((state1) {
-        print("shake is worked");
-        if (state1 == AnimationStatus.completed) {
-          controller1.reverse();
-        } else if (state1 == AnimationStatus.dismissed) {
+    }
+  }
+  void shake() {
+    animationShake.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller1.repeat();
+        } else if (status == AnimationStatus.dismissed) {
           controller1.forward();
         }
       });
-      controller1.forward();
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        try {
-        controller1.stop();
-        }
-        catch(exception, exc){}
-      });
-    }
+    controller1.forward();
   }
-
+ @override
   void dispose() {
     controller1.dispose();
+    controller.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    Animation<double> noAnimation;
     Size media = MediaQuery.of(context).size;
     double _height, _width;
     _height = media.height / 10;
     _width = media.width;
-    print("media hieght : $_height width:: $_width");
     //return new Padding(
     //  padding: new EdgeInsets.all(5.0),
     return new Container(
-        margin: new EdgeInsets.only(right:  15.0,left: 15.0),
+        margin: new EdgeInsets.only(right:  20.0,left: 20.0),
         height: _height,
         padding: new EdgeInsets.all(4.0),
         child: new Shake(
-            animation: (widget.shakestatus == StatusShake.Shake || widget.colorstatus==Status.Enable) 
+            animation: (widget.colorstatus==Status.ShakeLeft || widget.shakestatus == StatusShake.ShakeRight) 
                 ? animationShake
                 : animationInvisible,
             child: new ScaleTransition(
@@ -335,7 +299,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     elevation: 8.0,
                     splashColor: Colors.red,
                     onPressed: () => widget.onPress(),
-                    color: widget.colorstatus == Status.Enable
+                    color: (widget.colorstatus == Status.Enable ||widget.colorstatus==Status.ShakeLeft )
                         ? Colors.yellow[300]
                         : Colors.teal,
                     shape: new RoundedRectangleBorder(
@@ -346,59 +310,3 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             color: Colors.white, fontSize: 25.0))))));
   }
 }
-
-// class Shake extends AnimatedWidget {
-//   const Shake({
-//     Key key,
-//     Animation<double> animation,
-//     this.child,
-//   })
-//       : super(key: key, listenable: animation);
-
-//   final Widget child;
-
-//   Animation<double> get animation => listenable;
-//   double get translateX {
-//     const double shakeDelta = 0.0;
-//     final double t = animation.value;
-//     // if (t <= 2.0)
-//     //   return -t * shakeDelta;
-//     // // else if (t < 0.75)
-//     // //   return (t - 0.5) * shakeDelta;
-//       //return (1.0 - t) * 4.0 * shakeDelta;
-//       return t*1.2;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Transform(
-//       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
-//       child: child,
-//     );
-//   }
-// }
-// class ButtonAnimation extends AnimatedWidget {
-//   ButtonAnimation({Key key, Animation animation, this.onPressed})
-//       : super(key: key, listenable: animation);
-
-//   Function onPressed;
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//     print("Child build::");
-//     Animation animation = listenable;
-//     print("list:  $listenable");
-//     return new Center(
-//       child: new Container(
-//         height: 30.0,
-//         width: 30.0,
-//         margin: new EdgeInsets.only(left: animation.value ?? 0),
-//         child: new RaisedButton(
-//           child:  new Text("Push Me"),
-//           onPressed: onPressed,
-//         ),
-//       ),
-//     );
-//   }
-// }
