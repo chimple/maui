@@ -26,13 +26,16 @@ class Casino extends StatefulWidget {
 class _CasinoState extends State<Casino> {
   int _selectedItemIndex = 0;
   List<List<String>> data;
-   
+
   String givenWord = " ";
   bool _isLoading = true;
-  String wd = " ";
+  // String wd = " ";
   var givenWordList = new List();
   int i = 0;
-  int initialIndex;
+  int j=0;
+ FixedExtentScrollController scrollController =
+        new FixedExtentScrollController(initialItem: 3);
+  
   @override
   void initState() {
     super.initState();
@@ -41,7 +44,7 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-    initialIndex = 3;
+  
     print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
@@ -50,9 +53,6 @@ class _CasinoState extends State<Casino> {
 
     for (var i = 0; i < data.length; i++) {
       data[i].shuffle();
-      // if (scrollingLetterList[initialIndex] == givenWordList[i]) {
-      //   data[i].shuffle();
-      // }
     }
 
     print("data $givenWord");
@@ -60,15 +60,22 @@ class _CasinoState extends State<Casino> {
     print("shuffled Data $data");
 
     setState(() => _isLoading = false);
+   
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
-    FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: initialIndex);
+    
 
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
+    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
+    if(scrollingLetterList[3]==givenWordList[j]){
+      data[j].shuffle();
+      j++;
+      print("Hey data shuffled");
+
+    }
 
     return new Container(
       height: 100.0,
@@ -145,7 +152,7 @@ class _CasinoState extends State<Casino> {
                       color: Colors.white),
                 ))),
             new Expanded(
-              child: new Container(
+              child: new Center(
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: data.map((s) {
