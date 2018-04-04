@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -11,7 +13,12 @@ class Reflex extends StatefulWidget {
   int iteration;
   int gameCategoryId;
 
-  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+  Reflex({key,
+    this.onScore,
+    this.onProgress,
+    this.onEnd,
+    this.iteration,
+    this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -66,9 +73,9 @@ class ReflexState extends State<Reflex> {
           if (text == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
-                  _size * _size + _currentIndex < _allLetters.length
-                      ? _shuffledLetters[_size * _size + _currentIndex]
-                      : null;
+              _size * _size + _currentIndex < _allLetters.length
+                  ? _shuffledLetters[_size * _size + _currentIndex]
+                  : null;
               _currentIndex++;
             });
             widget.onScore(1);
@@ -94,17 +101,12 @@ class ReflexState extends State<Reflex> {
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j++, e))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-    return new Table(children: rows);
+    int j = 0;
+    return new ResponsiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
+    );
   }
 }
 
@@ -158,20 +160,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.teal,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+    return new ScaleTransition(
+        scale: animation,
+        child: new GestureDetector(
+            onLongPress: () {
+              showDialog(
+                  context: context,
+                  child: new FittedBox(
+                      fit: BoxFit.contain,
+                      child: new FlashCard(text: widget.text)));
+            },
+            child: new RaisedButton(
+                onPressed: () => widget.onPress(),
+                color: Colors.teal,
+                shape: new RoundedRectangleBorder(
+                    borderRadius:
+                    const BorderRadius.all(const Radius.circular(8.0))),
+                child: new Text(_displayText,
+                    style:
+                    new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
