@@ -77,6 +77,7 @@ class QuizPageState extends State<QuizPage> {
       fit: StackFit.loose,
       children: <Widget>[
         ht > wd ? new Column(
+          
         mainAxisAlignment: MainAxisAlignment.end,       
            children: <Widget>[
              new Column(
@@ -129,7 +130,8 @@ class QuizPageState extends State<QuizPage> {
                new Padding(
               padding: new EdgeInsets.all(ht * 0.06),
             ),
-               
+
+            new QuestionText(questionText),   
 
               new Padding(
               padding: new EdgeInsets.all(ht*0.05),
@@ -176,9 +178,9 @@ class QuizPageState extends State<QuizPage> {
                 print(1);
                 overlayShouldBeVisible = false;
               }); 
-              new Future.delayed(const Duration(milliseconds: 250), () {
-                _initBoard();
+              new Future.delayed(const Duration(milliseconds: 20), () {
                 widget.onEnd();
+                _initBoard();
               });         
             }
         )) : new Container()
