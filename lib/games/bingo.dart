@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
-import 'dart:ui' show window;
-
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
+import 'dart:async';
+import 'package:maui/components/';
 class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-
-  Bingo({key, this.onScore, this.onProgress,this.onEnd,this.iteration}) : super(key: key);
+  Bingo({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new BingoState();
 }
-enum Status {Active,Visible}
+enum Status {Active,Visible,Wrong}
 
 
-class BingoState extends State<Bingo> {
+class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
-  final List<String> _allLetters = [
-    '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9'
-  ];
-  final List<String> question = [
-    '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' ,
-  ];
+   Map<String,String> _Bingodata;
+//  final List<String> _question;
+   List<String> _all = [];
 
-  final int _size = 3;
+   int _size = 4;
   var _currentIndex = 0;
   var ques = 0;
   var num1 = 0;
   var i = 0;
   List storeBingo = [];
-
+  Animation animation;
+  AnimationController animationController;
   List _copyQuestion = [];
   List _Maped = [];
-  List<String> _shuffledLetters = [];
+   List<String> _shuffledLetters = [];
   List<Status> _statuses;
 //  List _letters;
   static int m = 3;
@@ -45,8 +45,9 @@ class BingoState extends State<Bingo> {
   var count = 0;
   // stored index check
   var s = 0;
+/// datattaaaa
 
-
+  bool _isLoading = true;
   var sum = 0;
   var _letters = new List.generate(m , (_) => new List(n));
   var _referenceMatrix = new List.generate(k.ceil() , (_) => new List(l.ceil()));
@@ -54,20 +55,31 @@ class BingoState extends State<Bingo> {
   @override
   void initState() {
     super.initState();
+    _initBoard();
+  }
+  void _initBoard() async {
+     animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+    setState(()=>_isLoading=true);
+    _Bingodata = await fetchPairData(widget.gameCategoryId , _size*_size);
+print({"kiran data":_Bingodata});
 
-    question.forEach((e) {
+    _Bingodata.forEach((e,v) {
       _copyQuestion.add(e);
+      _all.add(v);
     });
+    _copyQuestion.add(null);
     ques = _copyQuestion[i];
-    print("this is a $question");
+    print({"this questions :":_copyQuestion});
+    print({"this questions :":_all[i]});
+//    print("this is a $question");
     print("this is a $ques");
 
 
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
+    for (var i = 0; i < _all.length; i += _size * _size) {
       _shuffledLetters.addAll(
-          _allLetters.skip(i).take(_size * _size).toList(growable: true)
-            ..shuffle()
-      );
+          _all.skip(i).take(_size * _size).toList(growable: false)
+            ..shuffle());
     }
 //    for (var i = 0; i < _size; i++) {
 //      for (var j = 0; j < _size; j++) {
@@ -81,6 +93,18 @@ class BingoState extends State<Bingo> {
   }
 
 
+  void _myAnim() {
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+    animationController.forward();
+    print('Pushed the Button');
+  }
+
   Widget _buildItem(int index , String text , Status status) {
     final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
@@ -88,14 +112,14 @@ class BingoState extends State<Bingo> {
         text: text ,
         status: status ,
         onPress: () {
-          s = index;
-          if (_statuses[index] != Status.Visible) {
+          print("index $index");
+          print("text $text");
+          if (status==Status.Active) {
+            print("index kirrrrran $index");
             setState(() {
-              if (int.parse(t1.text) == int.parse(_copyQuestion[i])) {
+              if ( text  == _copyQuestion[i]) {
 
                 _statuses[index] = Status.Visible;
-                print({"inside setstate index:": index});
-                print(({"this is text":text}));
 
                 int counter = 0;
                 for(int i= 0;i<3;i++){
@@ -109,18 +133,30 @@ class BingoState extends State<Bingo> {
 
                 int matchRow = bingoHorizontalChecker();
                 print({"the bingo checker response row : " : matchRow});
+             ///horizontall  data showing part
+                if( -1 != matchRow){
+                  print("this is BINGORow");
+
+                }
                 int matchColumn = bingoVerticalChecker();
                 print({"the bingo checker response column: " : matchColumn});
+                if( -1 != matchColumn){
+                  print("this is BINGOColumn");
+
+                }
 
                 print({"this is reference":_referenceMatrix});
                 print({"this is i value ": i });
 
-                if(i < _size*_size-1){
-                  i = i + 1;
+                if(i <= _size*_size-1){
+                  i++;
                   ques = _copyQuestion[i];
                 }else{
                   print({"where is green manu ": " hello index is over"});
                 }
+              }
+              else{
+                status==Status.Wrong;
               }
             }
             );
@@ -215,8 +251,8 @@ class MyButton extends StatefulWidget{
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+  AnimationController controller,controller1;
+  Animation<double> animationRight,animationWrong;
   String _displayText;
 
   initState() {
@@ -225,9 +261,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+     animationRight = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-        print("$state:${animation.value}");
+        print("$state:${animationRight.value}");
         if (state == AnimationStatus.completed) {
 //        /  print('dismissed');
           if (!widget.text.isEmpty) {
@@ -236,16 +272,44 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
-    controller.forward();
+   controller.forward();
+    animationWrong = new Tween(begin: 0.0, end: 20.0).animate(controller1);
+//    animationWrong.addStatusListener((state) {
+//      if (state == AnimationStatus.completed) {
+//        controller.reverse();
+//      } else if (state == AnimationStatus.dismissed) {
+//
+//        controller.forward();
+//      }
+//    });
+//    controller.forward();
+//    print('Pushed the Button');
+
   }
+
+
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
       controller.reverse();
+    } else if (oldWidget.text == widget.text) {
+      controller1.addStatusListener((state1) {
+
+        if (state1 == AnimationStatus.completed) {
+          controller1.reverse();
+        } else if (state1 == AnimationStatus.dismissed) {
+          controller1.forward();
+        }
+      });
+      controller1.forward();
+      new Future.delayed(const Duration(milliseconds: 1400), () {
+        try {
+          controller1.stop();
+        }
+        catch(exception, exc){}
+      });
     }
-//    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   void _handleTouch() {
@@ -259,10 +323,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
 
     return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
+
+            child: new Container(
+                    padding: const EdgeInsets.all(8.0),
+            child: new Shake
             child: new ScaleTransition(
-                scale: animation,
+                scale: animationRight,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
                     padding: const EdgeInsets.all(8.0),
@@ -272,6 +338,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         const BorderRadius.all(const Radius.circular(8.0))),
                     child: new Text(_displayText,
                         style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+                            color: Colors.white, fontSize: 24.0)))))));
   }
 }
