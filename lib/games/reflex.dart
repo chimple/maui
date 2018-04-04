@@ -11,7 +11,13 @@ class Reflex extends StatefulWidget {
   int iteration;
   int gameCategoryId;
 
-  Reflex({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+  Reflex(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -34,7 +40,7 @@ class ReflexState extends State<Reflex> {
 
   void _initBoard() async {
     _currentIndex = 0;
-    setState(()=>_isLoading=true);
+    setState(() => _isLoading = true);
     _allLetters = await fetchSerialData(widget.gameCategoryId);
     _size = min(4, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
@@ -45,7 +51,7 @@ class ReflexState extends State<Reflex> {
     }
     print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
-    setState(()=>_isLoading=false);
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -85,26 +91,31 @@ class ReflexState extends State<Reflex> {
   @override
   Widget build(BuildContext context) {
     print("MyTableState.build");
-    MediaQueryData media = MediaQuery.of(context);
-    print(media);
-    if(_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j++, e))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-    return new Table(children: rows);
+
+    return new LayoutBuilder(builder: (context, constraints) {
+      var j = 0;
+      return new Center(
+          child: new GridView.count(
+        crossAxisCount: _size,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(4.0),
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
+        childAspectRatio: 1.0,
+        scrollDirection: constraints.maxHeight > constraints.maxWidth
+            ? Axis.vertical
+            : Axis.horizontal,
+        children:
+            _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
+      ));
+    });
   }
 }
 
@@ -137,7 +148,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           if (widget.text != null) {
             setState(() => _displayText = widget.text);
             controller.forward();
-          } 
+          }
         }
       });
     controller.forward();
@@ -158,20 +169,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.teal,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+    return new ScaleTransition(
+        scale: animation,
+        child: new RaisedButton(
+            onPressed: () => widget.onPress(),
+            color: Colors.teal,
+            shape: new RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(8.0))),
+            child: new Text(_displayText,
+                style: new TextStyle(color: Colors.white, fontSize: 24.0))));
   }
 }
