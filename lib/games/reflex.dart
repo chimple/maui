@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:maui/components/reactive_grid_view.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -100,7 +100,7 @@ class ReflexState extends State<Reflex> {
       );
     }
     int j = 0;
-    return new ReactiveGridView(
+    return new ResponsiveGridView(
       rows: _size,
       cols: _size,
       children: _letters.map((e) => _buildItem(j++, e)).toList(growable: false),

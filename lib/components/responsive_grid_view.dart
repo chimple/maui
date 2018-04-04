@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
-class ReactiveGridView extends StatelessWidget {
+class ResponsiveGridView extends StatelessWidget {
   List<Widget> children;
   final int rows;
   final int cols;
@@ -10,7 +10,7 @@ class ReactiveGridView extends StatelessWidget {
   final double crossAxisSpacing;
   final double childAspectRatio;
 
-  ReactiveGridView(
+  ResponsiveGridView(
       {@required this.children,
       @required this.rows,
       @required this.cols,
@@ -22,7 +22,7 @@ class ReactiveGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
-      bool portrait = constraints.maxHeight > constraints.maxWidth;
+      bool portrait = constraints.maxHeight * rows > constraints.maxWidth * cols;
       if (!portrait) {
         var widgets = <Widget>[];
         for (int i = 0; i < cols; i++) {
