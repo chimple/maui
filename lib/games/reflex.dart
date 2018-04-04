@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/reactive_grid_view.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -11,13 +13,12 @@ class Reflex extends StatefulWidget {
   int iteration;
   int gameCategoryId;
 
-  Reflex(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId})
+  Reflex({key,
+    this.onScore,
+    this.onProgress,
+    this.onEnd,
+    this.iteration,
+    this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -72,9 +73,9 @@ class ReflexState extends State<Reflex> {
           if (text == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
-                  _size * _size + _currentIndex < _allLetters.length
-                      ? _shuffledLetters[_size * _size + _currentIndex]
-                      : null;
+              _size * _size + _currentIndex < _allLetters.length
+                  ? _shuffledLetters[_size * _size + _currentIndex]
+                  : null;
               _currentIndex++;
             });
             widget.onScore(1);
@@ -98,24 +99,12 @@ class ReflexState extends State<Reflex> {
         child: new CircularProgressIndicator(),
       );
     }
-
-    return new LayoutBuilder(builder: (context, constraints) {
-      var j = 0;
-      return new Center(
-          child: new GridView.count(
-        crossAxisCount: _size,
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(4.0),
-        mainAxisSpacing: 4.0,
-        crossAxisSpacing: 4.0,
-        childAspectRatio: 1.0,
-        scrollDirection: constraints.maxHeight > constraints.maxWidth
-            ? Axis.vertical
-            : Axis.horizontal,
-        children:
-            _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
-      ));
-    });
+    int j = 0;
+    return new ReactiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
+    );
   }
 }
 
@@ -171,13 +160,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
-        child: new RaisedButton(
-            onPressed: () => widget.onPress(),
-            color: Colors.teal,
-            shape: new RoundedRectangleBorder(
-                borderRadius:
+        child: new GestureDetector(
+            onLongPress: () {
+              showDialog(
+                  context: context,
+                  child: new FittedBox(
+                      fit: BoxFit.contain,
+                      child: new FlashCard(text: widget.text)));
+            },
+            child: new RaisedButton(
+                onPressed: () => widget.onPress(),
+                color: Colors.teal,
+                shape: new RoundedRectangleBorder(
+                    borderRadius:
                     const BorderRadius.all(const Radius.circular(8.0))),
-            child: new Text(_displayText,
-                style: new TextStyle(color: Colors.white, fontSize: 24.0))));
+                child: new Text(_displayText,
+                    style:
+                    new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
