@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-
+ 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
 void main() {
