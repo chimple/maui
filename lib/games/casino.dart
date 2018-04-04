@@ -31,11 +31,9 @@ class _CasinoState extends State<Casino> {
   bool _isLoading = true;
   // String wd = " ";
   var givenWordList = new List();
-  int i = 0;
-  int j=0;
- FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: 3);
-  
+  int i;
+  int j;
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +42,8 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-  
+    i = 0;
+    j = 0;
     print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
@@ -60,21 +59,22 @@ class _CasinoState extends State<Casino> {
     print("shuffled Data $data");
 
     setState(() => _isLoading = false);
-   
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
-    
-
+    FixedExtentScrollController scrollController =
+        new FixedExtentScrollController(initialItem: 3);
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
-    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
-    if(scrollingLetterList[3]==givenWordList[j]){
-      data[j].shuffle();
+    if (j < givenWordList.length) {
+      print(
+          "scrolling[3] ${scrollingLetterList[3]}   givenletter ${givenWordList[j]}");
+      if (scrollingLetterList[3] == givenWordList[j]) {
+        data[j].shuffle();
+        print("Hey data shuffled");
+      }
       j++;
-      print("Hey data shuffled");
-
     }
 
     return new Container(
@@ -102,6 +102,7 @@ class _CasinoState extends State<Casino> {
                   new Future.delayed(const Duration(milliseconds: 500), () {
                     _initletters();
                     widget.onEnd();
+                    givenWordList = [];
                   });
                   print("the end");
                 } else {
@@ -110,6 +111,7 @@ class _CasinoState extends State<Casino> {
                   print("index $index");
                 }
                 i++;
+                print("i= $i");
               }
             },
             children: new List<Widget>.generate(scrollingLetterList.length,
