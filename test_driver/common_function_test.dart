@@ -16,9 +16,10 @@ void main() {
      if (driver != null)
        await driver.close();
    });
+ });
+ }
 
-    test('signin', () async {
-
+void commonSignIn(FlutterDriver driver) async {
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(milliseconds: 200));
 
@@ -27,11 +28,11 @@ void main() {
 
       completer.complete();
       await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
 
-    test('Game',() async{
+}
 
-      final Completer<Null> completer = new Completer<Null>();
+void commonGoToGames(FlutterDriver driver) async {
+        final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 2));
 
       final SerializableFinder game = find.text('Game');
@@ -39,8 +40,4 @@ void main() {
 
       completer.complete();
       await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
-});
-
-
 }

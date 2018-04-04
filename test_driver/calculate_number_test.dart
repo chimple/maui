@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-
+ 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
 void main() {
@@ -39,13 +39,15 @@ test('scrolling', () async {
 
 test('playing the Single digit addition without carry', () async {
       final Completer<Null> completer = new Completer<Null>();
-      String s='Single digit addition without carry';
+      String s='Triple digit addition without carry';
       final SerializableFinder todo=find.text(s);
       driver.tap(todo);
       await new Future<Duration>.delayed(const Duration(seconds: 1));
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
-      await new Future<Duration>.delayed(const Duration(seconds: 1));
+for(var j=0;j<2;j++)
+{     
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       final SerializableFinder number=find.byValueKey('num1');
       var item=await driver.getText(number);
       print(item);
@@ -77,6 +79,15 @@ test('playing the Single digit addition without carry', () async {
          list1=add%10;
          lst[1]=list1;
          add=(add~/10);
+         if(add==0)
+         {
+         final SerializableFinder item4 =find.text(lst[1]);
+         await driver.tap(item4);
+         await new Future<Duration>.delayed(const Duration(seconds: 1));
+         final SerializableFinder item5 =find.text(lst[0]);
+         await driver.tap(item5);
+         break;
+         }
          lst[2]=add;
          print(lst[2]);
          print(lst[1]);
@@ -207,8 +218,9 @@ test('playing the Single digit addition without carry', () async {
         await new Future<Duration>.delayed(const Duration(seconds: 1));
         final SerializableFinder item10 = find.text('✔');
         await driver.tap(item10);
-        final SerializableFinder tool=find.byTooltip('Back');
-        await driver.tap(tool);
+}        
+        // final SerializableFinder tool=find.byTooltip('Back');
+        // await driver.tap(tool);
         completer.complete();
         await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
