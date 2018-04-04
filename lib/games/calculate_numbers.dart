@@ -272,7 +272,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           var j = 0;
           return new Column(
             children: <Widget>[
-              new Padding(padding:constraints.maxHeight > constraints.maxWidth ? const EdgeInsets.all(15.0):const EdgeInsets.all(2.0),),
+              new Padding(padding:constraints.maxHeight > constraints.maxWidth ? const EdgeInsets.all(5.0):const EdgeInsets.all(2.0),),
               new Expanded(
                 child: new Container(
                   color: Colors.white,
@@ -283,25 +283,27 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             _displayContainer(" ", Colors.white, new Key(" ")),
-                           _displayContainer('$num1', Colors.lime, new Key("num1")),
+                           _displayContainer('$num1', Colors.limeAccent, new Key("num1")),
                           ],
                         ),
                       ),
+                      new Padding(padding:const EdgeInsets.all(2.0),),
                       new Expanded(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                               _displayContainer(_operator, Colors.lime, new Key("_operator")),
-                           _displayContainer('$num2', Colors.lime, new Key("num2")),
+                           _displayContainer(_operator, Colors.limeAccent, new Key("_operator")),
+                           _displayContainer('$num2', Colors.limeAccent, new Key("num2")),
                           ],
                         ),
                       ),
+                        new Padding(padding:const EdgeInsets.all(2.0),),
                        new Expanded(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                              _displayContainer(" ", Colors.white, new Key(" ")),
-                           _displayContainer(_output, flag==true?Colors.green:Colors.purple, new Key("_optput")),
+                           _displayContainer(_output, flag==true?Colors.green:Colors.redAccent, new Key("_optput")),
                           ],
                         ),
                       ),
@@ -318,7 +320,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 mainAxisSpacing:  constraints.maxHeight > constraints.maxWidth ? 4.0 : 15.0,
                 crossAxisSpacing: constraints.maxHeight > constraints.maxWidth ? 4.0 : 15.0,
                 childAspectRatio:
-                    constraints.maxHeight > constraints.maxWidth ? 2.0 : 1.0,
+                    constraints.maxHeight > constraints.maxWidth ? 2.0 : 0.4,
                 scrollDirection: constraints.maxHeight > constraints.maxWidth
                     ? Axis.vertical
                     : Axis.horizontal,
@@ -442,7 +444,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         scale: animation,
         child: new RaisedButton(
             onPressed: () => widget.onPress(),
-            color: Colors.lime,
+            color: Colors.pinkAccent,
             shape: new RoundedRectangleBorder(
                 borderRadius:
                     const BorderRadius.all(const Radius.circular(8.0))),
