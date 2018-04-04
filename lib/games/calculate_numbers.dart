@@ -245,15 +245,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   }
 
   Widget _displayContainer(String text, Color color, Key key) {
-    return new Container(
-        color: color,
-        height: 50.0,
-        width: 50.0,
-        child: new Center(
-          child: new Text(text,
-              key: key,
-              style: new TextStyle(color: Colors.black, fontSize: 20.0)),
-        ));
+    return new Expanded(
+                              child: new FittedBox(
+                                child: new Container(
+                                  height: 30.0,
+                                  width: 30.0,
+                                  color: color,
+                                  child: new Center(child: new Text(text),
+                                ),
+                              ),
+     ) );
   }
 
   @override
@@ -265,216 +266,69 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size + 1; ++i) {
-      List<Widget> cells = _numbers
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j++, e))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
     switch (options) {
       case 'one':
-        return new Container(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+        return new LayoutBuilder(builder: (context, constraints) {
+          var j = 0;
+          return new Column(
             children: <Widget>[
-              new Container(
-                  child: new Container(
-                color: Colors.pink,
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        _displayContainer(
-                            '$num1', Colors.lime, new Key('num1')),
-                      ],
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(
-                            _operator, Colors.lime, new Key('_operator')),
-                        _displayContainer(
-                            '$num2', Colors.lime, new Key('num2')),
-                      ],
-                    ),
-                    new Container(
-                      height: 10.0,
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        new Container(
-                          key: new Key('_outout'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
+              new Padding(padding:constraints.maxHeight > constraints.maxWidth ? const EdgeInsets.all(15.0):const EdgeInsets.all(2.0),),
+              new Expanded(
+                child: new Container(
+                  color: Colors.white,
+                  child: new Column(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _displayContainer(" ", Colors.white, new Key(" ")),
+                           _displayContainer('$num1', Colors.lime, new Key("num1")),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                               _displayContainer(_operator, Colors.lime, new Key("_operator")),
+                           _displayContainer('$num2', Colors.lime, new Key("num2")),
+                          ],
+                        ),
+                      ),
+                       new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                             _displayContainer(" ", Colors.white, new Key(" ")),
+                           _displayContainer(_output, flag==true?Colors.green:Colors.purple, new Key("_optput")),
+                          ],
+                        ),
+                      ),
+                      
+                    ],
+                  ),
                 ),
+              ),
+              new Expanded(
+                  child: new GridView.count(
+                crossAxisCount: _size,
+                shrinkWrap: true,
+                padding: constraints.maxHeight > constraints.maxWidth ? const EdgeInsets.all(5.0):const EdgeInsets.all(10.0),
+                mainAxisSpacing:  constraints.maxHeight > constraints.maxWidth ? 4.0 : 15.0,
+                crossAxisSpacing: constraints.maxHeight > constraints.maxWidth ? 4.0 : 15.0,
+                childAspectRatio:
+                    constraints.maxHeight > constraints.maxWidth ? 2.0 : 1.0,
+                scrollDirection: constraints.maxHeight > constraints.maxWidth
+                    ? Axis.vertical
+                    : Axis.horizontal,
+                children: _numbers
+                    .map((e) => _buildItem(j++, e))
+                    .toList(growable: false),
               )),
-              new Container(
-                  color: Colors.pink, child: new Table(children: rows))
             ],
-          ),
-        );
-        break;
-
-      case 'doubleDigitWithoutCarry':
-        return new Container(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Container(
-                  child: new Container(
-                color: Colors.pink,
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        new Container(
-                          color: Colors.pink,
-                          width: 2.0,
-                        ),
-                        _displayContainer(
-                            '$num1digit1', Colors.lime, new Key('num1')),
-                        new Container(color: Colors.pink, width: 2.0),
-                        _displayContainer(
-                            '$num1digit2', Colors.lime, new Key('num1')),
-                      ],
-                    ),
-                    new Container(color: Colors.pink, height: 2.0),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(
-                            _operator, Colors.lime, new Key('_operator')),
-                        new Container(color: Colors.pink, width: 2.0),
-                        _displayContainer(
-                            '$num2digit1', Colors.lime, new Key('num2')),
-                        new Container(color: Colors.pink, width: 2.0),
-                        _displayContainer(
-                            '$num2digit2', Colors.lime, new Key('num1')),
-                      ],
-                    ),
-                    new Container(
-                      height: 10.0,
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        new Container(
-                          key: new Key('_outout'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
-                        ),
-                        new Container(color: Colors.pink, width: 2.0),
-                        new Container(
-                          key: new Key('_outout1'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-              new Container(
-                  color: Colors.pink, child: new Table(children: rows))
-            ],
-          ),
-        );
-        break;
-
-      case 'tripleDigitWithoutCarry':
-        return new Container(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Container(
-                  child: new Container(
-                color: Colors.pink,
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        _displayContainer('', Colors.white, new Key('num1')),
-                        _displayContainer('', Colors.white, new Key('num1')),
-                        _displayContainer('', Colors.white, new Key('num1')),
-                      ],
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        _displayContainer(
-                            '$num1digit1', Colors.lime, new Key('num1')),
-                        _displayContainer(
-                            '$num1digit2', Colors.lime, new Key('num1')),
-                        _displayContainer(
-                            '$num1digit3', Colors.lime, new Key('num1')),
-                      ],
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(
-                            _operator, Colors.lime, new Key('_operator')),
-                        _displayContainer(
-                            '$num2digit1', Colors.lime, new Key('num2')),
-                        _displayContainer(
-                            '$num2digit2', Colors.lime, new Key('num1')),
-                        _displayContainer(
-                            '$num2digit3', Colors.lime, new Key('num1')),
-                      ],
-                    ),
-                    new Container(
-                      height: 10.0,
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _displayContainer(" ", Colors.pink, new Key(' ')),
-                        new Container(
-                          key: new Key('_outout'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
-                        ),
-                        new Container(
-                          key: new Key('_outout1'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
-                        ),
-                        new Container(
-                          key: new Key('_outout2'),
-                          child: new TextAnimation(
-                              animation: animation, text: _output, flag: flag),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-              new Container(
-                  color: Colors.pink, child: new Table(children: rows))
-            ],
-          ),
-        );
+          );
+        });
         break;
 
       default:
@@ -584,25 +438,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new TableCell(
-      child: new Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new ScaleTransition(
-            scale: animation,
-            child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                color: Colors.lime,
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(2.0))),
-                child: new Container(
-                  child: new Center(
-                      child: new Text(_displayText,
-                          style: new TextStyle(
-                              color: Colors.black, fontSize: 20.0))),
-                ))),
-      ),
-    );
+    return new ScaleTransition(
+        scale: animation,
+        child: new RaisedButton(
+            onPressed: () => widget.onPress(),
+            color: Colors.lime,
+            shape: new RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(8.0))),
+            child: new Center(
+                          child: new Text(_displayText,
+                  style: new TextStyle(color: Colors.black, fontSize: 25.0)),
+            )));
   }
 }
 
