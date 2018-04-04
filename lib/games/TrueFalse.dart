@@ -76,95 +76,37 @@ class QuizPageState extends State<QuizPage> {
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
-        ht > wd ? new Column(
-        mainAxisAlignment: MainAxisAlignment.end,       
-           children: <Widget>[
-             new Column(
-               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[new Column( 
-               mainAxisAlignment: MainAxisAlignment.end,
-             children: <Widget>[ 
-               new Padding(
-              padding: new EdgeInsets.all(ht*0.12),
-            ),
+        new Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
 
              new QuestionText(questionText),
 
-              new Padding(
-              padding: new EdgeInsets.all(ht*0.08),
-            ),
-             ]
-           ),
-              ],
-             ),
-
             new Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new Padding(
+
+                  new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
+
                   new AnswerButton(true, () => handleAnswer(true)), //true button
+
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
-                  new AnswerButton(false, () => handleAnswer(false)), 
+
+                  new AnswerButton(false, () => handleAnswer(false)), //false button
+
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
-                  ),// false button
-                ],
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(bottom: ht * 0.1),
-            ),
-          ],
-        ) : new Column(
-        mainAxisAlignment: MainAxisAlignment.end,       
-           children: <Widget>[
-             new Column(
-               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[new Column( 
-               mainAxisAlignment: MainAxisAlignment.end,
-             children: <Widget>[ 
-               new Padding(
-              padding: new EdgeInsets.all(ht * 0.06),
-            ),
-               
+                  ),
 
-              new Padding(
-              padding: new EdgeInsets.all(ht*0.05),
-            ),
-             ]
-           ),
-              ],
-             ),
-
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                new Padding(
-                    padding: new EdgeInsets.only(left: wd * 0.015),
-                  ),
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
-                  new Padding(
-                    padding: new EdgeInsets.only(right: wd * 0.015),
-                  ),
-                  new Padding(
-                    padding: new EdgeInsets.only(left: wd * 0.015),
-                  ),
-                  new AnswerButton(false, () => handleAnswer(false)), 
-                  new Padding(
-                    padding: new EdgeInsets.only(right: wd * 0.015),
-                  ),
-                ],
-            ),
-
-            new Padding(
-              padding: new EdgeInsets.only(bottom: ht * 0.01),
+                ]
             ),
           ],
         ),
-
+        
 
         overlayShouldBeVisible == true ? new Container(
           height: ht,
@@ -176,9 +118,9 @@ class QuizPageState extends State<QuizPage> {
                 print(1);
                 overlayShouldBeVisible = false;
               }); 
-              new Future.delayed(const Duration(milliseconds: 250), () {
-                _initBoard();
+              new Future.delayed(const Duration(milliseconds: 20), () {
                 widget.onEnd();
+                _initBoard();
               });         
             }
         )) : new Container()
@@ -235,25 +177,20 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     double ht=media.height;
     double wd = media.width;
     return new Material(
-      child: new Container(
+      child:  new Container(
+        height: ht * 0.2,
+        width: wd * 0.5,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
               color: const Color(0xFF03A9F4),
                 ),
-                padding: new EdgeInsets.all(20.0),
-            child: new Container(
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFF03A9F4),
-                ),
-                padding: new EdgeInsets.all(20.0),
-            child: ht>wd ? new Text( widget._question,
-              style: new TextStyle(color: Colors.white, fontSize: 60.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ) : new Text( widget._question,
-              style: new TextStyle(color: Colors.white, fontSize: 48.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+                padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.051),
+            child: new Center(
+              child: new Text( widget._question,
+              style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
             ),
-          ),
-          ),
+            ),
+      ),
     );
   }
 }
@@ -267,7 +204,10 @@ class AnswerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Expanded( // true button
+    Size media = MediaQuery.of(context).size;
+    double ht=media.height;
+    double wd = media.width;
+    return new Expanded( 
       child: new Material(        
         child: new InkWell(
           onTap: () => _onTap(),
@@ -277,10 +217,10 @@ class AnswerButton extends StatelessWidget {
                   color: _answer == true ? const Color(0xFF64DD17) : const Color(0xFFE53935),
                     
                 ),
-                padding: new EdgeInsets.all(20.0),
+                padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.031),
                 child: new Center(
                   child: new Text(_answer == true ? "True" : "False",
-                    style: new TextStyle(color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
                   )
                 ),
               ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ResponsiveGridView extends StatelessWidget {
   List<Widget> children;
-  final int rows;
   final int cols;
+  final int rows;
   final EdgeInsetsGeometry padding;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
@@ -12,8 +12,8 @@ class ResponsiveGridView extends StatelessWidget {
 
   ResponsiveGridView(
       {@required this.children,
-      @required this.rows,
       @required this.cols,
+      @required this.rows,
       this.padding = const EdgeInsets.all(4.0),
       this.mainAxisSpacing = 4.0,
       this.crossAxisSpacing = 4.0,
@@ -22,7 +22,7 @@ class ResponsiveGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
-      bool portrait = constraints.maxHeight * rows > constraints.maxWidth * cols;
+      bool portrait = constraints.maxHeight * cols > constraints.maxWidth * rows;
       if (!portrait) {
         var widgets = <Widget>[];
         for (int i = 0; i < cols; i++) {
@@ -35,7 +35,7 @@ class ResponsiveGridView extends StatelessWidget {
       }
       return new Center(
           child: new GridView.count(
-              crossAxisCount: portrait ? rows : cols,
+              crossAxisCount: portrait ? cols : rows,
               shrinkWrap: true,
               padding: padding,
               mainAxisSpacing: mainAxisSpacing,

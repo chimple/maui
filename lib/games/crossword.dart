@@ -1,50 +1,69 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-
-  Crossword({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
-      : super(key: key);
+  int gameCategoryId;
+ 
+  Crossword({key,
+  this.onScore,
+  this.onProgress,
+  this.onEnd,
+  this.iteration,
+  this.gameCategoryId})
+    : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new CrosswordState();
 }
-
 class CrosswordState extends State<Crossword> {
-  var sum=0;
-  var pressedtext='';
-  var pressedindex=0;
   var flag1=0;
   var correct=0;
-  
-  List<String> _allLetters = [
-    'C','','','','',
-    'A','','','','',
-    'T','I','G', 'E','R',
-    '','','','','A',
-    '','','','','T',
-  ];
+  var keys=0;
+Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data;
   static final int _size = 5;
   List<String> _rightwords=new List(_size);
   List<String> _letters=new List();
+  List<String> _data2=new List();
+  List<int> _data2_=new List();
   List<int> _flag=new List();
+  List<String> _data1=new List();
   List _sortletters=new List(_size*2); 
-  //String text1='';
+  bool _isLoading = true;
+
     @override
   void initState() {
     super.initState();
+   // keys=0; 
+  //  print('init 111');
     _initBoard();
   }
- void _initBoard() {
-   _letters=_allLetters;
+ void _initBoard() async {
+   setState(() => _isLoading = true);
+   data = await fetchCrosswordData(widget.gameCategoryId);
+
+    data.item1.forEach((e){e.forEach((v){_data1.add(v);});});
   
-   //print('array $_flag');
-    for (var i = 0; i < _allLetters.length; i++) {
-     if(_allLetters[i]==''){_letters[i]='1';}
-     else{_letters[i]=_allLetters[i];}
+    for(var i=0;i<data.item2.length;i++){
+   _data2.add(data.item2[i].item1);
+    }
+  // _data2_.add(data.item2[0].item2)
+    for(var i=0;i<data.item2.length;i++){
+   _data2_.add(data.item2[i].item2*5+data.item2[i].item3);
+    }
+
+   // print('hoi  $_data1');
+   // print('hoi ss ${_data1.length}');
+    _letters=_data1;
+    for (var i = 0; i < _data1.length; i++) {
+     if(_data1[i]==null){_letters[i]='1';}
+     else{_letters[i]=_data1[i];}
     }
     for (var i = 0,j=0,h=0; i < _letters.length; i++){
       if(i==5||i==11||i==12||i==13||i==19){
@@ -54,10 +73,12 @@ class CrosswordState extends State<Crossword> {
          _letters[i]='';
         }
     }
+    _rightwords.shuffle();
      _flag.length=_letters.length+_size+1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i]=0;
       }
+      setState(() => _isLoading = false);
   //  print('helo $_sortletters');
   }
   Widget _buildItem(int index, String text,int flag) {
@@ -70,7 +91,9 @@ class CrosswordState extends State<Crossword> {
         onAccepted: (targettext){
             flag1=0;         
                for (var i = 0; i < _sortletters.length; i++) {
-                if(_sortletters[i]==targettext && index==_sortletters[++i]){ 
+                if(_sortletters[i]==targettext && 
+                index==_sortletters[++i] && 
+                _letters[index]==''){ 
              //  _rightwords[index-100]='';
                flag1=1; 
                break;
@@ -78,10 +101,11 @@ class CrosswordState extends State<Crossword> {
               setState(() {
               if (flag1==1) {
               _letters[index]= targettext;
+
               correct++;
               widget.onScore(1);
                widget.onProgress(correct/_size);
-               if(correct==_size){widget.onEnd();}
+               if(correct==_size){widget.onEnd();widget.onEnd();}
                }
              else if(flag1==0){
                 _flag[index]=1 ;
@@ -89,7 +113,10 @@ class CrosswordState extends State<Crossword> {
             });
             }, 
             flag:flag,
-            arr:_flag
+            arr:_flag,
+            img:_data2,
+            imgindex:_data2_,
+            keys:keys++
       );//mybutton     
  }
   else {
@@ -100,12 +127,16 @@ class CrosswordState extends State<Crossword> {
         flag:flag,
         arr:_flag,
         onAccepted: (text) { },
+        img:_data2,
+        imgindex:_data2_,
+        keys:keys
    );
   }
 }
 @override
   Widget build(BuildContext context) {
   //  print("MyTableState.build");
+  keys=0;
    List<TableRow> rows = new List<TableRow>();
    List<TableRow> rows1 = new List<TableRow>();
     var j = 0,h=0;
@@ -144,15 +175,18 @@ class CrosswordState extends State<Crossword> {
   }
 }
 class MyButton extends StatefulWidget {
-  MyButton({ this.index, this.text,this.color1,this.flag,this.onAccepted,this.arr});
+  MyButton({ this.index, this.text,this.color1,
+  this.flag,this.onAccepted,this.arr,this.img,
+  this.imgindex,this.keys});
   var index;
   final int color1;
   final int flag;
   final String text;
    List arr;
+   final List<String> img;
+   final List<int> imgindex;
   final DragTargetAccept onAccepted;
- // final String text1;
-   
+  int keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -160,7 +194,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  
+   
   initState() {
     super.initState();
     _displayText = widget.text;
@@ -190,12 +224,39 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
  @override
   Widget build(BuildContext context) { 
+    widget.keys++;
+    print(widget.keys);
     for (var i = 0; i < widget.arr.length; i++) {
       widget.arr[i]=0;
       }
+      for (var i = 0; i < widget.imgindex.length; i++) {
+     if( widget.imgindex[i]==widget.index){
+         return new TableCell(
+        child: new Padding(
+            padding:const EdgeInsets.all(8.0),
+            child:new ScaleTransition(
+                scale: animation,
+                child: new Container(
+                width: 30.0,
+                height: 44.0,
+                 decoration: new BoxDecoration(
+                  color:Colors.yellow[500],
+                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+                  image: new DecorationImage(
+                image: new AssetImage(widget.img[i]),
+               
+               fit: BoxFit.contain
+               )
+                ),
+                child:new Center(
+                  child:new Text(widget.text,
+                  key: new Key('A${widget.keys}')
+                  ,style:new TextStyle(color:Colors.black ,fontSize: 24.0)),
+                ),
+              )
+            ))); 
+     }}
     if(widget.index<100 && widget.color1!=0){
-    //  print('nik $_displayText');
-    
      return new TableCell(
         child: new Padding(
             padding:const EdgeInsets.all(8.0),
@@ -223,7 +284,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                 ),
                 child:new Center(
-                  child:new Text(widget.text,style:new TextStyle(color:Colors.black,fontSize: 24.0)),
+                  child:new Text(widget.text,
+                  key: new Key('A${widget.keys}'),
+                  style:new TextStyle(color:Colors.black,fontSize: 24.0)),
                 ),
               );
             },
@@ -231,7 +294,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               ), ),),);
     }
      else if (widget.index>=100){
-       return new TableCell(
+           return new TableCell(
         child: new Draggable(
           data: _displayText,
           child:new Padding(
@@ -246,7 +309,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                 ),
                 child:new Center(
-                  child:new Text(_displayText,style:new TextStyle(color:Colors.black ,fontSize: 24.0)),
+                  child:new Text(_displayText,
+                  key:new Key('B${widget.keys}') ,
+                  style:new TextStyle(color:Colors.black ,fontSize: 24.0)),
                 ),
               )
             ),
@@ -258,8 +323,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
            color: Colors.yellow[400]),
            child:new Center(
-              child:new Text(_displayText,
-                style:new TextStyle(
+              child:new Text(_displayText,style:new TextStyle(
                   color: Colors.black,
                   decoration: TextDecoration.none,
                   fontSize: 26.0,
@@ -269,7 +333,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         
         ));
     }
-   else{
+     else{
     return new TableCell(
         child: new Padding(
             padding:const EdgeInsets.all(8.0),
