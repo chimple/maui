@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/flip_animator.dart';
 
 class Memory extends StatefulWidget {
   Function onScore;
@@ -83,9 +84,9 @@ class MemoryState extends State<Memory> {
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
            
-          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || cnt>2)  
+          if(_pressedTileIndex == index || cnt>2)   
            return;
-        
+             
           cnt++;
        
           setState((){
@@ -98,13 +99,16 @@ class MemoryState extends State<Memory> {
           {
             if(_pressedTile == text)
             {
-               setState((){
-               _letters[_pressedTileIndex] = '';
-               _letters[index] = '';
-               _pressedTileIndex = -1;
-               _pressedTile = null;
+               new Future.delayed(const Duration(milliseconds: 250), () {
+                setState((){
+                _letters[_pressedTileIndex] = '';
+                _letters[index] = '';
+                _pressedTileIndex = -1;
+                _pressedTile = null;
                 cnt = 0;
-               });
+                });
+             });   
+
                 _matched++;
                widget.onScore(2);
                widget.onProgress((_progressCnt) / (_allLetters.length/2));
@@ -122,19 +126,17 @@ class MemoryState extends State<Memory> {
                print("Matched");
             }
             else
-            { 
-               setState((){   
+            {
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
                 _statuses[index] = Status.Hidden;
                  _pressedTileIndex = -1;
                 _pressedTile = null;
                  cnt = 0;
                 });
-
-              new Future.delayed(const Duration(milliseconds: 500), () {
-                  
               });
-              
+                
               print("Pressed Statuses3: ${_statuses}"); 
               print("Unmatched"); 
             }  
@@ -143,7 +145,7 @@ class MemoryState extends State<Memory> {
           }    
            _pressedTileIndex = index;
           _pressedTile = text; 
-                
+         
         });
   }
 
@@ -187,6 +189,7 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
+  AnimationController flipController;
   String _displayText;
 
   initState() {
@@ -194,7 +197,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 250), vsync: this);
+    flipController = new AnimationController(
+        duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
@@ -206,7 +211,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           } 
         }
       });
-    controller.forward();
+    controller.forward().then((f){flipController.reverse();});
+    
   }
 
   @override
@@ -218,6 +224,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
+    if(oldWidget.status != widget.status) {
+      if(widget.status == Status.Visible) {
+        flipController.forward();
+      } else {
+        flipController.reverse();
+      }
+    }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
@@ -227,7 +240,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new TableCell(
         child: new Padding(
             padding: const EdgeInsets.all(8.0),
-            child: new ScaleTransition(
+            child: new FlipAnimator(controller: flipController, front: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
@@ -237,7 +250,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         borderRadius:
                             const BorderRadius.all(const Radius.circular(8.0))),
                     child: new Text(_displayText,
-                        style:
-                           widget.status == Status.Visible ? new TextStyle(color: Colors.white, fontSize: 24.0) : new TextStyle(color: Colors.teal, fontSize: 24.0))))));
+                        style: new TextStyle(color: Colors.white, fontSize: 24.0)))),
+                back: new RaisedButton(
+                    onPressed: () => widget.onPress(),
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.teal,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
+                    child: new Text(_displayText, style: new TextStyle(color: Colors.teal, fontSize: 24.0) )))));
+
   }
 }
