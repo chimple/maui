@@ -40,3 +40,6 @@ void commonGoToGames(FlutterDriver driver) async {
       completer.complete();
       await completer.future;
 }
+void commonScroilling(FlutterDriver driver, String gameName){
+
+}
