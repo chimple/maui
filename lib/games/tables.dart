@@ -2,29 +2,37 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Tables extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
 
-  Tables({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Tables({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _TablesState();
 }
 
-class _TablesState extends State<Tables> {
+class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
   String _question = "";
   String _result = "";
   int count = 0;
+  int _answer;
+  bool _isLoading = true;
+  List<Tuple4<int, String, int, int>> _tableData;
+  List<Tuple4<int, String, int, int>> _tableShuffledData = [];
+  Animation animation;
+  AnimationController animationController;
+  List<List<int>> shant;
+
   final List<String> _allLetters = [
-    'submit',
-    '0',
-    'C',
     '1',
     '2',
     '3',
@@ -34,20 +42,11 @@ class _TablesState extends State<Tables> {
     '7',
     '8',
     '9',
+    'clear',
+    '0',
+    'submit',
   ];
 
-  final List<int> _data = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-  ];
-  List<String> _letters;
 
   @override
   void initState() {
@@ -55,10 +54,43 @@ class _TablesState extends State<Tables> {
     _initBoard();
   }
 
-  void _initBoard() {
-    _letters = _allLetters.sublist(0, _size * (_size + 1));
-    int temp = _data[count];
-    _question= "$temp X $temp";
+  void _initBoard() async {
+    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+
+    setState(()=>_isLoading=true);
+    _tableData = await fetchTablesData(widget.gameCategoryId);
+    print("shant data $shant");
+    _tableShuffledData = [];
+
+    for (var i = 0; i < _allLetters.length; i += _size * _size) {
+      _tableShuffledData.addAll(
+          _tableData.skip(i).take(_size * _size).toList(growable: false)
+            ..shuffle());
+    }
+
+    print("anuj data $_tableShuffledData");
+    int temp1 = _tableShuffledData[count].item1;
+    String temp2 = _tableShuffledData[count].item2;
+    int temp3 = _tableShuffledData[count].item3;
+
+    int temp4 = _tableShuffledData[count].item4;
+    _question= "$temp1 $temp2 $temp3";
+    _answer= temp4;
+    print("After Data" + "$_question" + "$_answer");
+    setState(()=>_isLoading=false);
+  }
+
+  void _myAnim() {
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+    animationController.forward();
+    print('Pushed the Button');
   }
 
   Widget _buildItem(int index, String text) {
@@ -67,23 +99,40 @@ class _TablesState extends State<Tables> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if(text=='C') {
-              setState(() {
-                _result = _result.substring(0, _result.length - 1);
-              });
+          if(text=='clear') {
+            setState(() {
+              _result = _result.substring(0, _result.length - 1);
+            });
           }
           else if(text == 'submit') {
-            if(int.parse(_result) == (_data[count] * _data[count])) {
+            if( count > 7) {
+                print("coming.........");
+                 new Future.delayed(const Duration(milliseconds: 250), () {
+                     widget.onEnd();
+                 });
+            }
+            if(int.parse(_result) == _answer) {
+              widget.onScore(1);
+              widget.onProgress((count + 2) / 6.5);
               setState(() {
                 count = count + 1;
-                int temp = _data[count];
-                _question = "$temp X $temp";
+                print(count);
+                int temp1 = _tableShuffledData[count].item1;
+                String temp2 = _tableShuffledData[count].item2;
+                int temp3 = _tableShuffledData[count].item3;
+                int temp4 = _tableShuffledData[count].item4;
+                _question= "$temp1 $temp2 $temp3";
+                _answer= temp4;
                 _result = "";
               });
             }
             else{
-              setState((){
-                _result = "";
+              _myAnim();
+              new Future.delayed(const Duration(milliseconds: 700), () {
+                setState((){
+                  _result = "";
+                });
+                animationController.stop();
               });
             }
           }
@@ -94,24 +143,9 @@ class _TablesState extends State<Tables> {
               }
             });
           }
-
         });
   }
 
-//  Widget subTile = new Container (
-//    padding: new EdgeInsets.all(45.0),
-//    alignment: Alignment.center,
-//    color: new Color(0X00000000),
-//    child: new Text(
-//      "$str",
-//      style: new TextStyle(
-//        fontSize: 60.0,
-//        fontWeight: FontWeight.bold,
-//        color: Colors.black,
-//        decorationStyle: TextDecorationStyle.wavy,
-//      ),
-//    ),
-//  );
 
   @override
   void didUpdateWidget(Tables oldWidget) {
@@ -120,52 +154,29 @@ class _TablesState extends State<Tables> {
   @override
   Widget build(BuildContext context) {
     print("MyTableState.build");
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size + 1; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j++, e))
-          .toList();
-      rows.add(new TableRow(children: cells));
+    MediaQueryData media = MediaQuery.of(context);
+    print("anuj data");
+    print(media.size);
+    if(_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
     }
-
-    return new Container(
-      alignment: Alignment.bottomCenter,
-      child: new Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            new Container (
-              height: 125.0,
-              width: 800.0,
-              alignment: Alignment.center,
-              color: new Color(0X00000000),
-              child: new Text(
-                '$_question',
-                style: new TextStyle(
-                  fontSize: 60.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            new Container(
-                height: 60.0,
-                width: 120.0,
-                margin: new EdgeInsets.only(bottom: 20.0),
-                color: Colors.teal,
-                child: new Center(
-                    child: new Text("$_result",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                        )))),
-            new Table(children: rows),
-          ]
-      ),
+    int j = 0;
+    return new ResponsiveGridView(
+      rows: 4,
+      cols: 3,
+      children: _allLetters.map((e) => _buildItem(j++, e)).toList(growable: false),
     );
+
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
 
@@ -183,6 +194,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
+  int _count = 0;
 
   initState() {
     super.initState();
@@ -219,21 +231,41 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.teal,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+    return new ScaleTransition(
+        scale: animation,
+        child: new RaisedButton(
+            onPressed: () => widget.onPress(),
+            color: Colors.teal,
+            shape: new RoundedRectangleBorder(
+                borderRadius:
+                const BorderRadius.all(const Radius.circular(8.0))),
+            child: new Text(_displayText,
+                style: new TextStyle(color: Colors.white, fontSize: 24.0))));
+  }
+}
+
+class TextAnimation extends AnimatedWidget {
+  TextAnimation({Key key, Animation animation, this.text}) : super(key: key, listenable: animation);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    Animation animation = listenable;
+    MediaQueryData media = MediaQuery.of(context);
+    return new Center(
+      child: new Container(
+        height: media.size.height * 0.12,
+        width: media.size.width / 3.0,
+        alignment: Alignment.center,
+        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: media.size.height * 0.09),
+        child:  new Text(text,
+            style: new TextStyle(
+            color: Colors.white,
+            fontSize: media.size.height * 0.1,
+            fontWeight: FontWeight.bold,)),
+            color: Colors.teal,
+        ),
+    );
   }
 }
 

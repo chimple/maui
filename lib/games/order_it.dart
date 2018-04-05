@@ -96,5 +96,5 @@ class OrderPreviewState extends State<OrderPreview> {
   }
 
   @override
-  Widget build(BuildContext context) => new Text(data);
+  Widget build(BuildContext context) => new Text(" ");
 }
