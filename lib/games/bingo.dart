@@ -195,6 +195,7 @@ print({"kiran data":_Bingodata});
           new Container
             (color: Colors.orange , height: 45.0 , width: 46.0 ,
               child: new Center(child: new Text("$ques" ,
+              key: new Key('question'),
                   style: new TextStyle(
                       color: Colors.black , fontSize: 30.0))))),
           new Expanded(child: new ResponsiveGridView(
