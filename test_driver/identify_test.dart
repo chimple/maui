@@ -13,7 +13,7 @@ void main() {
       driver = await FlutterDriver.connect();
       commonSignIn(driver);
       commonGoToGames(driver);
-      commonScroilling(driver,'identify');
+      commonScrolling(driver,'identify');
     });
   });
 }

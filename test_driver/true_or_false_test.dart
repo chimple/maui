@@ -12,7 +12,8 @@ void main() {
       driver = await FlutterDriver.connect();
       commonSignIn(driver);
       commonGoToGames(driver);
-      commonScroilling(driver, 'true_or_false');
+      commonScrolling(driver, 'true_or_false');
+
 
 
     });

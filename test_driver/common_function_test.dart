@@ -40,10 +40,6 @@ void commonGoToGames(FlutterDriver driver) async {
       completer.complete();
       await completer.future;
 }
-<<<<<<< HEAD
-void commonScroilling(FlutterDriver driver, String gameName){
-
-=======
 void commonScrolling(FlutterDriver driver,String gameName) async{
   final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 3));
@@ -62,5 +58,5 @@ void commonScrolling(FlutterDriver driver,String gameName) async{
       await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;
->>>>>>> master
+
 }
