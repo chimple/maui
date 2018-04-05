@@ -19,7 +19,7 @@ class GameCategoryList extends StatelessWidget {
         crossAxisCount: 2,
         children: gameCategories
             .map((gameCategory) => new RaisedButton(
-              key: new Key('${gameCategory.id}'),
+              key: new Key('${gameCategory.name}'),
               child: new Text(gameCategory.name),
               onPressed: () => showModes(context, gameCategory.game, gameCategory.id),
         ))
