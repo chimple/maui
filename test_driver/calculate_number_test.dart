@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+import 'common_function_test.dart';
  
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
@@ -10,6 +11,9 @@ void main() {
     FlutterDriver driver;
     setUpAll(() async {
     driver = await FlutterDriver.connect();
+    commonSignIn(driver);
+    commonGoToGames(driver);
+    commonScrolling(driver,'calculate_numbers');
     });
 
     tearDownAll(() async {
@@ -17,29 +21,30 @@ void main() {
       await driver.close();
     });
 
-test('scrolling', () async {
-      final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 2));
-      bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('calculate_numbers');
-      driver.waitFor(menuItem).then<Null>((Null value) async {
-      scroll = false;
-      await new Future<Duration>.delayed(const Duration(seconds: 1));
-      await driver.tap(menuItem);
-      await new Future<Duration>.delayed(const Duration(seconds: 1));
-      completer.complete();
-      });
-      final SerializableFinder gs = find.byValueKey('Game_page');
-      while (scroll) {
-      await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
-      await new Future<Null>.delayed(kWaitBetweenActions);
-      }
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
+// test('scrolling', () async {
+//       final Completer<Null> completer = new Completer<Null>();
+//       await new Future<Duration>.delayed(const Duration(seconds: 2));
+//       bool scroll = true;
+//       final SerializableFinder menuItem = find.byValueKey('calculate_numbers');
+//       driver.waitFor(menuItem).then<Null>((Null value) async {
+//       scroll = false;
+//       await new Future<Duration>.delayed(const Duration(seconds: 1));
+//       await driver.tap(menuItem);
+//       await new Future<Duration>.delayed(const Duration(seconds: 1));
+//       completer.complete();
+//       });
+//       final SerializableFinder gs = find.byValueKey('Game_page');
+//       while (scroll) {
+//       await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
+//       await new Future<Null>.delayed(kWaitBetweenActions);
+//       }
+//       await completer.future;
+//     }, timeout: const Timeout(const Duration(minutes: 1)));
 
 test('playing the Single digit addition without carry', () async {
       final Completer<Null> completer = new Completer<Null>();
-      String s='Triple digit addition without carry';
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
+      String s='Single digit addition without carry';
       final SerializableFinder todo=find.text(s);
       driver.tap(todo);
       await new Future<Duration>.delayed(const Duration(seconds: 1));
@@ -73,14 +78,20 @@ for(var j=0;j<2;j++)
          lst = new List(list);
          lst[0]=list;
          add=(add~/10);
-    if(add>1)
+    if(add>=1)
         { 
          var list1;
          list1=add%10;
          lst[1]=list1;
          add=(add~/10);
-         if(add==0)
+        // lst[2]=add;
+         if(add==0||add==1)
          {
+          // print(lst[2]); 
+          print(lst[1]);
+          print(lst[0]);
+          // final SerializableFinder items =find.text(lst[2]);
+        //  await driver.tap(items);
          final SerializableFinder item4 =find.text(lst[1]);
          await driver.tap(item4);
          await new Future<Duration>.delayed(const Duration(seconds: 1));
