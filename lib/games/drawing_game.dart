@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import '../components/drawing.dart';
+import 'dart:ui' as ui;
 
 class Drawing extends StatefulWidget {
   Function onScore;
@@ -25,8 +23,10 @@ class DrawScreen extends State<Drawing> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    print({"this is mediaaa:": media.size});
     var assetsImage = new AssetImage('assets/apple.png');
-    var image = new Image(image: assetsImage, width: 150.0, height: 150.0);
+    var image = new Image(image: assetsImage, width: media.size.width, height: media.size.height*0.2);
 
     return new Container(
         child: new Column(
@@ -47,9 +47,10 @@ class DrawScreen extends State<Drawing> {
                     onPressed: _onClear,
                   ),
                   new RaisedButton(
-                      child: new Text("Undo"),
-                      color: Colors.blue,
-                      onPressed: null),
+                    child: new Text("Undo"),
+                    color: Colors.blue,
+                    onPressed: _onUndo,
+                  ),
                   new RaisedButton(
                     child: new Text("Send"),
                     color: Colors.blue,
@@ -58,18 +59,117 @@ class DrawScreen extends State<Drawing> {
                 ]),
           ]),
           new Column(
-//                      child:  new Container(
-//                        color: Colors.red,
-
-//                          height: 200.0,
-//                          width: 200.0,
             children: <Widget>[
               new FittedBox(
                 fit: BoxFit.fill,
+                child: new Container(
+                  width: media.size.width, height: media.size.height*0.4,
+
                 // otherwise the logo will be tiny
-                child: new MyDrawPage(_padController),
+                child: new MyDrawPage(_padController,),
                 key: new Key('draw_screen'),
+                ),
               ),
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new FlatButton(
+                      onPressed: () => _multiColor(0xff00e676),
+                      child:  new Container(
+                              width: 30.0, height: 30.0,
+                              decoration: new BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle
+                              ),
+                              margin: new EdgeInsets.all(5.0),
+                              ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiColor(0xffffea00),
+                      child:  new Container(
+                        width: 30.0, height: 30.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.yellow,
+                            shape: BoxShape.circle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiColor(0xff2962ff),
+                      child:  new Container(
+                        width: 30.0, height: 30.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiColor(0xffc51162),
+                      child:  new Container(
+                        width: 30.0, height: 30.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+
+                  ]),
+
+
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new FlatButton(
+                      onPressed: () => _multiWidth(5.0),
+                      child:  new Container(
+                        width: 15.0, height: 15.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiWidth(8.0),
+                      child:  new Container(
+                        width: 19.0, height: 19.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiWidth(10.0),
+                      child:  new Container(
+                        width: 21.0, height: 21.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+                    new FlatButton(
+                      onPressed: () => _multiWidth(15.0),
+                      child:  new Container(
+                        width: 24.0, height: 24.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle
+                        ),
+                        margin: new EdgeInsets.all(5.0),
+                      ),
+                    ),
+
+                  ]),
             ],
           ),
 //                    ),
@@ -80,5 +180,17 @@ class DrawScreen extends State<Drawing> {
     print("this is clear methode");
   }
 
-}
+  void _onUndo() {
+    _padController.undo();
+    print("this is undo methode");
+  }
 
+  void _multiColor(colorValue) {
+    _padController.multiColor(colorValue);
+    print({"this is _multiColor methode" : colorValue});
+  }
+  void _multiWidth(widthValue) {
+    _padController.multiWidth(widthValue);
+    print({"this is _multiWidth methode" : widthValue});
+  }
+}
