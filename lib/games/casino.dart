@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/repos/game_data.dart';
 import 'dart:async';
+import 'package:maui/components/flash_card.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -34,6 +35,7 @@ class _CasinoState extends State<Casino> {
   int i;
   int j;
   int index;
+  bool _isShowingFlashCard = false;
 
   @override
   void initState() {
@@ -114,8 +116,9 @@ class _CasinoState extends State<Casino> {
                   print("correct index $index");
                   givenWord = " ";
                   new Future.delayed(const Duration(milliseconds: 500), () {
-                    widget.onEnd();
-                    givenWordList = [];
+                    setState(() {
+                      _isShowingFlashCard = true;
+                    });
                   });
                   print("the end");
                 } else {
@@ -143,6 +146,15 @@ class _CasinoState extends State<Casino> {
     if (_isLoading) {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
+    }
+    if (_isShowingFlashCard) {
+      return new FlashCard(text: givenWord, onChecked: () {
+        _initletters();
+        widget.onEnd();
+        setState(() {
+          _isShowingFlashCard = false;
+        });
+      });
     }
     return new Container(
       child: new Container(

@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/flip_animator.dart';
+
+import '../components/responsive_grid_view.dart';
 
 class Memory extends StatefulWidget {
   Function onScore;
@@ -17,7 +20,7 @@ class Memory extends StatefulWidget {
   State<StatefulWidget> createState() => new MemoryState();
 }
 
-enum Status {Hidden, Visible}
+enum Status {Hidden, Visible, Disappear}
 
 class MemoryState extends State<Memory> {
   int _size = 4;
@@ -32,6 +35,7 @@ class MemoryState extends State<Memory> {
   var _pressedTile ;
   var _pressedTileIndex ;
   var cnt = 0;
+  var flag = 0; 
 
   @override
   void initState() {
@@ -60,6 +64,7 @@ class MemoryState extends State<Memory> {
     }
     print("Rajesh-Data-after-Shuffling: ${_shuffledLetters}");
     _letters = _shuffledLetters.sublist(0, _size * _size);
+     _statuses = [];
     _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
     setState(()=>_isLoading=false);
   }
@@ -82,10 +87,13 @@ class MemoryState extends State<Memory> {
        onPress: () {       
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
+          print("Pressed Statuses before checking: ${_statuses}");
+          
+          int numOfVisible = _statuses.fold(0, (prev, element) => element==Status.Visible ? prev+1 : prev);
            
-          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || cnt>2)  
+          if(_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || cnt>2)   
            return;
-        
+             
           cnt++;
        
           setState((){
@@ -98,13 +106,18 @@ class MemoryState extends State<Memory> {
           {
             if(_pressedTile == text)
             {
-               setState((){
-               _letters[_pressedTileIndex] = '';
-               _letters[index] = '';
-               _pressedTileIndex = -1;
-               _pressedTile = null;
-                cnt = 0;
-               });
+                new Future.delayed(const Duration(milliseconds: 250), () {
+                  setState((){
+                  _letters[_pressedTileIndex] = null;
+                  _letters[index] = null;
+                  _statuses[_pressedTileIndex] = Status.Disappear;
+                  _statuses[index] = Status.Disappear;
+                  _pressedTileIndex = -1;
+                  _pressedTile = null;
+                  cnt = 0;
+                  });
+              });   
+
                 _matched++;
                widget.onScore(2);
                widget.onProgress((_progressCnt) / (_allLetters.length/2));
@@ -122,20 +135,19 @@ class MemoryState extends State<Memory> {
                print("Matched");
             }
             else
-            { 
-               setState((){   
+            {
+              new Future.delayed(const Duration(milliseconds: 800), () {
+                setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
                 _statuses[index] = Status.Hidden;
-                 _pressedTileIndex = -1;
+                _pressedTileIndex = -1;
                 _pressedTile = null;
                  cnt = 0;
                 });
-
-              new Future.delayed(const Duration(milliseconds: 500), () {
-                  
+                print("Pressed Statuses3: ${_statuses}"); 
               });
+ 
               
-              print("Pressed Statuses3: ${_statuses}"); 
               print("Unmatched"); 
             }  
             print("Pressed Statuses4: ${_statuses}");
@@ -143,7 +155,7 @@ class MemoryState extends State<Memory> {
           }    
            _pressedTileIndex = index;
           _pressedTile = text; 
-                
+         
         });
   }
 
@@ -159,19 +171,16 @@ class MemoryState extends State<Memory> {
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j, e, _statuses[j++]))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-    return new Table(children: rows);
+     int j = 0;
+    return new ResponsiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _letters.map((e) => _buildItem(j, e, _statuses[j++])).toList(growable: false),
+    );
   }
 }
+
+
 
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.status, this.onPress}) : super(key: key);
@@ -187,6 +196,7 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
+  AnimationController flipController;
   String _displayText;
 
   initState() {
@@ -194,29 +204,42 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 250), vsync: this);
+    flipController = new AnimationController(
+        duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (widget.text == null) {
+          if (widget.text != null) {
             setState(() => _displayText = widget.text);
             controller.forward();
-          } 
+           } 
         }
       });
-    controller.forward();
+    controller.forward().then((f){flipController.reverse();});
+    
   }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == '' && widget.text != '') {
+    if (oldWidget.text == null && widget.text != null) {
       _displayText = widget.text;
       controller.forward();
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
+    }
+    else 
+    {
+      if(oldWidget.status != widget.status) {
+      if(widget.status == Status.Visible) {
+        flipController.forward();
+        } else {
+          flipController.reverse();
+        }
+      }
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
@@ -224,10 +247,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new ScaleTransition(
+
+            return new FlipAnimator(controller: flipController, front: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
@@ -237,7 +258,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         borderRadius:
                             const BorderRadius.all(const Radius.circular(8.0))),
                     child: new Text(_displayText,
-                        style:
-                           widget.status == Status.Visible ? new TextStyle(color: Colors.white, fontSize: 24.0) : new TextStyle(color: Colors.teal, fontSize: 24.0))))));
+                        style: new TextStyle(color: Colors.white, fontSize: 24.0)))),
+                back: new RaisedButton(
+                    onPressed: () => widget.onPress(),
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.teal,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
+                    child: new Text(' ', style: new TextStyle(color: Colors.teal, fontSize: 24.0) )));
+
   }
 }
