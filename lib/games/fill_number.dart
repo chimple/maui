@@ -3,8 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
-
-
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Fillnumber extends StatefulWidget {
   Function onScore;
@@ -204,6 +203,8 @@ class MyFillnumberState extends State<Fillnumber> {
 
                     _currentIndex++;
                     if (sum == _copyAns[i]) {
+                        widget.onScore(1);
+              widget.onProgress((count + 2) / 6.5);
                       i = i + 1;
                       ans = _copyAns[i];
                       for (var i = 0; i < _Index.length; i++) {
@@ -230,6 +231,7 @@ class MyFillnumberState extends State<Fillnumber> {
                       for (var i = 0; i < count; i++) {
                         _letters.add(null);
                       }
+                      count=0;
                       _statuses = _copyVal.map((a) => Status.Active).toList(
                           growable: false);
                       _Index.removeRange(0, _Index.length);
@@ -285,22 +287,33 @@ class MyFillnumberState extends State<Fillnumber> {
 
 
     List<TableRow> rows =new  List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)          .take(_size)
-          .map((e) => _buildItem(j, e, _statuses[j++]))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
+   
+    // for (var i = 0; i < _size; ++i) {
+    //   List<Widget> cells = _letters
+    //       .skip(i * _size)          .take(_size)
+    //       .map((e) => _buildItem(j, e, _statuses[j++]))
+    //       .toList();
+    //   rows.add(new TableRow(children: cells));
+    // }
+    // new ResponsiveGridView(
+    //   rows: _size,
+    //   cols: _size,
+    //   children: _letters.map((e) => _buildItem(j, e, _statuses[j++])).toList(growable: false),
+    // );
     return new LayoutBuilder(builder: (context, constraints) {
+         var j = 0;
+     
     return new Container(
       child: new Column(
         children: <Widget>[
           new Container
             (color: Colors.orange,height: 40.0,width: 40.0,
               child:new Center(child:new Text("$ans", style: new TextStyle(color: Colors.black, fontSize: 25.0)))),
-          new Table(children: rows),
+       new Expanded( child:   new ResponsiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _letters.map((e) => _buildItem(j, e, _statuses[j++])).toList(growable: false),
+    )),
           new Container
             (color: Colors.orange,height: 40.0,
               child:new Center(child:new Text("$num3", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
@@ -365,11 +378,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child:new  Padding(
-            padding: new EdgeInsets.all(8.0),
-            child: new ScaleTransition(
+    return  new ScaleTransition(
                 scale: animation,
+                child: new GestureDetector(
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
                     padding:new  EdgeInsets.all(8.0),
@@ -378,6 +389,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         borderRadius: new BorderRadius.all(new Radius.circular(8.0))),
                     child: new Text("$_displayText",
                         style:
-                       new  TextStyle(color: Colors.white, fontSize: 24.0))))));
+                       new  TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
