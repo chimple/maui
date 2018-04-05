@@ -49,6 +49,7 @@ class _CasinoState extends State<Casino> {
     j = 0;
 
     print("Fetched Data $data");
+    givenWord = '';
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
@@ -114,10 +115,11 @@ class _CasinoState extends State<Casino> {
                   widget.onScore(2);
                   widget.onProgress(givenWordList.length / data.length);
                   print("correct index $index");
-                  givenWord = " ";
+                  // givenWord = " ";
                   new Future.delayed(const Duration(milliseconds: 500), () {
                     setState(() {
                       _isShowingFlashCard = true;
+                      // givenWord = " ";
                     });
                   });
                   print("the end");
@@ -149,6 +151,7 @@ class _CasinoState extends State<Casino> {
     }
     if (_isShowingFlashCard) {
       return new FlashCard(text: givenWord, onChecked: () {
+        givenWord="";
         _initletters();
         widget.onEnd();
         setState(() {
