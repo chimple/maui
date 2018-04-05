@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/flip_animator.dart';
 
+import '../components/responsive_grid_view.dart';
+
 class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -62,8 +64,7 @@ class MemoryState extends State<Memory> {
     }
     print("Rajesh-Data-after-Shuffling: ${_shuffledLetters}");
     _letters = _shuffledLetters.sublist(0, _size * _size);
-    
-    _statuses = [];
+     _statuses = [];
     _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
     setState(()=>_isLoading=false);
   }
@@ -170,19 +171,16 @@ class MemoryState extends State<Memory> {
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-    var j = 0;
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j, e, _statuses[j++]))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-    return new Table(children: rows);
+     int j = 0;
+    return new ResponsiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _letters.map((e) => _buildItem(j, e, _statuses[j++])).toList(growable: false),
+    );
   }
 }
+
+
 
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.status, this.onPress}) : super(key: key);
@@ -249,10 +247,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new TableCell(
-        child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new FlipAnimator(controller: flipController, front: new ScaleTransition(
+
+            return new FlipAnimator(controller: flipController, front: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
@@ -270,7 +266,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     shape: new RoundedRectangleBorder(
                         borderRadius:
                             const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(' ', style: new TextStyle(color: Colors.teal, fontSize: 24.0) )))));
+                    child: new Text(' ', style: new TextStyle(color: Colors.teal, fontSize: 24.0) )));
 
   }
 }
