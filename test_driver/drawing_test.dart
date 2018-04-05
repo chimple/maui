@@ -12,6 +12,7 @@ void main() {
       driver = await FlutterDriver.connect();
       commonSignIn(driver);
       commonGoToGames(driver);
+      commonScrolling(driver, 'drawing');
     });
 
     tearDownAll(() async {
@@ -20,28 +21,29 @@ void main() {
     });
 
 
-    test('scrolling', () async {
-      final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 2));
-      bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('drawing');
-      driver.waitFor(menuItem).then<Null>((Null value) async {
-        scroll = false;
-        await new Future<Duration>.delayed(const Duration(seconds: 1));
-        await driver.tap(menuItem);
-        await new Future<Duration>.delayed(const Duration(seconds: 1));
-        completer.complete();
-      });
-      final SerializableFinder gs = find.byValueKey('Game_page');
-      while (scroll) {
-        await new Future<Duration>.delayed(const Duration(seconds: 1));
-        await driver.scroll(gs, 0.0, -200.0, const Duration(milliseconds: 500));
-        await new Future<Null>.delayed(kWaitBetweenActions);
-      }
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
+//    test('scrolling', () async {
+//      final Completer<Null> completer = new Completer<Null>();
+//      await new Future<Duration>.delayed(const Duration(seconds: 2));
+//      bool scroll = true;
+//      final SerializableFinder menuItem = find.byValueKey('drawing');
+//      driver.waitFor(menuItem).then<Null>((Null value) async {
+//        scroll = false;
+//        await new Future<Duration>.delayed(const Duration(seconds: 1));
+//        await driver.tap(menuItem);
+//        await new Future<Duration>.delayed(const Duration(seconds: 1));
+//        completer.complete();
+//      });
+//      final SerializableFinder gs = find.byValueKey('Game_page');
+//      while (scroll) {
+//        await new Future<Duration>.delayed(const Duration(seconds: 1));
+//        await driver.scroll(gs, 0.0, -200.0, const Duration(milliseconds: 500));
+//        await new Future<Null>.delayed(kWaitBetweenActions);
+//      }
+//      await completer.future;
+//    }, timeout: const Timeout(const Duration(minutes: 1)));
 
     test('playing the game', () async {
+      await new Future<Duration>.delayed(const Duration(seconds: 3));
       final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder tile = find.text('Todo Placeholder');
       await driver.tap(tile);
@@ -53,16 +55,20 @@ void main() {
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
 
-//    test('Getimgtext', () async {
-//      final Completer<Null> completer = new Completer<Null>();
-//      await new Future<Duration>.delayed(const Duration(seconds: 2));
-//
-//      final SerializableFinder imagetext = find.byValueKey('imgtext');
-//      String imagename = await driver.getText(imagetext);
-//      print(imagename);
-//      completer.complete();
-//      await completer.future;
-//    }, timeout: const Timeout(const Duration(minutes: 1)));
+    test('undo', () async {
+      final Completer<Null> completer = new Completer<Null>();
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
+      String s='Green';
+      final SerializableFinder color = find.byValueKey(s);
+      await driver.tap(color);
+      final SerializableFinder ds = find.byValueKey('draw_screen');
+      await driver.tap(ds);
+      await driver.scroll(ds, -500.0, 0.0, const Duration(milliseconds: 500));
+      final SerializableFinder undo=find.text('Undo');
+      await driver.tap(undo);
+      completer.complete();
+      await completer.future;
+    }, timeout: const Timeout(const Duration(minutes: 1)));
 
 
     test('Drwaing', () async {
@@ -111,6 +117,19 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 3)));
 
+
+
+
+     test('Getimgtext', () async {
+      final Completer<Null> completer = new Completer<Null>();
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
+
+      final SerializableFinder imagetext = find.byValueKey('imgtext');
+      String imagename = await driver.getText(imagetext);
+      print(imagename);
+      completer.complete();
+      await completer.future;
+    }, timeout: const Timeout(const Duration(minutes: 1)));
 
   });
 
