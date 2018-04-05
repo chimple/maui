@@ -24,7 +24,7 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
-  int _selectedItemIndex = 0;
+  final int _selectedItemIndex = 3;
   List<List<String>> data;
 
   String givenWord = " ";
@@ -33,6 +33,7 @@ class _CasinoState extends State<Casino> {
   var givenWordList = new List();
   int i;
   int j;
+  int index;
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class _CasinoState extends State<Casino> {
     data = await fetchRollingData(widget.gameCategoryId, 6);
     i = 0;
     j = 0;
+
     print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
@@ -54,23 +56,33 @@ class _CasinoState extends State<Casino> {
       data[i].shuffle();
     }
 
-    print("data $givenWord");
+    print("word $givenWord");
     print("===============");
-    print("shuffled Data $data");
+    // print("shuffled Data $data");
 
     setState(() => _isLoading = false);
   }
 
+  @override
+  void didUpdateWidget(Casino oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initletters();
+    }
+  }
+
   Widget _buildScrollButton(List<String> scrollingData) {
     FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: 3);
+        new FixedExtentScrollController(initialItem: _selectedItemIndex);
+    // scrollController.jumpToItem(_selectedItemIndex);
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
     if (j < givenWordList.length) {
       print(
-          "scrolling[3] ${scrollingLetterList[3]}   givenletter ${givenWordList[j]}");
-      if (scrollingLetterList[3] == givenWordList[j]) {
+          "scrolling[$_selectedItemIndex] ${scrollingLetterList[_selectedItemIndex]}   givenletter ${givenWordList[j]}");
+      if (scrollingLetterList[_selectedItemIndex] == givenWordList[j]) {
         data[j].shuffle();
         print("Hey data shuffled");
       }
@@ -85,30 +97,30 @@ class _CasinoState extends State<Casino> {
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CupertinoPicker(
+            key: new ValueKey<int>(index),
             scrollController: scrollController,
             itemExtent: 35.0,
             backgroundColor: CupertinoColors.white,
             onSelectedItemChanged: (int index) {
-              setState(() {
-                _selectedItemIndex = index;
-              });
-
+              // setState(() {
+              //   _selectedItemIndex = index;
+              //   print("_selectedItemIndex  $_selectedItemIndex ");
+              // });
+              print("index $index");
               if (givenWordList[i] == scrollingLetterList[index]) {
                 if (i == givenWordList.length - 1) {
                   widget.onScore(2);
                   widget.onProgress(givenWordList.length / data.length);
-                  print("index $index");
+                  print("correct index $index");
                   givenWord = " ";
                   new Future.delayed(const Duration(milliseconds: 500), () {
-                    _initletters();
                     widget.onEnd();
                     givenWordList = [];
                   });
                   print("the end");
                 } else {
-                  widget.onScore(2);
                   widget.onProgress(givenWordList.length / data.length);
-                  print("index $index");
+                  print("correct index $index");
                 }
                 i++;
                 print("i= $i");
@@ -134,7 +146,7 @@ class _CasinoState extends State<Casino> {
     }
     return new Container(
       child: new Container(
-        color: Colors.blue,
+        color: Colors.deepOrangeAccent[100],
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
