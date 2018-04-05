@@ -18,7 +18,7 @@ class Memory extends StatefulWidget {
   State<StatefulWidget> createState() => new MemoryState();
 }
 
-enum Status {Hidden, Visible}
+enum Status {Hidden, Visible, Disappear}
 
 class MemoryState extends State<Memory> {
   int _size = 4;
@@ -62,6 +62,8 @@ class MemoryState extends State<Memory> {
     }
     print("Rajesh-Data-after-Shuffling: ${_shuffledLetters}");
     _letters = _shuffledLetters.sublist(0, _size * _size);
+    
+    _statuses = [];
     _statuses = _letters.map((a)=>Status.Hidden).toList(growable: false);
     setState(()=>_isLoading=false);
   }
@@ -84,8 +86,8 @@ class MemoryState extends State<Memory> {
        onPress: () {       
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
-
           print("Pressed Statuses before checking: ${_statuses}");
+          
           int numOfVisible = _statuses.fold(0, (prev, element) => element==Status.Visible ? prev+1 : prev);
            
           if(_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || cnt>2)   
@@ -103,15 +105,17 @@ class MemoryState extends State<Memory> {
           {
             if(_pressedTile == text)
             {
-               new Future.delayed(const Duration(milliseconds: 250), () {
-                setState((){
-                _letters[_pressedTileIndex] = '';
-                _letters[index] = '';
-                _pressedTileIndex = -1;
-                _pressedTile = null;
-                cnt = 0;
-                });
-             });   
+                new Future.delayed(const Duration(milliseconds: 250), () {
+                  setState((){
+                  _letters[_pressedTileIndex] = null;
+                  _letters[index] = null;
+                  _statuses[_pressedTileIndex] = Status.Disappear;
+                  _statuses[index] = Status.Disappear;
+                  _pressedTileIndex = -1;
+                  _pressedTile = null;
+                  cnt = 0;
+                  });
+              });   
 
                 _matched++;
                widget.onScore(2);
@@ -131,10 +135,6 @@ class MemoryState extends State<Memory> {
             }
             else
             {
-              setState((){ 
-                _statuses[index] = Status.Visible;
-                });
-
               new Future.delayed(const Duration(milliseconds: 800), () {
                 setState((){   
                 _statuses[_pressedTileIndex] = Status.Hidden;
@@ -214,10 +214,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (widget.text == null) {
+          if (widget.text != null) {
             setState(() => _displayText = widget.text);
             controller.forward();
-          } 
+           } 
         }
       });
     controller.forward().then((f){flipController.reverse();});
@@ -227,17 +227,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == '' && widget.text != '') {
+    if (oldWidget.text == null && widget.text != null) {
       _displayText = widget.text;
       controller.forward();
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-    if(oldWidget.status != widget.status) {
+    else 
+    {
+      if(oldWidget.status != widget.status) {
       if(widget.status == Status.Visible) {
         flipController.forward();
-      } else {
-        flipController.reverse();
+        } else {
+          flipController.reverse();
+        }
       }
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
