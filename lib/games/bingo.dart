@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:tuple/tuple.dart';
-import 'dart:async';
-import 'package:maui/components/';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/responsive_grid_view.dart';
+
+import 'package:maui/components/Shaker.dart';
+
+
+
 class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -16,27 +22,24 @@ class Bingo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new BingoState();
 }
-enum Status {Active,Visible,Wrong}
-
+enum Status {Active,Visible}
+enum ShakeCell{Right,Wrong}
 
 class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
    Map<String,String> _Bingodata;
-//  final List<String> _question;
    List<String> _all = [];
 
-   int _size = 4;
-  var _currentIndex = 0;
+   int _size = 3;
   var ques = 0;
   var num1 = 0;
   var i = 0;
-  List storeBingo = [];
   Animation animation;
   AnimationController animationController;
   List _copyQuestion = [];
-  List _Maped = [];
    List<String> _shuffledLetters = [];
   List<Status> _statuses;
+  List<ShakeCell>_ShakeCells;
 //  List _letters;
   static int m = 3;
   static int n = 3;
@@ -90,27 +93,18 @@ print({"kiran data":_Bingodata});
     print({"reference size referenceMatrix.length": _referenceMatrix});
     _letters = _shuffledLetters.sublist(0 , _size * _size);
     _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+    _ShakeCells = _letters.map((a) => ShakeCell.Wrong).toList(growable: false);
+    print({"reference size _ShakeCells.length": _ShakeCells});
+
   }
 
 
-  void _myAnim() {
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        animationController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        animationController.forward();
-      }
-    });
-    animationController.forward();
-    print('Pushed the Button');
-  }
-
-  Widget _buildItem(int index , String text , Status status) {
-    final TextEditingController t1 = new TextEditingController(text: text);
+  Widget _buildItem(int index , String text , Status status,ShakeCell tile) {
     return new MyButton(
         key: new ValueKey<int>(index) ,
         text: text ,
         status: status ,
+        tile: tile,
         onPress: () {
           print("index $index");
           print("text $text");
@@ -156,7 +150,13 @@ print({"kiran data":_Bingodata});
                 }
               }
               else{
-                status==Status.Wrong;
+                _ShakeCells[index] = ShakeCell.Right;
+                print("this is wrongg");
+                new Future.delayed(const Duration(milliseconds: 4000), (){
+                    setState((){
+                      _ShakeCells[index] = ShakeCell.Wrong;
+                    });
+              });
               }
             }
             );
@@ -170,34 +170,40 @@ print({"kiran data":_Bingodata});
 //    print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-    List<TableRow> rows = new List<TableRow>();
+//    List<TableRow> rows = new List<TableRow>();
     var j = 0;
 
-    for (var i = 0; i < _size; ++i) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j , e , _statuses[j++]))
-          .toList();
-      rows.add(new TableRow(children: cells));
+//    for (var i = 0; i < _size; ++i) {
+//      List<Widget> cells = _letters
+//          .skip(i * _size)
+//          .take(_size)
+//          .map((e) => _buildItem(j , e , _statuses[j],_ShakeCells[j++]))
+//          .toList();
+//      rows.add(new TableRow(children: cells));
+//
+//    }
 
-    }
+//    return new ResponsiveGridView(
+//      rows: _size,
+//      cols: _size,
+//      children: _letters.map((e) =>_buildItem(j , e , _statuses[j],_ShakeCells[j++])).toList(growable: false),
+//    );
 
-    return new Container(
-      child: new Column(
+      return new Column(
         children: <Widget>[
+          new Expanded(child:
           new Container
-            (color: Colors.orange , height: 60.0 , width: 70.0 ,
+            (color: Colors.orange , height: 45.0 , width: 46.0 ,
               child: new Center(child: new Text("$ques" ,
                   style: new TextStyle(
-                      color: Colors.black , fontSize: 30.0)))) ,
-          new  Table(children: rows) ,
-//          new Container
-//            (color: Colors.orange,height: 60.0,
-//              child:new Center(child:new Text("num3", style: new TextStyle(color: Colors.black, fontSize: 30.0)))),
-        ] ,
-      ) ,
-    );
+                      color: Colors.black , fontSize: 30.0))))),
+          new Expanded(child: new ResponsiveGridView(
+          rows: _size,
+          cols: _size,
+    children: _letters.map((e) =>_buildItem(j , e , _statuses[j],_ShakeCells[j++])).toList(growable: false),
+          ))
+        ]
+      );
   }
 
   int bingoHorizontalChecker() {
@@ -236,15 +242,15 @@ print({"kiran data":_Bingodata});
     return -1;
   }
 
-
 }
 
 class MyButton extends StatefulWidget{
-  MyButton({Key key, this.text, this.onPress,this.status}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress,this.status,this.tile}) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
   Status status;
+  ShakeCell tile;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -261,72 +267,55 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-     animationRight = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
+    controller1 =  new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
+     animationRight = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+    controller.addStatusListener((state) {
         print("$state:${animationRight.value}");
-        if (state == AnimationStatus.completed) {
-//        /  print('dismissed');
-          if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
+//        if (state == AnimationStatus.completed) {
+////        /  print('dismissed');
+////          if (!widget.text.isEmpty) {
+////            setState(() => _displayText = widget.text);
+////            controller.stop();
+////          }
+//        }
       });
    controller.forward();
     animationWrong = new Tween(begin: 0.0, end: 20.0).animate(controller1);
-//    animationWrong.addStatusListener((state) {
-//      if (state == AnimationStatus.completed) {
-//        controller.reverse();
-//      } else if (state == AnimationStatus.dismissed) {
-//
-//        controller.forward();
-//      }
+    _myAnim();
+
+  }
+
+  void _myAnim() {
+    animationWrong.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller1.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller1.forward();
+      }
+    });
+    controller1.forward();
+
+//    new Future.delayed(const Duration(milliseconds: 9000),(){
+//      controller1.stop();
 //    });
-//    controller.forward();
-//    print('Pushed the Button');
-
   }
 
-
-
-  @override
-  void didUpdateWidget(MyButton oldWidget) {
-    if (oldWidget.text != widget.text) {
-      controller.reverse();
-    } else if (oldWidget.text == widget.text) {
-      controller1.addStatusListener((state1) {
-
-        if (state1 == AnimationStatus.completed) {
-          controller1.reverse();
-        } else if (state1 == AnimationStatus.dismissed) {
-          controller1.forward();
-        }
-      });
-      controller1.forward();
-      new Future.delayed(const Duration(milliseconds: 1400), () {
-        try {
-          controller1.stop();
-        }
-        catch(exception, exc){}
-      });
-    }
-  }
-
-  void _handleTouch() {
-    print(widget.text);
-    controller.reverse();
-  }
+//  @override
+//  void didUpdateWidget(MyButton oldWidget) {
+//    print({"oldwidget data ": oldWidget.text});
+//    if (oldWidget.text != widget.text) {
+//      controller.reverse();
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
 //    print("_MyButtonState.build");
+return new Container(
 
-
-    return new TableCell(
-
-            child: new Container(
-                    padding: const EdgeInsets.all(8.0),
-            child: new Shake
+            child: new Shake(
+              animation:widget.tile == ShakeCell.Right ? animationWrong : animationRight,
             child: new ScaleTransition(
                 scale: animationRight,
                 child: new RaisedButton(
@@ -338,6 +327,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         const BorderRadius.all(const Radius.circular(8.0))),
                     child: new Text(_displayText,
                         style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0)))))));
+                            color: Colors.white, fontSize: 24.0))))));
   }
 }
