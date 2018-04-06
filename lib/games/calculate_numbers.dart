@@ -52,9 +52,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2,
       num2digit3;
   int result;
-  String _output = ' ';
+  String _output = '';
   String _operator = '';
-  bool flag, carry;
+  bool flag;
   bool shake = true;
   Animation animationShake, animation;
   AnimationController animationController;
@@ -68,7 +68,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     animationShake =
-        new Tween(begin: 0.0, end: 6.0).animate(animationController);
+        new Tween(begin: -6.0, end: 6.0).animate(animationController);
     animation = new Tween(begin: 0.0, end: 0.0).animate(animationController);
     _myAnim();
     super.initState();
@@ -87,17 +87,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     setState(() => _isLoading = false);
     if (num1 % 10 == num1 && num2 % 10 == num2) {
       options = 'one';
-    } else if ( calCount(num1) == 2 || calCount(num2) == 2 ) {
+    } else if (calCount(num1) == 2 || calCount(num2) == 2) {
       options = 'doubleDigitWithoutCarry';
-       num1digit2 = num1 % 10;
+      num1digit2 = num1 % 10;
       num1 = num1 ~/ 10;
       num1digit1 = num1 % 10;
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
-      num2digit1 = num2 % 10; 
-      if (calCount((num1digit1 + num2digit1)) > 1 ||
-          calCount((num1digit2 + num2digit2)) > 1) carry = true;
-    } else  {
+      num2digit1 = num2 % 10;
+    } else {
       options = 'tripleDigitWithoutCarry';
       num1digit3 = num1 % 10;
       num1 = num1 ~/ 10;
@@ -109,9 +107,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit1 = num2 % 10;
-       if (calCount((num1digit1 + num2digit1)) > 1 || calCount((num1digit3 + num2digit3)) > 1||
-          calCount((num1digit2 + num2digit2)) > 1) carry = true;
-    } 
+    }
   }
 
   void reminderS(sum) {
@@ -179,7 +175,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
           new Future.delayed(const Duration(milliseconds: 900), () {
             setState(() {
-              _output = " ";
+              _output = "";
               flag = false;
               shake = true;
             });
@@ -194,7 +190,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         try {
           setState(() {
             _output = _output.substring(0, _output.length - 1);
-          //  flag = false;
+            //  flag = false;
           });
         } on FormatException {}
       }
@@ -219,7 +215,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   void operation(String text) {
     if (_zeoToNine(text) == true) {
-      if (_output.length < 3) {
+      if (_output.length < 2) {
         _preValue = text;
         _output = _output + _preValue;
         print(_output);
@@ -243,7 +239,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
-  height: _height,
+        height: _height,
         onPress: () {
           operation(text);
         });
@@ -270,72 +266,77 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           double height = constraints.minHeight;
           var j = 0;
           return new Container(
-             color: new Color(0XFFFFF7EBCB),
-                      child: new Column(
+            color: new Color(0XFFFFF7EBCB),
+            child: new Column(
               children: <Widget>[
                 new Expanded(
                   child: new Padding(
-                      padding: constraints.maxHeight > constraints.maxWidth
-                          ? new EdgeInsets.all(height * 0.05)
-                          : new EdgeInsets.all(height * 0.1),
-                      child: new Table(
-                        defaultColumnWidth: new FractionColumnWidth(0.25),
-                        children: <TableRow>[
-                          new TableRow(children: <Widget>[
-                            new Container(child: new Center(child: new Text(" "))),
-                            new Container(
-                                key: new Key('num1'),
-                                 color: new Color(0XFFFF52C5CE),
+                    padding: constraints.maxHeight > constraints.maxWidth
+                        ? new EdgeInsets.all(height * 0.05)
+                        : new EdgeInsets.all(height * 0.1),
+                    child: new Table(
+                      defaultColumnWidth: new FractionColumnWidth(0.25),
+                      children: <TableRow>[
+                        new TableRow(children: <Widget>[
+                          new Container(
+                              child: new Center(child: new Text(" "))),
+                          new Container(
+                              key: new Key('num1'),
+                              color: new Color(0XFFFF52C5CE),
+                              child: new Center(
+                                  child: new Text("$num1",
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: constraints.minHeight * 0.09,
+                                        // fontWeight: FontWeight.bold,
+                                      )))),
+                        ]),
+                        new TableRow(children: <Widget>[
+                          new Container(
+                              key: new Key('_operator'),
+                              color: new Color(0XFFFF52C5CE),
+                              child: new Center(
+                                  child: new Text(_operator,
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: constraints.minHeight * 0.09,
+                                        //  fontWeight: FontWeight.bold,
+                                      )))),
+                          new Container(
+                              key: new Key('num2'),
+                              color: new Color(0XFFFF52C5CE),
+                              child: new Center(
+                                  child: new Text("$num2",
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: constraints.minHeight * 0.09,
+                                        // fontWeight: FontWeight.bold,
+                                      )))),
+                        ]),
+                        new TableRow(children: <Widget>[
+                          new Container(
+                              child: new Center(child: new Text(" "))),
+                          new Shake(
+                              animation:
+                                  shake == false ? animationShake : animation,
+                              child: new Container(
+                                height: constraints.minHeight * 0.1,
+                                width: constraints.minHeight * 0.1,
+                                key: new Key('_output'),
+                                color: flag == true ? Colors.green : Colors.red,
                                 child: new Center(
-                  child: new Text("$num1",
-                      style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: constraints.minHeight * 0.09,
-                        // fontWeight: FontWeight.bold,
-                      )))),
-                          ]),
-                          new TableRow(children: <Widget>[
-                            new Container(
-                                key: new Key('_operator'),
-                                  color: new Color(0XFFFF52C5CE),
-                                child: new Center(
-                  child: new Text(_operator,
-                      style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: constraints.minHeight * 0.09,
-                        //  fontWeight: FontWeight.bold,
-                      )))),
-                            new Container(
-                                key: new Key('num2'),
-                                 color: new Color(0XFFFF52C5CE),
-                                child: new Center(
-                  child: new Text("$num2",
-                      style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: constraints.minHeight * 0.09,
-                        // fontWeight: FontWeight.bold,
-                      )))),
-                          ]),
-                          new TableRow(children: <Widget>[
-                            new Container(child: new Center(child: new Text(" "))),
-                            new Shake(
-                                animation:
-                  shake == false ? animationShake : animation,
-                                child: new Container(
-                                  key: new Key('_output'),
-                                  color: flag == true ? Colors.green : Colors.red,
-                                  child: new Center(
-                    child: new Text(_output,
-                        style: new TextStyle(
-                          color: Colors.black,
-                          fontSize: constraints.minHeight * 0.09,
-                          // fontWeight: FontWeight.bold,
-                        ))),
-                                )),
-                          ]),
-                        ],
-                      ),
+                                    child: new Text(_output,
+                                        style: new TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              constraints.minHeight * 0.09,
+                                          // fontWeight: FontWeight.bold,
+                                        ))),
+                              )),
+                        ]),
+                      ],
                     ),
+                  ),
                 ),
                 new Expanded(
                   child: new Container(
@@ -357,7 +358,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               : 0.24,
                       // childAspectRatio: 0.6,
                       children: _numbers
-                          .map((e) => _buildItem(j++, e,constraints.minHeight))
+                          .map((e) => _buildItem(j++, e, constraints.minHeight))
                           .toList(growable: false),
                     ),
                   ),
@@ -380,41 +381,46 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   children: <TableRow>[
                     new TableRow(children: <Widget>[
                       new Container(
-                          // key: new Key('num1'),
-                        //  color:
-                            //  carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                          color:
-                              carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                          color:
-                              carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                     ]),
                     new TableRow(children: <Widget>[
-                      new Container(child: new Center(child: new Text(" "))),
+                      new Container(
+                          // key: new Key('num1'),
+                          color: new Color(0XFFFF52C5CE),
+                          child: new Center(
+                              child: new Text(" ",
+                                  style: new TextStyle(
+                                    color: Colors.black,
+                                    fontSize: constraints.minHeight * 0.09,
+                                    // fontWeight: FontWeight.bold,
+                                  )))),
                       new Container(
                           // key: new Key('num1'),
                           color: new Color(0XFFFF52C5CE),
@@ -422,7 +428,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text("$num1digit1",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
@@ -432,7 +438,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text("$num1digit2",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                     ]),
@@ -444,7 +450,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text(_operator,
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     //  fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
@@ -454,17 +460,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text("$num2digit1",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           //  key: new Key('num1'),
-                         color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text("$num2digit2",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: constraints.minHeight *  0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                     ]),
@@ -474,11 +480,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            //   key: new Key('_output'),
-                            color:
-                                flag == true ? Colors.green : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
-                                child: new Text(' ',
+                                child: new Text(_output,
                                     style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: constraints.minHeight * 0.09,
@@ -489,14 +496,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            // key: new Key('_output'),
-                            color:
-                                flag == true ? Colors.green : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
-                                child: new Text(' ',
+                                child: new Text(_output,
                                     style: new TextStyle(
                                       color: Colors.black,
-                                      fontSize: constraints.minHeight *  0.09,
+                                      fontSize: constraints.minHeight * 0.09,
                                       // fontWeight: FontWeight.bold,
                                     ))),
                           )),
@@ -504,14 +512,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            // key: new Key('_output'),
-                            color:
-                                flag == true ? Colors.green : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
                                 child: new Text(_output,
                                     style: new TextStyle(
                                       color: Colors.black,
-                                      fontSize: constraints.minHeight *  0.09,
+                                      fontSize: constraints.minHeight * 0.09,
                                       // fontWeight: FontWeight.bold,
                                     ))),
                           )),
@@ -539,7 +548,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             : 0.24,
                     // childAspectRatio: 0.6,
                     children: _numbers
-                        .map((e) => _buildItem(j++, e,constraints.minHeight))
+                        .map((e) => _buildItem(j++, e, constraints.minHeight))
                         .toList(growable: false),
                   ),
                 ),
@@ -556,24 +565,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
             children: <Widget>[
               new Expanded(
                 child: new Table(
-                  defaultColumnWidth: new FractionColumnWidth(0.2),
+                  defaultColumnWidth: new FractionColumnWidth(0.15),
                   children: <TableRow>[
                     new TableRow(children: <Widget>[
-                     new Container(
-                          // key: new Key('num1'),
-                          color:
-                            carry == true ? Colors.limeAccent : Colors.white,
-                          child: new Center(
-                              child: new Text(" ",
-                                  style: new TextStyle(
-                                    color: Colors.black,
-                                      fontSize: constraints.minHeight * 0.09,
-                                    // fontWeight: FontWeight.bold,
-                                  )))),
                       new Container(
                           // key: new Key('num1'),
-                          color:
-                            carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
@@ -583,69 +580,76 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                           color:
-                            carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                     fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                          color:
-                            carry == true ? Colors.limeAccent : Colors.white,
+                          color: Colors.limeAccent,
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                      fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
+                                    // fontWeight: FontWeight.bold,
+                                  )))),
+                      new Container(
+                          // key: new Key('num1'),
+                          color: Colors.limeAccent,
+                          child: new Center(
+                              child: new Text(" ",
+                                  style: new TextStyle(
+                                    color: Colors.black,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                     ]),
                     new TableRow(children: <Widget>[
                       new Container(
                           // key: new Key('num1'),
-                        color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text(" ",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                       fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
-                     new Container(
+                      new Container(
                           // key: new Key('num1'),
-                        color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text("$num1digit1",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                       fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                         color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text("$num1digit2",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                       fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                        color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text("$num1digit3",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                      fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
-                     
                     ]),
                     new TableRow(children: <Widget>[
                       new Container(
@@ -655,7 +659,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text(_operator,
                                   style: new TextStyle(
                                     color: Colors.black,
-                                       fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     //  fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
@@ -665,7 +669,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text("$num2digit1",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                      fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
@@ -675,12 +679,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Text("$num2digit2",
                                   style: new TextStyle(
                                     color: Colors.black,
-                                      fontSize: constraints.minHeight * 0.09,
+                                    fontSize: constraints.minHeight * 0.09,
                                     // fontWeight: FontWeight.bold,
                                   )))),
                       new Container(
                           // key: new Key('num1'),
-                         color: new Color(0XFFFF52C5CE),
+                          color: new Color(0XFFFF52C5CE),
                           child: new Center(
                               child: new Text("$num2digit3",
                                   style: new TextStyle(
@@ -690,14 +694,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   )))),
                     ]),
                     new TableRow(children: <Widget>[
-                     new Shake(
+                      new Shake(
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            //   key: new Key('_output'),
-                            color: flag == true
-                                ? Colors.green
-                                : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
                                 child: new Text(_output,
                                     style: new TextStyle(
@@ -710,26 +714,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            //   key: new Key('_output'),
-                            color: flag == true
-                                ? Colors.green
-                                : Colors.tealAccent,
-                            child: new Center(
-                                child: new Text(_output,
-                                    style: new TextStyle(
-                                      color: Colors.black,
-                                    fontSize: constraints.minHeight * 0.09,
-                                      // fontWeight: FontWeight.bold,
-                                    ))),
-                          )),
-                      new Shake(
-                          animation:
-                              shake == false ? animationShake : animation,
-                          child: new Container(
-                            // key: new Key('_output'),
-                            color: flag == true
-                                ? Colors.green
-                                : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
                                 child: new Text(_output,
                                     style: new TextStyle(
@@ -742,15 +730,31 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           animation:
                               shake == false ? animationShake : animation,
                           child: new Container(
-                            //   key: new Key('_output'),
-                            color: flag == true
-                                ? Colors.green
-                                : Colors.tealAccent,
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
                             child: new Center(
                                 child: new Text(_output,
                                     style: new TextStyle(
                                       color: Colors.black,
-                                     fontSize: constraints.minHeight * 0.09,
+                                      fontSize: constraints.minHeight * 0.09,
+                                      // fontWeight: FontWeight.bold,
+                                    ))),
+                          )),
+                      new Shake(
+                          animation:
+                              shake == false ? animationShake : animation,
+                          child: new Container(
+                            height: constraints.minHeight * 0.1,
+                            width: constraints.minHeight * 0.1,
+                            key: new Key('_output'),
+                            color: flag == true ? Colors.green : Colors.red,
+                            child: new Center(
+                                child: new Text(_output,
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: constraints.minHeight * 0.09,
                                       // fontWeight: FontWeight.bold,
                                     ))),
                           )),
@@ -778,7 +782,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             : 0.24,
                     // childAspectRatio: 0.6,
                     children: _numbers
-                        .map((e) => _buildItem(j++, e,constraints.minHeight))
+                        .map((e) => _buildItem(j++, e, constraints.minHeight))
                         .toList(growable: false),
                   ),
                 ),
@@ -793,7 +797,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.height,this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.height, this.onPress}) : super(key: key);
   final String text;
   bool flag;
   double height;
@@ -807,13 +811,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller;
   Animation<double> animation;
- // double _height;
+  // double _height;
 
   @override
   initState() {
     super.initState();
     _displayText = widget.text;
-  //  _height=widget.height;
+    //  _height=widget.height;
     //  print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
@@ -841,7 +845,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-
   }
 
   @override
@@ -852,11 +855,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             onPressed: () => widget.onPress(),
             color: Colors.orangeAccent,
             shape: new RoundedRectangleBorder(
-                borderRadius:
-                    new BorderRadius.all(new Radius.circular(widget.height*0.09))),
+                borderRadius: new BorderRadius.all(
+                    new Radius.circular(widget.height * 0.09))),
             child: new Center(
               child: new Text(_displayText,
-                  style: new TextStyle(color: Colors.black, fontSize:widget.height*0.05)),
+                  style: new TextStyle(
+                      color: Colors.black, fontSize: widget.height * 0.05)),
             )));
   }
 }
