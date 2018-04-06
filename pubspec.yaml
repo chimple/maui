@@ -46,6 +46,8 @@ flutter:
     - assets/database.db
     - assets/chimple_logo.png
     - assets/apple.png
+    - assets/Boy.png
+    - assets/imageCoordinatesInfo.json
     - assets/apple.ogg
 
   # An image asset can refer to one or more resolution-specific "variants", see
