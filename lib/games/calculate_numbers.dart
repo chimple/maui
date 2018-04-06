@@ -64,8 +64,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   @override
   void initState() {
     animationController = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
-    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+        duration: new Duration(milliseconds: 0), vsync: this);
+    animation = new Tween(begin: 0.0, end: 8.0).animate(animationController);
     super.initState();
     _initBoard();
   }
@@ -169,7 +169,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         } else {
           _myAnim();
           print("Entering wrong data");
-          new Future.delayed(const Duration(milliseconds: 300), () {
+          new Future.delayed(const Duration(milliseconds: 900), () {
             setState(() {
               _output = " ";
               flag = false;
@@ -210,7 +210,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   void operation(String text) {
     if (_zeoToNine(text) == true) {
-      if (_output.length < 3) {
+      if (_output.length < 2) {
         _preValue = text;
         _output = _output + _preValue;
         print(_output);
@@ -272,120 +272,86 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     switch (options) {
       case 'one':
         return new LayoutBuilder(builder: (context, constraints) {
+          print("height");
+          double height = constraints.minHeight;
+          print("width");
+          print(constraints.minWidth);
           var j = 0;
           return new Column(
             children: <Widget>[
-               new Expanded(
-                 child: new Container(
-                   color: Colors.white,
-                  child: new Column(
-                     children: <Widget>[
-                       new Expanded(
-                         child: new Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: <Widget>[
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                             _displayContainer(
-                                 '$num1', Colors.limeAccent, new Key("num1")),
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                         ],
-                         ),
-                       ),
-                       new Padding(
-                         padding: const EdgeInsets.all(2.0),
-                       ),
-                       new Expanded(
-                         child: new Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                       _displayContainer(_operator, Colors.limeAccent,
-                                 new Key("_operator")),
-                             _displayContainer(
-                                 '$num2', Colors.limeAccent, new Key("num2")),
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                           ],
-                         ),
-                       ),
-                       new Padding(
-                         padding: const EdgeInsets.all(2.0),
-                      ),
-                   new Expanded(
-                         child: new Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: <Widget>[
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                             _displayContainer(" ", Colors.white, new Key(" ")),
-                             _displayContainer(
-                                 _output,
-                                flag == true ? Colors.green : Colors.redAccent,
-                               new Key("_optput")),
-                           _displayContainer(" ", Colors.white, new Key(" ")),
-                           ],
-                       ),
-                       ),
-                     ],
-                 ),
-                ),
-              ),
-              /* new Expanded(
-                child: new Table(
-                  children: <TableRow>[
-                    new TableRow(children: <Widget>[
-                      new Center(
-                        child: new Container(
-                           height: 300.0,
-                           width: 300.0,
-                          color: Colors.red,
-                          child: new Center(
-                            child: new Text(" "),
+              new Expanded(
+                child: new Padding(
+                  padding: constraints.maxHeight > constraints.maxWidth
+                      ? new EdgeInsets.all(height * 0.05)
+                      : new EdgeInsets.all(height * 0.1),
+                  child: new Table(
+                    defaultColumnWidth: new FractionColumnWidth(0.25),
+                    children: <TableRow>[
+                      new TableRow(children: <Widget>[
+                        new Container(child: new Center(child: new Text(" "))),
+                        new Container(
+                            color: Colors.tealAccent,
+                            child: new Center(
+                                child: new Text("$num1",
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: constraints.minHeight * 0.1,
+                                     // fontWeight: FontWeight.bold,
+                                    )))),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Container(
+                            color: Colors.tealAccent,
+                            child: new Center(
+                                child: new Text(_operator,
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: constraints.minHeight * 0.1,
+                                    //  fontWeight: FontWeight.bold,
+                                    )))),
+                        new Container(
+                            color: Colors.tealAccent,
+                            child: new Center(
+                                child: new Text("$num2",
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: constraints.minHeight * 0.1,
+                                     // fontWeight: FontWeight.bold,
+                                    )))),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Container(child: new Center(child: new Text(" "))),
+                        new Container(
+                          child: new TextAnimation(
+                            animation: animation,
+                            text: _output,
+                            flag: flag,
                           ),
                         ),
-                      ),
-                      /* new Container(
-                            height: 30.0, width: 30.0, child: new Text(" ")), */
-                      new Center(
-                        child: new Container(
-                            height: 300.0,
-                            width: 300.0,
-                            color: Colors.teal,
-                            child: new Center(child: new Text("$num1"))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Container(
-                          height: 300.0,
-                          width: 300.0,
-                          color: Colors.teal,
-                          child: new Center(child: new Text(_operator))),
-                      new Container(
-                          height: 300.0,
-                          width: 300.0,
-                          color: Colors.teal,
-                          child: new Center(child: new Text("$num2"))),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Container(
-                          height: 300.0,
-                          width: 300.0,
-                          child: new Center(child: new Text(" "))),
-                      new Container(
-                          height: 300.0,
-                          width: 300.0,
-                          color: Colors.teal,
-                          child: new Center(child: new Text(_output))),
-                    ]),
-                  ],
+                      ]),
+                    ],
+                  ),
                 ),
-              ), */
+              ),
               new Expanded(
                 child: new Container(
                   color: Colors.white,
                   child: new ResponsiveGridView(
                     rows: _size + 1,
                     cols: _size,
-                    childAspectRatio: 0.6,
+                    mainAxisSpacing:
+                        constraints.maxHeight > constraints.maxWidth
+                            ? 4.0
+                            : 1.0,
+                    crossAxisSpacing:
+                        constraints.maxHeight > constraints.maxWidth
+                            ? 4.0
+                            : 5.0,
+                    childAspectRatio:
+                        constraints.maxHeight > constraints.maxWidth
+                            ? 0.6
+                            : 0.24,
+                    // childAspectRatio: 0.6,
                     children: _numbers
                         .map((e) => _buildItem(j++, e))
                         .toList(growable: false),
@@ -398,79 +364,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         break;
 
       case 'doubleDigitWithoutCarry':
-        return new LayoutBuilder(builder: (context, constraints) {
-          var j = 0;
-          return new Column(
-            children: <Widget>[
-              new Expanded(
-                child: new Center(
-                  child: new Column(
-                    children: <Widget>[
-                      new Expanded(
-                        child: new Row(
-                          children: <Widget>[
-                            _displayContainer(" ", Colors.white, new Key(" ")),
-                            _displayContainer("$num1digit1 ", Colors.limeAccent,
-                                new Key(" ")),
-                            _displayContainer('$num1digit2', Colors.limeAccent,
-                                new Key("num1")),
-                            _displayContainer(" ", Colors.white, new Key(" ")),
-                          ],
-                        ),
-                      ),
-                      new Expanded(
-                        child: new Row(
-                          children: <Widget>[
-                            _displayContainer(
-                                _operator, Colors.limeAccent, new Key(" ")),
-                            _displayContainer('$num2digit1', Colors.limeAccent,
-                                new Key("num1")),
-                            _displayContainer("$num2digit2 ", Colors.limeAccent,
-                                new Key(" ")),
-                            _displayContainer(" ", Colors.white, new Key(" ")),
-                          ],
-                        ),
-                      ),
-                      new Expanded(
-                        child: new Row(
-                          children: <Widget>[
-                            _displayContainer(
-                                _output, Colors.redAccent, new Key(" ")),
-                            _displayContainer(
-                                _output, Colors.redAccent, new Key("num1")),
-                            _displayContainer(
-                                _output, Colors.redAccent, new Key(" ")),
-                            _displayContainer(" ", Colors.white, new Key(" ")),
-                            // _displayContainer(" ", Colors.white, new Key(" ")),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              new Expanded(
-                  child: new Container(
-                color: Colors.white,
-                child: new ResponsiveGridView(
-                  rows: _size + 1,
-                  cols: _size,
-                  childAspectRatio: 0.7,
-                  children: _numbers
-                      .map((e) => _buildItem(j++, e))
-                      .toList(growable: false),
-                ),
-              )),
-            ],
-          );
-        });
+        return new Container();
+
         break;
       default:
         return new Container();
-        /*   List<TableRow> rows;
-   //    List<Widget> cells=_displayContainer("hii", Colors.red, new Key(''));
-        rows.add(new TableRow(children:_displayContainer("hii", Colors.red, new Key('g'))));
-        return new Table(children: rows); */
+
         break;
     }
   }
@@ -552,14 +451,14 @@ class TextAnimation extends AnimatedWidget {
   Widget build(BuildContext context) {
     Animation animation = listenable;
     return new Container(
-        height: 50.0,
-        width: 50.0,
+          height: 70.0,
+         width: 300.0,
         alignment: Alignment.center,
-        margin: new EdgeInsets.only(right: animation.value ?? 0, bottom: 10.0),
+        margin: new EdgeInsets.only(left: animation.value ?? 0,right: animation.value ?? 0),
         child: new Text(text,
             style: new TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
+              color: Colors.black,
+              fontSize: 50.0,
             )),
         color: flag == true ? Colors.green : Colors.grey);
   }
