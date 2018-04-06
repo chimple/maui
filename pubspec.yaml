@@ -17,7 +17,7 @@ dependencies:
   tuple: ^1.0.1
   firebase_database: ^0.4.1
   firebase_storage: ^0.2.0
-
+  audioplayer: ^0.4.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +46,9 @@ flutter:
     - assets/database.db
     - assets/chimple_logo.png
     - assets/apple.png
+    - assets/Boy.png
+    - assets/imageCoordinatesInfo.json
+    - assets/apple.ogg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

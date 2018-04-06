@@ -1,0 +1,30 @@
+{
+    "images": [
+        {
+            "boy": {
+                "height": "420",
+                "width": "249",
+                "parts": [
+                    {
+                        "cap": {
+                            "height": "230",
+                            "width": "249"
+                        },
+                        "hand": {
+                            "height": "111",
+                            "width": "80"
+                        },
+                        "face": {
+                            "height": "98",
+                            "width": "213"
+                        },
+                        "body": {
+                            "height": "146",
+                            "width": "113"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

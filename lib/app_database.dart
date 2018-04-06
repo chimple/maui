@@ -46,6 +46,11 @@ class AppDatabase {
       List<int> imageBytes = imageData.buffer.asUint8List(imageData.offsetInBytes, imageData.lengthInBytes);
       await new File(imagePath).writeAsBytes(imageBytes);
 
+      String audioPath = join(documentsDirectory.path, "apple.ogg");
+      ByteData audioData = await rootBundle.load(join("assets", "apple.ogg"));
+      List<int> audioBytes = audioData.buffer.asUint8List(audioData.offsetInBytes, audioData.lengthInBytes);
+      await new File(audioPath).writeAsBytes(audioBytes);
+
       await new UserDao().insert(new User(
         id: 'dbb24390-20f0-11e8-c6ee-c11cc1dabc53',
         name: 'Chimple',
