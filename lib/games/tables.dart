@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/components/responsive_grid_view.dart';
 
 class Tables extends StatefulWidget {
   Function onScore;
@@ -93,11 +92,13 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     print('Pushed the Button');
   }
 
-  Widget _buildItem(int index, String text) {
+
+  Widget _buildItem(int index, String text, double _height) {
     print('_buildItem: $text');
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+        height: _height,
         onPress: () {
           if(text=='clear') {
             setState(() {
@@ -106,10 +107,10 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
           }
           else if(text == 'submit') {
             if( count > 7) {
-                print("coming.........");
-                 new Future.delayed(const Duration(milliseconds: 250), () {
-                     widget.onEnd();
-                 });
+              print("coming.........");
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                widget.onEnd();
+              });
             }
             if(int.parse(_result) == _answer) {
               widget.onScore(1);
@@ -164,12 +165,62 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         child: new CircularProgressIndicator(),
       );
     }
-    int j = 0;
-    return new ResponsiveGridView(
-      rows: 4,
-      cols: 3,
-      children: _allLetters.map((e) => _buildItem(j++, e)).toList(growable: false),
-    );
+    return new LayoutBuilder(builder: (context, constraints)
+    {
+        print("this is  data");
+        print(constraints.maxHeight);
+        print(constraints.maxWidth);
+        double _height, _width;
+        _height = constraints.maxHeight;
+        _width = constraints.maxWidth;
+      List<TableRow> rows = new List<TableRow>();
+      var j = 0;
+      for (var i = 0; i < _size + 1; ++i) {
+        List<Widget> cells = _allLetters
+            .skip(i * _size)
+            .take(_size)
+            .map((e) => _buildItem(j++, e, _height))
+            .toList();
+        rows.add(new TableRow(children: cells));
+
+      }
+
+        return new Center(
+            child: new Container(
+              child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    new Container (
+                      margin: new EdgeInsets.only(
+                          bottom: _height * 0.1),
+  //              height: media.size.height * 0.4,
+  //              width: media.size.width,
+                      alignment: Alignment.center,
+                      color: new Color(0X00000000),
+                      child: new Text(
+                        '$_question',
+                        key: new Key('question'),
+                        style: new TextStyle(
+                          fontSize: _height * 0.1,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    new TextAnimation(
+                        animation: animation,
+                        text: _result,
+                        height: _height,
+                        width: _width,
+                    ),
+                    new Container(
+                      child: new Center(
+                        child: new Table(children: rows),
+                      ),)
+                  ]
+              ),
+            ));
+    });
 
   }
 
@@ -181,9 +232,10 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.height, this.onPress}) : super(key: key);
 
   final String text;
+  final double height;
   final VoidCallback onPress;
 
   @override
@@ -231,41 +283,52 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new ScaleTransition(
-        scale: animation,
-        child: new RaisedButton(
-            onPressed: () => widget.onPress(),
-            color: Colors.teal,
-            shape: new RoundedRectangleBorder(
-                borderRadius:
-                const BorderRadius.all(const Radius.circular(8.0))),
-            child: new Text(_displayText,
-                style: new TextStyle(color: Colors.white, fontSize: 24.0))));
+    return new TableCell(
+        child: new Padding(
+            padding: new EdgeInsets.all(widget.height * 0.001),
+            child: new ScaleTransition(
+                scale: animation,
+                child: new RaisedButton(
+                    onPressed: () => widget.onPress(),
+                    padding: new EdgeInsets.all(widget.height * 0.01),
+                    color: Colors.teal,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                        new BorderRadius.all(new Radius.circular(widget.height * 0.09))),
+                    child: new Text(_displayText,
+                        key: new Key('keyPad$_count'),
+                        style: new TextStyle(
+                            color: Colors.white, fontSize: widget.height * 0.06))))));
   }
 }
 
 class TextAnimation extends AnimatedWidget {
-  TextAnimation({Key key, Animation animation, this.text}) : super(key: key, listenable: animation);
+  TextAnimation({Key key, Animation animation, this.text, this.height, this.width})
+      : super(key: key, listenable: animation);
   final String text;
+  final double height, width;
 
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
     MediaQueryData media = MediaQuery.of(context);
-    return new Center(
-      child: new Container(
-        height: media.size.height * 0.12,
-        width: media.size.width / 3.0,
-        alignment: Alignment.center,
-        margin: new EdgeInsets.only(left: animation.value ?? 0, bottom: media.size.height * 0.09),
-        child:  new Text(text,
-            style: new TextStyle(
-            color: Colors.white,
-            fontSize: media.size.height * 0.1,
-            fontWeight: FontWeight.bold,)),
-            color: Colors.teal,
+    return new LayoutBuilder(builder: (context, constraints) {
+      return new Center(
+        child: new Container(
+          height: height * 0.12,
+          width: width / 3.0,
+          alignment: Alignment.center,
+          margin: new EdgeInsets.only(
+              left: animation.value ?? 0, bottom: height * 0.09),
+          child: new Text(text,
+              style: new TextStyle(
+                color: Colors.white,
+                fontSize: height * 0.1,
+                fontWeight: FontWeight.bold,)),
+          color: Colors.teal,
         ),
-    );
+      );
+    });
   }
 }
 
