@@ -190,14 +190,16 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;
       case 'match_the_following':
         return new MatchTheFollowing(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            iteration: _iteration,
+            gameCategoryId: widget.gameCategoryId,);
         break;
       case 'calculate_numbers':
         return new CalculateTheNumbers(

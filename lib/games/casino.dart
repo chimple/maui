@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/repos/game_data.dart';
 import 'dart:async';
+import 'package:maui/components/flash_card.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -27,11 +28,15 @@ class _CasinoState extends State<Casino> {
   int _selectedItemIndex = 0;
   List<List<String>> data;
 
-  String word = " ";
+  String givenWord = " ";
   bool _isLoading = true;
-  String wd = " ";
-  var sData = new List();
+  // String wd = " ";
+  var givenWordList = new List();
   int i = 0;
+  int j=0;
+ FixedExtentScrollController scrollController;
+  bool _isShowingFlashCard = false;
+
   @override
   void initState() {
     super.initState();
@@ -40,32 +45,38 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-
-    print("Ram Data $data");
+    scrollController = new FixedExtentScrollController(initialItem: 3);
+    print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
-      word += data[i][0];
-      sData.add(data[i][0]);
-
+      givenWord += data[i][0];
+      givenWordList.add(data[i][0]);
     }
 
-    print("comapareDATA $sData");
     for (var i = 0; i < data.length; i++) {
       data[i].shuffle();
     }
-    print("Ram Data $data");
 
-    print("data $word");
+    print("data $givenWord");
+    print("===============");
+    print("shuffled Data $data");
 
     setState(() => _isLoading = false);
+   
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
-    FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: 3);
+    
 
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
+    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
+    if(scrollingLetterList[3]==givenWordList[j]){
+      data[j].shuffle();
+      j++;
+      print("Hey data shuffled");
+
+    }
 
     return new Container(
       height: 100.0,
@@ -83,21 +94,21 @@ class _CasinoState extends State<Casino> {
                 _selectedItemIndex = index;
               });
 
-              if (sData[i] == scrollingLetterList[index]) {
-                if (i == sData.length - 1) {
+              if (givenWordList[i] == scrollingLetterList[index]) {
+                if (i == givenWordList.length - 1) {
                   widget.onScore(2);
-                  widget.onProgress(sData.length / data.length);
+                  widget.onProgress(givenWordList.length / data.length);
                   print("index $index");
-                  word=" ";
+                  givenWord = " ";
                   new Future.delayed(const Duration(milliseconds: 500), () {
-                    _initletters();
-                    widget.onEnd();
+                    setState(() {
+                      _isShowingFlashCard = true;
+                    });
                   });
-
                   print("the end");
                 } else {
                   widget.onScore(2);
-                  widget.onProgress(sData.length / data.length);
+                  widget.onProgress(givenWordList.length / data.length);
                   print("index $index");
                 }
                 i++;
@@ -121,7 +132,16 @@ class _CasinoState extends State<Casino> {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
-    return new Expanded(
+    if (_isShowingFlashCard) {
+      return new FlashCard(text: givenWord, onChecked: () {
+        _initletters();
+        widget.onEnd();
+        setState(() {
+          _isShowingFlashCard = false;
+        });
+      });
+    }
+    return new Container(
       child: new Container(
         color: Colors.blue,
         child: new Column(
@@ -133,7 +153,7 @@ class _CasinoState extends State<Casino> {
                 color: Colors.pinkAccent,
                 child: new Center(
                     child: new Text(
-                  word,
+                  givenWord,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: new TextStyle(
@@ -143,7 +163,7 @@ class _CasinoState extends State<Casino> {
                       color: Colors.white),
                 ))),
             new Expanded(
-              child: new Container(
+              child: new Center(
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: data.map((s) {

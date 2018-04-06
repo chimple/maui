@@ -6,7 +6,6 @@ import 'package:test/test.dart';
 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
-
 void main() {
   group('login', () {
     FlutterDriver driver;
@@ -14,10 +13,10 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    tearDownAll(() async {
-      if (driver != null)
-        await driver.close();
-    });
+    // tearDownAll(() async {
+    //   if (driver != null)
+    //     await driver.close();
+    // });
 
     test('signin', () async {
 
@@ -47,7 +46,8 @@ void main() {
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 2));
       bool scroll = true;
-      final SerializableFinder menuItem = find.byValueKey('match_the_following');
+      await new Future<Null>.delayed(kWaitBetweenActions);
+      final SerializableFinder menuItem = find.byValueKey('bingo');
 
       driver.waitFor(menuItem).then<Null>((Null value) async {
         scroll = false;
@@ -57,8 +57,9 @@ void main() {
         completer.complete();
       });
       final SerializableFinder gs = find.byValueKey('Game_page');
+      await new Future<Null>.delayed(kWaitBetweenActions);
       while (scroll) {
-        await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
+        await driver.scroll(gs, 0.0, -300.0, const Duration(milliseconds: 500));
         await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;
@@ -76,27 +77,21 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
-    test('Match the following', () async {
+    test('Bingo', () async {
       final Completer<Null> completer = new Completer<Null>();
-          SerializableFinder x,y;
-          int j,i;
-          for( i =0;i<=4;i++)
-          {
-             x= find.byValueKey(i);
-             await driver.tap(x);
-            for( j=5;j<=9;j++)
-            {
-            y= find.byValueKey(j);
-            try{
-            await driver.tap(y); }
-            catch(exception, stackTrace) {
-              print(stackTrace);
-              }
-          }
-          }
+      final SerializableFinder t= find.byValueKey('question');
+       int num=int.parse( await driver.getText(t));
+       print(num);
+      //  await driver.tap(n);
+      while(true){
+      for(int i=num;i<=9;i++)
+      {
+        // final SerializableFinder n=find.byValueKey(num);
+        await driver.tap(find.byValueKey(i-1));
+        await new Future<Null>.delayed(kWaitBetweenActions);
+        }
        completer.complete();
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));    
+      await completer.future;}
+    }, timeout: const Timeout(const Duration(minutes: 4)));    
   });
 }
-
