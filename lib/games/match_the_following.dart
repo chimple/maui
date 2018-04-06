@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/shaker.dart';
+//import 'package:maui/components/shaker.dart';
 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
@@ -33,13 +33,13 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
   int c = 0;
   int start = 0, increament = 0;
-  final List<String> _leftSideletters = [];
-  final List<String> _rightSideLetters = [];
+  List<String> _leftSideletters = [];
+  List<String> _rightSideLetters = [];
   List<String> _lettersLeft = [], _lettersRight = [];
   List<String> _shuffledLetters = [], _shuffledLetters1 = [];
   List<Status> _statusColorChange;
   List<Status> _statusShake;
-  Map<String, String> _allLetters,allLettersStore;
+  Map<String, String> _allLetters;
   String _leftSideText, _rightSideText;
   int indexText1, indexText2, indexLeftButton;
   int correct = 0,
@@ -69,10 +69,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
          child:_buildRightSide(context),
         ),
       ],
-    );
-    
+    ); 
   }
-
   void initState() {
     super.initState();
     _initBoard();
@@ -80,6 +78,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
     @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
+    // super.didUpdateWidget(oldWidget);
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -87,29 +86,31 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
   }
   void _initBoard() async {
+    correct=0;
+    _leftSideletters.clear();
+    _rightSideLetters.clear();
+    _shuffledLetters.clear();
+    _shuffledLetters1.clear();
     setState(() => _isLoading = true);
-    _allLetters = await fetchPairData(widget.gameCategoryId, 10);
+    _allLetters = await fetchPairData(widget.gameCategoryId, 5);
     _allLetters.forEach((k, v) {
       _leftSideletters.add(k);
       _rightSideLetters.add(v);
     });
-    for (var i = start; i < _leftSideletters.length; i++) {
+    print("data is comming here:: $_rightSideLetters ,$_rightSideLetters");
+    for ( int i = start; i < _nextTask; i++) {
       _shuffledLetters.addAll(
-          _leftSideletters.skip(i).take(_nextTask).toList(growable: false)
-            ..shuffle());
+          _leftSideletters.skip(i).take(_nextTask).toList(growable: false)..shuffle());
+
       _shuffledLetters1.addAll(
-          _rightSideLetters.skip(i).take(_nextTask).toList(growable: false)
-            ..shuffle());
+          _rightSideLetters.skip(i).take(_nextTask).toList(growable: false)..shuffle());   
     }
     _lettersLeft = _shuffledLetters.sublist(start, _nextTask);
     _lettersRight = _shuffledLetters1.sublist(start, _nextTask);
     _statusColorChange=[];
-    _statusColorChange =
-        _shuffledLetters.map((a) => Status.Disable).toList(growable: false);
+    _statusColorChange =_shuffledLetters.map((a) => Status.Disable).toList(growable: false);
         _statusShake=[];
-    _statusShake = _shuffledLetters1
-        .map((e) => Status.Stopped)
-        .toList(growable: false);
+    _statusShake = _shuffledLetters1.map((e) => Status.Stopped).toList(growable: false);
     setState(() => _isLoading = false);
   }
    Widget _buildLeftSide(BuildContext context) {
@@ -173,17 +174,17 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   }
 
   void match(int indexRightbutton) {
-    int score = 4;
+    int score = 2;
     if (_leftSideletters.indexOf(_leftSideText) ==
         _rightSideLetters.indexOf(_rightSideText)) {
       setState(() {
-        _lettersLeft[indexText1] = '';
-        _lettersRight[indexText2] = '';
+        _lettersLeft[indexText1] = null;
+        _lettersRight[indexText2] =null;
       });
       correct++;
       widget.onScore(score);
       widget.onProgress(correct / 5);
-      score = score + 4;
+      score = score + 2;
     } else {
       if (_statusColorChange[indexLeftButton]==Status.Enable) {
           setState(() {
@@ -197,22 +198,26 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
               _statusShake[indexRightbutton] = Status.Stopped;
               _statusColorChange[indexLeftButton] = Status.Enable;
             });
-          });
           }
-          catch(exception,e){
-          //   _statusShake[indexRightbutton] = StatusShake.Stopped;
-          // _statusColorChange[indexLeftButton] = Status.Enable;
-          }
+          );
+          } catch(exception,e){}
+          // catch(exception,e){
+          // //   _statusShake[indexRightbutton] = StatusShake.Stopped;
+          // // _statusColorChange[indexLeftButton] = Status.Enable;
+          // }
       }
-      print("WRONG ATTEM");
     }
-    _oldIndexforRightButton = indexRightbutton;
-    if (correct == 5) {
+  //  _oldIndexforRightButton = indexRightbutton;
+    new Future.delayed(const Duration(milliseconds: 300), ()
+    {
+      if (correct == 5) {
       correct = 0;
-      //widget.onEnd();
-      // _initBoard();
-      // setState(() {});
+      _initBoard();
+       setState(() {});
+       widget.onEnd();
     }
+    }
+    );
   }
 }
 
@@ -239,7 +244,7 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller, controllerShake;
-  Animation animationInvisible, animationShake;
+  Animation animationInvisible, animationShake,noAimation;
   initState() {
     super.initState();
     initStateData();
@@ -248,13 +253,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initStateData() {
     super.initState();
     _displayText = widget.text;
+    print("button key :: ${widget.key}");
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 900), vsync: this);
+        duration: new Duration(milliseconds: 300), vsync: this);
     controllerShake = new AnimationController(
-        duration: new Duration(microseconds: 10), vsync: this);
+        duration: new Duration(microseconds: 500), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    animationShake = new Tween(begin: -1.0, end: 1.0, ).animate(controllerShake);
+    animationShake = new Tween(begin: -2.0, end: 2.0, ).animate(controllerShake);
+    noAimation = new Tween(begin: 0.0, end: 0.0, ).animate(controllerShake);
     controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
         if (widget.text == null) {
@@ -302,11 +309,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         key: widget.key,
         animation: (widget.status == Status.Shake)
             ? animationShake
-            : animationInvisible,
+            : noAimation,
         child: new ScaleTransition(
             scale: animationInvisible,
             key: widget.key,
             child: new RaisedButton(
+              disabledColor:  Colors.blue,
                 elevation: 5.0,
                 splashColor: Colors.red,
                 onPressed: () => widget.onPress(),
@@ -321,5 +329,35 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         color: Colors.black,
                         fontSize: 20.0,
                         fontStyle: FontStyle.italic)))));
+  }
+}
+class Shaker extends AnimatedWidget {
+  const Shaker({
+    Key key,
+    Animation<double> animation,
+    this.child,
+  }) : super(key: key, listenable: animation);
+
+  final Widget child;
+
+  Animation<double> get animation => listenable;
+
+  double get translateX {
+    const double shakeDelta = 1.34;
+    final double t = animation.value;
+    if (t <= 0.25)
+      return -t * shakeDelta;
+    else if (t < 0.75)
+      return (t - 0.5) * shakeDelta;
+    else
+      return (1.0 - t) * 4.0 * shakeDelta;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Transform(
+      transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
+      child: child,
+    );
   }
 }
