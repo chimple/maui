@@ -41,3 +41,22 @@ void commonGoToGames(FlutterDriver driver) async {
       completer.complete();
       await completer.future;
 }
+void commonScrolling(FlutterDriver driver,String gameName) async{
+  final Completer<Null> completer = new Completer<Null>();
+      await new Future<Duration>.delayed(const Duration(seconds: 3));
+      bool scroll = true;
+       final SerializableFinder menuItem = find.byValueKey(gameName);
+      driver.waitFor(menuItem).then<Null>((Null value) async {
+      scroll = false;
+      await new Future<Duration>.delayed(const Duration(seconds: 1));
+      await driver.tap(menuItem);
+      completer.complete();
+      });
+      final SerializableFinder gs = find.byValueKey('Game_page');
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
+      while (scroll) {
+      await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
+      await new Future<Null>.delayed(kWaitBetweenActions);
+      }
+      await completer.future;
+}
