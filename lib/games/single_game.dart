@@ -158,8 +158,9 @@ class _SingleGameState extends State<SingleGame> {
         return new Bingo(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            onEnd: _onEnd,
+            iteration: _iteration,
+            gameCategoryId : widget.gameCategoryId);
         break;
       case 'fill_in_the_blanks':
         return new FillInTheBlanks(
