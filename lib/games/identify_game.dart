@@ -10,8 +10,9 @@ class IdentifyGame extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  bool isRotated;
 
-  IdentifyGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  IdentifyGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.isRotated = false})
       : super(key: key);
 
   @override

@@ -15,8 +15,9 @@ class Bingo extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
-  Bingo({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+  Bingo({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated=false})
       : super(key: key);
 
   @override
