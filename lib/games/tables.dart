@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
+import 'package:maui/components/flash_card.dart';
 
 class Tables extends StatefulWidget {
   Function onScore;
@@ -11,7 +12,13 @@ class Tables extends StatefulWidget {
   int iteration;
   int gameCategoryId;
 
-  Tables({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId})
+  Tables(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -23,13 +30,14 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   String _question = "";
   String _result = "";
   int count = 0;
+  int _wrong = 0;
   int _answer;
   bool _isLoading = true;
   List<Tuple4<int, String, int, int>> _tableData;
   List<Tuple4<int, String, int, int>> _tableShuffledData = [];
   Animation animation;
   AnimationController animationController;
-  List<List<int>> shant;
+  bool _isShowingFlashCard = false;
 
   final List<String> _allLetters = [
     '1',
@@ -46,7 +54,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     'submit',
   ];
 
-
   @override
   void initState() {
     super.initState();
@@ -59,7 +66,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
 
     setState(()=>_isLoading=true);
     _tableData = await fetchTablesData(widget.gameCategoryId);
-    print("shant data $shant");
     _tableShuffledData = [];
 
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
@@ -68,15 +74,12 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             ..shuffle());
     }
 
-    print("anuj data $_tableShuffledData");
     int temp1 = _tableShuffledData[count].item1;
     String temp2 = _tableShuffledData[count].item2;
     int temp3 = _tableShuffledData[count].item3;
-
     int temp4 = _tableShuffledData[count].item4;
     _question= "$temp1 $temp2 $temp3";
     _answer= temp4;
-    print("After Data" + "$_question" + "$_answer");
     setState(()=>_isLoading=false);
   }
 
@@ -116,7 +119,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               widget.onScore(1);
               widget.onProgress((count + 2) / 6.5);
               setState(() {
-                count = count + 1;
+                count = count + 1 ;
                 print(count);
                 int temp1 = _tableShuffledData[count].item1;
                 String temp2 = _tableShuffledData[count].item2;
@@ -131,9 +134,17 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               _myAnim();
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState((){
+                  _wrong = _wrong + 1;
                   _result = "";
                 });
                 animationController.stop();
+                if(_wrong == 2){
+                  setState(() {
+                   // this.count = this.count + 1;
+                    _isShowingFlashCard = true;
+                    _wrong = 0;
+                  });
+                }
               });
             }
           }
@@ -165,6 +176,14 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         child: new CircularProgressIndicator(),
       );
     }
+
+    if (_isShowingFlashCard) {
+      return new FlashCard(text: _answer.toString(), onChecked: () {
+        setState(() {
+          _isShowingFlashCard = false;
+        });
+      });
+    }
     return new LayoutBuilder(builder: (context, constraints)
     {
         print("this is  data");
@@ -184,17 +203,14 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         rows.add(new TableRow(children: cells));
 
       }
-
-        return new Center(
-            child: new Container(
+      return new Center(
+          child: new Container(
+              color: new Color(0XFFF39B6D),
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     new Container (
-                      margin: new EdgeInsets.only(
-                          bottom: _height * 0.1),
-  //              height: media.size.height * 0.4,
-  //              width: media.size.width,
+                      margin: new EdgeInsets.only(bottom: _height * 0.1),
                       alignment: Alignment.center,
                       color: new Color(0X00000000),
                       child: new Text(
@@ -216,12 +232,11 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                     new Container(
                       child: new Center(
                         child: new Table(children: rows),
-                      ),)
-                  ]
-              ),
+                      ),
+                    )
+                  ]),
             ));
-    });
-
+        });
   }
 
   @override
@@ -290,15 +305,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 scale: animation,
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
-                    padding: new EdgeInsets.all(widget.height * 0.01),
-                    color: Colors.teal,
+                    padding: new EdgeInsets.all(widget.height * 0.02),
+                    color: new Color(0XFFFED2B7),
                     shape: new RoundedRectangleBorder(
                         borderRadius:
                         new BorderRadius.all(new Radius.circular(widget.height * 0.09))),
                     child: new Text(_displayText,
                         key: new Key('keyPad$_count'),
                         style: new TextStyle(
-                            color: Colors.white, fontSize: widget.height * 0.06))))));
+                            color: Colors.black, fontSize: widget.height * 0.05))))));
   }
 }
 
@@ -311,21 +326,21 @@ class TextAnimation extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
-    MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
       return new Center(
         child: new Container(
           height: height * 0.12,
           width: width / 3.0,
           alignment: Alignment.center,
+          color: new Color(0XFF734052),
           margin: new EdgeInsets.only(
               left: animation.value ?? 0, bottom: height * 0.09),
           child: new Text(text,
               style: new TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: height * 0.1,
                 fontWeight: FontWeight.bold,)),
-          color: Colors.teal,
+
         ),
       );
     });
