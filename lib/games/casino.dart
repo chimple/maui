@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:maui/repos/game_data.dart';
 import 'dart:async';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/casino_scroll_view.dart';
+import 'package:maui/components/casino_picker.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -10,6 +12,7 @@ class Casino extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
   Casino(
       {key,
@@ -17,7 +20,8 @@ class Casino extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId})
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -32,9 +36,15 @@ class _CasinoState extends State<Casino> {
   bool _isLoading = true;
   // String wd = " ";
   var givenWordList = new List();
+<<<<<<< HEAD
   int i;
   int j;
   int index;
+=======
+  int i = 0;
+  int j = 0;
+  CasinoScrollController scrollController;
+>>>>>>> refs/remotes/origin/master
   bool _isShowingFlashCard = false;
 
   @override
@@ -45,9 +55,13 @@ class _CasinoState extends State<Casino> {
 
   void _initLetters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
+<<<<<<< HEAD
     i = 0;
     j = 0;
 
+=======
+    scrollController = new CasinoScrollController(initialItem: 3);
+>>>>>>> refs/remotes/origin/master
     print("Fetched Data $data");
     givenWord = '';
     givenWordList = [];
@@ -67,6 +81,7 @@ class _CasinoState extends State<Casino> {
     setState(() => _isLoading = false);
   }
 
+<<<<<<< HEAD
   @override
   void didUpdateWidget(Casino oldWidget) {
     print(oldWidget.iteration);
@@ -91,6 +106,17 @@ class _CasinoState extends State<Casino> {
         print("Hey data shuffled");
       }
       j++;
+=======
+  Widget _buildScrollButton(List<String> scrollingData) {
+    Set<String> scrollingLetter = new Set<String>.from(scrollingData);
+
+    List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
+    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
+    if (scrollingLetterList[3] == givenWordList[j]) {
+      data[j].shuffle();
+      j++;
+      print("Hey data shuffled");
+>>>>>>> refs/remotes/origin/master
     }
 
     return new Container(
@@ -100,11 +126,16 @@ class _CasinoState extends State<Casino> {
         style: const TextStyle(
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
+<<<<<<< HEAD
           child: new CupertinoPicker(
             key: new ValueKey<int>(index),
+=======
+          child: new CasinoPicker(
+>>>>>>> refs/remotes/origin/master
             scrollController: scrollController,
             itemExtent: 35.0,
             backgroundColor: CupertinoColors.white,
+            isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               // setState(() {
               //   _selectedItemIndex = index;
@@ -160,8 +191,12 @@ class _CasinoState extends State<Casino> {
       return new FlashCard(
           text: givenWord,
           onChecked: () {
+<<<<<<< HEAD
             givenWord = "";
             _initLetters();
+=======
+            _initletters();
+>>>>>>> refs/remotes/origin/master
             widget.onEnd();
             setState(() {
               _isShowingFlashCard = false;

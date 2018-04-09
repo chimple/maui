@@ -45,6 +45,7 @@ class OrderableWidget<T> extends StatefulWidget {
   Size itemSize;
   double maxPos;
   Direction direction;
+  bool isRotated;
   VoidCallback onMove;
   VoidCallback onDrop;
   double step;
@@ -59,6 +60,7 @@ class OrderableWidget<T> extends StatefulWidget {
       this.onMove,
       this.onDrop,
       bool isDragged = false,
+      this.isRotated = false,
       this.direction = Direction.Horizontal,
       this.step = 0.0})
       : super(key: key) {}
@@ -66,7 +68,7 @@ class OrderableWidget<T> extends StatefulWidget {
   State<StatefulWidget> createState() => new OrderableWidgetState(data: data);
 
   @override
-  String toString({ DiagnosticLevel minLevel: DiagnosticLevel.debug }) =>
+  String toString({DiagnosticLevel minLevel: DiagnosticLevel.debug}) =>
       'DraggableText{data: $data, position: ${data.currentPosition}}';
 }
 
@@ -89,32 +91,35 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
 
   /// build horizontal or verticak drag gesture detector
   Widget buildGestureDetector({bool horizontal}) => horizontal
-    ? new GestureDetector(
-    onHorizontalDragStart: startDrag,
-    onHorizontalDragEnd: endDrag,
-    onHorizontalDragUpdate: (event) {
-      setState(() {
-        if (moreThanMin(event) && lessThanMax(event))
-          data.currentPosition =
-          new Offset(data.x + event.primaryDelta, data.y);
-        widget.onMove();
-      });
-    },
-    child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
-  )
-    : new GestureDetector(
-    onVerticalDragStart: startDrag,
-    onVerticalDragEnd: endDrag,
-    onVerticalDragUpdate: (event) {
-      setState(() {
-        if (moreThanMin(event) && lessThanMax(event))
-          data.currentPosition =
-          new Offset(data.x, data.y + event.primaryDelta);
-        widget.onMove();
-      });
-    },
-    child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
-  );
+      ? new GestureDetector(
+          onHorizontalDragStart: startDrag,
+          onHorizontalDragEnd: endDrag,
+          onHorizontalDragUpdate: (event) {
+            setState(() {
+              if (moreThanMin(event) && lessThanMax(event))
+                data.currentPosition = widget.isRotated
+                    ? new Offset(data.x - event.primaryDelta, data.y)
+                    : new Offset(data.x + event.primaryDelta, data.y);
+              ;
+              widget.onMove();
+            });
+          },
+          child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
+        )
+      : new GestureDetector(
+          onVerticalDragStart: startDrag,
+          onVerticalDragEnd: endDrag,
+          onVerticalDragUpdate: (event) {
+            setState(() {
+              if (moreThanMin(event) && lessThanMax(event))
+                data.currentPosition = widget.isRotated
+                    ? new Offset(data.x, data.y - event.primaryDelta)
+                    : new Offset(data.x, data.y + event.primaryDelta);
+              widget.onMove();
+            });
+          },
+          child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
+        );
 
   void startDrag(DragStartDetails event) {
     setState(() {
@@ -139,5 +144,6 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
       widget.maxPos;
 
   @override
-  String toString({ DiagnosticLevel minLevel: DiagnosticLevel.debug }) => 'OrderableWidgetState{data: $data}';
+  String toString({DiagnosticLevel minLevel: DiagnosticLevel.debug}) =>
+      'OrderableWidgetState{data: $data}';
 }

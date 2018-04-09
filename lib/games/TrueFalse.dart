@@ -10,9 +10,9 @@ class QuizPage extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
-
-  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
+  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated = false}) : super(key: key);
   
   @override
   State createState() => new QuizPageState();
@@ -73,6 +73,7 @@ class QuizPageState extends State<QuizPage> {
     }    
 
     return new Material(
+      color: const Color(0xFF54cc70),
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
@@ -177,12 +178,16 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     double ht=media.height;
     double wd = media.width;
     return new Material(
+      color: const Color(0xFF54cc70),
       child:  new Container(
         height: ht * 0.2,
         width: wd * 0.5,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFF03A9F4),
+              color: const Color(0xFFf8c43c),              
+              border: new Border.all(
+                  color: const Color(0xFF54cc70),
+                  ),
                 ),
                 padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.051),
             child: new Center(
@@ -208,7 +213,8 @@ class AnswerButton extends StatelessWidget {
     double ht=media.height;
     double wd = media.width;
     return new Expanded( 
-      child: new Material(        
+      child: new Material(
+        color: const Color(0xFF54cc70),        
         child: new InkWell(
           onTap: () => _onTap(),
           child: new Container(              
