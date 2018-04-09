@@ -54,7 +54,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   int result;
   String _output = '';
   String _operator = '';
-  bool flag,carrry=false;
+  bool flag, carrry = false;
   bool shake = true;
   Animation animationShake, animation;
   AnimationController animationController;
@@ -87,9 +87,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     setState(() => _isLoading = false);
     if (num1 % 10 == num1 && num2 % 10 == num2) {
       options = 'singleDigit';
-      if(calCount(num1+num2)>1){
-carrry=true;
-      } 
+      if (calCount(num1 + num2) > 1) {
+        carrry = true;
+      }
     } else if ((calCount(num1) <= 2 && calCount(num2) <= 2) &&
         (calCount(num1 + num2) == 2 || calCount(num1 + num2) == 3)) {
       options = 'doubleDigitWithoutCarry';
@@ -99,8 +99,7 @@ carrry=true;
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit1 = num2 % 10;
-    } else 
-        {
+    } else {
       options = 'tripleDigitWithoutCarry';
       num1digit3 = num1 % 10;
       num1 = num1 ~/ 10;
@@ -139,8 +138,7 @@ carrry=true;
 
   @override
   void didUpdateWidget(CalculateTheNumbers oldWidget) {
-    // print(oldWidget.iteration);
-    //  print(widget.iteration);
+
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -325,17 +323,9 @@ carrry=true;
                               child: new Container(
                                 height: constraints.minHeight * 0.1,
                                 width: constraints.minHeight * 0.1,
-                                key: new Key('_output'),
-                               // color: (flag == true && carrry==true) ? Colors.green : Colors.red,
                                 child: new Center(
-                                   /*  child: new Text(_output,
-                                        style: new TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              constraints.minHeight * 0.09,
-                                          // fontWeight: FontWeight.bold,
-                                        )) */),
-                              )), 
+                                    ),
+                              )),
                           new Shake(
                               animation:
                                   shake == false ? animationShake : animation,
@@ -394,8 +384,8 @@ carrry=true;
           double height = constraints.minHeight;
           var j = 0;
           return new Container(
-             color: new Color(0XFFFFF7EBCB),
-                      child: new Column(
+            color: new Color(0XFFFFF7EBCB),
+            child: new Column(
               children: <Widget>[
                 new Expanded(
                   child: new Table(
@@ -582,11 +572,11 @@ carrry=true;
         break;
       case 'tripleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
-          double height = constraints.minHeight;
+         
           var j = 0;
           return new Container(
-             color: new Color(0XFFFFF7EBCB),
-                      child: new Column(
+            color: new Color(0XFFFFF7EBCB),
+            child: new Column(
               children: <Widget>[
                 new Expanded(
                   child: new Table(
@@ -789,7 +779,6 @@ carrry=true;
                 ),
                 new Expanded(
                   child: new Container(
-                    color: Colors.white,
                     child: new ResponsiveGridView(
                       rows: _size + 1,
                       cols: _size,
