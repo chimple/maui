@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -66,7 +66,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
          child: _buildLeftSide(context),
         ),
         new Expanded(
-         child:_buildRightSide(context),
+         child:_buildRightSide(context)
         ),
       ],
     ); 
@@ -91,6 +91,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     _rightSideLetters.clear();
     _shuffledLetters.clear();
     _shuffledLetters1.clear();
+    _statusShake=[];
+    _statusColorChange=[];
     setState(() => _isLoading = true);
     _allLetters = await fetchPairData(widget.gameCategoryId, 5);
     _allLetters.forEach((k, v) {
@@ -185,15 +187,16 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       widget.onScore(score);
       widget.onProgress(correct / 5);
       score = score + 2;
+      flag2=0;
     } else {
-      if (_statusColorChange[indexLeftButton]==Status.Enable) {
+      if (flag2==1) {
           setState(() {
             _statusShake[indexRightbutton] = Status.Shake;
             _statusColorChange[indexLeftButton] = Status.Shake;
             flag1 = 1;
           });
           try{
-          new Future.delayed(const Duration(milliseconds: 600), () {
+          new Future.delayed(const Duration(milliseconds: 700), () {
             setState(() {
               _statusShake[indexRightbutton] = Status.Stopped;
               _statusColorChange[indexLeftButton] = Status.Enable;
@@ -208,7 +211,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       }
     }
   //  _oldIndexforRightButton = indexRightbutton;
-    new Future.delayed(const Duration(milliseconds: 300), ()
+    new Future.delayed(const Duration(milliseconds: 600), ()
     {
       if (correct == 5) {
       correct = 0;
@@ -255,12 +258,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     print("button key :: ${widget.key}");
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 300), vsync: this);
+        duration: new Duration(milliseconds: 400), vsync: this);
     controllerShake = new AnimationController(
-        duration: new Duration(microseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 100), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    animationShake = new Tween(begin: -2.0, end: 2.0, ).animate(controllerShake);
+    animationShake = new Tween(begin: -3.50, end: 2.50, ).animate(controllerShake);
     noAimation = new Tween(begin: 0.0, end: 0.0, ).animate(controllerShake);
     controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
@@ -281,7 +284,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 
   void shake() {
-    animationShake.addStatusListener((status) {
+    controllerShake.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controllerShake.reverse();
       } else if (status == AnimationStatus.dismissed) {
@@ -319,7 +322,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 splashColor: Colors.red,
                 onPressed: () => widget.onPress(),
                 color: (widget.status == Status.Enable || widget.status==Status.Shake)
-                    ? Colors.yellow[300]
+                    ? new Color(0xFFaa0e42)
                     : new Color(0xFFed4a79),
                 shape: new RoundedRectangleBorder(
                     borderRadius:
@@ -343,7 +346,7 @@ class Shaker extends AnimatedWidget {
   Animation<double> get animation => listenable;
 
   double get translateX {
-    const double shakeDelta = 1.34;
+   const double shakeDelta = 4.0;
     final double t = animation.value;
     if (t <= 0.25)
       return -t * shakeDelta;
@@ -351,6 +354,19 @@ class Shaker extends AnimatedWidget {
       return (t - 0.5) * shakeDelta;
     else
       return (1.0 - t) * 4.0 * shakeDelta;
+    
+    // if (t <= 0.55)
+    //   return -t * shakeDelta;
+    // else if (t < 0.85)
+    //   return -(t ) * shakeDelta;
+    // else if (t<=1.0)
+    // return t*shakeDelta;
+    // else if (t<=1.5)
+    // return -t*shakeDelta;
+    // else if( t<=2.0)
+    // return t*shakeDelta;
+    // else 
+    //   return -(1.0 - t) * 4.0 * shakeDelta;
   }
 
   @override
