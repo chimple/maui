@@ -108,9 +108,9 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 widget.onEnd();
               });
             }
+
             if(int.parse(_result) == _answer) {
               widget.onScore(1);
-              widget.onProgress((count + 2) / 6.5);
               setState(() {
                 count = count + 1 ;
                 print(count);
@@ -118,9 +118,11 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 String temp2 = _tableShuffledData[count].item2;
                 int temp3 = _tableShuffledData[count].item3;
                 _question= "$temp1 $temp2 $temp3";
-                _answer= _tableShuffledData[count].item4;;
+                _answer= _tableShuffledData[count].item4;
                 _result = "";
+                _wrong = 0;
               });
+              widget.onProgress( 1 / _tableShuffledData.length);
             }
             else{
               _myAnim();
@@ -205,7 +207,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    new Container (
+                     new Container (
                       margin: new EdgeInsets.only(bottom: _height * 0.1),
                       alignment: Alignment.center,
                       color: new Color(0X00000000),
