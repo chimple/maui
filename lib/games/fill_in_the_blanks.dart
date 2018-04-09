@@ -9,13 +9,15 @@ class FillInTheBlanks extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
   FillInTheBlanks(
       {key,
       this.onScore,
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId})
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -83,6 +85,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         index: index,
         text: text,
         color1: 1,
+        isRotated: widget.isRotated,
         onAccepted: (targetindex) {
           // print(targetindex);
           // print(fillblanks1);
@@ -170,6 +173,7 @@ class MyButton extends StatefulWidget {
       this.color1,
       this.flag,
       this.onAccepted,
+      this.isRotated = false,
       this.arr})
       : super(key: key);
   //  MyButton({Key key, this.text, this.onPress}) : super(key: key);
@@ -180,6 +184,7 @@ class MyButton extends StatefulWidget {
   final String text;
   List arr;
   final DragTargetAccept onAccepted;
+  bool isRotated;
   // final String text1;
 
   @override
@@ -262,46 +267,51 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         ),
       );
     } else if (widget.index >= 100) {
-      return new TableCell(
-          child: new Draggable(
-        data: widget.index,
-        child: new Padding(
-          padding: new EdgeInsets.all(8.0),
-          child: new ScaleTransition(
-              scale: animation,
-              child: new Container(
-                width: 50.0,
-                height: 50.0,
-                decoration: new BoxDecoration(
-                  color: widget.color1 == 1 ? Colors.white : Colors.purple[300],
-                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-                ),
-                child: new Center(
-                  child: new Text(_displayText,
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)),
-                ),
-              )),
-        ),
-        feedback: new Container(
-          height: 60.0,
-          width: 60.0,
-          decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              color: Colors.yellow[400]),
-          child: new Center(
-            child: new Text(
-              _displayText,
-              style: new TextStyle(
-                color: Colors.black,
-                decoration: TextDecoration.none,
-                fontSize: 26.0,
-              ),
+      var feedbackContainer = new Container(
+        height: 60.0,
+        width: 60.0,
+        decoration: new BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            color: Colors.yellow[400]),
+        child: new Center(
+          child: new Text(
+            _displayText,
+            style: new TextStyle(
+              color: Colors.black,
+              decoration: TextDecoration.none,
+              fontSize: 26.0,
             ),
           ),
         ),
-      ));
+      );
+      return new TableCell(
+          child: new Draggable(
+              data: widget.index,
+              child: new Padding(
+                padding: new EdgeInsets.all(8.0),
+                child: new ScaleTransition(
+                    scale: animation,
+                    child: new Container(
+                      width: 50.0,
+                      height: 50.0,
+                      decoration: new BoxDecoration(
+                        color: widget.color1 == 1
+                            ? Colors.white
+                            : Colors.purple[300],
+                        borderRadius:
+                            new BorderRadius.all(new Radius.circular(8.0)),
+                      ),
+                      child: new Center(
+                        child: new Text(_displayText,
+                            style: new TextStyle(
+                                color: Colors.black, fontSize: 24.0)),
+                      ),
+                    )),
+              ),
+              feedback: widget.isRotated
+                  ? new RotatedBox(quarterTurns: 2, child: feedbackContainer)
+                  : feedbackContainer));
     }
   }
 }
