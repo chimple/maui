@@ -77,9 +77,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     int temp1 = _tableShuffledData[count].item1;
     String temp2 = _tableShuffledData[count].item2;
     int temp3 = _tableShuffledData[count].item3;
-    int temp4 = _tableShuffledData[count].item4;
     _question= "$temp1 $temp2 $temp3";
-    _answer= temp4;
+    _answer=  _tableShuffledData[count].item4;
     setState(()=>_isLoading=false);
   }
 
@@ -124,9 +123,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 int temp1 = _tableShuffledData[count].item1;
                 String temp2 = _tableShuffledData[count].item2;
                 int temp3 = _tableShuffledData[count].item3;
-                int temp4 = _tableShuffledData[count].item4;
                 _question= "$temp1 $temp2 $temp3";
-                _answer= temp4;
+                _answer= _tableShuffledData[count].item4;;
                 _result = "";
               });
             }
@@ -140,7 +138,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 animationController.stop();
                 if(_wrong == 2){
                   setState(() {
-                   // this.count = this.count + 1;
                     _isShowingFlashCard = true;
                     _wrong = 0;
                   });
@@ -154,8 +151,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _result = _result + text;
               }
             });
-          }
-        });
+          }});
   }
 
 
@@ -181,6 +177,12 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       return new FlashCard(text: _answer.toString(), onChecked: () {
         setState(() {
           _isShowingFlashCard = false;
+          this.count = this.count + 1;
+          int temp1 = _tableShuffledData[count].item1;
+          String temp2 = _tableShuffledData[count].item2;
+          int temp3 = _tableShuffledData[count].item3;
+          _question= "$temp1 $temp2 $temp3";
+          _answer = _tableShuffledData[count].item4;
         });
       });
     }
@@ -339,10 +341,7 @@ class TextAnimation extends AnimatedWidget {
               style: new TextStyle(
                 color: Colors.black,
                 fontSize: height * 0.1,
-                fontWeight: FontWeight.bold,)),
-
-        ),
-      );
+                fontWeight: FontWeight.bold,))));
     });
   }
 }
