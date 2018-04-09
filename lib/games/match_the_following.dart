@@ -12,6 +12,7 @@ class MatchTheFollowing extends StatefulWidget {
   int iteration;
   Function function;
   int gameCategoryId;
+  bool isRotated;
   MatchTheFollowing({
     key,
     this.onScore,
@@ -20,6 +21,7 @@ class MatchTheFollowing extends StatefulWidget {
     this.iteration,
     this.function,
     this.gameCategoryId,
+    this.isRotated = false
   })
       : super(key: key);
   @override
