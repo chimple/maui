@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/shaker.dart';
 
 class CalculateTheNumbers extends StatefulWidget {
@@ -20,7 +19,7 @@ class CalculateTheNumbers extends StatefulWidget {
       this.onEnd,
       this.iteration,
       this.gameCategoryId,
-      this.isRotated=false})
+      this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();
@@ -40,12 +39,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     '9',
     '✖',
     '0',
-    '✔'
+    'submit'
   ];
 
   final int _size = 3;
   List<String> _numbers;
-  String _preValue = ' ';
+  String _preValue = '';
   int num1,
       num2,
       num1digit1,
@@ -53,12 +52,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num1digit3,
       num2digit1,
       num2digit2,
-      num2digit3;
+      num2digit3,
+      ans1,
+      ans2;
   int result;
-  String _output = '';
+  int check = 0;
+  String _output = '', _output1 = '';
   String _operator = '';
-  bool flag, carrry = false;
-  bool shake = true;
+  bool flag, flag1, carrry = false;
+  bool shake = true, shake1 = true;
   Animation animationShake, animation;
   AnimationController animationController;
   Tuple4<int, String, int, int> data;
@@ -102,6 +104,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit1 = num2 % 10;
+      ans2 = result % 10;
+      result = result ~/ 10;
+      ans1 = result % 10;
+      print(
+          "$num1digit2 ,  $num1digit1,  $num2digit2, $num2digit1,$ans1,$ans2");
     } else {
       options = 'tripleDigitWithoutCarry';
       num1digit3 = num1 % 10;
@@ -141,7 +148,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   @override
   void didUpdateWidget(CalculateTheNumbers oldWidget) {
-
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -159,33 +165,34 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     print('Pushed the Button');
   }
 
-  void wrongOrRight(String text, String output, sum) {
+  int wrongOrRight(String text, String output, int sum) {
     if (text == '✔') {
       try {
-        if (int.parse(output) == result) {
+        if (int.parse(output) == sum) {
           setState(() {
             _output = output;
+            flag == true;
           });
           widget.onScore(1);
           widget.onProgress(1.0);
           if (int.parse(output) == sum) {
             new Future.delayed(const Duration(milliseconds: 1000), () {
-              _output = ' ';
+              _output = '';
               flag = false;
               widget.onEnd();
             });
           }
         } else {
-          shake = false;
+          setState(() {
+            shake = false;
+          });
           print("Entering wrong data");
-
           new Future.delayed(const Duration(milliseconds: 900), () {
             setState(() {
               _output = "";
               flag = false;
               shake = true;
             });
-            // animationController.stop();
           });
         }
       } on FormatException {}
@@ -201,6 +208,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         } on FormatException {}
       }
     }
+    return int.parse(_output);
   }
 
   bool _zeoToNine(String text) {
@@ -219,7 +227,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       return false;
   }
 
-  void operation(String text) {
+  void operation(String text, String option) {
     if (_zeoToNine(text) == true) {
       if (_output.length < 2) {
         _preValue = text;
@@ -238,16 +246,75 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
       }
     }
+
     wrongOrRight(text, _output, result);
   }
 
-  Widget _buildItem(int index, String text, double _height) {
+  Widget _buildItem(int index, String text, double _height, String options) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         height: _height,
         onPress: () {
-          operation(text);
+          switch (options) {
+            case 'singleDigit':
+              operation(text, 'singleDigit');
+              break;
+            case 'doubleDigitWithoutCarry':
+              if (text == 'submit') {
+                print("data is coming");
+                if (int.parse(_output) == (num1digit2 + num2digit2)) {
+                  setState(() {
+                    flag = true;
+                    check = 1;
+                    text = '';
+                  });
+                } else {
+                  setState(() {
+                    text = '';
+                  });
+                }
+
+                if (int.parse(_output1) == (num1digit1 + num2digit1)) {
+                  setState(() {
+                    _output1;
+                    flag1 = true;
+                  });
+                }
+              } else {
+                if (_output.length < 2 || _output1.length < 2) {
+                  if (check == 1) {
+                    setState(() {
+                      _output1 = _output1 + text;
+                    });
+                  } else {
+                    setState(() {
+                      _preValue = text;
+                      _output = _output + _preValue;
+                    });
+                  }
+                }
+              }
+              if (text == '✖') {
+                if (_output.length > 0) {
+                  // try {
+                  setState(() {
+                    _output = _output.substring(0, _output.length - 1);
+                    flag = false;
+                    check = 0;
+                  });
+                  // } on FormatException {}
+                }
+                if (_output1.length > 0) {
+                  try {
+                    setState(() {
+                      _output1 = _output1.substring(0, _output1.length - 1);
+                      flag1 = false;
+                    });
+                  } on FormatException {}
+                }
+              }
+          }
         });
   }
 
@@ -271,6 +338,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         return new LayoutBuilder(builder: (context, constraints) {
           double height = constraints.minHeight;
           var j = 0;
+          double _height, _width;
+          _height = constraints.maxHeight;
+          _width = constraints.maxWidth;
+          List<TableRow> rows = new List<TableRow>();
+
+          for (var i = 0; i < _size + 1; ++i) {
+            List<Widget> cells = _numbers
+                .skip(i * _size)
+                .take(_size)
+                .map((e) => _buildItem(j++, e, _height, 'singleDigit'))
+                .toList();
+            rows.add(new TableRow(children: cells));
+          }
           return new Container(
             color: new Color(0XFFFFF7EBCB),
             child: new Column(
@@ -326,8 +406,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               child: new Container(
                                 height: constraints.minHeight * 0.1,
                                 width: constraints.minHeight * 0.1,
-                                child: new Center(
-                                    ),
+                                child: new Center(),
                               )),
                           new Shake(
                               animation:
@@ -353,29 +432,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 ),
                 new Expanded(
                   child: new Container(
-                    color: new Color(0XFFFFF7EBCB),
-                    child: new ResponsiveGridView(
-                      rows: _size + 1,
-                      cols: _size,
-                      mainAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 1.0,
-                      crossAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 5.0,
-                      childAspectRatio:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 0.6
-                              : 0.24,
-                      // childAspectRatio: 0.6,
-                      children: _numbers
-                          .map((e) => _buildItem(j++, e, constraints.minHeight))
-                          .toList(growable: false),
+                    child: new Center(
+                      child: new Table(children: rows),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           );
@@ -386,6 +447,22 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         return new LayoutBuilder(builder: (context, constraints) {
           double height = constraints.minHeight;
           var j = 0;
+          // print(constraints.maxHeight);
+          // print(constraints.maxWidth);
+          double _height, _width;
+          _height = constraints.maxHeight;
+          _width = constraints.maxWidth;
+          List<TableRow> rows = new List<TableRow>();
+          // var j = 0;
+          for (var i = 0; i < _size + 1; ++i) {
+            List<Widget> cells = _numbers
+                .skip(i * _size)
+                .take(_size)
+                .map((e) =>
+                    _buildItem(j++, e, _height, 'doubleDigitWithoutCarry'))
+                .toList();
+            rows.add(new TableRow(children: cells));
+          }
           return new Container(
             color: new Color(0XFFFFF7EBCB),
             child: new Column(
@@ -493,30 +570,32 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         //   new Container(child: new Center(child: new Text(" "))),
                         new Shake(
                             animation:
-                                shake == false ? animationShake : animation,
+                                /*  shake == false ? animationShake :  */ animation,
                             child: new Container(
                               height: constraints.minHeight * 0.1,
                               width: constraints.minHeight * 0.1,
-                              key: new Key('_output'),
-                              color: flag == true ? Colors.green : Colors.red,
+                              //     key: new Key('_output'),
+                              color: /* flag == true ? Colors.green : */ Colors
+                                  .red,
                               child: new Center(
-                                  child: new Text(_output,
+                                  /* child: new Text(_output,
                                       style: new TextStyle(
                                         color: Colors.black,
                                         fontSize: constraints.minHeight * 0.09,
                                         // fontWeight: FontWeight.bold,
-                                      ))),
+                                      )) */
+                                  ),
                             )),
                         new Shake(
                             animation:
-                                shake == false ? animationShake : animation,
+                                shake1 == false ? animationShake : animation,
                             child: new Container(
                               height: constraints.minHeight * 0.1,
                               width: constraints.minHeight * 0.1,
                               key: new Key('_output'),
-                              color: flag == true ? Colors.green : Colors.red,
+                              color: flag1 == true ? Colors.green : Colors.red,
                               child: new Center(
-                                  child: new Text(_output,
+                                  child: new Text(_output1,
                                       style: new TextStyle(
                                         color: Colors.black,
                                         fontSize: constraints.minHeight * 0.09,
@@ -543,31 +622,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     ],
                   ),
                 ),
-                new Expanded(
-                  child: new Container(
-                    // color: Color.fromARGB(247, 235, 203),
-                    child: new ResponsiveGridView(
-                      rows: _size + 1,
-                      cols: _size,
-                      mainAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 1.0,
-                      crossAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 5.0,
-                      childAspectRatio:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 0.6
-                              : 0.24,
-                      // childAspectRatio: 0.6,
-                      children: _numbers
-                          .map((e) => _buildItem(j++, e, constraints.minHeight))
-                          .toList(growable: false),
-                    ),
+                new Container(
+                  child: new Center(
+                    child: new Table(children: rows),
                   ),
-                ),
+                )
               ],
             ),
           );
@@ -575,8 +634,23 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         break;
       case 'tripleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
-         
+          print("this is  data");
+          print(constraints.maxHeight);
+          print(constraints.maxWidth);
+          double _height, _width;
+          _height = constraints.maxHeight;
+          _width = constraints.maxWidth;
+          List<TableRow> rows = new List<TableRow>();
           var j = 0;
+          for (var i = 0; i < _size + 1; ++i) {
+            List<Widget> cells = _numbers
+                .skip(i * _size)
+                .take(_size)
+                .map((e) => _buildItem(j++, e, _height, 'singleDigit'))
+                .toList();
+            rows.add(new TableRow(children: cells));
+          }
+
           return new Container(
             color: new Color(0XFFFFF7EBCB),
             child: new Column(
@@ -780,30 +854,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     ],
                   ),
                 ),
-                new Expanded(
-                  child: new Container(
-                    child: new ResponsiveGridView(
-                      rows: _size + 1,
-                      cols: _size,
-                      mainAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 1.0,
-                      crossAxisSpacing:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 4.0
-                              : 5.0,
-                      childAspectRatio:
-                          constraints.maxHeight > constraints.maxWidth
-                              ? 0.6
-                              : 0.24,
-                      // childAspectRatio: 0.6,
-                      children: _numbers
-                          .map((e) => _buildItem(j++, e, constraints.minHeight))
-                          .toList(growable: false),
-                    ),
+                new Container(
+                  child: new Center(
+                    child: new Table(children: rows),
                   ),
-                ),
+                )
               ],
             ),
           );
@@ -838,8 +893,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
     _displayText = widget.text;
-    //  _height=widget.height;
-    //  print("_MyButtonState.initState: ${widget.text}");
+
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
@@ -870,18 +924,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new ScaleTransition(
-        scale: animation,
-        child: new RaisedButton(
-            onPressed: () => widget.onPress(),
-            color: Colors.orangeAccent,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.all(
-                    new Radius.circular(widget.height * 0.09))),
-            child: new Center(
-              child: new Text(_displayText,
-                  style: new TextStyle(
-                      color: Colors.black, fontSize: widget.height * 0.05)),
-            )));
+    return new TableCell(
+        child: new Padding(
+            padding: new EdgeInsets.all(widget.height * 0.01),
+            child: new ScaleTransition(
+                scale: animation,
+                child: new RaisedButton(
+                    onPressed: () => widget.onPress(),
+                    padding: new EdgeInsets.all(widget.height * 0.02),
+                    color: Colors.orangeAccent,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.all(
+                            new Radius.circular(widget.height * 0.09))),
+                    child: new Text(_displayText,
+                        key: new Key('keyPad'),
+                        style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: widget.height * 0.05))))));
   }
 }
