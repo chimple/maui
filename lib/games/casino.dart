@@ -40,16 +40,17 @@ class _CasinoState extends State<Casino> {
   @override
   void initState() {
     super.initState();
-    _initletters();
+    _initLetters();
   }
 
-  void _initletters() async {
+  void _initLetters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
     i = 0;
     j = 0;
 
     print("Fetched Data $data");
     givenWord = '';
+    givenWordList = [];
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
@@ -71,14 +72,14 @@ class _CasinoState extends State<Casino> {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
-      _initletters();
+      _initLetters();
     }
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
     FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: _selectedItemIndex);
-    // scrollController.jumpToItem(_selectedItemIndex);
+        new FixedExtentScrollController(initialItem: 3);
+    // scrollController.jumpToItem(4);
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
@@ -113,18 +114,17 @@ class _CasinoState extends State<Casino> {
               if (givenWordList[i] == scrollingLetterList[index]) {
                 if (i == givenWordList.length - 1) {
                   widget.onScore(2);
-                  widget.onProgress(givenWordList.length / data.length);
+                  widget.onProgress((i + 1) / data.length);
                   print("correct index $index");
-                  // givenWord = " ";
+
                   new Future.delayed(const Duration(milliseconds: 500), () {
                     setState(() {
                       _isShowingFlashCard = true;
-                      // givenWord = " ";
                     });
                   });
                   print("the end");
                 } else {
-                  widget.onProgress(givenWordList.length / data.length);
+                  widget.onProgress((i + 1) / data.length);
                   print("correct index $index");
                 }
                 i++;
@@ -134,7 +134,14 @@ class _CasinoState extends State<Casino> {
             children: new List<Widget>.generate(scrollingLetterList.length,
                 (int index) {
               return new Center(
-                child: new Text(scrollingLetterList[index]),
+                child: new Text(
+                  scrollingLetterList[index],
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                      letterSpacing: 5.0,
+                      color: Colors.black),
+                ),
               );
             }),
           ),
@@ -150,25 +157,27 @@ class _CasinoState extends State<Casino> {
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
     if (_isShowingFlashCard) {
-      return new FlashCard(text: givenWord, onChecked: () {
-        givenWord="";
-        _initletters();
-        widget.onEnd();
-        setState(() {
-          _isShowingFlashCard = false;
-        });
-      });
+      return new FlashCard(
+          text: givenWord,
+          onChecked: () {
+            givenWord = "";
+            _initLetters();
+            widget.onEnd();
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          });
     }
     return new Container(
       child: new Container(
-        color: Colors.deepOrangeAccent[100],
+        color: new Color(0xfffff7ebcb),
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             new Container(
                 height: 100.0,
                 width: 200.0,
-                color: Colors.pinkAccent,
+                color: new Color(0xffff52c5ce),
                 child: new Center(
                     child: new Text(
                   givenWord,
