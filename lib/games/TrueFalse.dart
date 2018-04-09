@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 
-class QuizPage extends StatefulWidget {
+class TrueFalseGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -12,13 +12,13 @@ class QuizPage extends StatefulWidget {
   int gameCategoryId;
 
 
-  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
+  TrueFalseGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
   
   @override
-  State createState() => new QuizPageState();
+  State createState() => new TrueFalseGameState();
 }
 
-class QuizPageState extends State<QuizPage> {
+class TrueFalseGameState extends State<TrueFalseGame> {
   bool _isLoading = true;
  
  Tuple2<String, bool> _allques;
