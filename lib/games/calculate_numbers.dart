@@ -258,7 +258,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         onPress: () {
           switch (options) {
             case 'singleDigit':
-              operation(text, 'singleDigit');
+              operation(text, options);
               break;
             case 'doubleDigitWithoutCarry':
               if (text == 'submit') {
