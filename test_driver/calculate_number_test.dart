@@ -21,10 +21,11 @@ void main() {
     });
 
     test('Scrolling to the multiple Game option', () async {
+      await new Future<Duration>.delayed(const Duration(seconds: 5));
       final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 3));
+      await new Future<Duration>.delayed(const Duration(seconds: 1));
       bool scroll = true;
-      String s = 'Single digit subtraction without borrow';
+      String s = 'Triple digit addition without carry';
       final SerializableFinder todo = find.byValueKey(s);
       driver.waitFor(todo).then<Null>((Null value) async {
         scroll = false;
@@ -172,6 +173,20 @@ void main() {
                 final SerializableFinder item5 = find.byValueKey(list - 1);
                 await driver.tap(item5);
               }
+              if (mul>=1 && list == 0) {
+                list = 11;
+                print(mul);
+                print(list1);
+                print(list);
+                final SerializableFinder items = find.byValueKey(mul - 1);
+                await driver.tap(items);
+                final SerializableFinder item4 = find.byValueKey(list1 - 1);
+                await driver.tap(item4);
+                await new Future<Duration>.delayed(const Duration(seconds: 1));
+                final SerializableFinder item5 = find.byValueKey(list - 1);
+                await driver.tap(item5);
+                break;
+              }
               print(mul);
               print(list1);
               print(list);
@@ -238,6 +253,20 @@ void main() {
                 await new Future<Duration>.delayed(const Duration(seconds: 1));
                 final SerializableFinder item5 = find.byValueKey(list - 1);
                 await driver.tap(item5);
+              }
+              if (sub == 1 && list == 0) {
+                list = 11;
+                print(sub);
+                print(list1);
+                print(list);
+                final SerializableFinder items = find.byValueKey(sub - 1);
+                await driver.tap(items);
+                final SerializableFinder item4 = find.byValueKey(list1 - 1);
+                await driver.tap(item4);
+                await new Future<Duration>.delayed(const Duration(seconds: 1));
+                final SerializableFinder item5 = find.byValueKey(list - 1);
+                await driver.tap(item5);
+                break;
               }
               print(sub);
               print(list1);
