@@ -22,6 +22,8 @@ class OrderableStack<T> extends StatefulWidget {
 
   final Direction direction;
 
+  final bool isRotated;
+
   final Size itemSize;
 
   final double margin;
@@ -48,6 +50,7 @@ class OrderableStack<T> extends StatefulWidget {
       this.itemSize = kDefaultItemSize,
       this.margin = kMargin,
       this.direction = Direction.Horizontal,
+      this.isRotated = false,
       this.shuffle = true})
       : super(key: key);
 
@@ -64,11 +67,10 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   /// currently dragged widget if there is
   OrderableWidget dragged;
 
-
   _OrderableStackState(List<T> rawItems) {
     orderableItems = enumerate(rawItems)
-      .map((l) => new Orderable<T>(value: l.value, dataIndex: l.index))
-      .toList();
+        .map((l) => new Orderable<T>(value: l.value, dataIndex: l.index))
+        .toList();
   }
 
   List<T> get currentOrder => orderableItems.map((item) => item.value).toList();
@@ -77,11 +79,10 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   void initState() {
     super.initState();
 
-
     if (widget.shuffle) orderableItems.shuffle();
     orderableItems = enumerate(orderableItems)
-      .map<Orderable<T>>((IndexedValue e) => e.value..visibleIndex = e.index)
-      .toList();
+        .map<Orderable<T>>((IndexedValue e) => e.value..visibleIndex = e.index)
+        .toList();
 
     /// notify the initial order
     widget.onChange(currentOrder);
@@ -108,6 +109,7 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
           itemBuilder: widget.itemBuilder,
           itemSize: widget.itemSize,
           direction: widget.direction,
+          isRotated: widget.isRotated,
           maxPos: orderableItems.length * widget.step,
           data: l..currentPosition = getCurrentPosition(l),
           isDragged: l.selected,
@@ -143,7 +145,7 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
     setState(() {
       dragged = null;
       updateItemsPos();
-      if( currentOrder != lastOrder ){
+      if (currentOrder != lastOrder) {
         widget.onChange(currentOrder);
         lastOrder = currentOrder;
       }
