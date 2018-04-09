@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;
@@ -10,7 +11,6 @@ class Crossword extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
-  bool isRotated;
 
   Crossword(
       {key,
@@ -18,8 +18,7 @@ class Crossword extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+      this.gameCategoryId})
       : super(key: key);
 
   @override
@@ -35,7 +34,7 @@ class CrosswordState extends State<Crossword> {
   List<String> _rightwords = new List(_size);
   List<String> _letters = new List();
   List<String> _data2 = new List();
-  List<int> _data2_ = new List();
+  List<int> _data3 = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
   List _sortletters = new List(_size * 2);
@@ -44,8 +43,6 @@ class CrosswordState extends State<Crossword> {
   @override
   void initState() {
     super.initState();
-    // keys=0;
-    //  print('init 111');
     _initBoard();
   }
 
@@ -62,13 +59,10 @@ class CrosswordState extends State<Crossword> {
     for (var i = 0; i < data.item2.length; i++) {
       _data2.add(data.item2[i].item1);
     }
-    // _data2_.add(data.item2[0].item2)
+    // _data3.add(data.item2[0].item2)
     for (var i = 0; i < data.item2.length; i++) {
-      _data2_.add(data.item2[i].item2 * 5 + data.item2[i].item3);
+      _data3.add(data.item2[i].item2 * 5 + data.item2[i].item3);
     }
-
-    // print('hoi  $_data1');
-    // print('hoi ss ${_data1.length}');
     _letters = _data1;
     for (var i = 0; i < _data1.length; i++) {
       if (_data1[i] == null) {
@@ -77,7 +71,7 @@ class CrosswordState extends State<Crossword> {
         _letters[i] = _data1[i];
       }
     }
-    for (var i = 0, j = 0, h = 0; i < _letters.length; i++) {
+   for (var i = 0, j = 0, h = 0; i < _letters.length; i++) {
       if (i == 5 || i == 11 || i == 12 || i == 13 || i == 19) {
         _rightwords[j++] = _letters[i];
         _sortletters[h++] = _letters[i];
@@ -86,12 +80,12 @@ class CrosswordState extends State<Crossword> {
       }
     }
     _rightwords.shuffle();
-    _flag.length = _letters.length + _size + 1;
+
+    _flag.length = _letters.length + _size + 2;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
     }
     setState(() => _isLoading = false);
-    //  print('helo $_sortletters');
   }
 
   Widget _buildItem(int index, String text, int flag) {
@@ -101,22 +95,22 @@ class CrosswordState extends State<Crossword> {
           index: index,
           text: text,
           color1: 1,
-          isRotated: widget.isRotated,
-          onAccepted: (targettext) {
+          onAccepted: (dindex) {
             flag1 = 0;
-            for (var i = 0; i < _sortletters.length; i++) {
-              if (_sortletters[i] == targettext &&
+            var i = 0,flagtemp=0;
+            for (i; i < _sortletters.length; i++) {
+              if (_rightwords[dindex - 100] == _sortletters[i] &&
                   index == _sortletters[++i] &&
                   _letters[index] == '') {
-                //  _rightwords[index-100]='';
                 flag1 = 1;
                 break;
               }
             }
             setState(() {
               if (flag1 == 1) {
-                _letters[index] = targettext;
-
+                _rightwords[dindex - 100] = '1';
+                // print(' helo $_rightwords');
+                _letters[index] = _sortletters[--i];
                 correct++;
                 widget.onScore(1);
                 widget.onProgress(correct / _size);
@@ -126,13 +120,21 @@ class CrosswordState extends State<Crossword> {
                 }
               } else if (flag1 == 0) {
                 _flag[index] = 1;
+                if(_letters[index]==''){
+                _letters[index]=_rightwords[dindex - 100];flagtemp=1;}
+                
+                new Future.delayed(const Duration(milliseconds: 500), () {
+                  setState(() {
+                    _flag[index] = 0;
+                   if(flagtemp==1){ _letters[index]='';flagtemp=0;}
+                  });
+                });
               }
             });
           },
           flag: flag,
-          arr: _flag,
           img: _data2,
-          imgindex: _data2_,
+          imgindex: _data3,
           keys: keys++); //mybutton
     } else {
       return new MyButton(
@@ -140,54 +142,83 @@ class CrosswordState extends State<Crossword> {
           text: '',
           color1: 0,
           flag: flag,
-          arr: _flag,
           onAccepted: (text) {},
           img: _data2,
-          imgindex: _data2_,
+          imgindex: _data3,
           keys: keys);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //  print("MyTableState.build");
+     if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     keys = 0;
-    List<TableRow> rows = new List<TableRow>();
-    List<TableRow> rows1 = new List<TableRow>();
-    var j = 0, h = 0;
-    for (var i = 0; i < 5; i++) {
-      List<Widget> cells = _letters
-          .skip(i * _size)
-          .take(_size)
-          .map((e) => _buildItem(j++, e, _flag[h++]))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-    j = 100;
-    for (var i = 0; i < 1; i++) {
-      List<Widget> cells = _rightwords
-          .skip(i * 1)
-          .take(_size)
-          .map((e) => _buildItem(j++, e, _flag[h++]))
-          .toList();
-      rows1.add(new TableRow(children: cells));
-    }
-    return new Center(
-        child: new Container(
-            color: Colors.purple[300],
-            child: new Column(
-              children: <Widget>[
-                new Table(children: rows),
-                new Padding(padding: new EdgeInsets.all(20.0)),
-                new Text("choose words",
-                    style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: 50.0,
-                        fontFamily: "Roboto")),
-                new Padding(padding: new EdgeInsets.all(20.0)),
-                new Table(children: rows1)
-              ],
-            )));
+    var j = 0, h = 0, k = 100;
+    return new Container(
+        color: Colors.purple[300],
+        child: new Column(
+          children: <Widget>[
+         //   new Padding(padding: new EdgeInsets.all(10.0)),
+            new Flexible(
+              flex: 4,
+              child: new ResponsiveGridView(
+                rows: _size,
+                cols: _size,
+               // childAspectRatio: 0.8,
+               // mainAxisSpacing:9.0,
+                //crossAxisSpacing:9.0,
+               padding:const EdgeInsets.all(20.0),
+                children: _letters
+                    .map((e) => _buildItem(j++, e, _flag[h++]))
+                    .toList(growable: false),
+              ),
+            ),
+          //  new Padding(padding: new EdgeInsets.all(5.0)),
+            new Expanded(
+              child: new ResponsiveGridView(
+                rows: 1,
+                cols: _size,
+               // childAspectRatio: 2.3,
+                padding: const EdgeInsets.all(14.0),
+                //crossAxisSpacing: 9.0,
+                children: _rightwords
+                    .map((e) => _buildItem(k++, e, _flag[h++]))
+                    .toList(growable: false),
+              ),
+            )
+          ],
+        ));
+  }
+}
+
+class Shake extends AnimatedWidget {
+  const Shake({
+    Key key,
+    Animation<double> animation,
+    this.child,
+  }) : super(key: key, listenable: animation);
+
+  final Widget child;
+
+  Animation<double> get animation => listenable;
+  double get translateX {
+    final double t = animation.value;
+    const double shakeDelta = 2.0;
+    return t * 1.2;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Transform(
+      transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
+      child: child,
+    );
   }
 }
 
@@ -198,204 +229,172 @@ class MyButton extends StatefulWidget {
       this.color1,
       this.flag,
       this.onAccepted,
-      this.arr,
       this.img,
-      this.isRotated = false,
       this.imgindex,
       this.keys});
   var index;
   final int color1;
   final int flag;
   final String text;
-  List arr;
   final List<String> img;
   final List<int> imgindex;
   final DragTargetAccept onAccepted;
   int keys;
-  final bool isRotated;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+  AnimationController controller, controller1;
+  Animation<double> animation, animation1;
   String _displayText;
 
   initState() {
     super.initState();
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 80), vsync: this);
+        duration: new Duration(milliseconds: 100), vsync: this);
+    controller1 = new AnimationController(
+        duration: new Duration(milliseconds: 40), vsync: this);
     animation =
         new CurvedAnimation(parent: controller, curve: Curves.decelerate)
           ..addStatusListener((state) {
-            //  print("$state:${animation.value}");
-            if (state == AnimationStatus.dismissed) {
-              controller.forward();
-            }
           });
     controller.forward();
+    animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
+    _myAnim();
   }
 
-  @override
-  void didUpdateWidget(MyButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.flag == 1) {
-      // print("old ${oldWidget.text} new ${widget.text}");
-      controller.reverse();
-    }
-    //  print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  }
-
-  void _handleTouch() {
-    print(widget.text);
-    controller.reverse();
+  void _myAnim() {
+    animation1.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller1.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller1.forward();
+      }
+    });
+    controller1.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     widget.keys++;
-    print(widget.keys);
-    for (var i = 0; i < widget.arr.length; i++) {
-      widget.arr[i] = 0;
-    }
     for (var i = 0; i < widget.imgindex.length; i++) {
       if (widget.imgindex[i] == widget.index) {
-        return new TableCell(
-            child: new Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new ScaleTransition(
-                    scale: animation,
-                    child: new Container(
-                      width: 30.0,
-                      height: 44.0,
-                      decoration: new BoxDecoration(
-                          color: Colors.yellow[500],
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(8.0)),
-                          image: new DecorationImage(
-                              image: new AssetImage(widget.img[i]),
-                              fit: BoxFit.contain)),
-                      child: new Center(
-                        child: new Text(widget.text,
-                            key: new Key('A${widget.keys}'),
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 24.0)),
-                      ),
-                    ))));
+        return new ScaleTransition(
+            scale: animation,
+              child:new Container(             
+              decoration: new BoxDecoration(
+                  color: Colors.yellow[500],
+                   border: new Border.all(color: Colors.grey,width:3.0,style:BorderStyle.solid),
+                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+                  image: new DecorationImage(
+                      image: new AssetImage(widget.img[i]),
+                      fit: BoxFit.contain)),
+              child: new Center(
+                child: new Text(widget.text,
+                    key: new Key('A${widget.keys}'),
+                    style: new TextStyle(color: Colors.black, fontSize: 24.0)),
+              ),
+            ));
       }
     }
     if (widget.index < 100 && widget.color1 != 0) {
-      return new TableCell(
-        child: new Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new ScaleTransition(
+      return new ScaleTransition(
+        scale: animation,
+        child: new Shake(
+            animation: widget.flag == 1 ? animation1 : animation,
+            child: new ScaleTransition(
+                scale: animation,
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    color: widget.color1 == 1
+                        ? Colors.yellow[500]
+                        : Colors.purple[300],
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(8.0)),
+                  ),
+                  child: new DragTarget(
+                    onAccept: (int data) => widget.onAccepted(data),
+                    builder: (
+                      BuildContext context,
+                      List<dynamic> accepted,
+                      List<dynamic> rejected,
+                    ) 
+                    
+                    {
+                      return new Container(
+                        decoration: new BoxDecoration(
+                          color: widget.flag == 1
+                              ? Colors.redAccent
+                              : Colors.yellow[500],
+                          borderRadius:
+                              new BorderRadius.all(new Radius.circular(8.0)),
+                        ),
+                        child: new Center(
+                          child: new Text(widget.text,
+                              key: new Key('A${widget.keys}'),
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 24.0)),
+                        ),
+                      );
+                    },
+                  ),
+                ))),
+      );
+    } else if (widget.index >= 100 && widget.text == '') {
+      return new Container(height: 1.0, width: 1.0, color: Colors.purple[300]);
+    } else if (widget.index >= 100) {
+      //print('hloo11 ${widget.text}');
+      return new Draggable(
+        data: widget.index,
+        child: new ScaleTransition(
             scale: animation,
             child: new Container(
-              width: 30.0,
-              height: 44.0,
               decoration: new BoxDecoration(
                 color: widget.color1 == 1
                     ? Colors.yellow[500]
                     : Colors.purple[300],
                 borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
               ),
-              child: new DragTarget(
-                onAccept: (String data) => widget.onAccepted(data),
-                builder: (
-                  BuildContext context,
-                  List<dynamic> accepted,
-                  List<dynamic> rejected,
-                ) {
-                  return new Container(
-                    width: 30.0,
-                    height: 44.0,
-                    decoration: new BoxDecoration(
-                      color: Colors.yellow[500],
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                    ),
-                    child: new Center(
-                      child: new Text(widget.text,
-                          key: new Key('A${widget.keys}'),
-                          style: new TextStyle(
-                              color: Colors.black, fontSize: 24.0)),
-                    ),
-                  );
-                },
+              child: new Center(
+                child: new Text(widget.text,
+                    key: new Key('B${widget.keys}'),
+                    style: new TextStyle(color: Colors.black, fontSize: 24.0)),
+              ),
+            )),
+        feedback: new Container(
+          height: 40.0,
+          width: 50.0,
+          decoration: new BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+              color: Colors.yellow[400]),
+          child: new Center(
+            child: new Text(
+              widget.text,
+              style: new TextStyle(
+                color: Colors.black,
+                decoration: TextDecoration.none,
+                fontSize: 26.0,
               ),
             ),
           ),
         ),
       );
-    } else if (widget.index >= 100) {
-      var feedbackContainer = new Container(
-        height: 60.0,
-        width: 80.0,
-        decoration: new BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            color: Colors.yellow[400]),
-        child: new Center(
-          child: new Text(
-            _displayText,
-            style: new TextStyle(
-              color: Colors.black,
-              decoration: TextDecoration.none,
-              fontSize: 26.0,
-            ),
-          ),
-        ),
-      );
-      return new TableCell(
-          child: new Draggable(
-              data: _displayText,
-              child: new Padding(
-                padding: new EdgeInsets.all(8.0),
-                child: new ScaleTransition(
-                    scale: animation,
-                    child: new Container(
-                      width: 30.0,
-                      height: 44.0,
-                      decoration: new BoxDecoration(
-                        color: widget.color1 == 1
-                            ? Colors.yellow[500]
-                            : Colors.purple[300],
-                        borderRadius:
-                            new BorderRadius.all(new Radius.circular(8.0)),
-                      ),
-                      child: new Center(
-                        child: new Text(_displayText,
-                            key: new Key('B${widget.keys}'),
-                            style: new TextStyle(
-                                color: Colors.black, fontSize: 24.0)),
-                      ),
-                    )),
-              ),
-              feedback: widget.isRotated
-                  ? new RotatedBox(quarterTurns: 2, child: feedbackContainer)
-                  : feedbackContainer));
     } else {
-      return new TableCell(
-          child: new Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: new ScaleTransition(
-                  scale: animation,
-                  child: new Container(
-                    width: 30.0,
-                    height: 44.0,
-                    decoration: new BoxDecoration(
-                      color: Colors.purple[300],
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                    ),
-                    child: new Center(
-                      child: new Text(_displayText,
-                          style: new TextStyle(
-                              color: Colors.black, fontSize: 24.0)),
-                    ),
-                  ))));
+      return new ScaleTransition(
+          scale: animation,
+          child: new Container(
+            decoration: new BoxDecoration(
+              color: Colors.purple[300],
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
+            child: new Center(
+              child: new Text(_displayText,
+                  style: new TextStyle(color: Colors.black, fontSize: 24.0)),
+            ),
+          ));
     }
   }
 }
