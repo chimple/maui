@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 
-class QuizPage extends StatefulWidget {
+class TrueFalseGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -12,13 +12,14 @@ class QuizPage extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  QuizPage({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated = false}) : super(key: key);
+
+  TrueFalseGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated}) : super(key: key);
   
   @override
-  State createState() => new QuizPageState();
+  State createState() => new TrueFalseGameState();
 }
 
-class QuizPageState extends State<QuizPage> {
+class TrueFalseGameState extends State<TrueFalseGame> {
   bool _isLoading = true;
  
  Tuple2<String, bool> _allques;
@@ -80,8 +81,13 @@ class QuizPageState extends State<QuizPage> {
         new Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-
-             new QuestionText(questionText),
+          
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new QuestionText(questionText),]
+            ),
 
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -189,7 +195,6 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                   color: const Color(0xFF54cc70),
                   ),
                 ),
-                padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.051),
             child: new Center(
               child: new Text( widget._question,
               style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)

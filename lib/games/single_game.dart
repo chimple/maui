@@ -131,7 +131,7 @@ class _SingleGameState extends State<SingleGame> {
             iteration: _iteration);
         break;
       case 'true_or_false':
-        return new QuizPage(
+        return new TrueFalseGame(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
