@@ -11,13 +11,16 @@ class CalculateTheNumbers extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
+
   CalculateTheNumbers(
       {key,
       this.onScore,
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId})
+      this.gameCategoryId,
+      this.isRotated=false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();

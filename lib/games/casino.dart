@@ -10,6 +10,7 @@ class Casino extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
   Casino(
       {key,
@@ -17,7 +18,8 @@ class Casino extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId})
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -33,8 +35,8 @@ class _CasinoState extends State<Casino> {
   // String wd = " ";
   var givenWordList = new List();
   int i = 0;
-  int j=0;
- FixedExtentScrollController scrollController;
+  int j = 0;
+  FixedExtentScrollController scrollController;
   bool _isShowingFlashCard = false;
 
   @override
@@ -61,21 +63,17 @@ class _CasinoState extends State<Casino> {
     print("shuffled Data $data");
 
     setState(() => _isLoading = false);
-   
   }
 
   Widget _buildScrollButton(List<String> scrollingData) {
-    
-
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
 
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
     print("scrollingLetterList[3] ${scrollingLetterList[3]}");
-    if(scrollingLetterList[3]==givenWordList[j]){
+    if (scrollingLetterList[3] == givenWordList[j]) {
       data[j].shuffle();
       j++;
       print("Hey data shuffled");
-
     }
 
     return new Container(
@@ -133,13 +131,15 @@ class _CasinoState extends State<Casino> {
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
     if (_isShowingFlashCard) {
-      return new FlashCard(text: givenWord, onChecked: () {
-        _initletters();
-        widget.onEnd();
-        setState(() {
-          _isShowingFlashCard = false;
-        });
-      });
+      return new FlashCard(
+          text: givenWord,
+          onChecked: () {
+            _initletters();
+            widget.onEnd();
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          });
     }
     return new Container(
       child: new Container(

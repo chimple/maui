@@ -3,37 +3,29 @@ import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
 
 
-class OrderIt extends StatelessWidget {
+class OrderIt extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  bool isRotated;
 
-  OrderIt({key, this.onScore, this.onProgress, this.onEnd, this.iteration}) : super(key: key);
+  OrderIt({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.isRotated = false}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-   
-      return new MyHomePage();
+  OrderItState createState() {
+    return new OrderItState();
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 const kItemSize = const Size.square(80.0);
 const kChars = const ["Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday","Sunday"];
 
-class _MyHomePageState extends State<MyHomePage> {
+class OrderItState extends State<OrderIt> {
   List<String> chars = ["Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday","Sunday"];
 
   ValueNotifier<String> orderNotifier = new ValueNotifier<String>('');
-
   @override
   Widget build(BuildContext context) {
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
@@ -47,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
               new Center(
                   child:  new OrderableStack<String>(
                             direction: Direction.Vertical,
+                            isRotated: widget.isRotated,
                             items: chars,
                             itemSize: const Size(200.0, 45.0),
                             itemBuilder: itemBuilder,
