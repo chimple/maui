@@ -13,7 +13,7 @@ class TrueFalseGame extends StatefulWidget {
   bool isRotated;
 
 
-  TrueFalseGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId}) : super(key: key);
+  TrueFalseGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated}) : super(key: key);
   
   @override
   State createState() => new TrueFalseGameState();
@@ -81,8 +81,13 @@ class TrueFalseGameState extends State<TrueFalseGame> {
         new Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-
-             new QuestionText(questionText),
+          
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new QuestionText(questionText),]
+            ),
 
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -190,7 +195,6 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                   color: const Color(0xFF54cc70),
                   ),
                 ),
-                padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.051),
             child: new Center(
               child: new Text( widget._question,
               style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
