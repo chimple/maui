@@ -29,36 +29,42 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
-  int _selectedItemIndex = 0;
+  int _selectedItemIndex=3;
   List<List<String>> data;
 
   String givenWord = " ";
   bool _isLoading = true;
   // String wd = " ";
   var givenWordList = new List();
-  int i = 0;
-  int j = 0;
+  int i;
+  int j;
   bool _isShowingFlashCard = false;
 
   @override
   void initState() {
     super.initState();
-    _initletters();
+    _initLetters();
   }
 
-  void _initletters() async {
+  void _initLetters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
     print("Fetched Data $data");
+    i = 0;
+    j = 0;
+    givenWord = " ";
+    givenWordList = [];
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
     }
 
+    print("givenWordList $givenWordList");
+    print("givenWordList.length = ${givenWordList.length}");
     for (var i = 0; i < data.length; i++) {
       data[i].shuffle();
     }
 
-    print("data $givenWord");
+    print("givenWord $givenWord");
     print("===============");
     print("shuffled Data $data");
 
@@ -67,14 +73,27 @@ class _CasinoState extends State<Casino> {
 
   Widget _buildScrollButton(List<String> scrollingData) {
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
-
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
-    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
-    if (scrollingLetterList[3] == givenWordList[j]) {
-      data[j].shuffle();
+    var temp;
+    print("scrollingLetterList = $scrollingLetterList");
+    print("j = $j");
+    if (j < givenWordList.length) {
+      print(
+          "scrolling[3] ${scrollingLetterList[3]}   givenletter ${givenWordList[j]}");
+      if (scrollingLetterList[3] == givenWordList[j]) {
+        setState(() {
+          temp = scrollingLetterList[3];
+          scrollingLetterList[3] = scrollingLetterList[1];
+          scrollingLetterList[1] = temp;
+        });
+
+        print("Hey data shuffled");
+        print("scrollingLetterList = $scrollingLetterList");
+      }
       j++;
-      print("Hey data shuffled");
     }
+    print("j = $j");
+    print("===============");
 
     return new Container(
       height: 100.0,
@@ -84,21 +103,21 @@ class _CasinoState extends State<Casino> {
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
-            scrollController: new CasinoScrollController(initialItem: 3),
+            scrollController: new CasinoScrollController(initialItem:  _selectedItemIndex),
             itemExtent: 35.0,
-            backgroundColor: CupertinoColors.white,
+            backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
-              setState(() {
-                _selectedItemIndex = index;
-              });
+              // setState(() {
+              //   _selectedItemIndex = index;
+              // });
 
               if (givenWordList[i] == scrollingLetterList[index]) {
                 if (i == givenWordList.length - 1) {
-                  widget.onScore(2);
-                  widget.onProgress(givenWordList.length / data.length);
-                  print("index $index");
-                  givenWord = " ";
+                  widget.onScore(5);
+                  widget.onProgress(1.0);
+                  print("correct index $index");
+
                   new Future.delayed(const Duration(milliseconds: 500), () {
                     setState(() {
                       _isShowingFlashCard = true;
@@ -106,17 +125,21 @@ class _CasinoState extends State<Casino> {
                   });
                   print("the end");
                 } else {
-                  widget.onScore(2);
-                  widget.onProgress(givenWordList.length / data.length);
-                  print("index $index");
+                  print("correct index $index");
                 }
                 i++;
+                print("i= $i");
               }
             },
             children: new List<Widget>.generate(scrollingLetterList.length,
                 (int index) {
               return new Center(
-                child: new Text(scrollingLetterList[index]),
+                child: new Text(scrollingLetterList[index],
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                        letterSpacing: 5.0,
+                        color: Colors.black)),
               );
             }),
           ),
@@ -135,7 +158,7 @@ class _CasinoState extends State<Casino> {
       return new FlashCard(
           text: givenWord,
           onChecked: () {
-            _initletters();
+            _initLetters();
             widget.onEnd();
             setState(() {
               _isShowingFlashCard = false;
@@ -144,14 +167,14 @@ class _CasinoState extends State<Casino> {
     }
     return new Container(
       child: new Container(
-        color: Colors.blue,
+        color: new Color(0xfffff7ebcb),
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             new Container(
                 height: 100.0,
                 width: 200.0,
-                color: Colors.pinkAccent,
+                color: new Color(0xffff52c5ce),
                 child: new Center(
                     child: new Text(
                   givenWord,
