@@ -1,39 +1,44 @@
 import 'package:flutter/material.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
+import '../repos/game_data.dart';
 
-
-class OrderIt extends StatelessWidget {
+class OrderIt extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+  bool isRotated;
+  int gameCategoryId;
 
-  OrderIt({key, this.onScore, this.onProgress, this.onEnd, this.iteration}) : super(key: key);
+  OrderIt({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated = false}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-   
-      return new MyHomePage();
+  OrderItState createState() {
+    return new OrderItState();
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class OrderItState extends State<OrderIt> {
 
+  int _size = 7;
+  List<String> _allLetters;
+  List<String> _letters;
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
+  void initState() {
+    super.initState();
+    _initBoard();
+  }
 
-const kItemSize = const Size.square(80.0);
-const kChars = const ["Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday","Sunday"];
-
-class _MyHomePageState extends State<MyHomePage> {
-  List<String> chars = ["Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday","Sunday"];
+  void _initBoard() async {
+   _allLetters = await fetchSerialData(widget.gameCategoryId); 
+    print("Rajesh Patil Data ${_allLetters}");
+   _letters = _allLetters.sublist(0, _size );
+    print("Rajesh Patil Sublisted Data ${_letters}");
+  }
 
   ValueNotifier<String> orderNotifier = new ValueNotifier<String>('');
-
   @override
   Widget build(BuildContext context) {
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
@@ -46,8 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
               preview,
               new Center(
                   child:  new OrderableStack<String>(
-                            direction: Direction.Vertical,
-                            items: chars,
+                            direction: DDirection.Vertical,
+                            isRotated: widget.isRotated,
+                            items: _letters,
                             itemSize: const Size(200.0, 45.0),
                             itemBuilder: itemBuilder,
                             onChange: (List<String> orderedList) =>
