@@ -521,14 +521,6 @@ void main() {
       await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;
-      },timeout: const Timeout(const Duration(minutes: 1)));  
-    
-
-
-      
-
-
-
-      
+      },timeout: const Timeout(const Duration(minutes: 1)));    
       });
 }
