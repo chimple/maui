@@ -4,7 +4,7 @@ import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/drawing_game.dart';
-import 'package:maui/games/Memory.dart';
+import 'package:maui/games/memory.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
@@ -16,7 +16,6 @@ import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/components/progress_bar.dart';
 
-
 enum GameMode { timed, iterations }
 
 class SingleGame extends StatefulWidget {
@@ -27,9 +26,15 @@ class SingleGame extends StatefulWidget {
   Function onGameEnd;
   Function onScore;
   final GameMode _gameMode;
+  final bool isRotated;
 
   SingleGame(this.gameName,
-      {this.maxIterations = 0, this.playTime = 0, this.gameCategoryId, this.onGameEnd, this.onScore})
+      {this.maxIterations = 0,
+      this.playTime = 0,
+      this.gameCategoryId,
+      this.onGameEnd,
+      this.onScore,
+      this.isRotated = false})
       : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed;
 
   @override
@@ -49,8 +54,7 @@ class _SingleGameState extends State<SingleGame> {
     print(media);
     return new Scaffold(
       appBar: new PreferredSize(
-          child: new Chip(
-              label: new Text('$_score')),
+          child: new Chip(label: new Text('$_score')),
           preferredSize: new Size(100.0, 20.0)),
       body: new Column(children: <Widget>[
         widget._gameMode == GameMode.timed
@@ -115,28 +119,33 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
-       case 'order_it':
+      case 'order_it':
         return new OrderIt(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'true_or_false':
-        return new QuizPage(
+        return new TrueFalseGame(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd:() =>  _onEnd(context),
+            onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'identify':
         return new IdentifyGame(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            isRotated: widget.isRotated,
             iteration: _iteration);
         break;
       case 'abacus':
@@ -145,21 +154,25 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-             gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'drawing':
         return new Drawing(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            isRotated: widget.isRotated,
             iteration: _iteration);
         break;
       case 'bingo':
         return new Bingo(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration);
+            onEnd: _onEnd,
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'fill_in_the_blanks':
         return new FillInTheBlanks(
@@ -167,8 +180,8 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId
-        );
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'casino':
         return new Casino(
@@ -176,13 +189,15 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'crossword':
         return new Crossword(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            isRotated: widget.isRotated,
             iteration: _iteration);
         break;
       case 'tables':
@@ -191,15 +206,18 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'match_the_following':
         return new MatchTheFollowing(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            gameCategoryId: widget.gameCategoryId,);
+          onScore: _onScore,
+          onProgress: _onProgress,
+          onEnd: () => _onEnd(context),
+          iteration: _iteration,
+          isRotated: widget.isRotated,
+          gameCategoryId: widget.gameCategoryId,
+        );
         break;
       case 'calculate_numbers':
         return new CalculateTheNumbers(
@@ -207,15 +225,17 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-             gameCategoryId : widget.gameCategoryId );
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
-        case 'memory':
+      case 'memory':
         return new Memory(
-             onScore: _onScore,
+            onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId);
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'fill_number':
         return new Fillnumber(
@@ -223,8 +243,8 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: _onEnd,
             iteration: _iteration,
-            gameCategoryId : widget.gameCategoryId
-          );
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
         break;
     }
     return null;
