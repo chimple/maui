@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:maui/repos/game_data.dart';
 import 'dart:async';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/casino_scroll_view.dart';
+import 'package:maui/components/casino_picker.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -36,7 +38,6 @@ class _CasinoState extends State<Casino> {
   var givenWordList = new List();
   int i = 0;
   int j = 0;
-  FixedExtentScrollController scrollController;
   bool _isShowingFlashCard = false;
 
   @override
@@ -47,7 +48,6 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-    scrollController = new FixedExtentScrollController(initialItem: 3);
     print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
@@ -83,10 +83,11 @@ class _CasinoState extends State<Casino> {
         style: const TextStyle(
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
-          child: new CupertinoPicker(
-            scrollController: scrollController,
+          child: new CasinoPicker(
+            scrollController: new CasinoScrollController(initialItem: 3),
             itemExtent: 35.0,
             backgroundColor: CupertinoColors.white,
+            isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               setState(() {
                 _selectedItemIndex = index;
