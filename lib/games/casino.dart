@@ -29,15 +29,15 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
-  final int _selectedItemIndex = 3;
+  int _selectedItemIndex=3;
   List<List<String>> data;
 
   String givenWord = " ";
   bool _isLoading = true;
   // String wd = " ";
   var givenWordList = new List();
-  int i = 0;
-  int j = 0;
+  int i;
+  int j;
   bool _isShowingFlashCard = false;
 
   @override
@@ -49,20 +49,24 @@ class _CasinoState extends State<Casino> {
   void _initLetters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
     print("Fetched Data $data");
-    givenWord = '';
+    i = 0;
+    j = 0;
+    givenWord = " ";
     givenWordList = [];
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
     }
 
+    print("givenWordList $givenWordList");
+    print("givenWordList.length = ${givenWordList.length}");
     for (var i = 0; i < data.length; i++) {
       data[i].shuffle();
     }
 
-    print("word $givenWord");
+    print("givenWord $givenWord");
     print("===============");
-    // print("shuffled Data $data");
+    print("shuffled Data $data");
 
     setState(() => _isLoading = false);
   }
@@ -70,16 +74,26 @@ class _CasinoState extends State<Casino> {
   Widget _buildScrollButton(List<String> scrollingData) {
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
-
+    var temp;
+    print("scrollingLetterList = $scrollingLetterList");
+    print("j = $j");
     if (j < givenWordList.length) {
       print(
-          "scrolling[$_selectedItemIndex] ${scrollingLetterList[_selectedItemIndex]}   givenletter ${givenWordList[j]}");
-      if (givenWordList[j]==scrollingLetterList[_selectedItemIndex] ) {
-        data[j].shuffle();
+          "scrolling[3] ${scrollingLetterList[3]}   givenletter ${givenWordList[j]}");
+      if (scrollingLetterList[3] == givenWordList[j]) {
+        setState(() {
+          temp = scrollingLetterList[3];
+          scrollingLetterList[3] = scrollingLetterList[1];
+          scrollingLetterList[1] = temp;
+        });
+
         print("Hey data shuffled");
+        print("scrollingLetterList = $scrollingLetterList");
       }
       j++;
     }
+    print("j = $j");
+    print("===============");
 
     return new Container(
       height: 100.0,
@@ -89,19 +103,18 @@ class _CasinoState extends State<Casino> {
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
-            scrollController: new CasinoScrollController(initialItem: 3),
+            scrollController: new CasinoScrollController(initialItem:  _selectedItemIndex),
             itemExtent: 35.0,
             backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               // setState(() {
               //   _selectedItemIndex = index;
-              //   print("_selectedItemIndex  $_selectedItemIndex ");
               // });
-              print("index $index");
+
               if (givenWordList[i] == scrollingLetterList[index]) {
                 if (i == givenWordList.length - 1) {
-                  widget.onScore(2);
+                  widget.onScore(5);
                   widget.onProgress(1.0);
                   print("correct index $index");
 
@@ -112,7 +125,6 @@ class _CasinoState extends State<Casino> {
                   });
                   print("the end");
                 } else {
-                  // widget.onProgress(1.0);
                   print("correct index $index");
                 }
                 i++;
@@ -122,14 +134,12 @@ class _CasinoState extends State<Casino> {
             children: new List<Widget>.generate(scrollingLetterList.length,
                 (int index) {
               return new Center(
-                child: new Text(
-                  scrollingLetterList[index],
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      letterSpacing: 5.0,
-                      color: Colors.black),
-                ),
+                child: new Text(scrollingLetterList[index],
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                        letterSpacing: 5.0,
+                        color: Colors.black)),
               );
             }),
           ),
@@ -162,22 +172,20 @@ class _CasinoState extends State<Casino> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             new Container(
-              child: new Container(
-                  height: 100.0,
-                  width: 200.0,
-                  color: new Color(0xffff52c5ce),
-                  child: new Center(
-                      child: new Text(
-                    givenWord,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.clip,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50.0,
-                        letterSpacing: 5.0,
-                        color: Colors.white),
-                  ))),
-            ),
+                height: 100.0,
+                width: 200.0,
+                color: new Color(0xffff52c5ce),
+                child: new Center(
+                    child: new Text(
+                  givenWord,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50.0,
+                      letterSpacing: 5.0,
+                      color: Colors.white),
+                ))),
             new Expanded(
               child: new Center(
                 child: new Row(
