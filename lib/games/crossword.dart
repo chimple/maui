@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/components/Shaker.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;
@@ -11,13 +12,14 @@ class Crossword extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
-
+  bool isRotated;
   Crossword(
       {key,
       this.onScore,
       this.onProgress,
       this.onEnd,
       this.iteration,
+      this.isRotated = false,
       this.gameCategoryId})
       : super(key: key);
 
@@ -71,7 +73,7 @@ class CrosswordState extends State<Crossword> {
         _letters[i] = _data1[i];
       }
     }
-   for (var i = 0, j = 0, h = 0; i < _letters.length; i++) {
+    for (var i = 0, j = 0, h = 0; i < _letters.length; i++) {
       if (i == 5 || i == 11 || i == 12 || i == 13 || i == 19) {
         _rightwords[j++] = _letters[i];
         _sortletters[h++] = _letters[i];
@@ -97,7 +99,7 @@ class CrosswordState extends State<Crossword> {
           color1: 1,
           onAccepted: (dindex) {
             flag1 = 0;
-            var i = 0,flagtemp=0;
+            var i = 0, flagtemp = 0;
             for (i; i < _sortletters.length; i++) {
               if (_rightwords[dindex - 100] == _sortletters[i] &&
                   index == _sortletters[++i] &&
@@ -120,13 +122,18 @@ class CrosswordState extends State<Crossword> {
                 }
               } else if (flag1 == 0) {
                 _flag[index] = 1;
-                if(_letters[index]==''){
-                _letters[index]=_rightwords[dindex - 100];flagtemp=1;}
-                
+                if (_letters[index] == '') {
+                  _letters[index] = _rightwords[dindex - 100];
+                  flagtemp = 1;
+                }
+
                 new Future.delayed(const Duration(milliseconds: 500), () {
                   setState(() {
                     _flag[index] = 0;
-                   if(flagtemp==1){ _letters[index]='';flagtemp=0;}
+                    if (flagtemp == 1) {
+                      _letters[index] = '';
+                      flagtemp = 0;
+                    }
                   });
                 });
               }
@@ -151,7 +158,7 @@ class CrosswordState extends State<Crossword> {
 
   @override
   Widget build(BuildContext context) {
-     if (_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -164,27 +171,27 @@ class CrosswordState extends State<Crossword> {
         color: Colors.purple[300],
         child: new Column(
           children: <Widget>[
-         //   new Padding(padding: new EdgeInsets.all(10.0)),
+            //   new Padding(padding: new EdgeInsets.all(10.0)),
             new Flexible(
               flex: 4,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,
-               // childAspectRatio: 0.8,
-               // mainAxisSpacing:9.0,
+                // childAspectRatio: 0.8,
+                // mainAxisSpacing:9.0,
                 //crossAxisSpacing:9.0,
-               padding:const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
               ),
             ),
-          //  new Padding(padding: new EdgeInsets.all(5.0)),
+            //  new Padding(padding: new EdgeInsets.all(5.0)),
             new Expanded(
               child: new ResponsiveGridView(
                 rows: 1,
                 cols: _size,
-               // childAspectRatio: 2.3,
+                // childAspectRatio: 2.3,
                 padding: const EdgeInsets.all(14.0),
                 //crossAxisSpacing: 9.0,
                 children: _rightwords
@@ -194,31 +201,6 @@ class CrosswordState extends State<Crossword> {
             )
           ],
         ));
-  }
-}
-
-class Shake extends AnimatedWidget {
-  const Shake({
-    Key key,
-    Animation<double> animation,
-    this.child,
-  }) : super(key: key, listenable: animation);
-
-  final Widget child;
-
-  Animation<double> get animation => listenable;
-  double get translateX {
-    final double t = animation.value;
-    const double shakeDelta = 2.0;
-    return t * 1.2;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Transform(
-      transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
-      child: child,
-    );
   }
 }
 
@@ -258,8 +240,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 40), vsync: this);
     animation =
         new CurvedAnimation(parent: controller, curve: Curves.decelerate)
-          ..addStatusListener((state) {
-          });
+          ..addStatusListener((state) {});
     controller.forward();
     animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
     _myAnim();
@@ -283,10 +264,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       if (widget.imgindex[i] == widget.index) {
         return new ScaleTransition(
             scale: animation,
-              child:new Container(             
+            child: new Container(
               decoration: new BoxDecoration(
                   color: Colors.yellow[500],
-                   border: new Border.all(color: Colors.grey,width:3.0,style:BorderStyle.solid),
+                  //   border: new Border.all(color: Colors.grey,width:3.0,style:BorderStyle.solid),
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                   image: new DecorationImage(
                       image: new AssetImage(widget.img[i]),
@@ -320,9 +301,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       BuildContext context,
                       List<dynamic> accepted,
                       List<dynamic> rejected,
-                    ) 
-                    
-                    {
+                    ) {
                       return new Container(
                         decoration: new BoxDecoration(
                           color: widget.flag == 1
