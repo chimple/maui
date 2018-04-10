@@ -36,15 +36,9 @@ class _CasinoState extends State<Casino> {
   bool _isLoading = true;
   // String wd = " ";
   var givenWordList = new List();
-<<<<<<< HEAD
-  int i;
-  int j;
-  int index;
-=======
   int i = 0;
   int j = 0;
   CasinoScrollController scrollController;
->>>>>>> refs/remotes/origin/master
   bool _isShowingFlashCard = false;
 
   @override
@@ -55,13 +49,7 @@ class _CasinoState extends State<Casino> {
 
   void _initLetters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-<<<<<<< HEAD
-    i = 0;
-    j = 0;
-
-=======
     scrollController = new CasinoScrollController(initialItem: 3);
->>>>>>> refs/remotes/origin/master
     print("Fetched Data $data");
     givenWord = '';
     givenWordList = [];
@@ -81,23 +69,10 @@ class _CasinoState extends State<Casino> {
     setState(() => _isLoading = false);
   }
 
-<<<<<<< HEAD
-  @override
-  void didUpdateWidget(Casino oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initLetters();
-    }
-  }
-
   Widget _buildScrollButton(List<String> scrollingData) {
-    FixedExtentScrollController scrollController =
-        new FixedExtentScrollController(initialItem: 3);
-    // scrollController.jumpToItem(4);
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
-
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
+
     if (j < givenWordList.length) {
       print(
           "scrolling[$_selectedItemIndex] ${scrollingLetterList[_selectedItemIndex]}   givenletter ${givenWordList[j]}");
@@ -106,17 +81,6 @@ class _CasinoState extends State<Casino> {
         print("Hey data shuffled");
       }
       j++;
-=======
-  Widget _buildScrollButton(List<String> scrollingData) {
-    Set<String> scrollingLetter = new Set<String>.from(scrollingData);
-
-    List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
-    print("scrollingLetterList[3] ${scrollingLetterList[3]}");
-    if (scrollingLetterList[3] == givenWordList[j]) {
-      data[j].shuffle();
-      j++;
-      print("Hey data shuffled");
->>>>>>> refs/remotes/origin/master
     }
 
     return new Container(
@@ -126,15 +90,10 @@ class _CasinoState extends State<Casino> {
         style: const TextStyle(
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
-<<<<<<< HEAD
-          child: new CupertinoPicker(
-            key: new ValueKey<int>(index),
-=======
           child: new CasinoPicker(
->>>>>>> refs/remotes/origin/master
             scrollController: scrollController,
             itemExtent: 35.0,
-            backgroundColor: CupertinoColors.white,
+            backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               // setState(() {
@@ -145,7 +104,7 @@ class _CasinoState extends State<Casino> {
               if (givenWordList[i] == scrollingLetterList[index]) {
                 if (i == givenWordList.length - 1) {
                   widget.onScore(2);
-                  widget.onProgress((i + 1) / data.length);
+                  widget.onProgress(1.0);
                   print("correct index $index");
 
                   new Future.delayed(const Duration(milliseconds: 500), () {
@@ -155,7 +114,7 @@ class _CasinoState extends State<Casino> {
                   });
                   print("the end");
                 } else {
-                  widget.onProgress((i + 1) / data.length);
+                  // widget.onProgress(1.0);
                   print("correct index $index");
                 }
                 i++;
@@ -191,12 +150,7 @@ class _CasinoState extends State<Casino> {
       return new FlashCard(
           text: givenWord,
           onChecked: () {
-<<<<<<< HEAD
-            givenWord = "";
             _initLetters();
-=======
-            _initletters();
->>>>>>> refs/remotes/origin/master
             widget.onEnd();
             setState(() {
               _isShowingFlashCard = false;
@@ -210,20 +164,22 @@ class _CasinoState extends State<Casino> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             new Container(
-                height: 100.0,
-                width: 200.0,
-                color: new Color(0xffff52c5ce),
-                child: new Center(
-                    child: new Text(
-                  givenWord,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50.0,
-                      letterSpacing: 5.0,
-                      color: Colors.white),
-                ))),
+              child: new Container(
+                  height: 100.0,
+                  width: 200.0,
+                  color: new Color(0xffff52c5ce),
+                  child: new Center(
+                      child: new Text(
+                    givenWord,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.clip,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50.0,
+                        letterSpacing: 5.0,
+                        color: Colors.white),
+                  ))),
+            ),
             new Expanded(
               child: new Center(
                 child: new Row(
