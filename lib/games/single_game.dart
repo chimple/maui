@@ -127,11 +127,12 @@ class _SingleGameState extends State<SingleGame> {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            iteration: _iteration,
             isRotated: widget.isRotated,
-            iteration: _iteration);
+            gameCategoryId: widget.gameCategoryId);
         break;
       case 'true_or_false':
-        return new QuizPage(
+        return new TrueFalseGame(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
