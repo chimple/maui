@@ -16,14 +16,6 @@ class Bingo extends StatefulWidget {
   bool isRotated;
 
 
-  Bingo(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId})
-
   Bingo({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated=false})
       : super(key: key);
 
