@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
-String test = '';
+// String test = '';
 
 class IdentifyGame extends StatefulWidget {
   Function onScore;
@@ -261,8 +261,8 @@ class DragBox extends StatefulWidget {
 
 class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   Offset position = new Offset(0.0, 0.0);
-  AnimationController controller, controller1;
-  Animation<double> animation, animation1, noanimation;
+  AnimationController controller, shakeController;
+  Animation<double> animation, shakeAnimation, noanimation;
 
   Color draggableColor;
   String draggableText;
@@ -280,14 +280,14 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   }
 
   void toAnimateButton() {
-    // animation1.addStatusListener((AnimationStatus status) {
+    // shakeAnimation.addStatusListener((AnimationStatus status) {
     //   if(status == AnimationStatus.completed){
-    //     controller1.reverse();
+    //     shakeController.reverse();
     //   }else if (status == AnimationStatus.dismissed){
-    //     controller1.forward();
+    //     shakeController.forward();
     //   }
     // });
-    controller1.forward();
+    shakeController.forward();
   }
 
   @override
@@ -295,7 +295,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
 
-    controller1 = new AnimationController(
+    shakeController = new AnimationController(
         duration: new Duration(milliseconds: 800), vsync: this);
     controller = new AnimationController(
         duration: new Duration(milliseconds: 80), vsync: this);
@@ -304,8 +304,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     animation.addListener(() {
       setState(() {});
     });
-    animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeOut);
-    noanimation = new Tween(begin: 0.0, end: 0.0).animate(controller1);
+    shakeAnimation = new CurvedAnimation(parent: shakeController, curve: Curves.easeOut);
+    noanimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
     position = widget.intipos;
     draggableColor = widget.itemColor;
     draggableText = widget.label;
@@ -316,7 +316,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   @override
   void dispose() {
     controller.dispose();
-    controller1.dispose();
+    shakeController.dispose();
     super.dispose();
   }
 
@@ -326,7 +326,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
       left: position.dx,
       top: position.dy,
       child: new ScaleTransition(
-          scale: animation1,
+          scale: shakeAnimation,
           child: new Draggable(
               data: draggableText,
               child: new AnimatedDrag(
