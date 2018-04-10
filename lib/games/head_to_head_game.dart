@@ -73,6 +73,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                   gameCategoryId: widget.gameCategoryId,
                   onScore: setOtherScore,
                   onGameEnd: onGameEnd,
+                  isRotated: true,
                 ),
                 quarterTurns: 2)),
         new Expanded(

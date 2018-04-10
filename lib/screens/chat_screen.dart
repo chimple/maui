@@ -96,7 +96,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                    File imageFile = await ImagePicker.pickImage();
+                    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
                     var uuid = new Uuid().v4();
                     StorageReference ref = FirebaseStorage.instance
                         .ref()
