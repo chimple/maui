@@ -38,7 +38,6 @@ class _CasinoState extends State<Casino> {
   var givenWordList = new List();
   int i = 0;
   int j = 0;
-  CasinoScrollController scrollController;
   bool _isShowingFlashCard = false;
 
   @override
@@ -49,7 +48,6 @@ class _CasinoState extends State<Casino> {
 
   void _initletters() async {
     data = await fetchRollingData(widget.gameCategoryId, 6);
-    scrollController = new CasinoScrollController(initialItem: 3);
     print("Fetched Data $data");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
@@ -86,7 +84,7 @@ class _CasinoState extends State<Casino> {
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
-            scrollController: scrollController,
+            scrollController: new CasinoScrollController(initialItem: 3),
             itemExtent: 35.0,
             backgroundColor: CupertinoColors.white,
             isRotated: widget.isRotated,
