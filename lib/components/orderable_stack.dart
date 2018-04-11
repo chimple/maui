@@ -20,7 +20,9 @@ class OrderableStack<T> extends StatefulWidget {
   /// list of items to reorder
   final List<T> items;
 
-  final Direction direction;
+  final DDirection direction;
+
+  final bool isRotated;
 
   final Size itemSize;
 
@@ -35,7 +37,7 @@ class OrderableStack<T> extends StatefulWidget {
   /// true if items must be randomized (default : true )
   final bool shuffle;
 
-  double get step => direction == Direction.Horizontal
+  double get step => direction == DDirection.Horizontal
       ? itemSize.width + margin
       : itemSize.height + margin;
 
@@ -47,7 +49,8 @@ class OrderableStack<T> extends StatefulWidget {
       this.onChange,
       this.itemSize = kDefaultItemSize,
       this.margin = kMargin,
-      this.direction = Direction.Horizontal,
+      this.direction = DDirection.Horizontal,
+      this.isRotated = false,
       this.shuffle = true})
       : super(key: key);
 
@@ -64,11 +67,10 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   /// currently dragged widget if there is
   OrderableWidget dragged;
 
-
   _OrderableStackState(List<T> rawItems) {
     orderableItems = enumerate(rawItems)
-      .map((l) => new Orderable<T>(value: l.value, dataIndex: l.index))
-      .toList();
+        .map((l) => new Orderable<T>(value: l.value, dataIndex: l.index))
+        .toList();
   }
 
   List<T> get currentOrder => orderableItems.map((item) => item.value).toList();
@@ -77,11 +79,10 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   void initState() {
     super.initState();
 
-
     if (widget.shuffle) orderableItems.shuffle();
     orderableItems = enumerate(orderableItems)
-      .map<Orderable<T>>((IndexedValue e) => e.value..visibleIndex = e.index)
-      .toList();
+        .map<Orderable<T>>((IndexedValue e) => e.value..visibleIndex = e.index)
+        .toList();
 
     /// notify the initial order
     widget.onChange(currentOrder);
@@ -108,6 +109,7 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
           itemBuilder: widget.itemBuilder,
           itemSize: widget.itemSize,
           direction: widget.direction,
+          isRotated: widget.isRotated,
           maxPos: orderableItems.length * widget.step,
           data: l..currentPosition = getCurrentPosition(l),
           isDragged: l.selected,
@@ -119,7 +121,7 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   /// if te item is dragged its current position is returned
   Offset getCurrentPosition(Orderable l) => l.selected
       ? l.currentPosition // if isDragged don't move
-      : widget.direction == Direction.Horizontal
+      : widget.direction == DDirection.Horizontal
           ? new Offset(l.visibleIndex * (widget.itemSize.width + widget.margin),
               l.currentPosition.dy)
           : new Offset(l.currentPosition.dx,
@@ -143,14 +145,14 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
     setState(() {
       dragged = null;
       updateItemsPos();
-      if( currentOrder != lastOrder ){
+      if (currentOrder != lastOrder) {
         widget.onChange(currentOrder);
         lastOrder = currentOrder;
       }
     });
   }
 
-  void updateItemsPos([Direction direction = Direction.Horizontal]) {
+  void updateItemsPos([DDirection direction = DDirection.Horizontal]) {
     enumerate(orderableItems).forEach((item) {
       item.value.visibleIndex = item.index;
       item.value.currentPosition = getCurrentPosition(item.value);

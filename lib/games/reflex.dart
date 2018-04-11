@@ -12,13 +12,16 @@ class Reflex extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
-  Reflex({key,
-    this.onScore,
-    this.onProgress,
-    this.onEnd,
-    this.iteration,
-    this.gameCategoryId})
+  Reflex(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -73,9 +76,9 @@ class ReflexState extends State<Reflex> {
           if (text == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
-              _size * _size + _currentIndex < _allLetters.length
-                  ? _shuffledLetters[_size * _size + _currentIndex]
-                  : null;
+                  _size * _size + _currentIndex < _allLetters.length
+                      ? _shuffledLetters[_size * _size + _currentIndex]
+                      : null;
               _currentIndex++;
             });
             widget.onScore(1);
@@ -164,8 +167,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             onLongPress: () {
               showDialog(
                   context: context,
-                  child: new FittedBox(
-                      fit: BoxFit.contain,
+                  child: new FractionallySizedBox(
+                      heightFactor: 0.5,
+                      widthFactor: 0.8,
                       child: new FlashCard(text: widget.text)));
             },
             child: new RaisedButton(
@@ -173,9 +177,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.teal,
                 shape: new RoundedRectangleBorder(
                     borderRadius:
-                    const BorderRadius.all(const Radius.circular(8.0))),
+                        const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(_displayText,
                     style:
-                    new TextStyle(color: Colors.white, fontSize: 24.0)))));
+                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
