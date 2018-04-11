@@ -52,20 +52,26 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num1digit3 = 0,
       num2digit1 = 0,
       num2digit2 = 0,
-      num2digit3 = 0,
-      ans1,
-      ans2;
+      num2digit3 = 0;
   int result;
-  int check = 0, check1 = 0, carry1 = 0, carry2 = 0, carry3 = 0;
-  String _output = '', _output1 = '', _output2 = '';
+  int check = 0,
+      check1 = 0,
+      check2 = 0,
+      carry1 = 0,
+      carry2 = 0,
+      carry3 = 0,
+      carry4 = 0;
+  String _output = '', _output1 = '', _output2 = '', _output3 = '';
   String _operator = '';
-  bool flag = false, flag1, flag2, carrry = false;
+  bool flag = false, flag1, flag2, flag3;
   bool shake1 = true, shake2 = true, shake3 = true, shake4 = true;
   Animation animationShake, animation;
   AnimationController animationController;
   Tuple4<int, String, int, int> data;
   bool _isLoading = true;
   String options;
+  int scoreCount = 0;
+ 
 
   @override
   void initState() {
@@ -88,14 +94,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     num2 = data.item3;
     result = data.item4;
     _operator = data.item2;
+    scoreCount = 0;
     setState(() => _isLoading = false);
     if (num1 % 10 == num1 && num2 % 10 == num2) {
       num1digit1 = num1 % 10;
       num2digit1 = num2 % 10;
       options = 'singleDigit';
-      /*  if (calCount(num1 + num2) > 1) {
-        carrry = true;
-      } */
     } else if ((calCount(num1) <= 2 && calCount(num2) <= 2) &&
         (calCount(num1 + num2) == 2 || calCount(num1 + num2) == 3)) {
       options = 'doubleDigitWithoutCarry';
@@ -107,16 +111,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2 = num2 % 10;
     } else {
       options = 'tripleDigitWithoutCarry';
-      num1digit3 = num1 % 10;
+      num1digit1 = num1 % 10;
       num1 = num1 ~/ 10;
       num1digit2 = num1 % 10;
       num1 = num1 ~/ 10;
-      num1digit1 = num1 % 10;
-      num2digit3 = num2 % 10;
+      num1digit3 = num1 % 10;
+      num2digit1 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
-      num2digit1 = num2 % 10;
+      num2digit3 = num2 % 10;
     }
   }
 
@@ -132,6 +136,22 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     } else {
       return count = 1;
     }
+  }
+
+  int _removeZero(int out) {
+    if (calCount(out) > 1) {
+      int num = out;
+      int rem1 = num % 10;
+      num = num ~/ 10;
+      int rem2 = num;
+      if (rem2 == 0) {
+        print("printing reminder");
+        print(rem1);
+        return rem1;
+      } else
+        return out;
+    } else
+      return out;
   }
 
   @override
@@ -152,48 +172,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     animationController.forward();
   }
 
-  void wrongOrRight(String text, String output, int sum) {
-    print("output value");
-    print(output);
-    print("sum value");
-    print(sum);
-    if (text == '✔') {
-      if (int.parse(output) == sum) {
-        setState(() {
-          flag == true;
-        });
-        widget.onScore(1);
-        widget.onProgress(1.0);
-        new Future.delayed(const Duration(milliseconds: 1000), () {
-          _output = '';
-          flag = false;
-          widget.onEnd();
-        });
-      } else {
-        setState(() {
-          shake1 = false;
-        });
-        print("Entering wrong data");
-        new Future.delayed(const Duration(milliseconds: 900), () {
-          setState(() {
-            _output = "";
-            flag = false;
-            shake1 = true;
-          });
-        });
-      }
-    }
-    if (text == '✖') {
-      print("Erasing content: " + output);
-      if (_output.length > 0) {
-        setState(() {
-          _output = _output.substring(0, _output.length - 1);
-          flag = false;
-        });
-      }
-    }
-  }
-
   bool _zeoToNine(String text) {
     if (text == '1' ||
         text == '2' ||
@@ -210,38 +188,73 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       return false;
   }
 
-  void operation( String text) {
-       print('$result');
+  void operation(String text) {
     if (_zeoToNine(text) == true) {
-      if (_output.length < 2) {
+      if (_output.length < 2 && check == 0) {
         print("output is printing");
         setState(() {
           _output = _output + text;
         });
       }
     } else if (text == '✔') {
-      if (int.parse(_output) == result) {
+      int res;
+      setState(() {
+        res = _removeZero(int.parse(_output));
+        _output = res.toString();
+      });
+      if (res == result) {
         setState(() {
+          check = 1;
           flag = true;
+          shake1 = true;
         });
-      } else {
-        setState(() {
-          shake1 = false;
-        });
-        print("Entering wrong data");
-        new Future.delayed(const Duration(milliseconds: 900), () {
+        if (calCount(result) > 1) {
           setState(() {
-            _output = "";
-            flag = false;
+            check = 1;
+            flag1 = true;
+            _output = (int.parse(_output) % 10).toString();
+            carry1 = result ~/ 10;
+            _output1 = (result ~/ 10).toString();
             shake1 = true;
           });
+        }
+        setState(() {
+          _preValue = _output1 + _output;
         });
+        if (int.parse(_preValue) == result) {
+          if (scoreCount == 0) {
+            widget.onScore(1);
+            widget.onProgress(1.0);
+            scoreCount = 1;
+            new Future.delayed(const Duration(milliseconds: 1000), () {
+              _output = '';
+              _output1 = '';
+              carry1 = 0;
+              flag = false;
+              flag1 = false;
+              check = 0;
+              shake1 = true;
+              widget.onEnd();
+            });
+          }
+        }
+      } else {
+        if (check != 1) {
+          setState(() {
+            shake1 = false;
+          });
+          new Future.delayed(const Duration(milliseconds: 900), () {
+            setState(() {
+              shake1 = true;
+            });
+          });
+        }
       }
     } else if (text == '✖') {
       print("Erasing content: " + _output);
-      if (_output.length > 0) {
+      if (_output.length > 0 && check == 0) {
         setState(() {
-          _output = _output.substring(0, _output.length - 1);
+          _output = '';
           flag = false;
         });
       }
@@ -257,21 +270,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           switch (_options) {
             case 'singleDigit':
               operation(text);
-              if (text == '✔') {
-                if (int.parse(_output) == result) {
-                  widget.onScore(1);
-                  widget.onProgress(1.0);
-                  new Future.delayed(const Duration(milliseconds: 1000), () {
-                    _output = '';
-                    flag = false;
-                    widget.onEnd();
-                  });
-                }
-              }
               break;
             case 'doubleDigitWithoutCarry':
               if (text == '✔') {
-                print("data is coming");
+                setState(() {
+                  _output = _removeZero(int.parse(_output)).toString();
+                });
                 if (int.parse(_output) == (num1digit1 + num2digit1)) {
                   setState(() {
                     flag = true;
@@ -302,48 +306,55 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   }
                   setState(() {
                     flag1 = true;
+                    shake2 = true;
                     check1 = 1;
                     if (flag2 == true) {
                       _output2 = carry3.toString();
                     }
+                    _output1 = _removeZero(int.parse(_output1)).toString();
                   });
                 } else {
-                  setState(() {
-                    shake2 = false;
-                  });
-                  new Future.delayed(const Duration(milliseconds: 900), () {
+                  if (check1 != 1) {
                     setState(() {
-                      shake2 = true;
+                      shake2 = false;
                     });
-                  });
+                    new Future.delayed(const Duration(milliseconds: 900), () {
+                      setState(() {
+                        shake2 = true;
+                      });
+                    });
+                  }
                 }
                 setState(() {
                   _preValue = _output2 + _output1 + _output;
                 });
-                print("final output value");
-                print(_preValue);
-                print(result);
                 if (int.parse(_preValue) == result) {
-                  print("Given result..");
-                  print(result);
-                  widget.onScore(1);
-                  widget.onProgress(1.0);
-                  new Future.delayed(const Duration(milliseconds: 1000), () {
-                    _output = '';
-                    _output1 = '';
-                    _output2 = '';
-                    check = 0;
-                    check1 = 0;
-                    flag = false;
-                    flag1 = false;
-                    flag2 = false;
-                    carry1 = 0;
-                    carry2 = 0;
-                    carry3 = 0;
-                    widget.onEnd();
-                  });
+                  if (scoreCount == 0) {
+                    print("Given result..");
+                    print(result);
+                    widget.onScore(1);
+                    widget.onProgress(1.0);
+                    scoreCount = 1;
+                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                      _output = '';
+                      _output1 = '';
+                      _output2 = '';
+                      check = 0;
+                      check1 = 0;
+                      flag = false;
+                      flag1 = false;
+                      flag2 = false;
+                      carry1 = 0;
+                      carry2 = 0;
+                      carry3 = 0;
+                      shake1 = true;
+                      shake2 = true;
+                      widget.onEnd();
+                    });
+                  }
                 }
               }
+
               if (_output1.length < 2 && text != '✔') {
                 if (check == 1 && check1 == 0) {
                   setState(() {
@@ -375,7 +386,165 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 }
               }
               break;
-           
+            case 'tripleDigitWithoutCarry':
+              if (text == '✔') {
+                setState(() {
+                  _output = _removeZero(int.parse(_output)).toString();
+                });
+                if (int.parse(_output) == (num1digit1 + num2digit1)) {
+                  setState(() {
+                    flag = true;
+                    check = 1;
+                    if (calCount(num1digit1 + num2digit1) > 1) {
+                      setState(() {
+                        carry2 = 1;
+                        _output = (int.parse(_output) % 10).toString();
+                      });
+                    }
+                  });
+                } else {
+                  if (check != 1) {
+                    setState(() {
+                      shake1 = false;
+                    });
+                    new Future.delayed(const Duration(milliseconds: 900), () {
+                      setState(() {
+                        shake1 = true;
+                      });
+                    });
+                  }
+                }
+                if (int.parse(_output1) == (num1digit2 + num2digit2 + carry2)) {
+                 
+                  if (calCount(num1digit2 + num2digit2 + carry2) > 1) {
+                    setState(() {
+                      carry3 = 1;
+                      _output1 = (int.parse(_output1) % 10).toString();
+                     // _output1 = _removeZero(int.parse(_output1)).toString();
+                    });
+                  }
+                   setState(() {
+                    flag1 = true;
+                    check1 = 1;
+                    _output1 = _removeZero(int.parse(_output1)).toString();
+                  });
+                } else {
+                  if (check1 != 1) {
+                    setState(() {
+                      shake2 = false;
+                    });
+                    new Future.delayed(const Duration(milliseconds: 900), () {
+                      setState(() {
+                        shake2 = true;
+                      });
+                    });
+                  }
+                }
+                if (int.parse(_output2) == (num1digit3 + num2digit3 + carry3)) {
+                 
+                  if (calCount(num1digit3 + num2digit3 + carry3) > 1) {
+                    setState(() {
+                      carry4 = (num1digit3 + num2digit3 + carry3) ~/ 10;
+                      _output2 = (int.parse(_output2) % 10).toString();
+                      flag3 = true;
+                    });
+                  }
+                   setState(() {
+                    flag2 = true;
+                    check2 = 1;
+                    _output2 = _removeZero(int.parse(_output2)).toString();
+                  });
+                  if (flag3 == true) {
+                    setState(() {
+                      _output3 = carry4.toString();
+                    });
+                  }
+                } else {
+                  if (check2 != 1) {
+                    setState(() {
+                      shake3 = false;
+                    });
+                    new Future.delayed(const Duration(milliseconds: 900), () {
+                      setState(() {
+                        shake3 = true;
+                      });
+                    });
+                  }
+                }
+                setState(() {
+                  _preValue = _output3 + _output2 + _output1 + _output;
+                });
+                if (int.parse(_preValue) == result && text == '✔') {
+                  if (scoreCount == 0) {
+                    widget.onScore(1);
+                    widget.onProgress(1.0);
+                    scoreCount = 1;
+                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                      _output = '';
+                      _output1 = '';
+                      _output2 = '';
+                      _output3 = '';
+                      check = 0;
+                      check1 = 0;
+                      check2 = 0;
+                      flag = false;
+                      flag1 = false;
+                      flag2 = false;
+                      flag3 = false;
+                      carry1 = 0;
+                      carry2 = 0;
+                      carry3 = 0;
+                      carry4 = 0;
+                      widget.onEnd();
+                    });
+                  }
+                }
+              }
+              if (_output2.length < 2 && text != '✔') {
+                if (check1 == 1 && check2 == 0) {
+                  setState(() {
+                    _output2 = _output2 + text;
+                  });
+                }
+              }
+              if (_output1.length < 2 && text != '✔') {
+                if (check == 1 && check1 == 0) {
+                  setState(() {
+                    _output1 = _output1 + text;
+                  });
+                }
+              }
+              if (_output.length < 2) {
+                if (check == 0) {
+                  setState(() {
+                    _output = _output + text;
+                  });
+                }
+              }
+              if (text == '✖') {
+                print("erasing the data");
+                if (check == 0) {
+                  setState(() {
+                    _output = '';
+                    flag = false;
+                  });
+                }
+                if (check1 == 0) {
+                  setState(() {
+                    _output1 = '';
+                    flag1 = false;
+                    // check1 = 0;
+                  });
+                }
+                if (check2 == 0) {
+                  setState(() {
+                    _output2 = '';
+                    flag2 = false;
+                    //  check2 = 0;
+                  });
+                }
+              }
+              break;
           }
         });
   }
@@ -451,40 +620,72 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     defaultColumnWidth: new FractionColumnWidth(0.25),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(
-                                constraints.minHeight, ' ', 1, new Key(''))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(
-                                constraints.minHeight, ' ', 1, new Key(''))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry1', carry1, new Key('carry1'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(
+                                  constraints.minHeight, ' ', 1, new Key(''))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.minHeight, ' ', 1, new Key(''))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                "$num1", 1, new Key('num1'))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(
+                                  constraints.minHeight, ' ', 1, new Key(''))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  "$num1", 1, new Key('num1'))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                _operator, 1, new Key('_operator'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                "$num2", 1, new Key('num2'))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  _operator, 1, new Key('_operator'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  "$num2", 1, new Key('num2'))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        displayShake(constraints.minHeight, _output1, flag1,
-                            shake1, new Key('shake')),
-                        displayShake(constraints.minHeight, _output, flag,
-                            shake1, new Key('shake1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: displayShake(constraints.minHeight, _output1,
+                              flag1, shake2, new Key('shake')),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: displayShake(constraints.minHeight, _output,
+                              flag, shake1, new Key('shake1')),
+                        ),
                       ]),
                     ],
                   ),
@@ -511,59 +712,107 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     defaultColumnWidth: new FractionColumnWidth(0.2),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry3', carry3, new Key('carry3'))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry2', carry2, new Key('carry2'))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry1', carry1, new Key('carry1'))),
-                      ]),
-                      new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.minHeight, ' ', 1, new Key(''))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num1digit2', 1, new Key('num1digit2'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num1digit1', 1, new Key('num1digit1'))),
-                      ]),
-                      new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                _operator, 1, new Key('_operator'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num2digit2', 1, new Key('num2digit2'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num2digit1', 1, new Key('num2digit1'))),
-                      ]),
-                      new TableRow(children: <Widget>[
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output2,
-                              flag2, true, new Key('')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry3', carry3, new Key('carry3'))),
                         ),
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output1,
-                              flag1, shake2, new Key('shake2')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry2', carry2, new Key('carry2'))),
                         ),
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output,
-                              flag, shake1, new Key('shake1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry1', carry1, new Key('carry1'))),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(
+                                  constraints.minHeight, ' ', 1, new Key(''))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num1digit2', 1, new Key('num1digit2'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num1digit1', 1, new Key('num1digit1'))),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  _operator, 1, new Key('_operator'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num2digit2', 1, new Key('num2digit2'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num2digit1', 1, new Key('num2digit1'))),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output2,
+                                flag2, true, new Key('')),
+                          ),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output1,
+                                flag1, shake2, new Key('shake2')),
+                          ),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output,
+                                flag, shake1, new Key('shake1')),
+                          ),
                         ),
                       ]),
                     ],
@@ -591,75 +840,139 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     defaultColumnWidth: new FractionColumnWidth(0.2),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry3', carry3, new Key('carry3'))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry3', carry3, new Key('carry3'))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry2', carry2, new Key('carry2'))),
-                        new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.minHeight,
-                                '$carry1', carry1, new Key('carry1'))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry4', carry4, new Key('carry4'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry3', carry3, new Key('carry3'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry2', carry2, new Key('carry2'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: Colors.limeAccent,
+                              child: displayContainer(constraints.minHeight,
+                                  '$carry1', carry1, new Key('carry1'))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.minHeight, ' ', 1, new Key(''))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num1digit3 ', 1, new Key('num1digit3'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num1digit2', 1, new Key('num1digit2'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num1digit1', 1, new Key('num1digit1'))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(
+                                  constraints.minHeight, ' ', 1, new Key(''))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num1digit3', 1, new Key('num1digit3'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num1digit2', 1, new Key('num1digit2'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num1digit1', 1, new Key('num1digit1'))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                _operator, 1, new Key(''))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num2digit3', 1, new Key('num2digit3'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num2digit2', 1, new Key('num2digit2'))),
-                        new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.minHeight,
-                                '$num2digit1', 1, new Key('num2digit1'))),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  _operator, 1, new Key('_operator'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num2digit3', 1, new Key('num2digit3'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num2digit2', 1, new Key('num2digit2'))),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                              color: new Color(0XFFFF52C5CE),
+                              child: displayContainer(constraints.minHeight,
+                                  '$num2digit1', 1, new Key('num2digit1'))),
+                        ),
                       ]),
                       new TableRow(children: <Widget>[
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output2,
-                              flag2, true, new Key('flag2')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output3,
+                                flag3, shake4, new Key('flag2')),
+                          ),
                         ),
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output2,
-                              flag2, true, new Key('flag2')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output2,
+                                flag2, shake3, new Key('flag2')),
+                          ),
                         ),
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output1,
-                              flag1, shake2, new Key('flag1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output1,
+                                flag1, shake2, new Key('flag1')),
+                          ),
                         ),
-                        new Container(
-                          child: displayShake(constraints.minHeight, _output,
-                              flag, shake1, new Key('flag1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.minHeight * 0.005),
+                          child: new Container(
+                            child: displayShake(constraints.minHeight, _output,
+                                flag, shake1, new Key('flag1')),
+                          ),
                         ),
                       ]),
                     ],
