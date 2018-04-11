@@ -29,7 +29,7 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
-  int _selectedItemIndex=3;
+  int _selectedItemIndex = 3;
   List<List<String>> data;
 
   String givenWord = " ";
@@ -94,7 +94,7 @@ class _CasinoState extends State<Casino> {
     }
     print("j = $j");
     print("===============");
-
+    print("i = $i");
     return new Container(
       height: 100.0,
       width: 50.0,
@@ -103,7 +103,9 @@ class _CasinoState extends State<Casino> {
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
-            scrollController: new CasinoScrollController(initialItem:  _selectedItemIndex),
+            key: new ValueKey<int>(j),
+            scrollController:
+                new CasinoScrollController(initialItem: _selectedItemIndex),
             itemExtent: 35.0,
             backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
@@ -118,7 +120,7 @@ class _CasinoState extends State<Casino> {
                   widget.onProgress(1.0);
                   print("correct index $index");
 
-                  new Future.delayed(const Duration(milliseconds: 500), () {
+                  new Future.delayed(const Duration(milliseconds: 800), () {
                     setState(() {
                       _isShowingFlashCard = true;
                     });
@@ -178,6 +180,7 @@ class _CasinoState extends State<Casino> {
                 child: new Center(
                     child: new Text(
                   givenWord,
+                  key: new Key("fruit"),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: new TextStyle(
