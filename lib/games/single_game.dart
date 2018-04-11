@@ -241,7 +241,7 @@ class _SingleGameState extends State<SingleGame> {
         return new Fillnumber(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd,
+            onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
