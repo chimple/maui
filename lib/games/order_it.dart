@@ -20,8 +20,12 @@ class OrderIt extends StatefulWidget {
   }
 }
 
-class OrderItState extends State<OrderIt> {
+//const kItemSize = const Size.square(80.0);
+//const kChars = const ["A", "B", "C", "D"];
 
+class OrderItState extends State<OrderIt> {
+ // List<String> chars = ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N"];
+ // List<String> chars = ["A", "B", "C", "D","E","F","G","H"];
   int _size = 7;
   List<String> _allLetters;
   List<String> _letters;
@@ -51,7 +55,7 @@ class OrderItState extends State<OrderIt> {
               preview,
               new Center(
                   child:  new OrderableStack<String>(
-                            direction: DDirection.Vertical,
+                            direction: OrderItDirection.Vertical,
                             isRotated: widget.isRotated,
                             items: _letters,
                             itemSize: const Size(200.0, 45.0),
