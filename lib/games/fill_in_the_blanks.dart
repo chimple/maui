@@ -20,8 +20,7 @@ class FillInTheBlanks extends StatefulWidget {
       this.onEnd,
       this.iteration,
       this.gameCategoryId,
-      this.isRotated=false
-      })
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -214,7 +213,7 @@ class MyButton extends StatefulWidget {
 
   final String text;
   List arr;
-   bool isRotated;
+  bool isRotated;
   int keys;
   final DragTargetAccept onAccepted;
   final VoidCallback onDrag;
@@ -267,43 +266,42 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     //print('build of MyButton: ${widget.index} ${widget.text}');
     if (widget.index < 100) {
       return new Shake(
-          animation: widget.flag == 1 ? animationShake : animation,
-          child: new ScaleTransition(
-            scale: animation,
-            child: new Container(
-              decoration: new BoxDecoration(
-                color: widget.color1 == 1 ? Colors.white : Colors.purple[300],
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              ),
-              child: new DragTarget(
-                onAccept: (int data) => widget.onAccepted(data),
-                builder: (
-                  BuildContext context,
-                  List<dynamic> accepted,
-                  List<dynamic> rejected,
-                ) {
-                  return new Container(
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      border: new Border.all(
-                          width: 3.0,
-                          color: accepted.isEmpty
-                              ? Colors.grey
-                              : Colors.cyan[300]),
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                    ),
-                    child: new Center(
-                      child: new Text(widget.text,
-                          key: new Key('${widget.keys}'),
-                          style: new TextStyle(
-                              color: Colors.black, fontSize: 24.0)),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ));
+        animation: widget.flag == 1 ? animationShake : animation,
+        child:  
+        new ScaleTransition(
+        scale: animation,
+        child: new Container(
+          decoration: new BoxDecoration(
+            color: widget.color1 == 1 ? Colors.white : Colors.purple[300],
+            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+          ),
+          child: new DragTarget(
+            onAccept: (var data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return new Container(
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                  border: new Border.all(
+                      width: 3.0,
+                      color: accepted.isEmpty ? Colors.grey : Colors.cyan[300]),
+                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+                ),
+                child: new Center(
+                  child: new Text(widget.text,
+                      key: new Key('${widget.keys}'),
+                      style:
+                          new TextStyle(color: Colors.black, fontSize: 24.0)),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      );
     } else if (widget.index >= 100 && widget.text == '1') {
       return new Container(
         color: Colors.green[300],
@@ -325,7 +323,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       key: new Key("A${widget.keys}"),
                       style:
                           new TextStyle(color: Colors.black, fontSize: 24.0)),
-                  //   ),
+                  // ),
                 )),
           ),
           feedback: new Container(
