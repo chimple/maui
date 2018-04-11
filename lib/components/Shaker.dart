@@ -22,6 +22,8 @@ class Shake extends AnimatedWidget {
     return t*1.2;
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return new Transform(

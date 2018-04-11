@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
-import 'package:maui/components/Shaker.dart';
+import 'package:maui/components/shaker.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
