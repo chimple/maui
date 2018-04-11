@@ -186,8 +186,8 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     return new Material(
       color: const Color(0xFF54cc70),
       child:  new Container(
-        height: ht * 0.2,
-        width: wd * 0.5,
+        height: ht * 0.22,
+        width: wd * 0.6,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
               color: const Color(0xFFf8c43c),              
@@ -196,9 +196,14 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                   ),
                 ),
             child: new Center(
-              child: new Text( widget._question,
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [ new Text( widget._question,
               style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-            ),
+                  ),
+              ],
+              ),
             ),
       ),
     );
@@ -222,16 +227,24 @@ class AnswerButton extends StatelessWidget {
         color: const Color(0xFF54cc70),        
         child: new InkWell(
           onTap: () => _onTap(),
-          child: new Container(              
+          child: new Container( 
+                height: ht * 0.2,
+                width: wd * 0.6,             
                 decoration: new BoxDecoration(
                   borderRadius: new BorderRadius.circular(25.0),
                   color: _answer == true ? const Color(0xFF64DD17) : const Color(0xFFE53935),
                     
                 ),
-                padding: ht>wd ? new EdgeInsets.all(ht*0.041) : new EdgeInsets.all(ht*0.031),
                 child: new Center(
-                  child: new Text(_answer == true ? "True" : "False",
-                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new Icon(_answer == true ? Icons.check : Icons.close, size: ht>wd? ht*0.15 : wd*0.15, color: Colors.white,),
+                      new Text(_answer == true ? "(True)" : "(False)",
+                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.02 : wd*0.02, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+                      )
+                    ],
                   )
                 ),
               ),
