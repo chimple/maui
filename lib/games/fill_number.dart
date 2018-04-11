@@ -11,14 +11,11 @@ class Fillnumber extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
-  Fillnumber(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId})
+  Fillnumber({key, 
+  this.onScore,
+   this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new MyFillnumberState();

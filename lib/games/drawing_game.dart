@@ -7,8 +7,9 @@ class Drawing extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  bool isRotated;
 
-  Drawing({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Drawing({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.isRotated})
       : super(key: key);
 
   @override
@@ -77,6 +78,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiColor(0xff00e676),
                       child:  new Container(
                               width: 30.0, height: 30.0,
+                              key: new Key('Green'),
                               decoration: new BoxDecoration(
                               color: Colors.green,
                               shape: BoxShape.circle
@@ -88,6 +90,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiColor(0xffffea00),
                       child:  new Container(
                         width: 30.0, height: 30.0,
+                        key: new Key('Yellow'),
                         decoration: new BoxDecoration(
                             color: Colors.yellow,
                             shape: BoxShape.circle
@@ -99,6 +102,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiColor(0xff2962ff),
                       child:  new Container(
                         width: 30.0, height: 30.0,
+                        key: new Key('Blue'),
                         decoration: new BoxDecoration(
                             color: Colors.blue,
                             shape: BoxShape.circle
@@ -110,6 +114,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiColor(0xffc51162),
                       child:  new Container(
                         width: 30.0, height: 30.0,
+                        key: new Key('Red'),
                         decoration: new BoxDecoration(
                             color: Colors.red,
                             shape: BoxShape.circle
@@ -128,6 +133,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiWidth(5.0),
                       child:  new Container(
                         width: 15.0, height: 15.0,
+                        key: new Key('s'),
                         decoration: new BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.rectangle
@@ -139,6 +145,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiWidth(8.0),
                       child:  new Container(
                         width: 19.0, height: 19.0,
+                        key: new Key('m'),
                         decoration: new BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.rectangle
@@ -150,6 +157,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiWidth(10.0),
                       child:  new Container(
                         width: 21.0, height: 21.0,
+                        key: new Key('l'),
                         decoration: new BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.rectangle
@@ -161,6 +169,7 @@ class DrawScreen extends State<Drawing> {
                       onPressed: () => _multiWidth(15.0),
                       child:  new Container(
                         width: 24.0, height: 24.0,
+                        key: new Key('xl'),
                         decoration: new BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.rectangle
