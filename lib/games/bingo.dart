@@ -46,7 +46,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   List<Status> _statuses = [];
   List<ShakeCell> _ShakeCells = [];
   List<ColmunCell> _ColmunCells = [];
-
 //  List _letters;
   static int m = 3;
   static int n = 3;
@@ -57,6 +56,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   // stored index check
   var s = 0;
   var element;
+
 
   /// datattaaaa
 
@@ -120,7 +120,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
           if (status == Status.Active) {
             print("index kirrrrran $index");
             setState(() {
+
               if (text == element || text == ques) {
+
                 setState(() {
                   _statuses[index] = Status.Visible;
 //                  widget.onScore(1);
@@ -154,8 +156,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                       });
@@ -165,8 +167,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                       });
@@ -176,8 +178,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                       });
@@ -198,8 +200,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         print("this is great");
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                         print({"this is 1": _ColmunCells});
@@ -215,8 +217,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         print({"this is 2": _ColmunCells});
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                       });
@@ -230,8 +232,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
+
+                        new Future.delayed(const Duration(milliseconds: 250), () {
                           widget.onEnd();
                         });
                         print({"this is 3": _ColmunCells});
@@ -247,6 +249,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 print({"this is i value ": i});
 
                 if (i <= _size * _size - 1) {
+
                   _copyQuestion.removeWhere((val)=> val==ques);
                   ques = _copyQuestion[i];
 
@@ -256,6 +259,14 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               }
 
               else {
+
+//                  i++;
+//                  ques = _copyQuestion[i];
+//                } else {
+//                  print({"where is green manu ": " hello index is over"});
+//                }
+//              } else {
+//>>>>>>> origin/master
                 _ShakeCells[index] = ShakeCell.Right;
 
                 print("this is wrongg");
@@ -269,6 +280,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
 
 
+
+//                  });
+//>>>>>>> origin/master
                 });
               }
             });
