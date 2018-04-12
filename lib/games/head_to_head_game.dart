@@ -71,8 +71,10 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                   maxIterations: widget.maxIterations,
                   playTime: widget.playTime,
                   gameCategoryId: widget.gameCategoryId,
+                  score: _otherScore,
                   onScore: setOtherScore,
                   onGameEnd: onGameEnd,
+                  isRotated: true,
                 ),
                 quarterTurns: 2)),
         new Expanded(
@@ -81,6 +83,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
           maxIterations: widget.maxIterations,
           playTime: widget.playTime,
           gameCategoryId: widget.gameCategoryId,
+          score: _myScore,
           onScore: setMyScore,
           onGameEnd: onGameEnd,
         ))

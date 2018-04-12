@@ -107,6 +107,7 @@ Future<Tuple2<String, String>> fetchFillInTheBlanksData(int categoryId) async {
 
 Future<List<Tuple2<String, String>>> fetchWordWithBlanksData(
     int categoryId) async {
+  //TODO make sure that caps and non caps are not provided
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.lessonId != null) {
     var lessonUnits = await new LessonUnitRepo()
@@ -152,6 +153,7 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
       case 'Double digit addition with carryover':
+        //TODO: no carry over at all
         var firstNum = rand.nextInt(98) + 1;
         var sum = rand.nextInt(firstNum) + 100;
         var secondNum = sum - firstNum;
@@ -272,7 +274,7 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
     var number = int.parse(category?.name);
-    var fillNumbers = [];
+    var fillNumbers = new List<List<int>>();
     for (var i = 0; i < size; i++) {
       fillNumbers.add(<int>[]);
       for (var j = 0; j < size; j++) {

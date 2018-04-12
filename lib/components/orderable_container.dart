@@ -8,14 +8,14 @@ class OrderableContainer extends StatefulWidget {
   final List<OrderableWidget> uiItems;
 
   Size itemSize;
-  Direction direction;
+  OrderItDirection direction;
   final double margin;
 
   OrderableContainer(
       {@required this.uiItems,
       @required this.itemSize,
       this.margin = kMargin,
-      this.direction = Direction.Horizontal})
+      this.direction = OrderItDirection.Horizontal})
       : super(key: new Key('OrderableContainer'));
 
   @override
@@ -30,7 +30,7 @@ class OrderableContainerState extends State<OrderableContainer> {
         children: widget.uiItems,
       ));
 
-  Size get stackSize => widget.direction == Direction.Horizontal
+  Size get stackSize => widget.direction == OrderItDirection.Horizontal
       ? new Size(
           (widget.itemSize.width + widget.margin) * widget.uiItems.length,
           widget.itemSize.height)
@@ -44,7 +44,8 @@ class OrderableWidget<T> extends StatefulWidget {
   final Orderable<T> data;
   Size itemSize;
   double maxPos;
-  Direction direction;
+  OrderItDirection direction;
+  bool isRotated;
   VoidCallback onMove;
   VoidCallback onDrop;
   double step;
@@ -59,14 +60,15 @@ class OrderableWidget<T> extends StatefulWidget {
       this.onMove,
       this.onDrop,
       bool isDragged = false,
-      this.direction = Direction.Horizontal,
+      this.isRotated = false,
+      this.direction = OrderItDirection.Horizontal,
       this.step = 0.0})
       : super(key: key) {}
   @override
   State<StatefulWidget> createState() => new OrderableWidgetState(data: data);
 
   @override
-  String toString({ DiagnosticLevel minLevel: DiagnosticLevel.debug }) =>
+  String toString({DiagnosticLevel minLevel: DiagnosticLevel.debug}) =>
       'DraggableText{data: $data, position: ${data.currentPosition}}';
 }
 
@@ -75,7 +77,7 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
   /// item
   Orderable<T> data;
 
-  bool get isHorizontal => widget.direction == Direction.Horizontal;
+  bool get isHorizontal => widget.direction == OrderItDirection.Horizontal;
 
   OrderableWidgetState({this.data});
 
@@ -89,32 +91,35 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
 
   /// build horizontal or verticak drag gesture detector
   Widget buildGestureDetector({bool horizontal}) => horizontal
-    ? new GestureDetector(
-    onHorizontalDragStart: startDrag,
-    onHorizontalDragEnd: endDrag,
-    onHorizontalDragUpdate: (event) {
-      setState(() {
-        if (moreThanMin(event) && lessThanMax(event))
-          data.currentPosition =
-          new Offset(data.x + event.primaryDelta, data.y);
-        widget.onMove();
-      });
-    },
-    child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
-  )
-    : new GestureDetector(
-    onVerticalDragStart: startDrag,
-    onVerticalDragEnd: endDrag,
-    onVerticalDragUpdate: (event) {
-      setState(() {
-        if (moreThanMin(event) && lessThanMax(event))
-          data.currentPosition =
-          new Offset(data.x, data.y + event.primaryDelta);
-        widget.onMove();
-      });
-    },
-    child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
-  );
+      ? new GestureDetector(
+          onHorizontalDragStart: startDrag,
+          onHorizontalDragEnd: endDrag,
+          onHorizontalDragUpdate: (event) {
+            setState(() {
+              if (moreThanMin(event) && lessThanMax(event))
+                data.currentPosition = widget.isRotated
+                    ? new Offset(data.x - event.primaryDelta, data.y)
+                    : new Offset(data.x + event.primaryDelta, data.y);
+              ;
+              widget.onMove();
+            });
+          },
+          child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
+        )
+      : new GestureDetector(
+          onVerticalDragStart: startDrag,
+          onVerticalDragEnd: endDrag,
+          onVerticalDragUpdate: (event) {
+            setState(() {
+              if (moreThanMin(event) && lessThanMax(event))
+                data.currentPosition = widget.isRotated
+                    ? new Offset(data.x, data.y - event.primaryDelta)
+                    : new Offset(data.x, data.y + event.primaryDelta);
+              widget.onMove();
+            });
+          },
+          child: widget.itemBuilder(data: data, itemSize: widget.itemSize),
+        );
 
   void startDrag(DragStartDetails event) {
     setState(() {
@@ -139,5 +144,6 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
       widget.maxPos;
 
   @override
-  String toString({ DiagnosticLevel minLevel: DiagnosticLevel.debug }) => 'OrderableWidgetState{data: $data}';
+  String toString({DiagnosticLevel minLevel: DiagnosticLevel.debug}) =>
+      'OrderableWidgetState{data: $data}';
 }
