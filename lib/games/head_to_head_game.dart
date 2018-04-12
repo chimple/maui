@@ -59,10 +59,17 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    print('HeadToHeadGameState:initState');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('HeadToHeadGameState:build');
     MediaQueryData media = MediaQuery.of(context);
     return media.size.height > media.size.width ?
-     new Column(
+      new Column(
       children: <Widget>[
         new Expanded(
             child: new RotatedBox(
