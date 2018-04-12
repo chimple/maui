@@ -27,11 +27,13 @@ class SingleGame extends StatefulWidget {
   Function onScore;
   final GameMode _gameMode;
   final bool isRotated;
+  final int score;
 
   SingleGame(this.gameName,
       {this.maxIterations = 0,
       this.playTime = 0,
       this.gameCategoryId,
+        this.score = 0,
       this.onGameEnd,
       this.onScore,
       this.isRotated = false})
@@ -44,9 +46,15 @@ class SingleGame extends StatefulWidget {
 }
 
 class _SingleGameState extends State<SingleGame> {
-  int _score = 0;
+  int _score;
   double _progress = 0.0;
   int _iteration = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _score = widget.score;
+  }
 
   @override
   Widget build(BuildContext context) {
