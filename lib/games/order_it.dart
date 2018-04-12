@@ -24,7 +24,6 @@ class OrderIt extends StatefulWidget {
 //const kChars = const ["A", "B", "C", "D"];
 
 class OrderItState extends State<OrderIt> {
-  //List<String> chars = ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N"];
   List<String> _chars = ["A", "B", "C", "D","E","F","G"];
   int _size = 7;
   List<String> _allLetters;
@@ -60,6 +59,7 @@ class OrderItState extends State<OrderIt> {
     }
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
+    print("Rajesh MediaQuery: ${gSize}");
         return new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
