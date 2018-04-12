@@ -1,19 +1,10 @@
 import 'dart:async' show Future;
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 // String test = '';
-
-Future<String> _loadGameAsset() async {
-  return await rootBundle.loadString("assets/imageCoordinatesInfo.json"); 
-}
-
-Future _loadGameInfo() async {
-  String jsonGameInfo = await _loadGameAsset();
-  print(jsonGameInfo);
-} 
 
 class IdentifyGame extends StatefulWidget {
   Function onScore;
@@ -36,6 +27,23 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
+  // String demo;
+  Future<String> _loadGameAsset() async {
+    return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
+  }
+
+  Future _loadGameInfo() async {
+    String jsonGameInfo = await _loadGameAsset();
+    // demo = jsonGameInfo;
+    print(jsonGameInfo);
+    _parserJsonForGame(jsonGameInfo);
+  }
+
+  void _parserJsonForGame(String jsonString) {
+    Map decoded = json.decode(jsonString);
+    print(decoded["id"]);
+
+  }
 
   @override
   void initState() {
@@ -44,10 +52,9 @@ class _IdentifyGameState extends State<IdentifyGame> {
     _loadGameInfo();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    // print(demo);
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
@@ -288,6 +295,15 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   String draggableText;
   int _flag = 0;
 
+
+  // void _parseJsonIdentifyGame(String jsonString) {
+  //   Map decoded = json.decode(jsonString);
+  //   print(decoded);
+  // }
+
+
+
+
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -314,8 +330,6 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
 
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 800), vsync: this);
@@ -498,5 +512,3 @@ class AnimatedDrag extends AnimatedWidget {
     // );
   }
 }
-
-

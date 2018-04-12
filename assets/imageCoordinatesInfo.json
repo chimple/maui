@@ -1,58 +1,33 @@
 {
-    "boy": {
-        "height": "420",
-        "width": "249",
-        "parts": [
-            {
-                "cap": {
-                    "height": "230",
-                    "width": "249"
-                },
-                "hand": {
-                    "height": "111",
-                    "width": "80"
-                },
-                "face": {
-                    "height": "98",
-                    "width": "213"
-                },
-                "body": {
-                    "height": "146",
-                    "width": "113"
-                }
+    "id": "shapes",
+    "height": "286.0",
+    "width": "370.0",
+    "parts": [
+        {
+            "square": {
+                "height": "100.0",
+                "width": "100.0",
+                "x": "50.0",
+                "y": "50.0"
+            },
+            "circle": {
+                "height": "120.0",
+                "width": "120.0",
+                "x": "310.0",
+                "y": "60.0"
+            },
+            "hexagon": {
+                "height": "116.264",
+                "width": "100.687",
+                "x": "311.208",
+                "y": "235.0"
+            },
+            "triangle": {
+                "height": "130.0",
+                "width": "130.0",
+                "x": "65.0",
+                "y": "220.0"
             }
-        ]
-    },
-    "shapes": {
-        "height": "286",
-        "width": "370",
-        "parts": [
-            {
-                "square": {
-                    "height": "100",
-                    "width": "100",
-                    "x": "50",
-                    "y": "50"
-                },
-                "circle": {
-                    "height": "120",
-                    "width": "120",
-                    "x": "310",
-                    "y": "60"
-                },
-                "hexagon": {
-                    "height": "116.264",
-                    "width": "100.687",
-                    "x": "311.208",
-                    "y": "235"
-                },
-                "triangle": {
-                    "height": "130",
-                    "width": "130",
-                    "x": "65",
-                    "y": "220"
-                }
-            }
-        ]
-    }
+        }
+    ]
 }
