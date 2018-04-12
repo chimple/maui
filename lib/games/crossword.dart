@@ -296,7 +296,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new DragTarget(
-                    onAccept: (int data) => widget.onAccepted(data),
+                    onAccept: (var data) => widget.onAccepted(data),
                     builder: (
                       BuildContext context,
                       List<dynamic> accepted,
@@ -322,7 +322,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 ))),
       );
     } else if (widget.index >= 100 && widget.text == '') {
-      return new Container(height: 1.0, width: 1.0, color: Colors.purple[300]);
+      return new ScaleTransition(
+          scale: animation,
+          child: new Container(
+            decoration: new BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
+            child: new Center(
+              child: new Text(_displayText,
+                  style: new TextStyle(color: Colors.black, fontSize: 24.0)),
+            ),
+          ));
     } else if (widget.index >= 100) {
       //print('hloo11 ${widget.text}');
       return new Draggable(
@@ -337,7 +348,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
               ),
               child: new Center(
-                child: new Text(widget.text,
+                child: new Text(_displayText,
                     key: new Key('B${widget.keys}'),
                     style: new TextStyle(color: Colors.black, fontSize: 24.0)),
               ),
