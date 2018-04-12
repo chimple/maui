@@ -13,7 +13,14 @@ class Tables extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  Tables({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated = false})
+  Tables(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -24,7 +31,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
   String _question = "";
   String _result = "";
-  int count = 0;
+  int _count = 0;
   int _wrong = 0;
   int _answer;
   bool _isLoading = true;
@@ -52,13 +59,15 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     _initBoard();
   }
 
   void _initBoard() async {
-    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
-    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
-
+    _count = 0;
+    _wrong = 0;
+    _result = '';
     setState(()=>_isLoading=true);
     _tableData = await fetchTablesData(widget.gameCategoryId);
     _tableShuffledData = [];
@@ -69,12 +78,11 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             ..shuffle());
     }
 
-    int temp1 = _tableShuffledData[count].item1;
-    String temp2 = _tableShuffledData[count].item2;
-    int temp3 = _tableShuffledData[count].item3;
-    int temp4 = _tableShuffledData[count].item4;
+    int temp1 = _tableShuffledData[_count].item1;
+    String temp2 = _tableShuffledData[_count].item2;
+    int temp3 = _tableShuffledData[_count].item3;
     _question= "$temp1 $temp2 $temp3";
-    _answer= temp4;
+    _answer=  _tableShuffledData[_count].item4;
     setState(()=>_isLoading=false);
   }
 
@@ -104,26 +112,27 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             });
           }
           else if(text == 'submit') {
-            if( count > 7) {
+            if( _count > 8) {
               print("coming.........");
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
               });
             }
+
             if(int.parse(_result) == _answer) {
               widget.onScore(1);
-              widget.onProgress((count + 2) / 6.5);
               setState(() {
-                count = count + 1 ;
-                print(count);
-                int temp1 = _tableShuffledData[count].item1;
-                String temp2 = _tableShuffledData[count].item2;
-                int temp3 = _tableShuffledData[count].item3;
-                int temp4 = _tableShuffledData[count].item4;
+                _count = _count + 1 ;
+                print(_count);
+                int temp1 = _tableShuffledData[_count].item1;
+                String temp2 = _tableShuffledData[_count].item2;
+                int temp3 = _tableShuffledData[_count].item3;
                 _question= "$temp1 $temp2 $temp3";
-                _answer= temp4;
+                _answer= _tableShuffledData[_count].item4;
                 _result = "";
+                _wrong = 0;
               });
+              widget.onProgress( _count / _tableShuffledData.length);
             }
             else{
               _myAnim();
@@ -135,7 +144,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 animationController.stop();
                 if(_wrong == 2){
                   setState(() {
-                   // this.count = this.count + 1;
                     _isShowingFlashCard = true;
                     _wrong = 0;
                   });
@@ -149,13 +157,18 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _result = _result + text;
               }
             });
-          }
-        });
+          }});
   }
 
 
   @override
   void didUpdateWidget(Tables oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_tableData);
+    }
   }
 
   @override
@@ -176,6 +189,12 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       return new FlashCard(text: _answer.toString(), onChecked: () {
         setState(() {
           _isShowingFlashCard = false;
+          this._count = this._count + 1;
+          int temp1 = _tableShuffledData[_count].item1;
+          String temp2 = _tableShuffledData[_count].item2;
+          int temp3 = _tableShuffledData[_count].item3;
+          _question= "$temp1 $temp2 $temp3";
+          _answer = _tableShuffledData[_count].item4;
         });
       });
     }
@@ -204,7 +223,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    new Container (
+                     new Container (
                       margin: new EdgeInsets.only(bottom: _height * 0.1),
                       alignment: Alignment.center,
                       color: new Color(0X00000000),
@@ -256,7 +275,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  int _count = 0;
+  int __count = 0;
 
   initState() {
     super.initState();
@@ -306,7 +325,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         borderRadius:
                         new BorderRadius.all(new Radius.circular(widget.height * 0.09))),
                     child: new Text(_displayText,
-                        key: new Key('keyPad$_count'),
+                        key: new Key('keyPad$__count'),
                         style: new TextStyle(
                             color: Colors.black, fontSize: widget.height * 0.05))))));
   }
@@ -334,10 +353,7 @@ class TextAnimation extends AnimatedWidget {
               style: new TextStyle(
                 color: Colors.black,
                 fontSize: height * 0.1,
-                fontWeight: FontWeight.bold,)),
-
-        ),
-      );
+                fontWeight: FontWeight.bold,))));
     });
   }
 }

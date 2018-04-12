@@ -31,10 +31,10 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(38.0, 500.0), 'face', Colors.red),
-        new DragBox(new Offset(126.0, 500.0), 'cap', Colors.orange),
-        new DragBox(new Offset(214.0, 500.0), 'hand', Colors.lightBlue),
-        new DragBox(new Offset(303.0, 500.0), 'body', Colors.green),
+        new DragBox(new Offset(38.0, 500.0), 'square', Colors.red),
+        new DragBox(new Offset(126.0, 500.0), 'triangle', Colors.orange),
+        new DragBox(new Offset(214.0, 500.0), 'circle', Colors.lightBlue),
+        new DragBox(new Offset(303.0, 500.0), 'hexagon', Colors.green),
       ],
     );
     // return new Column(
@@ -194,9 +194,9 @@ class DropTargetState extends State<DropTarget> {
       left: position.dx,
       right: position.dy,
       child: new Image(
-        image: new AssetImage('assets/Boy.png'),
-        height: height * 0.7,
-        width: width * 0.6,
+        image: new AssetImage('assets/Shapes.png'),
+        // height: height * 0.7,
+        // width: width * 0.6,
       ),
       // child: new Container(
       //   decoration: new BoxDecoration(
@@ -304,7 +304,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     animation.addListener(() {
       setState(() {});
     });
-    shakeAnimation = new CurvedAnimation(parent: shakeController, curve: Curves.easeOut);
+    shakeAnimation =
+        new CurvedAnimation(parent: shakeController, curve: Curves.easeOut);
     noanimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
     position = widget.intipos;
     draggableColor = widget.itemColor;
@@ -322,6 +323,9 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
+    double height = media.height;
+    double width = media.width;
     return new Positioned(
       left: position.dx,
       top: position.dy,
@@ -349,26 +353,31 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 setState(() {
                   // new DragBoxCopy(new Offset(position.dx, position.dy),
                   //     draggableText, draggableColor);
-                  if (draggableText == 'face' &&
-                      (250.0 > offset.dx && 250 > offset.dy)) {
+                  if ((draggableText == 'square') &&
+                      (offset.dx > 0.0 && offset.dx < 100.0) &&
+                      (offset.dy > 0.0 && offset.dy < 100.0)) {
                     position = offset;
-                  } else if (draggableText == 'cap' &&
-                      (230 > offset.dx && 300 > offset.dy)) {
+                  } else if (draggableText == 'circle' &&
+                      (offset.dx > (width - 130) && offset.dx < 370.0) &&
+                      (offset.dy > 0.0 && offset.dy < 120.0)) {
                     position = offset;
-                  } else if (draggableText == 'hand' &&
-                      (200 > offset.dx && 450 > offset.dy)) {
+                  } else if (draggableText == 'triangle' &&
+                      (offset.dx > 0.0 && offset.dx < 130.0) &&
+                      (offset.dy > 160.0 && offset.dy < 290.0)) {
                     position = offset;
-                  } else if (draggableText == 'body' &&
-                      (250 > offset.dx && 400 > offset.dy)) {
+                  } else if (draggableText == 'hexagon' &&
+                      (offset.dx > (width - 110) && offset.dx < 370.0) &&
+                      (offset.dy > 170 && offset.dy < 290.0)) {
                     position = offset;
                   } else {
                     _flag = 1;
                     toAnimateFunction();
                     new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState((){_flag = 0;});
+                      setState(() {
+                        _flag = 0;
+                      });
                       controller.stop();
                     });
-                    
                   }
                 });
               })),
@@ -393,8 +402,8 @@ class AnimatedFeedback extends AnimatedWidget {
     double width = media.width;
     final Animation<double> animation = listenable;
     return new Container(
-      width: width * 0.2,
-      height: height * 0.15,
+      // width: width * 0.2,
+      // height: height * 0.15,
       color: draggableColor.withOpacity(0.5),
       child: new Center(
         child: new Text(
@@ -431,8 +440,8 @@ class AnimatedDrag extends AnimatedWidget {
     return new Transform(
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Container(
-        width: width * 0.1,
-        height: height * 0.08,
+        // width: width * 0.2,
+        // height: height * 0.08,
         color: draggableColor,
         // margin: new EdgeInsets.only(
         //     left: animation.value ?? 0, right: animation.value ?? 0),
