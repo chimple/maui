@@ -15,12 +15,12 @@ class FillInTheBlanks extends StatefulWidget {
   int gameCategoryId;
   FillInTheBlanks(
       {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+        this.onScore,
+        this.onProgress,
+        this.onEnd,
+        this.iteration,
+        this.gameCategoryId,
+        this.isRotated = false})
       : super(key: key);
 
   @override
@@ -107,29 +107,29 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             widget.onProgress(progres / count);
             dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
             dragBoxData[targetindex - 100] = '1';
-            _holdDataOfDragBox[indexOfDragText] = ' ';
           }
           if (progres == count) {
             widget.onScore(2);
             widget.onEnd();
           }
-
-          if (flag1 == 0) {
-            _flag[index] = 1;
-            if (dropTargetData[index] == '') {
-              dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
-              flagtemp = 1;
-            }
-            new Future.delayed(const Duration(milliseconds: 400), () {
-              setState(() {
-                _flag[index] = 0;
-                if (flagtemp == 1) {
-                  dropTargetData[index] = '';
-                  flagtemp = 0;
-                }
+          setState(() {
+            if (flag1 == 0) {
+              _flag[index] = 1;
+              if (dropTargetData[index] == '') {
+                dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+                flagtemp = 1;
+              }
+              new Future.delayed(const Duration(milliseconds: 400), () {
+                setState(() {
+                  _flag[index] = 0;
+                  if (flagtemp == 1) {
+                    dropTargetData[index] = '';
+                    flagtemp = 0;
+                  }
+                });
               });
-            });
-          }
+            }
+          });
         },
         flag: flag,
         keys: keys++);
@@ -196,15 +196,15 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
 class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
-      this.index,
-      this.text,
-      this.color1,
-      this.flag,
-      this.onAccepted,
-      this.arr,
-      this.onDrag,
-      this.isRotated = false,
-      this.keys})
+        this.index,
+        this.text,
+        this.color1,
+        this.flag,
+        this.onAccepted,
+        this.arr,
+        this.onDrag,
+        this.isRotated = false,
+        this.keys})
       : super(key: key);
 
   var index;
@@ -224,8 +224,11 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controllerShake;
   Animation<double> animation, animationShake;
+  String _displayText;
   initState() {
     super.initState();
+    _displayText = widget.text;
+    //_displayText = widget.text;
     controllerShake = new AnimationController(
         duration: new Duration(microseconds: 500), vsync: this);
     animationShake = new Tween(end: -1.0, begin: 1.0).animate(controllerShake);
@@ -267,46 +270,66 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     if (widget.index < 100) {
       return new Shake(
         animation: widget.flag == 1 ? animationShake : animation,
-        child:  
-        new ScaleTransition(
-        scale: animation,
-        child: new Container(
-          decoration: new BoxDecoration(
-            color: widget.color1 == 1 ? Colors.white : Colors.purple[300],
-            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-          ),
-          child: new DragTarget(
-            onAccept: (var data) => widget.onAccepted(data),
-            builder: (
-              BuildContext context,
-              List<dynamic> accepted,
-              List<dynamic> rejected,
-            ) {
-              return new Container(
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                  border: new Border.all(
-                      width: 3.0,
-                      color: accepted.isEmpty ? Colors.grey : Colors.cyan[300]),
-                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-                ),
-                child: new Center(
-                  child: new Text(widget.text,
-                      key: new Key('${widget.keys}'),
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)),
-                ),
-              );
-            },
+        child: new ScaleTransition(
+          scale: animation,
+          child: new Container(
+            decoration: new BoxDecoration(
+              color: widget.color1 == 1
+                  ? Colors.white
+                  : Colors.purple[300],
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
+            child: new DragTarget(
+              onAccept: (var data) => widget.onAccepted(data),
+              builder: (
+                  BuildContext context,
+                  List<dynamic> accepted,
+                  List<dynamic> rejected,
+                  ) {
+                return new Container(
+                  decoration: new BoxDecoration(
+                    color: widget.flag == 1 ? Colors.redAccent : Colors.white10,
+                    border: new Border.all(
+                        width: 3.0,
+                        color:
+                        accepted.isEmpty ? Colors.grey : Colors.cyan[300]),
+                    borderRadius:
+                    new BorderRadius.all(new Radius.circular(8.0)),
+                  ),
+                  child: new Center(
+                    child: new Text(widget.text,
+                        key: new Key('${widget.keys}'),
+                        style:
+                        new TextStyle(color: Colors.black, fontSize: 24.0)),
+                  ),
+                );
+              },
+            ),
           ),
         ),
-      ),
       );
-    } else if (widget.index >= 100 && widget.text == '1') {
-      return new Container(
-        color: Colors.green[300],
-      );
-    } else if (widget.index >= 100) {
+    }
+    else if (widget.index >= 100 && widget.text == '1')
+    {
+      print("object$widget.text");
+      return new ScaleTransition(
+          scale: animation,
+          child: new Container(
+            decoration: new BoxDecoration(
+              color:
+              Colors.purple[300],
+              border: new Border.all(width: 1.0, color: Colors.cyan[300]),
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
+            child: new Center(
+              child: new Text(_displayText,
+                  key: new Key("A${widget.keys}"),
+                  style:
+                  new TextStyle(color: Colors.black, fontSize: 24.0)),
+            ),
+          ));
+    }
+    else if (widget.index >= 100) {
       return new Draggable(
           onDragStarted: widget.onDrag,
           data: widget.index,
@@ -322,8 +345,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new Text(widget.text,
                       key: new Key("A${widget.keys}"),
                       style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)),
-                  // ),
+                      new TextStyle(color: Colors.black, fontSize: 24.0)),
                 )),
           ),
           feedback: new Container(
