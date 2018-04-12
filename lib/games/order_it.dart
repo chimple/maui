@@ -24,11 +24,13 @@ class OrderIt extends StatefulWidget {
 //const kChars = const ["A", "B", "C", "D"];
 
 class OrderItState extends State<OrderIt> {
- // List<String> chars = ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N"];
- // List<String> chars = ["A", "B", "C", "D","E","F","G","H"];
+  //List<String> chars = ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N"];
+  List<String> _chars = ["A", "B", "C", "D","E","F","G"];
   int _size = 7;
   List<String> _allLetters;
   List<String> _letters;
+  bool _isLoading = true;
+  
   @override
   void initState() {
     super.initState();
@@ -36,15 +38,26 @@ class OrderItState extends State<OrderIt> {
   }
 
   void _initBoard() async {
+    setState(() => _isLoading = true);
    _allLetters = await fetchSerialData(widget.gameCategoryId); 
     print("Rajesh Patil Data ${_allLetters}");
    _letters = _allLetters.sublist(0, _size );
     print("Rajesh Patil Sublisted Data ${_letters}");
+    print("Rajesh Patil HardCoded Data ${_chars}");
+    setState(() => _isLoading = false);
   }
 
   ValueNotifier<String> orderNotifier = new ValueNotifier<String>('');
   @override
   Widget build(BuildContext context) {
+    print("OrderItState.build");
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
         return new Column(
@@ -58,7 +71,7 @@ class OrderItState extends State<OrderIt> {
                             direction: OrderItDirection.Vertical,
                             isRotated: widget.isRotated,
                             items: _letters,
-                            itemSize: const Size(200.0, 45.0),
+                            itemSize: const Size(200.0, 50.0),
                             itemBuilder: itemBuilder,
                             onChange: (List<String> orderedList) =>
                                 orderNotifier.value = orderedList.toString()))
