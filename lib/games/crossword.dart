@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
@@ -32,16 +32,17 @@ class CrosswordState extends State<Crossword> {
   var correct = 0;
   var keys = 0;
   Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data;
-  static final int _size = 5;
-  List<String> _rightwords = new List(_size);
+  List<String> _rightwords = [];
   List<String> _letters = new List();
   List<String> _data2 = new List();
   List<int> _data3 = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
-  List _sortletters = new List(_size * 2);
+  List _sortletters = [];
   bool _isLoading = true;
-
+  String img;
+  int _rows,_cols;
+  int len;
   @override
   void initState() {
     super.initState();
@@ -57,33 +58,51 @@ class CrosswordState extends State<Crossword> {
         _data1.add(v);
       });
     });
-
+  _rows=data.item1.length;
+  _cols=data.item1[0].length;
+  //print('lengtttt  ${data.item1[0]}');
     for (var i = 0; i < data.item2.length; i++) {
       _data2.add(data.item2[i].item1);
     }
-    // _data3.add(data.item2[0].item2)
     for (var i = 0; i < data.item2.length; i++) {
-      _data3.add(data.item2[i].item2 * 5 + data.item2[i].item3);
+      _data3.add(data.item2[i].item2 * _rows + data.item2[i].item3);
     }
     _letters = _data1;
-    for (var i = 0; i < _data1.length; i++) {
-      if (_data1[i] == null) {
-        _letters[i] = '1';
-      } else {
-        _letters[i] = _data1[i];
+    switch(_data2.length){
+      case 3 :{len=4;break;}
+      case 4:{len=5;break;}
+      case 5:{len=6;break;}
+      case 6:{len=7;break;}
+      case 7:{len=8;break;}
+      case 8:{len=9;break;}
+      case 9:{len=10;break;}
+      case 10:{len=11;break;}
+      default:{len=5;}
+    }
+    var rng = new Random();
+    var i = 0;
+    for (; i < _letters.length; i++) {
+      if (_letters[i] != null) {
+        if (rng.nextInt(2) == 1) {
+          _rightwords.add(_letters[i]);
+          _sortletters.add(_letters[i]);
+          _sortletters.add(i);
+        }
+      }
+      if (i == _letters.length - 1) {
+        if (_rightwords.length != len) {
+          i = 0;
+          _rightwords = [];
+          _sortletters = [];
+        }
       }
     }
-    for (var i = 0, j = 0, h = 0; i < _letters.length; i++) {
-      if (i == 5 || i == 11 || i == 12 || i == 13 || i == 19) {
-        _rightwords[j++] = _letters[i];
-        _sortletters[h++] = _letters[i];
-        _sortletters[h++] = i;
-        _letters[i] = '';
-      }
+    for (var i = 1; i < _sortletters.length; i += 2) {
+      _letters[_sortletters[i]] = '';
     }
     _rightwords.shuffle();
 
-    _flag.length = _letters.length + _size + 2;
+    _flag.length = _letters.length + _rows + _cols;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
     }
@@ -92,7 +111,14 @@ class CrosswordState extends State<Crossword> {
 
   Widget _buildItem(int index, String text, int flag) {
     final TextEditingController t1 = new TextEditingController(text: text);
-    if (text != '1') {
+    img=null;
+    for (var i=0; i < _data3.length; i++) {
+        if (_data3[i] == index) {
+         img=_data2[i];
+          break;
+        }
+      }
+    if (text != null) {
       return new MyButton(
           index: index,
           text: text,
@@ -110,13 +136,13 @@ class CrosswordState extends State<Crossword> {
             }
             setState(() {
               if (flag1 == 1) {
-                _rightwords[dindex - 100] = '1';
-                // print(' helo $_rightwords');
+                _rightwords[dindex - 100]+= '.';
+              //   print(' helo ${_rightwords[dindex - 100][1]}');
                 _letters[index] = _sortletters[--i];
                 correct++;
                 widget.onScore(1);
-                widget.onProgress(correct / _size);
-                if (correct == _size) {
+                widget.onProgress(correct / _rightwords.length);
+                if (correct == _rightwords.length) {
                   widget.onEnd();
                   widget.onEnd();
                 }
@@ -140,9 +166,8 @@ class CrosswordState extends State<Crossword> {
             });
           },
           flag: flag,
-          img: _data2,
-          imgindex: _data3,
-          keys: keys++); //mybutton
+          img: img,
+          keys: keys++);
     } else {
       return new MyButton(
           index: index,
@@ -150,14 +175,18 @@ class CrosswordState extends State<Crossword> {
           color1: 0,
           flag: flag,
           onAccepted: (text) {},
-          img: _data2,
-          imgindex: _data3,
+          img: img,
           keys: keys);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    int portf=0;
+    MediaQueryData media = MediaQuery.of(context);
+    if(media.size.height<media.size.width){
+      portf=1;
+    }
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -169,14 +198,14 @@ class CrosswordState extends State<Crossword> {
     var j = 0, h = 0, k = 100;
     return new Container(
         color: Colors.purple[300],
-        child: new Column(
+        child: portf==0?new Column(
           children: <Widget>[
             //   new Padding(padding: new EdgeInsets.all(10.0)),
             new Flexible(
               flex: 4,
               child: new ResponsiveGridView(
-                rows: _size,
-                cols: _size,
+                rows: _rows,
+                cols: _cols,
                 // childAspectRatio: 0.8,
                 // mainAxisSpacing:9.0,
                 //crossAxisSpacing:9.0,
@@ -190,10 +219,34 @@ class CrosswordState extends State<Crossword> {
             new Expanded(
               child: new ResponsiveGridView(
                 rows: 1,
-                cols: _size,
+                cols: _rightwords.length,
                 // childAspectRatio: 2.3,
                 padding: const EdgeInsets.all(14.0),
                 //crossAxisSpacing: 9.0,
+                children: _rightwords
+                    .map((e) => _buildItem(k++, e, _flag[h++]))
+                    .toList(growable: false),
+              ),
+            )
+          ],
+        ):new Row(
+          children: <Widget>[
+            new Flexible(
+              flex: 4,
+              child: new ResponsiveGridView(
+                rows: _rows,
+                cols: _cols,
+                padding: const EdgeInsets.all(20.0),
+                children: _letters
+                    .map((e) => _buildItem(j++, e, _flag[h++]))
+                    .toList(growable: false),
+              ),
+            ),
+            new Expanded(
+              child: new ResponsiveGridView(
+                rows: _rightwords.length,
+                cols: 1,
+                padding: const EdgeInsets.all(14.0),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
@@ -212,16 +265,14 @@ class MyButton extends StatefulWidget {
       this.flag,
       this.onAccepted,
       this.img,
-      this.imgindex,
       this.keys});
-  var index;
+  final index;
   final int color1;
   final int flag;
   final String text;
-  final List<String> img;
-  final List<int> imgindex;
+  final String img;
   final DragTargetAccept onAccepted;
-  int keys;
+  final keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -230,7 +281,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animation, animation1;
   String _displayText;
-
+  List<Widget> feed1;
+  String newtext;
+  var f = 0;
+  var i = 0;
   initState() {
     super.initState();
     _displayText = widget.text;
@@ -259,27 +313,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    widget.keys++;
-    for (var i = 0; i < widget.imgindex.length; i++) {
-      if (widget.imgindex[i] == widget.index) {
-        return new ScaleTransition(
-            scale: animation,
-            child: new Container(
-              decoration: new BoxDecoration(
-                  color: Colors.yellow[500],
-                  //   border: new Border.all(color: Colors.grey,width:3.0,style:BorderStyle.solid),
-                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-                  image: new DecorationImage(
-                      image: new AssetImage(widget.img[i]),
-                      fit: BoxFit.contain)),
-              child: new Center(
-                child: new Text(widget.text,
-                    key: new Key('A${widget.keys}'),
-                    style: new TextStyle(color: Colors.black, fontSize: 24.0)),
-              ),
-            ));
-      }
-    }
     if (widget.index < 100 && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -289,9 +322,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 scale: animation,
                 child: new Container(
                   decoration: new BoxDecoration(
-                    color: widget.color1 == 1
-                        ? Colors.yellow[500]
-                        : Colors.purple[300],
+                    color: Colors.yellow[500],
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
@@ -309,6 +340,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                               : Colors.yellow[500],
                           borderRadius:
                               new BorderRadius.all(new Radius.circular(8.0)),
+                          image:widget.img!=null
+                              ? new DecorationImage(
+                                  image: new AssetImage(widget.img),
+                                  fit: BoxFit.contain)
+                              : null,
                         ),
                         child: new Center(
                           child: new Text(widget.text,
@@ -321,7 +357,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   ),
                 ))),
       );
-    } else if (widget.index >= 100 && widget.text == '') {
+    } else if (widget.index >= 100 && widget.text.length == 2) {
+       newtext=widget.text[0];
       return new ScaleTransition(
           scale: animation,
           child: new Container(
@@ -330,12 +367,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
             ),
             child: new Center(
-              child: new Text(_displayText,
+              child: new Text(newtext,
                   style: new TextStyle(color: Colors.black, fontSize: 24.0)),
             ),
           ));
     } else if (widget.index >= 100) {
-      //print('hloo11 ${widget.text}');
       return new Draggable(
         data: widget.index,
         child: new ScaleTransition(
@@ -353,9 +389,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     style: new TextStyle(color: Colors.black, fontSize: 24.0)),
               ),
             )),
-        feedback: new Container(
-          height: 40.0,
-          width: 50.0,
+        childWhenDragging: new Container(),
+        feedback:new Container(
+       //   transform: new Matrix4.identity().,
+          height: 45.0,
+          width: 58.0,
           decoration: new BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
@@ -377,7 +415,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale: animation,
           child: new Container(
             decoration: new BoxDecoration(
-              color: Colors.purple[300],
+              color: Colors.purple[500],
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
             ),
             child: new Center(
