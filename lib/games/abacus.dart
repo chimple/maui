@@ -310,6 +310,7 @@ print('flagsss      $flags');
          height: 80.0,
          width: 200.0,
          child: new ResponsiveGridView(
+           padding: new EdgeInsets.all(0.0),
            rows: 1,
            cols: 5,
            children: _letters1.map((e) => _buildItem(k, e,status[k++-100],flags[1])).toList(growable: false),
@@ -320,13 +321,17 @@ print('flagsss      $flags');
        ),
        new Expanded(
          child: new ResponsiveGridView(
+          
+           padding: new EdgeInsets.all(0.0),
           // mainAxisSpacing: 0.0,
-           crossAxisSpacing: 0.0,
+          // crossAxisSpacing: 0.0,
            rows: 14,
            cols: _size,
            children: _letters.map((e) => _buildItem(j, e,status[1],flags[j++])).toList(growable: false),
          ),
-       )
+       ), new Container(height: 4.0,
+       color: Colors.pink,
+       ),
      ],
    );
   
@@ -454,10 +459,10 @@ return  new Center(
         shape: BoxShape.rectangle
         
       ), padding: new EdgeInsets.all(10.0),
-      child: new Text(widget.text,
+      child: new Center(child:new Text(widget.text,
       key: new Key(widget.index.toString()),
        style:new
-                            TextStyle(color: Colors.red,)) ,
+                            TextStyle(color: Colors.red,))),
     )
   )
 
