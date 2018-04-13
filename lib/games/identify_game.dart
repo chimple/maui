@@ -1,7 +1,8 @@
-import 'dart:async';
-
+import 'dart:async' show Future;
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 // String test = '';
 
@@ -26,8 +27,34 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
+  // String demo;
+  Future<String> _loadGameAsset() async {
+    return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
+  }
+
+  Future _loadGameInfo() async {
+    String jsonGameInfo = await _loadGameAsset();
+    // demo = jsonGameInfo;
+    print(jsonGameInfo);
+    _parserJsonForGame(jsonGameInfo);
+  }
+
+  void _parserJsonForGame(String jsonString) {
+    Map decoded = json.decode(jsonString);
+    print(decoded["id"]);
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadGameInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print(demo);
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
@@ -110,53 +137,53 @@ class _IdentifyGameState extends State<IdentifyGame> {
   }
 }
 
-class DragBoxCopy extends StatefulWidget {
-  final Offset initpos;
-  final String label;
-  final Color itemColor;
-  DragBoxCopy(this.initpos, this.label, this.itemColor);
+// class DragBoxCopy extends StatefulWidget {
+//   final Offset initpos;
+//   final String label;
+//   final Color itemColor;
+//   DragBoxCopy(this.initpos, this.label, this.itemColor);
 
-  @override
-  DragBoxCopyState createState() => new DragBoxCopyState();
-}
+//   @override
+//   DragBoxCopyState createState() => new DragBoxCopyState();
+// }
 
-class DragBoxCopyState extends State<DragBoxCopy> {
-  Offset position = new Offset(0.0, 0.0);
-  Color draggedBoxColor;
-  String draggedText;
+// class DragBoxCopyState extends State<DragBoxCopy> {
+//   Offset position = new Offset(0.0, 0.0);
+//   Color draggedBoxColor;
+//   String draggedText;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
 
-    position = widget.initpos;
-    draggedBoxColor = widget.itemColor;
-    draggedText = widget.label;
-  }
+//     position = widget.initpos;
+//     draggedBoxColor = widget.itemColor;
+//     draggedText = widget.label;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return new Positioned(
-        left: position.dx,
-        top: position.dy,
-        child: new Container(
-          height: 50.0,
-          width: 50.0,
-          color: draggedBoxColor.withOpacity(0.5),
-          child: new Center(
-            child: new Text(
-              draggedText,
-              style: new TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.none,
-                fontSize: 15.0,
-              ),
-            ),
-          ),
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return new Positioned(
+//         left: position.dx,
+//         top: position.dy,
+//         child: new Container(
+//           height: 50.0,
+//           width: 50.0,
+//           color: draggedBoxColor.withOpacity(0.5),
+//           child: new Center(
+//             child: new Text(
+//               draggedText,
+//               style: new TextStyle(
+//                 color: Colors.white,
+//                 decoration: TextDecoration.none,
+//                 fontSize: 15.0,
+//               ),
+//             ),
+//           ),
+//         ));
+//   }
+// }
 
 class DropTarget extends StatefulWidget {
   final Offset intipos;
@@ -267,6 +294,15 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   Color draggableColor;
   String draggableText;
   int _flag = 0;
+
+
+  // void _parseJsonIdentifyGame(String jsonString) {
+  //   Map decoded = json.decode(jsonString);
+  //   print(decoded);
+  // }
+
+
+
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
