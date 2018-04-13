@@ -170,6 +170,13 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   }
 
   @override
+  void didUpdateWidget(FillInTheBlanks oldWidget) {
+    if (widget.iteration != oldWidget.iteration) {
+      _initFillBlanks();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     keys = 0;
     if (_isLoading) {
@@ -183,7 +190,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       return new FlashCard(
           text: fruit,
           onChecked: () {
-            _initFillBlanks();
+//            _initFillBlanks();
             widget.onEnd();
             setState(() {
               _isShowingFlashCard = false;
@@ -207,6 +214,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
               child: new ResponsiveGridView(
                 rows: 1,
                 cols: dropTargetData.length,
+                maxAspectRatio: 1.0,
                 children: dropTargetData
                     .map((e) => droptarget(j++, e, _flag[h++]))
                     .toList(growable: false),
@@ -217,6 +225,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
               child: new ResponsiveGridView(
                   rows: 1,
                   cols: dragBoxData.length,
+                  maxAspectRatio: 1.0,
                   children: dragBoxData
                       .map((e) => dragbox(k++, e, _flag[a++]))
                       .toList(growable: false)),
