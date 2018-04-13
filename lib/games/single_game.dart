@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/games/reflex.dart';
 import 'package:maui/games/order_it.dart';
 import 'package:maui/games/identify_game.dart';
@@ -53,25 +54,41 @@ class _SingleGameState extends State<SingleGame> {
   @override
   void initState() {
     super.initState();
+    print('_SingleGameState:initState');
     _score = widget.score;
+//    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIOverlays([
+      SystemUiOverlay.top,
+      SystemUiOverlay.bottom
+    ]);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('_SingleGameState:build');
     MediaQueryData media = MediaQuery.of(context);
-    print(media);
+    print(media.size);
     return new Scaffold(
       appBar: new PreferredSize(
-          child: new Chip(label: new Text('$_score')),
-          preferredSize: new Size(100.0, 20.0)),
-      body: new Column(children: <Widget>[
+          child: new Row(
+            children: <Widget>[
+              new Image.asset('assets/apple.png'),
+              new Text('$_score')
+            ],
+          ), preferredSize: new Size(100.0, 20.0)),
+        body: new Column(
+      children: <Widget>[
         widget._gameMode == GameMode.timed
             ? new ProgressBar(
                 time: widget.playTime, onEnd: () => _onGameEnd(context))
             : new ProgressBar(progress: _progress),
         new Expanded(child: buildSingleGame(context))
-      ]),
-    );
+    ]));
   }
 
   _onScore(int incrementScore) {
