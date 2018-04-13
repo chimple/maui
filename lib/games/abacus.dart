@@ -14,8 +14,9 @@ class Abacus extends StatefulWidget {
   Function onEnd;
   int iteration;
  int gameCategoryId;
+ bool isRotated;
 
-  Abacus({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId})
+  Abacus({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
       : super(key: key);
 
   @override

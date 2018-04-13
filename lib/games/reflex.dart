@@ -12,6 +12,7 @@ class Reflex extends StatefulWidget {
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  bool isRotated;
 
   Reflex(
       {key,
@@ -19,7 +20,8 @@ class Reflex extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId})
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class ReflexState extends State<Reflex> {
   @override
   void initState() {
     super.initState();
+    print('ReflexState:initState');
     _initBoard();
   }
 
@@ -92,7 +95,7 @@ class ReflexState extends State<Reflex> {
 
   @override
   Widget build(BuildContext context) {
-    print("MyTableState.build");
+    print("ReflexState.build");
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -132,7 +135,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-        print("$state:${animation.value}");
+//        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
           if (widget.text != null) {

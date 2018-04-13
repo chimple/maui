@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/shaker.dart';
+//import 'package:maui/components/shaker.dart';
 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
@@ -12,6 +12,7 @@ class MatchTheFollowing extends StatefulWidget {
   int iteration;
   Function function;
   int gameCategoryId;
+  bool isRotated;
   MatchTheFollowing({
     key,
     this.onScore,
@@ -20,6 +21,7 @@ class MatchTheFollowing extends StatefulWidget {
     this.iteration,
     this.function,
     this.gameCategoryId,
+    this.isRotated = false
   })
       : super(key: key);
   @override
@@ -33,23 +35,25 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
   int c = 0;
   int start = 0, increament = 0;
-  final List<String> _leftSideletters = [];
-  final List<String> _rightSideLetters = [];
+  List<String> _leftSideletters = [];
+  List<String> _rightSideLetters = [];
   List<String> _lettersLeft = [], _lettersRight = [];
   List<String> _shuffledLetters = [], _shuffledLetters1 = [];
   List<Status> _statusColorChange;
   List<Status> _statusShake;
-  Map<String, String> _allLetters,allLettersStore;
+  Map<String, String> _allLetters;
   String _leftSideText, _rightSideText;
+  final int score = 2;
   int indexText1, indexText2, indexLeftButton;
   int correct = 0,
       i = 0,
       _oldIndexforLeftButton = 0,
       _oldIndexforRightButton = 0,
       _nextTask = 5,
-      flag2 = 0;
+      flag2 = 0,
+      leftSideTextIndex = 0;
   bool _isLoading = true;
-  int indexL, flag = 0, flag1 = 0;
+  int indexL, flag = 0, flag1 = 0, _wrongAttem = 0;
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -59,18 +63,17 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         child: new CircularProgressIndicator(),
       );
     }
-   return  new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-      new Expanded(
-         child: _buildLeftSide(context),
-        ),
-        new Expanded(
-         child:_buildRightSide(context),
-        ),
-      ],
-    );
-    
+    return new Container(
+        color: new Color(0xFF28c9c9),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Expanded(
+              child: _buildLeftSide(context),
+            ),
+            new Expanded(child: _buildRightSide(context)),
+          ],
+        ));
   }
 
   void initState() {
@@ -78,41 +81,53 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     _initBoard();
   }
 
-    @override
+  @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
+    // super.didUpdateWidget(oldWidget);
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
   }
+
   void _initBoard() async {
+    correct = 0;
+    _leftSideletters.clear();
+    _rightSideLetters.clear();
+    _shuffledLetters.clear();
+    _shuffledLetters1.clear();
+    //_allLetters.clear();
+    _statusShake = [];
+    _statusColorChange = [];
     setState(() => _isLoading = true);
-    _allLetters = await fetchPairData(widget.gameCategoryId, 10);
+    _allLetters = await fetchPairData(widget.gameCategoryId, 5);
     _allLetters.forEach((k, v) {
       _leftSideletters.add(k);
       _rightSideLetters.add(v);
     });
-    for (var i = start; i < _leftSideletters.length; i++) {
+    print("data is comming here:: $_rightSideLetters ,$_rightSideLetters");
+    for (int i = start; i < _nextTask; i++) {
       _shuffledLetters.addAll(
           _leftSideletters.skip(i).take(_nextTask).toList(growable: false)
             ..shuffle());
+
       _shuffledLetters1.addAll(
           _rightSideLetters.skip(i).take(_nextTask).toList(growable: false)
             ..shuffle());
     }
     _lettersLeft = _shuffledLetters.sublist(start, _nextTask);
     _lettersRight = _shuffledLetters1.sublist(start, _nextTask);
-    _statusColorChange=[];
+    _statusColorChange = [];
     _statusColorChange =
         _shuffledLetters.map((a) => Status.Disable).toList(growable: false);
-        _statusShake=[];
-    _statusShake = _shuffledLetters1
-        .map((e) => Status.Stopped)
-        .toList(growable: false);
+    _statusShake = [];
+    _statusShake =
+        _shuffledLetters1.map((e) => Status.Stopped).toList(growable: false);
     setState(() => _isLoading = false);
   }
-   Widget _buildLeftSide(BuildContext context) {
+
+  Widget _buildLeftSide(BuildContext context) {
     int j = 0;
     return new ResponsiveGridView(
       rows: 5,
@@ -145,6 +160,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
           _oldIndexforLeftButton = index;
           indexLeftButton = index;
           flag2 = 1;
+          leftSideTextIndex = _leftSideletters.indexOf(_leftSideText);
         });
   }
 
@@ -153,7 +169,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: 5,
       cols: 1,
-    padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       children: _lettersRight
           .map((e) => _buildItemsRight(j, e, _statusShake[j++]))
           .toList(growable: false),
@@ -173,46 +189,52 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   }
 
   void match(int indexRightbutton) {
-    int score = 4;
-    if (_leftSideletters.indexOf(_leftSideText) ==
-        _rightSideLetters.indexOf(_rightSideText)) {
+    if (flag2==1)
+    if (leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText)) {
       setState(() {
-        _lettersLeft[indexText1] = '';
-        _lettersRight[indexText2] = '';
+        _lettersLeft[indexText1] = null;
+        _lettersRight[indexText2] = null;
       });
       correct++;
-      widget.onScore(score);
-      widget.onProgress(correct / 5);
-      score = score + 4;
+      print("Correct :: $correct");
+        widget.onScore(1);
+        widget.onProgress(correct / 5);
+      flag2 = 0;
     } else {
-      if (_statusColorChange[indexLeftButton]==Status.Enable) {
-          setState(() {
-            _statusShake[indexRightbutton] = Status.Shake;
-            _statusColorChange[indexLeftButton] = Status.Shake;
-            flag1 = 1;
-          });
-          try{
-          new Future.delayed(const Duration(milliseconds: 600), () {
+      leftSideTextIndex = -1;
+      if (flag2 == 1) {
+        _wrongAttem++;
+        setState(() {
+          _statusShake[indexRightbutton] = Status.Shake;
+          _statusColorChange[indexLeftButton] = Status.Shake;
+          flag1 = 1;
+        });
+        try {
+          new Future.delayed(const Duration(milliseconds: 500), () {
             setState(() {
               _statusShake[indexRightbutton] = Status.Stopped;
-              _statusColorChange[indexLeftButton] = Status.Enable;
+              _statusColorChange[indexLeftButton] = Status.Disable;
             });
           });
-          }
-          catch(exception,e){
-          //   _statusShake[indexRightbutton] = StatusShake.Stopped;
-          // _statusColorChange[indexLeftButton] = Status.Enable;
-          }
+        } catch (exception, e) {}
+        flag2 = 0;
+        // if (_wrongAttem == 4) {
+        //   widget.onScore(-1);
+        //   _wrongAttem = 0;
+        //   print("Four times wrong::");
+        // }
+        widget.onProgress(_wrongAttem/5);
       }
-      print("WRONG ATTEM");
     }
-    _oldIndexforRightButton = indexRightbutton;
-    if (correct == 5) {
-      correct = 0;
-      //widget.onEnd();
-      // _initBoard();
-      // setState(() {});
-    }
+    //  _oldIndexforRightButton = indexRightbutton;
+    new Future.delayed(const Duration(milliseconds: 500), () {
+      if (correct >= 5) {
+        correct = 0;
+         _initBoard();
+        // setState(() {});
+        widget.onEnd();
+      }
+    });
   }
 }
 
@@ -224,8 +246,7 @@ class MyButton extends StatefulWidget {
     this.active: true,
     this.status,
     this.shake,
-  })
-      : super(key: key);
+  }) : super(key: key);
   final String text;
   final VoidCallback onPress;
   bool active;
@@ -239,22 +260,29 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller, controllerShake;
-  Animation animationInvisible, animationShake;
+  Animation animationInvisible, animationShake, noAimation;
   initState() {
     super.initState();
     initStateData();
   }
-
   initStateData() {
     super.initState();
     _displayText = widget.text;
+    print("button key :: ${widget.key}");
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 900), vsync: this);
+        duration: new Duration(milliseconds: 300), vsync: this);
     controllerShake = new AnimationController(
-        duration: new Duration(microseconds: 10), vsync: this);
+        duration: new Duration(milliseconds: 80), vsync: this);
     animationInvisible =
         new CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    animationShake = new Tween(begin: -1.0, end: 1.0, ).animate(controllerShake);
+    animationShake = new Tween(
+      begin: -3.50,
+      end: 2.50,
+    ).animate(controllerShake);
+    noAimation = new Tween(
+      begin: 0.0,
+      end: 0.0,
+    ).animate(controllerShake);
     controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
         if (widget.text == null) {
@@ -265,16 +293,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller.forward();
     shake();
   }
+
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
       controller.reverse();
-    } 
+    }
   }
 
   void shake() {
-    animationShake.addStatusListener((status) {
+    controllerShake.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controllerShake.reverse();
       } else if (status == AnimationStatus.dismissed) {
@@ -298,20 +327,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
-   return new Shaker(
+    return new Shaker(
         key: widget.key,
-        animation: (widget.status == Status.Shake)
-            ? animationShake
-            : animationInvisible,
+        animation:
+            (widget.status == Status.Shake) ? animationShake : noAimation,
         child: new ScaleTransition(
             scale: animationInvisible,
             key: widget.key,
             child: new RaisedButton(
-                elevation: 5.0,
+                disabledColor: Colors.blue,
+                elevation:(widget.status == Status.Enable ||
+                        widget.status == Status.Shake) ? 0.0 : 8.0,
                 splashColor: Colors.red,
                 onPressed: () => widget.onPress(),
-                color: (widget.status == Status.Enable || widget.status==Status.Shake)
-                    ? Colors.yellow[300]
+                color: (widget.status == Status.Enable ||
+                        widget.status == Status.Shake)
+                    ? new Color(0xFFaa0e42)
                     : new Color(0xFFed4a79),
                 shape: new RoundedRectangleBorder(
                     borderRadius:
@@ -321,5 +352,36 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         color: Colors.black,
                         fontSize: 20.0,
                         fontStyle: FontStyle.italic)))));
+  }
+}
+
+class Shaker extends AnimatedWidget {
+  const Shaker({
+    Key key,
+    Animation<double> animation,
+    this.child,
+  }) : super(key: key, listenable: animation);
+
+  final Widget child;
+
+  Animation<double> get animation => listenable;
+
+  double get translateX {
+    const double shakeDelta = 4.0;
+    final double t = animation.value;
+    if (t <= 0.25)
+      return -t * shakeDelta;
+    else if (t < 0.75)
+      return (t - 0.5) * shakeDelta;
+    else
+      return (1.0 - t) * 4.0 * shakeDelta;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Transform(
+      transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
+      child: child,
+    );
   }
 }
