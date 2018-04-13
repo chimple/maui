@@ -405,7 +405,7 @@ for (num e in _val2) {
                 child: new ResponsiveGridView(
               rows: _size,
               cols: _size,
-              childAspectRatio: 1.0,
+              maxAspectRatio: 1.0,
               children: _letters
                   .map((e) => _buildItem(j, e, _statuses[j], _Bgstatus[j++]))
                   .toList(growable: false),

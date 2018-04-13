@@ -274,7 +274,7 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
     var number = int.parse(category?.name);
-    var fillNumbers = [];
+    var fillNumbers = new List<List<int>>();
     for (var i = 0; i < size; i++) {
       fillNumbers.add(<int>[]);
       for (var j = 0; j < size; j++) {
