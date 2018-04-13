@@ -21,24 +21,20 @@ enum GameMode { timed, iterations }
 
 class SingleGame extends StatefulWidget {
   final String gameName;
-  final int maxIterations;
-  final int playTime;
   final int gameCategoryId;
   final Function onGameEnd;
   final Function onScore;
-  final GameMode _gameMode;
+  final GameMode gameMode;
   final bool isRotated;
 
   SingleGame(this.gameName,
       {Key key,
-      this.maxIterations = 0,
-      this.playTime = 0,
+        this.gameMode = GameMode.iterations,
       this.gameCategoryId,
       this.onGameEnd,
       this.onScore,
       this.isRotated = false})
-      : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed,
-        super(key: key);
+      : super(key: key);
 
   @override
   _SingleGameState createState() {
@@ -50,6 +46,8 @@ class _SingleGameState extends State<SingleGame> {
   int _score = 0;
   double _progress = 0.0;
   int _iteration = 0;
+  int maxIterations = 2;
+  int playTime = 10000;
 
   @override
   void initState() {
@@ -69,6 +67,7 @@ class _SingleGameState extends State<SingleGame> {
     print('_SingleGameState:build');
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
+    var game = buildSingleGame(context);
     return new Scaffold(
         appBar: new PreferredSize(
             child: new Row(
@@ -79,11 +78,11 @@ class _SingleGameState extends State<SingleGame> {
             ),
             preferredSize: new Size(100.0, 20.0)),
         body: new Column(children: <Widget>[
-          widget._gameMode == GameMode.timed
+          widget.gameMode == GameMode.timed
               ? new ProgressBar(
-                  time: widget.playTime, onEnd: () => _onGameEnd(context))
+                  time: playTime, onEnd: () => _onGameEnd(context))
               : new ProgressBar(progress: _progress),
-          new Expanded(child: buildSingleGame(context))
+          new Expanded(child: game)
         ]));
   }
 
@@ -95,16 +94,16 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   _onProgress(double progress) {
-    if (widget._gameMode == GameMode.iterations) {
+    if (widget.gameMode == GameMode.iterations) {
       setState(() {
-        _progress = (_iteration + progress) / widget.maxIterations;
+        _progress = (_iteration + progress) / maxIterations;
       });
     }
   }
 
   _onEnd(BuildContext context) {
-    if (widget._gameMode == GameMode.iterations) {
-      if (_iteration + 1 < widget.maxIterations) {
+    if (widget.gameMode == GameMode.iterations) {
+      if (_iteration + 1 < maxIterations) {
         setState(() {
           _iteration++;
         });
@@ -135,6 +134,8 @@ class _SingleGameState extends State<SingleGame> {
   Widget buildSingleGame(BuildContext context) {
     switch (widget.gameName) {
       case 'reflex':
+        playTime = 15000;
+        maxIterations = 1;
         return new Reflex(
             onScore: _onScore,
             onProgress: _onProgress,

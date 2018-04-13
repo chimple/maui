@@ -4,13 +4,11 @@ import 'single_game.dart';
 
 class HeadToHeadGame extends StatefulWidget {
   final String gameName;
-  final int maxIterations;
-  final int playTime;
+  final GameMode gameMode;
   final int gameCategoryId;
 
   HeadToHeadGame(this.gameName,
-      {this.maxIterations = 0,
-      this.playTime = 0,
+      {this.gameMode = GameMode.iterations,
       @required this.gameCategoryId});
 
   @override
@@ -64,8 +62,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
     final myGame = new SingleGame(
       widget.gameName,
       key: new GlobalObjectKey('SingleGame.my'),
-      maxIterations: widget.maxIterations,
-      playTime: widget.playTime,
+      gameMode: widget.gameMode,
       gameCategoryId: widget.gameCategoryId,
       onScore: setMyScore,
       onGameEnd: onGameEnd,
@@ -73,8 +70,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
     final otherGame = new SingleGame(
       widget.gameName,
       key: new GlobalObjectKey('SingleGame.other'),
-      maxIterations: widget.maxIterations,
-      playTime: widget.playTime,
+      gameMode: widget.gameMode,
       gameCategoryId: widget.gameCategoryId,
       onScore: setOtherScore,
       onGameEnd: onGameEnd,
