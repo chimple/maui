@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
@@ -47,6 +49,7 @@ class OrderItState extends State<OrderIt> {
   }
 
   ValueNotifier<String> orderNotifier = new ValueNotifier<String>('');
+
   @override
   Widget build(BuildContext context) {
     print("OrderItState.build");
@@ -79,11 +82,28 @@ class OrderItState extends State<OrderIt> {
   }
 
   Widget itemBuilder({Orderable<String> data, Size itemSize}) {
+    print("Rajesh Patil dataIndex: ${data.dataIndex}");
+    print("Rajesh Patil selected: ${data.selected}");
+    print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
+    print("Rajesh Patil value: ${data.value}");
+    print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
+
+    if(orderNotifier.value.compareTo(_letters.toString()) == 1)
+    {
+      print("Game Over!!");
+     // new Future.delayed(const Duration(milliseconds: 100), () {    
+                //  print("Rajesh Game-End");
+               // setState(() {
+                  // widget.onScore(1);
+                  // widget.onProgress(1.0);
+                  // widget.onEnd();
+                //       });
+              //  });
+    }
+
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected
-          ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan
-          : Colors.orange,
+      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
       width: itemSize.width,
       height: itemSize.height,
       child: new Center(
@@ -93,13 +113,13 @@ class OrderItState extends State<OrderIt> {
           style: new TextStyle(fontSize: 25.0, color: Colors.white),
         )
       ])),
-    );
+    ); 
   }
 }
 
 class OrderPreview extends StatefulWidget {
   final ValueNotifier orderNotifier;
-
+  
   OrderPreview({this.orderNotifier});
 
   @override
