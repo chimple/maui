@@ -400,14 +400,13 @@ class MyFillnumberState extends State<Fillnumber> {
                             color: Colors.black, fontSize: 30.0)))),
             new Expanded(
                 child: new ResponsiveGridView(
-                    rows: _size,
-                    cols: _size,
-                    childAspectRatio: 1.0,
-                    children: _letters
-                        .map((e) =>
-                            _buildItem(j, e, _statuses[j], _Bgstatus[j++]))
-                        .toList(growable: false),
-                )),
+              rows: _size,
+              cols: _size,
+              maxAspectRatio: 1.0,
+              children: _letters
+                  .map((e) => _buildItem(j, e, _statuses[j], _Bgstatus[j++]))
+                  .toList(growable: false),
+            )),
           ],
         ),
       );
