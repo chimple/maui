@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 
 
-enum DDirection { Vertical, Horizontal }
+enum OrderItDirection { Vertical, Horizontal }
 
 /// associate value with
 class Orderable<T> {
@@ -36,7 +36,7 @@ void sortOrderables<T extends Orderable<U>, U>(
     {List<T> items,
     Size itemSize,
     double margin,
-    DDirection direction = DDirection.Horizontal}) {
+    OrderItDirection direction = OrderItDirection.Horizontal}) {
   int orderableHSort(T a, T b) {
     if (!a.selected && !b.selected)
       return a.visibleIndex.compareTo(b.visibleIndex);
@@ -85,7 +85,7 @@ void sortOrderables<T extends Orderable<U>, U>(
     return null;
   }
 
-  items.sort(direction == DDirection.Vertical ? orderableVSort : orderableHSort);
+  items.sort(direction == OrderItDirection.Vertical ? orderableVSort : orderableHSort);
 }
 
 
