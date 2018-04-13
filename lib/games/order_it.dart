@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
@@ -24,12 +26,12 @@ class OrderIt extends StatefulWidget {
 //const kChars = const ["A", "B", "C", "D"];
 
 class OrderItState extends State<OrderIt> {
-  //List<String> chars = ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N"];
   List<String> _chars = ["A", "B", "C", "D","E","F","G"];
   int _size = 7;
   List<String> _allLetters;
   List<String> _letters;
   bool _isLoading = true;
+  int cnt = 0;
   
   @override
   void initState() {
@@ -48,6 +50,7 @@ class OrderItState extends State<OrderIt> {
   }
 
   ValueNotifier<String> orderNotifier = new ValueNotifier<String>('');
+
   @override
   Widget build(BuildContext context) {
     print("OrderItState.build");
@@ -60,6 +63,7 @@ class OrderItState extends State<OrderIt> {
     }
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
+    print("Rajesh MediaQuery: ${gSize}");
         return new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -79,11 +83,27 @@ class OrderItState extends State<OrderIt> {
   }
 
   Widget itemBuilder({Orderable<String> data, Size itemSize}) {
+    print("Rajesh Patil dataIndex: ${data.dataIndex}");
+    print("Rajesh Patil selected: ${data.selected}");
+    print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
+    print("Rajesh Patil value: ${data.value}");
+    print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
+
+    if(orderNotifier.value.compareTo(_letters.toString()) == 0)
+    {
+      print("Game Over!!: ${cnt++}");
+      new Future.delayed(const Duration(milliseconds: 100), () {    
+               // setState(() {
+                  // widget.onScore(7);
+                  // widget.onProgress(1.0);
+                   widget.onEnd();
+                      // });
+                });
+    }
+
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected
-          ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan
-          : Colors.orange,
+      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
       width: itemSize.width,
       height: itemSize.height,
       child: new Center(
@@ -93,13 +113,13 @@ class OrderItState extends State<OrderIt> {
           style: new TextStyle(fontSize: 25.0, color: Colors.white),
         )
       ])),
-    );
+    ); 
   }
 }
 
 class OrderPreview extends StatefulWidget {
   final ValueNotifier orderNotifier;
-
+  
   OrderPreview({this.orderNotifier});
 
   @override
