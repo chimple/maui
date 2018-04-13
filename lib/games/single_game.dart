@@ -24,21 +24,21 @@ class SingleGame extends StatefulWidget {
   final int maxIterations;
   final int playTime;
   final int gameCategoryId;
-  Function onGameEnd;
-  Function onScore;
+  final Function onGameEnd;
+  final Function onScore;
   final GameMode _gameMode;
   final bool isRotated;
-  final int score;
 
   SingleGame(this.gameName,
-      {this.maxIterations = 0,
+      {Key key,
+      this.maxIterations = 0,
       this.playTime = 0,
       this.gameCategoryId,
-        this.score = 0,
       this.onGameEnd,
       this.onScore,
       this.isRotated = false})
-      : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed;
+      : _gameMode = maxIterations > 0 ? GameMode.iterations : GameMode.timed,
+        super(key: key);
 
   @override
   _SingleGameState createState() {
@@ -47,24 +47,20 @@ class SingleGame extends StatefulWidget {
 }
 
 class _SingleGameState extends State<SingleGame> {
-  int _score;
+  int _score = 0;
   double _progress = 0.0;
   int _iteration = 0;
 
   @override
   void initState() {
     super.initState();
-    print('_SingleGameState:initState');
-    _score = widget.score;
-//    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIOverlays([]);
   }
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIOverlays([
-      SystemUiOverlay.top,
-      SystemUiOverlay.bottom
-    ]);
+    SystemChrome.setEnabledSystemUIOverlays(
+        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -74,21 +70,21 @@ class _SingleGameState extends State<SingleGame> {
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     return new Scaffold(
-      appBar: new PreferredSize(
-          child: new Row(
-            children: <Widget>[
-              new Image.asset('assets/apple.png'),
-              new Text('$_score')
-            ],
-          ), preferredSize: new Size(100.0, 20.0)),
-        body: new Column(
-      children: <Widget>[
-        widget._gameMode == GameMode.timed
-            ? new ProgressBar(
-                time: widget.playTime, onEnd: () => _onGameEnd(context))
-            : new ProgressBar(progress: _progress),
-        new Expanded(child: buildSingleGame(context))
-    ]));
+        appBar: new PreferredSize(
+            child: new Row(
+              children: <Widget>[
+                new Image.asset('assets/apple.png'),
+                new Text('$_score')
+              ],
+            ),
+            preferredSize: new Size(100.0, 20.0)),
+        body: new Column(children: <Widget>[
+          widget._gameMode == GameMode.timed
+              ? new ProgressBar(
+                  time: widget.playTime, onEnd: () => _onGameEnd(context))
+              : new ProgressBar(progress: _progress),
+          new Expanded(child: buildSingleGame(context))
+        ]));
   }
 
   _onScore(int incrementScore) {
