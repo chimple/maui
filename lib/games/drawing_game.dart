@@ -7,8 +7,9 @@ class Drawing extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  bool isRotated;
 
-  Drawing({key, this.onScore, this.onProgress, this.onEnd, this.iteration})
+  Drawing({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.isRotated})
       : super(key: key);
 
   @override

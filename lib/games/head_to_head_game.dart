@@ -32,10 +32,12 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   onGameEnd(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
     showDialog<String>(
         context: context,
         child: new AlertDialog(
-          content: new Column(
+          content: media.size.height > media.size.width ?
+            new Column(
             children: <Widget>[
               new Expanded(
                   child: new RotatedBox(
@@ -44,7 +46,13 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
               )),
               new Expanded(child: new Text('$_myScore'))
             ],
-          ),
+          ) :
+          new Row(
+            children: <Widget>[
+              new Expanded(child: new Center(child: new Text('$_otherScore'))),
+              new Expanded(child: new Center(child: new Text('$_myScore')))
+            ],
+          )
         )).then<Null>((String s) {
       Navigator.pop(context);
     });
@@ -52,7 +60,9 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
+    MediaQueryData media = MediaQuery.of(context);
+    return media.size.height > media.size.width ?
+     new Column(
       children: <Widget>[
         new Expanded(
             child: new RotatedBox(
@@ -63,6 +73,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                   gameCategoryId: widget.gameCategoryId,
                   onScore: setOtherScore,
                   onGameEnd: onGameEnd,
+                  isRotated: true,
                 ),
                 quarterTurns: 2)),
         new Expanded(
@@ -75,6 +86,28 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
           onGameEnd: onGameEnd,
         ))
       ],
+    ) :
+    new Row(
+      children: <Widget>[
+        new Expanded(
+            child: new SingleGame(
+                  widget.gameName,
+                  maxIterations: widget.maxIterations,
+                  playTime: widget.playTime,
+                  gameCategoryId: widget.gameCategoryId,
+                  onScore: setOtherScore,
+                  onGameEnd: onGameEnd,
+                )),
+        new Expanded(
+            child: new SingleGame(
+              widget.gameName,
+              maxIterations: widget.maxIterations,
+              playTime: widget.playTime,
+              gameCategoryId: widget.gameCategoryId,
+              onScore: setMyScore,
+              onGameEnd: onGameEnd,
+            ))
+      ]
     );
   }
 }
