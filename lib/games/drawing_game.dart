@@ -38,11 +38,12 @@ class DrawScreen extends State<Drawing> {
 
     if (orientation == Orientation.portrait) {
       return new Container(
+          width: width, height: height,
           child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 new Column(children: <Widget>[
-                new Image(image: assetsImage, width: width*0.5, height: height*0.18),
+                new Image(image: assetsImage, width: width*0.5, height: height*0.13),
                   new Container(
                     width: width, height: height*0.05,
                     child : new Text("APPLE",
@@ -86,8 +87,7 @@ class DrawScreen extends State<Drawing> {
                     ),
                   ),
 
-                  new Container(
-                    width: width, height: height*0.18,
+                  new FittedBox(
                     child: new Column(
                       children: <Widget>[
                         new Row(
@@ -149,7 +149,7 @@ class DrawScreen extends State<Drawing> {
                               new FlatButton(
                                 onPressed: () => _multiWidth(5.0),
                                 child: new Container(
-                                  width: width*0.038, height: width*0.038,
+                                  width: width*0.035, height: width*0.035,
                                   key: new Key('s'),
                                   decoration: new BoxDecoration(
                                       color: Colors.black,
