@@ -19,7 +19,7 @@ class Quiz extends StatefulWidget {
   State createState() => new QuizState();
 }
 
-class QuizState extends State<Quiz> {
+class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
  
  Tuple2<String, bool> _allques;
@@ -27,6 +27,12 @@ class QuizState extends State<Quiz> {
   bool tf;
   bool isCorrect;
   bool overlayShouldBeVisible = false;
+
+  Animation<double> buttonSqueezeAnimation;
+
+  Animation<double> buttonZoomout;
+
+  AnimationController _loginButtonController;
 
   @override
   void initState() {
@@ -43,18 +49,34 @@ class QuizState extends State<Quiz> {
     print(_allques.item2);
     tf = _allques.item2;
     setState(()=>_isLoading=false);
+    _loginButtonController = new AnimationController(
+      duration: new Duration(milliseconds: 3000),
+      vsync: this
+    );
   }
 
   void handleAnswer(bool answer) {
     isCorrect = (tf == answer);
     if (isCorrect) {
+      _playAnimation();
       widget.onScore(1);
       widget.onProgress(1.0);
+      widget.onEnd();
+      _initBoard();
     }
     this.setState(() {
       print(4);
       overlayShouldBeVisible = true;
     });
+  }
+
+
+  Future<Null> _playAnimation() async {
+    try {
+      await _loginButtonController.forward();
+      await _loginButtonController.reverse();
+    }
+    on TickerCanceled{}
   }
   
     @override
@@ -73,6 +95,27 @@ class QuizState extends State<Quiz> {
       );
     }    
 
+    buttonSqueezeAnimation = new Tween(
+      begin: 320.0,
+      end: 70.0,
+    ).animate(new CurvedAnimation(
+      parent: _loginButtonController.view,
+      curve: new Interval(0.0, 0.250)
+    ));
+
+    buttonZoomout = new Tween(
+      begin: 70.0,
+      end: 1000.0,
+    ).animate(
+      new CurvedAnimation(
+        parent: _loginButtonController.view,
+        curve: new Interval(
+          0.550, 0.900,
+          curve: Curves.bounceOut,
+        )
+    ));
+       
+
     return new Material(
       color: const Color(0xFF54cc70),
       child: new Stack(
@@ -88,8 +131,12 @@ class QuizState extends State<Quiz> {
               children: [new QuestionText(questionText),]
             ),
 
-            new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            new Container(
+              width: buttonZoomout.value == 70 ? buttonSqueezeAnimation.value : buttonZoomout.value,
+              height: buttonZoomout.value == 70 ? 60.0 : buttonZoomout.value,
+              alignment: FractionalOffset.center,
+              child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Row(
@@ -99,19 +146,32 @@ class QuizState extends State<Quiz> {
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                    new AnswerButton(true, () => handleAnswer(true)), //true button
+                    buttonSqueezeAnimation.value > 75.0 ? new AnswerButton(true, () => handleAnswer(true))/*true button*/ : buttonZoomout.value < 300.0 ? new CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Colors.white
+                    ),
+                  ) : null, 
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                    new AnswerButton(false, () => handleAnswer(false)), //false button
+                    buttonSqueezeAnimation.value > 75.0 ? new AnswerButton(false, () => handleAnswer(false)) /*false button*/ : buttonZoomout.value < 300.0 ? new CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Colors.white
+                    ),
+                  ) : null,
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
                   ]
                 ),
+
+                 new Padding(
+                      padding: new EdgeInsets.all(ht * 0.015),
+                    ),
+
                 new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -120,13 +180,21 @@ class QuizState extends State<Quiz> {
                         padding: new EdgeInsets.all(wd * 0.015),
                       ),
 
-                      new AnswerButton(true, () => handleAnswer(true)), //true button
+                      buttonSqueezeAnimation.value > 75.0 ? new AnswerButton(true, () => handleAnswer(true))/*true button*/ : buttonZoomout.value < 300.0 ? new CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Colors.white
+                    ),
+                  ) : null,
 
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
+                    new Padding(
+                      padding: new EdgeInsets.all(wd * 0.015),
+                    ),
 
-                      new AnswerButton(false, () => handleAnswer(false)), //false button
+                    buttonSqueezeAnimation.value > 75.0 ? new AnswerButton(false, () => handleAnswer(false)) /*false button*/ : buttonZoomout.value < 300.0 ? new CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Colors.white
+                    ),
+                  ) : null,
 
                       new Padding(
                         padding: new EdgeInsets.all(wd * 0.015),
@@ -136,26 +204,28 @@ class QuizState extends State<Quiz> {
                 ),
               ]
             ),
+            ),
           ],
         ),
         
+        
 
-        overlayShouldBeVisible == true ? new Container(
-          height: ht,
-          width: wd,
-          child: new CorrectWrongOverlay(
-            isCorrect,
-                () {                     
-              this.setState(() {
-                print(1);
-                overlayShouldBeVisible = false;
-              }); 
-              new Future.delayed(const Duration(milliseconds: 20), () {
-                widget.onEnd();
-                _initBoard();
-              });         
-            }
-        )) : new Container()
+        // overlayShouldBeVisible == true ? new Container(
+        //   height: ht,
+        //   width: wd,
+        //   child: new CorrectWrongOverlay(
+        //     isCorrect,
+        //         () {                     
+        //       this.setState(() {
+        //         print(1);
+        //         overlayShouldBeVisible = false;
+        //       }); 
+        //       new Future.delayed(const Duration(milliseconds: 20), () {
+        //         widget.onEnd();
+        //         _initBoard();
+        //       });         
+        //     }
+        // )) : new Container()
       ],
     ),
     );

@@ -187,7 +187,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
       color: const Color(0xFF54cc70),
       child:  new Container(
         height: ht * 0.22,
-        width: wd * 0.6,
+        width: ht>wd? wd * 0.6 : wd*0.5,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
               color: const Color(0xFFf8c43c),              
@@ -228,7 +228,7 @@ class AnswerButton extends StatelessWidget {
         child: new InkWell(
           onTap: () => _onTap(),
           child: new Container( 
-                height: ht * 0.2,
+                height: ht>wd? ht * 0.2 : ht * 0.29,
                 width: wd * 0.6,             
                 decoration: new BoxDecoration(
                   borderRadius: new BorderRadius.circular(25.0),
