@@ -42,7 +42,7 @@ class CrosswordState extends State<Crossword> {
   bool _isLoading = true;
   String img;
   int _rows,_cols;
-  int len;
+  int len,_rightlen,_rightcols;
   @override
   void initState() {
     super.initState();
@@ -100,9 +100,15 @@ class CrosswordState extends State<Crossword> {
     for (var i = 1; i < _sortletters.length; i += 2) {
       _letters[_sortletters[i]] = '';
     }
+    _rightlen=_rightcols=_rightwords.length;
     _rightwords.shuffle();
-
-    _flag.length = _letters.length + _rows + _cols;
+    if(_rightlen>5){
+      _rightcols= ((_rightlen/2).ceil()+1)*2;
+       while(_rightwords.length<=_rightcols){
+        _rightwords.add('');
+      }
+    }
+    _flag.length = _rows*_cols+ _rightcols+1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
     }
@@ -118,7 +124,7 @@ class CrosswordState extends State<Crossword> {
           break;
         }
       }
-    if (text != null) {
+    if (text != null || text=='') {
       return new MyButton(
           index: index,
           text: text,
@@ -141,8 +147,8 @@ class CrosswordState extends State<Crossword> {
                 _letters[index] = _sortletters[--i];
                 correct++;
                 widget.onScore(1);
-                widget.onProgress(correct / _rightwords.length);
-                if (correct == _rightwords.length) {
+                widget.onProgress(correct / _rightlen);
+                if (correct == _rightlen) {
                   widget.onEnd();
                   widget.onEnd();
                 }
@@ -195,34 +201,30 @@ class CrosswordState extends State<Crossword> {
       );
     }
     keys = 0;
+    
     var j = 0, h = 0, k = 100;
+    
     return new Container(
         color: Colors.purple[300],
         child: portf==0?new Column(
           children: <Widget>[
-            //   new Padding(padding: new EdgeInsets.all(10.0)),
             new Flexible(
               flex: 4,
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
-                // childAspectRatio: 0.8,
-                // mainAxisSpacing:9.0,
-                //crossAxisSpacing:9.0,
-                padding: const EdgeInsets.all(20.0),
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
               ),
             ),
-            //  new Padding(padding: new EdgeInsets.all(5.0)),
-            new Expanded(
+            new Padding(padding: new EdgeInsets.all(5.0)),
+            new Flexible(
+              flex:1,
+              fit: FlexFit.loose,
               child: new ResponsiveGridView(
-                rows: 1,
-                cols: _rightwords.length,
-                // childAspectRatio: 2.3,
-                padding: const EdgeInsets.all(14.0),
-                //crossAxisSpacing: 9.0,
+                rows: _rightlen>5?2:1,
+                cols: _rightlen>5?(_rightcols/2).ceil():_rightcols,
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
@@ -236,17 +238,18 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
-                padding: const EdgeInsets.all(20.0),
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
               ),
             ),
-            new Expanded(
+            new Padding(padding: new EdgeInsets.all(5.0)),
+            new Flexible(
+              flex: 1,
+              fit: FlexFit.loose,
               child: new ResponsiveGridView(
-                rows: _rightwords.length,
-                cols: 1,
-                padding: const EdgeInsets.all(14.0),
+                rows: _rightlen>5?(_rightcols/2).ceil():_rightcols,
+                cols: _rightlen>5?2:1,  
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
@@ -282,7 +285,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation, animation1;
   String _displayText;
   List<Widget> feed1;
-  String newtext;
+  String newtext='';
   var f = 0;
   var i = 0;
   initState() {
@@ -357,13 +360,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   ),
                 ))),
       );
-    } else if (widget.index >= 100 && widget.text.length == 2) {
-       newtext=widget.text[0];
+    } else if (widget.index >= 100 && (widget.text==''|| widget.text.length==2)) {
+      if(widget.text==''){newtext='';}
+      else{newtext=widget.text[0];}
       return new ScaleTransition(
           scale: animation,
           child: new Container(
             decoration: new BoxDecoration(
-              color: Colors.grey[300],
+              color: widget.text==''?Colors.purple[300]:Colors.grey[300],
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
             ),
             child: new Center(
