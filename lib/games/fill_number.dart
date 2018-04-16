@@ -13,9 +13,14 @@ class Fillnumber extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  Fillnumber({key, 
-  this.onScore,
-   this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated = false})
+  Fillnumber(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new MyFillnumberState();
@@ -25,8 +30,9 @@ enum Status { Active, Visible, Disappear }
 enum Bgstatus { BgActive, BgVisible }
 
 class MyFillnumberState extends State<Fillnumber> {
+  List<Offset> _points = [];
   var sum = 0,
-      Ansum=0,
+      Ansum = 0,
       ia = 0,
       center = 0,
       center2 = 0,
@@ -34,14 +40,15 @@ class MyFillnumberState extends State<Fillnumber> {
       L = 1,
       val = 0,
       i = 0,
-      k=0,
+      k = 0,
       ans = 0,
       num1 = 0,
       count = 0,
-      Ansr=0,
-      x=0,
+      Ansr = 0,
+      x = 0,
+      z=3,
       count1 = 0;
-      
+
   List<String> num3 = [];
   final int _size = 4;
   static int size = 4;
@@ -50,7 +57,7 @@ class MyFillnumberState extends State<Fillnumber> {
   List<List<int>> _allLetters;
   List<int> _shuffledLetters = [];
   List<int> _copyVal = [];
- 
+
   List _Index = [];
   List _num2 = [];
   List _center = [];
@@ -91,14 +98,14 @@ class MyFillnumberState extends State<Fillnumber> {
 
     print("data in _shuffledLetters of shanthu $_shuffledLetters");
     _letters = _shuffledLetters.sublist(0, _size * _size);
-    
+
     setState(() => _isLoading = false);
-        _val2 = _shuffledLetters.sublist(0, 4);
-for (num e in _val2) {
-          Ansum+= e;
-        }
-        Ansr=Ansum;
-         _val2.removeRange(0, _val2.length);
+    _val2 = _shuffledLetters.sublist(0, 4);
+    for (num e in _val2) {
+      Ansum += e;
+    }
+    Ansr = Ansum;
+    _val2.removeRange(0, _val2.length);
   }
 
   @override
@@ -122,7 +129,6 @@ for (num e in _val2) {
           if (status == Status.Active) {
             if (sum == 0) {
               setState(() {
-        
                 ssum = '$text';
                 print('qwer $ssum');
               });
@@ -134,114 +140,108 @@ for (num e in _val2) {
               });
               print('helo this is in status os the values stored n $_statuses');
 
+
+              print("hello this repeating one value once level is completed $ssum");
+
               _center.add(index);
               _Index.add(index);
               sum = sum + text;
-               if (sum == Ansr) {
-                
-                      ssum = '$ssum' + '=$sum';
-                      new Future.delayed(const Duration(milliseconds: 250), () {
-                        widget.onScore(1);
-                        widget.onProgress((count1 + 2) / 6.5);
-                        count1++;
-                             for (var i = 0; i < _Index.length; i++) {
-                          _letters[_Index[i]] = null;
-                        }
+              if (sum == Ansr) {
+                ssum = '$ssum' + '=$sum';
+                new Future.delayed(const Duration(milliseconds: 250), () {
+                  widget.onScore(1);
+                  widget.onProgress((count1 + 2) / 6.5);
+                  count1++;
+                  for (var i = 0; i < _Index.length; i++) {
+                    _letters[_Index[i]] = null;
+                  }
 
-                        sum = 0;
-                        center = 0;
-                        _center.removeRange(0, _center.length);
-                        print(
-                            'helo this is sum when resetting in it value $sum');
-                        print(
-                            'helo this is sum when resetting in it value $_letters');
-                        _letters.forEach((e) {
-                          if (e == null) {
-                            count = count + 1;
-                          }
-                        });
-                        ssum = '';
-                        _letters.removeWhere((value) => value == null);
-                        for (var i = 0; i < count; i++) {
-                          _letters.add(null);
-                        }
-                                print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+                  sum = 0;
+                  center = 0;
+                  _center.removeRange(0, _center.length);
+                  print('helo this is sum when resetting in it value $sum');
+                  print(
+                      'helo this is sum when resetting in it value $_letters');
+                  _letters.forEach((e) {
+                    if (e == null) {
+                      count = count + 1;
+                    }
+                  });
+                  ssum = '';
+                  _letters.removeWhere((value) => value == null);
+                  for (var i = 0; i < count; i++) {
+                    _letters.add(null);
+                  }
+                  print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
-                                 
-                         _val2.removeRange(0, _val2.length);
+                  _val2.removeRange(0, _val2.length);
 
-                          Ansum=0;
-                                _val2 = _letters.sublist(0, 4);
-                                  print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
-                                   _val2.forEach((e) {if(e==null){
-                                      
-                                         
-                                   }
-                                   });
-                                    print("my calling onennd value is $k");
-                                   _val2.removeWhere((value) => value == null);
-                                   k=_val2.length;
+                  Ansum = 0;
+                  _val2 = _letters.sublist(0, z);
+                  z++;
+                  print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
+                  _val2.forEach((e) {
+                    if (e == null) {}
+                  });
+                  print("my calling onennd value is $k");
+                  _val2.removeWhere((value) => value == null);
+                  k = _val2.length;
 
-                                   print("thid  is the vlaue of length is valu$k");
-                                for (num e in _val2) {
-                                 Ansum += e;
-                                   }
-                                   print("thhhiiiiiiisssss isss shanthuuuu$_val2");
-                                        Ansr=Ansum;
-                                        
-                        count = 0;
-                        _statuses = _copyVal
-                            .map((a) => Status.Active)
-                            .toList(growable: false);
-                        _Bgstatus = _copyVal
-                            .map((a) => Bgstatus.BgActive)
-                            .toList(growable: false);
-                        _Index.removeRange(0, _Index.length);
-                        _num2.removeRange(0, _num2.length);
-                  
-                      });
-                      k=_letters[4];
-                      print("helllo this letters$k");
-                            if(_letters[4] == null) {
-                       setState(() {
-                         k=0;
-                          Ansr=0;
-                          ssum = '';
-                _letters.removeRange(0, _letters.length);
-              });
+                  print("thid is the vlaue of length is valu$k");
+                  for (num e in _val2) {
+                    Ansum += e;
+                  }
+                  print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+                  Ansr = Ansum;
+
+                  count = 0;
+                  _statuses = _copyVal
+                      .map((a) => Status.Active)
+                      .toList(growable: false);
+                  _Bgstatus = _copyVal
+                      .map((a) => Bgstatus.BgActive)
+                      .toList(growable: false);
+                  _Index.removeRange(0, _Index.length);
+                  _num2.removeRange(0, _num2.length);
+                });
+                k = _letters[4];
+                print("helllo this letters$k");
+                if (_letters[4] == null) {
+                  setState(() {
+                    k = 0;
+                    Ansr = 0;
+                    ssum = '';
+                    _letters.removeRange(0, _letters.length);
+                  });
                   new Future.delayed(const Duration(milliseconds: 250), () {
                     print("Rajesh Game-End");
                     widget.onEnd();
-                });
-               }
+                  });
+                }
 
-
-                  
-                      _val2.removeRange(0, _val2.length);
-                      
-                    }
+                _val2.removeRange(0, _val2.length);
+              }
               print('helo this is num on clicked value of sum $sum');
               print('helo this is num on clicked index value $index');
             }
             _center.forEach((e) {
               center = e;
-                if(center==_size || center==_size+_size || center==_size+_size+_size)
-                {
-                        x=center;
-                }
+              if (center == _size ||
+                  center == _size + _size ||
+                  center == _size + _size + _size) {
+                x = center;
+              }
               if ((index == center + R ||
                   index == center + B ||
-                 ( index == center - L && x!=center)||
+                  (index == center - L && x != center) ||
                   index == center - T)) {
-
-                   
                 setState(() {
                   ssum = '$ssum' + '+' + '$text';
                   _statuses[index] = Status.Visible;
                   _Bgstatus[index] = Bgstatus.BgVisible;
                 });
 
-                print('qwer nniiikkkiilll  $ssum');
+                print('qwer nniiikkkiilll $ssum');
                 print(
                     'helo this is in status os the values stored n $_statuses');
                 print(
@@ -259,13 +259,12 @@ for (num e in _val2) {
                   setState(() {
                     print('helo this is sum value $sum');
                     if (sum == Ansr) {
-                
                       ssum = '$ssum' + '=$sum';
                       new Future.delayed(const Duration(milliseconds: 250), () {
                         widget.onScore(1);
                         widget.onProgress((count1 + 2) / 6.5);
                         count1++;
-                             for (var i = 0; i < _Index.length; i++) {
+                        for (var i = 0; i < _Index.length; i++) {
                           _letters[_Index[i]] = null;
                         }
 
@@ -286,30 +285,28 @@ for (num e in _val2) {
                         for (var i = 0; i < count; i++) {
                           _letters.add(null);
                         }
-                                print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+                        print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
-                                 
-                         _val2.removeRange(0, _val2.length);
+                        _val2.removeRange(0, _val2.length);
 
-                          Ansum=0;
-                                _val2 = _letters.sublist(0, 4);
-                                  print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
-                                   _val2.forEach((e) {if(e==null){
-                                      
-                                         
-                                   }
-                                   });
-                                    print("my calling onennd value is $k");
-                                   _val2.removeWhere((value) => value == null);
-                                   k=_val2.length;
+                        Ansum = 0;
+                        _val2 = _letters.sublist(0, z);
+                        z++;
+                        print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
+                        _val2.forEach((e) {
+                          if (e == null) {}
+                        });
+                        print("my calling onennd value is $k");
+                        _val2.removeWhere((value) => value == null);
+                        k = _val2.length;
 
-                                   print("thid  is the vlaue of length is valu$k");
-                                for (num e in _val2) {
-                                 Ansum += e;
-                                   }
-                                   print("thhhiiiiiiisssss isss shanthuuuu$_val2");
-                                        Ansr=Ansum;
-                                        
+                        print("thid is the vlaue of length is valu$k");
+                        for (num e in _val2) {
+                          Ansum += e;
+                        }
+                        print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+                        Ansr = Ansum;
+
                         count = 0;
                         _statuses = _copyVal
                             .map((a) => Status.Active)
@@ -319,28 +316,28 @@ for (num e in _val2) {
                             .toList(growable: false);
                         _Index.removeRange(0, _Index.length);
                         _num2.removeRange(0, _num2.length);
-                  
                       });
-                      k=_letters[4];
+                      k = _letters[4];
                       print("helllo this letters$k");
-                            if(_letters[4] == null) {
-                       setState(() {
-                         k=0;
-                          Ansr=0;
+                      if (_letters[z] == null) {
+                        setState(() {
+                        print("its reload time ");
+                          k = 0;
+                          Ansr = 0;
                           ssum = '';
-                          sum=0;
-                _letters.removeRange(0, _letters.length);
-              });
-                  new Future.delayed(const Duration(milliseconds: 250), () {
-                    print("Rajesh Game-End");
-                    widget.onEnd();
-                });
-               }
+                          sum = 0;
+                          _Index.removeRange(0, _Index.length);
+                          _letters.removeRange(0, _letters.length);
+                            _center.removeRange(0, _center.length);
+                        });
+                        new Future.delayed(const Duration(milliseconds: 250),
+                            () {
+                          print("Rajesh Game-End");
+                          widget.onEnd();
+                        });
+                      }
 
-
-                  
                       _val2.removeRange(0, _val2.length);
-                      
                     }
                   });
                 }
@@ -357,7 +354,7 @@ for (num e in _val2) {
               _Index.removeRange(0, _Index.length);
               _num2.removeRange(0, _num2.length);
               _center.removeRange(0, _center.length);
-           
+
               center = 0;
             });
           }
@@ -434,6 +431,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   int _displayText;
+  List<Offset> _points = [];
 
   initState() {
     super.initState();
@@ -469,17 +467,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
 
     return new Container(
-      decoration: new BoxDecoration(
-        color:
-            widget.bgstatus == Bgstatus.BgVisible ? Colors.red : Colors.white,
-        borderRadius: new BorderRadius.circular(.0),
-      ),
-      child: new ScaleTransition(
+        decoration: new BoxDecoration(
+          color:
+              widget.bgstatus == Bgstatus.BgVisible ? Colors.red : Colors.white,
+          borderRadius: new BorderRadius.circular(.0),
+        ),
+        child: new ScaleTransition(
           scale: animation,
           child: new GestureDetector(
+
               child: new RaisedButton(
                   onPressed: () => widget.onPress(),
-                  padding: new EdgeInsets.all(8.0),
+       
                   color: widget.status == Status.Visible
                       ? Colors.yellow
                       : Colors.teal,
@@ -487,8 +486,39 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       borderRadius:
                           new BorderRadius.all(new Radius.circular(8.0))),
                   child: new Text("$_displayText",
-                      style: new TextStyle(
-                          color: Colors.black, fontSize: 24.0))))),
-    );
+                      style:
+                          new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
+        ));
+  }
+}
+
+class DrawPainting extends CustomPainter {
+  List<Offset> points = [];
+  Canvas _lastCanvas;
+  Size _lastSize;
+  DrawPainting(this.points) {}
+
+  void paint(Canvas canvas, Size size) {
+    print({
+      "the main paint is called .... ": {"size": size}
+    });
+    _lastCanvas = canvas;
+    _lastSize = size;
+
+    Paint paint = new Paint()
+      ..strokeCap = StrokeCap.round
+      ..color = Colors.red
+      ..strokeWidth = 5.0;
+    print("this is painting my tiles");
+
+    for (int i = 0; i < points.length; i++) {
+      if (points[i] != null && points[i + 1] != null) {
+        canvas.drawLine(points[i], points[i + 1], paint);
+      }
+    }
+  }
+
+  bool shouldRepaint(DrawPainting oldDelegate) {
+    return true;
   }
 }
