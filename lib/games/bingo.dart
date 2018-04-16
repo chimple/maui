@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-
-import 'package:maui/components/Shaker.dart';
-
-
+import 'dart:math';
+import 'package:maui/components/shaker.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
@@ -17,279 +13,364 @@ class Bingo extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  Bingo({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated=false})
+  Bingo(
+      {key,
+        this.onScore,
+        this.onProgress,
+        this.onEnd,
+        this.iteration,
+        this.gameCategoryId,
+        this.isRotated = false})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new BingoState();
 }
-enum Status {Active,Visible}
-enum ShakeCell{Right,Wrong,Dance,Curve}
+
+enum Status { Active, Visible }
+enum ShakeCell { Right, Wrong, Dance, CurveRow }
+enum ColmunCell { ColumnActive, CurveColumn }
 
 class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
+  Map<String, String> _Bingodata;
+  List<String> _all = [];
 
-   Map<String,String> _Bingodata;
-   List<String> _all = [];
-
-   int _size = 3;
-  var ques = 0;
+  int _size = 3;
+  var ques;
   var num1 = 0;
-  var i = 0;
+  var i = 0, j = 0;
   Animation animation;
   AnimationController animationController;
   List _copyQuestion = [];
-   List<String> _shuffledLetters = [];
+  List<String> _shuffledLetters = [];
   List<Status> _statuses = [];
-  List<ShakeCell>_ShakeCells = [];
+  List<ShakeCell> _ShakeCells = [];
+  List<ColmunCell> _ColmunCells = [];
 //  List _letters;
   static int m = 3;
   static int n = 3;
   static double k = 3.0;
   static double l = 3.0;
   var count = 0;
+  var x=0;
   // stored index check
   var s = 0;
-/// datattaaaa
+  var element;
+
+
+  /// datattaaaa
 
   bool _isLoading = true;
   var sum = 0;
-  var _letters = new List.generate(m , (_) => new List(n));
-  var _referenceMatrix = new List.generate(k.ceil() , (_) => new List(l.ceil()));
+  List _letters = new List.generate(m, (_) => new List(n));
+  var _referenceMatrix = new List.generate(k.ceil(), (_) => new List(l.ceil()));
 
   @override
   void initState() {
     super.initState();
     _initBoard();
   }
-  void _initBoard() async {
-     animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
-     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
-    setState(()=>_isLoading=true);
-    _Bingodata = await fetchPairData(widget.gameCategoryId , _size*_size);
-print({"kiran data":_Bingodata});
 
-    _Bingodata.forEach((e,v) {
+  void _initBoard() async {
+    animationController = new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
+    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+    setState(() => _isLoading = true);
+    _Bingodata = await fetchPairData(widget.gameCategoryId, _size * _size);
+    print({"kiran data": _Bingodata});
+
+    _Bingodata.forEach((e, v) {
       _copyQuestion.add(e);
       _all.add(v);
     });
-    _copyQuestion.add(null);
+
     ques = _copyQuestion[i];
-    print({"this questions :":_copyQuestion});
-    print({"this questions :":_all[i]});
+    print({"this questions :": _copyQuestion});
+    print({"this questions :": _all[i]});
 //    print("this is a $question");
     print("this is a $ques");
 
-
     for (var i = 0; i < _all.length; i += _size * _size) {
       _shuffledLetters.addAll(
-          _all.skip(i).take(_size * _size).toList(growable: false)
-            ..shuffle());
+          _all.skip(i).take(_size * _size).toList(growable: false)..shuffle());
     }
-//    for (var i = 0; i < _size; i++) {
-//      for (var j = 0; j < _size; j++) {
-//        _referenceMatrix[i][j] = _shuffledLetters[count];
-//        count++;
-//      }
-//    }
     print({"reference size referenceMatrix.length": _referenceMatrix});
-    _letters = _shuffledLetters.sublist(0 , _size * _size);
+    _letters = _shuffledLetters.sublist(0, _size * _size);
     _statuses = _letters.map((a) => Status.Active).toList(growable: false);
     _ShakeCells = _letters.map((a) => ShakeCell.Wrong).toList(growable: false);
+    _ColmunCells =
+        _letters.map((a) => ColmunCell.ColumnActive).toList(growable: false);
     print({"reference size _ShakeCells.length": _ShakeCells});
-    setState(()=>_isLoading = false);
+    print({"reference size _ShakeCells.length": _ColmunCells});
+    setState(() => _isLoading = false);
   }
 
-
-  Widget _buildItem(int index , String text , Status status,ShakeCell tile) {
+  Widget _buildItem(
+      int index, String text, Status status, ShakeCell tile, ColmunCell Ctile) {
     return new MyButton(
-        key: new ValueKey<int>(index) ,
-        text: text ,
-        status: status ,
+        key: new ValueKey<int>(index),
+        text: text,
+        status: status,
         tile: tile,
+        Ctile: Ctile,
         onPress: () {
+          print("this is index of prssed text ");
           print("index $index");
           print("text $text");
-          if (status==Status.Active) {
+          if (status == Status.Active) {
             print("index kirrrrran $index");
             setState(() {
-              if ( text  == _copyQuestion[i]) {
 
-                _statuses[index] = Status.Visible;
+              if (text == element || text == ques) {
+
+                setState(() {
+                  _statuses[index] = Status.Visible;
+                  widget.onScore(1);
+
+                });
 
                 int counter = 0;
-                for(int i= 0;i<3;i++){
-                  for(int j=0;j<3;j++){
-                    if(counter == index){
+                for (int i = 0; i < 3; i++) {
+                  for (int j = 0; j < 3; j++) {
+                    if (counter == index) {
                       _referenceMatrix[i][j] = ShakeCell.Dance;
+                      print({"this is  size": _size});
                     }
                     counter++;
                   }
                 }
 
                 int matchRow = bingoHorizontalChecker();
-                print({"the bingo checker response row : " : matchRow});
-             ///horizontall  data showing part
-                if( -1 != matchRow){
+                print({"the bingo checker response row : ": matchRow});
+
+                ///horizontall  data showing part
+                if (-1 != matchRow) {
                   print("this is BINGORow");
-                  for(int j = 0;j <= _referenceMatrix.length-1;j++ ) {
-                    if(_referenceMatrix[matchRow][j] == ShakeCell.Dance ){
-                      _referenceMatrix[matchRow][j] = ShakeCell.Curve;
-
-
+                  for (int j = 0; j <= _referenceMatrix.length - 1; j++) {
+                    if (_referenceMatrix[matchRow][j] == ShakeCell.Dance) {
+                      _referenceMatrix[matchRow][j] = ShakeCell.CurveRow;
                     }
                   }
-                  if(matchRow==0){
-                    for(i=matchRow; i<_size+matchRow; i++ )
-                    {
-                      setState((){
-                        _ShakeCells[i]=ShakeCell.Curve;
-                      });
-                    }
-                  }
-                  else if(matchRow==1)
-                    {  matchRow=matchRow+_size-1;
-                      for(i=matchRow; i<_size+matchRow; i++ )
-                    {
-                      setState((){
-                        _ShakeCells[i]=ShakeCell.Curve;
-                      });
-                    }
+//                  horizontall animation and Bingo
+                  if (matchRow == 0) {
+                    for (i = matchRow; i < _size + matchRow; i++) {
+                      setState(() {
+                        _ShakeCells[i] = ShakeCell.CurveRow;
+                        widget.onProgress(2/1);
 
-                    }
-                    else
-                      { matchRow= matchRow+_size+1;
-                        for(i=matchRow; i<_size+matchRow; i++ )
-                      {
-                        setState((){
-                          _ShakeCells[i]=ShakeCell.Curve;
+                        new Future.delayed(const Duration(milliseconds: 2000), () {
+                          widget.onEnd();
                         });
-                      }
+                      });
+                    }
+                  } else if (matchRow == 1) {
+                    matchRow = matchRow + _size - 1;
+                    for (i = matchRow; i < _size + matchRow; i++) {
+                      setState(() {
+                        _ShakeCells[i] = ShakeCell.CurveRow;
+                        widget.onProgress(2/1);
+                        new Future.delayed(const Duration(milliseconds: 2000), () {
+                          widget.onEnd();
+                        });
+                      });
+                    }
+                  } else {
+                    matchRow = matchRow + _size + 1;
+                    for (i = matchRow; i < _size + matchRow; i++) {
+                      setState(() {
+                        _ShakeCells[i] = ShakeCell.CurveRow;
+                        widget.onProgress(2/1);
 
-                      }
+                        new Future.delayed(const Duration(milliseconds: 2000), () {
+                          widget.onEnd();
+                        });
+                      });
+                    }
+                  }
 
                   print("thius is bngo animati curved in it $_ShakeCells");
                 }
                 int matchColumn = bingoVerticalChecker();
-                print({"the bingo checker response column: " : matchColumn});
-                if( -1 != matchColumn){
-                  print({"matchColumn elements":matchColumn.toString()});
+                print({"the bingo checker response column: ": matchColumn});
+                if (-1 != matchColumn) {
+                  //horizontall animation and Bingo
+                  if (matchColumn == 0) {
+                    print("this is 000first column of kiran $matchColumn ");
+                    for (i = matchColumn; i <= _size + _size; i++) {
+                      print("print iiiiiiiiiiii is iiiiiiii is $i");
+                      setState(() {
+                        print("this is great");
+                        _ColmunCells[i] = ColmunCell.CurveColumn;
+                        i = i + 2;
+                        widget.onProgress(2/1);
 
+                        new Future.delayed(const Duration(milliseconds: 2000), () {
+                          widget.onEnd();
+                        });
+                        print({"this is 1": _ColmunCells});
+                      });
+                    }
+                  } else if (matchColumn == 1) {
+                    print("this is 1111second column of kiran $matchColumn ");
+                    for (i = matchColumn;
+                    i <= _size + matchColumn + _size;
+                    i++) {
+                      print("print iiiiiiiiiiii is iiiiiiii is $i");
+                      setState(() {
+                        print({"this is 2": _ColmunCells});
+                        _ColmunCells[i] = ColmunCell.CurveColumn;
+                        i = i + 2;
+                        widget.onProgress(2/1);
+
+                        new Future.delayed(const Duration(milliseconds:2000), () {
+                          widget.onEnd();
+                        });
+                      });
+                    }
+                  } else {
+                    print("this is 2222third column of kiran $matchColumn ");
+                    for (i = matchColumn;
+                    i <= _size + matchColumn + _size;
+                    i++) {
+                      print("print iiiiiiiiiiii is iiiiiiii is $i");
+                      setState(() {
+                        _ColmunCells[i] = ColmunCell.CurveColumn;
+                        i = i + 2;
+                        widget.onProgress(2/1);
+
+                        new Future.delayed(const Duration(milliseconds: 2000), () {
+                          widget.onEnd();
+                        });
+                        print({"this is 3": _ColmunCells});
+                      });
+                    }
+                  }
+
+                  print(
+                      "thius is bngo animation  Colmun curved in it $_ColmunCells");
                 }
 
-                print({"this is reference":_referenceMatrix});
-                print({"this is i value ": i });
+                print({"this is reference": _referenceMatrix});
+                print({"this is i value ": i});
 
-                if(i <= _size*_size-1){
-                  i++;
+                if (i <= _size * _size - 1) {
+
+                  _copyQuestion.removeWhere((val)=> val==ques);
                   ques = _copyQuestion[i];
-                }else{
+
+                } else {
                   print({"where is green manu ": " hello index is over"});
                 }
               }
-              else{
+
+              else {
+
                 _ShakeCells[index] = ShakeCell.Right;
+
                 print("this is wrongg");
-                new Future.delayed(const Duration(milliseconds: 400), (){
-                    setState((){
-                      _ShakeCells[index] = ShakeCell.Wrong;
-                    });
-              });
+                new Future.delayed(const Duration(milliseconds: 200), () {
+                  setState(() {
+                    _ShakeCells[index] = ShakeCell.Wrong;
+                    final _random = new Random();
+                    var element = _copyQuestion[_random.nextInt(_copyQuestion.length)];
+                    ques=element;
+                  });
+                });
               }
-            }
-            );
+            });
           }
         });
   }
-
 
   @override
   Widget build(BuildContext context) {
 //    print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-    if(_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator()
-      );
+          width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
-    return new LayoutBuilder(builder: (context,constraints)
-    {
+    return new LayoutBuilder(builder: (context, constraints) {
       var j = 0;
       return new Container(
-      child: new Column(
+        child: new Column(
           children: <Widget>[
-            new Container
-              (color: Colors.orange , height:100.0,width: 100.0 ,
-                child: new Center(child: new Text("$ques" ,
-                    key: new Key('question') ,
-                    style: new TextStyle(
-                        color: Colors.black , fontSize: 30.0)))) ,
-            new Expanded(child: new ResponsiveGridView(
-              rows: _size ,
-              cols: _size ,
-              children: _letters.map((e) =>
-                  _buildItem(j , e , _statuses[j] , _ShakeCells[j++])).toList(
-                  growable: false) ,
-            )),
+            new Container(
+                color: Colors.orange,
+                height: 100.0,
+                width: 100.0,
+                child: new Center(
+                    child: new Text("$ques",
+                        key: new Key('question'),
+                        style: new TextStyle(
+                            color: Colors.black, fontSize: 30.0)))),
+            new Expanded(
+                child: new ResponsiveGridView(
+                  rows: _size,
+                  cols: _size,
+                  children: _letters
+                      .map((e) => _buildItem(
+                      j, e, _statuses[j], _ShakeCells[j], _ColmunCells[j++]))
+                      .toList(growable: false),
+                )),
           ],
-      ),);
+        ),
+      );
     });
   }
-  int bingoHorizontalChecker() {
 
-    print({"the reference matrix value is : " : _referenceMatrix});
-    for(int i= 0 ; i< _referenceMatrix.length ; i++){
+  int bingoHorizontalChecker() {
+    print({"the reference matrix value is : ": _referenceMatrix});
+    for (int i = 0; i < _referenceMatrix.length; i++) {
       bool bingo = true;
-      for(int j = 0 ; j < _referenceMatrix.length; j++){
-        if(_referenceMatrix[i][j] == null){
+      for (int j = 0; j < _referenceMatrix.length; j++) {
+        if (_referenceMatrix[i][j] == null) {
           bingo = false;
           break;
         }
       }
-      if(bingo)
-        return i;
+      if (bingo) return i;
     }
 
     return -1;
   }
 
   int bingoVerticalChecker() {
-
-    print({"the reference matrix value is : " : _referenceMatrix});
-    for(int j= 0 ; j< _referenceMatrix.length ; j++){
+    print({"the reference matrix value is : ": _referenceMatrix});
+    for (int j = 0; j < _referenceMatrix.length; j++) {
       bool bingo = true;
-      for(int i = 0 ; i < _referenceMatrix.length; i++){
-        if(_referenceMatrix[i][j] == null){
+      for (int i = 0; i < _referenceMatrix.length; i++) {
+        if (_referenceMatrix[i][j] == null) {
           bingo = false;
           break;
         }
       }
-      if(bingo)
-        return j;
+      if (bingo) return j;
     }
 
     return -1;
   }
-
 }
 
-class MyButton extends StatefulWidget{
-  MyButton({Key key, this.text, this.onPress,this.status,this.tile}) : super(key: key);
+class MyButton extends StatefulWidget {
+  MyButton(
+      {Key key, this.text, this.onPress, this.status, this.tile, this.Ctile})
+      : super(key: key);
 
   final String text;
   final VoidCallback onPress;
   Status status;
   ShakeCell tile;
+  ColmunCell Ctile;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller,controller1,controller2;
-  Animation<double> animationRight,animationWrong,animationDance;
+  AnimationController controller, controller1, controller2;
+  Animation<double> animationRight, animationWrong, animationDance;
   String _displayText;
 
   initState() {
@@ -298,11 +379,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
-    controller1 =  new AnimationController(
+    controller1 = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
-     animationRight = new CurvedAnimation(parent: controller, curve: Curves.elasticIn);
+    animationRight =
+    new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller2 = new AnimationController(
-        duration: new Duration(milliseconds:1000), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
     controller.addStatusListener((state) {
 //        print("$state:${animationRight.value}");
 ////        if (state == AnimationStatus.completed) {
@@ -312,13 +394,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //////            controller.stop();
 //////          }
 ////        }
-      });
-   controller.forward();
+    });
+    controller.forward();
     animationWrong = new Tween(begin: -8.0, end: 8.0).animate(controller1);
-    animationDance = new CurvedAnimation(parent: controller2, curve: Curves.bounceOut);
+    animationDance =
+    new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
     _myAnim();
     _myZoom();
-
   }
 
   void _myAnim() {
@@ -331,6 +413,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controller1.forward();
   }
+
   void _myZoom() {
     animationDance.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -351,19 +434,34 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //  }
 
   @override
+  void dispose() {
+    controller2.dispose();
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 //    print("_MyButtonState.build");
-return new ScaleTransition(
-            scale: widget.tile == ShakeCell.Curve ?animationDance : animationRight,
-            child: new Shake(
-              animation:widget.tile == ShakeCell.Right ? animationWrong : animationRight,
+    return new ScaleTransition(
+        scale: widget.Ctile == ColmunCell.CurveColumn ||
+            widget.tile == ShakeCell.CurveRow
+            ? animationDance
+            : animationRight,
+        child: new Shake(
+            animation: widget.tile == ShakeCell.Right
+                ? animationWrong
+                : animationRight,
             child: new ScaleTransition(
                 scale: animationRight,
                 child: new RaisedButton(
-                  splashColor: Colors.red,
+                    splashColor: Colors.red,
                     onPressed: () => widget.onPress(),
                     padding: const EdgeInsets.all(8.0),
-                    color: widget.status == Status.Visible ? Colors.yellow : Colors.teal,
+                    color: widget.status == Status.Visible
+                        ? Colors.yellow
+                        : Colors.teal,
                     shape: new RoundedRectangleBorder(
                         borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),

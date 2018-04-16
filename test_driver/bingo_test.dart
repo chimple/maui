@@ -13,10 +13,10 @@ void main() {
       driver = await FlutterDriver.connect();
     });
 
-    // tearDownAll(() async {
-    //   if (driver != null)
-    //     await driver.close();
-    // });
+    tearDownAll(() async {
+      if (driver != null)
+        await driver.close();
+    });
 
     test('signin', () async {
 
@@ -66,11 +66,14 @@ void main() {
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
     test('playing the game', () async {
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       final Completer<Null> completer = new Completer<Null>();
      final SerializableFinder todo = find.text('Upper Case Letters');
+     await new Future<Duration>.delayed(const Duration(seconds: 1));
       final SerializableFinder mode=find.byValueKey('single'); 
 
       await driver.tap(todo);
+      await new Future<Duration>.delayed(const Duration(seconds: 1));
       await driver.tap(mode);
 
       completer.complete();
@@ -80,18 +83,17 @@ void main() {
     test('Bingo', () async {
       final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder t= find.byValueKey('question');
-       int num=int.parse( await driver.getText(t));
-       print(num);
-      //  await driver.tap(n);
-      while(true){
-      for(int i=num;i<=9;i++)
+       String p= await driver.getText(t);
+       print(p);
+      // while(true){
+      for(int i=1;i<=9;i++)
       {
-        // final SerializableFinder n=find.byValueKey(num);
         await driver.tap(find.byValueKey(i-1));
         await new Future<Null>.delayed(kWaitBetweenActions);
         }
        completer.complete();
-      await completer.future;}
+      await completer.future;
+      // }
     }, timeout: const Timeout(const Duration(minutes: 4)));    
   });
 }

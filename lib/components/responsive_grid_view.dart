@@ -1,48 +1,50 @@
+import 'dart:math';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
 class ResponsiveGridView extends StatelessWidget {
-  List<Widget> children;
+  final List<Widget> children;
   final int cols;
   final int rows;
   final EdgeInsetsGeometry padding;
-  final double mainAxisSpacing;
-  final double crossAxisSpacing;
-  final double childAspectRatio;
+  final double maxAspectRatio;
 
   ResponsiveGridView(
       {@required this.children,
       @required this.cols,
       @required this.rows,
       this.padding = const EdgeInsets.all(4.0),
-      this.mainAxisSpacing = 4.0,
-      this.crossAxisSpacing = 4.0,
-      this.childAspectRatio = 1.0});
+      this.maxAspectRatio});
 
   @override
   Widget build(BuildContext context) {
+    print('ResponsiveGridView.build');
     return new LayoutBuilder(builder: (context, constraints) {
-      bool portrait = constraints.maxHeight * cols > constraints.maxWidth * rows;
-      if (!portrait) {
-        var widgets = <Widget>[];
-        for (int i = 0; i < cols; i++) {
-          for (int j = 0; j < rows; j++) {
-            widgets.add(children[j * cols + i]);
-          }
-        }
-        print(widgets);
-        children = widgets;
+      print(constraints);
+      List<Widget> tableRows = new List<Widget>();
+      final aspectRatio =
+          constraints.maxWidth * rows / (constraints.maxHeight * 0.90 * cols);
+      for (var i = 0; i < rows; ++i) {
+        List<Widget> cells = children
+            .skip(i * cols)
+            .take(cols)
+            .map((w) => new Expanded(
+                child: new Padding(
+                    padding: padding,
+                    child: new AspectRatio(
+                        aspectRatio: max(
+                            maxAspectRatio ?? aspectRatio, aspectRatio),
+                        child: w))))
+            .toList(growable: false);
+        tableRows.add(new Row(children: cells));
       }
-      return new Center(
-          child: new GridView.count(
-              crossAxisCount: portrait ? cols : rows,
-              shrinkWrap: true,
-              padding: padding,
-              mainAxisSpacing: mainAxisSpacing,
-              crossAxisSpacing: crossAxisSpacing,
-              childAspectRatio: childAspectRatio,
-              scrollDirection: portrait ? Axis.vertical : Axis.horizontal,
-              children: children));
+
+      return new Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: tableRows,
+          ));
     });
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 
-class TrueFalseGame extends StatefulWidget {
+class Quiz extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -13,13 +13,13 @@ class TrueFalseGame extends StatefulWidget {
   bool isRotated;
 
 
-  TrueFalseGame({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated}) : super(key: key);
+  Quiz({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.gameCategoryId, this.isRotated}) : super(key: key);
   
   @override
-  State createState() => new TrueFalseGameState();
+  State createState() => new QuizState();
 }
 
-class TrueFalseGameState extends State<TrueFalseGame> {
+class QuizState extends State<Quiz> {
   bool _isLoading = true;
  
  Tuple2<String, bool> _allques;
@@ -85,31 +85,56 @@ class TrueFalseGameState extends State<TrueFalseGame> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new QuestionText(questionText),]
+              children: [new QuestionText(questionText),]
             ),
 
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                    new Padding(
+                      padding: new EdgeInsets.all(wd * 0.015),
+                    ),
 
-                  new Padding(
-                    padding: new EdgeInsets.all(wd * 0.015),
-                  ),
+                    new AnswerButton(true, () => handleAnswer(true)), //true button
 
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                    new Padding(
+                      padding: new EdgeInsets.all(wd * 0.015),
+                    ),
 
-                  new Padding(
-                    padding: new EdgeInsets.all(wd * 0.015),
-                  ),
+                    new AnswerButton(false, () => handleAnswer(false)), //false button
 
-                  new AnswerButton(false, () => handleAnswer(false)), //false button
+                    new Padding(
+                      padding: new EdgeInsets.all(wd * 0.015),
+                    ),
+                  ]
+                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
 
-                  new Padding(
-                    padding: new EdgeInsets.all(wd * 0.015),
-                  ),
+                      new Padding(
+                        padding: new EdgeInsets.all(wd * 0.015),
+                      ),
 
-                ]
+                      new AnswerButton(true, () => handleAnswer(true)), //true button
+
+                      new Padding(
+                        padding: new EdgeInsets.all(wd * 0.015),
+                      ),
+
+                      new AnswerButton(false, () => handleAnswer(false)), //false button
+
+                      new Padding(
+                        padding: new EdgeInsets.all(wd * 0.015),
+                      ),
+
+                    ]
+                ),
+              ]
             ),
           ],
         ),
