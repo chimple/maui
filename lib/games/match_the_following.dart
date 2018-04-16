@@ -27,9 +27,12 @@ class MatchTheFollowing extends StatefulWidget {
   State<StatefulWidget> createState() => new _MatchTheFollowingState();
 }
 
-enum Status { Disable, Enable, ShakeLeft, Stopped0,Shake,Stopped }
-enum Status { Disable, Enable, Dump, Shake, Stopped,Color }
-enum StatusShake { Stopped, ShakeRight, Shake, }
+enum Status { Disable, Enable, Dump, Shake, Stopped, Color }
+enum StatusShake {
+  Stopped,
+  ShakeRight,
+  Shake,
+}
 
 //enum color {0xFFaa0e42}
 class _MatchTheFollowingState extends State<MatchTheFollowing>
@@ -40,8 +43,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   List<String> _rightSideLetters = [];
   List<String> _lettersLeft = [], _lettersRight = [];
   List<String> _shuffledLetters = [], _shuffledLetters1 = [];
-  List<Status> _statusColorChange=[];
-  List<Status> _statusShake=[];
+  List<Status> _statusColorChange = [];
+  List<Status> _statusShake = [];
   Map<String, String> _allLetters;
   String _leftSideText, _rightSideText;
   final int score = 2;
@@ -66,19 +69,22 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       );
     }
 
-    return new Material(
-     child:new Container(
-        color: new Color(0xFF28c9c9),
+   //  return new Material(
+    // child: new Expanded(
+   return new Container(
+        color: new Color(0xffAB47BC),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Expanded(
               child: _buildLeftSide(context),
-            ), 
-            new Expanded(child: _buildRightSide(context)), 
+            ),
+            new Padding(padding: new EdgeInsets.all(50.0)),
+            new Expanded(child: _buildRightSide(context)),
           ],
-        ))
-        );
+        ));
+     //);
+    // );
   }
 
   void initState() {
@@ -89,13 +95,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
-     super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     // print(oldWidget.iteration);
     // print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
   }
+
   void _initBoard() async {
     _leftSideletters.clear();
     _rightSideLetters.clear();
@@ -118,7 +125,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
     _lettersLeft = _shuffledLetters.sublist(start, _nextTask);
     _lettersRight = _shuffledLetters1.sublist(start, _nextTask);
-     print("Shuffle data:: $_lettersLeft ,$_lettersRight");
+    print("Shuffle data:: $_lettersLeft ,$_lettersRight");
     _statusColorChange =
         _shuffledLetters.map((a) => Status.Disable).toList(growable: false);
     _statusShake =
@@ -131,12 +138,13 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: 5,
       cols: 1,
-      padding: const EdgeInsets.all(10.0),
+      // padding: const EdgeInsets.all(10.0),
       children: _lettersLeft
           .map((e) => _buildItemsLeft(j, e, _statusColorChange[j++]))
           .toList(growable: false),
     );
   }
+
   Widget _buildItemsLeft(int index, String text, Status colorstatus) {
     return new MyButton(
         key: new ValueKey<int>(index),
@@ -168,7 +176,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: 5,
       cols: 1,
-      padding: const EdgeInsets.all(10.0),
+      //padding: const EdgeInsets.all(10.0),
       children: _lettersRight
           .map((e) => _buildItemsRight(j, e, _statusShake[j++]))
           .toList(growable: false),
@@ -190,34 +198,38 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   void match(int indexRightbutton) {
     if (flag2 == 1) if (leftSideTextIndex ==
         _rightSideLetters.indexOf(_rightSideText)) {
-          try{
-      setState(() {
-        //  _lettersLeft[indexText1] = null;
-         // _lettersRight[indexText2] = null;
-        _statusShake[indexRightbutton] = Status.Dump;
-        _statusColorChange[indexLeftButton] = Status.Disable;
-      });}
-      catch(exception,e){}
+      try {
+        setState(() {
+          //  _lettersLeft[indexText1] = null;
+          // _lettersRight[indexText2] = null;
+          _statusShake[indexRightbutton] = Status.Dump;
+          _statusColorChange[indexLeftButton] = Status.Disable;
+        });
+      } catch (exception, e) {}
       correct++;
       widget.onScore(1);
       widget.onProgress(correct / 5);
       flag2 = 0;
       try {
-      new Future.delayed(const Duration(milliseconds: 500,),(){
-        setState((){
-          _statusShake[indexRightbutton] = Status.Color;
+        new Future.delayed(
+            const Duration(
+              milliseconds: 500,
+            ), () {
+          setState(() {
+            _statusShake[indexRightbutton] = Status.Color;
+          });
         });
-      });
-      }
-      catch(exception,e){}
+      } catch (exception, e) {}
     } else {
       leftSideTextIndex = -1;
       if (flag2 == 1) {
+        try {
         setState(() {
           _statusShake[indexRightbutton] = Status.Shake;
           _statusColorChange[indexLeftButton] = Status.Shake;
           flag1 = 1;
-        });
+        });}
+        catch(exception,e){}
         try {
           new Future.delayed(const Duration(milliseconds: 500), () {
             setState(() {
@@ -239,16 +251,16 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
     if (correct == 5) {
       correct = 0;
-      widget.onScore(-_wrongAttem);      
+      widget.onScore(-_wrongAttem);
       _wrongAttem = 0;
-      new Future.delayed(const Duration(milliseconds: 1000),(){
-       widget.onEnd();
-       _initBoard();
-       _gameEnd++;
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        widget.onEnd();
+        _initBoard();
+        _gameEnd++;
       });
     }
-    if (_gameEnd==2){
-      _gameEnd=0;
+    if (_gameEnd == 2) {
+      _gameEnd = 0;
     }
   }
 }
@@ -276,8 +288,8 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
-  AnimationController controller, controllerShake,dumpController;
-  Animation animationInvisible, animationShake, noAimation,dumpAnimation;
+  AnimationController controller, controllerShake, dumpController;
+  Animation animationInvisible, animationShake, noAimation, dumpAnimation;
   initState() {
     super.initState();
     initStateData();
@@ -291,11 +303,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 500), vsync: this);
     controllerShake = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
-        dumpController = new AnimationController(
+    dumpController = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
-    animationInvisible =
-        new CurvedAnimation(parent: controller, curve: new Interval(0.0, 1.0,curve: Curves.ease));
-        dumpAnimation = new CurvedAnimation(parent: dumpController,curve: new Interval(0.60, 1.0,curve: Curves.easeIn));
+    animationInvisible = new CurvedAnimation(
+        parent: controller, curve: new Interval(0.0, 1.0, curve: Curves.ease));
+    dumpAnimation = new CurvedAnimation(
+        parent: dumpController,
+        curve: new Interval(0.60, 1.0, curve: Curves.easeIn));
     animationShake = new Tween(
       begin: -3.10,
       end: 2.10,
@@ -315,6 +329,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     shake();
     dumping();
   }
+
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -325,11 +340,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     //   } else if (status == AnimationStatus.dismissed) {
     //     controller.forward();
     //   }
-    // });  
+    // });
     // }
-   // controller.forward();
+    // controller.forward();
   }
-void dumping(){
+
+  void dumping() {
     dumpController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         dumpController.reverse();
@@ -338,7 +354,8 @@ void dumping(){
       }
     });
     dumpController.forward();
-}
+  }
+
   void shake() {
     controllerShake.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -349,6 +366,7 @@ void dumping(){
     });
     controllerShake.forward();
   }
+
   @override
   void dispose() {
     controllerShake.dispose();
@@ -359,45 +377,47 @@ void dumping(){
 
   @override
   Widget build(BuildContext context) {
-    const double radius=8.0;
+    const double radius = 8.0;
     Size media = MediaQuery.of(context).size;
     double _w = media.width;
     _w = _w / 18;
-    int _color=0xFFA9A9A9;
-    if (widget.status==Status.Shake){
-      _color=0xFFff0000; // red
+    int _color = 0xFFA9A9A9;
+    if (widget.status == Status.Shake) {
+      _color = 0xFFff0000; // red
     }
-    
+
     return new Shaker(
         key: widget.key,
-        animation:
-            widget.status == Status.Shake ? animationShake : noAimation,
+        animation: widget.status == Status.Shake ? animationShake : noAimation,
         child: new ScaleTransition(
             scale: animationInvisible,
             key: widget.key,
             child: new Container(
-            child: new RaisedButton(
-                disabledColor:widget.status==Status.Color ? Colors.green : new  Color(_color),
-                elevation: (widget.status == Status.Enable ||
-                        widget.status == Status.Shake)
-                    ? 0.0
-                    : 8.0,
-                splashColor: Colors.red,
-                onPressed: widget.status == Status.Disable ||
-                        widget.status == Status.Stopped
-                    ? () => widget.onPress()
-                    : null,
-                color: widget.status== Status.Enable ? new Color(0xFF808080): new Color(0xFFed4a79),
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(radius))),
-                child: new Text(_displayText,
-                    style: new TextStyle(
-                        color: widget.status==Status.Enable? new Color(0xFF13A1A9) :new Color(0xFFffffff),
-                        fontSize: _w,
-                        fontStyle: FontStyle.italic))
-                        ))
-                        ));
+              margin: const EdgeInsets.only(left: 10.0,right: 10.0),
+                child: new RaisedButton(
+                    disabledColor: widget.status == Status.Color
+                        ? Colors.green
+                        : new Color(_color),
+                    elevation: (widget.status == Status.Enable || widget.status == Status.Shake)
+                        ? 0.0
+                        : 8.0,
+                    splashColor: Colors.red,
+                    onPressed: widget.status == Status.Disable || widget.status == Status.Stopped
+                        ? () => widget.onPress()
+                        : null,
+                    color: widget.status == Status.Enable
+                        ? new Color(0xFF808080)
+                        : new Color(0xFFed4a79),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(
+                            const Radius.circular(radius))),
+                    child: new Text(_displayText,
+                        style: new TextStyle(
+                            color: widget.status == Status.Enable
+                                ? new Color(0xFF13A1A9)
+                                : new Color(0xFFffffff),
+                            fontSize: _w,
+                            fontStyle: FontStyle.italic))))));
   }
 }
 
