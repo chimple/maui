@@ -76,7 +76,7 @@ void main() {
 
       final Completer<Null> completer = new Completer<Null>();
       // await new Future<Duration>.delayed(const Duration(seconds: 2));
-      final SerializableFinder todo = find.text('1'); 
+      final SerializableFinder todo = find.text('2'); 
       await driver.tap(todo);
       await new Future<Duration>.delayed(const Duration(seconds: 2));
       final SerializableFinder pp = find.byValueKey('single');
@@ -88,15 +88,28 @@ void main() {
 
      test('PlayingGame', () async{
        final Completer<Null> completer = new Completer<Null>();
-       for(int i=0;i<=4;i++){
-         for(int j=0;j<=4;i++){
+       for(int i=0;i<=15;i++){
+         for(int j=1;j<=10;j++){
+           for(int k=2;k<=20;k++){
+             for(int l=3;l<=30;l++){
        final SerializableFinder firstnum = find.byValueKey(i);
        await driver.tap(firstnum);
        await new Future<Duration>.delayed(const Duration(seconds: 2));
        final SerializableFinder secondnum = find.byValueKey(j);
        await driver.tap(secondnum);
        await new Future<Duration>.delayed(const Duration(seconds: 2));
-         }}
+       final SerializableFinder thirdnum = find.byValueKey(k);
+       await driver.tap(thirdnum);
+       await new Future<Duration>.delayed(const Duration(seconds: 2));
+       final SerializableFinder fourthnum = find.byValueKey(l);
+       await driver.tap(fourthnum);
+       await new Future<Duration>.delayed(const Duration(seconds: 2));
+      //  k++;
+      //  j++;
+         }
+         }
+         }
+       }
        completer.complete();
        await completer.future;
      },timeout: const Timeout(const Duration(minutes: 3)));

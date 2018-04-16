@@ -5,8 +5,8 @@ import 'dart:ui' show window;
 import 'dart:math';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-var quest = 0;
-var result=0;
+import 'package:maui/components/responsive_grid_view.dart';
+
 
 class Abacus extends StatefulWidget {
  Function onScore;
@@ -24,7 +24,9 @@ class Abacus extends StatefulWidget {
 }
 
 class AbacusState extends State<Abacus> {
-  var sum=0;
+ var quest = 0;
+var result=0;
+ var sum=0;
   var ia=0;
   List Check=[];
   final List<String> _allLetters = [
@@ -50,10 +52,13 @@ class AbacusState extends State<Abacus> {
  final List<String> _allLetters1=[
     '','','','','',''
   ];
+  List flags=[];
 var u=1;
   var n=0;
   var m=0;
   var finalans=0;
+  int count=0;
+  var maxcount=0;
    List<String> _letters1=[];
   
  // var result=0;
@@ -69,8 +74,12 @@ var u=1;
     print('data is $data');
      print('data is ${data.item1}');
       var q=data.item4.toString();
-_size=q.length;
-     for (var i = 0; i < 3; i ++) {
+       var p=data.item1.toString();
+
+       if(q.length>p.length){
+_size=q.length;}
+else {_size=p.length;}
+     for (var i = 0; i < 4; i ++) {
       _shuffledLetters.addAll(
           _allLetters1.skip(0).take(_size).toList(growable: true)
       );
@@ -86,11 +95,19 @@ _size=q.length;
     _letters = _shuffledLetters.sublist(0, _shuffledLetters.length);
     quest=data.item1;
     result=0;
+    //flags=_letters;
+   
+   for(var i=0;i<_letters.length;i++){
+     flags.add('-1');
+   }
+    print('flags array     $flags');
     finalans=data.item4;
     var x=data.item1;
     var y=data.item2;
     var z=data.item3;
-   
+   for(var i=0;i<_size;i++){
+     _letters[i]=count.toString();
+   }
     _letters1.add(x.toString());
     _letters1.add(y.toString());
     _letters1.add(z.toString());
@@ -101,7 +118,7 @@ _size=q.length;
   //print(' data from database${fetchMathData(1)}');
   }
 
-  Widget _buildItem(int index, String text,int stat) {
+  Widget _buildItem(int index, String text,int stat,String flag) {
 
     final TextEditingController t1= new TextEditingController(text: text);
     return new MyButton(
@@ -109,6 +126,8 @@ _size=q.length;
       text: text,
       index: index,
       colorflag: stat,
+      size: _size,
+      flag:flag,
       onac: (index) {
       
           print('control transfer');
@@ -121,33 +140,130 @@ _size=q.length;
       
        print("...............$index,$_Index,$u");
       
-      if(result==finalans){}
+      // if(result==finalans){}
       
-      else{
+      // else{
 for(var i=0;i<_size;i++){
   if(_Index[0]%_size==i){
      if(Check[0]=='1'&&_Index[0]+_size>=_letters.length){
        if(_letters[_Index[0]-_size]==''){
+         if(_Index[0]==_letters.length-_size) {
+           count=int.parse(_letters[i]);
+           count=count+1;
+         _letters[i]=count.toString();
+
 _letters[_Index[0]-(3*_size)]='1';
-_letters[_Index[0]]=''; result=result+pow(10,(_size-1-i));}
+_letters[_Index[0]]=''; result=result+pow(10,(_size-1-i));
+
+
+}
+else{
+   count=int.parse(_letters[i]);
+         count=count+1;
+         _letters[i]=count.toString();
+         
+_letters[_Index[0]-(3*_size)]='1';
+_letters[_Index[0]]=''; result=result+pow(10,(_size-1-i));
+
+   for(var xx=i;xx>0;xx--){
+     count=0;
+     maxcount=int.parse(_letters[xx]);
+       if(maxcount>9){
+
+         for(var x=xx+_size;x<_letters.length;x=x+_size){
+              if(count<3){
+                _letters[x]='';
+                count++;
+              } else {flags[x]='0';
+                _letters[x]='1';
+              }
+         }count=0;
+         for(var x=xx+_size-1;x<_letters.length;x=x+_size){
+              if(_letters[x]==''){
+                count++;
+              }
+              if(count==3){
+                _letters[x+_size]='';
+                flags[x-(2*_size)]='1';
+                _letters[x-(2*_size)]='1';
+              }
+         }
+
+         _letters[xx]='0';
+          count=int.parse(_letters[xx-1]);
+           count=count+1;
+         _letters[xx-1]=count.toString();
+       }  
+
+
+   }
+
+}
+
+}
 else{}
 
            }
   else if(Check[0]=='1'&&_letters[_Index[0]+_size]=='1'&&_Index[0]==i){}
      else if(Check[0]=='1'&&_letters[_Index[0]+_size]==''){
+            flags[_Index[0]+(3*_size)]='0';
+           // flags[_Index[0]]='0';
              _letters[_Index[0]]='';
              _letters[_Index[0]+(3*_size)]='1';
-             result=result-pow(10,(_size-1-i));
+                  
+               if(i!=_size-1&&_letters[(i+1+_size)]==''){
+                 int cnt=0;
+                  for(int vari=(i+1+_size);vari<_letters.length;vari=vari+_size){
+                     if(cnt<10){
+                       _letters[vari]='1';
+                       cnt++;
+                       flags[vari]='1';
+                     }else {
+                       _letters[vari]='';
+                     }
+                  }
+                  _letters[i+1]='10';
+               }else
+{
+             result=result-pow(10,(_size-1-i));}
+              count=int.parse(_letters[i]);
+           count=count-1;
+         _letters[i]=count.toString();
+ new Future.delayed(const Duration(milliseconds:500), () {
+ setState(() {
+   var x=flags.length;
+    // flags.removeRange(0, flags.length);
+    for(var i=0; i<x; i++){
+      flags[i]='-1';
+    }
+ });});
+           
+
            }
             else if(Check[0]=='1'&&_letters[_Index[0]-_size]==''){
+           
+         // flags[_Index[0]]='1';
+         flags[_Index[0]-(3*_size)]='1';
               _letters[_Index[0]]='';
               _letters[_Index[0]-(3*_size)]='1';
             result=result+pow(10,(_size-1-i));
+             count=int.parse(_letters[i]);
+           count=count+1;
+         _letters[i]=count.toString();
          
+         new Future.delayed(const Duration(milliseconds: 500), () {
+ setState(() {
+    // flags[_Index[0]]='-1';
+     var x=flags.length;
+    // flags.removeRange(0, flags.length);
+    for(var i=0; i<x; i++){
+      flags[i]='-1';
+     }
+ });});
            } 
   }
   
-}}
+}
  if(result==quest){
        quest=finalans;
        status[2]=0;
@@ -156,7 +272,7 @@ else{}
           _letters1[4]=finalans.toString();
           status[2]=1;
           status[4]=0;  widget.onEnd();
-        new Future.delayed(const Duration(milliseconds: 500), () {
+        new Future.delayed(const Duration(milliseconds: 1500), () {
                 widget.onEnd();
               });
       }
@@ -175,6 +291,7 @@ print("result==$result");
     print("MyTableState.build");
 print("letters1 $_letters1");
 print("letters $_letters");
+print('flagsss      $flags');
       if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -182,76 +299,82 @@ print("letters $_letters");
         child: new CircularProgressIndicator(),
       );
     }
-    List<TableRow> rows = new List<TableRow>();
-   var  j = 0;
-    for (var i = 0; i < _letters.length; i=i+_size) {
-      List<Widget> cells = _letters
-          .skip(i)
-          .take(_size)
-          .map((e) => _buildItem(j++, e,status[0]))
-          .toList();
-      rows.add(new TableRow(children: cells));
-    }
-
- List<TableRow> rows1 = new List<TableRow>();
-   var  k = 100;j=0;
-    for (var i = 0; i < _letters1.length; i=i+5) {
-      List<Widget> cells = _letters1
-          .skip(i)
-          .take(5)
-          .map((e) => _buildItem(k++, e,status[j++]))
-          .toList();
-      rows1.add(new TableRow(children: cells));
-    }
-    
-    return new Center( child: new Container( 
-    //  height: 400.0,
-     // width: 200.0,
-      decoration: const BoxDecoration(
-    border: const Border(
-      top: const BorderSide(width: 3.0, color: Colors.red),
-      left: const BorderSide(width: 3.0, color:  Colors.red),
-      right: const BorderSide(width: 3.0, color:  Colors.red),
-      bottom: const BorderSide(width: 3.0, color:  Colors.red),
-    ),
-  ),
-  
-      child:  new Column(children: <Widget>[new Text(quest.toString()), new Question(),
-    new Container(//height: 300.0,
-      width: 300.0,
-      child: 
-    new Table(children: rows1)),
-    new Container(
-        height: 3.0, //width: 100.0,
-      
-       color: Colors.black87,
-      ),
-
-     //new Expanded(child: 
-     new Container(//height: 300.0,
-     // width: 100.0,
-      child: 
-    new Table(children: rows)), new Container(
-        height: 3.0,// width: 100.0,
-      
-       color: Colors.black87,
-      ),
-    
-    
-     ] ) ));
-    
+    int k=100;
+    int j=0;
+   return new Column(
+     children: <Widget>[
+       new Container(
+         child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+       ),
+       new Container(
+         height: 80.0,
+         width: 200.0,
+         child: new ResponsiveGridView(
+           padding: new EdgeInsets.all(0.0),
+           rows: 1,
+           cols: 5,
+           children: _letters1.map((e) => _buildItem(k, e,status[k++-100],flags[1])).toList(growable: false),
+         ),
+       ),
+       new Container(height: 4.0,
+       color: Colors.pink,
+       ),
+       new Expanded(
+         child: new ResponsiveGridView(
+          
+           padding: new EdgeInsets.all(0.0),
+          // mainAxisSpacing: 0.0,
+          // crossAxisSpacing: 0.0,
+           rows: 14,
+           cols: _size,
+           children: _letters.map((e) => _buildItem(j, e,status[1],flags[j++])).toList(growable: false),
+         ),
+       ), new Container(height: 4.0,
+       color: Colors.pink,
+       ),
+     ],
+   );
   
   }
 }
 
+
+
+class Shake extends AnimatedWidget {
+ const Shake({
+ Key key,
+ Animation<double> animation,
+ this.child,
+ }) : super(key: key, listenable: animation);
+
+ final Widget child;
+
+ Animation<double> get animation => listenable;
+ double get translateX {
+ final double t = animation.value;
+ const double shakeDelta = 2.0;
+ return t * 1.2;
+ }
+
+ @override
+ Widget build(BuildContext context) {
+ return new Transform(
+ transform: new Matrix4.translationValues(0.0,translateX, 0.0),
+ child: child,
+ );
+ }
+}
+
+
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.index,this.onac,this.colorflag,this.textflag}) : super(key: key);
+  MyButton({Key key, this.text,this.index,this.onac,this.colorflag,this.size,this.flag}) : super(key: key);
  
   final String text;
   final DragTargetAccept onac;
   final int colorflag;
   final int textflag;
-
+  String flag;
+final int size;
 List<String> letters;
 int index;
   @override
@@ -261,78 +384,107 @@ int index;
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   
-  AnimationController controller;
-  Animation<double> animation;
+  AnimationController controller,controller1;
+  Animation<double> animation,animation1;
   String _displayText;
 List _Index=[];
 List Check=[];
+int flag=0;
 String let='';
  var val=0;
+ var f=0;
   initState() {
     super.initState();
    
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller =new
-        AnimationController(duration:new Duration(milliseconds: 50), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+        AnimationController(duration:new Duration(milliseconds:500), vsync: this);
+        controller1 =new
+        AnimationController(duration:new Duration(milliseconds:500), vsync: this);
+   // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
+   animation1= new Tween(begin: -60.0, end: 00.0).animate(controller1)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
+        
         if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-         // if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-       // }
-      });
-    controller.forward();
+              controller1.forward();
+          
+        }
+      }
+      );
+animation = new Tween(begin: 60.0, end: 00.0).animate(controller)
+      ..addStatusListener((state) {
+        print("$state:${animation.value}");
+        
+        if (state == AnimationStatus.dismissed) {
+              controller.forward();
+        }
+      }
+      );
+
+       controller.forward();
+        controller1.forward();
   }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
-     controller.reverse();
+    if (widget.flag!=oldWidget.flag) {
+     if(widget.flag=='0'){
+       
+    controller1.reset();f=1;}
+     else if(widget.flag=='1'){
+     controller.reset(); // setState(() => _displayText = widget.text);
+     print('workin 1');}
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
+    
+    print("_MyButtonState.didUpdateWidget: ${widget.flag} ${oldWidget.flag}");
+  
   }
 
-  void _handleTouch() {
-    print(widget.text);
-    controller.reverse();
-  }
 var tt='';
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
+
    if(widget.index>=100){
 
-return new TableCell(
-  child: new Center(
+return  new Center(
    child:  new Container(
-     height: 50.0,
-     width: 50.0,
+    // height: 50.0,
+    // width: 50.0,
       decoration: new BoxDecoration(
         color:widget.colorflag!=0? Colors.white30:Colors.yellowAccent,
         shape: BoxShape.rectangle
         
       ), padding: new EdgeInsets.all(10.0),
-      child: new Text(widget.text,
+      child: new Center(child:new Text(widget.text,
+      key: new Key(widget.index.toString()),
        style:new
-                            TextStyle(color: Colors.red, fontSize: 24.0)) ,
+                            TextStyle(color: Colors.red,))),
     )
-  ),
+  )
 
-);
+;
 
    }
+   else if(widget.index<widget.size){
+    return  new Container(
+    // height: 50.0,
+    // width: 50.0,
+      decoration: new BoxDecoration(
+        color:Colors.blue,
+        shape: BoxShape.rectangle
+        
+      ), padding: new EdgeInsets.all(10.0),
+      child: new Text(widget.text,
+       style:new
+                            TextStyle(color: Colors.red, )) ,
+    );
+   }
    else{
-    return new TableCell(
-     
-           child: new ScaleTransition(
-              scale: animation,
-               child: new Center(
+    return  new Center(
            child:    new Container(
            // height: 35.0,
           //   width: 35.0,
@@ -340,22 +492,28 @@ return new TableCell(
             child:new Stack( alignment: const Alignment(0.0, 0.0), children: <Widget>[
              
                  new Container(
-          height: 40.0,
+        //  height: 4000.0,
           width: 3.0,
           color: Colors.black,
         ), //new Column(  
-new Draggable(child: 
+    new Shake(
+              animation:widget.flag=='1'?animation:animation1,
+               child:new Draggable(
+                affinity: Axis.vertical,
+                 onDragStarted: ()=>widget.onac(widget.index),
+                 child: 
+               
   new GestureDetector(
                
-  onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
+  //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
              child:  new Container(
             // height: 10.0,
            //  width: 10.0,
-          decoration:_displayText!=''? new BoxDecoration(
+          decoration:widget.text!=''? new BoxDecoration(
         color: Colors.red[400],
         shape: BoxShape.circle, 
       ):new BoxDecoration(), padding: new EdgeInsets.all(5.0),
-                    child:new Text(_displayText,
+                    child:new Text(widget.text,
                         style:new
                             TextStyle(color: Colors.white, fontSize: 24.0))),
                         
@@ -363,22 +521,6 @@ new Draggable(child:
              feedback: new Container(),
                          //   onDragStarted: ()=>widget.onac(widget.index),
                           
-    )]),))));}
+    ))]),));}
   }
-}
-
-
-class Question extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      decoration:new BoxDecoration(
-        color: Colors.blue,
-        shape: BoxShape.rectangle,
-      ),
-
-      child: new Text(result.toString()),
-     );
-  }
-
 }
