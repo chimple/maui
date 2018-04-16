@@ -23,11 +23,12 @@ void main() {
       await new Future<Duration>.delayed(const Duration(seconds: 1));
       final SerializableFinder option = find.text('Todo Placeholder');
       await driver.tap(option);
-      await new Future<Duration>.delayed(const Duration(seconds: 1));
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
-      completer.complete();
-      await completer.future;
+
+
+
     }, timeout: const Timeout(const Duration(minutes: 1)));
 
   });
