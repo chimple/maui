@@ -66,7 +66,8 @@ class _CasinoState extends State<Casino> {
     givenWord = " ";
     compareWord = " ";
     givenWordList = [];
-    
+    lst=[];
+    print(" finalList _initLetters = $finalList");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
@@ -84,7 +85,6 @@ class _CasinoState extends State<Casino> {
 
     print("givenWord $givenWord");
     print("===============");
-   
 
     setState(() => _isLoading = false);
   }
@@ -96,7 +96,6 @@ class _CasinoState extends State<Casino> {
 
     var rndm = new Random();
     var random = rndm.nextInt(5);
-   
 
     print("===============");
     print("scrollingLetterList = $scrollingLetterList");
@@ -132,24 +131,25 @@ class _CasinoState extends State<Casino> {
               //   _selectedItemIndex = index;
               // });
               print("buttonNumber  $buttonNumber is triggered");
-
+              
               for (int i = 0; i < givenWordList.length; i++) {
                 if (buttonNumber == i &&
                     givenWordList[i] == scrollingLetterList[index]) {
                   print(
                       "correct index $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
                   lst.add(scrollingLetterList[index]);
+                  
                 }
               }
               lst.sort();
               Set<String> finalSet = new Set<String>.from(lst);
-              List<String> finalList = new List<String>.from(finalSet);
+              finalList = new List<String>.from(finalSet);
 
               print(" finalList = $finalList");
               print(" finalGivenWordList = $finalGivenWordList");
               // print("count = $count");
-              if (const IterableEquality().equals(finalList,finalGivenWordList)) {
-                
+              if (const IterableEquality()
+                  .equals(finalList, finalGivenWordList)) {
                 widget.onScore(5);
                 widget.onProgress(1.0);
 
@@ -158,7 +158,8 @@ class _CasinoState extends State<Casino> {
                     _isShowingFlashCard = true;
                   });
                 });
-                finalList =[];
+
+                print(" finalList  = $finalList");
                 print("the end");
               }
             },
