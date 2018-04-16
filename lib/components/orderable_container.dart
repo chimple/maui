@@ -8,14 +8,14 @@ class OrderableContainer extends StatefulWidget {
   final List<OrderableWidget> uiItems;
 
   Size itemSize;
-  DDirection direction;
+  OrderItDirection direction;
   final double margin;
 
   OrderableContainer(
       {@required this.uiItems,
       @required this.itemSize,
       this.margin = kMargin,
-      this.direction = DDirection.Horizontal})
+      this.direction = OrderItDirection.Horizontal})
       : super(key: new Key('OrderableContainer'));
 
   @override
@@ -30,7 +30,7 @@ class OrderableContainerState extends State<OrderableContainer> {
         children: widget.uiItems,
       ));
 
-  Size get stackSize => widget.direction == DDirection.Horizontal
+  Size get stackSize => widget.direction == OrderItDirection.Horizontal
       ? new Size(
           (widget.itemSize.width + widget.margin) * widget.uiItems.length,
           widget.itemSize.height)
@@ -44,7 +44,7 @@ class OrderableWidget<T> extends StatefulWidget {
   final Orderable<T> data;
   Size itemSize;
   double maxPos;
-  DDirection direction;
+  OrderItDirection direction;
   bool isRotated;
   VoidCallback onMove;
   VoidCallback onDrop;
@@ -61,7 +61,7 @@ class OrderableWidget<T> extends StatefulWidget {
       this.onDrop,
       bool isDragged = false,
       this.isRotated = false,
-      this.direction = DDirection.Horizontal,
+      this.direction = OrderItDirection.Horizontal,
       this.step = 0.0})
       : super(key: key) {}
   @override
@@ -77,7 +77,7 @@ class OrderableWidgetState<T> extends State<OrderableWidget>
   /// item
   Orderable<T> data;
 
-  bool get isHorizontal => widget.direction == DDirection.Horizontal;
+  bool get isHorizontal => widget.direction == OrderItDirection.Horizontal;
 
   OrderableWidgetState({this.data});
 

@@ -53,7 +53,7 @@ class MauiApp extends StatelessWidget {
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
                   path[2],
-                  maxIterations: 2,
+                  gameMode: GameMode.iterations,
                   gameCategoryId: gameCategoryId,
                 ),
           );
@@ -62,7 +62,7 @@ class MauiApp extends StatelessWidget {
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
                   path[2],
-                  playTime: 30000,
+                  gameMode: GameMode.timed,
                   gameCategoryId: gameCategoryId,
                 ),
           );
@@ -70,13 +70,13 @@ class MauiApp extends StatelessWidget {
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new HeadToHeadGame(path[2],
-                maxIterations: 2, gameCategoryId: gameCategoryId),
+                gameMode: GameMode.iterations, gameCategoryId: gameCategoryId),
           );
         case 'h2h_timed':
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new HeadToHeadGame(path[2],
-                playTime: 30000, gameCategoryId: gameCategoryId),
+                gameMode: GameMode.timed, gameCategoryId: gameCategoryId),
           );
       }
     }
