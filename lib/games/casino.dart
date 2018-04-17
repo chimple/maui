@@ -37,12 +37,12 @@ class _CasinoState extends State<Casino> {
   String givenWord = " ";
   String compareWord = " ";
   bool _isLoading = true;
-  // String wd = " ";
+
   var givenWordList = new List();
   var lst = new List();
   int i;
   int j;
-  int count, countValue;
+  int count;
   var answer = new List();
   bool _isShowingFlashCard = false;
   Set<String> finalGivenWordSet;
@@ -60,24 +60,17 @@ class _CasinoState extends State<Casino> {
     i = 0;
     j = 0;
     count = 0;
-    countValue = 0;
 
     _selectedItemIndex = 1;
     givenWord = " ";
     compareWord = " ";
-    givenWordList = [];
-    lst=[];
+    givenWordList.clear();
+    lst = [];
     print(" finalList _initLetters = $finalList");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
     }
-
-    // print("givenWordList $givenWordList");
-    // print("givenWordList.length = ${givenWordList.length}");
-    // for (var i = 0; i < data.length; i++) {
-    //   data[i].shuffle();
-    // }
 
     finalGivenWordSet = new Set<String>.from(givenWordList);
     finalGivenWordList = new List<String>.from(finalGivenWordSet);
@@ -131,35 +124,37 @@ class _CasinoState extends State<Casino> {
               //   _selectedItemIndex = index;
               // });
               print("buttonNumber  $buttonNumber is triggered");
-              
+
               for (int i = 0; i < givenWordList.length; i++) {
                 if (buttonNumber == i &&
                     givenWordList[i] == scrollingLetterList[index]) {
                   print(
                       "correct index $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
                   lst.add(scrollingLetterList[index]);
-                  
+                  count++;
                 }
               }
               lst.sort();
+              print(" lst = $lst \n");
+              print("");
               Set<String> finalSet = new Set<String>.from(lst);
               finalList = new List<String>.from(finalSet);
 
               print(" finalList = $finalList");
               print(" finalGivenWordList = $finalGivenWordList");
-              // print("count = $count");
+              print("count = $count");
               if (const IterableEquality()
-                  .equals(finalList, finalGivenWordList)) {
+                      .equals(finalList, finalGivenWordList) &&
+                  count >= givenWordList.length) {
                 widget.onScore(5);
                 widget.onProgress(1.0);
 
-                new Future.delayed(const Duration(milliseconds: 500), () {
+                new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
                     _isShowingFlashCard = true;
                   });
                 });
 
-                print(" finalList  = $finalList");
                 print("the end");
               }
             },
