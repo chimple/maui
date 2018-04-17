@@ -4,13 +4,11 @@ import 'single_game.dart';
 
 class HeadToHeadGame extends StatefulWidget {
   final String gameName;
-  final int maxIterations;
-  final int playTime;
+  final GameMode gameMode;
   final int gameCategoryId;
 
   HeadToHeadGame(this.gameName,
-      {this.maxIterations = 0,
-      this.playTime = 0,
+      {this.gameMode = GameMode.iterations,
       @required this.gameCategoryId});
 
   @override
@@ -59,63 +57,42 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    print('HeadToHeadGameState:initState');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print('HeadToHeadGameState:build');
     MediaQueryData media = MediaQuery.of(context);
+    final myGame = new SingleGame(
+      widget.gameName,
+      key: new GlobalObjectKey('SingleGame.my'),
+      gameMode: widget.gameMode,
+      gameCategoryId: widget.gameCategoryId,
+      onScore: setMyScore,
+      onGameEnd: onGameEnd,
+    );
+    final otherGame = new SingleGame(
+      widget.gameName,
+      key: new GlobalObjectKey('SingleGame.other'),
+      gameMode: widget.gameMode,
+      gameCategoryId: widget.gameCategoryId,
+      onScore: setOtherScore,
+      onGameEnd: onGameEnd,
+      isRotated: true,
+    );
     return media.size.height > media.size.width ?
       new Column(
       children: <Widget>[
         new Expanded(
             child: new RotatedBox(
-                child: new SingleGame(
-                  widget.gameName,
-                  maxIterations: widget.maxIterations,
-                  playTime: widget.playTime,
-                  gameCategoryId: widget.gameCategoryId,
-                  score: _otherScore,
-                  onScore: setOtherScore,
-                  onGameEnd: onGameEnd,
-                  isRotated: true,
-                ),
+                child: otherGame,
                 quarterTurns: 2)),
         new Expanded(
-            child: new SingleGame(
-          widget.gameName,
-          maxIterations: widget.maxIterations,
-          playTime: widget.playTime,
-          gameCategoryId: widget.gameCategoryId,
-          score: _myScore,
-          onScore: setMyScore,
-          onGameEnd: onGameEnd,
-        ))
+            child: myGame)
       ],
     ) :
     new Row(
       children: <Widget>[
         new Expanded(
-            child: new SingleGame(
-                  widget.gameName,
-                  maxIterations: widget.maxIterations,
-                  playTime: widget.playTime,
-                  gameCategoryId: widget.gameCategoryId,
-                  onScore: setOtherScore,
-                  onGameEnd: onGameEnd,
-                )),
+            child: otherGame),
         new Expanded(
-            child: new SingleGame(
-              widget.gameName,
-              maxIterations: widget.maxIterations,
-              playTime: widget.playTime,
-              gameCategoryId: widget.gameCategoryId,
-              onScore: setMyScore,
-              onGameEnd: onGameEnd,
-            ))
+            child: myGame)
       ]
     );
   }
