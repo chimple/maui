@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
 import 'package:maui/components/shaker.dart';
 class TapWrong extends StatefulWidget {
  Function onScore;
@@ -22,15 +24,34 @@ class TapWrongState extends State<TapWrong> {
 
 int num1=0;
 int  numOFWrongElem=0;
-  List<String> word=['D','O','G'];
-  List<String> others=['X','P'];
+ bool _isLoading = true;
+  List<String> word=new List(); //=['D','O','G'];
+  List<String> others= new List();//=['X','P'];
 List<String> arr1=[];
 List<String> proArray=[];
 List<Statuses> _statusList ;
+Tuple2<List<String>,List<String>> data;
+
    @override
   void initState() {
     super.initState();
-   
+    _initBoard();
+  }
+  void _initBoard() async{
+     setState(() => _isLoading = true);
+data=await fetchWordData(widget.gameCategoryId,3,2);
+
+    data.item1.forEach((e) {
+     
+        word.add(e);
+      
+    });
+    data.item2.forEach((e) {
+     
+        others.add(e);
+      
+    });
+
    arr1.addAll(word);
    var lenOfArr1=arr1.length;
    arr1.addAll(others);
@@ -61,6 +82,7 @@ List<Statuses> _statusList ;
 
          _statusList = arr1.map((a) => Statuses.right).toList(growable: false);
          print('status array      $_statusList');
+          setState(() => _isLoading = false);
   }
 
  
@@ -120,7 +142,13 @@ print('word array       $word');
 
   @override
   Widget build(BuildContext context) {
-
+  if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
      int j = 0;
    
       return 
