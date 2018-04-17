@@ -209,7 +209,7 @@ class CrosswordState extends State<Crossword> {
     keys = 0;
     var j = 0, h = 0, k = 100;
     return new Container(
-     padding:new EdgeInsets.symmetric(vertical:media.size.height*.05,horizontal:media.size.width*.05),
+  //   padding:new EdgeInsets.symmetric(vertical:media.size.height*.05,horizontal:media.size.width*.05),
         color: Colors.purple[300],
         child: media.orientation==Orientation.portrait?new Column(//portrait
           children: <Widget>[
@@ -218,6 +218,7 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
+                maxAspectRatio: 1.2,
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
@@ -230,6 +231,7 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _rightlen>6?2:1,
                 cols: _rightlen>6?(_rightcols/2).ceil():_rightcols,
+                maxAspectRatio: 1.7,
                 padding: const EdgeInsets.all(3.0),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
@@ -244,6 +246,7 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
+                maxAspectRatio: 1.6,
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
@@ -256,6 +259,7 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _rightlen>6?(_rightcols/2).ceil():_rightcols,
                 cols: _rightlen>6?2:1, 
+                maxAspectRatio: 1.8,
                 padding: const EdgeInsets.all(3.0), 
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
