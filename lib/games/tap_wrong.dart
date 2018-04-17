@@ -41,14 +41,14 @@ Tuple2<List<String>,List<String>> data;
      setState(() => _isLoading = true);
 data=await fetchWordData(widget.gameCategoryId,3,2);
 
-    data.item1.forEach((e) {
+    data.item1.forEach((d) {
      
-        word.add(e);
+        word.add(d);
       
     });
-    data.item2.forEach((e) {
+    data.item2.forEach((d) {
      
-        others.add(e);
+        others.add(d);
       
     });
 
