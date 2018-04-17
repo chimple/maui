@@ -55,7 +55,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2 = 0,
       num2digit3 = 0;
   int result;
-  int tempf = 0,tempf1=0;
+  int tempf = 0, tempf1 = 0;
   int check = 0,
       check1 = 0,
       check2 = 0,
@@ -514,8 +514,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         flag = false;
                         flag1 = false;
                         flag2 = false;
-                        barrowFlag=false;
-                        carryFlag=false;
+                        barrowFlag = false;
+                        carryFlag = false;
                         carry1 = 0;
                         carry2 = 0;
                         carry3 = 0;
@@ -747,7 +747,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       barrowFlag = true;
                     });
-                    if (int.parse(_output) == ((num1digit1+10) - num2digit1)) {
+                    if (int.parse(_output) ==
+                        ((num1digit1 + 10) - num2digit1)) {
                       setState(() {
                         check = 1;
                         shake1 = true;
@@ -793,15 +794,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       print(carry2);
                       setState(() {
                         barrowFlag1 = true;
-                        print(barrowFlag1);                      
+                        print(barrowFlag1);
                       });
-                        /* if( num1digit2<10){
+                      /* if( num1digit2<10){
                           setState((){
                             num1digit2=num1digit2+10;
                           });
                         }  */
                       if (int.parse(_output1) ==
-                              ((num1digit2 - num2digit2) - 1) || int.parse(_output1)==((num1digit2+10)-num2digit2-1)) {
+                              ((num1digit2 - num2digit2) - 1) ||
+                          int.parse(_output1) ==
+                              ((num1digit2 + 10) - num2digit2 - 1)) {
                         setState(() {
                           flag1 = true;
                           shake2 = true;
@@ -889,12 +892,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         flag = false;
                         flag1 = false;
                         flag2 = false;
-                        barrowFlag=false;
-                        carryFlag=false;
-                         barrowFlag1=false;
-                        carryFlag1=false;
+                        barrowFlag = false;
+                        carryFlag = false;
+                        barrowFlag1 = false;
+                        carryFlag1 = false;
                         tempf1 = 0;
-                        tempf=0;
+                        tempf = 0;
                         carry1 = 0;
                         carry2 = 0;
                         carry3 = 0;
@@ -1218,7 +1221,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     onTap: () {
                                       setState(() {
                                         carryFlag = true;
-                                        if (tempf == 0 && barrowFlag==true) {
+                                        if (tempf == 0 && barrowFlag == true) {
                                           num1digit1 = num1digit1 + 10;
                                           carry2 = -1;
                                           tempf++;
@@ -1375,23 +1378,31 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             padding: new EdgeInsets.all(
                                 constraints.minHeight * 0.005),
                             child: _operator == '-'
-                                // ? barrowFlag==true 
-                                    ?  new Container(
-                                        color:(barrowFlag==true&& carryFlag == true) ||(barrowFlag1==true&& carryFlag1 == true)
-                                            ? Colors.redAccent
-                                            : Colors.limeAccent,
-                                        child: new Center(
-                                          child: new Text(
-                                            barrowFlag1==true&& carryFlag1 == true?_arrow:'$carry2',
-                                            style: new TextStyle(
-                                              color: carry2 == -1
-                                            ? Colors.black
-                                            : Colors.limeAccent,
-                                              fontSize:barrowFlag1==true&& carryFlag1 == true?constraints.minHeight * 0.075: constraints.minHeight * 0.09                                                
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                // ? barrowFlag==true
+                                ? new Container(
+                                    color: (barrowFlag == true &&
+                                                carryFlag == true) ||
+                                            (barrowFlag1 == true &&
+                                                carryFlag1 == true)
+                                        ? Colors.redAccent
+                                        : Colors.limeAccent,
+                                    child: new Center(
+                                      child: new Text(
+                                        barrowFlag1 == true &&
+                                                carryFlag1 == true
+                                            ? _arrow
+                                            : '$carry2',
+                                        style: new TextStyle(
+                                            color: carry2 == -1
+                                                ? Colors.black
+                                                : Colors.limeAccent,
+                                            fontSize: barrowFlag1 == true &&
+                                                    carryFlag1 == true
+                                                ? constraints.minHeight * 0.075
+                                                : constraints.minHeight * 0.09),
+                                      ),
+                                    ),
+                                  )
                                 : new Container(
                                     color: Colors.limeAccent,
                                     child: displayContainer(
@@ -1462,7 +1473,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     onTap: () {
                                       setState(() {
                                         carryFlag1 = true;
-                                          if (tempf1 == 0 && barrowFlag1==true) {
+                                        if (tempf1 == 0 &&
+                                            barrowFlag1 == true) {
                                           num1digit2 = num1digit2 + 10;
                                           carry3 = -1;
                                           tempf1++;
@@ -1485,8 +1497,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           ? Colors.green
                                           : new Color(0XFFFF52C5CE),
                                       child: new Center(
-                                          child: new Text(
-                                               '$num1digit2',
+                                          child: new Text('$num1digit2',
                                               style: new TextStyle(
                                                 fontSize:
                                                     constraints.minHeight *
@@ -1512,7 +1523,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     onTap: () {
                                       setState(() {
                                         carryFlag = true;
-                                      if (tempf == 0 && barrowFlag==true) {
+                                        if (tempf == 0 && barrowFlag == true) {
                                           num1digit1 = num1digit1 + 10;
                                           carry2 = -1;
                                           tempf++;
@@ -1535,8 +1546,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           ? Colors.green
                                           : new Color(0XFFFF52C5CE),
                                       child: new Center(
-                                          child: new Text(
-                                              '$num1digit1',
+                                          child: new Text('$num1digit1',
                                               style: new TextStyle(
                                                 fontSize:
                                                     constraints.minHeight *
@@ -1708,7 +1718,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         key: new Key('keyPad'),
                         style: new TextStyle(
                             color: Colors.white,
-                            fontSize: widget.height * 0.05))))));
+                            fontSize: widget.height * 0.05,
+                            fontWeight: FontWeight.bold ))))));
   }
 }
 
