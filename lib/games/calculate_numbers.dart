@@ -45,7 +45,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   final int _size = 3;
   List<String> _numbers;
-  String _preValue = '';
+  String _preValue;
   int num1,
       num2,
       num1digit1 = 0,
@@ -227,7 +227,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
             check = 1;
             flag1 = true;
             _output = (int.parse(_output) % 10).toString();
-            carry1 = result ~/ 10;
+            if (_operator != '*') {
+              setState(() {
+                carry1 = result ~/ 10;
+              });
+            }
             _output1 = (result ~/ 10).toString();
             shake1 = true;
           });
@@ -260,6 +264,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           new Future.delayed(const Duration(milliseconds: 900), () {
             setState(() {
               shake1 = true;
+              _output = '';
             });
           });
         }
@@ -275,6 +280,37 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     }
   }
 
+  String _addText(String _text, String _gettingResult) {
+    print(_gettingResult);
+    if (_gettingResult.length < 2 && _zeoToNine(_text) == true) {
+      _gettingResult = _gettingResult + _text;
+    }
+    return _gettingResult;
+  }
+
+  String _removeText(String _text, String _gettingResult) {
+    print(_gettingResult);
+    if (_text == '✖') {
+      _gettingResult = '';
+    }
+    return _gettingResult;
+  }
+
+  void _final(String _text,String _gettingResult){
+    print("coming to the final function");
+    if(_text=='' && int.parse(_gettingResult)==result){
+      if (scoreCount == 0) {
+            widget.onScore(1);
+            widget.onProgress(1.0);
+            scoreCount = 1;
+            new Future.delayed(const Duration(milliseconds: 300), () {
+            widget.onEnd();
+            });
+      }
+    }
+
+  }
+
   Widget _buildItem(int index, String text, double _height, String _options) {
     return new MyButton(
         key: new ValueKey<int>(index),
@@ -283,7 +319,25 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         onPress: () {
           switch (_options) {
             case 'singleDigit':
-              operation(text);
+              //   operation(text);
+              setState(() {
+                _output = _addText(text, _output);
+                if (int.parse(_output) == result) {
+                  flag = true;
+                  _final(text, _output);
+                } else {
+                  shake1 = false;
+                  new Future.delayed(const Duration(milliseconds: 900), () {
+                    setState(() {
+                      shake1 = true;
+                      _output = '';
+                    });
+                  });
+                }
+                _output = _removeText(text, _output);
+                
+              });
+
               break;
             case 'doubleDigitWithoutCarry':
               if (_operator == '+') {
@@ -309,6 +363,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake1 = true;
+                          _output = '';
                         });
                       });
                     }
@@ -337,6 +392,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake2 = true;
+                          _output1 = '';
                         });
                       });
                     }
@@ -423,6 +479,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake1 = true;
+                          _output = '';
                         });
                       });
                     }
@@ -447,6 +504,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         setState(() {
                           shake1 = true;
                           numberShake = true;
+                          _output = '';
                         });
                       });
                     }
@@ -469,6 +527,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             () {
                           setState(() {
                             shake2 = true;
+                            _output1 = '';
                           });
                         });
                       }
@@ -489,6 +548,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             () {
                           setState(() {
                             shake2 = true;
+                            _output1 = '';
                           });
                         });
                       }
@@ -585,6 +645,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake1 = true;
+                          _output = '';
                         });
                       });
                     }
@@ -595,7 +656,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       setState(() {
                         carry3 = 1;
                         _output1 = (int.parse(_output1) % 10).toString();
-                        // _output1 = _removeZero(int.parse(_output1)).toString();
                       });
                     }
                     setState(() {
@@ -611,6 +671,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake2 = true;
+                          _output1 = '';
                         });
                       });
                     }
@@ -642,6 +703,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake3 = true;
+                          _output2 = '';
                         });
                       });
                     }
@@ -740,6 +802,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       new Future.delayed(const Duration(milliseconds: 900), () {
                         setState(() {
                           shake1 = true;
+                          _output = '';
                         });
                       });
                     }
@@ -764,6 +827,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         setState(() {
                           shake1 = true;
                           numberShake = true;
+                          _output = '';
                         });
                       });
                     }
@@ -786,6 +850,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             () {
                           setState(() {
                             shake2 = true;
+                            _output1 = '';
                           });
                         });
                       }
@@ -796,11 +861,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         barrowFlag1 = true;
                         print(barrowFlag1);
                       });
-                      /* if( num1digit2<10){
-                          setState((){
-                            num1digit2=num1digit2+10;
-                          });
-                        }  */
                       if (int.parse(_output1) ==
                               ((num1digit2 - num2digit2) - 1) ||
                           int.parse(_output1) ==
@@ -821,6 +881,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           setState(() {
                             shake2 = true;
                             numberShake1 = true;
+                            _output1 = '';
                           });
                         });
                       }
@@ -844,6 +905,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             () {
                           setState(() {
                             shake3 = true;
+                            _output2 = '';
                           });
                         });
                       }
@@ -866,6 +928,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             () {
                           setState(() {
                             shake3 = true;
+                            _output2 = '';
                           });
                         });
                       }
@@ -1019,15 +1082,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         child: new CircularProgressIndicator(),
       );
     }
-    //  return new Loader();
     switch (options) {
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
             color: new Color(0XFFFFF7EBCB),
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new Expanded(
+                new Container(
+                  margin: new EdgeInsets.only(
+                      bottom: constraints.minHeight * 0.001),
                   child: new Table(
                     defaultColumnWidth: new FractionColumnWidth(0.25),
                     children: <TableRow>[
@@ -1102,10 +1167,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     ],
                   ),
                 ),
-                new Expanded(
-                  child: new Container(
-                    child: displayTable(constraints.minHeight, 'singleDigit'),
-                  ),
+                new Container(
+                  child: displayTable(constraints.minHeight, 'singleDigit'),
                 )
               ],
             ),
@@ -1180,7 +1243,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         fontSize: barrowFlag == true &&
                                                 _operator == '-' &&
                                                 carryFlag == true
-                                            ? constraints.minHeight * 0.075
+                                            ? constraints.minHeight * 0.078
                                             : constraints.minHeight * 0.09,
                                       ),
                                     ),
@@ -1218,23 +1281,26 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       ? animationShake
                                       : animation,
                                   child: new GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        carryFlag = true;
-                                        if (tempf == 0 && barrowFlag == true) {
-                                          num1digit1 = num1digit1 + 10;
-                                          carry2 = -1;
-                                          tempf++;
-                                        }
-                                      });
-                                      new Future.delayed(
-                                          const Duration(milliseconds: 2000),
-                                          () {
-                                        setState(() {
-                                          carryFlag = false;
-                                        });
-                                      });
-                                    },
+                                    onTap: check == 0
+                                        ? () {
+                                            setState(() {
+                                              carryFlag = true;
+                                              if (tempf == 0 &&
+                                                  barrowFlag == true) {
+                                                num1digit1 = num1digit1 + 10;
+                                                carry2 = -1;
+                                                tempf++;
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                carryFlag = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
                                     child: new Container(
                                       color: barrowFlag == true &&
                                               _operator == '-' &&
@@ -1398,7 +1464,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                                 : Colors.limeAccent,
                                             fontSize: barrowFlag1 == true &&
                                                     carryFlag1 == true
-                                                ? constraints.minHeight * 0.075
+                                                ? constraints.minHeight * 0.078
                                                 : constraints.minHeight * 0.09),
                                       ),
                                     ),
@@ -1432,7 +1498,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         fontSize: barrowFlag == true &&
                                                 _operator == '-' &&
                                                 carryFlag == true
-                                            ? constraints.minHeight * 0.075
+                                            ? constraints.minHeight * 0.078
                                             : constraints.minHeight * 0.09,
                                       ),
                                     ),
@@ -1470,26 +1536,28 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       ? animationShake
                                       : animation,
                                   child: new GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        carryFlag1 = true;
-                                        if (tempf1 == 0 &&
-                                            barrowFlag1 == true) {
-                                          num1digit2 = num1digit2 + 10;
-                                          carry3 = -1;
-                                          tempf1++;
-                                          print("printing carry3....");
-                                          print(carry3);
-                                        }
-                                      });
-                                      new Future.delayed(
-                                          const Duration(milliseconds: 2000),
-                                          () {
-                                        setState(() {
-                                          carryFlag1 = false;
-                                        });
-                                      });
-                                    },
+                                    onTap: check1 == 0 && check == 1
+                                        ? () {
+                                            setState(() {
+                                              carryFlag1 = true;
+                                              if (tempf1 == 0 &&
+                                                  barrowFlag1 == true) {
+                                                num1digit2 = num1digit2 + 10;
+                                                carry3 = -1;
+                                                tempf1++;
+                                                print("printing carry3....");
+                                                print(carry3);
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                carryFlag1 = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
                                     child: new Container(
                                       color: barrowFlag1 == true &&
                                               _operator == '-' &&
@@ -1520,25 +1588,28 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       ? animationShake
                                       : animation,
                                   child: new GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        carryFlag = true;
-                                        if (tempf == 0 && barrowFlag == true) {
-                                          num1digit1 = num1digit1 + 10;
-                                          carry2 = -1;
-                                          tempf++;
-                                          print("printing carry2....");
-                                          print(carry2);
-                                        }
-                                      });
-                                      new Future.delayed(
-                                          const Duration(milliseconds: 2000),
-                                          () {
-                                        setState(() {
-                                          carryFlag = false;
-                                        });
-                                      });
-                                    },
+                                    onTap: check == 0
+                                        ? () {
+                                            setState(() {
+                                              carryFlag = true;
+                                              if (tempf == 0 &&
+                                                  barrowFlag == true) {
+                                                num1digit1 = num1digit1 + 10;
+                                                carry2 = -1;
+                                                tempf++;
+                                                print("printing carry2....");
+                                                print(carry2);
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                carryFlag = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
                                     child: new Container(
                                       color: barrowFlag == true &&
                                               _operator == '-' &&
@@ -1690,6 +1761,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
@@ -1704,7 +1781,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new TableCell(
         child: new Padding(
-            padding: new EdgeInsets.all(widget.height * 0.01),
+            padding: new EdgeInsets.all(widget.height * 0.005),
             child: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
@@ -1719,65 +1796,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         style: new TextStyle(
                             color: Colors.white,
                             fontSize: widget.height * 0.05,
-                            fontWeight: FontWeight.bold ))))));
+                            fontWeight: FontWeight.bold))))));
   }
 }
-
-/*class BarrowAnimation extends StatefulWidget{
-  @override
-  State createState()=>new _BarrowAnimation();
-}
-
- class _BarrowAnimation extends State<BarrowAnimation>
-    with TickerProviderStateMixin {
-   AnimationController _opacityController;
-   Animation<double> _opacity;
-   bool _showHint = false;
-  
-   @override
-   void initState() {
-     super.initState();
-     _opacityController = new AnimationController(vsync: this,duration: const Duration(milliseconds: 800));
-     _opacity = new CurvedAnimation(parent: _opacityController, curve: Curves.easeInOut)..addStatusListener((status) {
-       if (status == AnimationStatus.completed) {
-         _opacityController.reverse();
-       } else if (status == AnimationStatus.dismissed) {
-         _opacityController.forward();
-       }
-     });
-     _opacityController.forward();
-  }
-  
-  @override
-  void dispose() {
-    super.dispose();
-    _opacityController.dispose();
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return  new Container(
-        child: new Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            !_showHint?new FadeTransition(
-              opacity: _opacity,
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Icon(Icons.arrow_back),
-                  new Padding(padding: const EdgeInsets.only(left: 8.0)),
-                  new Text("Swipe it",
-                    style: new TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.blueGrey
-                    ),
-                  )
-                ],
-              ),
-            ):new Container(),
-          ]
-      )
-    );
- }
-    }         */
