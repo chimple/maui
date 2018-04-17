@@ -6,14 +6,15 @@ import 'common_function_test.dart';
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
 void main() {
-  group('login', () {
+  group('login', ()
+  {
     FlutterDriver driver;
     setUpAll(() async {
       driver = await FlutterDriver.connect();
       commonSignIn(driver);
       commonGoToGames(driver);
       commonScrolling(driver, 'identify');
-      await new Future<Duration>.delayed(const Duration(seconds: 4));
+      await new Future<Duration>.delayed(const Duration(seconds: 4) );
     });
 
     test('playingGame', () async {
