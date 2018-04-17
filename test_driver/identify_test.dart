@@ -6,15 +6,14 @@ import 'common_function_test.dart';
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
 void main() {
-  group('login', ()
-  {
+  group('login', () {
     FlutterDriver driver;
     setUpAll(() async {
       driver = await FlutterDriver.connect();
       commonSignIn(driver);
       commonGoToGames(driver);
       commonScrolling(driver, 'identify');
-      await new Future<Duration>.delayed(const Duration(seconds: 4) );
+      await new Future<Duration>.delayed(const Duration(seconds: 4));
     });
 
     test('playingGame', () async {
@@ -27,18 +26,17 @@ void main() {
       final SerializableFinder mode = find.byValueKey('single');
       await driver.tap(mode);
       final SerializableFinder element1 = find.text('square');
-      final SerializableFinder element2 = find.text('circle');
-      final SerializableFinder element3 = find.text('triangle');
-      final SerializableFinder element4 = find.text('hexagon');
-
       await driver.scroll(
           element1, 0.0, -500.0, const Duration(milliseconds: 400));
+      final SerializableFinder element2 = find.text('circle');
       await driver.scroll(
-          element2, -300.0, -500.0, const Duration(milliseconds: 400));
+          element2, 100.0, -450.0, const Duration(milliseconds: 400));
+      final SerializableFinder element3 = find.text('triangle');
       await driver.scroll(
-          element3, 0.0, -250.0, const Duration(milliseconds: 400));
+          element3, 0.0, -350.0, const Duration(milliseconds: 400));
+      final SerializableFinder element4 = find.text('hexagon');
       await driver.scroll(
-          element4, 0.0, -500.0, const Duration(milliseconds: 400));
+          element4, 0.0, -350.0, const Duration(milliseconds: 400));
 
       completer.complete();
       await completer.future;
