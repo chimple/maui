@@ -40,15 +40,14 @@ class CrosswordState extends State<Crossword> {
   List<String> _data1 = new List();
   List _sortletters = [];
   bool _isLoading = true;
-  String img;
-  int _rows,_cols;
+  String img,dragdata;
+  int _rows,_cols,code,dindex,dcode;
   int len,_rightlen,_rightcols;
   @override
   void initState() {
     super.initState();
     _initBoard();
   }
-
   void _initBoard() async {
     setState(() => _isLoading = true);
     data = await fetchCrosswordData(widget.gameCategoryId);
@@ -60,7 +59,6 @@ class CrosswordState extends State<Crossword> {
     });
   _rows=data.item1.length;
   _cols=data.item1[0].length;
-  //print('lengtttt  ${data.item1[0]}');
     for (var i = 0; i < data.item2.length; i++) {
       _data2.add(data.item2[i].item1);
     }
@@ -77,7 +75,10 @@ class CrosswordState extends State<Crossword> {
       case 8:{len=9;break;}
       case 9:{len=10;break;}
       case 10:{len=11;break;}
-      default:{len=5;}
+      case 11:{len=12;break;}
+      case 12:{len=13;break;}
+      case 13:{len=14;break;}
+      default:{len=14;}
     }
     var rng = new Random();
     var i = 0;
@@ -102,12 +103,14 @@ class CrosswordState extends State<Crossword> {
     }
     _rightlen=_rightcols=_rightwords.length;
     _rightwords.shuffle();
-    if(_rightlen>5){
-      _rightcols= ((_rightlen/2).ceil()+1)*2;
+    if(_rightlen>6){
+      _rightcols=(_rightlen/2).floor()!=_rightlen/2?
+      ((_rightlen/2).floor()+1)*2:(_rightlen/2).floor()*2;
        while(_rightwords.length<=_rightcols){
         _rightwords.add('');
       }
     }
+    code= rng.nextInt(870)+rng.nextInt(1120);
     _flag.length = _rows*_cols+ _rightcols+1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
@@ -116,7 +119,6 @@ class CrosswordState extends State<Crossword> {
   }
 
   Widget _buildItem(int index, String text, int flag) {
-    final TextEditingController t1 = new TextEditingController(text: text);
     img=null;
     for (var i=0; i < _data3.length; i++) {
         if (_data3[i] == index) {
@@ -129,8 +131,13 @@ class CrosswordState extends State<Crossword> {
           index: index,
           text: text,
           color1: 1,
-          onAccepted: (dindex) {
+          onAccepted: (dcindex) {
+         //   print('dataa $dcindex');
             flag1 = 0;
+            dragdata=dcindex;
+            dindex=int.parse(dragdata.substring(0,3));
+            dcode=int.parse(dragdata.substring(4));
+            if(code==dcode){
             var i = 0, flagtemp = 0;
             for (i; i < _sortletters.length; i++) {
               if (_rightwords[dindex - 100] == _sortletters[i] &&
@@ -143,7 +150,6 @@ class CrosswordState extends State<Crossword> {
             setState(() {
               if (flag1 == 1) {
                 _rightwords[dindex - 100]+= '.';
-              //   print(' helo ${_rightwords[dindex - 100][1]}');
                 _letters[index] = _sortletters[--i];
                 correct++;
                 widget.onScore(1);
@@ -169,9 +175,11 @@ class CrosswordState extends State<Crossword> {
                   });
                 });
               }
-            });
+            });}
           },
           flag: flag,
+          code:code,
+          isRotated:widget.isRotated,
           img: img,
           keys: keys++);
     } else {
@@ -181,6 +189,8 @@ class CrosswordState extends State<Crossword> {
           color1: 0,
           flag: flag,
           onAccepted: (text) {},
+          code:code,
+          isRotated:widget.isRotated,
           img: img,
           keys: keys);
     }
@@ -188,11 +198,7 @@ class CrosswordState extends State<Crossword> {
 
   @override
   Widget build(BuildContext context) {
-    int portf=0;
     MediaQueryData media = MediaQuery.of(context);
-    if(media.size.height<media.size.width){
-      portf=1;
-    }
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -201,12 +207,11 @@ class CrosswordState extends State<Crossword> {
       );
     }
     keys = 0;
-    
     var j = 0, h = 0, k = 100;
-    
     return new Container(
+     padding:new EdgeInsets.symmetric(vertical:media.size.height*.05,horizontal:media.size.width*.05),
         color: Colors.purple[300],
-        child: portf==0?new Column(
+        child: media.orientation==Orientation.portrait?new Column(//portrait
           children: <Widget>[
             new Flexible(
               flex: 4,
@@ -218,18 +223,19 @@ class CrosswordState extends State<Crossword> {
                     .toList(growable: false),
               ),
             ),
-            new Padding(padding: new EdgeInsets.all(5.0)),
+            new Padding(padding: new EdgeInsets.all(media.size.height*.02)),            
             new Flexible(
-              flex:1,
+           //  flex:1,
               fit: FlexFit.loose,
               child: new ResponsiveGridView(
-                rows: _rightlen>5?2:1,
-                cols: _rightlen>5?(_rightcols/2).ceil():_rightcols,
+                rows: _rightlen>6?2:1,
+                cols: _rightlen>6?(_rightcols/2).ceil():_rightcols,
+                padding: const EdgeInsets.all(3.0),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
               ),
-            )
+            ),
           ],
         ):new Row(
           children: <Widget>[
@@ -243,18 +249,19 @@ class CrosswordState extends State<Crossword> {
                     .toList(growable: false),
               ),
             ),
-            new Padding(padding: new EdgeInsets.all(5.0)),
-            new Flexible(
-              flex: 1,
+             new Padding(padding: new EdgeInsets.all(media.size.width*.02)),           
+             new Flexible(
+            //  flex: 1,
               fit: FlexFit.loose,
               child: new ResponsiveGridView(
-                rows: _rightlen>5?(_rightcols/2).ceil():_rightcols,
-                cols: _rightlen>5?2:1,  
+                rows: _rightlen>6?(_rightcols/2).ceil():_rightcols,
+                cols: _rightlen>6?2:1, 
+                padding: const EdgeInsets.all(3.0), 
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
               ),
-            )
+            ),
           ],
         ));
   }
@@ -267,11 +274,15 @@ class MyButton extends StatefulWidget {
       this.color1,
       this.flag,
       this.onAccepted,
+      this.code,
+      this.isRotated,
       this.img,
       this.keys});
   final index;
   final int color1;
   final int flag;
+  final int code;
+  final bool isRotated;
   final String text;
   final String img;
   final DragTargetAccept onAccepted;
@@ -284,7 +295,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animation, animation1;
   String _displayText;
-  List<Widget> feed1;
   String newtext='';
   var f = 0;
   var i = 0;
@@ -316,6 +326,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+      MediaQueryData media = MediaQuery.of(context);
     if (widget.index < 100 && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -377,7 +388,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
-        data: widget.index,
+        data: '${widget.index}'+'_'+'${widget.code}',
         child: new ScaleTransition(
             scale: animation,
             child: new Container(
@@ -393,17 +404,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     style: new TextStyle(color: Colors.black, fontSize: 24.0)),
               ),
             )),
-        childWhenDragging: new Container(),
+      //  childWhenDragging: new Container(),
         feedback:new Container(
-       //   transform: new Matrix4.identity().,
-          height: 45.0,
-          width: 58.0,
+          height: media.orientation==Orientation.portrait?media.size.height*.06:media.size.height*.13,
+          width: media.orientation==Orientation.portrait?media.size.width*.17:media.size.width*.06,
           decoration: new BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
               color: Colors.yellow[400]),
           child: new Center(
-            child: new Text(
+            child: new Transform.rotate(
+                angle: widget.isRotated==true?
+                media.orientation==Orientation.portrait?3.14:0.0:0.0,
+                alignment: Alignment.center,
+              child: new Text(
               widget.text,
               style: new TextStyle(
                 color: Colors.black,
@@ -411,6 +425,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 fontSize: 26.0,
               ),
             ),
+          ),
           ),
         ),
       );
