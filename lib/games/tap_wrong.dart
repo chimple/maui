@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
-
+import 'dart:async';
+import 'package:maui/components/shaker.dart';
 class TapWrong extends StatefulWidget {
  Function onScore;
   Function onProgress;
@@ -25,7 +26,7 @@ int  numOFWrongElem=0;
   List<String> others=['X','P'];
 List<String> arr1=[];
 List<String> proArray=[];
-List<Statuses> _statusArray ;
+List<Statuses> _statusList ;
    @override
   void initState() {
     super.initState();
@@ -58,38 +59,35 @@ List<Statuses> _statusArray ;
             }
         }print('array1     $arr1');
 
-         _statusArray = arr1.map((a) => Statuses.right).toList(growable: false);
-         print('status array      $_statusArray');
+         _statusList = arr1.map((a) => Statuses.right).toList(growable: false);
+         print('status array      $_statusList');
   }
 
  
- Widget _buildItem(int index, String text) {
+ Widget _buildItem(int index, String text, Statuses status) {
     return new MyButton(
        key: new ValueKey<int>(index),
         text: text,
+        status: status,
         onPress: () {
 print("index                         $index");
            int j = 0;
     setState(() {
 proArray.addAll(arr1);
-        // for (int i = 0; i < arr1.length; i++) {
-        // proArray[i] = arr1[i];
-        // }
-       //proArray=arr1;
+      
       proArray.removeAt(index);
 print('removed array       $proArray');
 print('removed array l3en      ${proArray.length}');
 print('word array       $word');
-     // console.log("removed array",proArray);
+     
         for (int i = 0; i <proArray.length; i++) {
            
             if ( word[j] == proArray[i]) {
-                j++; //console.log("hai", j);
+                j++;
             }
              if (j >=  word.length) {break;}
         }
 
-    //  console.log("j is now", j);
     print('j is now     $j');
       
         if (j >=  word.length) {
@@ -98,21 +96,21 @@ print('word array       $word');
        print('array 1           $arr1');
       arr1.removeAt(index);
       print('array 1 after     $arr1');
-      
-      // this.setState( {...this.state,arr1:this.state.arr1.filter((val,index)=> index!=id)})
             widget.onScore(2);
             widget.onProgress(num1 / others.length);
             if ( numOFWrongElem ==   others.length) {
-              
-              // this.setState({statuses: this.state.statuses.map(()=>'selected')})
-             //  this.refs.view1.zoomIn(1000);
-              // setTimeout( () => { this.props.onEnd();},1500)
+            
               widget.onEnd();
                widget.onEnd();
             }
         
         } else {
-           // view.wobble(1000);
+          _statusList[index]=Statuses.wrong;
+          print('status array afdter clicking wrong     $_statusList');
+           new Future.delayed(const Duration(milliseconds: 500), () {
+                  setState(() {
+                 _statusList[index]=Statuses.right;
+                  });});
        }
        proArray=[];
   }); }
@@ -124,20 +122,24 @@ print('word array       $word');
   Widget build(BuildContext context) {
 
      int j = 0;
-    return new ResponsiveGridView(
+   
+      return 
+        
+         new ResponsiveGridView(
+           maxAspectRatio: 1.0,
       rows: 1,
       cols: arr1.length,
-      children: arr1.map((e) => _buildItem(j++, e)).toList(growable: false),
-    );
+      children: arr1.map((e) => _buildItem(j, e,_statusList[j++])).toList(growable: false),
+      );
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress,this.status}) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
-
+  final Statuses status;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -155,42 +157,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 10), vsync: this);
         controller1 = new AnimationController(
         duration: new Duration(milliseconds: 40), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
-//        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
     controller.forward();
      animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
     _myAnim();
   }
 
-  // @override
-  // void didUpdateWidget(MyButton oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.text == null && widget.text != null) {
-  //     _displayText = widget.text;
-  //     controller.forward();
-  //   } else if (oldWidget.text != widget.text) {
-  //     controller.reverse();
-  //   }
-  //   print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  // }
-
-  // @override
-  // void didUpdateWidget(MyButton oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.text != widget.text) {
-  //     controller.reverse();
-  //   }
-  //   print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  // }
+ 
    void _myAnim() {
     animation1.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -204,14 +178,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return  new RaisedButton(
+    return  new ScaleTransition(
+      scale: animation,
+      child:new  Shake(
+      animation: widget.status == Statuses.wrong?animation1:animation,
+      child: new RaisedButton(
                 onPressed: () => widget.onPress(),
-                color: Colors.teal,
+                color: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(_displayText,
+                child: new Text(widget.text,
                     style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)));
+                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
