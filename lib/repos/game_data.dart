@@ -6,6 +6,7 @@ import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
 import 'unit_repo.dart';
 import 'concept_repo.dart';
+import 'package:maui/db/entity/lesson_unit.dart';
 
 enum Category { letter, number }
 
@@ -289,15 +290,131 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
 enum Direction { across, down }
 Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
     fetchCrosswordData(int categoryId) async {
+  var rand = new Random();
+  switch (rand.nextInt(2)) {
+    case (0):
+      return new Tuple2([
+        ['E', null, null, null, null],
+        ['A', null, null, null, null],
+        ['T', 'I', 'G', 'E', 'R'],
+        [null, null, null, null, 'A'],
+        [null, null, null, null, 'T']
+      ], [
+        new Tuple4('assets/apple.png', 0, 0, Direction.down),
+        new Tuple4('assets/apple.png', 2, 0, Direction.across),
+        new Tuple4('assets/apple.png', 2, 4, Direction.down),
+      ]);
+      break;
+  }
   return new Tuple2([
-    ['E', null, null, null, null],
-    ['A', null, null, null, null],
-    ['T', 'I', 'G', 'E', 'R'],
-    [null, null, null, null, 'A'],
-    [null, null, null, null, 'T']
+    ['C', 'A', 'T', null, null, 'E'],
+    [null, 'N', null, null, null, 'G'],
+    [null, 'T', 'I', 'G', 'E', 'R'],
+    [null, null, 'B', null, null, 'E'],
+    [null, null, 'E', null, null, 'T'],
+    [null, 'O', 'X', 'E', 'N', null]
   ], [
-    new Tuple4('assets/apple.png', 0, 0, Direction.down),
-    new Tuple4('assets/apple.png', 2, 0, Direction.across),
-    new Tuple4('assets/apple.png', 2, 4, Direction.down),
+    new Tuple4('assets/apple.png', 0, 0, Direction.across),
+    new Tuple4('assets/apple.png', 0, 1, Direction.down),
+    new Tuple4('assets/apple.png', 0, 5, Direction.down),
+    new Tuple4('assets/apple.png', 2, 1, Direction.across),
+    new Tuple4('assets/apple.png', 2, 2, Direction.down),
+    new Tuple4('assets/apple.png', 5, 1, Direction.across)
   ]);
+}
+
+Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
+    int categoryId, int maxChoices) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  List<LessonUnit> lessonUnits;
+  if (gameCategory.lessonId != null) {
+    lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsByLessonId(gameCategory.lessonId);
+  } else if (gameCategory.conceptId != null) {
+    lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsBelowSeqAndByConceptId(10, gameCategory.conceptId);
+  }
+  lessonUnits.shuffle();
+  var answer = lessonUnits[0];
+  List<String> choices = lessonUnits
+      .where((l) => l.subjectUnitId != answer.subjectUnitId)
+      .take(maxChoices)
+      .map((l) => l.objectUnitId)
+      .toList(growable: false);
+  return new Tuple3(
+      lessonUnits[0].subjectUnitId, lessonUnits[0].objectUnitId, choices);
+}
+
+Future<Tuple2<List<String>, List<String>>> fetchWordData(
+    int categoryId, int maxLength, int otherLength) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  List<LessonUnit> lessonUnits;
+  List<String> wordLetters;
+  if (gameCategory.lessonId != null) {
+    lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsByLessonId(gameCategory.lessonId);
+    lessonUnits.shuffle();
+    wordLetters = lessonUnits
+        .firstWhere((w) => w.subjectUnitId.length <= maxLength)
+        .subjectUnitId
+        .runes
+        .map((r) => new String.fromCharCode(r))
+        .toList(growable: false);
+  } else if (gameCategory.conceptId != null) {
+    lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsBelowSeqAndByConceptId(10, gameCategory.conceptId);
+    lessonUnits.shuffle();
+    wordLetters = lessonUnits
+        .firstWhere((w) => w.objectUnitId.length <= maxLength)
+        .objectUnitId
+        .runes
+        .map((r) => new String.fromCharCode(r))
+        .toList(growable: false);
+  }
+  var otherUnits = await new UnitRepo().getUnitsOfSameTypeAs(wordLetters[0]);
+  otherUnits.shuffle();
+  var otherLetters = otherUnits
+      .where((u) => !wordLetters.contains(u.name))
+      .take(otherLength)
+      .map((u) => u.name)
+      .toList(growable: false);
+  return new Tuple2(wordLetters, otherLetters);
+}
+
+Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
+    int categoryId, int maxLength, int otherLength) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    switch (category?.name) {
+      case '0-9':
+        var startNum = rand.nextInt(max(0, 9 - maxLength));
+        List<String> consecutive = new List<String>();
+        for(int i = startNum; i < startNum + maxLength; i++) {
+          consecutive.add(i.toString());
+        }
+        List<String> other = new List<String>();
+        for(int i = 0; i < otherLength; i++) {
+          var nextNum = (startNum + maxLength +1 + rand.nextInt(max(0, 9 - maxLength))) % 10;
+          other.add(nextNum.toString());
+        }
+        return new Tuple2(consecutive, other);
+        break;
+      case '0-99':
+        var startNum = rand.nextInt(max(0, 99 - maxLength));
+        List<String> consecutive = new List<String>();
+        for(int i = startNum; i < startNum + maxLength; i++) {
+          consecutive.add(i.toString());
+        }
+        List<String> other = new List<String>();
+        for(int i = 0; i < otherLength; i++) {
+          var nextNum = (startNum + maxLength +1 + rand.nextInt(max(0, 99 - maxLength))) % 100;
+          other.add(nextNum.toString());
+        }
+        return new Tuple2(consecutive, other);
+        break;
+    }
+  }
+  return null;
 }
