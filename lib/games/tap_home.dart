@@ -31,8 +31,8 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
 
   Animation _animation, _animationTimer;
   AnimationController _animationController, _animTimerController;
-  int result = 5;
-  int _num = 5;
+  List<int> result = [2, 3, 4];
+  int _num = 0;
   int count = 0;
   List<int> a = [1, 2, 3, 4, 5];
   @override
@@ -67,30 +67,51 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
           _animTimerController.forward(from: 0.0);
           new Future.delayed(const Duration(milliseconds: 500), () {
             _animTimerController.stop();
+            setState(() {
+              _num = _num + 1;
+              count = 0;
+            });
+            _animTimerController.forward(from: 0.0);
           });
 
         }
         else {
           count = count + 1;
           _animTimerController.forward(from: 0.0);
-          //}
-        }}
+        }
+      }
     });
     _animTimerController.forward(from: 0.0);
     print('Pushed the Button');
   }
 
   void _clickText () {
-    if(result ==  a[_animationTimer.value]){
-      setState(() => this.result = 1);
+    print("value of data");
+    print(result.length);
+    print(_num);
+    if(result.length > _num) {
+      if (result[_num] == a[_animationTimer.value]) {
+        print("heloo i have stop this22222");
+        if(result.length == _num + 1 ){
+          print("heloo i have stop this");
+          _animTimerController.stop();
+        }
+        else{
+          setState(() => _num = _num + 1);
+          _animTimerController.forward(from: 0.0);
+        }
+      }
+
+      else {
+        _myAnim();
+        new Future.delayed(const Duration(milliseconds: 1000), () {
+          _animationController.stop();
+          _animTimerController.forward(from: 0.0);
+        });
+      }
     }
     else{
-      _myAnim();
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        _animationController.stop();
-        _animTimerController.forward(from:0.0);
-
-      });
+      _animTimerController.stop();
     }
   }//end of _clickText function
 
@@ -114,7 +135,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
                               aspectRatio: 1.0,
                               child: new TextAnimation(
                                   animation: _animation,
-                                  text: result.toString(),
+                                  text: result[_num].toString(),
                                   height: _height))),
                       new Expanded(
                           flex: 1,
