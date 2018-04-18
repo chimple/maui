@@ -28,6 +28,9 @@ class IdentifyGame extends StatefulWidget {
 
 class _IdentifyGameState extends State<IdentifyGame> {
   // String demo;
+
+  Map decoded;
+
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
   }
@@ -40,28 +43,35 @@ class _IdentifyGameState extends State<IdentifyGame> {
   }
 
   void _parserJsonForGame(String jsonString) {
-    Map decoded = json.decode(jsonString);
+    this.setState((){
+      decoded = json.decode(jsonString);
+    });
     print(decoded["id"]);
-
+    print(decoded["height"]);
+    print(decoded["width"]);
+    print(decoded["parts"][0]["name"]);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadGameInfo();
+    this._loadGameInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     // print(demo);
+    Size media = MediaQuery.of(context).size;
+    double height = media.height;
+    double width = media.width;
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(38.0, 500.0), 'square', Colors.red),
-        new DragBox(new Offset(126.0, 500.0), 'triangle', Colors.orange),
-        new DragBox(new Offset(214.0, 500.0), 'circle', Colors.lightBlue),
-        new DragBox(new Offset(303.0, 500.0), 'hexagon', Colors.green),
+        new DragBox(new Offset(38.0, 500.0), decoded["parts"][0]["name"], Colors.red),
+        new DragBox(new Offset(126.0, 500.0), decoded["parts"][3]["name"], Colors.orange),
+        new DragBox(new Offset(214.0, 500.0), decoded["parts"][1]["name"], Colors.lightBlue),
+        new DragBox(new Offset(303.0, 500.0), decoded["parts"][2]["name"], Colors.green),
       ],
     );
     // return new Column(
@@ -214,25 +224,29 @@ class DropTargetState extends State<DropTarget> {
 
   @override
   Widget build(BuildContext context) {
+    var assetsImage = new AssetImage('assets/Shapes.png');
+    Image image = new Image(image: assetsImage);
+    image.image.resolve(new ImageConfiguration()).addListener((ImageInfo info, bool _) => ImageStreamCompleter.(info.image));
     Size media = MediaQuery.of(context).size;
     double height = media.height;
     double width = media.width;
     return new Positioned(
       left: position.dx,
       right: position.dy,
-      child: new Image(
-        image: new AssetImage('assets/Shapes.png'),
-        // height: height * 0.7,
-        // width: width * 0.6,
-      ),
-      // child: new Container(
-      //   decoration: new BoxDecoration(
-      //     image: new DecorationImage(
-      //       image: new AssetImage('assets/Boy.png'),
-      //       fit: BoxFit.contain,
-      //     ),
-      //   ),
+      child: image,
+      // child: new Image(
+      //   image: new AssetImage('assets/Shapes.png'),
+      //   // height: height * 0.7,
+      //   // width: width * 0.6,
       // ),
+      // // child: new Container(
+      // //   decoration: new BoxDecoration(
+      // //     image: new DecorationImage(
+      // //       image: new AssetImage('assets/Boy.png'),
+      // //       fit: BoxFit.contain,
+      // //     ),
+      // //   ),
+      // // ),
     );
     // return new DragTarget(
     //   // onAccept: (String text) {
@@ -295,14 +309,10 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   String draggableText;
   int _flag = 0;
 
-
   // void _parseJsonIdentifyGame(String jsonString) {
   //   Map decoded = json.decode(jsonString);
   //   print(decoded);
   // }
-
-
-
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {

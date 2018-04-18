@@ -17,15 +17,17 @@ dependencies:
   tuple: ^1.0.1
   firebase_database: ^0.4.1
   firebase_storage: ^0.2.0
+  json_annotation: ^0.2.2
   audioplayer: ^0.4.0
+  fluttie: ^0.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-
-
+  build_runner: ^0.7.6
+  json_serializable: ^0.3.2
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
@@ -50,6 +52,8 @@ flutter:
     - assets/imageCoordinatesInfo.json
     - assets/apple.ogg
     - assets/Shapes.png
+    - assets/animations/koala_happy.json
+    - assets/animations/zebra_face.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

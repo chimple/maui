@@ -21,8 +21,9 @@ void main() {
     });
 
     test('Scrolling to the multiple Game option', () async {
-      final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 3));
+      final Completer<Null> completer = new Completer<Null>();
+      await new Future<Duration>.delayed(const Duration(seconds: 5));
       bool scroll = true;
       String s = 'Single digit addition without carry';
       final SerializableFinder todo = find.byValueKey(s);
