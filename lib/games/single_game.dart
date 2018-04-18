@@ -15,6 +15,7 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
+import 'package:maui/games/quiz.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/hoodie.dart';
@@ -266,6 +267,15 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_number':
         return new Fillnumber(
             onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+        case 'quiz':
+        return new Quiz(
+          onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
