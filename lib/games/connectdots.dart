@@ -32,15 +32,26 @@ enum ShakeCell { Right, InActive, Dance, CurveRow }
 class ConnectdotsState extends State<Connectdots> {
 
   var  i=0;
-  var n=0;
+  
   var count=0;
  final List<int> _numserial = [
-   3,4,5,6,7,8
+  15,16,17,18,19,20,21,22
 ];
-final List<int> _numothers =[11,10,1];
+final List<int> _numothers =[32,37,1,43];
 
   final int _size = 3;
   static int size=3;
+   var j=size;
+   var n=size;
+  var m=size;
+   var k=0;
+   var count1=0;
+   var count2=0;
+   var count3=0;
+   var count6=0;
+   var count4=0;
+  var count5=0;
+  var r;
  
  List<int> numbers=[];
 
@@ -49,19 +60,21 @@ final List<int> _numothers =[11,10,1];
   List _copyAns = [];
  
   List<int> _letters;
-  List<int> _letters1;
-  List<int> _number0;
-  List<int> _number1;
-  List<int> _number2;
-  List<int> _number3;
+ 
+  List<int> _todnumber=[];
   List<Status> _statuses;
-List<int> _letterex;
+List<int> _letterex=[];
+var z=0;
+
 
   List<ShakeCell> _ShakeCells = [];
-
-  @override
+   @override
   void initState() {
     super.initState();
+    _initBoard();
+  }
+
+ void _initBoard() async {
    _numserial.forEach((e) { _copyAns.add(e);});
    
  
@@ -82,39 +95,137 @@ List<int> _letterex;
 _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
 
     print(_shuffledLetters);
-   _number0 = _shuffledLetters.sublist(0, _size);
+
+
+      var todnumbers= new List.generate(m, (_) => new List(n));
+    for(var i=0; i<size; i++)
+    {
+      for(var j=0;j<size; j++)
+      {
+       count3= count2+j+1+count1;
+      print("print something in forloop");
+   _shuffledLetters.sublist(count1,count3).forEach((e){todnumbers[i][j]=e;});
     
-     _number1= _shuffledLetters.sublist(_size,_size+_size);
-     _number3=_shuffledLetters.sublist(_size+_size,_size*3);
+        print("value of 2d is each time $todnumbers");
+      }
+      count1=count3;
+   
+     
+    }
+     for(var i=1;i<size;i++){
+       if(i%2!=0){
+    Iterable letdo = todnumbers[i].reversed; 
+    var fReverse = letdo.toList();
 
-      print("number sublist is  $_number1");
-    Iterable _number2 = _number1.reversed;
-    var fruitsInReverse = _number2.toList();
-     print("number sublist reverse is is  $fruitsInReverse");
+    print("value of 2d is $todnumbers");
 
+       print("RRRRRR $fReverse");
+     todnumbers[i].setRange(0, size, fReverse.map((e)=>e));
+ print("value o ooppps$todnumbers");
+       }
+     }
+
+todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
+
+ print("2d value is in my oops is$_todnumber");
+
+
+ var todcolnumbers= new List.generate(m, (_) => new List(n));
+    for(var i=0; i<size; i++)
+    {
+      if(i%2!=0){
+
+        print("this treacing $count6");
+        print("this treacing 2count$count4");
+
+         for(var j=size-1;j>=0; j--) {
+             count6= 1+count4;
+            
+      print("this jjjj is $j");
+
+   _shuffledLetters.sublist(count4,count6).forEach((e){todcolnumbers[j][i]=e;});
+      
+        print("value of 2d is cols each time $todcolnumbers");
+         count4=count6;
+         }
+         
+      }
+      else
+      {
+      for(var j=0;j<size; j++)
+      {
+       count6= count2+j+1+count4;
+      print("print something in forloop");
+   _shuffledLetters.sublist(count4,count6).forEach((e){todcolnumbers[j][i]=e;});
+    
+        print("value of 2d is cols each time $todcolnumbers");
+      }
+      }
+      count4=count6;
+   
+    }
+    //  Iterable letdocol = todcolnumbers[1].reversed; 
+    // var fcolReverse = letdocol.toList();
+    // print("is cols revers$fcolReverse");
+    // todcolnumbers[1].setRange(0, size, fcolReverse.map((e)=>e));
+   
+
+
+   todcolnumbers.forEach((e){e.forEach((v){_letterex.add(v);});});
+    
+  
   var rng = new Random();
   for (var i = 0; i <1; i++) {
-      n= rng.nextInt(2);
+      r= rng.nextInt(4);
+    
   }
-  if(n==1)
-{
-              _letterex=_shuffledLetters.sublist(0, _size);
-               fruitsInReverse.forEach((e){_letterex.add(e);});
-           
-            _number3.forEach((v){_letterex.add(v);});
-            Iterable _number4 = _letterex.reversed;
+  if(r==4){
+    r=r-1;
+  }
+  print("hello sir $r");
+
+  switch(r)
+  {
+    case 0: { 
+      _letters=_todnumber;} 
+     break;
+     case 1: {  
+       Iterable _number4 = _todnumber.reversed;
             var fruitsInReverset = _number4.toList();
             _letters=fruitsInReverset;
-
-     print("hello all data here $_letters");
+             } 
+      break; 
+     
+      case 2: {  
+           _letters=_letterex;
+               } 
+      break; 
+      case 3: {  
+       Iterable _number4 = _letterex.reversed;
+            var fruitsInReverset = _number4.toList();
+            _letters=fruitsInReverset;
+             } 
+      break; 
   }
-  else{
-              _letters=_shuffledLetters.sublist(0, _size);
-               fruitsInReverse.forEach((e){_letters.add(e);});
+//   if(n==1)
+// {
+//               _letterex=_shuffledLetters.sublist(0, _size);
+//                fruitsInReverse.forEach((e){_letterex.add(e);});
            
-            _number3.forEach((v){_letters.add(v);});
+//             _number3.forEach((v){_letterex.add(v);});
+//             Iterable _number4 = _letterex.reversed;
+//             var fruitsInReverset = _number4.toList();
+//             _letters=fruitsInReverset;
 
-  }
+//      print("hello all data here $_letters");
+//   }
+//   else{
+//               _letters=_shuffledLetters.sublist(0, _size);
+//                fruitsInReverse.forEach((e){_letters.add(e);});
+           
+//             _number3.forEach((v){_letters.add(v);});
+
+//   }
   }
 
   Widget _buildItem(int index,int  text, Status status,ShakeCell tile) {
@@ -168,6 +279,7 @@ _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
       return new ResponsiveGridView(
       rows: _size,
       cols: _size,
+    maxAspectRatio: 1.0,
       children: _letters.map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++])).toList(growable: false),
     );
   
