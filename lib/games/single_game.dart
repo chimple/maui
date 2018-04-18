@@ -16,6 +16,7 @@ import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/games/connectdots.dart';
+import 'package:maui/games/wordgrid.dart';
 import 'package:maui/components/progress_bar.dart';
 
 enum GameMode { timed, iterations }
@@ -271,6 +272,15 @@ class _SingleGameState extends State<SingleGame> {
         break;
         case 'connect_dots': 
         return new Connectdots(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+        case 'wordgrid': 
+        return new Wordgrid(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
