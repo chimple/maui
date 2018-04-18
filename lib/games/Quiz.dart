@@ -22,15 +22,11 @@ class Quiz extends StatefulWidget {
 class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
  
- Tuple2<String, bool> _allques;
+ Tuple3<String, String, List<String>> _allques;
   String questionText;
-  bool tf;
+  String ans;
+  List<String> choices;
   bool isCorrect;
-  bool overlayShouldBeVisible = false;
-
-  Animation<double> buttonSqueezeAnimation;
-
-  Animation<double> buttonZoomout;
 
   AnimationController _loginButtonController;
 
@@ -42,22 +38,23 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
 
   void _initBoard() async {
     setState(()=>_isLoading=true);
-    _allques =  await fetchTrueOrFalse(widget.gameCategoryId);
+    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 4);
     print("this is my data  $_allques");
     print(_allques.item1);
     questionText = _allques.item1;
     print(_allques.item2);
-    tf = _allques.item2;
+    ans = _allques.item2;
+    print(_allques.item3);
+    choices = _allques.item3;
     setState(()=>_isLoading=false);
     _loginButtonController = new AnimationController(
-      duration: new Duration(milliseconds: 3000),
+      duration: new Duration(milliseconds: 300),
       vsync: this
     );
   }
 
-  void handleAnswer(bool answer) {
-    isCorrect = (tf == answer);
-    _playAnimation();
+  void handleAnswer(String answer) {
+    isCorrect = (ans == answer);
     if (isCorrect) {
       _playAnimation();
       widget.onScore(1);
@@ -65,10 +62,9 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
       widget.onEnd();
       _initBoard();
     }
-    this.setState(() {
-      print(4);
-      overlayShouldBeVisible = true;
-    });
+    else {
+      _playWrongAnimation();
+    }
   }
 
 
@@ -79,6 +75,13 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     }
     on TickerCanceled{}
   }
+
+  Future<Null> _playWrongAnimation() async {
+    try {
+      await _loginButtonController.forward();
+    }
+    on TickerCanceled{}
+  }
   
     @override
   Widget build(BuildContext context) {
@@ -86,7 +89,7 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     double ht=media.height;
     double wd = media.width;
     print("Question text here $questionText");
-    print("Answer here $tf");
+    print("Answer here $ans");
 
     if(_isLoading) {
       return new SizedBox(
@@ -95,27 +98,6 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
         child: new CircularProgressIndicator(),
       );
     }    
-
-    buttonSqueezeAnimation = new Tween(
-      begin: 320.0,
-      end: 70.0,
-    ).animate(new CurvedAnimation(
-      parent: _loginButtonController.view,
-      curve: new Interval(0.0, 0.250)
-    ));
-
-    buttonZoomout = new Tween(
-      begin: 500.0,
-      end: 1000.0,
-    ).animate(
-      new CurvedAnimation(
-        parent: _loginButtonController.view,
-        curve: new Interval(
-          0.550, 0.900,
-          curve: Curves.bounceOut,
-        )
-    ));
-       
 
     return new Material(
       color: const Color(0xFF54cc70),
@@ -143,13 +125,13 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                  new AnswerButton(buttonController: _loginButtonController.view, answer: true, onTap: () => handleAnswer(false))/*true button*/, 
+                  new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[0], onTap: () => handleAnswer(choices[0])), 
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                  new AnswerButton(buttonController: _loginButtonController.view, answer: false, onTap: () => handleAnswer(false)), /*false button*/
+                  new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[1], onTap: () => handleAnswer(choices[1])),
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
@@ -158,7 +140,7 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
                 ),
 
                  new Padding(
-                      padding: new EdgeInsets.all(ht * 0.015),
+                      padding: new EdgeInsets.all(ht * 0.01),
                     ),
 
                new Row(
@@ -169,13 +151,13 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
                         padding: new EdgeInsets.all(wd * 0.015),
                       ),
 
-                    new AnswerButton(buttonController: _loginButtonController.view, answer: true, onTap: () => handleAnswer(false)),/*true button*/
+                    new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[2], onTap: () => handleAnswer(choices[2])),
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                    new AnswerButton(buttonController: _loginButtonController.view, answer: false, onTap: () => handleAnswer(false)), /*false button*/ 
+                    new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[3], onTap: () => handleAnswer(choices[3])),
 
                       new Padding(
                         padding: new EdgeInsets.all(wd * 0.015),
@@ -268,10 +250,10 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 }
 
 class AnswerButton extends StatelessWidget {
-  final bool answer;
+  final String answerText;
   final VoidCallback onTap;
 
-  AnswerButton({Key key, this.answer, this.onTap, this.buttonController})
+  AnswerButton({Key key, this.answerText, this.onTap, this.buttonController})
       : buttonSqueezeanimation = new Tween(
           begin: 320.0,
           end: 70.0,
@@ -328,13 +310,12 @@ class AnswerButton extends StatelessWidget {
   }
 
   Widget _buildAnimation(BuildContext context, Widget child) {
-    return new Padding(
+    return new Padding(  
       padding: buttomZoomOut.value == 70
           ? const EdgeInsets.only(bottom: 50.0)
           : containerCircleAnimation.value,
       child: new InkWell(
           onTap: () {
-            _playAnimation();
             onTap();
           },
           child: new Hero(
@@ -355,7 +336,7 @@ class AnswerButton extends StatelessWidget {
                     ),
                     child: buttonSqueezeanimation.value > 75.0
                         ? new Text(
-                            answer == true ? "True" : "False",
+                            answerText,
                             style: new TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
