@@ -42,14 +42,14 @@ class _HoodieState extends State<Hoodie> {
 
     // Load our first composition for the emoji animation
     var anim = await instance.loadAnimationFromResource(
-        "assets/animations/koala_happy.json",
+        "assets/animations/zebra_face.json",
         bundle: DefaultAssetBundle.of(context)
     );
     // And prepare its animation, which should loop infinitely and take 2s per
     // iteration. Instead of RepeatMode.START_OVER, we could have choosen
     // REVERSE, which would play the animation in reverse on every second iteration.
     _controller = await instance.prepareAnimation(anim,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 6),
         repeatCount: const RepeatCount.infinite(), repeatMode: RepeatMode.START_OVER);
 
 
