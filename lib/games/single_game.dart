@@ -17,6 +17,7 @@ import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/games/quiz.dart';
 import 'package:maui/games/connectdots.dart';
+import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/hoodie.dart';
 
@@ -284,6 +285,15 @@ class _SingleGameState extends State<SingleGame> {
         break;
         case 'connect_dots': 
         return new Connectdots(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+         case 'tap_wrong': 
+        return new TapWrong(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
