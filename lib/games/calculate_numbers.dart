@@ -45,7 +45,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   final int _size = 3;
   List<String> _numbers;
-  String _preValue;
+  String _preValue = '';
   int num1,
       num2,
       num1digit1 = 0,
@@ -86,11 +86,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   bool _isLoading = true;
   String options;
   int scoreCount = 0;
-  var n1 = new List();
-  var n2 = new List();
-  var o = new List();
-  var f = new List();
-  var s = new List();
+    List<int> n1=[];
+    List<int> n2=[];
+    List<String> o=[];
+    List<bool> f=[];
+     List<bool> s=[];
+    List<int> c=[];
+     List<int> cf=[];
+
+  int j1;
+  int i = 0;
+  String fr;
 
   @override
   void initState() {
@@ -102,19 +108,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     _myAnim();
     super.initState();
     _initBoard();
-    o.add(_output3);
-    o.add(_output2);
-    o.add(_output1);
-    o.add(_output);
-    f.add(flag3);
-    f.add(flag2);
-    f.add(flag1);
-    f.add(flag);
-    s.add(shake4);
-    s.add(shake3);
-    s.add(shake2);
-    s.add(shake1);
-    print(o);
   }
 
   void _initBoard() async {
@@ -128,9 +121,21 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     _operator = data.item2;
     scoreCount = 0;
     setState(() => _isLoading = false);
+    o.clear();
+    print("printing output list....$o");
+    f.clear();
+    s.clear();
+    i = 0;
+    j1 = 0;
+    _preValue = '';
+    c.clear();
+    n1.clear();
+    n2.clear();
     if (num1 % 10 == num1 && num2 % 10 == num2) {
       num1digit1 = num1 % 10;
       num2digit1 = num2 % 10;
+         n1.add(num1digit1);
+      n2.add(num2digit1);
       options = 'singleDigit';
     } else if ((calCount(num1) <= 2 && calCount(num2) <= 2) &&
         (calCount(num1 + num2) == 2 || calCount(num1 + num2) == 3)) {
@@ -138,15 +143,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num1digit1 = num1 % 10;
       num1 = num1 ~/ 10;
       num1digit2 = num1 % 10;
-        n1.add(num1digit1);
+      n1.add(num1digit1);
       n1.add(num1digit2);
-    
       num2digit1 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit2 = num2 % 10;
-        n2.add(num2digit1);
+      n2.add(num2digit1);
       n2.add(num2digit2);
-    
       print('printing n1 list values..');
       print(n1);
       print('printing n2 list values..');
@@ -163,7 +166,33 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit2 = num2 % 10;
       num2 = num2 ~/ 10;
       num2digit3 = num2 % 10;
+      n1.add(num1digit1);
+      n1.add(num1digit2);
+      n1.add(num1digit3);
+       n2.add(num2digit1);
+      n2.add(num2digit2);
+      n2.add(num2digit3);
+    
     }
+   o.add(_output3);
+   o.add(_output2);
+   o.add(_output1);
+   o.add(_output);
+    f.add(flag3);
+    f.add(flag2);
+    f.add(flag1);
+    f.add(flag);
+    s.add(shake4);
+    s.add(shake3);
+    s.add(shake2);
+    s.add(shake1);
+    //  c.add(check4);
+    //  c.add(check3);
+    c.add(check2);
+    c.add(check1);
+    cf.add(check2);
+    cf.add(check1);
+    print(o);
   }
 
   int calCount(sum) {
@@ -332,9 +361,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         widget.onScore(1);
         widget.onProgress(1.0);
         scoreCount = 1;
-        new Future.delayed(const Duration(milliseconds: 1000), () {
+        new Future.delayed(const Duration(milliseconds: 300), () {
           _output = '';
           flag = false;
+          _initBoard();
           widget.onEnd();
         });
       }
@@ -360,45 +390,144 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         key: new ValueKey<int>(index),
         text: text,
         height: _height,
-        onPress: () {
-          switch (_options) {
-            case 'singleDigit':
-              //    operation(text);
-              setState(() {
-                _output = _addText(text, _output);
-                _output = _removeText(text, _output);
-                if (_rigltClick(text, _output, (num1 + num2)) == true) {
-                  _final(text, _output);
-                }
+        onPress: () {        
+             setState(() {
+                j1 = calCount(result);
               });
-              break;
-            case 'doubleDigitWithoutCarry':
-              for (var i = 0; i < calCount(num2); i++) {
+              if (j1 > 0 /* && c[i] == 0 */) {
                 print("coming to the double digit..");
-                print(n1[i]);
-                print(n2[i]);
+                print('initial i value... $i');
+                print('initial j value... $j1');
+                print('n1 first digit....${n1[i]}');
+                print('n2 first digit....${n2[i]}');
                 setState(() {
                   o[i] = _addText(text, o[i]);
                   o[i] = _removeText(text, o[i]);
                   f[i] = _rigltClick(text, o[i], (n1[i] + n2[i]));
                   print('printing flag value....${f[i]}');
                 });
-                if (f[i] == true) {
-                  setState(() {
-                    s[i] = true;
-                  });
-                } else {
-                  setState(() {
-                    s[i] = false;
-                  });
-                  new Future.delayed(const Duration(milliseconds: 500), () {
+                print('first output....${o[i]}');
+                print('complete list...${o}');
+                if (text == '✔') {
+                  if (_rigltClick(text, o[i], (n1[i] + n2[i])) == true) {
                     setState(() {
                       s[i] = true;
-                      o[i]='';
+                      c[i] = 1;
+                       if(o[i].length>1){
+                         setState((){                        
+                          o[i]=(int.parse(o[i])%10).toString();
+                           o[i+1]=(result~/10).toString();
+                            f[i+1]=true;
+                            
+                           print('printing o+1 value ....$o[i+1]');
+                        });
+                      }
+                      //_preValue =o[i+1]+ o[i]+ _preValue;
+                      _preValue = o[i]+ _preValue;
                     });
-                  });
+                    if (c[i] == 1) {
+                        setState((){
+                          print('printing i increment....');
+                      c[i] = 0;
+                      i++;
+                      j1--;                    
+                       });
+                    }
+                  } else {
+                    setState(() {
+                      s[i] = false;
+                    });
+                    new Future.delayed(const Duration(milliseconds: 500), () {
+                      setState(() {
+                        s[i] = true;
+                        o[i] = '';
+                      });
+                    });
+                  }
                 }
+                print('printing final value....$_preValue');
+                print(' at end i value ${i}');
+                print(' at end j value ${j1}');
               }
+              _final(text, _preValue);
+              //   operation(text);
+              // setState(() {
+              //   _output = _addText(text, _output);
+              //   _output = _removeText(text, _output);
+              //   f[i] = _rigltClick(text, _output, result);
+              // });
+              // if (text == '✔') {
+              //   if (_rigltClick(text, _output, result) == true) {
+              //     setState(() {
+              //       flag = true;
+              //     });
+              //     _final(text, _output);
+              //   } else {
+              //     setState(() {
+              //       shake1 = false;
+              //     });
+              //     new Future.delayed(const Duration(milliseconds: 500), () {
+              //       setState(() {
+              //         shake1 = true;
+              //         _output = '';
+              //       });
+              //     });
+              //   }
+              // }
+          //    break;
+            // case 'doubleDigitWithoutCarry':
+            //   setState(() {
+            //     j1 = calCount(result);
+            //   });
+            //   if (j1 > 0 && c[i] == 0) {
+            //     print("coming to the double digit..");
+            //     print('initial i value... $i');
+            //     print('initial j value... $j1');
+            //     print('n1 first digit....${n1[i]}');
+            //     print('n2 first digit....${n2[i]}');
+            //     setState(() {
+            //       o[i] = _addText(text, o[i]);
+            //       o[i] = _removeText(text, o[i]);
+            //       f[i] = _rigltClick(text, o[i], (n1[i] + n2[i]));
+            //       print('printing flag value....${f[i]}');
+            //     });
+            //     print('first output....${o[i]}');
+            //     print('complete list...${o}');
+            //     if (text == '✔') {
+            //       if (_rigltClick(text, o[i], (n1[i] + n2[i])) == true) {
+            //         setState(() {
+            //           s[i] = true;
+            //           c[i] = 1;
+            //           if(o[i].length>1){
+            //             setState((){
+            //               o[i]=(int.parse(o[i])%10).toString();
+            //             });
+            //           }
+            //           _preValue = o[i] + _preValue;
+            //         });
+            //         if (c[i] == 1) {
+            //           c[i] = 0;
+            //           i++;
+            //           j1--;
+            //         }
+            //       } else {
+            //         setState(() {
+            //           s[i] = false;
+            //         });
+            //         new Future.delayed(const Duration(milliseconds: 500), () {
+            //           setState(() {
+            //             s[i] = true;
+            //             o[i] = '';
+            //           });
+            //         });
+            //       }
+            //     }
+            //     print('printing final value....$_preValue');
+            //     print(' at end i value ${i}');
+            //     print(' at end j value ${j1}');
+            //   }
+            //   _final(text, _preValue);
+
               // if (_operator == '+') {
               //   if (text == '✔') {
               //     setState(() {
@@ -678,407 +807,407 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
               //     }
               //   }
               // }
-              break;
-            case 'tripleDigitWithoutCarry':
-              if (_operator == '+') {
-                if (text == '✔') {
-                  setState(() {
-                    _output = _removeZero(int.parse(_output)).toString();
-                  });
-                  if (int.parse(_output) == (num1digit1 + num2digit1)) {
-                    setState(() {
-                      flag = true;
-                      check = 1;
-                      if (calCount(num1digit1 + num2digit1) > 1) {
-                        setState(() {
-                          carry2 = 1;
-                          _output = (int.parse(_output) % 10).toString();
-                        });
-                      }
-                    });
-                  } else {
-                    if (check != 1) {
-                      setState(() {
-                        shake1 = false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
-                        setState(() {
-                          shake1 = true;
-                          _output = '';
-                        });
-                      });
-                    }
-                  }
-                  if (int.parse(_output1) ==
-                      (num1digit2 + num2digit2 + carry2)) {
-                    if (calCount(num1digit2 + num2digit2 + carry2) > 1) {
-                      setState(() {
-                        carry3 = 1;
-                        _output1 = (int.parse(_output1) % 10).toString();
-                      });
-                    }
-                    setState(() {
-                      flag1 = true;
-                      check1 = 1;
-                      _output1 = _removeZero(int.parse(_output1)).toString();
-                    });
-                  } else {
-                    if (check1 != 1) {
-                      setState(() {
-                        shake2 = false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
-                        setState(() {
-                          shake2 = true;
-                          _output1 = '';
-                        });
-                      });
-                    }
-                  }
-                  if (int.parse(_output2) ==
-                      (num1digit3 + num2digit3 + carry3)) {
-                    if (calCount(num1digit3 + num2digit3 + carry3) > 1) {
-                      setState(() {
-                        carry4 = (num1digit3 + num2digit3 + carry3) ~/ 10;
-                        _output2 = (int.parse(_output2) % 10).toString();
-                        flag3 = true;
-                      });
-                    }
-                    setState(() {
-                      flag2 = true;
-                      check2 = 1;
-                      _output2 = _removeZero(int.parse(_output2)).toString();
-                    });
-                    if (flag3 == true) {
-                      setState(() {
-                        _output3 = carry4.toString();
-                      });
-                    }
-                  } else {
-                    if (check2 != 1) {
-                      setState(() {
-                        shake3 = false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
-                        setState(() {
-                          shake3 = true;
-                          _output2 = '';
-                        });
-                      });
-                    }
-                  }
-                  setState(() {
-                    _preValue = _output3 + _output2 + _output1 + _output;
-                  });
-                  if (int.parse(_preValue) == result && text == '✔') {
-                    if (scoreCount == 0) {
-                      widget.onScore(1);
-                      widget.onProgress(1.0);
-                      scoreCount = 1;
-                      new Future.delayed(const Duration(milliseconds: 1000),
-                          () {
-                        _output = '';
-                        _output1 = '';
-                        _output2 = '';
-                        _output3 = '';
-                        check = 0;
-                        check1 = 0;
-                        check2 = 0;
-                        flag = false;
-                        flag1 = false;
-                        flag2 = false;
-                        flag3 = false;
-                        carry1 = 0;
-                        carry2 = 0;
-                        carry3 = 0;
-                        carry4 = 0;
-                        widget.onEnd();
-                      });
-                    }
-                  }
-                }
-                if (_output2.length < 2 && text != '✔') {
-                  if (check1 == 1 && check2 == 0) {
-                    setState(() {
-                      _output2 = _output2 + text;
-                    });
-                  }
-                }
-                if (_output1.length < 2 && text != '✔') {
-                  if (check == 1 && check1 == 0) {
-                    setState(() {
-                      _output1 = _output1 + text;
-                    });
-                  }
-                }
-                if (_output.length < 2) {
-                  if (check == 0) {
-                    setState(() {
-                      _output = _output + text;
-                    });
-                  }
-                }
-                if (text == '✖') {
-                  print("erasing the data");
-                  if (check == 0) {
-                    setState(() {
-                      _output = '';
-                      flag = false;
-                    });
-                  }
-                  if (check1 == 0) {
-                    setState(() {
-                      _output1 = '';
-                      flag1 = false;
-                      // check1 = 0;
-                    });
-                  }
-                  if (check2 == 0) {
-                    setState(() {
-                      _output2 = '';
-                      flag2 = false;
-                      //  check2 = 0;
-                    });
-                  }
-                }
-              } else if (_operator == '-') {
-                if (text == '✔') {
-                  setState(() {
-                    _output = _removeZero(int.parse(_output)).toString();
-                  });
-                  if (num1digit1 > num2digit1 || num1digit1 == num2digit1) {
-                    if (int.parse(_output) == (num1digit1 - num2digit1)) {
-                      setState(() {
-                        flag = true;
-                        check = 1;
-                        shake1 = true;
-                      });
-                    } else {
-                      if (check != 1)
-                        setState(() {
-                          shake1 = false;
-                        });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
-                        setState(() {
-                          shake1 = true;
-                          _output = '';
-                        });
-                      });
-                    }
-                  } else {
-                    setState(() {
-                      barrowFlag = true;
-                    });
-                    if (int.parse(_output) ==
-                        ((num1digit1 + 10) - num2digit1)) {
-                      setState(() {
-                        check = 1;
-                        shake1 = true;
-                        flag = true;
-                        carry2 = -1;
-                      });
-                    } else {
-                      setState(() {
-                        shake1 = false;
-                        numberShake = false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
-                        setState(() {
-                          shake1 = true;
-                          numberShake = true;
-                          _output = '';
-                        });
-                      });
-                    }
-                  }
-                  if (check == 1) {
-                    if ((num1digit2 > num2digit2 || num1digit2 == num2digit2) &&
-                        carry2 != -1) {
-                      print('coming to without carry');
-                      if (int.parse(_output1) == (num1digit2 - num2digit2)) {
-                        setState(() {
-                          flag1 = true;
-                          shake2 = true;
-                          check1 = 1;
-                        });
-                      } else {
-                        setState(() {
-                          shake2 = false;
-                        });
-                        new Future.delayed(const Duration(milliseconds: 900),
-                            () {
-                          setState(() {
-                            shake2 = true;
-                            _output1 = '';
-                          });
-                        });
-                      }
-                    } else {
-                      print("coming to carry2");
-                      print(carry2);
-                      setState(() {
-                        barrowFlag1 = true;
-                        print(barrowFlag1);
-                      });
-                      if (int.parse(_output1) ==
-                              ((num1digit2 - num2digit2) - 1) ||
-                          int.parse(_output1) ==
-                              ((num1digit2 + 10) - num2digit2 - 1)) {
-                        setState(() {
-                          flag1 = true;
-                          shake2 = true;
-                          check1 = 1;
-                          carry3 = -1;
-                        });
-                      } else {
-                        setState(() {
-                          shake2 = false;
-                          numberShake1 = false;
-                        });
-                        new Future.delayed(const Duration(milliseconds: 900),
-                            () {
-                          setState(() {
-                            shake2 = true;
-                            numberShake1 = true;
-                            _output1 = '';
-                          });
-                        });
-                      }
-                    }
-                  }
-                  if (check1 == 1) {
-                    if ((num1digit3 > num2digit3 || num1digit3 == num2digit3) &&
-                        carry3 != -1) {
-                      print('coming to 3 digit without carry');
-                      if (int.parse(_output2) == (num1digit3 - num2digit3)) {
-                        setState(() {
-                          flag2 = true;
-                          shake3 = true;
-                          check2 = 1;
-                        });
-                      } else {
-                        setState(() {
-                          shake3 = false;
-                        });
-                        new Future.delayed(const Duration(milliseconds: 900),
-                            () {
-                          setState(() {
-                            shake3 = true;
-                            _output2 = '';
-                          });
-                        });
-                      }
-                    } else {
-                      print("printing carry2");
-                      print(carry2);
-                      if (int.parse(_output2) ==
-                              (num1digit3 - num2digit3 - 1) &&
-                          carry3 == -1) {
-                        setState(() {
-                          flag2 = true;
-                          shake3 = true;
-                          check2 = 1;
-                        });
-                      } else {
-                        setState(() {
-                          shake3 = false;
-                        });
-                        new Future.delayed(const Duration(milliseconds: 900),
-                            () {
-                          setState(() {
-                            shake3 = true;
-                            _output2 = '';
-                          });
-                        });
-                      }
-                    }
-                  }
-                  setState(() {
-                    _preValue = _output2 + _output1 + _output;
-                  });
-                  if (int.parse(_preValue) == result) {
-                    if (scoreCount == 0) {
-                      print("Given result..");
-                      print(result);
-                      widget.onScore(1);
-                      widget.onProgress(1.0);
-                      scoreCount = 1;
-                      new Future.delayed(const Duration(milliseconds: 1000),
-                          () {
-                        _output = '';
-                        _output1 = '';
-                        _output2 = '';
-                        check = 0;
-                        check1 = 0;
-                        check2 = 0;
-                        flag = false;
-                        flag1 = false;
-                        flag2 = false;
-                        barrowFlag = false;
-                        carryFlag = false;
-                        barrowFlag1 = false;
-                        carryFlag1 = false;
-                        tempf1 = 0;
-                        tempf = 0;
-                        carry1 = 0;
-                        carry2 = 0;
-                        carry3 = 0;
-                        shake1 = true;
-                        shake2 = true;
-                        shake3 = true;
-                        widget.onEnd();
-                      });
-                    }
-                  }
-                }
-                if (_output2.length < 1 && text != '✔') {
-                  if (check1 == 1 && check2 == 0) {
-                    setState(() {
-                      _output2 = _output2 + text;
-                    });
-                  }
-                }
-                if (_output1.length < 1 && text != '✔') {
-                  if (check == 1 && check1 == 0) {
-                    setState(() {
-                      _output1 = _output1 + text;
-                    });
-                  }
-                }
-                if (_output.length < 1 && text != '✔') {
-                  if (check == 0) {
-                    setState(() {
-                      _output = _output + text;
-                    });
-                  }
-                }
-                if (text == '✖') {
-                  print("erasing the data");
-                  if (check == 0 && _output != '') {
-                    print("out getting erased");
-                    setState(() {
-                      _output = '';
-                      flag = false;
-                    });
-                  }
-                  if (check1 == 0 && _output1 != '') {
-                    setState(() {
-                      _output1 = '';
-                      flag1 = false;
-                      // check1 = 0;
-                    });
-                  }
-                  if (check2 == 0 && _output2 != '') {
-                    setState(() {
-                      _output2 = '';
-                      flag2 = false;
-                      //  check2 = 0;
-                    });
-                  }
-                }
-              }
-              break;
-          }
+          //     break;
+          //   case 'tripleDigitWithoutCarry':
+          //     if (_operator == '+') {
+          //       if (text == '✔') {
+          //         setState(() {
+          //           _output = _removeZero(int.parse(_output)).toString();
+          //         });
+          //         if (int.parse(_output) == (num1digit1 + num2digit1)) {
+          //           setState(() {
+          //             flag = true;
+          //             check = 1;
+          //             if (calCount(num1digit1 + num2digit1) > 1) {
+          //               setState(() {
+          //                 carry2 = 1;
+          //                 _output = (int.parse(_output) % 10).toString();
+          //               });
+          //             }
+          //           });
+          //         } else {
+          //           if (check != 1) {
+          //             setState(() {
+          //               shake1 = false;
+          //             });
+          //             new Future.delayed(const Duration(milliseconds: 900), () {
+          //               setState(() {
+          //                 shake1 = true;
+          //                 _output = '';
+          //               });
+          //             });
+          //           }
+          //         }
+          //         if (int.parse(_output1) ==
+          //             (num1digit2 + num2digit2 + carry2)) {
+          //           if (calCount(num1digit2 + num2digit2 + carry2) > 1) {
+          //             setState(() {
+          //               carry3 = 1;
+          //               _output1 = (int.parse(_output1) % 10).toString();
+          //             });
+          //           }
+          //           setState(() {
+          //             flag1 = true;
+          //             check1 = 1;
+          //             _output1 = _removeZero(int.parse(_output1)).toString();
+          //           });
+          //         } else {
+          //           if (check1 != 1) {
+          //             setState(() {
+          //               shake2 = false;
+          //             });
+          //             new Future.delayed(const Duration(milliseconds: 900), () {
+          //               setState(() {
+          //                 shake2 = true;
+          //                 _output1 = '';
+          //               });
+          //             });
+          //           }
+          //         }
+          //         if (int.parse(_output2) ==
+          //             (num1digit3 + num2digit3 + carry3)) {
+          //           if (calCount(num1digit3 + num2digit3 + carry3) > 1) {
+          //             setState(() {
+          //               carry4 = (num1digit3 + num2digit3 + carry3) ~/ 10;
+          //               _output2 = (int.parse(_output2) % 10).toString();
+          //               flag3 = true;
+          //             });
+          //           }
+          //           setState(() {
+          //             flag2 = true;
+          //             check2 = 1;
+          //             _output2 = _removeZero(int.parse(_output2)).toString();
+          //           });
+          //           if (flag3 == true) {
+          //             setState(() {
+          //               _output3 = carry4.toString();
+          //             });
+          //           }
+          //         } else {
+          //           if (check2 != 1) {
+          //             setState(() {
+          //               shake3 = false;
+          //             });
+          //             new Future.delayed(const Duration(milliseconds: 900), () {
+          //               setState(() {
+          //                 shake3 = true;
+          //                 _output2 = '';
+          //               });
+          //             });
+          //           }
+          //         }
+          //         setState(() {
+          //           _preValue = _output3 + _output2 + _output1 + _output;
+          //         });
+          //         if (int.parse(_preValue) == result && text == '✔') {
+          //           if (scoreCount == 0) {
+          //             widget.onScore(1);
+          //             widget.onProgress(1.0);
+          //             scoreCount = 1;
+          //             new Future.delayed(const Duration(milliseconds: 1000),
+          //                 () {
+          //               _output = '';
+          //               _output1 = '';
+          //               _output2 = '';
+          //               _output3 = '';
+          //               check = 0;
+          //               check1 = 0;
+          //               check2 = 0;
+          //               flag = false;
+          //               flag1 = false;
+          //               flag2 = false;
+          //               flag3 = false;
+          //               carry1 = 0;
+          //               carry2 = 0;
+          //               carry3 = 0;
+          //               carry4 = 0;
+          //               widget.onEnd();
+          //             });
+          //           }
+          //         }
+          //       }
+          //       if (_output2.length < 2 && text != '✔') {
+          //         if (check1 == 1 && check2 == 0) {
+          //           setState(() {
+          //             _output2 = _output2 + text;
+          //           });
+          //         }
+          //       }
+          //       if (_output1.length < 2 && text != '✔') {
+          //         if (check == 1 && check1 == 0) {
+          //           setState(() {
+          //             _output1 = _output1 + text;
+          //           });
+          //         }
+          //       }
+          //       if (_output.length < 2) {
+          //         if (check == 0) {
+          //           setState(() {
+          //             _output = _output + text;
+          //           });
+          //         }
+          //       }
+          //       if (text == '✖') {
+          //         print("erasing the data");
+          //         if (check == 0) {
+          //           setState(() {
+          //             _output = '';
+          //             flag = false;
+          //           });
+          //         }
+          //         if (check1 == 0) {
+          //           setState(() {
+          //             _output1 = '';
+          //             flag1 = false;
+          //             // check1 = 0;
+          //           });
+          //         }
+          //         if (check2 == 0) {
+          //           setState(() {
+          //             _output2 = '';
+          //             flag2 = false;
+          //             //  check2 = 0;
+          //           });
+          //         }
+          //       }
+          //     } else if (_operator == '-') {
+          //       if (text == '✔') {
+          //         setState(() {
+          //           _output = _removeZero(int.parse(_output)).toString();
+          //         });
+          //         if (num1digit1 > num2digit1 || num1digit1 == num2digit1) {
+          //           if (int.parse(_output) == (num1digit1 - num2digit1)) {
+          //             setState(() {
+          //               flag = true;
+          //               check = 1;
+          //               shake1 = true;
+          //             });
+          //           } else {
+          //             if (check != 1)
+          //               setState(() {
+          //                 shake1 = false;
+          //               });
+          //             new Future.delayed(const Duration(milliseconds: 900), () {
+          //               setState(() {
+          //                 shake1 = true;
+          //                 _output = '';
+          //               });
+          //             });
+          //           }
+          //         } else {
+          //           setState(() {
+          //             barrowFlag = true;
+          //           });
+          //           if (int.parse(_output) ==
+          //               ((num1digit1 + 10) - num2digit1)) {
+          //             setState(() {
+          //               check = 1;
+          //               shake1 = true;
+          //               flag = true;
+          //               carry2 = -1;
+          //             });
+          //           } else {
+          //             setState(() {
+          //               shake1 = false;
+          //               numberShake = false;
+          //             });
+          //             new Future.delayed(const Duration(milliseconds: 900), () {
+          //               setState(() {
+          //                 shake1 = true;
+          //                 numberShake = true;
+          //                 _output = '';
+          //               });
+          //             });
+          //           }
+          //         }
+          //         if (check == 1) {
+          //           if ((num1digit2 > num2digit2 || num1digit2 == num2digit2) &&
+          //               carry2 != -1) {
+          //             print('coming to without carry');
+          //             if (int.parse(_output1) == (num1digit2 - num2digit2)) {
+          //               setState(() {
+          //                 flag1 = true;
+          //                 shake2 = true;
+          //                 check1 = 1;
+          //               });
+          //             } else {
+          //               setState(() {
+          //                 shake2 = false;
+          //               });
+          //               new Future.delayed(const Duration(milliseconds: 900),
+          //                   () {
+          //                 setState(() {
+          //                   shake2 = true;
+          //                   _output1 = '';
+          //                 });
+          //               });
+          //             }
+          //           } else {
+          //             print("coming to carry2");
+          //             print(carry2);
+          //             setState(() {
+          //               barrowFlag1 = true;
+          //               print(barrowFlag1);
+          //             });
+          //             if (int.parse(_output1) ==
+          //                     ((num1digit2 - num2digit2) - 1) ||
+          //                 int.parse(_output1) ==
+          //                     ((num1digit2 + 10) - num2digit2 - 1)) {
+          //               setState(() {
+          //                 flag1 = true;
+          //                 shake2 = true;
+          //                 check1 = 1;
+          //                 carry3 = -1;
+          //               });
+          //             } else {
+          //               setState(() {
+          //                 shake2 = false;
+          //                 numberShake1 = false;
+          //               });
+          //               new Future.delayed(const Duration(milliseconds: 900),
+          //                   () {
+          //                 setState(() {
+          //                   shake2 = true;
+          //                   numberShake1 = true;
+          //                   _output1 = '';
+          //                 });
+          //               });
+          //             }
+          //           }
+          //         }
+          //         if (check1 == 1) {
+          //           if ((num1digit3 > num2digit3 || num1digit3 == num2digit3) &&
+          //               carry3 != -1) {
+          //             print('coming to 3 digit without carry');
+          //             if (int.parse(_output2) == (num1digit3 - num2digit3)) {
+          //               setState(() {
+          //                 flag2 = true;
+          //                 shake3 = true;
+          //                 check2 = 1;
+          //               });
+          //             } else {
+          //               setState(() {
+          //                 shake3 = false;
+          //               });
+          //               new Future.delayed(const Duration(milliseconds: 900),
+          //                   () {
+          //                 setState(() {
+          //                   shake3 = true;
+          //                   _output2 = '';
+          //                 });
+          //               });
+          //             }
+          //           } else {
+          //             print("printing carry2");
+          //             print(carry2);
+          //             if (int.parse(_output2) ==
+          //                     (num1digit3 - num2digit3 - 1) &&
+          //                 carry3 == -1) {
+          //               setState(() {
+          //                 flag2 = true;
+          //                 shake3 = true;
+          //                 check2 = 1;
+          //               });
+          //             } else {
+          //               setState(() {
+          //                 shake3 = false;
+          //               });
+          //               new Future.delayed(const Duration(milliseconds: 900),
+          //                   () {
+          //                 setState(() {
+          //                   shake3 = true;
+          //                   _output2 = '';
+          //                 });
+          //               });
+          //             }
+          //           }
+          //         }
+          //         setState(() {
+          //           _preValue = _output2 + _output1 + _output;
+          //         });
+          //         if (int.parse(_preValue) == result) {
+          //           if (scoreCount == 0) {
+          //             print("Given result..");
+          //             print(result);
+          //             widget.onScore(1);
+          //             widget.onProgress(1.0);
+          //             scoreCount = 1;
+          //             new Future.delayed(const Duration(milliseconds: 1000),
+          //                 () {
+          //               _output = '';
+          //               _output1 = '';
+          //               _output2 = '';
+          //               check = 0;
+          //               check1 = 0;
+          //               check2 = 0;
+          //               flag = false;
+          //               flag1 = false;
+          //               flag2 = false;
+          //               barrowFlag = false;
+          //               carryFlag = false;
+          //               barrowFlag1 = false;
+          //               carryFlag1 = false;
+          //               tempf1 = 0;
+          //               tempf = 0;
+          //               carry1 = 0;
+          //               carry2 = 0;
+          //               carry3 = 0;
+          //               shake1 = true;
+          //               shake2 = true;
+          //               shake3 = true;
+          //               widget.onEnd();
+          //             });
+          //           }
+          //         }
+          //       }
+          //       if (_output2.length < 1 && text != '✔') {
+          //         if (check1 == 1 && check2 == 0) {
+          //           setState(() {
+          //             _output2 = _output2 + text;
+          //           });
+          //         }
+          //       }
+          //       if (_output1.length < 1 && text != '✔') {
+          //         if (check == 1 && check1 == 0) {
+          //           setState(() {
+          //             _output1 = _output1 + text;
+          //           });
+          //         }
+          //       }
+          //       if (_output.length < 1 && text != '✔') {
+          //         if (check == 0) {
+          //           setState(() {
+          //             _output = _output + text;
+          //           });
+          //         }
+          //       }
+          //       if (text == '✖') {
+          //         print("erasing the data");
+          //         if (check == 0 && _output != '') {
+          //           print("out getting erased");
+          //           setState(() {
+          //             _output = '';
+          //             flag = false;
+          //           });
+          //         }
+          //         if (check1 == 0 && _output1 != '') {
+          //           setState(() {
+          //             _output1 = '';
+          //             flag1 = false;
+          //             // check1 = 0;
+          //           });
+          //         }
+          //         if (check2 == 0 && _output2 != '') {
+          //           setState(() {
+          //             _output2 = '';
+          //             flag2 = false;
+          //             //  check2 = 0;
+          //           });
+          //         }
+          //       }
+          //     }
+          //     break;
+          // }
         });
   }
 
@@ -1213,14 +1342,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
-                          child: displayShake(constraints.minHeight, _output1,
-                              flag1, shake2, new Key('shake')),
+                          child: displayShake(constraints.minHeight, o[1],
+                              f[1], s[1], new Key('shake')),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
-                          child: displayShake(constraints.minHeight, _output,
-                              flag, shake1, new Key('shake1')),
+                          child: displayShake(constraints.minHeight, o[0],
+                              f[0], s[0], new Key('shake1')),
                         ),
                       ]),
                     ],
@@ -1730,32 +1859,32 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: new Container(
-                            child: displayShake(constraints.minHeight, _output3,
-                                flag3, shake4, new Key('flag2')),
+                            child: displayShake(constraints.minHeight, o[3],
+                                f[3], s[3], new Key('flag2')),
                           ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: new Container(
-                            child: displayShake(constraints.minHeight, _output2,
-                                flag2, shake3, new Key('flag2')),
+                            child: displayShake(constraints.minHeight, o[2],
+                                f[2], s[2], new Key('flag2')),
                           ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: new Container(
-                            child: displayShake(constraints.minHeight, _output1,
-                                flag1, shake2, new Key('flag1')),
+                            child: displayShake(constraints.minHeight, o[1],
+                                f[1], s[1], new Key('flag1')),
                           ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: new Container(
-                            child: displayShake(constraints.minHeight, _output,
-                                flag, shake1, new Key('flag1')),
+                            child: displayShake(constraints.minHeight, o[0],
+                                f[0], s[0], new Key('flag1')),
                           ),
                         ),
                       ]),
