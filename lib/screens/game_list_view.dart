@@ -76,10 +76,15 @@ class GameListView extends StatelessWidget {
               child: new Icon(Icons.broken_image, size: 64.0),
               onPressed: () => showModes(context, 'fill_number')),
     
-           new RaisedButton(
+          new RaisedButton(
               key: new Key('connect_dots'),
               child: new Icon(Icons.wb_sunny, size: 64.0),
-              onPressed: () => showModes(context, 'connect_dots'))
+              onPressed: () => showModes(context, 'connect_dots')),
+          new RaisedButton(
+              key: new Key('tap_home'),
+              child: new Icon(Icons.timer, size: 64.0),
+              onPressed: () => showModes(context, 'tap_home'))
+
         ]);
   }
 
