@@ -43,7 +43,7 @@ class _CasinoState extends State<Casino> {
   int i;
   int j;
   int count;
-  var answer = new List();
+  // var answer = new List();
   bool _isShowingFlashCard = false;
   Set<String> finalGivenWordSet;
   List<String> finalGivenWordList;
@@ -197,6 +197,7 @@ class _CasinoState extends State<Casino> {
             });
           });
     }
+    return new LayoutBuilder(builder: (context, constraints){
     return new Container(
       child: new Container(
         color: new Color(0xfffff7ebcb),
@@ -233,5 +234,6 @@ class _CasinoState extends State<Casino> {
         ),
       ),
     );
+    });
   }
 }
