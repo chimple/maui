@@ -15,8 +15,11 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
+import 'package:maui/games/quiz.dart';
 import 'package:maui/games/connectdots.dart';
+import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/components/progress_bar.dart';
+import 'package:maui/components/hoodie.dart';
 
 enum GameMode { timed, iterations }
 
@@ -73,11 +76,11 @@ class _SingleGameState extends State<SingleGame> {
         appBar: new PreferredSize(
             child: new Row(
               children: <Widget>[
-                new Image.asset('assets/apple.png'),
+                new Hoodie(),
                 new Text('$_score')
               ],
             ),
-            preferredSize: new Size(100.0, 20.0)),
+            preferredSize: new Size(100.0, 60.0)),
         body: new Column(children: <Widget>[
           widget.gameMode == GameMode.timed
               ? new ProgressBar(
@@ -233,6 +236,8 @@ class _SingleGameState extends State<SingleGame> {
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'match_the_following':
+        playTime = 15000;
+        maxIterations = 4;
         return new MatchTheFollowing(
           onScore: _onScore,
           onProgress: _onProgress,
@@ -269,8 +274,26 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
+        case 'quiz':
+        return new Quiz(
+          onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
         case 'connect_dots': 
         return new Connectdots(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+         case 'tap_wrong': 
+        return new TapWrong(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
