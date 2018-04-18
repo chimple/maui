@@ -6,6 +6,8 @@ import 'package:flutter/services.dart' show rootBundle;
 
 // String test = '';
 
+Map decoded;
+
 class IdentifyGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -27,9 +29,6 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-  // String demo;
-
-  Map decoded;
 
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
