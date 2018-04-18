@@ -168,7 +168,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.6"
+    version: "2.3.7"
   firebase_core:
     dependency: transitive
     description:
@@ -559,7 +559,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.30+3"
+    version: "0.12.32+1"
   tuple:
     dependency: "direct main"
     description:
