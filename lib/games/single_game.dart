@@ -17,6 +17,7 @@ import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/components/progress_bar.dart';
+import 'package:maui/components/hoodie.dart';
 
 enum GameMode { timed, iterations }
 
@@ -73,11 +74,11 @@ class _SingleGameState extends State<SingleGame> {
         appBar: new PreferredSize(
             child: new Row(
               children: <Widget>[
-                new Image.asset('assets/apple.png'),
+                new Hoodie(),
                 new Text('$_score')
               ],
             ),
-            preferredSize: new Size(100.0, 20.0)),
+            preferredSize: new Size(100.0, 60.0)),
         body: new Column(children: <Widget>[
           widget.gameMode == GameMode.timed
               ? new ProgressBar(
@@ -192,7 +193,7 @@ class _SingleGameState extends State<SingleGame> {
         return new Bingo(
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: _onEnd,
+            onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
@@ -233,6 +234,8 @@ class _SingleGameState extends State<SingleGame> {
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'match_the_following':
+        playTime = 15000;
+        maxIterations = 4;
         return new MatchTheFollowing(
           onScore: _onScore,
           onProgress: _onProgress,
