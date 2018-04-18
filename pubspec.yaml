@@ -19,6 +19,7 @@ dependencies:
   firebase_storage: ^0.2.0
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
+  fluttie: ^0.2.1
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
     - assets/imageCoordinatesInfo.json
     - assets/apple.ogg
     - assets/Shapes.png
+    - assets/animations/koala_happy.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
