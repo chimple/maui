@@ -6,6 +6,8 @@ import 'package:flutter/services.dart' show rootBundle;
 
 // String test = '';
 
+Map decoded;
+
 class IdentifyGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -27,9 +29,6 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-  // String demo;
-
-  Map decoded;
 
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
@@ -37,20 +36,26 @@ class _IdentifyGameState extends State<IdentifyGame> {
 
   Future _loadGameInfo() async {
     String jsonGameInfo = await _loadGameAsset();
-    // demo = jsonGameInfo;
     print(jsonGameInfo);
-    _parserJsonForGame(jsonGameInfo);
-  }
-
-  void _parserJsonForGame(String jsonString) {
     this.setState((){
-      decoded = json.decode(jsonString);
+      decoded = json.decode(jsonGameInfo);
     });
     print(decoded["id"]);
     print(decoded["height"]);
     print(decoded["width"]);
     print(decoded["parts"][0]["name"]);
+    // _parserJsonForGame(jsonGameInfo);
   }
+
+  // void _parserJsonForGame(String jsonString) {
+  //   this.setState((){
+  //     decoded = json.decode(jsonString);
+  //   });
+  //   print(decoded["id"]);
+  //   print(decoded["height"]);
+  //   print(decoded["width"]);
+  //   print(decoded["parts"][0]["name"]);
+  // }
 
   @override
   void initState() {
@@ -61,17 +66,18 @@ class _IdentifyGameState extends State<IdentifyGame> {
 
   @override
   Widget build(BuildContext context) {
-    // print(demo);
     Size media = MediaQuery.of(context).size;
-    double height = media.height;
-    double width = media.width;
+    double _height = media.height;
+    double _width = media.width;
+    print("height is $_height ");
+    print("width is $_width");
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(38.0, 500.0), decoded["parts"][0]["name"], Colors.red),
-        new DragBox(new Offset(126.0, 500.0), decoded["parts"][3]["name"], Colors.orange),
-        new DragBox(new Offset(214.0, 500.0), decoded["parts"][1]["name"], Colors.lightBlue),
-        new DragBox(new Offset(303.0, 500.0), decoded["parts"][2]["name"], Colors.green),
+        new DragBox(new Offset(_width*0.05, _height*0.75), decoded["parts"][0]["name"], Colors.red),
+        new DragBox(new Offset((_width*0.30), _height*0.75), decoded["parts"][3]["name"], Colors.orange),
+        new DragBox(new Offset((_width*0.55), _height*0.75), decoded["parts"][1]["name"], Colors.lightBlue),
+        new DragBox(new Offset((_width*0.80), _height*0.75), decoded["parts"][2]["name"], Colors.green),
       ],
     );
     // return new Column(
@@ -224,16 +230,24 @@ class DropTargetState extends State<DropTarget> {
 
   @override
   Widget build(BuildContext context) {
-    var assetsImage = new AssetImage('assets/Shapes.png');
-    Image image = new Image(image: assetsImage);
-    image.image.resolve(new ImageConfiguration()).addListener((ImageInfo info, bool _) => ImageStreamCompleter.(info.image));
     Size media = MediaQuery.of(context).size;
-    double height = media.height;
-    double width = media.width;
+    double _height = media.height;
+    double _width = media.width;
     return new Positioned(
       left: position.dx,
       right: position.dy,
-      child: image,
+      // child: new Container(
+      //   decoration: new BoxDecoration(
+      //     border: new Border.all(color: Colors.red)
+      //   ),
+      //   child: image,
+      // ),
+      child: new Image(
+        image: new AssetImage('assets/Shapes.png'),
+        // fit: BoxFit.contain,
+        height: _height*0.5,
+        width: _width,
+      ),
       // child: new Image(
       //   image: new AssetImage('assets/Shapes.png'),
       //   // height: height * 0.7,
@@ -370,8 +384,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
-    double height = media.height;
-    double width = media.width;
+    double _height = media.height;
+    double _width = media.width;
     return new Positioned(
       left: position.dx,
       top: position.dy,
@@ -399,20 +413,20 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 setState(() {
                   // new DragBoxCopy(new Offset(position.dx, position.dy),
                   //     draggableText, draggableColor);
-                  if ((draggableText == 'square') &&
+                  if ((draggableText == decoded["parts"][0]["name"]) &&
                       (offset.dx > 0.0 && offset.dx < 100.0) &&
                       (offset.dy > 0.0 && offset.dy < 100.0)) {
                     position = offset;
-                  } else if (draggableText == 'circle' &&
-                      (offset.dx > (width - 130) && offset.dx < 370.0) &&
+                  } else if (draggableText == decoded["parts"][1]["name"] &&
+                      (offset.dx > (_width - 130) && offset.dx < 370.0) &&
                       (offset.dy > 0.0 && offset.dy < 120.0)) {
                     position = offset;
-                  } else if (draggableText == 'triangle' &&
+                  } else if (draggableText == decoded["parts"][3]["name"] &&
                       (offset.dx > 0.0 && offset.dx < 130.0) &&
                       (offset.dy > 160.0 && offset.dy < 290.0)) {
                     position = offset;
-                  } else if (draggableText == 'hexagon' &&
-                      (offset.dx > (width - 110) && offset.dx < 370.0) &&
+                  } else if (draggableText == decoded["parts"][2]["name"] &&
+                      (offset.dx > (_width - 110) && offset.dx < 370.0) &&
                       (offset.dy > 170 && offset.dy < 290.0)) {
                     position = offset;
                   } else {
@@ -444,12 +458,12 @@ class AnimatedFeedback extends AnimatedWidget {
 
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
-    double height = media.height;
-    double width = media.width;
+    double _height = media.height;
+    double _width = media.width;
     final Animation<double> animation = listenable;
     return new Container(
-      // width: width * 0.2,
-      // height: height * 0.15,
+      width: _width * 0.15,
+      height: _height * 0.04,
       color: draggableColor.withOpacity(0.5),
       child: new Center(
         child: new Text(
@@ -457,7 +471,7 @@ class AnimatedFeedback extends AnimatedWidget {
           style: new TextStyle(
             color: Colors.white,
             decoration: TextDecoration.none,
-            fontSize: 15.0,
+            fontSize: _height * 0.02,
           ),
         ),
       ),
@@ -478,16 +492,16 @@ class AnimatedDrag extends AnimatedWidget {
 
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
-    double height = media.height;
-    double width = media.width;
+    double _height = media.height;
+    double _width = media.width;
     final Animation<double> animation = listenable;
     double translateX = animation.value;
     print("value: $translateX");
     return new Transform(
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Container(
-        // width: width * 0.2,
-        // height: height * 0.08,
+        width: _width * 0.15,
+        height: _height * 0.04,
         color: draggableColor,
         // margin: new EdgeInsets.only(
         //     left: animation.value ?? 0, right: animation.value ?? 0),
@@ -497,7 +511,7 @@ class AnimatedDrag extends AnimatedWidget {
             style: new TextStyle(
               color: Colors.white,
               decoration: TextDecoration.none,
-              fontSize: 15.0,
+              fontSize: _height * 0.02,
             ),
           ),
         ),
