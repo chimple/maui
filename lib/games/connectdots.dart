@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 
 class Connectdots extends StatefulWidget {
@@ -51,20 +52,23 @@ final List<int> _numothers =[32,37,1,43];
    var count6=0;
    var count4=0;
   var count5=0;
+  var count0=0;
   var r;
  
- List<int> numbers=[];
+ List<String> numbers=[];
 
-  List<int>_shuffledLetters = [];
+  List<String>_shuffledLetters = [];
  
   List _copyAns = [];
  
-  List<int> _letters;
+  List<String> _letters;
  
-  List<int> _todnumber=[];
+  List<String> _todnumber=[];
   List<Status> _statuses;
-List<int> _letterex=[];
+List<String> _letterex=[];
+bool _isLoading = true;
 var z=0;
+ Tuple2<List<String>, List<String>> consecutive;
 
 
   List<ShakeCell> _ShakeCells = [];
@@ -75,17 +79,23 @@ var z=0;
   }
 
  void _initBoard() async {
-   _numserial.forEach((e) { _copyAns.add(e);});
-   
- 
-          _numserial.forEach((e){ numbers.add(e);});
-          _numothers.forEach((v){numbers.add(v);});
+  
 
-      numbers.shuffle();
+
+    setState(() => _isLoading = true);
+      consecutive= await fetchConsecutiveData(widget.gameCategoryId, 5,4);
+       
+    print("this data is coming from fetchng ${consecutive.item1}");
+   
+ consecutive.item1.forEach((e) { _copyAns.add(e);});
+         consecutive.item1.forEach((e){ numbers.add(e);});
+         consecutive.item2.forEach((v){numbers.add(v);});
+
+      
       print("suffle data is in my numbers is $numbers");
-      numbers.sort();
+      
       print("sorted numbers are $numbers ");
-    
+  
     for (var i = 0; i < numbers.length; i += _size * _size) {
       _shuffledLetters.addAll(
           numbers.skip(i).take(_size * _size).toList(growable: true)
@@ -164,10 +174,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
       count4=count6;
    
     }
-    //  Iterable letdocol = todcolnumbers[1].reversed; 
-    // var fcolReverse = letdocol.toList();
-    // print("is cols revers$fcolReverse");
-    // todcolnumbers[1].setRange(0, size, fcolReverse.map((e)=>e));
+   
    
 
 
@@ -207,28 +214,20 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
              } 
       break; 
   }
-//   if(n==1)
-// {
-//               _letterex=_shuffledLetters.sublist(0, _size);
-//                fruitsInReverse.forEach((e){_letterex.add(e);});
-           
-//             _number3.forEach((v){_letterex.add(v);});
-//             Iterable _number4 = _letterex.reversed;
-//             var fruitsInReverset = _number4.toList();
-//             _letters=fruitsInReverset;
 
-//      print("hello all data here $_letters");
-//   }
-//   else{
-//               _letters=_shuffledLetters.sublist(0, _size);
-//                fruitsInReverse.forEach((e){_letters.add(e);});
-           
-//             _number3.forEach((v){_letters.add(v);});
-
-//   }
+    setState(() => _isLoading = false);
+  }
+   @override
+  void didUpdateWidget(Connectdots oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+     
+    }
   }
 
-  Widget _buildItem(int index,int  text, Status status,ShakeCell tile) {
+  Widget _buildItem(int index,String  text, Status status,ShakeCell tile) {
 
    
     return new MyButton(
@@ -241,11 +240,45 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
           if (status == Status.Active) {
             if(text==_copyAns[i])
             {
+
               setState(() {
                 _statuses[index] = Status.Visible;
+                widget.onScore(1);
+                        widget.onProgress((count0+2) / (_copyAns.length));
+                        count0++;
 
               });
+              print("length is${_copyAns.length}");
+             
             i++;
+                print("hey this onend$i");
+            
+             if(i==_copyAns.length)
+              {
+                  k=0;
+                          count0=0;         
+    count1=0;
+    count2=0;
+    count3=0;
+    count6=0;
+    count4=0;
+   count5=0;
+   _todnumber.removeRange(0, _todnumber.length);
+                _letters.removeRange(0, _letters.length);
+                
+                 _letterex.removeRange(0, _letterex.length);
+                 numbers.removeRange(0, numbers.length);
+
+   _shuffledLetters.removeRange(0, _shuffledLetters.length);
+
+                 new Future.delayed(const Duration(milliseconds: 250),
+                            () {
+                        
+                          widget.onEnd();
+                         
+                        });
+              }
+
             }
             else{
                 setState(() {
@@ -290,7 +323,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.status,this.tile, this.onPress}) : super(key: key);
 
-  final int text;
+  final String text;
   Status status;
    ShakeCell tile;
   final VoidCallback onPress;
@@ -302,14 +335,14 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animationRight,animation, animationWrong, animationDance;
-  int _displayText;
+  String _displayText;
 
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 10), vsync: this);
     controller =
        new  AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
         animationRight =
@@ -319,14 +352,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (!widget.text.isNaN) {
+          if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
           }
         }
       });
     controller.forward();
-    animationWrong = new Tween(begin: -8.0, end: 8.0).animate(controller1);
+    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
     _myAnim();
   }
   void _myAnim() {
@@ -357,6 +390,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
+
+
+ 
+    int _color =0xFF5F9EA0;
+
+
+     if (widget.tile==ShakeCell.Right) {
+      _color = 0xFFff0000; // red
+    }
+
       return new ScaleTransition(
           scale: animation,
           child: new Shake(
@@ -372,7 +415,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
        
                   color: widget.status == Status.Visible
                       ? Colors.yellow
-                      : Colors.teal,
+                      : new Color(_color),
                   shape: new RoundedRectangleBorder(
                       borderRadius:
                           new BorderRadius.all(new Radius.circular(8.0))),
