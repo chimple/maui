@@ -19,10 +19,12 @@ import 'package:maui/games/quiz.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/components/progress_bar.dart';
+import 'package:maui/components/progress_circle.dart';
 import 'package:maui/components/hoodie.dart';
 import 'package:maui/games/tap_home.dart';
 
 enum GameMode { timed, iterations }
+enum GameDisplay { single, myHeadToHead, otherHeadToHead }
 
 class SingleGame extends StatefulWidget {
   final String gameName;
@@ -31,10 +33,13 @@ class SingleGame extends StatefulWidget {
   final Function onScore;
   final GameMode gameMode;
   final bool isRotated;
+  final GameDisplay gameDisplay;
+  final Key key;
 
   SingleGame(this.gameName,
-      {Key key,
+      {this.key,
       this.gameMode = GameMode.iterations,
+      this.gameDisplay = GameDisplay.single,
       this.gameCategoryId,
       this.onGameEnd,
       this.onScore,
@@ -72,20 +77,45 @@ class _SingleGameState extends State<SingleGame> {
     print('_SingleGameState:build');
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
-    var game = buildSingleGame(context);
+    print(widget.key.toString());
+    var game = buildSingleGame(context, widget.gameDisplay.toString());
     return new Scaffold(
-        appBar: new PreferredSize(
-            child: new Row(
-              children: <Widget>[new Hoodie(), new Text('$_score')],
-            ),
-            preferredSize: new Size(100.0, 60.0)),
-        body: new Column(children: <Widget>[
-          widget.gameMode == GameMode.timed
-              ? new ProgressBar(
-                  time: playTime, onEnd: () => _onGameEnd(context))
-              : new ProgressBar(progress: _progress),
-          new Expanded(child: game)
-        ]));
+        body: media.size.height > media.size.width || widget.gameDisplay != GameDisplay.single
+            ? new Column(children: <Widget>[
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: widget.gameDisplay == GameDisplay.single
+                        ? <Widget>[new Hoodie(_score), new Text('$_score')]
+                        : <Widget>[new Text('$_score')]),
+                widget.gameMode == GameMode.timed
+                    ? new ProgressBar(
+                        time: playTime, onEnd: () => _onGameEnd(context))
+                    : new ProgressBar(progress: _progress),
+                new Expanded(child: game)
+              ])
+            : new Row(children: <Widget>[
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: widget.gameDisplay == GameDisplay.single
+                        ? <Widget>[
+                            new Hoodie(_score),
+                            new Text('$_score'),
+                            widget.gameMode == GameMode.timed
+                                ? new ProgressCircle(
+                                    time: playTime,
+                                    onEnd: () => _onGameEnd(context))
+                                : new ProgressCircle(progress: _progress)
+                          ]
+                        : <Widget>[
+                            new Text('$_score'),
+                            widget.gameMode == GameMode.timed
+                                ? new ProgressCircle(
+                                    time: playTime,
+                                    onEnd: () => _onGameEnd(context))
+                                : new ProgressCircle(progress: _progress)
+                          ]),
+                new Expanded(child: game)
+              ]));
   }
 
   _onScore(int incrementScore) {
@@ -133,12 +163,13 @@ class _SingleGameState extends State<SingleGame> {
     }
   }
 
-  Widget buildSingleGame(BuildContext context) {
+  Widget buildSingleGame(BuildContext context, String keyName) {
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
         maxIterations = 1;
         return new Reflex(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
@@ -281,7 +312,7 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-      case 'connect_dots':
+        case 'connect_the_dots':
         return new Connectdots(
             onScore: _onScore,
             onProgress: _onProgress,

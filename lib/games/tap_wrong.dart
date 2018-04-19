@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:maui/repos/game_data.dart';
+import 'package:tuple/tuple.dart';
+import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 class TapWrong extends StatefulWidget {
  Function onScore;
@@ -19,18 +22,46 @@ class TapWrong extends StatefulWidget {
 }
 enum Statuses {right,wrong}
 class TapWrongState extends State<TapWrong> {
-
-int num1=0;
-int  numOFWrongElem=0;
-  List<String> word=['D','O','G'];
-  List<String> others=['X','P'];
+String _dispText='';
+int num1;
+int  numOFWrongElem;
+ bool _isLoading = true;
+  List<String> word=new List(); //=['D','O','G'];
+  List<String> others= new List();//=['X','P'];
 List<String> arr1=[];
 List<String> proArray=[];
 List<Statuses> _statusList ;
+Tuple2<List<String>,List<String>> data;
+ bool _isShowingFlashCard = false;
    @override
   void initState() {
     super.initState();
-   
+    _initBoard();
+  }
+  void _initBoard() async{
+    word=[];
+    others=[];
+    arr1=[];
+    _statusList=[];
+    num1=0;
+    numOFWrongElem=0;
+    _dispText='';
+     setState(() => _isLoading = true);
+data=await fetchWordData(widget.gameCategoryId,3,2);
+
+    data.item1.forEach((d) {
+     
+        word.add(d);
+      
+    });
+    data.item2.forEach((d) {
+     
+        others.add(d);
+      
+    });
+word.forEach((d){
+_dispText=_dispText+d;
+});
    arr1.addAll(word);
    var lenOfArr1=arr1.length;
    arr1.addAll(others);
@@ -61,8 +92,18 @@ List<Statuses> _statusList ;
 
          _statusList = arr1.map((a) => Statuses.right).toList(growable: false);
          print('status array      $_statusList');
+          setState(() => _isLoading = false);
   }
 
+  // @override
+  // void didUpdateWidget(TapWrong oldWidget) {
+  //   print(oldWidget.iteration);
+  //   print(widget.iteration);
+  //   if (widget.iteration != oldWidget.iteration) {
+  //     _initBoard();
+      
+  //   }
+  // }
  
  Widget _buildItem(int index, String text, Statuses status) {
     return new MyButton(
@@ -79,7 +120,8 @@ proArray.addAll(arr1);
 print('removed array       $proArray');
 print('removed array l3en      ${proArray.length}');
 print('word array       $word');
-     
+print('disp text   $_dispText');
+    
         for (int i = 0; i <proArray.length; i++) {
            
             if ( word[j] == proArray[i]) {
@@ -99,9 +141,11 @@ print('word array       $word');
             widget.onScore(2);
             widget.onProgress(num1 / others.length);
             if ( numOFWrongElem ==   others.length) {
-            
-              widget.onEnd();
-               widget.onEnd();
+              new Future.delayed(const Duration(milliseconds: 500), () {
+            setState(() {
+               _isShowingFlashCard = true; // widget.onEnd();
+             }); });
+             //  widget.onEnd();
             }
         
         } else {
@@ -120,7 +164,25 @@ print('word array       $word');
 
   @override
   Widget build(BuildContext context) {
+  if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+     if (_isShowingFlashCard) {
+      return new FlashCard(
+          text:_dispText,
+          onChecked: () {
+            _initBoard();
+            widget.onEnd();
 
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          });
+    }
      int j = 0;
    
       return 
@@ -184,7 +246,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       animation: widget.status == Statuses.wrong?animation1:animation,
       child: new RaisedButton(
                 onPressed: () => widget.onPress(),
-                color: Colors.lightBlue,
+                color:widget.status == Statuses.wrong?Colors.red: Colors.lightBlue,
                 shape: new RoundedRectangleBorder(
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
