@@ -56,30 +56,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       num2digit3 = 0;
   int result;
   int tempf = 0, tempf1 = 0;
-  int check = 0,
-      check1 = 0,
-      check2 = 0,
-      carry1 = 0,
-      carry2 = 0,
-      carry3 = 0,
-      carry4 = 0;
-  String _output = '',
-      _output1 = '',
-      _output2 = '',
-      _output3 = '',
-      _arrow = '⤵';
+  String _arrow = '⤵';
   String _operator = '';
-  bool flag = false,
-      flag1,
-      flag2,
-      flag3,
-      carryFlag,
-      barrowFlag,
-      numberShake,
-      numberShake1,
-      barrowFlag1,
-      carryFlag1;
-  bool shake1 = true, shake2 = true, shake3 = true, shake4 = true;
+  bool carryFlag, carryFlag1;
   Animation animationShake, animation;
   AnimationController animationController;
   Tuple4<int, String, int, int> data;
@@ -88,18 +67,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   int scoreCount = 0;
   List<int> n1 = [0, 0, 0, 0];
   List<int> n2 = [0, 0, 0, 0];
-  List<String> o = ['', '', '', ''];
+  List<String> o = ['1', '2', '3', '4'];
   List<bool> f = [false, false, false, false];
   List<bool> s = [true, true, true, true];
   List<int> c = [0, 0, 0, 0];
   List<int> cf = [0, 0, 0, 0];
   List<bool> bf = [];
-  List<bool> ccf = [];
   List<bool> ns = [];
-
   int j1;
   int i = 0;
-  String fr;
+
 
   @override
   void initState() {
@@ -131,6 +108,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     i = 0;
     j1 = 0;
     _preValue = '';
+    bf.clear();
+    cf.clear();
     c.clear();
     n1.clear();
     n2.clear();
@@ -178,32 +157,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       n2.add(num2digit3);
     }
     j1 = calCount(result);
-    o.add(_output3);
-    o.add(_output2);
-    o.add(_output1);
-    o.add(_output);
-    f.add(flag3);
-    f.add(flag2);
-    f.add(flag1);
-    f.add(flag);
-    bf.add(flag3);
-    bf.add(flag2);
-    ccf.add(flag1);
-    ccf.add(flag);
-    ns.add(flag1);
-    ns.add(flag);
-    s.add(shake4);
-    s.add(shake3);
-    s.add(shake2);
-    s.add(shake1);
-    c.add(check2);
-    c.add(check2);
-    c.add(check2);
-    c.add(check1);
-    cf.add(check2);
-    cf.add(check2);
-    cf.add(check2);
-    cf.add(check1);
+    for (int i = 0; i < 4; i++) {
+      o.add(' ');
+      f.add(false);
+      bf.add(false);
+      s.add(true);
+      c.add(0);
+      cf.add(0);
+      ns.add(true);
+    }
     print(o);
   }
 
@@ -295,9 +257,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         widget.onScore(1);
         widget.onProgress(1.0);
         scoreCount = 1;
-        new Future.delayed(const Duration(milliseconds: 300), () {
-          _output = '';
-          flag = false;
+        new Future.delayed(const Duration(milliseconds: 1000), () {
           _initBoard();
           widget.onEnd();
         });
@@ -334,7 +294,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 print('n1 first digit....${n1[i]}');
                 print('n2 first digit....${n2[i]}');
                 setState(() {
-                  o[i] = _addText(text, o[i]);
+                  o[i] =
+                      _removeZero(int.parse(_addText(text, o[i]))).toString();
                   o[i] = _removeText(text, o[i]);
                   f[i] = _rigltClick(text, o[i], (n1[i] + n2[i] + cf[i]));
                   print('printing flag value....${f[i]}');
@@ -384,10 +345,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 print(' at end i value ${i}');
                 print(' at end j value ${j1}');
               }
-              if ((cf[calCount(result) - 1] == 1 &&
-                      (calCount(num1) != calCount(result) ||
-                          calCount(num2) != calCount(result))) ||
-                  cf[calCount(result)] == 1) {
+              if (cf[calCount(result) - 1] == 1
+                  /*   || */
+                  /* cf[calCount(result)] == 1 */) {
                 print("coming to check final carry is there or not...");
                 setState(() {
                   print('printing i value in carryflag function...$i');
@@ -400,28 +360,21 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
               _final(text, _preValue);
               break;
             case '-':
-              if (j1 > 0) {
-                print("coming to the double digit..");
-                print('initial i value... $i');
-                print('initial j value... $j1');
-                print('n1 first digit....${n1[i]}');
-                print('n2 first digit....${n2[i]}');
+              if (j1 > 0 && c[i] == 0) {
                 setState(() {
-                  o[i] = _addText(text, o[i]);
+                  o[i] =
+                      _removeZero(int.parse(_addText(text, o[i]))).toString();
                   o[i] = _removeText(text, o[i]);
-                  print('printing flag value....${f[i]}');
                 });
-                print('first output....${o[i]}');
-                print('complete list...${o}');
                 if (text == '✔') {
                   if (n1[i] > n2[i] || n1[i] == n2[i]) {
-                    if (_rigltClick(text, o[i], (n1[i] - n2[i]+cf[i])) ==
+                    if (_rigltClick(text, o[i], (n1[i] - n2[i] + cf[i])) ==
                         true) {
                       setState(() {
-                        f[i] = _rigltClick(text, o[i], (n1[i] - n2[i]+cf[i]));
+                        f[i] = _rigltClick(text, o[i], (n1[i] - n2[i] + cf[i]));
                         s[i] = true;
                         c[i] = 1;
-                        _preValue = o[i] + _preValue;
+                        //  _preValue = o[i] + _preValue;
                       });
                     }
                   } else {
@@ -429,15 +382,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       bf[i] = true;
                     });
                     if (_rigltClick(
-                            text, o[i], ((n1[i] + 10) - n2[i]+cf[i])) ==
+                            text, o[i], ((n1[i] + 10) - n2[i] + cf[i])) ==
                         true) {
                       setState(() {
                         f[i] = _rigltClick(
-                            text, o[i], ((n1[i] + 10) - n2[i]+ cf[i]));
+                            text, o[i], ((n1[i] + 10) - n2[i] + cf[i]));
                         s[i] = true;
                         c[i] = 1;
-                        cf[i+1] = -1;
-                        _preValue = o[i] + _preValue;
+                        cf[i + 1] = -1;
+                        //  _preValue = o[i] + _preValue;
                       });
                     } else {
                       setState(() {
@@ -454,8 +407,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   }
                   if (c[i] == 1) {
                     setState(() {
-                      print('printing i increment....');
-                      c[i] = 0;
                       i++;
                       j1--;
                     });
@@ -471,13 +422,49 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     });
                   }
                 }
-                print('printing final value....$_preValue');
-                print(' at end i value ${i}');
-                print(' at end j value ${j1}');
               }
-              if(j1==0){
-              _final(text, _preValue);}
+              //   if(j1==0){
+              //  for (var k = 0; k < calCount(result); k++) {
+              //    setState((){ _preValue=o[k]+_preValue;
+              //    print('printing preval ...$_preValue');
+              //    });
+              //  }
+              //  }
+              _final(text, (o[3] + o[2] + o[1] + o[0]));
+
               break;
+            case '*':
+              setState(() {
+                o[i] = _removeZero(int.parse(_addText(text, o[i]))).toString();
+                o[i] = _removeText(text, o[i]);
+                f[i] = _rigltClick(text, o[i], (n1[i] * n2[i]));
+              });
+              if (text == '✔') {
+                if (_rigltClick(text, o[i], (n1[i] * n2[i])) == true) {
+                  setState(() {
+                    s[i] = true;
+                    c[i] = 1;
+                    _preValue = o[i] + _preValue;
+                  });
+                  if (o[i].length > 1) {
+                    setState(() {
+                      o[i] = (int.parse(o[i]) % 10).toString();
+                      o[i + 1] = (result ~/ 10).toString();
+                      f[i + 1] = true;
+                    });
+                  }
+                } else {
+                  setState(() {
+                    s[i] = false;
+                  });
+                  new Future.delayed(const Duration(milliseconds: 900), () {
+                    setState(() {
+                      s[i] = true;
+                    });
+                  });
+                }
+              }
+              _final(text, _preValue);
           }
         });
   }
@@ -662,16 +649,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  color: barrowFlag == true &&
+                                  color: bf[0] == true &&
                                           _operator == '-' &&
                                           carryFlag == true
                                       ? Colors.redAccent
                                       : Colors.limeAccent,
                                   child: new Center(
                                     child: new Text(
-                                      '$carry2',
+                                      cf[1].toString(),
                                       style: new TextStyle(
-                                        color: carry2 == -1
+                                        color: cf[1] == -1
                                             ? Colors.black
                                             : Colors.limeAccent,
                                         fontSize: constraints.minHeight * 0.09,
@@ -755,7 +742,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                               carryFlag = true;
                                               if (tempf == 0 && bf[0] == true) {
                                                 num1digit1 = num1digit1 + 10;
-                                                carry2 = -1;
+                                                cf[1] = -1;
                                                 tempf++;
                                               }
                                             });
@@ -880,20 +867,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  color: barrowFlag1 == true &&
+                                  color: bf[1] == true &&
                                           _operator == '-' &&
                                           carryFlag1 == true
                                       ? Colors.redAccent
                                       : Colors.limeAccent,
                                   child: new Center(
                                     child: new Text(
-                                      barrowFlag1 == true &&
+                                      bf[1] == true &&
                                               _operator == '-' &&
                                               carryFlag1 == true
                                           ? '-1'
-                                          : carry3 == -1 ? '-1' : ' ',
+                                          : cf[2] == -1 ? '-1' : ' ',
                                       style: new TextStyle(
-                                        fontSize: barrowFlag1 == true &&
+                                        fontSize: bf[1] == true &&
                                                 _operator == '-' &&
                                                 carryFlag1 == true
                                             ? constraints.minHeight * 0.09
@@ -916,23 +903,22 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             child: _operator == '-'
                                 // ? barrowFlag==true
                                 ? new Container(
-                                    color: (barrowFlag == true &&
-                                                carryFlag == true) ||
-                                            (barrowFlag1 == true &&
-                                                carryFlag1 == true)
-                                        ? Colors.redAccent
-                                        : Colors.limeAccent,
+                                    color:
+                                        (bf[0] == true && carryFlag == true) ||
+                                                (bf[1] == true &&
+                                                    carryFlag1 == true)
+                                            ? Colors.redAccent
+                                            : Colors.limeAccent,
                                     child: new Center(
                                       child: new Text(
-                                        barrowFlag1 == true &&
-                                                carryFlag1 == true
+                                        bf[1] == true && carryFlag1 == true
                                             ? _arrow
                                             : cf[1].toString(),
                                         style: new TextStyle(
-                                            color: carry2 == -1
+                                            color: cf[1] == -1
                                                 ? Colors.black
                                                 : Colors.limeAccent,
-                                            fontSize: barrowFlag1 == true &&
+                                            fontSize: bf[1] == true &&
                                                     carryFlag1 == true
                                                 ? constraints.minHeight * 0.078
                                                 : constraints.minHeight * 0.09),
@@ -952,20 +938,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  color: barrowFlag == true &&
+                                  color: bf[0] == true &&
                                           _operator == '-' &&
                                           carryFlag == true
                                       ? Colors.redAccent
                                       : Colors.limeAccent,
                                   child: new Center(
                                     child: new Text(
-                                      barrowFlag == true &&
+                                      bf[0] == true &&
                                               _operator == '-' &&
                                               carryFlag == true
                                           ? _arrow
                                           : ' ',
                                       style: new TextStyle(
-                                        fontSize: barrowFlag == true &&
+                                        fontSize: bf[0] == true &&
                                                 _operator == '-' &&
                                                 carryFlag == true
                                             ? constraints.minHeight * 0.078
@@ -1005,21 +991,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: _operator == '-'
                               ? new Shake(
-                                  animation: numberShake1 == false
+                                  animation: ns[1] == false
                                       ? animationShake
                                       : animation,
                                   child: new GestureDetector(
-                                    onTap: check1 == 0 && check == 1
+                                    onTap: c[1] == 0 && c[0] == 1
                                         ? () {
                                             setState(() {
                                               carryFlag1 = true;
                                               if (tempf1 == 0 &&
-                                                  barrowFlag1 == true) {
+                                                  bf[1] == true) {
                                                 num1digit2 = num1digit2 + 10;
-                                                carry3 = -1;
+                                                cf[2] = -1;
                                                 tempf1++;
-                                                print("printing carry3....");
-                                                print(carry3);
                                               }
                                             });
                                             new Future.delayed(
@@ -1032,7 +1016,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           }
                                         : () {},
                                     child: new Container(
-                                      color: barrowFlag1 == true &&
+                                      color: bf[1] == true &&
                                               _operator == '-' &&
                                               carryFlag1 == true
                                           ? Colors.green
@@ -1057,21 +1041,18 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.minHeight * 0.005),
                           child: _operator == '-'
                               ? new Shake(
-                                  animation: numberShake == false
+                                  animation: ns[0] == false
                                       ? animationShake
                                       : animation,
                                   child: new GestureDetector(
-                                    onTap: check == 0
+                                    onTap: c[i] == 0
                                         ? () {
                                             setState(() {
                                               carryFlag = true;
-                                              if (tempf == 0 &&
-                                                  barrowFlag == true) {
+                                              if (tempf == 0 && bf[0] == true) {
                                                 num1digit1 = num1digit1 + 10;
-                                                carry2 = -1;
+                                                cf[1] = -1;
                                                 tempf++;
-                                                print("printing carry2....");
-                                                print(carry2);
                                               }
                                             });
                                             new Future.delayed(
@@ -1084,7 +1065,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           }
                                         : () {},
                                     child: new Container(
-                                      color: barrowFlag == true &&
+                                      color: bf[0] == true &&
                                               _operator == '-' &&
                                               carryFlag == true
                                           ? Colors.green
