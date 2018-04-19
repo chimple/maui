@@ -53,6 +53,7 @@ flutter:
     - assets/apple.ogg
     - assets/Shapes.png
     - assets/animations/koala_happy.json
+    - assets/animations/koala_sad.json
     - assets/animations/zebra_face.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
