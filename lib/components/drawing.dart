@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,18 +9,27 @@ import 'dart:convert';
 
 class DrawPadController {
   _DrawPadDelegate _delegate;
+
   void clear() => _delegate?.clear();
+
   send() => _delegate?.send();
+
   multiColor(colorValue) => _delegate?.multiColor(colorValue);
+
   multiWidth(widthValue) => _delegate?.multiWidth(widthValue);
+
   undo() => _delegate?.undo();
 }
 
 abstract class _DrawPadDelegate {
   void clear();
+
   send();
+
   multiColor(colorValue);
+
   multiWidth(widthValue);
+
   undo();
 }
 
@@ -27,17 +37,18 @@ class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
 
   MyDrawPage(this.controller, {Key key}) : super(key: key);
+
   State<StatefulWidget> createState() {
     return new MyHomePageState(this.controller);
   }
 }
 
 class DrawLineProperty {
-  Offset _position = null;
+  Position _position = null;
   var _color = new Color(0xff000000);
   var _width = 5.0;
 
-  DrawLineProperty(position, color, width) {
+  DrawLineProperty(Position position, color, width) {
     this._position = position;
     this._color = color;
     this._width = width;
@@ -60,45 +71,6 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   DrawPainting _currentPainter;
 
   void initState() {
-//    List<DrawLineProperty> drawLineProperty = [];
-//    List drawPoint = [];
-//    for (int i = 0; i < drawLineProperty.length; i++)
-//      drawPoint.add(drawLineProperty[i]._position);
-//    print({"the full data position is : ": drawPoint});
-
-//    List<Position> position1 = [];
-//    List<Position> position2 = [];
-//    List<Position> position3 = [];
-//
-//    position1.add(new Position(101.0, 121.0));
-//    position1.add(new Position(102.0, 122.0));
-//    position1.add(new Position(103.0, 123.0));
-//    position2.add(new Position(104.0, 124.0));
-//    position2.add(new Position(105.0, 125.0));
-//    position2.add(new Position(106.0, 126.0));
-//    position3.add(new Position(107.0, 127.0));
-//    position3.add(new Position(108.0, 128.0));
-//    position3.add(new Position(109.0, 129.0));
-//    position3.add(new Position(110.0, 130.0));
-//    position1.add(new Position(111.0, 131.0));
-//    position2.add(new Position(112.0, 132.0));
-//
-//
-//    List<Draw> draw = [];
-//    draw.add(new Draw(0xff000000, 8.0, position: position1));
-//    draw.add(new Draw(0xff000001, 9.0, position: position2));
-//    draw.add(new Draw(0xff000002, 10.0, position: position3));
-//    print({"initial object is": draw});
-//
-//    CanvasProperty canvasProperty = new CanvasProperty(draw);
-//
-//    final drawJson = _encode(canvasProperty);
-//    print({"the object convert into json formate : ": drawJson});
-//
-//    var decode = JSON.decode(drawJson);
-//    print({"the decode value is : 1": decode});
-//    print({"the decode value is : 1": decode['draw'][0]['width']});
-
     _controller._delegate = this;
   }
 
@@ -109,15 +81,13 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   @override
   Widget build(BuildContext context) {
-    _currentPainter = new DrawPainting(_drawLineProperty); //, color, width);
-//    MediaQueryData media = MediaQuery.of(context);
-//    print({"this is mediaaa:": media.size});
+    MediaQueryData media = MediaQuery.of(context);
+    print({"this is mediaaa2:": media.size});
+
+    _currentPainter =
+    new DrawPainting(_drawLineProperty, media.size); //, color, width);
     return new Container(
       margin: new EdgeInsets.all(5.0),
-//        height: media.size.height* 0.335,
-//        width: media.size.width,
-
-//      height: 250.0, width: 400.0,
       decoration: new BoxDecoration(
         color: const Color(0xFFF1F8E9),
         boxShadow: [new BoxShadow(
@@ -133,26 +103,25 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       child: new ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: new GestureDetector(
-//          onPanDown: (DragDownDetails details) {
-//            print({"on pan down is : " : details});
-//            setState(() {
-//              RenderBox referenceBox = context.findRenderObject();
-//              Offset localPosition = referenceBox.globalToLocal(details.globalPosition);
-//              _drawLineProperty = new List.from(_drawLineProperty)..add(new DrawLineProperty(localPosition,color,width));
-//            });
-//          },
           onPanUpdate: (DragUpdateDetails details) {
             setState(() {
               RenderBox referenceBox = context.findRenderObject();
               Offset localPosition = referenceBox.globalToLocal(
                   details.globalPosition);
+
+              var x = localPosition.dx / media.size.width;
+              print({"x value in percentage is : ": x});
+              Position convertedIntoPercentage = new Position(
+                  x, localPosition.dy / media.size.height);
+              print({"convert into percentage is : ": convertedIntoPercentage});
               _drawLineProperty = new List.from(_drawLineProperty)
-                ..add(new DrawLineProperty(localPosition, color, width));
+                ..add(new DrawLineProperty(
+                    convertedIntoPercentage, color, width));
             });
           },
           onPanEnd: (DragEndDetails details) {
             _drawLineProperty.add(
-                new DrawLineProperty(null, Colors.black, 5.0));
+                new DrawLineProperty(null, color, width));
           },
           child: new CustomPaint(
             painter: _currentPainter,
@@ -166,7 +135,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   void clear() {
     setState(() {
       _drawLineProperty.clear();
-      print("this is clear methode");
+      print({"this is clear methode": _drawLineProperty});
     });
   }
 
@@ -186,41 +155,58 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void send() {
-    List<Draw> draw = [];
+    List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
+    print({"the data is : " : drawLinePropertyArray});
+
+    var colorRef = drawLinePropertyArray[0]._color.value;
+    var widthRef = drawLinePropertyArray[0]._width;
+    List<Draw> drawList = [];
     List<Position> position = [];
+    var drawTracker = 1;
 
-    for (int i = 0; i < _drawLineProperty.length; i++) {
-      if (_drawLineProperty[i]._position != null &&
-          _drawLineProperty[i]._color.value == _drawLineProperty[i+1]._color.value
-          && _drawLineProperty[i]._width ==  _drawLineProperty[i+1]._width) {
+    for (var i = 0; i < drawLinePropertyArray.length; i++) {
 
-        position.add(new Position(_drawLineProperty[i]._position.dx,
-            _drawLineProperty[i]._position.dy));
-        draw.add(new Draw(
-            _drawLineProperty[i]._color.value, _drawLineProperty[i]._width,
-            position: position));
+      DrawLineProperty current = drawLinePropertyArray[i];
+      if (current._color.value == colorRef && current._width == widthRef) {
 
-         if(_drawLineProperty[i]._position == null){
-           position.add(new Position(null,null));
-           draw.add(new Draw(
-               _drawLineProperty[i]._color.value, _drawLineProperty[i]._width,
-               position: position));
+        if (current._position != null)
+          position.add(new Position(current._position.x, current._position.y));
+        else
+          position.add(new Position(null, null));
+
+      } else if (current._color.value != colorRef || current._width != widthRef) {
+        drawList.add(new Draw(colorRef, widthRef, position:position));
+        drawTracker++;
+
+        colorRef = current._color.value;
+        widthRef = current._width;
+        position = [];
+
+        if (current._position != null)
+          position.add(new Position(current._position.x, current._position.y));
+        else
+          position.add(new Position(null, null));
       }
-
-      }
-
     }
 
-    CanvasProperty canvasProperty = new CanvasProperty(draw);
-    final drawJson = _encode(canvasProperty);
-    print({"the drawJson is : ": drawJson});
+    if (drawTracker != drawList.length && drawLinePropertyArray.length > 0) {
+      drawList.add(new Draw(colorRef, widthRef, position:position));
+    }
 
-//    var decode = JSON.decode(drawJson);
-//    print({"the object is : ": decode});
+    CanvasProperty canvasProperty = new CanvasProperty(drawList);
+
+    final drawJson = _encode(canvasProperty);
+    print({"the drawJson is : ": drawJson.toString()});
+
+    var decode = json.decode(drawJson);
+    print({"the object is : ": decode});
+
+
+
   }
 
-  List<Offset> getAllPoints(List<DrawLineProperty> drawLineProperty) {
-    List<Offset> points = [];
+  List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
+    List<Position> points = [];
     for (int i = 0; i < drawLineProperty.length; i++) {
       points.add(drawLineProperty[i]._position);
     }
@@ -248,33 +234,61 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
 class DrawPainting extends CustomPainter {
   List<DrawLineProperty> drawLineProperty = [];
+  Size sizeMedia = new Size(0.0, 0.0);
 
-
-  DrawPainting(drawLineProperty) {
+  DrawPainting(drawLineProperty, sizeMedia) {
     this.drawLineProperty = drawLineProperty;
+    this.sizeMedia = sizeMedia;
+  }
+
+
+  void getAllPoints(List<DrawLineProperty> drawLineProperty) {
+    List<Position> points = [];
+    for (int i = 0; i < drawLineProperty.length; i++) {
+      points.add(drawLineProperty[i]._position);
+      print({points[i].x: points[i].y});
+    }
   }
 
   void paint(Canvas canvas, Size size) {
+//    print("this is paint ,methodeeee");
+//    print({"the drawLine points are : " : getAllPoints(drawLineProperty)});
+
+
     Paint paint = new Paint()
       ..strokeCap = StrokeCap.round;
-
-print({"size of paint is": size});
+    print({"sizeMedia of paint is in draw is ": sizeMedia});
+    print({"size of paint is in draw is ": size});
     for (int i = 0; i < drawLineProperty.length - 1; i++) {
+
       if (drawLineProperty[i]._position != null &&
           drawLineProperty[i + 1]._position != null &&
-          (drawLineProperty[i]._position.dx >= 0 &&
-              drawLineProperty[i]._position.dy >= 0 &&
-              drawLineProperty[i]._position.dx < size.width &&
-              drawLineProperty[i]._position.dy < size.height) &&
-          (drawLineProperty[i + 1]._position.dx >= 0 &&
-              drawLineProperty[i + 1]._position.dy >= 0 &&
-              drawLineProperty[i + 1]._position.dx < size.width &&
-              drawLineProperty[i + 1]._position.dy < size.height)) {
+          drawLineProperty[i]._position.x * sizeMedia.width >= 0 &&
+          drawLineProperty[i]._position.y * sizeMedia.height >= 0 &&
+          (drawLineProperty[i]._position.x * sizeMedia.width >= 0 &&
+              drawLineProperty[i]._position.y * sizeMedia.height >= 0 &&
+              drawLineProperty[i]._position.x * sizeMedia.width < size.width &&
+              drawLineProperty[i]._position.y * sizeMedia.height <
+                  size.height) &&
+          (drawLineProperty[i + 1]._position.x * sizeMedia.width >= 0 &&
+              drawLineProperty[i + 1]._position.y * sizeMedia.height >= 0 &&
+              drawLineProperty[i + 1]._position.x * sizeMedia.width <
+                  size.width &&
+              drawLineProperty[i + 1]._position.y * sizeMedia.height <
+                  size.height)) {
+        paint.color = drawLineProperty[i]._color;
+        paint.strokeWidth = drawLineProperty[i]._width;
 
-            paint.color = drawLineProperty[i]._color;
-            paint.strokeWidth = drawLineProperty[i]._width;
+        var currentPixel = new Offset(
+            drawLineProperty[i]._position.x * sizeMedia.width,
+            drawLineProperty[i]._position.y * sizeMedia.height);
+        var nextPixel = new Offset(
+            drawLineProperty[i + 1]._position.x * sizeMedia.width,
+            drawLineProperty[i + 1]._position.y * sizeMedia.height);
 
-          canvas.drawLine(drawLineProperty[i]._position, drawLineProperty[i + 1]._position, paint);
+        canvas.drawLine(currentPixel, nextPixel, paint);
+//        canvas.drawCircle(currentPixel, 8.0, paint);
+        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
 
