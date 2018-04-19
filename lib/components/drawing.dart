@@ -288,7 +288,7 @@ class DrawPainting extends CustomPainter {
 
         canvas.drawLine(currentPixel, nextPixel, paint);
 //        canvas.drawCircle(currentPixel, 8.0, paint);
-        canvas.drawCircle(nextPixel, 8.0, paint);
+//        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
 

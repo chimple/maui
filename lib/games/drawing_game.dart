@@ -113,7 +113,7 @@ class DrawScreen extends State<Drawing> {
                                   ),
                                 ),
                                 new FlatButton(
-                                  onPressed: () => _multiColor(0xFFF1F8E9),
+                                  onPressed: () => _multiColor(0xffffd54f),
                                   child: new Container(
                                     width: constraints.maxWidth * 0.06,
                                     height: constraints.maxWidth * 0.06,
