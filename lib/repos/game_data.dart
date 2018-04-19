@@ -21,6 +21,42 @@ Future<List<String>> fetchSerialData(int categoryId) async {
   return null;
 }
 
+Future<Tuple2<String, List<String>>> fetchSequenceData(int categoryId, int maxData) async {
+  var rand = new Random();
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.lessonId != null) {
+    var lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsByLessonId(gameCategory.lessonId);
+    var start = rand.nextInt(max(0, lessonUnits.length-maxData));
+    var sequence = lessonUnits
+        .skip(start)
+        .take(maxData)
+        .map((e) => e.subjectUnitId).toList(growable: false);
+    var answer = sequence[rand.nextInt(sequence.length)];
+    return new Tuple2(answer, sequence);
+  } else if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var maxNumber = 10;
+    switch (category?.name) {
+      case '0-9':
+        maxNumber = 10;
+        break;
+      case '0-99':
+        maxNumber = 100;
+        break;
+    }
+    List<String> sequence = new List<String>();
+    var start = rand.nextInt(maxNumber);
+    for (int i = start; i < start + maxData; i++) {
+      sequence.add(i.toString());
+    }
+    var answer = sequence[rand.nextInt(sequence.length)];
+    return new Tuple2(answer, sequence);
+  }
+  return null;
+}
+
+
 Future<Map<String, String>> fetchPairData(int categoryId, int maxData) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.lessonId != null) {
