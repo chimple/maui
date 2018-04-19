@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 
 class Connectdots extends StatefulWidget {
@@ -32,47 +33,69 @@ enum ShakeCell { Right, InActive, Dance, CurveRow }
 class ConnectdotsState extends State<Connectdots> {
 
   var  i=0;
-  var n=0;
+  
   var count=0;
  final List<int> _numserial = [
-   3,4,5,6,7,8
+  15,16,17,18,19,20,21,22
 ];
-final List<int> _numothers =[11,10,1];
+final List<int> _numothers =[32,37,1,43];
 
   final int _size = 3;
   static int size=3;
+   var j=size;
+   var n=size;
+  var m=size;
+   var k=0;
+   var count1=0;
+   var count2=0;
+   var count3=0;
+   var count6=0;
+   var count4=0;
+  var count5=0;
+  var count0=0;
+  var r;
  
- List<int> numbers=[];
+ List<String> numbers=[];
 
-  List<int>_shuffledLetters = [];
+  List<String>_shuffledLetters = [];
  
   List _copyAns = [];
  
-  List<int> _letters;
-  List<int> _letters1;
-  List<int> _number0;
-  List<int> _number1;
-  List<int> _number2;
-  List<int> _number3;
+  List<String> _letters;
+ 
+  List<String> _todnumber=[];
   List<Status> _statuses;
-List<int> _letterex;
+List<String> _letterex=[];
+bool _isLoading = true;
+var z=0;
+ Tuple2<List<String>, List<String>> consecutive;
+
 
   List<ShakeCell> _ShakeCells = [];
-
-  @override
+   @override
   void initState() {
     super.initState();
-   _numserial.forEach((e) { _copyAns.add(e);});
-   
- 
-          _numserial.forEach((e){ numbers.add(e);});
-          _numothers.forEach((v){numbers.add(v);});
+    _initBoard();
+  }
 
-      numbers.shuffle();
+ void _initBoard() async {
+  
+
+
+    setState(() => _isLoading = true);
+      consecutive= await fetchConsecutiveData(widget.gameCategoryId, 5,4);
+       
+    print("this data is coming from fetchng ${consecutive.item1}");
+   
+ consecutive.item1.forEach((e) { _copyAns.add(e);});
+         consecutive.item1.forEach((e){ numbers.add(e);});
+         consecutive.item2.forEach((v){numbers.add(v);});
+
+      
       print("suffle data is in my numbers is $numbers");
-      numbers.sort();
+      
       print("sorted numbers are $numbers ");
-    
+  
     for (var i = 0; i < numbers.length; i += _size * _size) {
       _shuffledLetters.addAll(
           numbers.skip(i).take(_size * _size).toList(growable: true)
@@ -82,42 +105,129 @@ List<int> _letterex;
 _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
 
     print(_shuffledLetters);
-   _number0 = _shuffledLetters.sublist(0, _size);
+
+
+      var todnumbers= new List.generate(m, (_) => new List(n));
+    for(var i=0; i<size; i++)
+    {
+      for(var j=0;j<size; j++)
+      {
+       count3= count2+j+1+count1;
+      print("print something in forloop");
+   _shuffledLetters.sublist(count1,count3).forEach((e){todnumbers[i][j]=e;});
     
-     _number1= _shuffledLetters.sublist(_size,_size+_size);
-     _number3=_shuffledLetters.sublist(_size+_size,_size*3);
+        print("value of 2d is each time $todnumbers");
+      }
+      count1=count3;
+   
+     
+    }
+     for(var i=1;i<size;i++){
+       if(i%2!=0){
+    Iterable letdo = todnumbers[i].reversed; 
+    var fReverse = letdo.toList();
 
-      print("number sublist is  $_number1");
-    Iterable _number2 = _number1.reversed;
-    var fruitsInReverse = _number2.toList();
-     print("number sublist reverse is is  $fruitsInReverse");
+    print("value of 2d is $todnumbers");
 
+       print("RRRRRR $fReverse");
+     todnumbers[i].setRange(0, size, fReverse.map((e)=>e));
+ print("value o ooppps$todnumbers");
+       }
+     }
+
+todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
+
+ print("2d value is in my oops is$_todnumber");
+
+
+ var todcolnumbers= new List.generate(m, (_) => new List(n));
+    for(var i=0; i<size; i++)
+    {
+      if(i%2!=0){
+
+        print("this treacing $count6");
+        print("this treacing 2count$count4");
+
+         for(var j=size-1;j>=0; j--) {
+             count6= 1+count4;
+            
+      print("this jjjj is $j");
+
+   _shuffledLetters.sublist(count4,count6).forEach((e){todcolnumbers[j][i]=e;});
+      
+        print("value of 2d is cols each time $todcolnumbers");
+         count4=count6;
+         }
+         
+      }
+      else
+      {
+      for(var j=0;j<size; j++)
+      {
+       count6= count2+j+1+count4;
+      print("print something in forloop");
+   _shuffledLetters.sublist(count4,count6).forEach((e){todcolnumbers[j][i]=e;});
+    
+        print("value of 2d is cols each time $todcolnumbers");
+      }
+      }
+      count4=count6;
+   
+    }
+   
+   
+
+
+   todcolnumbers.forEach((e){e.forEach((v){_letterex.add(v);});});
+    
+  
   var rng = new Random();
   for (var i = 0; i <1; i++) {
-      n= rng.nextInt(2);
+      r= rng.nextInt(4);
+    
   }
-  if(n==1)
-{
-              _letterex=_shuffledLetters.sublist(0, _size);
-               fruitsInReverse.forEach((e){_letterex.add(e);});
-           
-            _number3.forEach((v){_letterex.add(v);});
-            Iterable _number4 = _letterex.reversed;
+  if(r==4){
+    r=r-1;
+  }
+  print("hello sir $r");
+
+  switch(r)
+  {
+    case 0: { 
+      _letters=_todnumber;} 
+     break;
+     case 1: {  
+       Iterable _number4 = _todnumber.reversed;
             var fruitsInReverset = _number4.toList();
             _letters=fruitsInReverset;
-
-     print("hello all data here $_letters");
+             } 
+      break; 
+     
+      case 2: {  
+           _letters=_letterex;
+               } 
+      break; 
+      case 3: {  
+       Iterable _number4 = _letterex.reversed;
+            var fruitsInReverset = _number4.toList();
+            _letters=fruitsInReverset;
+             } 
+      break; 
   }
-  else{
-              _letters=_shuffledLetters.sublist(0, _size);
-               fruitsInReverse.forEach((e){_letters.add(e);});
-           
-            _number3.forEach((v){_letters.add(v);});
 
+    setState(() => _isLoading = false);
   }
+   @override
+  void didUpdateWidget(Connectdots oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+     
+    }
   }
 
-  Widget _buildItem(int index,int  text, Status status,ShakeCell tile) {
+  Widget _buildItem(int index,String  text, Status status,ShakeCell tile) {
 
    
     return new MyButton(
@@ -130,11 +240,45 @@ _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
           if (status == Status.Active) {
             if(text==_copyAns[i])
             {
+
               setState(() {
                 _statuses[index] = Status.Visible;
+                widget.onScore(1);
+                        widget.onProgress((count0+2) / (_copyAns.length));
+                        count0++;
 
               });
+              print("length is${_copyAns.length}");
+             
             i++;
+                print("hey this onend$i");
+            
+             if(i==_copyAns.length)
+              {
+                  k=0;
+                          count0=0;         
+    count1=0;
+    count2=0;
+    count3=0;
+    count6=0;
+    count4=0;
+   count5=0;
+   _todnumber.removeRange(0, _todnumber.length);
+                _letters.removeRange(0, _letters.length);
+                
+                 _letterex.removeRange(0, _letterex.length);
+                 numbers.removeRange(0, numbers.length);
+
+   _shuffledLetters.removeRange(0, _shuffledLetters.length);
+
+                 new Future.delayed(const Duration(milliseconds: 250),
+                            () {
+                        
+                          widget.onEnd();
+                         
+                        });
+              }
+
             }
             else{
                 setState(() {
@@ -168,6 +312,7 @@ _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
       return new ResponsiveGridView(
       rows: _size,
       cols: _size,
+    maxAspectRatio: 1.0,
       children: _letters.map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++])).toList(growable: false),
     );
   
@@ -178,7 +323,7 @@ _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.status,this.tile, this.onPress}) : super(key: key);
 
-  final int text;
+  final String text;
   Status status;
    ShakeCell tile;
   final VoidCallback onPress;
@@ -190,14 +335,14 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animationRight,animation, animationWrong, animationDance;
-  int _displayText;
+  String _displayText;
 
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 10), vsync: this);
     controller =
        new  AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
         animationRight =
@@ -207,14 +352,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
-          if (!widget.text.isNaN) {
+          if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
           }
         }
       });
     controller.forward();
-    animationWrong = new Tween(begin: -8.0, end: 8.0).animate(controller1);
+    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
     _myAnim();
   }
   void _myAnim() {
@@ -245,6 +390,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
+
+
+ 
+    int _color =0xFF5F9EA0;
+
+
+     if (widget.tile==ShakeCell.Right) {
+      _color = 0xFFff0000; // red
+    }
+
       return new ScaleTransition(
           scale: animation,
           child: new Shake(
@@ -260,7 +415,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
        
                   color: widget.status == Status.Visible
                       ? Colors.yellow
-                      : Colors.teal,
+                      : new Color(_color),
                   shape: new RoundedRectangleBorder(
                       borderRadius:
                           new BorderRadius.all(new Radius.circular(8.0))),
