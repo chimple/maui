@@ -21,6 +21,7 @@ import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/components/hoodie.dart';
+import 'package:maui/games/tap_home.dart';
 
 enum GameMode { timed, iterations }
 enum GameDisplay { single, myHeadToHead, otherHeadToHead }
@@ -302,16 +303,16 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-        case 'quiz':
+      case 'quiz':
         return new Quiz(
-          onScore: _onScore,
+            onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-        case 'connect_the_dots': 
+        case 'connect_the_dots':
         return new Connectdots(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -320,7 +321,16 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-         case 'tap_wrong': 
+      case 'tap_home':
+        return new TapHome(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+      case 'tap_wrong':
         return new TapWrong(
             onScore: _onScore,
             onProgress: _onProgress,
