@@ -4,7 +4,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 import 'common_function_test.dart';
 
-const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
+const Duration kWaitBetweenActions = const Duration(milliseconds: 500);
 
 void main() {
   group('login', () {
@@ -33,8 +33,11 @@ void main() {
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 2)));
 
+   var blanktext ;
     test('question', () async {
-      await new Future.delayed(const Duration(milliseconds: 2000), () {});
+      for(int i=0;i<=1;i++)
+      {
+      await new Future.delayed(const Duration(milliseconds: 200), () {});
       var index = 100;
       double cordy = -297.0, cordx;
       int buttons = 0;
@@ -53,10 +56,11 @@ void main() {
       int space = 0;
 
       for (int j = 1; j <= buttons; j++) {
-        await new Future<Duration>.delayed(const Duration(seconds: 2));
+        await new Future<Duration>.delayed(const Duration(seconds: 1));
         String valuekey = j.toString();
         final SerializableFinder blank = find.byValueKey(valuekey);
-        var blanktext = await driver.getText(blank);
+     
+        blanktext= await driver.getText(blank);
         if (blanktext == '') {
           cord.add(j);
           space++;
@@ -65,72 +69,388 @@ void main() {
       }
       print('spaces are:: $space');
       print('Number of cordinate:: $cord');
-      await new Future<Duration>.delayed(const Duration(seconds: 3));
-// for (int i=0;i<space;i++)
-// {
-//   for(int j=100;j<buttons+100;j++)
-//   {
-//     for(int h=1;h<buttons;h++)
-//     {
-//     String hhh= h.toString();
-//     final SerializableFinder blanks=find.byValueKey(hhh);
-//     var blankstext=await driver.getText(blanks);
-//     while(true)
-//     {
-//       await driver.scroll(find.byValueKey(j), cordx*cord[i].toDouble(), cordy,const Duration(seconds: 1));
-//       cordx=cordx-65.9;
-//       if( blankstext !='' )
-//       break;
-//     }
-//     }
-//   }
-// }
+      await new Future<Duration>.delayed(const Duration(milliseconds: 300));
+
       double val;
-      if (buttons == 6) {
-        val = 52.5;
-        for (int i = 0; i < space; i++)
-          for (int j = 0; j < space; j++)
+      if (buttons == 5) {
+        val = 80.7;
+       
+        for (int i = 0; i < space; i++){
+        //    for (int j = 0; j < space; j++)
+        // {
+             if(cord[i]==1)
            {
             for (int j = 100; j < buttons + 100; j++)
+            
+            
              {
-              if (j - 100 < cord[i]) 
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
               {
-                await driver.scroll(find.byValueKey(j), (j - 100 + cord[i]).toDouble() * val,cordy,const Duration(seconds: 1));
-                //cordx=cordx-val;
-              } else if (j - 100 + 1 == cord[i]) {
-                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(seconds: 1));
-                //await driver.scroll(find.byValueKey(j), -(j-100-cord[i]).toDouble()*val, cordy, const Duration(seconds: 1));
-              } else {
-                await driver.scroll(find.byValueKey(j), -(j - 100 + cord[i]).toDouble() * val,  cordy, const Duration(seconds: 1));
-              }
-            }
-          }
-      }
-      if (buttons == 5) {
-        val = 65.0;
-        for (int i = 0; i < space; i++) {
-          for (int j = 100; j < buttons + 100; j++) {
-            if (j - 100 < cord[i]) {
-              await driver.scroll(
-                  find.byValueKey(j),
-                  (j - 100 + cord[i]).toDouble() * val,
-                  cordy,
-                  const Duration(seconds: 1));
-              //cordx=cordx-val;
-            } else if (j - 100 + 1 == cord[i]) {
-              await driver.scroll(
-                  find.byValueKey(j), 0.0, cordy, const Duration(seconds: 1));
-              //await driver.scroll(find.byValueKey(j), -(j-100-cord[i]).toDouble()*val, cordy, const Duration(seconds: 1));
-            } else {
-              await driver.scroll(
-                  find.byValueKey(j),
-                  -(j - 100 + cord[i]).toDouble() * val,
-                  cordy,
-                  const Duration(seconds: 1));
-            }
-          }
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j),-(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+                   
+             }
+             //break;
+           }
+            if (cord[i]==2)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble()*val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+          if (cord[i]==3)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+           if (cord[i]==4)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+           if (cord[i]==5)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), ((j-(100+cord[i]-1))).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;     
+                 
+            }//break;
+           }
+          
         }
+         await new Future<Duration>.delayed(const Duration(milliseconds: 500));   
+           final SerializableFinder check=find.byValueKey('check');
+            await driver.tap(check);
+        // //   }
+        }
+      //}
+      else{
+          val = 67.2;
+       
+        for (int i = 0; i < space; i++)
+        //    for (int j = 0; j < space; j++)
+         {
+             if(cord[i]==1)
+           {
+            for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble()* val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+            
+          }
+          
+                   
+             }
+             //break;
+           
+            if (cord[i]==2)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble()* val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+          if (cord[i]==3)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+           if (cord[i]==4)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+
+             }//break;
+           }
+           if (cord[i]==5)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+             await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+
+             }//break;
+           }
+            if (cord[i]==6)
+           {
+               for (int j = 100; j < buttons + 100; j++)
+            
+            
+             {
+               if (j - 100+1 == cord[i]) {
+                await driver.scroll( find.byValueKey(j), 0.0, cordy, const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else if (j - 100 < cord[i]) 
+              {
+                await driver.scroll(find.byValueKey(j), ((100+cord[i]-1)-j).toDouble() * val,cordy,const Duration(milliseconds: 300));
+               await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+              } 
+              else {
+              await driver.scroll(find.byValueKey(j), -(j-(100+cord[i]-1)).toDouble() * val,  cordy, const Duration(milliseconds: 300));
+                await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+                  }
+                  var value=cord[i];
+            String str=(value).toString();
+            print(str);
+            final SerializableFinder blank = find.byValueKey(str);
+            blanktext= await driver.getText(blank);
+            
+            print('text is $blanktext');
+            if(blanktext!='')
+             break;
+            //  final SerializableFinder check=find.byValueKey('check');
+            // await driver.tap(check);
+            
+
+             }//break;
+           }
+        }
+         await new Future<Duration>.delayed(const Duration(milliseconds: 500));   
+           final SerializableFinder check=find.byValueKey('check');
+            await driver.tap(check);
+    
+      
+    
+            //  var value=cord[i];
+            //    String str=(value).toString();
+            //    print(str);
+            //   final SerializableFinder blank = find.byValueKey(str);
+            //   blanktext= await driver.getText(blank);
+            //   print('text is $blanktext');
+            //  if(blanktext!='')
+            //  break;
+        //   }
       }
-    }, timeout: const Timeout(const Duration(minutes: 1)));
+      }
+    // }
+    }, timeout: const Timeout(const Duration(minutes: 3)));
   });
 }
