@@ -91,5 +91,13 @@ class AppDatabase {
     fetchTablesData(36).then((m)=>print(m));
     fetchFillNumberData(57, 4).then((f)=>print(f));
     fetchCrosswordData(1).then((c)=>print(c));
+    fetchMultipleChoiceData(58, 3).then((m)=>print(m));
+    fetchMultipleChoiceData(60, 6).then((m)=>print(m));
+    fetchWordData(61, 10, 3).then((m)=>print(m));
+    fetchWordData(62, 8, 5).then((m)=>print(m));
+    fetchConsecutiveData(63, 6, 3).then((d)=>print(d));
+    fetchConsecutiveData(64, 12, 4).then((d)=>print(d));
+    fetchSequenceData(65, 8).then((s)=>print(s));
+    fetchSequenceData(67, 12).then((s)=>print(s));
   }
 }

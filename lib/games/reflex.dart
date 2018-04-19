@@ -89,6 +89,8 @@ class ReflexState extends State<Reflex> {
                 widget.onEnd();
               });
             }
+          } else {
+            widget.onScore(-1);
           }
         });
   }
