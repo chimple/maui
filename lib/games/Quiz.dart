@@ -19,7 +19,7 @@ class Quiz extends StatefulWidget {
   State createState() => new QuizState();
 }
 
-class QuizState extends State<Quiz> {
+class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
  
  Tuple2<String, bool> _allques;
@@ -27,6 +27,12 @@ class QuizState extends State<Quiz> {
   bool tf;
   bool isCorrect;
   bool overlayShouldBeVisible = false;
+
+  Animation<double> buttonSqueezeAnimation;
+
+  Animation<double> buttonZoomout;
+
+  AnimationController _loginButtonController;
 
   @override
   void initState() {
@@ -43,18 +49,35 @@ class QuizState extends State<Quiz> {
     print(_allques.item2);
     tf = _allques.item2;
     setState(()=>_isLoading=false);
+    _loginButtonController = new AnimationController(
+      duration: new Duration(milliseconds: 3000),
+      vsync: this
+    );
   }
 
   void handleAnswer(bool answer) {
     isCorrect = (tf == answer);
+    _playAnimation();
     if (isCorrect) {
+      _playAnimation();
       widget.onScore(1);
       widget.onProgress(1.0);
+      widget.onEnd();
+      _initBoard();
     }
     this.setState(() {
       print(4);
       overlayShouldBeVisible = true;
     });
+  }
+
+
+  Future<Null> _playAnimation() async {
+    try {
+      await _loginButtonController.forward();
+      await _loginButtonController.reverse();
+    }
+    on TickerCanceled{}
   }
   
     @override
@@ -73,6 +96,27 @@ class QuizState extends State<Quiz> {
       );
     }    
 
+    buttonSqueezeAnimation = new Tween(
+      begin: 320.0,
+      end: 70.0,
+    ).animate(new CurvedAnimation(
+      parent: _loginButtonController.view,
+      curve: new Interval(0.0, 0.250)
+    ));
+
+    buttonZoomout = new Tween(
+      begin: 500.0,
+      end: 1000.0,
+    ).animate(
+      new CurvedAnimation(
+        parent: _loginButtonController.view,
+        curve: new Interval(
+          0.550, 0.900,
+          curve: Curves.bounceOut,
+        )
+    ));
+       
+
     return new Material(
       color: const Color(0xFF54cc70),
       child: new Stack(
@@ -85,11 +129,11 @@ class QuizState extends State<Quiz> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [new QuestionText(questionText),]
+              children: [new QuestionText(questionText)]
             ),
 
-            new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+           new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Row(
@@ -99,20 +143,25 @@ class QuizState extends State<Quiz> {
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                    new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new AnswerButton(buttonController: _loginButtonController.view, answer: true, onTap: () => handleAnswer(false))/*true button*/, 
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
 
-                    new AnswerButton(false, () => handleAnswer(false)), //false button
+                  new AnswerButton(buttonController: _loginButtonController.view, answer: false, onTap: () => handleAnswer(false)), /*false button*/
 
                     new Padding(
                       padding: new EdgeInsets.all(wd * 0.015),
                     ),
                   ]
                 ),
-                new Row(
+
+                 new Padding(
+                      padding: new EdgeInsets.all(ht * 0.015),
+                    ),
+
+               new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
 
@@ -120,13 +169,13 @@ class QuizState extends State<Quiz> {
                         padding: new EdgeInsets.all(wd * 0.015),
                       ),
 
-                      new AnswerButton(true, () => handleAnswer(true)), //true button
+                    new AnswerButton(buttonController: _loginButtonController.view, answer: true, onTap: () => handleAnswer(false)),/*true button*/
 
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
+                    new Padding(
+                      padding: new EdgeInsets.all(wd * 0.015),
+                    ),
 
-                      new AnswerButton(false, () => handleAnswer(false)), //false button
+                    new AnswerButton(buttonController: _loginButtonController.view, answer: false, onTap: () => handleAnswer(false)), /*false button*/ 
 
                       new Padding(
                         padding: new EdgeInsets.all(wd * 0.015),
@@ -139,23 +188,6 @@ class QuizState extends State<Quiz> {
           ],
         ),
         
-
-        overlayShouldBeVisible == true ? new Container(
-          height: ht,
-          width: wd,
-          child: new CorrectWrongOverlay(
-            isCorrect,
-                () {                     
-              this.setState(() {
-                print(1);
-                overlayShouldBeVisible = false;
-              }); 
-              new Future.delayed(const Duration(milliseconds: 20), () {
-                widget.onEnd();
-                _initBoard();
-              });         
-            }
-        )) : new Container()
       ],
     ),
     );
@@ -236,108 +268,136 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 }
 
 class AnswerButton extends StatelessWidget {
+  final bool answer;
+  final VoidCallback onTap;
 
-  final bool _answer;
-  final VoidCallback _onTap;
-
-  AnswerButton(this._answer, this._onTap);
-
-  @override
-  Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht=media.height;
-    double wd = media.width;
-    return new Expanded( 
-      child: new Material(
-        color: const Color(0xFF54cc70),        
-        child: new InkWell(
-          onTap: () => _onTap(),
-          child: new Container( 
-                height: ht * 0.2,
-                width: wd * 0.6,             
-                decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  color: _answer == true ? const Color(0xFF64DD17) : const Color(0xFFE53935),
-                    
-                ),
-                child: new Center(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Icon(_answer == true ? Icons.check : Icons.close, size: ht>wd? ht*0.15 : wd*0.15, color: Colors.white,),
-                      new Text(_answer == true ? "(True)" : "(False)",
-                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.02 : wd*0.02, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-                      )
-                    ],
-                  )
-                ),
-              ),
+  AnswerButton({Key key, this.answer, this.onTap, this.buttonController})
+      : buttonSqueezeanimation = new Tween(
+          begin: 320.0,
+          end: 70.0,
+        )
+            .animate(
+          new CurvedAnimation(
+            parent: buttonController,
+            curve: new Interval(
+              0.0,
+              0.150,
+            ),
+          ),
         ),
-      ),
-    );
+        buttomZoomOut = new Tween(
+          begin: 70.0,
+          end: 1000.0,
+        )
+            .animate(
+          new CurvedAnimation(
+            parent: buttonController,
+            curve: new Interval(
+              0.550,
+              0.999,
+              curve: Curves.bounceOut,
+            ),
+          ),
+        ),
+        containerCircleAnimation = new EdgeInsetsTween(
+          begin: const EdgeInsets.only(bottom: 50.0),
+          end: const EdgeInsets.only(bottom: 0.0),
+        )
+            .animate(
+          new CurvedAnimation(
+            parent: buttonController,
+            curve: new Interval(
+              0.500,
+              0.800,
+              curve: Curves.ease,
+            ),
+          ),
+        ),
+        super(key: key);
+
+  final AnimationController buttonController;
+  final Animation<EdgeInsets> containerCircleAnimation;
+  final Animation buttonSqueezeanimation;
+  final Animation buttomZoomOut;
+
+  Future<Null> _playAnimation() async {
+    try {
+      await buttonController.forward();
+      await buttonController.reverse();
+    } on TickerCanceled {}
   }
-}
 
-
-
-class CorrectWrongOverlay extends StatefulWidget {
-
-  final bool _isCorrect;
-  final VoidCallback _onTap;
-
-  CorrectWrongOverlay(this._isCorrect, this._onTap);
-
-  @override
-  State createState() => new CorrectWrongOverlayState();
-}
-
-class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTickerProviderStateMixin {
-
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _iconAnimationController = new AnimationController(duration: new Duration(seconds: 2), vsync: this);
-    _iconAnimation = new CurvedAnimation(parent: _iconAnimationController, curve: Curves.elasticOut);
-    _iconAnimation.addListener(() => this.setState(() {print(3);}));
-    _iconAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _iconAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Material(
-      color: Colors.black54,
+  Widget _buildAnimation(BuildContext context, Widget child) {
+    return new Padding(
+      padding: buttomZoomOut.value == 70
+          ? const EdgeInsets.only(bottom: 50.0)
+          : containerCircleAnimation.value,
       child: new InkWell(
-        onTap: () => widget._onTap(),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-              decoration: new BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle
-              ),
-              child: new Transform.rotate(
-                angle: _iconAnimation.value * 2 * PI,
-                child: new Icon(widget._isCorrect == true ? Icons.done : Icons.clear, size: _iconAnimation.value * 80.0,),
-              ),
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(bottom: 20.0),
-            ),
-            new Text(widget._isCorrect == true ? "Correct!" : "Wrong!", style: new TextStyle(color: Colors.white, fontSize: 30.0),)
-          ],
-        ),
-      ),
+          onTap: () {
+            _playAnimation();
+            onTap();
+          },
+          child: new Hero(
+            tag: "fade",
+            child: buttomZoomOut.value <= 300
+                ? new Container(
+                    width: buttomZoomOut.value == 70
+                        ? buttonSqueezeanimation.value
+                        : buttomZoomOut.value,
+                    height:
+                        buttomZoomOut.value == 70 ? 60.0 : buttomZoomOut.value,
+                    alignment: FractionalOffset.center,
+                    decoration: new BoxDecoration(
+                      color: const Color.fromRGBO(247, 64, 106, 1.0),
+                      borderRadius: buttomZoomOut.value < 400
+                          ? new BorderRadius.all(const Radius.circular(30.0))
+                          : new BorderRadius.all(const Radius.circular(0.0)),
+                    ),
+                    child: buttonSqueezeanimation.value > 75.0
+                        ? new Text(
+                            answer == true ? "True" : "False",
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 0.3,
+                            ),
+                          )
+                        : buttomZoomOut.value < 300.0
+                            ? new CircularProgressIndicator(
+                                value: null,
+                                strokeWidth: 1.0,
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.white),
+                              )
+                            : null)
+                : new Container(
+                    width: buttomZoomOut.value,
+                    height: buttomZoomOut.value,
+                    decoration: new BoxDecoration(
+                      shape: buttomZoomOut.value < 500
+                          ? BoxShape.circle
+                          : BoxShape.rectangle,
+                      color: const Color.fromRGBO(247, 64, 106, 1.0),
+                    ),
+                  ),
+          )),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    buttonController.addListener(() {
+      if (buttonController.isCompleted) {
+        Navigator.pushNamed(context, "Quiz");
+      }
+    });
+    return new AnimatedBuilder(
+      builder: _buildAnimation,
+      animation: buttonController,
     );
   }
 }
+
+
+
