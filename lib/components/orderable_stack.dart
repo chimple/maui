@@ -7,7 +7,7 @@ import './orderable.dart';
 /// Widget factory method
 typedef Widget WidgetFactory({Orderable data, Size itemSize});
 
-const kMargin = 20.0;
+const kMargin = 10.0;
 
 const kMinSize = 50.0;
 const kMaxHeight = 600.0;

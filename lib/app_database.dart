@@ -97,5 +97,7 @@ class AppDatabase {
     fetchWordData(62, 8, 5).then((m)=>print(m));
     fetchConsecutiveData(63, 6, 3).then((d)=>print(d));
     fetchConsecutiveData(64, 12, 4).then((d)=>print(d));
+    fetchSequenceData(65, 8).then((s)=>print(s));
+    fetchSequenceData(67, 12).then((s)=>print(s));
   }
 }

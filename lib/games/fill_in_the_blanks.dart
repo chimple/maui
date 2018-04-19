@@ -35,12 +35,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   int _size;
   List<String> dragBoxData, _holdDataOfDragBox, shuffleData, dragBoxDataStore;
   List<String> dropTargetData;
-  //List<Status> _statusShake;
   List<Tuple2<String, String>> _fillData;
   List<String> ref;
   List<int> _flag = new List();
   String fruit = ' ';
-
   int indexOfDragText, indexOfTarget;
   @override
   void initState() {
@@ -53,13 +51,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   int count = 0;
   int progres = 0;
   int space = 0;
-
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
     fruit = ' ';
     space = 0;
-
     setState(() => _isLoading = true);
     _fillData = await fetchWordWithBlanksData(widget.gameCategoryId);
     dragBoxData = _fillData.map((f) {
@@ -78,25 +74,19 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         fruit = fruit + dropTargetData[i];
       }
     }
-    print("dragbox data$dragBoxData");
-    print("drop box $dropTargetData");
     setState(() => _isLoading = false);
     _size = dragBoxData.length;
     _flag.length = dragBoxData.length + _size + 1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
     }
-
-    print("fruit is $fruit");
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
     }
-    print("count in data $count ");
-    print("length is ${dragBoxData.length}");
     space = dragBoxData.length - count;
-    print("count in data after $space ");
     dragBoxData.shuffle();
   }
+
   Widget droptarget(int index, String text, int flag) {
     return new MyButton(
         key: new ValueKey<int>(index),
@@ -104,13 +94,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         text: text,
         color1: 1,
         onAccepted: (targetindex) {
-          // print(targetindex);
-          // print(index);
-          // print(indexOfDragText);
           flag1 = 0;
           var flagtemp = 0;
-
-          print("Text of darg :: ${text}");
           if (index == indexOfDragText) {
             flag1 = 1;
             progres++;
@@ -118,18 +103,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
             dragBoxData[targetindex - 100] = '1';
           }
-          print("progress is $progres");
-          print("count is $count");
           if (progres == space) {
             widget.onScore(2);
-            print("progressin loop is $progres");
-            // widget.onEnd();
-
             new Future.delayed(const Duration(milliseconds: 500), () {
               setState(() {
                 _isShowingFlashCard = true;
-                // _initFillBlanks();
-                print("progress is $progres");
               });
             });
           }
@@ -153,6 +131,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           });
         },
         flag: flag,
+        isRotated: widget.isRotated,
         keys: keys++);
   }
 
@@ -163,6 +142,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         text: text,
         color1: 1,
         flag: flag,
+        isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
@@ -190,19 +170,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       return new FlashCard(
           text: fruit,
           onChecked: () {
-//            _initFillBlanks();
             widget.onEnd();
             setState(() {
               _isShowingFlashCard = false;
             });
           });
     }
-
     var j = 0, k = 100, h = 0, a = 0;
-
     return new Container(
-      // padding: new EdgeInsets.all(2.0),
-
       color: new Color(0xffff8edda3),
       child: new Center(
         child: new Column(
@@ -266,8 +241,8 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller, controllerShake;
-  Animation<double> animation, animationShake;
+  AnimationController controller, controllerShake, controllerDrag;
+  Animation<double> animation, animationShake, animationDrag;
   String _displayText;
   initState() {
     super.initState();
@@ -308,9 +283,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    int portf = 0;
+    MediaQueryData media = MediaQuery.of(context);
+    if (media.size.height < media.size.width) {
+      portf = 1;
+    }
     widget.keys++;
-    //print("value ${widget.keys}");
-    //print('build of MyButton: ${widget.index} ${widget.text}');
     if (widget.index < 100) {
       return new Shake(
         animation: widget.flag == 1 ? animationShake : animation,
@@ -387,20 +365,27 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 )),
           ),
           feedback: new Container(
-            height: 70.0,
-            width: 70.0,
+            height: media.orientation == Orientation.portrait
+                ? media.size.height * 0.13
+                : media.size.height * 0.26,
+            width: media.orientation == Orientation.portrait
+                ? media.size.width * 0.23
+                : media.size.width * 0.15,
             decoration: new BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-               color: new Color(0xffffe04444),
-                ),
+              shape: BoxShape.rectangle,
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+              color: new Color(0xffffe04444),
+            ),
             child: new Center(
-              child: new Text(
-                widget.text,
-                style: new TextStyle(
-                  color: Colors.black,
-                  decoration: TextDecoration.none,
-                  fontSize: 26.0,
+              child: new Transform.rotate(
+                angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
+                child: new Text(
+                  widget.text,
+                  style: new TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.none,
+                    fontSize: 26.0,
+                  ),
                 ),
               ),
             ),
