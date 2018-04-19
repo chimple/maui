@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-
+import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -29,6 +29,7 @@ class Wordgrid extends StatefulWidget {
 
 class WordgridState extends State<Wordgrid> {
   int _size = 4;
+  Tuple2<List<String>, List<String>> data;
   List<String> _others = [
     'q',
     'w',
@@ -45,9 +46,11 @@ class WordgridState extends State<Wordgrid> {
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters = ['A', 'P', 'P', 'L', 'E'];
+  List<int> _indexarray = [];
   List<int> _flags = [];
   bool _isLoading = true;
-
+  var rng = new Random();
+  var j=0;
   @override
   void initState() {
     super.initState();
@@ -57,12 +60,30 @@ class WordgridState extends State<Wordgrid> {
   void _initBoard() async {
     _currentIndex = 0;
     setState(() => _isLoading = true);
+   data = await fetchWordData(widget.gameCategoryId,3,2);
+
+    print('daataa ${data.item1} ');
+    print('daataa2  ${data.item2} ');
+    rng.nextInt(2);
+    // for (int i = 1; i <= _size * _size; i++) {
+    //   _indexarray.add(i - 1);
+    //   if (i % _size == 0) {
+    //     i += _size;
+    //     while (j<_size) {
+    //       _indexarray.add(i - 1);
+    //       i--;
+    //       j++;
+    //     }
+    //     i += _size;
+    //   }
+    // }
+    print('arrr $_indexarray');
     _shuffledLetters.addAll(_letters);
     _shuffledLetters.addAll(_others);
     _shuffledLetters.shuffle();
-    _flags.length=0;
+    _flags.length = 0;
     while (_flags.length <= _shuffledLetters.length) _flags.add(0);
-    print('flag array $_flags');
+    // print('flag array $_flags');
     setState(() => _isLoading = false);
   }
 
@@ -93,12 +114,11 @@ class WordgridState extends State<Wordgrid> {
                 widget.onEnd();
               });
             }
-          }
-          else{
-                setState(() {
+          } else {
+            setState(() {
               _flags[index] = 1;
             });
-              new Future.delayed(const Duration(milliseconds: 550), () {
+            new Future.delayed(const Duration(milliseconds: 550), () {
               setState(() {
                 _flags[index] = 0;
               });
