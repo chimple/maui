@@ -283,7 +283,7 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-        case 'connect_dots': 
+        case 'connect_the_dots': 
         return new Connectdots(
             onScore: _onScore,
             onProgress: _onProgress,

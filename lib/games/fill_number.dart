@@ -400,6 +400,7 @@ class MyFillnumberState extends State<Fillnumber> {
                             color: Colors.black, fontSize: 30.0)))),
             new Expanded(
                 child: new ResponsiveGridView(
+                  padding: new EdgeInsets.all(0.0),
               rows: _size,
               cols: _size,
               maxAspectRatio: 1.0,
@@ -431,7 +432,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   int _displayText;
-  List<Offset> _points = [];
+  
 
   initState() {
     super.initState();
@@ -468,8 +469,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     return new Container(
         decoration: new BoxDecoration(
-          color:
-              widget.bgstatus == Bgstatus.BgVisible ? Colors.red : Colors.white,
+          color: Colors.white,
           borderRadius: new BorderRadius.circular(.0),
         ),
         child: new ScaleTransition(
@@ -489,36 +489,5 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       style:
                           new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
         ));
-  }
-}
-
-class DrawPainting extends CustomPainter {
-  List<Offset> points = [];
-  Canvas _lastCanvas;
-  Size _lastSize;
-  DrawPainting(this.points) {}
-
-  void paint(Canvas canvas, Size size) {
-    print({
-      "the main paint is called .... ": {"size": size}
-    });
-    _lastCanvas = canvas;
-    _lastSize = size;
-
-    Paint paint = new Paint()
-      ..strokeCap = StrokeCap.round
-      ..color = Colors.red
-      ..strokeWidth = 5.0;
-    print("this is painting my tiles");
-
-    for (int i = 0; i < points.length; i++) {
-      if (points[i] != null && points[i + 1] != null) {
-        canvas.drawLine(points[i], points[i + 1], paint);
-      }
-    }
-  }
-
-  bool shouldRepaint(DrawPainting oldDelegate) {
-    return true;
   }
 }
