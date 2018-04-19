@@ -197,44 +197,42 @@ class _CasinoState extends State<Casino> {
             });
           });
     }
-    return new LayoutBuilder(builder: (context, constraints) {
-      return new Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Container(
-          color: new Color(0xfffff7ebcb),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              new Container(
-                  height: 100.0,
-                  width: 200.0,
-                  color: new Color(0xffff52c5ce),
-                  child: new Center(
-                      child: new Text(
-                    givenWord,
-                    key: new Key("fruit"),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.clip,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50.0,
-                        letterSpacing: 5.0,
-                        color: Colors.white),
-                  ))),
-              new Expanded(
+
+   
+      return new Container(
+        color: new Color(0xfffff7ebcb),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            new Container(
+                height: 100.0,
+                width: 200.0,
+                color: new Color(0xffff52c5ce),
                 child: new Center(
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: data.map((s) {
-                      return _buildScrollButton(s, scrollbuttonNumber++);
-                    }).toList(growable: false),
-                  ),
+                    child: new Text(
+                  givenWord,
+                  key: new Key("fruit"),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50.0,
+                      letterSpacing: 5.0,
+                      color: Colors.white),
+                ))),
+            new Expanded(
+              child: new Center(
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: data.map((s) {
+                    return _buildScrollButton(s, scrollbuttonNumber++);
+                  }).toList(growable: false),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
-    });
+    
   }
 }
