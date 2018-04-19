@@ -60,8 +60,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
     @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
-    double ht=media.height;
-    double wd = media.width;
     print("Question text here $questionText");
     print("Answer here $tf");
 
@@ -73,7 +71,13 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       );
     }    
 
-    return new Material(
+    return new LayoutBuilder(builder: (context, constraints)
+    {
+      double ht=constraints.maxHeight;
+      double wd = constraints.maxWidth;
+      print("My Height - $ht");
+      print("My Width - $wd");
+      return new Material(
       color: const Color(0xFF54cc70),
       child: new Stack(
       fit: StackFit.loose,
@@ -86,7 +90,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                new QuestionText(questionText),]
+                new QuestionText(questionText, ht, wd),]
             ),
 
             new Row(
@@ -97,13 +101,13 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
 
-                  new AnswerButton(true, () => handleAnswer(true)), //true button
+                  new AnswerButton(true, () => handleAnswer(true), ht, wd), //true button
 
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
                   ),
 
-                  new AnswerButton(false, () => handleAnswer(false)), //false button
+                  new AnswerButton(false, () => handleAnswer(false), ht, wd), //false button
 
                   new Padding(
                     padding: new EdgeInsets.all(wd * 0.015),
@@ -134,6 +138,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       ],
     ),
     );
+    });
   }
     
 }
@@ -142,8 +147,9 @@ class TrueFalseGameState extends State<TrueFalseGame> {
 class QuestionText extends StatefulWidget {
 
   final String _question;
+  double ht, wd;
 
-  QuestionText(this._question);
+  QuestionText(this._question, this.ht, this.wd);
 
   @override
   State createState() => new QuestionTextState();
@@ -180,14 +186,11 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht=media.height;
-    double wd = media.width;
-    return new Material(
+      return new Material(
       color: const Color(0xFF54cc70),
       child:  new Container(
-        height: ht * 0.22,
-        width: ht>wd? wd * 0.6 : wd*0.5,
+        height: widget.ht * 0.3,
+        width: widget.ht>widget.wd? widget.wd * 0.6 : widget.wd*0.5,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
               color: const Color(0xFFf8c43c),              
@@ -195,16 +198,14 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                   color: const Color(0xFF54cc70),
                   ),
                 ),
-            child: new Center(
-              child: new Column(
+            child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [ new Text( widget._question,
-              style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+              style: new TextStyle(color: Colors.white, fontSize: widget.ht>widget.wd? widget.ht*0.06 : widget.wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
                   ),
               ],
               ),
-            ),
       ),
     );
   }
@@ -214,21 +215,19 @@ class AnswerButton extends StatelessWidget {
 
   final bool _answer;
   final VoidCallback _onTap;
+  double ht, wd;
 
-  AnswerButton(this._answer, this._onTap);
+  AnswerButton(this._answer, this._onTap, this.ht, this.wd);
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht=media.height;
-    double wd = media.width;
-    return new Expanded( 
+      return new Expanded( 
       child: new Material(
         color: const Color(0xFF54cc70),        
         child: new InkWell(
           onTap: () => _onTap(),
           child: new Container( 
-                height: ht>wd? ht * 0.2 : ht * 0.29,
+                height: ht>wd? ht * 0.3 : ht * 0.29,
                 width: wd * 0.6,             
                 decoration: new BoxDecoration(
                   borderRadius: new BorderRadius.circular(25.0),
