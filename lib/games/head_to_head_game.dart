@@ -8,8 +8,7 @@ class HeadToHeadGame extends StatefulWidget {
   final int gameCategoryId;
 
   HeadToHeadGame(this.gameName,
-      {this.gameMode = GameMode.iterations,
-      @required this.gameCategoryId});
+      {this.gameMode = GameMode.iterations, @required this.gameCategoryId});
 
   @override
   HeadToHeadGameState createState() {
@@ -34,24 +33,25 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
     showDialog<String>(
         context: context,
         child: new AlertDialog(
-          content: media.size.height > media.size.width ?
-            new Column(
-            children: <Widget>[
-              new Expanded(
-                  child: new RotatedBox(
-                child: new Text('$_otherScore'),
-                quarterTurns: 2,
-              )),
-              new Expanded(child: new Text('$_myScore'))
-            ],
-          ) :
-          new Row(
-            children: <Widget>[
-              new Expanded(child: new Center(child: new Text('$_otherScore'))),
-              new Expanded(child: new Center(child: new Text('$_myScore')))
-            ],
-          )
-        )).then<Null>((String s) {
+            content: media.size.height > media.size.width
+                ? new Column(
+                    children: <Widget>[
+                      new Expanded(
+                          child: new RotatedBox(
+                        child: new Text('$_otherScore'),
+                        quarterTurns: 2,
+                      )),
+                      new Expanded(child: new Text('$_myScore'))
+                    ],
+                  )
+                : new Row(
+                    children: <Widget>[
+                      new Expanded(
+                          child: new Center(child: new Text('$_otherScore'))),
+                      new Expanded(
+                          child: new Center(child: new Text('$_myScore')))
+                    ],
+                  ))).then<Null>((String s) {
       Navigator.pop(context);
     });
   }
@@ -63,37 +63,38 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
       widget.gameName,
       key: new GlobalObjectKey('SingleGame.my'),
       gameMode: widget.gameMode,
+      gameDisplay: GameDisplay.myHeadToHead,
       gameCategoryId: widget.gameCategoryId,
       onScore: setMyScore,
       onGameEnd: onGameEnd,
     );
-    final otherGame = new SingleGame(
-      widget.gameName,
-      key: new GlobalObjectKey('SingleGame.other'),
-      gameMode: widget.gameMode,
-      gameCategoryId: widget.gameCategoryId,
-      onScore: setOtherScore,
-      onGameEnd: onGameEnd,
-      isRotated: true,
-    );
-    return media.size.height > media.size.width ?
-      new Column(
-      children: <Widget>[
-        new Expanded(
-            child: new RotatedBox(
-                child: otherGame,
-                quarterTurns: 2)),
-        new Expanded(
-            child: myGame)
-      ],
-    ) :
-    new Row(
-      children: <Widget>[
-        new Expanded(
-            child: otherGame),
-        new Expanded(
-            child: myGame)
-      ]
-    );
+    return media.size.height > media.size.width
+        ? new Column(
+            children: <Widget>[
+              new Expanded(
+                  child: new RotatedBox(
+                      child: new SingleGame(widget.gameName,
+                          key: new GlobalObjectKey('SingleGame.other'),
+                          gameMode: widget.gameMode,
+                          gameDisplay: GameDisplay.otherHeadToHead,
+                          gameCategoryId: widget.gameCategoryId,
+                          onScore: setOtherScore,
+                          onGameEnd: onGameEnd,
+                          isRotated: true),
+                      quarterTurns: 2)),
+              new Expanded(child: myGame)
+            ],
+          )
+        : new Row(children: <Widget>[
+            new Expanded(
+                child: new SingleGame(widget.gameName,
+                    key: new GlobalObjectKey('SingleGame.other'),
+                    gameDisplay: GameDisplay.otherHeadToHead,
+                    gameMode: widget.gameMode,
+                    gameCategoryId: widget.gameCategoryId,
+                    onScore: setOtherScore,
+                    onGameEnd: onGameEnd)),
+            new Expanded(child: myGame)
+          ]);
   }
 }
