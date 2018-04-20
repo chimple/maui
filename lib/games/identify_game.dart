@@ -6,7 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 // String test = '';
 
-Map decoded;
+Map _decoded;
 
 class IdentifyGame extends StatefulWidget {
   Function onScore;
@@ -29,7 +29,6 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
   }
@@ -37,24 +36,24 @@ class _IdentifyGameState extends State<IdentifyGame> {
   Future _loadGameInfo() async {
     String jsonGameInfo = await _loadGameAsset();
     print(jsonGameInfo);
-    this.setState((){
-      decoded = json.decode(jsonGameInfo);
+    this.setState(() {
+      _decoded = json.decode(jsonGameInfo);
     });
-    print(decoded["id"]);
-    print(decoded["height"]);
-    print(decoded["width"]);
-    print(decoded["parts"][0]["name"]);
+    print(_decoded["id"]);
+    print(_decoded["height"]);
+    print(_decoded["width"]);
+    print(_decoded["parts"][0]["name"]);
     // _parserJsonForGame(jsonGameInfo);
   }
 
   // void _parserJsonForGame(String jsonString) {
   //   this.setState((){
-  //     decoded = json.decode(jsonString);
+  //     _decoded = json.decode(jsonString);
   //   });
-  //   print(decoded["id"]);
-  //   print(decoded["height"]);
-  //   print(decoded["width"]);
-  //   print(decoded["parts"][0]["name"]);
+  //   print(_decoded["id"]);
+  //   print(_decoded["height"]);
+  //   print(_decoded["width"]);
+  //   print(_decoded["parts"][0]["name"]);
   // }
 
   @override
@@ -74,10 +73,14 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(_width*0.05, _height*0.7), decoded["parts"][0]["name"], Colors.red),
-        new DragBox(new Offset((_width*0.55), _height*0.7), decoded["parts"][1]["name"], Colors.lightBlue),
-        new DragBox(new Offset((_width*0.80), _height*0.7), decoded["parts"][2]["name"], Colors.green),
-        new DragBox(new Offset((_width*0.30), _height*0.7), decoded["parts"][3]["name"], Colors.orange),
+        new DragBox(new Offset(_width * 0.05, _height * 0.7),
+            _decoded["parts"][0]["name"], Colors.red),
+        new DragBox(new Offset((_width * 0.55), _height * 0.7),
+            _decoded["parts"][1]["name"], Colors.lightBlue),
+        new DragBox(new Offset((_width * 0.80), _height * 0.7),
+            _decoded["parts"][2]["name"], Colors.green),
+        new DragBox(new Offset((_width * 0.30), _height * 0.7),
+            _decoded["parts"][3]["name"], Colors.orange),
       ],
     );
     // return new Column(
@@ -243,9 +246,9 @@ class DropTargetState extends State<DropTarget> {
       //   child: image,
       // ),
       child: new Image(
-        image: new AssetImage('assets/'+decoded["id"]),
+        image: new AssetImage('assets/' + _decoded["id"]),
         // fit: BoxFit.contain,
-        height: _height*0.5,
+        height: _height * 0.5,
         width: _width,
       ),
       // child: new Image(
@@ -324,8 +327,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   int _flag = 0;
 
   // void _parseJsonIdentifyGame(String jsonString) {
-  //   Map decoded = json.decode(jsonString);
-  //   print(decoded);
+  //   Map _decoded = json.decode(jsonString);
+  //   print(_decoded);
   // }
 
   void toAnimateFunction() {
@@ -413,21 +416,29 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 setState(() {
                   // new DragBoxCopy(new Offset(position.dx, position.dy),
                   //     draggableText, draggableColor);
-                  if ((draggableText == decoded["parts"][0]["name"]) &&
-                      (offset.dx > 0.0 && offset.dx < 100.0) &&
-                      (offset.dy > 0.0 && offset.dy < 100.0)) {
+                  if ((draggableText == _decoded["parts"][0]["name"]) &&
+                      (offset.dx > 0.0 && offset.dx < _decoded["parts"][0]["data"]["width"]) &&
+                      (offset.dy > 0.0 && offset.dy < _decoded["parts"][0]["data"]["height"])) {
+                    print(offset.dx);
+                    print(offset.dy);
                     position = offset;
-                  } else if (draggableText == decoded["parts"][1]["name"] &&
+                  } else if (draggableText == _decoded["parts"][1]["name"] &&
                       (offset.dx > (_width - 130) && offset.dx < 370.0) &&
                       (offset.dy > 0.0 && offset.dy < 120.0)) {
+                    print(offset.dx);
+                    print(offset.dy);
                     position = offset;
-                  } else if (draggableText == decoded["parts"][3]["name"] &&
+                  } else if (draggableText == _decoded["parts"][3]["name"] &&
                       (offset.dx > 0.0 && offset.dx < 130.0) &&
                       (offset.dy > 160.0 && offset.dy < 290.0)) {
+                    print(offset.dx);
+                    print(offset.dy);
                     position = offset;
-                  } else if (draggableText == decoded["parts"][2]["name"] &&
+                  } else if (draggableText == _decoded["parts"][2]["name"] &&
                       (offset.dx > (_width - 110) && offset.dx < 370.0) &&
                       (offset.dy > 170 && offset.dy < 290.0)) {
+                    print(offset.dx);
+                    print(offset.dy);
                     position = offset;
                   } else {
                     _flag = 1;
@@ -463,7 +474,7 @@ class AnimatedFeedback extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return new Container(
       width: _width * 0.15,
-      height: _height * 0.04,
+      height: _height * 0.06,
       color: draggableColor.withOpacity(0.5),
       child: new Center(
         child: new Text(
@@ -501,7 +512,7 @@ class AnimatedDrag extends AnimatedWidget {
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Container(
         width: _width * 0.15,
-        height: _height * 0.04,
+        height: _height * 0.06,
         color: draggableColor,
         // margin: new EdgeInsets.only(
         //     left: animation.value ?? 0, right: animation.value ?? 0),
@@ -511,7 +522,7 @@ class AnimatedDrag extends AnimatedWidget {
             style: new TextStyle(
               color: Colors.white,
               decoration: TextDecoration.none,
-              fontSize: _width* 0.03,
+              fontSize: _width * 0.03,
             ),
           ),
         ),
