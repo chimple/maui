@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/casino_scroll_view.dart';
 import 'package:maui/components/casino_picker.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -104,19 +105,20 @@ class _CasinoState extends State<Casino> {
       }
       j++;
     }
-
+    print("Value of j = $j");
     return new Container(
-      height: 150.0,
-      width: 50.0,
+      // height: 100.0,
+      // width: 50.0,
+      padding: const EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
-            color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
+            color: Colors.black, fontSize: 10.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
             key: new ValueKey(j),
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
-            itemExtent: 35.0,
+            itemExtent: 50.0,
             backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
@@ -168,7 +170,7 @@ class _CasinoState extends State<Casino> {
                 child: new Text(scrollingLetterList[index],
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
+                        fontSize: 45.0,
                         letterSpacing: 5.0,
                         color: Colors.black)),
               );
@@ -198,41 +200,39 @@ class _CasinoState extends State<Casino> {
           });
     }
 
-   
-      return new Container(
-        color: new Color(0xfffff7ebcb),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            new Container(
-                height: 100.0,
-                width: 200.0,
-                color: new Color(0xffff52c5ce),
-                child: new Center(
-                    child: new Text(
-                  givenWord,
-                  key: new Key("fruit"),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50.0,
-                      letterSpacing: 5.0,
-                      color: Colors.white),
-                ))),
-            new Expanded(
+    return new Container(
+      color: new Color(0xfffff7ebcb),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          new Container(
+              height: 200.0,
+              width: 200.0,
+              color: new Color(0xffff52c5ce),
               child: new Center(
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: data.map((s) {
-                    return _buildScrollButton(s, scrollbuttonNumber++);
-                  }).toList(growable: false),
-                ),
-              ),
+                  child: new Text(
+                givenWord,
+                key: new Key("fruit"),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.clip,
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50.0,
+                    letterSpacing: 5.0,
+                    color: Colors.white),
+              ))),
+          new Expanded(
+            child: new ResponsiveGridView(
+              cols: data.length,
+              rows: 1,
+              maxAspectRatio: 0.7,
+              children: data.map((s) {
+                return _buildScrollButton(s, scrollbuttonNumber++);
+              }).toList(growable: false),
             ),
-          ],
-        ),
-      );
-    
+          ),
+        ],
+      ),
+    );
   }
 }
