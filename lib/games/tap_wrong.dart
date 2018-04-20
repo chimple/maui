@@ -48,7 +48,7 @@ Tuple2<List<String>,List<String>> data;
     _dispText='';
      setState(() => _isLoading = true);
 data=await fetchWordData(widget.gameCategoryId,3,2);
-
+   print('datat  ${data.item1}');
     data.item1.forEach((d) {
      
         word.add(d);
@@ -95,15 +95,15 @@ _dispText=_dispText+d;
           setState(() => _isLoading = false);
   }
 
-  // @override
-  // void didUpdateWidget(TapWrong oldWidget) {
-  //   print(oldWidget.iteration);
-  //   print(widget.iteration);
-  //   if (widget.iteration != oldWidget.iteration) {
-  //     _initBoard();
+  @override
+  void didUpdateWidget(TapWrong oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
       
-  //   }
-  // }
+    }
+  }
  
  Widget _buildItem(int index, String text, Statuses status) {
     return new MyButton(
@@ -175,8 +175,8 @@ print('disp text   $_dispText');
       return new FlashCard(
           text:_dispText,
           onChecked: () {
-            _initBoard();
-            widget.onEnd();
+         widget.onEnd();    // _initBoard();
+          
 
             setState(() {
               _isShowingFlashCard = false;
