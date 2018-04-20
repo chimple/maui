@@ -106,7 +106,7 @@ class _CasinoState extends State<Casino> {
     }
 
     return new Container(
-      height: 100.0,
+      height: 150.0,
       width: 50.0,
       child: new DefaultTextStyle(
         style: const TextStyle(
