@@ -22,6 +22,7 @@ import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/components/hoodie.dart';
 import 'package:maui/games/tap_home.dart';
+import 'package:maui/games/ClueGame.dart';
 
 enum GameMode { timed, iterations }
 enum GameDisplay { single, myHeadToHead, otherHeadToHead }
@@ -240,6 +241,15 @@ class _SingleGameState extends State<SingleGame> {
         break;
       case 'fill_in_the_blanks':
         return new FillInTheBlanks(
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameCategoryId);
+        break;
+         case 'clue_game':
+        return new ClueGame(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
