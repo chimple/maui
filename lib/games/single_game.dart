@@ -79,7 +79,16 @@ class _SingleGameState extends State<SingleGame> {
     print(media.size);
     print(widget.key.toString());
     var game = buildSingleGame(context, widget.gameDisplay.toString());
-    return new Scaffold(
+    return new Theme(
+        data: new ThemeData(
+            scaffoldBackgroundColor: Colors.lime, //bg
+            backgroundColor: Colors.amber, //behind progress bar
+//          highlightColor: Colors.indigo, //onClick button
+          accentColor: Colors.brown, //progress bar
+          buttonColor: Colors.pink
+        ),
+        child: new Scaffold(
+          resizeToAvoidBottomPadding: false,
         body: media.size.height > media.size.width || widget.gameDisplay != GameDisplay.single
             ? new Column(children: <Widget>[
                 new Row(
@@ -115,7 +124,7 @@ class _SingleGameState extends State<SingleGame> {
                                 : new ProgressCircle(progress: _progress)
                           ]),
                 new Expanded(child: game)
-              ]));
+              ])));
   }
 
   _onScore(int incrementScore) {
