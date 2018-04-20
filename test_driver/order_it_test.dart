@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+import 'common_function_test.dart';
 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
 
@@ -10,6 +11,9 @@ void main() {
     FlutterDriver driver;
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      commonSignIn(driver);
+      commonGoToGames(driver);
+      commonScrolling(driver, 'orderit');
     });
 
     // tearDownAll(() async {
@@ -17,62 +21,97 @@ void main() {
     //     await driver.close();
     // });
 
-    test('1signin', () async {
-
-      final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(milliseconds: 200));
-      final SerializableFinder user = find.byValueKey('user-Chimple'),  game = find.text('Game');
-      await driver.tap(user);
-      //wait time to click on game
-      await new Future<Null>.delayed(kWaitBetweenActions);
-      await driver.tap(game);
-      completer.complete();
-      //waits till task is completed
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
-
-    
-    test('2scrolling', () async {
-      final Completer<Null> completer = new Completer<Null>();
-      final SerializableFinder menuItem = find.byValueKey('orderit');
-      //bool scroll = true;
-      //scroll and click on game
-      // driver.waitFor(menuItem).then<Null>((Null value) async {
-      //  // scroll = false;
-        await new Future<Duration>.delayed(const Duration(seconds: 3));
-        await driver.tap(menuItem);
-        completer.complete();
-      // });
-      final SerializableFinder gs = find.text('Game_page'); //game page is the page key
-      //scroll till game is found
-      // while (scroll) {
-      //   await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
-      //   await new Future<Null>.delayed(kWaitBetweenActions);
-      // }
-      await completer.future;
-    }, timeout: const Timeout(const Duration(minutes: 1)));
-
     test('playing the game in single mode', () async {
+      
+      await new Future<Duration>.delayed(const Duration(seconds: 3));
+      
       final Completer<Null> completer = new Completer<Null>();
-      bool scroll = true;
-      final SerializableFinder tile = find.text('Upper Case Letters'), mode=find.byValueKey('single'), monday=find.text('Monday');
+      final SerializableFinder tile = find.text('Upper Case Letters'), mode = find.byValueKey('single');
+
+      //final SerializableFinder monday=find.text('Monday');
       await driver.tap(tile);
-       await new Future<Duration>.delayed(const Duration(seconds: 2));
+      await new Future<Duration>.delayed(const Duration(seconds: 3));
       await driver.tap(mode);
-      final SerializableFinder menuItem1 = find.byValueKey('orderableDataWidget${3}');
-      driver.waitFor( menuItem1).then<Null>((Null value) async{
-        scroll=false;
-        await new Future<Duration>.delayed(const Duration(seconds: 1));
-        await driver.tap(monday);
-        await new Future<Duration>.delayed(const Duration(seconds: 1));
-        completer.complete();
-        });
-       while (scroll) {
-        await driver.scroll(monday, 0.0, -570.0, const Duration(milliseconds: 500));
-        await new Future<Null>.delayed(kWaitBetweenActions);
-      }     
+      List<int> list = [0,1,2,3,4,5,6];
+      var i, j;
+      for (i = 0; i <=list.length-1; i++) {
+        bool scroll=true;
+        final SerializableFinder menuItem1 =
+        find.byValueKey('orderableDataWidget${list[i]}');
+        await driver.waitFor(menuItem1).then<Null>((Null value) async {
+          scroll=false;
+        // await driver.tap(menuItem1);
+        await new Future<Duration>.delayed(const Duration(seconds: 2));
+       
+      });
+      while (scroll) {
+        await driver.scroll(
+            menuItem1, 0.0, -200.0, const Duration(milliseconds: 500));
+        await new Future<Null>.delayed(const Duration(seconds: 2));
+    }
+      
+      }
+    //    var swap;
+
+    //   if (list[i] > list[i + 1])
+    //   {
+         
+    //   }
+    //     
+    //   bool scroll = true;
+
+    //   
+    //   await new Future<Duration>.delayed(const Duration(seconds: 3));
+    //   //  for(int i=0;i<=6;i++){
+
+    //   // int j=10;
+    //   print('click on monday');
+    //   final SerializableFinder menuItem1 =
+    //       find.byValueKey('orderableDataWidget${0}');
+    //   await driver.waitFor(menuItem1).then<Null>((Null value) async {
+    //     scroll = false;
+    //     await new Future<Duration>.delayed(const Duration(seconds: 2));
+    //     // await driver.tap(menuItem1);
+    //     await new Future<Duration>.delayed(const Duration(seconds: 2));
+    //     completer.complete();
+    //   });
+    //   while (scroll) {
+    //     await driver.scroll(
+    //         menuItem1, 0.0, -200.0, const Duration(milliseconds: 500));
+    //     await new Future<Null>.delayed(const Duration(seconds: 2));
+    //   }
+    //   // } j=j+10;
+    //   // }
+    //   await completer.future;
+    // }, timeout: const Timeout(const Duration(minutes: 1)));
+
+    // test(' single mode', () async {
+    //   final Completer<Null> completer = new Completer<Null>();
+    //   final SerializableFinder tuesday = find.text('Tuesday');
+    //   bool scroll = true;
+    //   //  final SerializableFinder  weeks=find.;
+    //   //  var lst= await driver.getText(weeks);
+
+    //   await new Future<Duration>.delayed(const Duration(seconds: 3));
+    //   //  for(int i=0;i<7;i++){
+    //   print('for loop');
+    //   final SerializableFinder menuItem1 =
+    //       find.byValueKey('orderableDataWidget${1}');
+    //   driver.waitFor(menuItem1).then<Null>((Null value) async {
+    //     scroll = false;
+    //     await new Future<Duration>.delayed(const Duration(seconds: 1));
+    //     await driver.tap(tuesday);
+    //     await new Future<Duration>.delayed(const Duration(seconds: 1));
+    //     completer.complete();
+    //   });
+    //   while (scroll) {
+    //     await driver.scroll(
+    //         menuItem1, 0.0, -200.0, const Duration(milliseconds: 500));
+    //     await new Future<Null>.delayed(kWaitBetweenActions);
+    //   }
+    //   //  }
+     completer.complete();
       await completer.future;
     }, timeout: const Timeout(const Duration(minutes: 1)));
-    });
-
+  });
 }

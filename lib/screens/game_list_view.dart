@@ -22,7 +22,7 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('orderit'),
               child: new Icon(Icons.cake, size: 64.0),
-              onPressed: () =>showModes(context, 'order_it')),
+              onPressed: () => showModes(context, 'order_it')),
           new RaisedButton(
               key: new Key('memory'),
               child: new Icon(Icons.camera, size: 64.0),
@@ -38,7 +38,7 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('drawing'),
               child: new Icon(Icons.format_paint, size: 64.0),
-              onPressed: () =>showModes(context, 'drawing')),
+              onPressed: () => showModes(context, 'drawing')),
           new RaisedButton(
               key: new Key('fill_in_the_blanks'),
               child: new Icon(Icons.call, size: 64.0),
@@ -54,7 +54,7 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('match_the_following'),
               child: new Icon(Icons.assistant_photo, size: 64.0),
-              onPressed: () =>showModes(context, 'match_the_following')),
+              onPressed: () => showModes(context, 'match_the_following')),
           new RaisedButton(
               key: new Key('bingo'),
               child: new Icon(Icons.add_to_queue, size: 64.0),
@@ -75,17 +75,19 @@ class GameListView extends StatelessWidget {
               key: new Key('fill_number'),
               child: new Icon(Icons.broken_image, size: 64.0),
               onPressed: () => showModes(context, 'fill_number')),
-        new RaisedButton(
+          new RaisedButton(
               key: new Key('quiz'),
               child: new Icon(Icons.chevron_left, size: 64.0),
               onPressed: () => showModes(context, 'quiz')),
-    
            new RaisedButton(
               key: new Key('connect_the_dots'),
               child: new Icon(Icons.wb_sunny, size: 64.0),
               onPressed: () => showModes(context, 'connect_dots')),
-              
-           new RaisedButton(
+          new RaisedButton(
+              key: new Key('tap_home'),
+              child: new Icon(Icons.timer, size: 64.0),
+              onPressed: () => showModes(context, 'tap_home')),
+          new RaisedButton(
               key: new Key('tap_wrong'),
               child: new Icon(Icons.bluetooth_audio, size: 64.0),
               onPressed: () => showModes(context, 'tap_wrong'))

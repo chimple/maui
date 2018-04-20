@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:async';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
@@ -25,7 +26,8 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
  Tuple3<String, String, List<String>> _allques;
   String questionText;
   String ans;
-  List<String> choices;
+  List<String> choice;
+  var choices;
   bool isCorrect;
 
   AnimationController _loginButtonController;
@@ -38,14 +40,19 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
 
   void _initBoard() async {
     setState(()=>_isLoading=true);
-    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 4);
+    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 3);
     print("this is my data  $_allques");
     print(_allques.item1);
     questionText = _allques.item1;
     print(_allques.item2);
     ans = _allques.item2;
     print(_allques.item3);
-    choices = _allques.item3;
+    choice = _allques.item3;
+    choice[3] = ans;
+    print("My Choices - $choice");
+    var choices = shuffle(choice);
+
+    print("My shuffled Choices - $choices");
     setState(()=>_isLoading=false);
     _loginButtonController = new AnimationController(
       duration: new Duration(milliseconds: 300),
@@ -76,9 +83,9 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     on TickerCanceled{}
   }
 
-  Future<Null> _playWrongAnimation() async {
+  Future<Null> _playWrongAnimation() async { 
     try {
-      await _loginButtonController.forward();
+      await _loginButtonController.reset();
     }
     on TickerCanceled{}
   }
