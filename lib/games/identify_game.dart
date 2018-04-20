@@ -74,10 +74,10 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new Stack(
       children: <Widget>[
         new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(_width*0.05, _height*0.75), decoded["parts"][0]["name"], Colors.red),
-        new DragBox(new Offset((_width*0.30), _height*0.75), decoded["parts"][3]["name"], Colors.orange),
-        new DragBox(new Offset((_width*0.55), _height*0.75), decoded["parts"][1]["name"], Colors.lightBlue),
-        new DragBox(new Offset((_width*0.80), _height*0.75), decoded["parts"][2]["name"], Colors.green),
+        new DragBox(new Offset(_width*0.05, _height*0.7), decoded["parts"][0]["name"], Colors.red),
+        new DragBox(new Offset((_width*0.55), _height*0.7), decoded["parts"][1]["name"], Colors.lightBlue),
+        new DragBox(new Offset((_width*0.80), _height*0.7), decoded["parts"][2]["name"], Colors.green),
+        new DragBox(new Offset((_width*0.30), _height*0.7), decoded["parts"][3]["name"], Colors.orange),
       ],
     );
     // return new Column(
@@ -243,7 +243,7 @@ class DropTargetState extends State<DropTarget> {
       //   child: image,
       // ),
       child: new Image(
-        image: new AssetImage('assets/Shapes.png'),
+        image: new AssetImage('assets/'+decoded["id"]),
         // fit: BoxFit.contain,
         height: _height*0.5,
         width: _width,
@@ -471,7 +471,7 @@ class AnimatedFeedback extends AnimatedWidget {
           style: new TextStyle(
             color: Colors.white,
             decoration: TextDecoration.none,
-            fontSize: _height * 0.02,
+            fontSize: _width * 0.03,
           ),
         ),
       ),
@@ -511,7 +511,7 @@ class AnimatedDrag extends AnimatedWidget {
             style: new TextStyle(
               color: Colors.white,
               decoration: TextDecoration.none,
-              fontSize: _height * 0.02,
+              fontSize: _width* 0.03,
             ),
           ),
         ),
