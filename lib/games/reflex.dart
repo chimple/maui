@@ -177,7 +177,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             },
             child: new RaisedButton(
                 onPressed: () => widget.onPress(),
-                color: Colors.teal,
                 shape: new RoundedRectangleBorder(
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
