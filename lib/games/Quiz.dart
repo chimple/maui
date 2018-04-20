@@ -83,7 +83,12 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     on TickerCanceled{}
   }
 
-  Future<Null> _playWrongAnimation() async { }
+  Future<Null> _playWrongAnimation() async { 
+    try {
+      await _loginButtonController.reset();
+    }
+    on TickerCanceled{}
+  }
   
     @override
   Widget build(BuildContext context) {
