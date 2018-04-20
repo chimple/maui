@@ -65,18 +65,40 @@ class WordgridState extends State<Wordgrid> {
     print('daataa ${data.item1} ');
     print('daataa2  ${data.item2} ');
     rng.nextInt(2);
-    // for (int i = 1; i <= _size * _size; i++) {
-    //   _indexarray.add(i - 1);
-    //   if (i % _size == 0) {
-    //     i += _size;
-    //     while (j<_size) {
-    //       _indexarray.add(i - 1);
-    //       i--;
-    //       j++;
-    //     }
-    //     i += _size;
-    //   }
-    // }
+    for (int i = 1; i <= _size * _size; i++) {
+      _indexarray.add(i);
+      if (i % _size == 0) {
+      //  print('hi $i');
+        i += _size;
+        while (j<_size) {
+          _indexarray.add(i);
+          i--;
+          j++;
+        }
+        i += _size;
+        j=0;
+      }
+    }
+    _indexarray.length=0;
+     for (int i = 1,j=0; i <= _size*_size||i==_size; i+=_size) {
+      _indexarray.add(i);
+      j++;
+      if (j==_size) {
+        print('hi $i');
+        i++;
+        j=0;
+        while (j<_size) {
+          _indexarray.add(i);
+          i-=_size;
+          j++;
+          if(i==_size){
+            break;
+          }
+        }
+        i ++;
+        j=0;
+      }
+    }
     print('arrr $_indexarray');
     _shuffledLetters.addAll(_letters);
     _shuffledLetters.addAll(_others);
