@@ -21,6 +21,7 @@ class _HoodieState extends State<Hoodie> {
   void initState() {
     super.initState();
     print("Hoodie.initState");
+    _ready = false;
     prepareAnimation();
     _prevScore = widget.score;
   }
@@ -36,10 +37,16 @@ class _HoodieState extends State<Hoodie> {
   Widget build(BuildContext context) {
     bool happy = _prevScore <= widget.score;
     _prevScore = widget.score;
-    return new IndexedStack(index: happy ? 0 : 1, children: <Widget>[
-      new FluttieAnimation(_happyController),
-      new FluttieAnimation(_sadController)
-    ]);
+    return _ready
+        ? new IndexedStack(index: happy ? 0 : 1, children: <Widget>[
+            new FluttieAnimation(_happyController),
+            new FluttieAnimation(_sadController)
+          ])
+        : new SizedBox(
+            width: 20.0,
+            height: 20.0,
+            child: new CircularProgressIndicator(),
+          );
   }
 
   @override
