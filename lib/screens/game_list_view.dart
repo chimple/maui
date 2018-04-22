@@ -90,7 +90,12 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('tap_wrong'),
               child: new Icon(Icons.bluetooth_audio, size: 64.0),
-              onPressed: () => showModes(context, 'tap_wrong'))
+              onPressed: () => showModes(context, 'tap_wrong')),
+          new RaisedButton(
+              key: new Key('wordgrid'),
+              child: new Icon(Icons.android, size: 64.0),
+              onPressed: () => showModes(context, 'wordgrid'))
+
         ]);
   }
 
