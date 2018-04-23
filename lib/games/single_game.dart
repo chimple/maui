@@ -193,6 +193,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'order_it':
         return new Tuple2(
             new OrderIt(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -373,6 +374,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'memory':
         return new Tuple2(
             new Memory(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
