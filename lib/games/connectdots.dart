@@ -34,26 +34,24 @@ class ConnectdotsState extends State<Connectdots> {
 
   var  i=0;
   
-  var count=0;
- final List<int> _numserial = [
-  15,16,17,18,19,20,21,22
-];
-final List<int> _numothers =[32,37,1,43];
+  //var count=0;
 
-  final int _size = 3;
-  static int size=3;
+
+  final int _size = 4;
+  static int size=4;
    var j=size;
    var n=size;
   var m=size;
    var k=0;
    var count1=0;
-   var count2=0;
+   //var count2=0;
    var count3=0;
    var count6=0;
    var count4=0;
-  var count5=0;
+  //var count5=0;
   var count0=0;
   var r;
+  var rand;
  
  List<String> numbers=[];
 
@@ -83,15 +81,28 @@ var z=0;
 
 
     setState(() => _isLoading = true);
-      consecutive= await fetchConsecutiveData(widget.gameCategoryId, 5,4);
+      consecutive= await fetchConsecutiveData(widget.gameCategoryId, 7,9);
+print("hello this is the data od gamecategory ${widget.gameCategoryId}");
        
     print("this data is coming from fetchng ${consecutive.item1}");
    
  consecutive.item1.forEach((e) { _copyAns.add(e);});
+
+
+ var rnge = new Random();
+  for (var i = 0; i <1; i++) {
+      rand= rnge.nextInt(2);
+    
+  }
+     if(rand==1){
          consecutive.item1.forEach((e){ numbers.add(e);});
          consecutive.item2.forEach((v){numbers.add(v);});
 
-      
+     }
+     else{
+       consecutive.item2.forEach((e){ numbers.add(e);});
+         consecutive.item1.forEach((v){numbers.add(v);});
+     }
       print("suffle data is in my numbers is $numbers");
       
       print("sorted numbers are $numbers ");
@@ -112,7 +123,9 @@ _ShakeCells=numbers.map((a)=>ShakeCell.InActive).toList(growable: false);
     {
       for(var j=0;j<size; j++)
       {
-       count3= count2+j+1+count1;
+        count3= j+1+count1;
+
+     //  count3= count2+j+1+count1;
       print("print something in forloop");
    _shuffledLetters.sublist(count1,count3).forEach((e){todnumbers[i][j]=e;});
     
@@ -164,7 +177,8 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
       {
       for(var j=0;j<size; j++)
       {
-       count6= count2+j+1+count4;
+        count6= j+1+count4;
+      // count6= count2+j+1+count4;
       print("print something in forloop");
    _shuffledLetters.sublist(count4,count6).forEach((e){todcolnumbers[j][i]=e;});
     
@@ -258,11 +272,11 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
                   k=0;
                           count0=0;         
     count1=0;
-    count2=0;
+   
     count3=0;
     count6=0;
     count4=0;
-   count5=0;
+   //count5=0;
    _todnumber.removeRange(0, _todnumber.length);
                 _letters.removeRange(0, _letters.length);
                 
@@ -304,12 +318,9 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
     print("MyTableState.build");
     print("MyTableState.build");
 
-
-
-    List<TableRow> rows = new List<TableRow>();
     var j = 0;
    
-      return new ResponsiveGridView(
+     return new ResponsiveGridView(
       rows: _size,
       cols: _size,
     maxAspectRatio: 1.0,
@@ -391,8 +402,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
 
-
- 
     int _color =0xFF5F9EA0;
 
 
