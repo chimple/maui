@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:maui/components/hoodie.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
+import 'package:maui/games/ClueGame.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
@@ -281,6 +282,21 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_in_the_blanks':
         return new Tuple2(
             new FillInTheBlanks(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'clue_game':
+        return new Tuple2(
+            new ClueGame(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
