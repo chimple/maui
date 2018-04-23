@@ -227,7 +227,7 @@ class AnswerButton extends StatelessWidget {
         child: new InkWell(
           onTap: () => _onTap(),
           child: new Container( 
-                height: ht>wd? ht * 0.3 : ht * 0.29,
+                height: ht>wd? ht * 0.35 : ht * 0.43,
                 width: wd * 0.6,             
                 decoration: new BoxDecoration(
                   borderRadius: new BorderRadius.circular(25.0),
