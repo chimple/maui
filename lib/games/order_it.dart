@@ -108,7 +108,7 @@ class OrderItState extends State<OrderIt> {
       );
     });
   }
-  Widget itemBuilder({Orderable<String> data, Size itemSize}) {
+  Widget itemBuilder({Orderable<dynamic> data, Size itemSize}) {
     print("Rajesh Patil dataIndex: ${data.dataIndex}");
     print("Rajesh Patil selected: ${data.selected}");
     print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
