@@ -110,7 +110,8 @@ class CrosswordState extends State<Crossword> {
         _rightwords.add('');
       }
     }
-    code= rng.nextInt(870)+rng.nextInt(1120);
+    code= rng.nextInt(499)+rng.nextInt(500);
+    print('code $code');
     _flag.length = _rows*_cols+ _rightcols+1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
@@ -128,6 +129,7 @@ class CrosswordState extends State<Crossword> {
       }
     if (text != null || text=='') {
       return new MyButton(
+          key: new ValueKey<int>(index),
           index: index,
           text: text,
           color1: 1,
@@ -184,6 +186,7 @@ class CrosswordState extends State<Crossword> {
           keys: keys++);
     } else {
       return new MyButton(
+          key: new ValueKey<int>(index),
           index: index,
           text: '',
           color1: 0,
@@ -208,31 +211,40 @@ class CrosswordState extends State<Crossword> {
     }
     keys = 0;
     var j = 0, h = 0, k = 100;
+    var _finalcols=_rightlen>6?(_rightcols/2).ceil():_rightcols;
+    var rwidth,rheight;
+    return new LayoutBuilder(builder: (context, constraints){
+      rwidth=constraints.maxWidth;
+      rheight=constraints.maxHeight;
+    //  print(constraints.maxHeight);
+      print('nikk width/heidht ${constraints.maxWidth}');
     return new Container(
-  //   padding:new EdgeInsets.symmetric(vertical:media.size.height*.05,horizontal:media.size.width*.05),
+     padding: media.orientation==Orientation.portrait?
+     new EdgeInsets.symmetric(vertical:rheight*.04,horizontal:rwidth*.12)
+     :new EdgeInsets.symmetric(horizontal:rwidth*.08),
         color: Colors.purple[300],
-        child: media.orientation==Orientation.portrait?new Column(//portrait
+        child: media.orientation==Orientation.portrait?new Column(
+          // portrait mode
           children: <Widget>[
             new Flexible(
               flex: 4,
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
-                maxAspectRatio: 1.2,
+                maxAspectRatio: rwidth/(rheight*0.65),
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
               ),
             ),
-            new Padding(padding: new EdgeInsets.all(media.size.height*.02)),            
-            new Flexible(
-           //  flex:1,
-              fit: FlexFit.loose,
+            new FractionallySizedBox(
+              // flex:1,
+                  widthFactor: _cols>_finalcols?0.75:null,
+                  alignment: Alignment.center,
               child: new ResponsiveGridView(
                 rows: _rightlen>6?2:1,
-                cols: _rightlen>6?(_rightcols/2).ceil():_rightcols,
-                maxAspectRatio: 1.7,
-                padding: const EdgeInsets.all(3.0),
+                cols: _finalcols,
+                maxAspectRatio:rwidth/(rheight*0.58),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
@@ -240,40 +252,43 @@ class CrosswordState extends State<Crossword> {
             ),
           ],
         ):new Row(
+          // landsape mode
           children: <Widget>[
             new Flexible(
               flex: 4,
               child: new ResponsiveGridView(
                 rows: _rows,
                 cols: _cols,
-                maxAspectRatio: 1.6,
+                maxAspectRatio: rwidth/(rheight*.9),
                 children: _letters
                     .map((e) => _buildItem(j++, e, _flag[h++]))
                     .toList(growable: false),
               ),
             ),
-             new Padding(padding: new EdgeInsets.all(media.size.width*.02)),           
+            new Padding(padding:new EdgeInsets.all(rwidth*.03)),
              new Flexible(
-            //  flex: 1,
-              fit: FlexFit.loose,
+               flex:1,
+              child:new FractionallySizedBox(
+                  heightFactor: _rightlen<6?0.5:null,
+                  alignment: Alignment.center,           
               child: new ResponsiveGridView(
-                rows: _rightlen>6?(_rightcols/2).ceil():_rightcols,
+                rows: _finalcols,
                 cols: _rightlen>6?2:1, 
-                maxAspectRatio: 1.8,
-                padding: const EdgeInsets.all(3.0), 
+                maxAspectRatio: rwidth/(rheight*0.68),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[h++]))
                     .toList(growable: false),
               ),
-            ),
+            ),)
           ],
         ));
   }
+    );}
 }
-
 class MyButton extends StatefulWidget {
   MyButton(
-      {this.index,
+      { Key key,
+      this.index,
       this.text,
       this.color1,
       this.flag,
@@ -281,7 +296,7 @@ class MyButton extends StatefulWidget {
       this.code,
       this.isRotated,
       this.img,
-      this.keys});
+      this.keys}): super(key: key);
   final index;
   final int color1;
   final int flag;
@@ -327,7 +342,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controller1.forward();
   }
-
+@override
+  void dispose() {
+    controller1.dispose();
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
       MediaQueryData media = MediaQuery.of(context);
@@ -410,8 +430,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             )),
       //  childWhenDragging: new Container(),
         feedback:new Container(
-          height: media.orientation==Orientation.portrait?media.size.height*.06:media.size.height*.13,
-          width: media.orientation==Orientation.portrait?media.size.width*.17:media.size.width*.06,
+          height: media.orientation==Orientation.portrait?media.size.height*.05:media.size.height*.1,
+          width: media.orientation==Orientation.portrait?media.size.width*.14:media.size.width*.08,
           decoration: new BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
