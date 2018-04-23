@@ -15,6 +15,7 @@ group('login', ()
       commonSignIn(driver);
       commonGoToGames(driver);
       commonScrolling(driver, 'tables');
+      await new Future<Duration>.delayed(const Duration(seconds: 2));
 });
 
 // tearDownAll(() async 
@@ -25,31 +26,37 @@ group('login', ()
 
 test('scrolling in game category list', () async 
 {
-    final Completer<Null> completer = new Completer<Null>();
-    await new Future<Duration>.delayed(const Duration(seconds: 2));
-    bool scroll = true;
     await new Future<Duration>.delayed(const Duration(seconds: 3));
-    final SerializableFinder tile = find.text('9 Tables');
+    final Completer<Null> completer = new Completer<Null>();
+    await new Future<Duration>.delayed(const Duration(seconds: 3));
+    bool scroll = true;
+    //await new Future<Duration>.delayed(const Duration(seconds: 3));
+    final SerializableFinder tile = find.text('1 Tables');
     driver.waitFor(tile).then<Null>((Null value) async 
     {
     scroll = false;
      await new Future<Duration>.delayed(const Duration(seconds: 1));
      await driver.tap(tile);
-     await new Future<Duration>.delayed(const Duration(seconds: 1));
+     //await new Future<Duration>.delayed(const Duration(seconds: 2));
      completer.complete();
     });
+    //await new Future<Duration>.delayed(const Duration(seconds: 1));
     final SerializableFinder cg = find.byValueKey('game-category-list');
-    await new Future<Duration>.delayed(const Duration(seconds: 3));
+    await new Future<Duration>.delayed(const Duration(seconds: 2));
     while (scroll) 
     {
-        await driver.scroll(cg, 0.0, -350.0, const Duration(milliseconds: 500));
+        await new Future<Duration>.delayed(const Duration(seconds: 1));
+        await driver.scroll(cg, 0.0, -300.0, const Duration(milliseconds: 500));
         await new Future<Null>.delayed(kWaitBetweenActions);
     }
       await completer.future;
+     // await new Future<Duration>.delayed(const Duration(seconds: 3));
 }, timeout: const Timeout(const Duration(minutes: 1)));
+
 
 test('click on single', () async 
 {
+    await new Future<Duration>.delayed(const Duration(seconds: 3));
     final Completer<Null> completer = new Completer<Null>();
     //final SerializableFinder tile = find.text('1 Tables');
     //await driver.tap(tile);
@@ -64,7 +71,7 @@ test('playing the game', () async
       final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder question=find.byValueKey('question');
       await new Future<Null>.delayed(kWaitBetweenActions);
-      for(int i=0;i<10;i++) {
+      for(int i=0;i<20;i++) {
       var text = await driver.getText(question);
       print(text);
       var array = text.split('*');
@@ -130,10 +137,10 @@ test('playing the game', () async
           await driver.tap(tapp1);
    
        } 
+       await new Future<Duration>.delayed(const Duration(milliseconds: 500));
+
       
     }
- final SerializableFinder q=find.byValueKey('submit');
- await driver.tap(q);   
     completer.complete();
     await completer.future;
 }, timeout: const Timeout(const Duration(minutes: 1)));
