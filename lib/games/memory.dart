@@ -49,6 +49,7 @@ class MemoryState extends State<Memory> {
   @override
   void initState() {
     super.initState();
+    print('MemoryState:initState');
     _initBoard();
   }
 
@@ -258,6 +259,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       }
     });
     shakeController.forward();
+  }
+
+   @override
+  void dispose() {
+    shakeController.dispose();
+    controller.dispose();
+    super.dispose();
   }
 
   @override
