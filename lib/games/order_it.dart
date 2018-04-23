@@ -68,6 +68,9 @@ class OrderItState extends State<OrderIt> {
         child: new CircularProgressIndicator(),
       );
     }
+    
+   var ht = (_letters.length/2)*0.01;
+
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
     print("Rajesh MediaQuery: ${gSize}");
@@ -76,50 +79,56 @@ class OrderItState extends State<OrderIt> {
           "Rajesh patil Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return new Container(
         child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          //  mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //  new Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               //  ]),
               preview,
-              new Expanded(
-                child: new OrderableStack<String>(
+             // new Expanded(
+                 new OrderableStack<String>(
                     direction: OrderItDirection.Vertical,
                     isRotated: widget.isRotated,
                     items: _letters,
-                    //itemSize: new Size(constraints.maxWidth*0.4,constraints.maxHeight*0.01),
-                    itemSize: constraints.maxHeight > 630.0 || constraints.maxWidth > 360 ? constraints.maxWidth > 730.0         
-                          ? new Size(constraints.maxWidth * 0.4,
-                              constraints.maxHeight * 0.04)
-                          : new Size(constraints.maxWidth * 0.4,
-                              constraints.maxHeight * 0.04)
-                        : new Size(constraints.maxWidth * 0.4,
-                            constraints.maxHeight * 0.001), 
+                   // itemSize: new Size(constraints.maxWidth*0.4,constraints.maxHeight*ht),
+                   // itemSize: constraints.maxHeight > 630.0 || constraints.maxWidth > 360 ? constraints.maxWidth > 730.0         
+                        //  ? new Size(constraints.maxWidth * 0.4,
+                           //   constraints.maxHeight *ht)
+                         // : new Size(constraints.maxWidth * 0.4,
+                         //     constraints.maxHeight*ht)
+                         // : new Size(constraints.maxWidth * 0.4,
+                         //     constraints.maxHeight *ht), 
+                    itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
+                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht) 
+                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht*0.7),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
                         orderNotifier.value = orderedList.toString()),
-              )
+             // )
             ]),
       );
     });
   }
-
-  Widget itemBuilder({Orderable<String> data, Size itemSize}) {
+  Widget itemBuilder({Orderable<dynamic> data, Size itemSize}) {
     print("Rajesh Patil dataIndex: ${data.dataIndex}");
     print("Rajesh Patil selected: ${data.selected}");
     print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
     print("Rajesh Patil value: ${data.value}");
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
 
+    //if(cnt == 0)
+   // {
     if (orderNotifier.value.compareTo(_letters.toString()) == 0) {
       print("Game Over!!: ${cnt++}");
-      //new Future.delayed(const Duration(milliseconds: 100), () {
+     // new Future.delayed(const Duration(milliseconds: 100), () {
       // setState(() {
       // widget.onScore(7);
-      // widget.onProgress(1.0);
+      // widget.onProgress(1.0);   
       // widget.onEnd();
+      // print("Game Over Called afyter widget.onendddddddddddddddddddddddddd");
       // });
       // });
     }
+    //}
 
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
