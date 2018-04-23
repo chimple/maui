@@ -292,7 +292,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         widget.onScore(1);
         widget.onProgress(1.0);
         _scoreCount = 1;
-        new Future.delayed(const Duration(milliseconds: 1000), () {
+        new Future.delayed(const Duration(milliseconds: 2000), () {
           widget.onEnd();
         });
       }
@@ -379,7 +379,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 print(' at end _i value ${_i}');
                 print(' at end j value ${_j1}');
               }
-              if ((cf[calCount(_result) - 1] ==1 && _options=='singleDigit') || (cf[calCount(_result)-1]==1)&& _outputList.length!=calCount(_result)) {
+              if ((cf[calCount(_result) - 1] ==1 && _options=='singleDigit')) {
                 print("coming to check final carry is there or not...");
                 setState(() {
                   print('printing _i value in _carryFlag function...$_i');
@@ -389,7 +389,26 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   _flag[_i] = true;
                 });
               }
-
+              if (cf[calCount(_result)-1]==1 && _options=='tripleDigitWithoutCarry' && _outputList.length==calCount(_result)) {
+                print("coming to check final carry is there or not for double and triple digit...");
+                setState(() {
+                  print('printing _i value in _carryFlag function...$_i');
+                  _outputList[_i] = '1';
+                  print('printing output list...$_outputList');
+                  _preValue = _outputList[_i] + _preValue;
+                  _flag[_i] = true;
+                });
+              }
+              if (cf[calCount(_result)-1]==1 && _options=='doubleDigitWithoutCarry' && (_num1digit2+_num2digit2+1)>=10) {
+                print("coming to check final carry is there or not for double and triple digit...");
+                setState(() {
+                  print('printing _i value in _carryFlag function...$_i');
+                  _outputList[_i] = '1';
+                  print('printing output list...$_outputList');
+                  _preValue = _outputList[_i] + _preValue;
+                  _flag[_i] = true;
+                });
+              }
               _final(text, _preValue);
               break;
             case '-':
@@ -486,6 +505,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   new Future.delayed(const Duration(milliseconds: 900), () {
                     setState(() {
                       _shake[_i] = true;
+                      _outputList[_i]='';
                     });
                   });
                 }
@@ -631,13 +651,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
-                          child: displayShake(constraints.maxHeight, _outputList[1], _flag[1],
+                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,):displayShake(constraints.maxHeight, _outputList[1], _flag[1],
                               _shake[1], new Key('shake')),
                         ),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
-                            child: new Container(
+                            child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): new Container(
                                 child: displayShake(constraints.maxHeight, _outputList[0],
                                     _flag[0], _shake[0], new Key('shake1')))),
                       ]),
@@ -837,7 +857,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[2], _flag[2],
+                          child:_flag[2]==true?new _BlinkAnimation(text:_outputList[2],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[2], _flag[2],
                               true, new Key('')),
                         ),
                       ),
@@ -845,7 +865,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[1], _flag[1],
+                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[1], _flag[1],
                               _shake[1], new Key('shake2')),
                         ),
                       ),
@@ -853,7 +873,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[0], _flag[0],
+                          child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[0], _flag[0],
                               _shake[0], new Key('shake1')),
                         ),
                       ),
@@ -1147,7 +1167,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[3], _flag[3],
+                          child:_flag[3]==true?new _BlinkAnimation(text:_outputList[3],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[3], _flag[3],
                               _shake[3], new Key('flag2')),
                         ),
                       ),
@@ -1155,7 +1175,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[2], _flag[2],
+                          child:_flag[2]==true?new _BlinkAnimation(text:_outputList[2],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[2], _flag[2],
                               _shake[2], new Key('flag2')),
                         ),
                       ),
@@ -1163,7 +1183,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[1], _flag[1],
+                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[1], _flag[1],
                               _shake[1], new Key('flag1')),
                         ),
                       ),
@@ -1171,7 +1191,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         padding:
                             new EdgeInsets.all(constraints.maxHeight * 0.005),
                         child: new Container(
-                          child: displayShake(constraints.maxHeight, _outputList[0], _flag[0],
+                          child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[0], _flag[0],
                               _shake[0], new Key('flag1')),
                         ),
                       ),
@@ -1275,16 +1295,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-class BlinkAnimation extends StatefulWidget {
-  BlinkAnimation({Key key, this.text, this.height}) : super(key: key);
+class _BlinkAnimation extends StatefulWidget {
+  _BlinkAnimation({Key key, this.text, this.height}) : super(key: key);
   String text;
   double height;
   @override
   _BlinkAnimationState createState() => new _BlinkAnimationState();
 }
 
-class _BlinkAnimationState extends State<BlinkAnimation>
-    with TickerProviderStateMixin {
+class _BlinkAnimationState extends State<_BlinkAnimation> with TickerProviderStateMixin {
   AnimationController _opacityController;
   Animation<double> _opacity;
   bool _showHint = false;
@@ -1297,7 +1316,7 @@ class _BlinkAnimationState extends State<BlinkAnimation>
     _text = widget.text;
     _height = widget.height;
     _opacityController = new AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 600));
+        vsync: this, duration: const Duration(milliseconds: 400));
     _opacity =
         new CurvedAnimation(parent: _opacityController, curve: Curves.easeInOut)
           ..addStatusListener((status) {
@@ -1326,9 +1345,9 @@ class _BlinkAnimationState extends State<BlinkAnimation>
             ? new FadeTransition(
                 opacity: _opacity,
                 child: new Container(
-                  height: _height * 0.09,
-                  width: _height * 0.16,
-                  color: Colors.blue,
+                  height: _height * 0.1,
+                  width: _height * 0.5,
+                  color: Colors.green,
                   child: new Center(
                     child: new Text(
                       _text,
