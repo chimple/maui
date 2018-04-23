@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/drawing.dart';
 import 'dart:ui' as ui;
 
+
 class Drawing extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -19,6 +20,7 @@ class Drawing extends StatefulWidget {
 class DrawScreen extends State<Drawing> {
   DrawPadController _padController;
   void initState() {
+    print({"init State - in drawScreen": "line 22"});
     _padController = new DrawPadController();
   }
 
@@ -27,18 +29,17 @@ class DrawScreen extends State<Drawing> {
     Orientation orientation = MediaQuery
         .of(context)
         .orientation;
-
-
-//    MediaQueryData media = MediaQuery.of(context);
+    MediaQueryData media = MediaQuery.of(context);
 //    print({"this is mediaaa1:": media.size});
 //    final height = media.size.height;
 //    final width = media.size.width;
     var assetsImage = new AssetImage('assets/apple.png');
 
-    if (orientation == Orientation.portrait) {
+//    if (orientation == Orientation.portrait) {
+    if(media.size.height > media.size.width){
     return new LayoutBuilder(builder: (context, constraints)
     {
-      print({"this is constraints":constraints});
+      print({"this is constraints":"potrait"});
         return new Container(
             width: constraints.maxWidth, height: constraints.maxHeight,
             child: new Column(
@@ -219,10 +220,9 @@ class DrawScreen extends State<Drawing> {
         );
       }
     );
-      }
-
-
+    }
     else {
+      print({'landscape mode ....': ""});
       return new LayoutBuilder(builder: (context, constraints)
       {
         print({"this is constraints": constraints});

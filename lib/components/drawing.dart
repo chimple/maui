@@ -6,30 +6,22 @@ import 'dart:ui' as ui;
 import 'package:json_annotation/json_annotation.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
+import '../components/SecondScreen.dart';
 
 class DrawPadController {
   _DrawPadDelegate _delegate;
 
   void clear() => _delegate?.clear();
-
   send() => _delegate?.send();
-
   multiColor(colorValue) => _delegate?.multiColor(colorValue);
-
   multiWidth(widthValue) => _delegate?.multiWidth(widthValue);
-
   undo() => _delegate?.undo();
 }
-
 abstract class _DrawPadDelegate {
   void clear();
-
   send();
-
   multiColor(colorValue);
-
   multiWidth(widthValue);
-
   undo();
 }
 
@@ -81,54 +73,70 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
-    print({"this is mediaaa2:": media.size});
+    return new LayoutBuilder(builder: (context, constraints) {
+      print({"this is constraints of drawing component": constraints});
+      MediaQueryData media = MediaQuery.of(context);
+      print({"this is mediaaa2:": media.size});
 
-    _currentPainter =
-    new DrawPainting(_drawLineProperty, media.size); //, color, width);
-    return new Container(
-      margin: new EdgeInsets.all(5.0),
-      decoration: new BoxDecoration(
-        color: const Color(0xFFF1F8E9),
-        boxShadow: [new BoxShadow(
-          color: Colors.green,
-          blurRadius: 5.0,
-        ),
-        ],
-        border: new Border.all(
-          color: Colors.black,
-          width: 2.0,
-        ),
-      ),
-      child: new ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: new GestureDetector(
-          onPanUpdate: (DragUpdateDetails details) {
-            setState(() {
-              RenderBox referenceBox = context.findRenderObject();
-              Offset localPosition = referenceBox.globalToLocal(
-                  details.globalPosition);
+      _currentPainter =
+      new DrawPainting(_drawLineProperty, media.size); //, color, width);
+      return new Container(
+        height: constraints.maxHeight, width: constraints.maxWidth,
+          margin: new EdgeInsets.all(5.0),
+          child: new Card(
+            child: new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new GestureDetector(
+                  onPanUpdate: (DragUpdateDetails details) {
+                    setState(() {
+                      RenderBox referenceBox = context.findRenderObject();
+                      Offset localPosition = referenceBox.globalToLocal(
+                          details.globalPosition);
 
-              var x = localPosition.dx / media.size.width;
-              print({"x value in percentage is : ": x});
-              Position convertedIntoPercentage = new Position(
-                  x, localPosition.dy / media.size.height);
-              print({"convert into percentage is : ": convertedIntoPercentage});
-              _drawLineProperty = new List.from(_drawLineProperty)
-                ..add(new DrawLineProperty(
-                    convertedIntoPercentage, color, width));
-            });
-          },
-          onPanEnd: (DragEndDetails details) {
-            _drawLineProperty.add(
-                new DrawLineProperty(null, color, width));
-          },
-          child: new CustomPaint(
-            painter: _currentPainter,
+                      Position convertedIntoPercentage = new Position(
+                          localPosition.dx / media.size.width, localPosition.dy / media.size.height);
+                      print({"convert into percentage is : ": convertedIntoPercentage});
 
-          ),
-        ),
-      ),
+                      double tolerence = 0.03;
+
+                      if(_drawLineProperty.length < 1){
+                        _drawLineProperty = new List.from(_drawLineProperty)
+                          ..add(new DrawLineProperty(
+                              convertedIntoPercentage, color, width));
+                      }else{
+                        if(_drawLineProperty.last._position != null){
+                          if(_drawLineProperty.last._position.x+tolerence >  convertedIntoPercentage.x && convertedIntoPercentage.x >  _drawLineProperty.last._position.x-tolerence
+                              && _drawLineProperty.last._position.y+tolerence >  convertedIntoPercentage.y && convertedIntoPercentage.y >  _drawLineProperty.last._position.y-tolerence){
+                            _drawLineProperty = new List.from(_drawLineProperty)
+                              ..add(new DrawLineProperty(
+                                  convertedIntoPercentage, color, width));
+                            print({"the value is added ...." : "point is tolerable"});
+                          }
+                        }else{
+                          _drawLineProperty = new List.from(_drawLineProperty)
+                            ..add(new DrawLineProperty(
+                                convertedIntoPercentage, color, width));
+                        }
+                      }
+                    });
+                  },
+                  onPanEnd: (DragEndDetails details) {
+                    _drawLineProperty.add(
+                        new DrawLineProperty(null, color, width));
+                  },
+                  child: new RepaintBoundary(
+                    child: new CustomPaint(
+                      painter: _currentPainter,
+                      isComplex: true,
+                      willChange: false,
+
+                    ),
+                  )
+              ),
+            ),
+          )
+      );
+    }
     );
   }
 
@@ -147,7 +155,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
         } else {
           _drawLineProperty.removeLast();
           var point = getAllPoints(_drawLineProperty);
-          print("this is Undo methode");
+          print("this is Undo");
           break;
         }
       }
@@ -200,6 +208,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
     var decode = json.decode(drawJson);
     print({"the object is : ": decode});
+    var _output = decode;
+    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SecondScreen(_output)));
 
 
 
@@ -214,7 +224,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void multiColor(colorValue) {
-    // print({"I am getting final color here  " : colorValue});
+     print({"I am getting final color here  " : colorValue});
     setState(() {
       color = new Color(colorValue);
 //      width = 20.0;
@@ -253,7 +263,6 @@ class DrawPainting extends CustomPainter {
   void paint(Canvas canvas, Size size) {
 //    print("this is paint ,methodeeee");
 //    print({"the drawLine points are : " : getAllPoints(drawLineProperty)});
-
 
     Paint paint = new Paint()
       ..strokeCap = StrokeCap.round;
@@ -300,10 +309,11 @@ class DrawPainting extends CustomPainter {
 //    canvas.drawPoints(PointMode.points,position , paint);
 
   }
-
-  bool shouldRepaint(DrawPainting oldDelegate) {
+  @override
+  bool shouldRepaint(DrawPainting oldDelegate){
     return true;
   }
+
 }
 
 
