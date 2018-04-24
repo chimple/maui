@@ -283,6 +283,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_in_the_blanks':
         return new Tuple2(
             new FillInTheBlanks(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -290,10 +291,10 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: new Color(0xffff8edda3), //bg
+                backgroundColor: new Color(0xffffeaca8b), //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                ));
         break;
       case 'clue_game':
         return new Tuple2(
@@ -308,7 +309,7 @@ class _SingleGameState extends State<SingleGame> {
                 scaffoldBackgroundColor: Colors.lime, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: new Color(0xffffefce97)));
         break;
       case 'casino':
         return new Tuple2(
