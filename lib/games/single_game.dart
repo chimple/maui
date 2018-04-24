@@ -411,9 +411,9 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
+                scaffoldBackgroundColor: new Color(0xFFf7ebcb), //bg
                 backgroundColor: Colors.amber, //behind progress bar
-                accentColor: Colors.brown, //progress bar
+                accentColor: Colors.black, //progress bar
                 buttonColor: Colors.pink));
         break;
       case 'quiz':
@@ -441,10 +441,10 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                scaffoldBackgroundColor:new Color(0xFFf5c5b7), //bg
+                backgroundColor: new Color(0xFF951664), //behind progress bar
+                accentColor: new Color(0xFFfff176), //progress bar
+                buttonColor: new Color(0xFFed2d85)));
         break;
       case 'tap_home':
         return new Tuple2(
