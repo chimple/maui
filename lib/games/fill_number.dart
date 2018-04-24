@@ -46,6 +46,7 @@ class MyFillnumberState extends State<Fillnumber> {
       count = 0,
       Ansr = 0,
       x = 0,
+      y,
       z=3,
       count1 = 0;
 
@@ -122,6 +123,7 @@ class MyFillnumberState extends State<Fillnumber> {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+         index: index,
         status: status,
         bgstatus: bgstatus,
         onPress: () {
@@ -131,6 +133,7 @@ class MyFillnumberState extends State<Fillnumber> {
               setState(() {
                 ssum = '$text';
                 print('qwer $ssum');
+                 _center.add(index);
               });
 
               val = index;
@@ -143,7 +146,7 @@ class MyFillnumberState extends State<Fillnumber> {
 
               print("hello this repeating one value once level is completed $ssum");
 
-              _center.add(index);
+             
               _Index.add(index);
               sum = sum + text;
               if (sum == Ansr) {
@@ -231,7 +234,16 @@ class MyFillnumberState extends State<Fillnumber> {
                   center == _size + _size + _size) {
                 x = center;
               }
-              if ((index == center + R ||
+
+              else if (center == _size-1 ||
+                  center == _size+ _size-1 ||
+                  center == _size + _size+ _size-1) {
+
+                y = center;
+              print("hello this iiis yyyy$y");
+              }
+
+              if (( (index == center + R && y!= center )||
                   index == center + B ||
                   (index == center - L && x != center) ||
                   index == center - T)) {
@@ -260,6 +272,7 @@ class MyFillnumberState extends State<Fillnumber> {
                     print('helo this is sum value $sum');
                     if (sum == Ansr) {
                       ssum = '$ssum' + '=$sum';
+
                       new Future.delayed(const Duration(milliseconds: 250), () {
                         widget.onScore(1);
                         widget.onProgress((count1 + 2) / 6.5);
@@ -280,7 +293,8 @@ class MyFillnumberState extends State<Fillnumber> {
                             count = count + 1;
                           }
                         });
-                        ssum = '';
+                        setState(() { ssum = '';});
+                        
                         _letters.removeWhere((value) => value == null);
                         for (var i = 0; i < count; i++) {
                           _letters.add(null);
@@ -383,7 +397,7 @@ class MyFillnumberState extends State<Fillnumber> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             new Container(
-                color: Colors.orange,
+                color: new Color(0xFFf16761),
                 height: 50.0,
                 width: 50.0,
                 padding: const EdgeInsets.all(10.0),
@@ -416,10 +430,11 @@ class MyFillnumberState extends State<Fillnumber> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status, this.bgstatus, this.onPress})
+  MyButton({Key key, this.text, this.index,this.status, this.bgstatus, this.onPress})
       : super(key: key);
 
   final int text;
+  int index;
   Status status;
   Bgstatus bgstatus;
   final VoidCallback onPress;
@@ -468,10 +483,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
 
     return new Container(
-        decoration: new BoxDecoration(
-          color: Colors.white,
-          borderRadius: new BorderRadius.circular(.0),
-        ),
+        // decoration: new BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: new BorderRadius.circular(.0),
+        // ),
         child: new ScaleTransition(
           scale: animation,
           child: new GestureDetector(
@@ -480,12 +495,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   onPressed: () => widget.onPress(),
        
                   color: widget.status == Status.Visible
-                      ? Colors.yellow
+                      ? new Color(0xFFffffff)
                       : Colors.teal,
                   shape: new RoundedRectangleBorder(
                       borderRadius:
                           new BorderRadius.all(new Radius.circular(8.0))),
                   child: new Text("$_displayText",
+                  key: new Key(widget.index.toString()+"but"),
                       style:
                           new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
         ));
