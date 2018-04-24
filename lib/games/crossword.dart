@@ -42,7 +42,7 @@ class CrosswordState extends State<Crossword> {
   bool _isLoading = true;
   String img,dragdata;
   int _rows,_cols,code,dindex,dcode;
-  int len,_rightlen,_rightcols;
+  int len,_rightlen,_rightcols,j,k;
   @override
   void initState() {
     super.initState();
@@ -50,6 +50,12 @@ class CrosswordState extends State<Crossword> {
   }
   void _initBoard() async {
     setState(() => _isLoading = true);
+    _letters=[];
+    _data2=[];
+    _data1=[];
+    _data3=[];
+    _sortletters=[];
+    _rightwords=[];
     data = await fetchCrosswordData(widget.gameCategoryId);
 
     data.item1.forEach((e) {
@@ -111,11 +117,23 @@ class CrosswordState extends State<Crossword> {
       }
     }
     code= rng.nextInt(499)+rng.nextInt(500);
+    if(code<100){
+    while(code<100){
+      code= rng.nextInt(499)+rng.nextInt(500);
+    }}
     print('code $code');
-    _flag.length = _rows*_cols+ _rightcols+1;
-    for (var i = 0; i < _flag.length; i++) {
-      _flag[i] = 0;
+    print('d1 ${_rows}');
+     print('d2 ${_cols}');
+      print('d3 ${_rightcols}');
+       print('sort ${_sortletters.length}');
+        print('right ${_rightwords.length}');
+    _flag=[];
+     print('flag ${_flag.length}');
+    for (var i = 0; i <(_rows*_cols)+(_rightcols)*2+1; i++) {
+      _flag.add(0);
     }
+    print('nik $_flag');
+    print('len ${_flag.length}');
     setState(() => _isLoading = false);
   }
 
@@ -210,14 +228,15 @@ class CrosswordState extends State<Crossword> {
       );
     }
     keys = 0;
-    var j = 0, h = 0, k = 100;
+     j = 0; 
+     k = 100;
     var _finalcols=_rightlen>6?(_rightcols/2).ceil():_rightcols;
     var rwidth,rheight;
     return new LayoutBuilder(builder: (context, constraints){
       rwidth=constraints.maxWidth;
       rheight=constraints.maxHeight;
     //  print(constraints.maxHeight);
-      print('nikk width/heidht ${constraints.maxWidth}');
+     // print('nikk width/heidht ${constraints.maxWidth}');
     return new Container(
      padding: media.orientation==Orientation.portrait?
      new EdgeInsets.symmetric(vertical:rheight*.04,horizontal:rwidth*.12)
@@ -233,7 +252,7 @@ class CrosswordState extends State<Crossword> {
                 cols: _cols,
                 maxAspectRatio: rwidth/(rheight*0.65),
                 children: _letters
-                    .map((e) => _buildItem(j++, e, _flag[h++]))
+                    .map((e) => _buildItem(j, e, _flag[j++]))
                     .toList(growable: false),
               ),
             ),
@@ -246,7 +265,7 @@ class CrosswordState extends State<Crossword> {
                 cols: _finalcols,
                 maxAspectRatio:rwidth/(rheight*0.58),
                 children: _rightwords
-                    .map((e) => _buildItem(k++, e, _flag[h++]))
+                    .map((e) => _buildItem(k++, e, _flag[j++]))
                     .toList(growable: false),
               ),
             ),
@@ -261,7 +280,7 @@ class CrosswordState extends State<Crossword> {
                 cols: _cols,
                 maxAspectRatio: rwidth/(rheight*.9),
                 children: _letters
-                    .map((e) => _buildItem(j++, e, _flag[h++]))
+                    .map((e) => _buildItem(j, e, _flag[j++]))
                     .toList(growable: false),
               ),
             ),
@@ -274,9 +293,9 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _finalcols,
                 cols: _rightlen>6?2:1, 
-                maxAspectRatio: rwidth/(rheight*0.68),
+                maxAspectRatio:_rightlen>6?rwidth/(rheight*1.58):rwidth/(rheight*0.68),
                 children: _rightwords
-                    .map((e) => _buildItem(k++, e, _flag[h++]))
+                    .map((e) => _buildItem(k++, e, _flag[j++]))
                     .toList(growable: false),
               ),
             ),)
@@ -315,6 +334,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation, animation1;
   String _displayText;
   String newtext='';
+  final Offset offs;
   var f = 0;
   var i = 0;
   initState() {
@@ -453,7 +473,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           ),
         ),
       );
-    } else {
+      } else {
       return new ScaleTransition(
           scale: animation,
           child: new Container(
