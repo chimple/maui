@@ -55,16 +55,13 @@ class WordgridState extends State<Wordgrid> {
   var count0 = 0;
   var r;
   var center = 0;
- var rand;
+  var rand;
+  var flag = 0;
 
   List<String> numbers = [];
-
   List<String> _shuffledLetters = [];
-
   List _copyAns = [];
-
   List<String> _letters;
-
   List<String> _todnumber = [];
   List<Status> _statuses;
   List<String> _letterex = [];
@@ -82,31 +79,31 @@ class WordgridState extends State<Wordgrid> {
   void _initBoard() async {
     setState(() => _isLoading = true);
     data = await fetchWordData(widget.gameCategoryId, 5, 4);
-
     print("this data is coming from fetchng ${data.item1}");
-
     data.item1.forEach((e) {
       _copyAns.add(e);
     });
-   var rnge = new Random();
-  for (var i = 0; i <1; i++) {
-      rand= rnge.nextInt(2);
-    
-  }
-     if(rand==1){
-         data.item1.forEach((e){ numbers.add(e);});
-         data.item2.forEach((v){numbers.add(v);});
-
-     }
-     else{
-       data.item2.forEach((e){ numbers.add(e);});
-         data.item1.forEach((v){numbers.add(v);});
-     }
-
+    var rnge = new Random();
+    for (var i = 0; i < 1; i++) {
+      rand = rnge.nextInt(2);
+    }
+    if (rand == 1) {
+      data.item1.forEach((e) {
+        numbers.add(e);
+      });
+      data.item2.forEach((v) {
+        numbers.add(v);
+      });
+    } else {
+      data.item2.forEach((e) {
+        numbers.add(e);
+      });
+      data.item1.forEach((v) {
+        numbers.add(v);
+      });
+    }
     print("suffle data is in my numbers is $numbers");
-
     print("sorted numbers are $numbers ");
-
     for (var i = 0; i < numbers.length; i += _size * _size) {
       _shuffledLetters
           .addAll(numbers.skip(i).take(_size * _size).toList(growable: true));
@@ -121,12 +118,9 @@ class WordgridState extends State<Wordgrid> {
     for (var i = 0; i < size; i++) {
       for (var j = 0; j < size; j++) {
         count3 = count2 + j + 1 + count1;
-        print("print something in forloop");
         _shuffledLetters.sublist(count1, count3).forEach((e) {
           todnumbers[i][j] = e;
         });
-
-        print("value of 2d is each time $todnumbers");
       }
       count1 = count3;
     }
@@ -134,12 +128,7 @@ class WordgridState extends State<Wordgrid> {
       if (i % 2 != 0) {
         Iterable letdo = todnumbers[i].reversed;
         var fReverse = letdo.toList();
-
-        print("value of 2d is $todnumbers");
-
-        print("RRRRRR $fReverse");
         todnumbers[i].setRange(0, size, fReverse.map((e) => e));
-        print("value o ooppps$todnumbers");
       }
     }
 
@@ -148,36 +137,22 @@ class WordgridState extends State<Wordgrid> {
         _todnumber.add(v);
       });
     });
-
-    print("2d value is in my oops is$_todnumber");
-
     var todcolnumbers = new List.generate(m, (_) => new List(n));
     for (var i = 0; i < size; i++) {
       if (i % 2 != 0) {
-        print("this treacing $count6");
-        print("this treacing 2count$count4");
-
         for (var j = size - 1; j >= 0; j--) {
           count6 = 1 + count4;
-
-          print("this jjjj is $j");
-
           _shuffledLetters.sublist(count4, count6).forEach((e) {
             todcolnumbers[j][i] = e;
           });
-
-          print("value of 2d is cols each time $todcolnumbers");
           count4 = count6;
         }
       } else {
         for (var j = 0; j < size; j++) {
           count6 = count2 + j + 1 + count4;
-          print("print something in forloop");
           _shuffledLetters.sublist(count4, count6).forEach((e) {
             todcolnumbers[j][i] = e;
           });
-
-          print("value of 2d is cols each time $todcolnumbers");
         }
       }
       count4 = count6;
@@ -196,8 +171,6 @@ class WordgridState extends State<Wordgrid> {
     if (r == 4) {
       r = r - 1;
     }
-    print("hello sir $r");
-
     switch (r) {
       case 0:
         {
@@ -251,45 +224,42 @@ class WordgridState extends State<Wordgrid> {
                     index == center - L ||
                     index == center - T ||
                     index == center + B ||
-                    center == 0)) {
+                    (center == 0 && flag == 0))) {
               center = index;
+              flag = 1;
               setState(() {
                 _statuses[index] = Status.Visible;
                 widget.onScore(1);
-                widget.onProgress((i+1) / (_copyAns.length));
+                widget.onProgress((i + 1) / (_copyAns.length));
                 count0++;
               });
-              print("length is${_copyAns.length}");
-
               i++;
-              print("hey this onend$i");
-
               if (i == _copyAns.length) {
-                k = 0;
-                center = 0;
-                count0 = 0;
-                count1 = 0;
-                count2 = 0;
-                count3 = 0;
-                count6 = 0;
-                count4 = 0;
-                count5 = 0;
-                _todnumber.removeRange(0, _todnumber.length);
-                _letters.removeRange(0, _letters.length);
+                new Future.delayed(const Duration(milliseconds: 300), () {
+                  k = 0;
+                  center = 0;
+                  flag = 0;
+                  count0 = 0;
+                  count1 = 0;
+                  count2 = 0;
+                  count3 = 0;
+                  count6 = 0;
+                  count4 = 0;
+                  count5 = 0;
+                  _todnumber.removeRange(0, _todnumber.length);
+                  _letters.removeRange(0, _letters.length);
 
-                _letterex.removeRange(0, _letterex.length);
-                numbers.removeRange(0, numbers.length);
+                  _letterex.removeRange(0, _letterex.length);
+                  numbers.removeRange(0, numbers.length);
 
-                _shuffledLetters.removeRange(0, _shuffledLetters.length);
+                  _shuffledLetters.removeRange(0, _shuffledLetters.length);
 
-                new Future.delayed(const Duration(milliseconds: 250), () {
                   widget.onEnd();
                 });
               }
             } else {
               setState(() {
                 _ShakeCells[index] = ShakeCell.Right;
-                print("hello shake cell list$_ShakeCells");
                 new Future.delayed(const Duration(milliseconds: 400), () {
                   setState(() {
                     _ShakeCells[index] = ShakeCell.InActive;
@@ -346,9 +316,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-          print('dismissed');
           if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
@@ -377,7 +345,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   void _handleTouch() {
@@ -387,8 +354,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
-
     int _color = 0xFF5F9EA0;
 
     if (widget.tile == ShakeCell.Right) {
