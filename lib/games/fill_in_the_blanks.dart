@@ -178,8 +178,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     }
     var j = 0, k = 100, h = 0, a = 0;
     return new Container(
-      color: new Color(0xffff8edda3),
-      child: new Center(
+     child: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -348,6 +347,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (widget.index >= 100) {
       return new Draggable(
           onDragStarted: widget.onDrag,
+         maxSimultaneousDrags: 1,
            dragAnchor: DragAnchor.child,
           data: widget.index,
           child: new ScaleTransition(
