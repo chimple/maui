@@ -97,7 +97,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                           localPosition.dx / media.size.width, localPosition.dy / media.size.height);
                       print({"convert into percentage is : ": convertedIntoPercentage});
 
-                      double tolerence = 0.03;
+                      double tolerence = 0.04;
 
                       if(_drawLineProperty.length < 1){
                         _drawLineProperty = new List.from(_drawLineProperty)
