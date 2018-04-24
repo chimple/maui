@@ -105,14 +105,14 @@ class _CasinoState extends State<Casino> {
       }
       j++;
     }
-    print("Value of j = $j");
+
     return new Container(
       // height: 100.0,
       // width: 50.0,
-      padding: const EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
+      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
-            color: Colors.black, fontSize: 10.0, fontWeight: FontWeight.w900),
+            color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
             key: new ValueKey(j),
@@ -206,7 +206,7 @@ class _CasinoState extends State<Casino> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Container(
-              height: 200.0,
+              height: 100.0,
               width: 200.0,
               color: new Color(0xffff52c5ce),
               child: new Center(
