@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:json_annotation/json_annotation.dart';
@@ -162,7 +161,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     });
   }
 
-  void send() {
+  bool send() {
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
     print({"the data is : " : drawLinePropertyArray});
 
@@ -209,10 +208,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     var decode = json.decode(drawJson);
     print({"the object is : ": decode});
     var _output = decode;
-    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SecondScreen(_output)));
-
-
-
+    print("Rajesh Patillllllll");
+    return true;
   }
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {

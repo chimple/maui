@@ -55,20 +55,6 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
                                 fontSize: constraints.maxHeight * 0.05,
                                 fontWeight: FontWeight.bold))
                     ),
-                    new Container(
-                        width: constraints.maxWidth, height: constraints.maxHeight * 0.1,
-                        child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              new RaisedButton(
-                                child: new Text("Send"),
-                                color: Colors.blue,
-                                onPressed: _onSend,
-                              ),
-                            ]
-                        )
-                    ),
-
 
                     new FittedBox(
                       fit: BoxFit.fill,
@@ -80,6 +66,20 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
                             key: new GlobalObjectKey('MyDrawPage')),
                         key: new Key('draw_screen'),
                       ),
+                    ),
+
+                     new Container(
+                        width: constraints.maxWidth, height: constraints.maxHeight * 0.1,
+                        child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              new RaisedButton(
+                                child: new Text("Submit"),
+                                color: Colors.blue,
+                                onPressed: _onSend,
+                              ),
+                            ]
+                        )
                     ),
 
                   ])
@@ -121,7 +121,7 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
                                     .spaceEvenly,
                                 children: <Widget>[
                                   new RaisedButton(
-                                    child: new Text("Send"),
+                                    child: new Text("Submit"),
                                     color: Colors.blue,
                                     onPressed: _onSend,
                                   )
@@ -155,7 +155,8 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
   }
 
   void _onSend() {
-    _padController.send();
+    bool flag =_padController.send();
+    print("Rajesh Patil ${flag}");
   }
 
 }
