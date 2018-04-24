@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/components/flash_card.dart';
 import 'package:tuple/tuple.dart';
 
 class Quiz extends StatefulWidget {
@@ -20,18 +22,16 @@ class Quiz extends StatefulWidget {
   State createState() => new QuizState();
 }
 
-class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
+class QuizState extends State<Quiz> {
   bool _isLoading = true;
  
  Tuple3<String, String, List<String>> _allques;
+ int _size = 2;
   String questionText;
   String ans;
   List<String> ch;
-  var choice = new List();
-  var choices;
+  List<String> choice = [];
   bool isCorrect;
-
-  AnimationController _loginButtonController;
 
   @override
   void initState() {
@@ -41,7 +41,8 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
 
   void _initBoard() async {
     setState(()=>_isLoading=true);
-    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 3);
+    choice=[];
+    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 3);    
     print("this is my data  $_allques");
     print(_allques.item1);
     questionText = _allques.item1;
@@ -56,47 +57,52 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     choice.add(ans);
     print("My Choices - $choice");
 
-    choices = choice;
-    choices.shuffle();
+    choice.shuffle();
+    _size = min(2, sqrt(choice.length).floor());
 
-    print("My shuffled Choices - $choices");
-    _loginButtonController = new AnimationController(
-      duration: new Duration(milliseconds: 300),
-      vsync: this
-    );
+    print("My shuffled Choices - $choice");
     setState(()=>_isLoading=false);    
   }
 
   void handleAnswer(String answer) {
     isCorrect = (ans == answer);
     if (isCorrect) {
-      _playAnimation();
       widget.onScore(1);
       widget.onProgress(1.0);
       widget.onEnd();
       _initBoard();
     }
-    else {
-      _playWrongAnimation();
-    }
   }
 
-
-  Future<Null> _playAnimation() async {
-    try {
-      await _loginButtonController.forward();
-      await _loginButtonController.reverse();
-    }
-    on TickerCanceled{}
+  Widget _buildItem(int index, String text) {
+    return new MyButton(
+        key: new ValueKey<int>(index),
+        text: text,
+        onPress: () {
+          if (text == ans) {
+            widget.onScore(1);
+            widget.onProgress(1.0);
+                widget.onEnd();
+                _initBoard();
+                choice=[];
+            }
+          else {
+            widget.onScore(-1);
+          }
+        });
   }
 
-  Future<Null> _playWrongAnimation() async { 
-    try {
-      await _loginButtonController.forward();
+    @override
+  void didUpdateWidget(Quiz oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_allques);
     }
-    on TickerCanceled{}
+    choice=[];
   }
-  
+
     @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
@@ -113,80 +119,22 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
       );
     }    
 
-    return new Material(
-      color: const Color(0xFF54cc70),
-      child: new Stack(
-      fit: StackFit.loose,
-      children: <Widget>[
-        new Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-          
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [new QuestionText(questionText)]
-            ),
+    int j=0;
+    // return new Column(
+    //           children: <Widget>[
+                  
+                    // new Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [new QuestionText(questionText)]
+                    // ),
+                    //new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[0], onTap: () => handleAnswer(choices[0])), 
 
-           new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                    new Padding(
-                      padding: new EdgeInsets.all(wd * 0.015),
-                    ),
-
-                  new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[0], onTap: () => handleAnswer(choices[0])), 
-
-                    new Padding(
-                      padding: new EdgeInsets.all(wd * 0.015),
-                    ),
-
-                  new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[1], onTap: () => handleAnswer(choices[1])),
-
-                    new Padding(
-                      padding: new EdgeInsets.all(wd * 0.015),
-                    ),
-                  ]
-                ),
-
-                 new Padding(
-                      padding: new EdgeInsets.all(ht * 0.01),
-                    ),
-
-               new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
-
-                    new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[2], onTap: () => handleAnswer(choices[2])),
-
-                    new Padding(
-                      padding: new EdgeInsets.all(wd * 0.015),
-                    ),
-
-                    new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[3], onTap: () => handleAnswer(choices[3])),
-
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
-
-                    ]
-                ),
-              ]
-            ),
-          ],
-        ),
-        
-      ],
-    ),
-    );
+                    return new ResponsiveGridView(
+                      rows: _size,
+                      cols: _size,
+                      children: choice.map((e) => _buildItem(j++, e)).toList(growable: false),
+              );
   }
     
 }
@@ -263,136 +211,78 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
   }
 }
 
-class AnswerButton extends StatelessWidget {
-  final String answerText;
-  final VoidCallback onTap;
+class MyButton extends StatefulWidget {
+  MyButton({Key key, this.text, this.onPress}) : super(key: key);
 
-  AnswerButton({Key key, this.answerText, this.onTap, this.buttonController})
-      : buttonSqueezeanimation = new Tween(
-          begin: 320.0,
-          end: 70.0,
-        )
-            .animate(
-          new CurvedAnimation(
-            parent: buttonController,
-            curve: new Interval(
-              0.0,
-              0.150,
-            ),
-          ),
-        ),
-        buttomZoomOut = new Tween(
-          begin: 35.0,
-          end: 1000.0,
-        )
-            .animate(
-          new CurvedAnimation(
-            parent: buttonController,
-            curve: new Interval(
-              0.550,
-              0.999,
-              curve: Curves.bounceOut,
-            ),
-          ),
-        ),
-        containerCircleAnimation = new EdgeInsetsTween(
-          begin: const EdgeInsets.only(bottom: 50.0),
-          end: const EdgeInsets.only(bottom: 0.0),
-        )
-            .animate(
-          new CurvedAnimation(
-            parent: buttonController,
-            curve: new Interval(
-              0.500,
-              0.800,
-              curve: Curves.ease,
-            ),
-          ),
-        ),
-        super(key: key);
+  final String text;
+  final VoidCallback onPress;
 
-  final AnimationController buttonController;
-  final Animation<EdgeInsets> containerCircleAnimation;
-  final Animation buttonSqueezeanimation;
-  final Animation buttomZoomOut;
+  @override
+  _MyButtonState createState() => new _MyButtonState();
+}
 
-  Future<Null> _playAnimation() async {
-    try {
-      await buttonController.forward();
-      await buttonController.reverse();
-    } on TickerCanceled {}
+class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> animation;
+  String _displayText;
+
+  initState() {
+    super.initState();
+    print("_MyButtonState.initState: ${widget.text}");
+    _displayText = widget.text;
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 250), vsync: this);
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+      ..addStatusListener((state) {
+//        print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+          print('dismissed');
+          if (widget.text != null) {
+            setState(() => _displayText = widget.text);
+            controller.forward();
+          }
+        }
+      });
+    controller.forward();
   }
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
-    return new Padding(  
-      padding: buttomZoomOut.value == 35
-          ? const EdgeInsets.only(bottom: 50.0)
-          : containerCircleAnimation.value,
-      child: new InkWell(
-          onTap: () {
-            onTap();
-          },
-          child: new Hero(
-            tag: "fade",
-            child: buttomZoomOut.value <= 300
-                ? new Container(
-                    width: buttomZoomOut.value == 35
-                        ? buttonSqueezeanimation.value
-                        : buttomZoomOut.value,
-                    height:
-                        buttomZoomOut.value == 35 ? 60.0 : buttomZoomOut.value,
-                    alignment: FractionalOffset.center,
-                    decoration: new BoxDecoration(
-                      color: const Color.fromRGBO(247, 64, 106, 1.0),
-                      borderRadius: buttomZoomOut.value < 400
-                          ? new BorderRadius.all(const Radius.circular(30.0))
-                          : new BorderRadius.all(const Radius.circular(0.0)),
-                    ),
-                    child: buttonSqueezeanimation.value > 75.0
-                        ? new Text(
-                            answerText,
-                            style: new TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w300,
-                              letterSpacing: 0.3,
-                            ),
-                          )
-                        : buttomZoomOut.value < 300.0
-                            ? new CircularProgressIndicator(
-                                value: null,
-                                strokeWidth: 1.0,
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Colors.white),
-                              )
-                            : null)
-                : new Container(
-                    width: buttomZoomOut.value,
-                    height: buttomZoomOut.value,
-                    decoration: new BoxDecoration(
-                      shape: buttomZoomOut.value < 500
-                          ? BoxShape.circle
-                          : BoxShape.rectangle,
-                      color: const Color.fromRGBO(247, 64, 106, 1.0),
-                    ),
-                  ),
-          )),
-    );
+  @override
+  void didUpdateWidget(MyButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text == null && widget.text != null) {
+      _displayText = widget.text;
+      controller.forward();
+    } else if (oldWidget.text != widget.text) {
+      controller.reverse();
+    }
+    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override
   Widget build(BuildContext context) {
-    buttonController.addListener(() {
-      if (buttonController.isCompleted) {
-        Navigator.pushNamed(context, "Quiz");
-      }
-    });
-    return new AnimatedBuilder(
-      builder: _buildAnimation,
-      animation: buttonController,
-    );
+    print("_MyButtonState.build");
+    return new ScaleTransition(
+        scale: animation,
+        child: new GestureDetector(
+            onLongPress: () {
+              showDialog(
+                  context: context,
+                  child: new FractionallySizedBox(
+                      heightFactor: 0.5,
+                      widthFactor: 0.8,
+                      child: new FlashCard(text: widget.text)));
+            },
+            child: new RaisedButton(
+                onPressed: () => widget.onPress(),
+                shape: new RoundedRectangleBorder(
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(8.0))),
+                child: new Text(_displayText,
+                    style:
+                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
+
 
 
 
