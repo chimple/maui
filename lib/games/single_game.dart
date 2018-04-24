@@ -24,6 +24,7 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
+import 'package:maui/games/spin_wheel.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -360,6 +361,7 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 4;
         return new Tuple2(
             new MatchTheFollowing(
+              key: new GlobalObjectKey(keyName),
               onScore: _onScore,
               onProgress: _onProgress,
               onEnd: () => _onEnd(context),
@@ -368,10 +370,10 @@ class _SingleGameState extends State<SingleGame> {
               gameCategoryId: widget.gameCategoryId,
             ),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: new Color(0xFF28c9c9), //bg
+                backgroundColor:new Color(0xFFfcc335), //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: new Color(0xFFed4a79)));
         break;
       case 'calculate_numbers':
         return new Tuple2(
@@ -482,6 +484,20 @@ class _SingleGameState extends State<SingleGame> {
       case 'wordgrid':
         return new Tuple2(
             new Wordgrid(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+                case 'spin_wheel':
+        return new Tuple2(
+            new SpinWheel(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
