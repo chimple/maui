@@ -121,19 +121,11 @@ class CrosswordState extends State<Crossword> {
     while(code<100){
       code= rng.nextInt(499)+rng.nextInt(500);
     }}
-    print('code $code');
-    print('d1 ${_rows}');
-     print('d2 ${_cols}');
-      print('d3 ${_rightcols}');
-       print('sort ${_sortletters.length}');
-        print('right ${_rightwords.length}');
     _flag=[];
      print('flag ${_flag.length}');
     for (var i = 0; i <(_rows*_cols)+(_rightcols)*2+1; i++) {
       _flag.add(0);
     }
-    print('nik $_flag');
-    print('len ${_flag.length}');
     setState(() => _isLoading = false);
   }
 
@@ -227,20 +219,19 @@ class CrosswordState extends State<Crossword> {
         child: new CircularProgressIndicator(),
       );
     }
-    keys = 0;
+  return new LayoutBuilder(builder: (context, constraints){
+     keys = 0;
      j = 0; 
      k = 100;
     var _finalcols=_rightlen>6?(_rightcols/2).ceil():_rightcols;
     var rwidth,rheight;
-    return new LayoutBuilder(builder: (context, constraints){
       rwidth=constraints.maxWidth;
       rheight=constraints.maxHeight;
-    //  print(constraints.maxHeight);
-     // print('nikk width/heidht ${constraints.maxWidth}');
+   //   print('nikk width/heidht ${_flag.length}');
     return new Container(
      padding: media.orientation==Orientation.portrait?
      new EdgeInsets.symmetric(vertical:rheight*.04,horizontal:rwidth*.12)
-     :new EdgeInsets.symmetric(horizontal:rwidth*.08),
+     :new EdgeInsets.symmetric(vertical:rheight*.05),
         color: Colors.purple[300],
         child: media.orientation==Orientation.portrait?new Column(
           // portrait mode
@@ -293,7 +284,7 @@ class CrosswordState extends State<Crossword> {
               child: new ResponsiveGridView(
                 rows: _finalcols,
                 cols: _rightlen>6?2:1, 
-                maxAspectRatio:_rightlen>6?rwidth/(rheight*1.58):rwidth/(rheight*0.68),
+                maxAspectRatio:_rightlen>6?rwidth/(rheight*1.45):rwidth/(rheight*0.68),
                 children: _rightwords
                     .map((e) => _buildItem(k++, e, _flag[j++]))
                     .toList(growable: false),
@@ -334,7 +325,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation, animation1;
   String _displayText;
   String newtext='';
-  final Offset offs;
   var f = 0;
   var i = 0;
   initState() {
@@ -385,7 +375,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new DragTarget(
-                    onAccept: (var data) => widget.onAccepted(data),
+                    onAccept: (String data) => widget.onAccepted(data),
                     builder: (
                       BuildContext context,
                       List<dynamic> accepted,
