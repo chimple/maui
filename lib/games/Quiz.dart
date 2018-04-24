@@ -26,7 +26,8 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
  Tuple3<String, String, List<String>> _allques;
   String questionText;
   String ans;
-  List<String> choice;
+  List<String> ch;
+  var choice = new List();
   var choices;
   bool isCorrect;
 
@@ -47,17 +48,23 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
     print(_allques.item2);
     ans = _allques.item2;
     print(_allques.item3);
-    choice = _allques.item3;
-    choice[3] = ans;
+    ch = _allques.item3;
+    for(var x=0;x<ch.length;x++)
+    {
+      choice.add(ch[x]);
+    }
+    choice.add(ans);
     print("My Choices - $choice");
-    var choices = shuffle(choice);
+
+    choices = choice;
+    choices.shuffle();
 
     print("My shuffled Choices - $choices");
-    setState(()=>_isLoading=false);
     _loginButtonController = new AnimationController(
       duration: new Duration(milliseconds: 300),
       vsync: this
     );
+    setState(()=>_isLoading=false);    
   }
 
   void handleAnswer(String answer) {
@@ -85,7 +92,7 @@ class QuizState extends State<Quiz> with SingleTickerProviderStateMixin {
 
   Future<Null> _playWrongAnimation() async { 
     try {
-      await _loginButtonController.reset();
+      await _loginButtonController.forward();
     }
     on TickerCanceled{}
   }
@@ -275,7 +282,7 @@ class AnswerButton extends StatelessWidget {
           ),
         ),
         buttomZoomOut = new Tween(
-          begin: 70.0,
+          begin: 35.0,
           end: 1000.0,
         )
             .animate(
@@ -318,7 +325,7 @@ class AnswerButton extends StatelessWidget {
 
   Widget _buildAnimation(BuildContext context, Widget child) {
     return new Padding(  
-      padding: buttomZoomOut.value == 70
+      padding: buttomZoomOut.value == 35
           ? const EdgeInsets.only(bottom: 50.0)
           : containerCircleAnimation.value,
       child: new InkWell(
@@ -329,11 +336,11 @@ class AnswerButton extends StatelessWidget {
             tag: "fade",
             child: buttomZoomOut.value <= 300
                 ? new Container(
-                    width: buttomZoomOut.value == 70
+                    width: buttomZoomOut.value == 35
                         ? buttonSqueezeanimation.value
                         : buttomZoomOut.value,
                     height:
-                        buttomZoomOut.value == 70 ? 60.0 : buttomZoomOut.value,
+                        buttomZoomOut.value == 35 ? 60.0 : buttomZoomOut.value,
                     alignment: FractionalOffset.center,
                     decoration: new BoxDecoration(
                       color: const Color.fromRGBO(247, 64, 106, 1.0),
