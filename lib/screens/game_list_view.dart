@@ -102,7 +102,11 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('wordgrid'),
               child: new Icon(Icons.android, size: 64.0),
-              onPressed: () => showModes(context, 'wordgrid'))
+              onPressed: () => showModes(context, 'wordgrid')),
+          new RaisedButton(
+              key: new Key('spin_wheel'),
+              child: new Icon(Icons.sentiment_very_satisfied, size: 64.0),
+              onPressed: () => showModes(context, 'spin_wheel')),
         ]);
   }
 
