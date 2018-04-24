@@ -373,6 +373,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'calculate_numbers':
+      playTime = 15000;
+        maxIterations = 4;
         return new Tuple2(
             new CalculateTheNumbers(
                 onScore: _onScore,
@@ -382,10 +384,10 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
+                scaffoldBackgroundColor: Colors.orange[100], //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: Colors.orange));
         break;
       case 'memory':
         return new Tuple2(
