@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:maui/components/hoodie.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
+import 'package:maui/games/ClueGame.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
@@ -22,6 +23,7 @@ import 'package:maui/games/reflex.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
+import 'package:maui/games/wordgrid.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -192,6 +194,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'order_it':
         return new Tuple2(
             new OrderIt(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -199,7 +202,7 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
+                scaffoldBackgroundColor: Colors.blue, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
@@ -280,6 +283,21 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_in_the_blanks':
         return new Tuple2(
             new FillInTheBlanks(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'clue_game':
+        return new Tuple2(
+            new ClueGame(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -373,6 +391,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'memory':
         return new Tuple2(
             new Memory(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -448,6 +467,21 @@ class _SingleGameState extends State<SingleGame> {
       case 'tap_wrong':
         return new Tuple2(
             new TapWrong(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'wordgrid':
+        return new Tuple2(
+            new Wordgrid(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),

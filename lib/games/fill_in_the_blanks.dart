@@ -313,7 +313,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     border: new Border.all(
                         width: 3.0,
                         color:
-                            accepted.isEmpty ? Colors.grey : Colors.cyan[300]),
+                            accepted.isEmpty ? Colors.white : Colors.black),
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
@@ -348,6 +348,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (widget.index >= 100) {
       return new Draggable(
           onDragStarted: widget.onDrag,
+           dragAnchor: DragAnchor.child,
           data: widget.index,
           child: new ScaleTransition(
             scale: animation,
@@ -365,12 +366,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 )),
           ),
           feedback: new Container(
-            height: media.orientation == Orientation.portrait
-                ? media.size.height * 0.13
-                : media.size.height * 0.26,
-            width: media.orientation == Orientation.portrait
-                ? media.size.width * 0.23
-                : media.size.width * 0.15,
+            height: 100.0,
+            width: 100.0,
             decoration: new BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
