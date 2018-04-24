@@ -433,6 +433,10 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
         List<String> other = new List<String>();
         for(int i = 0; i < otherLength; i++) {
           var nextNum = (startNum + maxLength +1 + rand.nextInt(max(0, 9 - maxLength))) % 10;
+          if(nextNum==startNum-1)
+          {
+            nextNum=startNum+maxLength+1+nextNum;
+          }
           other.add(nextNum.toString());
         }
         return new Tuple2(consecutive, other);

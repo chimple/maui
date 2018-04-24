@@ -194,6 +194,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'order_it':
         return new Tuple2(
             new OrderIt(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -201,7 +202,7 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
+                scaffoldBackgroundColor: Colors.blue, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
@@ -390,6 +391,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'memory':
         return new Tuple2(
             new Memory(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
