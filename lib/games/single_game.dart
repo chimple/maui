@@ -4,6 +4,7 @@ import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/ClueGame.dart';
+import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
@@ -14,18 +15,18 @@ import 'package:maui/games/crossword.dart';
 import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
 import 'package:maui/games/fill_number.dart';
+import 'package:maui/games/guess.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/memory.dart';
 import 'package:maui/games/order_it.dart';
-import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/quiz.dart';
 import 'package:maui/games/reflex.dart';
+import 'package:maui/games/spin_wheel.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
-import 'package:maui/games/spin_wheel.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -293,10 +294,10 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: new Color(0xffff8edda3), //bg
-                backgroundColor: new Color(0xffffeaca8b), //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                ));
+              scaffoldBackgroundColor: new Color(0xffff8edda3), //bg
+              backgroundColor: new Color(0xffffeaca8b), //behind progress bar
+              accentColor: Colors.brown, //progress bar
+            ));
         break;
       case 'clue_game':
         return new Tuple2(
@@ -324,13 +325,12 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: new Color(0xfffffef7c3a), //bg
-                backgroundColor: new Color(0xfffff2d0d21), //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                buttonColor: new Color(0xffffff8c43c),
-                // primaryTextTheme:new TextTheme(display1: ),
-                
-                ));
+              scaffoldBackgroundColor: new Color(0xfffffef7c3a), //bg
+              backgroundColor: new Color(0xfffff2d0d21), //behind progress bar
+              accentColor: Colors.brown, //progress bar
+              buttonColor: new Color(0xffffff8c43c),
+              // primaryTextTheme:new TextTheme(display1: ),
+            ));
         break;
       case 'crossword':
         return new Tuple2(
@@ -376,12 +376,12 @@ class _SingleGameState extends State<SingleGame> {
             ),
             new ThemeData(
                 scaffoldBackgroundColor: new Color(0xFF28c9c9), //bg
-                backgroundColor:new Color(0xFFfcc335), //behind progress bar
+                backgroundColor: new Color(0xFFfcc335), //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: new Color(0xFFed4a79)));
         break;
       case 'calculate_numbers':
-      playTime = 15000;
+        playTime = 15000;
         maxIterations = 4;
         return new Tuple2(
             new CalculateTheNumbers(
@@ -453,7 +453,7 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor:new Color(0xFFf5c5b7), //bg
+                scaffoldBackgroundColor: new Color(0xFFf5c5b7), //bg
                 backgroundColor: new Color(0xFF951664), //behind progress bar
                 accentColor: new Color(0xFFfff176), //progress bar
                 buttonColor: new Color(0xFFed2d85)));
@@ -502,7 +502,21 @@ class _SingleGameState extends State<SingleGame> {
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
-                case 'spin_wheel':
+        break;
+      case 'guess':
+        return new Tuple2(
+            new GuessIt(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+      case 'spin_wheel':
         return new Tuple2(
             new SpinWheel(
                 onScore: _onScore,
@@ -517,7 +531,7 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
-       case 'draw_challenge':
+      case 'draw_challenge':
         return new Tuple2(
             new Draw_Challenge(
                 onScore: _onScore,

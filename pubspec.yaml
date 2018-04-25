@@ -49,6 +49,7 @@ flutter:
     - assets/apple.png
     - assets/Boy.png
     - assets/imageCoordinatesInfo.json
+    - assets/imageCoordinatesInfo2.json
     - assets/apple.ogg
     - assets/Shapes.png
     - assets/koala_neutral.png
