@@ -27,157 +27,109 @@ class ClueGame extends StatefulWidget {
 }
 
 class _ClueGameState extends State<ClueGame> {
-  List<String> _words = [
-    'bu',
-    'wa',
-    'pl',
-    'io',
-    't',
-    'ap',
-    't',
-    's',
-    'tz',
-    'e',
-    'no',
-    'is',
-    'tm',
-    'er',
-    'kl',
-    'hk',
-    'ko',
-    'ca',
-    'ko',
-    'aw'
-  ];
+  List<String> _words = ['bu','wa','pl','io','t','ap','t','s','tz','e','no','is','tm','er','kl','hk','ko','ca','ko','aw'];
   List<String> _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
 
-  Widget _builtWord(int index, String text, double _height) {
+  Widget _builtWord(int index, String text) {
     return new MyButton(
       key: new ValueKey<int>(index),
       text: text,
-      height: _height,
       onPress: () {
         text = text + '1';
       },
     );
   }
 
-  Widget _builtCategory(int index, String text, double _height) {
-    return new BuildCategory(
-      key: new ValueKey<int>(index),
-      text: text,
-      height: _height,
-    );
-  }
-
-  Widget answer(
-    String output,
-  ) {
-    MediaQueryData media = MediaQuery.of(context);
-    double _height = media.size.height;
-    double _width = media.size.width;
-    return new Container(
-      height: media.orientation == Orientation.portrait
-          ? _height * 0.07
-          : _height * 0.1,
-      width: media.orientation == Orientation.portrait
-          ? _width * 0.6
-          : _width * 0.32,
-      alignment: Alignment.bottomRight,
-      decoration: new BoxDecoration(
-        border: new Border.all(width: 1.0),
-        color: Colors.blue[200],
-        shape: BoxShape.rectangle,
-        borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
+  Widget answer(String output,) {
+    return new Padding(
+      padding: new EdgeInsets.only(left: 1.0),
+      child: new Container(
+        height: 50.0,
+        width: 250.0,
+        alignment: Alignment.bottomRight,
+        decoration: new BoxDecoration(
+          border: new Border.all(width: 1.0),
+          color: Colors.red,
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
+        ),
+        //  alignment: Alignment.topLeft,
+        child: new Center(
+            child: new Text(output,
+                style: new TextStyle(
+                  color: Colors.black,
+                  fontSize: 25.0,
+                ))),
       ),
-      //  alignment: Alignment.topLeft,
-      child: new Center(
-          child: new Text(output,
-              style: new TextStyle(
-                color: Colors.black,
-                fontSize: 25.0,
-              ))),
     );
-  }
-
-  Widget submit() {
-    MediaQueryData media = MediaQuery.of(context);
-    double _height = media.size.height;
-    double _width = media.size.width;
-    return new Container(
-        height: media.orientation == Orientation.portrait
-            ? _height * 0.07
-            : _height * 0.1,
-        width: media.orientation == Orientation.portrait
-            ? _width * 0.24
-            : _width * 0.13,
-        //margin: new EdgeInsets.all(1.0),
-        child: new RaisedButton(
-          onPressed: null,
-          shape: new RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
-          child: new Text(
-            'submit',
-            style: new TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return new LayoutBuilder(builder: (context, constraints) {
-      double _height, _width;
-      _height = constraints.maxHeight;
-      _width = constraints.maxWidth;
-      List<TableRow> rows = new List<TableRow>();
-      List<TableRow> rows1 = new List<TableRow>();
-      var j = 0;
-      for (var i = 0; i < 4; i++) {
-        List<Widget> cells = _words
-            .skip(i * 5)
-            .take(5)
-            .map((e) => _builtWord(j++, e, _height))
-            .toList();
-        rows.add(new TableRow(children: cells));
-      }
-      var k = 0;
-      for (var i = 0; i < 2; i++) {
-        List<Widget> cells = _category
-            .skip(i * 2)
-            .take(2)
-            .map((e) => _builtCategory(k++, e, _height))
-            .toList();
-        rows1.add(new TableRow(children: cells));
-      }
-      return new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    int j = 0;
+    return Container(
+      color: Colors.cyan[600],
+      child: Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Table(children: rows1),
+            Expanded(
+              child: new Center(
+                child: new ResponsiveGridView(
+                  rows: 2,
+                  cols: 2,
+                  maxAspectRatio: 1.5,
+                  children: _category
+                      .map((f) => _builtWord(j++, f))
+                      .toList(growable: false),
+                ),
+              ),
+            ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 answer('output'),
-                submit(),
+                new Container(
+                    height: 50.0,
+                    width: 100.0,
+                    margin: new EdgeInsets.all(1.0),
+                    child: new RaisedButton(
+                      onPressed: null,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: const BorderRadius.all(
+                              const Radius.circular(8.0))),
+                      child: new Text(
+                        'submit',
+                        style: new TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ))
               ],
             ),
-            new Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: new Table(children: rows),
+            new Center(
+              child: new ResponsiveGridView(
+                rows: 4,
+                cols: 5,
+                maxAspectRatio: 1.4,
+                children: _words
+                    .map((f) => _builtWord(j++, f))
+                    .toList(growable: false),
+              ),
             ),
-          ]);
-    });
+          ],
+        ),
+      ),
+    );
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.height, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress}) : super(key: key);
 
   final String text;
-  final double height;
   final VoidCallback onPress;
 
   @override
@@ -191,7 +143,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-
+    print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
@@ -211,55 +163,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new TableCell(
-      child: new Padding(
-        padding: new EdgeInsets.all(widget.height * 0.001),
-        child: new ScaleTransition(
-          scale: animation,
-          child: new RaisedButton(
-            onPressed: () => widget.onPress(),
-            padding: new EdgeInsets.all(widget.height * 0.02),
-            splashColor: Colors.green,
-            shape: new RoundedRectangleBorder(
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(8.0))),
-            child: new Text(
-              _displayText,
-              style: new TextStyle(color: Colors.white, fontSize: 24.0),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BuildCategory extends StatefulWidget {
-  BuildCategory({Key key, this.height, this.text}) : super(key: key);
-  final String text;
-  final double height;
-
-  @override
-  _BuildCategoryState createState() => new _BuildCategoryState();
-}
-
-class _BuildCategoryState extends State<BuildCategory> {
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return new Padding(
-      padding: new EdgeInsets.all(5.0),
-      child: new Container(
-        height: widget.height * 0.13,
-        width: widget.height * 0.12,
-        decoration: new BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Colors.green,
-        ),
-        child: new Center(
+    return new ScaleTransition(
+      scale: animation,
+      child: new GestureDetector(
+        child: new RaisedButton(
+          onPressed: () => widget.onPress(),
+          splashColor: Colors.green,
+          shape: new RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
           child: new Text(
-            widget.text,
+            _displayText,
             style: new TextStyle(color: Colors.white, fontSize: 24.0),
           ),
         ),
