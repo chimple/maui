@@ -109,7 +109,7 @@ class _CasinoPickerState extends State<CasinoPicker> {
     if (defaultTargetPlatform == TargetPlatform.iOS
         && index != _lastHapticIndex) {
       _lastHapticIndex = index;
-      HapticFeedback.selectionClick();
+      //HapticFeedback.selectionClick();
     }
 
     if (widget.onSelectedItemChanged != null) {
