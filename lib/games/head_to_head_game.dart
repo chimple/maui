@@ -63,6 +63,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
       widget.gameName,
       key: new GlobalObjectKey('SingleGame.my'),
       gameMode: widget.gameMode,
+      gameDisplay: GameDisplay.myHeadToHead,
       gameCategoryId: widget.gameCategoryId,
       onScore: setMyScore,
       onGameEnd: onGameEnd,
@@ -75,6 +76,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                       child: new SingleGame(widget.gameName,
                           key: new GlobalObjectKey('SingleGame.other'),
                           gameMode: widget.gameMode,
+                          gameDisplay: GameDisplay.otherHeadToHead,
                           gameCategoryId: widget.gameCategoryId,
                           onScore: setOtherScore,
                           onGameEnd: onGameEnd,
@@ -87,6 +89,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
             new Expanded(
                 child: new SingleGame(widget.gameName,
                     key: new GlobalObjectKey('SingleGame.other'),
+                    gameDisplay: GameDisplay.otherHeadToHead,
                     gameMode: widget.gameMode,
                     gameCategoryId: widget.gameCategoryId,
                     onScore: setOtherScore,

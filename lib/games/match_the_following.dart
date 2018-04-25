@@ -72,20 +72,18 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       );
     }
 
-    return new Material(
-        //color: new Color(0xFFffffff),
-        child: new Container(
-            color: new Color(0xffAB47BC),
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Expanded(
-                  child: _buildLeftSide(context),
-                ),
-                new Padding(padding: new EdgeInsets.all(60.0)),
-                new Expanded(child: _buildRightSide(context)),
-              ],
-            )));
+    return new Container(
+        //color: new Color(0xffAB47BC),
+        child: new Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Expanded(
+          child: _buildLeftSide(context),
+        ),
+        new Padding(padding: new EdgeInsets.all(60.0)),
+        new Expanded(child: _buildRightSide(context)),
+      ],
+    ));
     // return new Stack(
     //   fit: StackFit.expand,
     //   children: <Widget>[
@@ -144,7 +142,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     // _lettersLeft.clear();
     // _lettersRight.clear();
     // _shake.clear();
-    _allLetters = await fetchPairData(widget.gameCategoryId, 5);
+    _allLetters = await fetchPairData(widget.gameCategoryId,6);
     _allLetters.forEach((k, v) {
       _leftSideletters.add(k);
       _rightSideLetters.add(v);
@@ -155,8 +153,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     _shuffledLetters1.addAll(
         _rightSideLetters.take(_nextTask).toList(growable: false)..shuffle());
     // }
-    _lettersLeft = _shuffledLetters.sublist(0, _nextTask);
-    _lettersRight = _shuffledLetters1.sublist(0, _nextTask);
+    _lettersLeft = _shuffledLetters.sublist(0, 5);
+    _lettersRight = _shuffledLetters1.sublist(0, 5);
     _statusColorChange =
         _shuffledLetters.map((a) => Status.Disable).toList(growable: false);
     // _statusShake =
@@ -164,19 +162,20 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     for (int i = 0; i <= 9; i++) {
       _shake.add(0);
     }
-    print("after fatching for left:: $_leftSideletters");
-    print("after fatching for right:: $_rightSideLetters");
-    print("after fatching shuffle left:: $_shuffledLetters");
-    print("after fatching shuffle right:: $_shuffledLetters1");
+    // print("after fatching for left:: $_leftSideletters");
+    // print("after fatching for right:: $_rightSideLetters");
+    // print("after fatching shuffle left:: $_shuffledLetters");
+    // print("after fatching shuffle right:: $_shuffledLetters1");
     //print("shuffle data:: $_lettersLeft");
     //print("shuffle data:: $_lettersRight");
     setState(() => _isLoading = false);
+    //print("length: : ${_leftSideletters.length}");
   }
 
   Widget _buildLeftSide(BuildContext context) {
     int j = 0;
     return new ResponsiveGridView(
-      rows: 5,
+      rows:5,
       cols: 1,
       children: _lettersLeft
           .map((e) => _buildItemsLeft(j, e, _statusColorChange[j++]))
@@ -451,9 +450,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     Size media = MediaQuery.of(context).size;
     double _w = media.height;
     _w = _w / 19;
-    int _color = 0xFFA9A9A9;
+    int _color = 0xFFed4a79;
+    int changeColor = 0xFFed4a79;
     if (widget.shake == 2) {
       _color = 0xFFff0000; // red
+    }
+    if (widget.status == Status.Enable) {
+      changeColor = 0xFFFA8072;
+    }
+    if (widget.shake == 1) {
+      changeColor = 0xFF00FF00;
     }
     return new Shaker(
         // key: widget.key,
@@ -463,18 +469,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new ScaleTransition(
             scale: animationInvisible,
             child: new RaisedButton(
-                colorBrightness: Brightness.dark,
-                disabledColor: widget.shake == 1
-                    ? Colors.green
-                    : new Color(_color), // red color
+              //color: new Color(_color),
+                disabledColor:
+                    widget.status == Status.Enable || widget.shake == 1
+                        ? new Color(changeColor)
+                        : new Color(_color), // red color
                 elevation: 8.0,
                 onPressed:
                     (widget.status == Status.Disable || widget.shake == 0)
                         ? () => widget.onPress()
                         : null,
-                color: widget.status == Status.Enable
-                    ? new Color(0xFF808080)
-                    : new Color(0xFFed4a79),
                 shape: new RoundedRectangleBorder(
                     borderRadius: widget.status == Status.Color
                         ? const BorderRadius.all(const Radius.circular(20.0))
@@ -482,9 +486,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             const Radius.circular(radius))),
                 child: new Text(_displayText,
                     style: new TextStyle(
-                        color: widget.status == Status.Enable
-                            ? new Color(0xFF13A1A9)
-                            : new Color(0xFFffffff),
+                       color: Colors.white,
                         fontSize: _w,
                         fontStyle: FontStyle.italic)))));
   }
