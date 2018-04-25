@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/casino_scroll_view.dart';
 import 'package:maui/components/casino_picker.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -37,13 +38,13 @@ class _CasinoState extends State<Casino> {
   String givenWord = " ";
   String compareWord = " ";
   bool _isLoading = true;
-  // String wd = " ";
+
   var givenWordList = new List();
   var lst = new List();
   int i;
   int j;
-  int count, countValue;
-  var answer = new List();
+  int count;
+  // var answer = new List();
   bool _isShowingFlashCard = false;
   Set<String> finalGivenWordSet;
   List<String> finalGivenWordList;
@@ -60,24 +61,17 @@ class _CasinoState extends State<Casino> {
     i = 0;
     j = 0;
     count = 0;
-    countValue = 0;
 
     _selectedItemIndex = 1;
     givenWord = " ";
     compareWord = " ";
-    givenWordList = [];
-    lst=[];
+    givenWordList.clear();
+    lst.clear();
     print(" finalList _initLetters = $finalList");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
     }
-
-    // print("givenWordList $givenWordList");
-    // print("givenWordList.length = ${givenWordList.length}");
-    // for (var i = 0; i < data.length; i++) {
-    //   data[i].shuffle();
-    // }
 
     finalGivenWordSet = new Set<String>.from(givenWordList);
     finalGivenWordList = new List<String>.from(finalGivenWordSet);
@@ -113,8 +107,9 @@ class _CasinoState extends State<Casino> {
     }
 
     return new Container(
-      height: 100.0,
-      width: 50.0,
+      // height: 100.0,
+      // width: 50.0,
+      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
@@ -123,7 +118,7 @@ class _CasinoState extends State<Casino> {
             key: new ValueKey(j),
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
-            itemExtent: 35.0,
+            itemExtent: 50.0,
             backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
@@ -131,35 +126,38 @@ class _CasinoState extends State<Casino> {
               //   _selectedItemIndex = index;
               // });
               print("buttonNumber  $buttonNumber is triggered");
-              
+
               for (int i = 0; i < givenWordList.length; i++) {
                 if (buttonNumber == i &&
                     givenWordList[i] == scrollingLetterList[index]) {
                   print(
                       "correct index $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
                   lst.add(scrollingLetterList[index]);
-                  
+                  count++;
                 }
               }
               lst.sort();
+              print(" lst = $lst \n");
+              print("");
               Set<String> finalSet = new Set<String>.from(lst);
               finalList = new List<String>.from(finalSet);
 
               print(" finalList = $finalList");
               print(" finalGivenWordList = $finalGivenWordList");
-              // print("count = $count");
+              print("count = $count");
               if (const IterableEquality()
-                  .equals(finalList, finalGivenWordList)) {
+                      .equals(finalList, finalGivenWordList) &&
+                  count >= givenWordList.length) {
                 widget.onScore(5);
                 widget.onProgress(1.0);
 
-                new Future.delayed(const Duration(milliseconds: 500), () {
+                new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
                     _isShowingFlashCard = true;
+                    lst.clear();
                   });
                 });
 
-                print(" finalList  = $finalList");
                 print("the end");
               }
             },
@@ -172,7 +170,7 @@ class _CasinoState extends State<Casino> {
                 child: new Text(scrollingLetterList[index],
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
+                        fontSize: 45.0,
                         letterSpacing: 5.0,
                         color: Colors.black)),
               );
@@ -194,48 +192,46 @@ class _CasinoState extends State<Casino> {
       return new FlashCard(
           text: givenWord,
           onChecked: () {
-            _initLetters();
             widget.onEnd();
-
+            // _initLetters();
             setState(() {
               _isShowingFlashCard = false;
             });
           });
     }
+
     return new Container(
-      child: new Container(
-        color: new Color(0xfffff7ebcb),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            new Container(
-                height: 100.0,
-                width: 200.0,
-                color: new Color(0xffff52c5ce),
-                child: new Center(
-                    child: new Text(
-                  givenWord,
-                  key: new Key("fruit"),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50.0,
-                      letterSpacing: 5.0,
-                      color: Colors.white),
-                ))),
-            new Expanded(
+      color: new Color(0xfffff7ebcb),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          new Container(
+              height: 100.0,
+              width: 200.0,
+              color: new Color(0xffff52c5ce),
               child: new Center(
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: data.map((s) {
-                    return _buildScrollButton(s, scrollbuttonNumber++);
-                  }).toList(growable: false),
-                ),
-              ),
+                  child: new Text(
+                givenWord,
+                key: new Key("fruit"),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.clip,
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50.0,
+                    letterSpacing: 5.0,
+                    color: Colors.white),
+              ))),
+          new Expanded(
+            child: new ResponsiveGridView(
+              cols: data.length,
+              rows: 1,
+              maxAspectRatio: 0.7,
+              children: data.map((s) {
+                return _buildScrollButton(s, scrollbuttonNumber++);
+              }).toList(growable: false),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
