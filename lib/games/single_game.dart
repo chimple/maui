@@ -315,6 +315,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'casino':
         return new Tuple2(
             new Casino(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -322,10 +323,13 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: new Color(0xfffffef7c3a), //bg
+                backgroundColor: new Color(0xfffff2d0d21), //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: new Color(0xffffff8c43c),
+                // primaryTextTheme:new TextTheme(display1: ),
+                
+                ));
         break;
       case 'crossword':
         return new Tuple2(
