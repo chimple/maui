@@ -15,6 +15,7 @@ import 'package:maui/games/crossword.dart';
 import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
 import 'package:maui/games/fill_number.dart';
+import 'package:maui/games/first_word.dart';
 import 'package:maui/games/guess.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/match_the_following.dart';
@@ -242,6 +243,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'abacus':
         return new Tuple2(
             new Abacus(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -531,8 +533,24 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
-       case 'draw_challenge':
-       maxIterations=1;
+      case 'first_word':
+        return new Tuple2(
+            new FirstWord(
+                key: new GlobalObjectKey(keyName),
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'draw_challenge':
+        maxIterations = 1;
         return new Tuple2(
             new Draw_Challenge(
                 onScore: _onScore,
