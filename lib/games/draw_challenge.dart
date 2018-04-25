@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../components/drawing_match.dart';
 import 'dart:ui' as ui;
@@ -26,6 +28,7 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
 
   @override
   Widget build(BuildContext context) {
+    print("Mauuuuiiiiiiiii");
     Orientation orientation = MediaQuery
         .of(context)
         .orientation;
@@ -155,8 +158,11 @@ class Draw_Challenge_Screen extends State<Draw_Challenge> {
   }
 
   void _onSend() {
-    bool flag =_padController.send();
-    print("Rajesh Patil ${flag}");
+    int random =_padController.send();
+    print("Rajesh Patil ${random}");
+      widget.onScore(random);
+      widget.onProgress(random/10);
+     widget.onEnd();
   }
 
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
+import 'dart:math';
 
 class DrawPadController {
   _DrawPadDelegate _delegate;
@@ -153,7 +154,15 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     });
   }
 
-  bool send() {
+  int send() {
+    Random rnd;
+    int min = 5;
+    int max = 10;
+    rnd = new Random();
+    int r = min + rnd.nextInt(max - min);
+    print("$r Rajesh Patillllllllllllllllllllis in the range of $min and $max");
+
+
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
     print({"the data is : " : drawLinePropertyArray});
 
@@ -201,7 +210,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     print({"the object is : ": decode});
     var _output = decode;
     print("Rajesh Patillllllll");
-    return true;
+    return r;
   }
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
