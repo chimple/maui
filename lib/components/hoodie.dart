@@ -37,8 +37,14 @@ class _HoodieState extends State<Hoodie> {
     bool happy = _prevScore <= widget.score;
     _prevScore = widget.score;
     return new IndexedStack(index: happy ? 0 : 1, children: <Widget>[
-      new FluttieAnimation(_happyController),
-      new FluttieAnimation(_sadController)
+      new FluttieAnimation(
+        _happyController,
+//        size: new Size(200.0, 200.0),
+      ),
+      new FluttieAnimation(
+        _sadController,
+//          size: new Size(200.0, 200.0)
+      )
     ]);
   }
 
@@ -66,20 +72,22 @@ class _HoodieState extends State<Hoodie> {
 
     // Load our first composition for the emoji animation
     var happyAnim = await instance.loadAnimationFromResource(
-        "assets/animations/koala_happy.json",
+        "assets/animations/goat_sad3.json",
         bundle: DefaultAssetBundle.of(context));
     // And prepare its animation, which should loop infinitely and take 2s per
     // iteration. Instead of RepeatMode.START_OVER, we could have choosen
     // REVERSE, which would play the animation in reverse on every second iteration.
     _happyController = await instance.prepareAnimation(happyAnim,
+        preferredSize: new Size(200.0, 200.0),
         duration: const Duration(seconds: 2),
         repeatCount: const RepeatCount.dontRepeat(),
         repeatMode: RepeatMode.START_OVER);
 
     var sadAnim = await instance.loadAnimationFromResource(
-        "assets/animations/koala_sad.json",
+        "assets/animations/goat_sad3.json",
         bundle: DefaultAssetBundle.of(context));
     _sadController = await instance.prepareAnimation(sadAnim,
+        preferredSize: new Size(200.0, 200.0),
         duration: const Duration(seconds: 2),
         repeatCount: const RepeatCount.dontRepeat(),
         repeatMode: RepeatMode.START_OVER);
