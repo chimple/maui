@@ -14,7 +14,7 @@ class SecondScreen extends StatelessWidget {
           fit: BoxFit.fill,
           child: new Container(
             // otherwise the logo will be tiny
-            child: Text("This is Drawing game"),
+            child: new Text("This is Drawing game"),
           ),
         ),
       );

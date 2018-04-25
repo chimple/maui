@@ -28,6 +28,10 @@ class GameListView extends StatelessWidget {
               child: new Icon(Icons.camera, size: 64.0),
               onPressed: () => showModes(context, 'memory')),
           new RaisedButton(
+              key: new Key('draw_challenge'),
+              child: new Icon(Icons.add_alert, size: 64.0),
+              onPressed: () => showModes(context, 'draw_challenge')),     
+          new RaisedButton(
               key: new Key('abacus'),
               child: new Icon(Icons.image, size: 64.0),
               onPressed: () => showModes(context, 'abacus')),
