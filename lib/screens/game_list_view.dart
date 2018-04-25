@@ -30,7 +30,7 @@ class GameListView extends StatelessWidget {
           new RaisedButton(
               key: new Key('draw_challenge'),
               child: new Icon(Icons.add_alert, size: 64.0),
-              onPressed: () => showModes(context, 'draw_challenge')),     
+              onPressed: () => showModes(context, 'draw_challenge')),
           new RaisedButton(
               key: new Key('abacus'),
               child: new Icon(Icons.image, size: 64.0),
@@ -95,6 +95,10 @@ class GameListView extends StatelessWidget {
               key: new Key('tap_wrong'),
               child: new Icon(Icons.bluetooth_audio, size: 64.0),
               onPressed: () => showModes(context, 'tap_wrong')),
+          new RaisedButton(
+              key: new Key('guess'),
+              child: new Icon(Icons.keyboard_arrow_down, size: 64.0),
+              onPressed: () => showModes(context, 'guess')),
           new RaisedButton(
               key: new Key('clue_game'),
               child: new Icon(Icons.headset, size: 64.0),
