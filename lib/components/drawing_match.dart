@@ -1,26 +1,18 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-import 'package:json_annotation/json_annotation.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
-import '../components/SecondScreen.dart';
 
 class DrawPadController {
   _DrawPadDelegate _delegate;
 
   void clear() => _delegate?.clear();
   send() => _delegate?.send();
-  multiColor(colorValue) => _delegate?.multiColor(colorValue);
-  multiWidth(widthValue) => _delegate?.multiWidth(widthValue);
   undo() => _delegate?.undo();
 }
 abstract class _DrawPadDelegate {
   void clear();
   send();
-  multiColor(colorValue);
-  multiWidth(widthValue);
   undo();
 }
 
@@ -220,23 +212,6 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     return points;
   }
 
-  void multiColor(colorValue) {
-     print({"I am getting final color here  " : colorValue});
-    setState(() {
-      color = new Color(colorValue);
-//      width = 20.0;
-    });
-  }
-
-  void multiWidth(widthValue) {
-    //  print({"I am getting final width here  " : widthValue});
-    setState(() {
-      width = widthValue;
-    });
-  }
-
-//  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-
 }
 
 class DrawPainting extends CustomPainter {
@@ -258,8 +233,6 @@ class DrawPainting extends CustomPainter {
   }
 
   void paint(Canvas canvas, Size size) {
-//    print("this is paint ,methodeeee");
-//    print({"the drawLine points are : " : getAllPoints(drawLineProperty)});
 
     Paint paint = new Paint()
       ..strokeCap = StrokeCap.round;
@@ -293,17 +266,9 @@ class DrawPainting extends CustomPainter {
             drawLineProperty[i + 1]._position.y * sizeMedia.height);
 
         canvas.drawLine(currentPixel, nextPixel, paint);
-//        canvas.drawCircle(currentPixel, 8.0, paint);
-//        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
 
-//    List<Offset> position= [];
-//    for(var element in drawLineProperty)
-//      position.add(element._position);
-//
-//    paint.strokeWidth = 5.0;
-//    canvas.drawPoints(PointMode.points,position , paint);
 
   }
   @override
