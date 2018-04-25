@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maui/components/hoodie.dart';
+import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_bar.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/ClueGame.dart';
@@ -94,7 +94,7 @@ class _SingleGameState extends State<SingleGame> {
                     new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: widget.gameDisplay == GameDisplay.single
-                            ? <Widget>[new Hoodie(_score), new Text('$_score')]
+                            ? <Widget>[new Nima(_score), new Text('$_score')]
                             : <Widget>[new Text('$_score')]),
                     widget.gameMode == GameMode.timed
                         ? new ProgressBar(
@@ -107,7 +107,7 @@ class _SingleGameState extends State<SingleGame> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: widget.gameDisplay == GameDisplay.single
                             ? <Widget>[
-                                new Hoodie(_score),
+                                new Nima(_score),
                                 new Text('$_score'),
                                 widget.gameMode == GameMode.timed
                                     ? new ProgressCircle(
