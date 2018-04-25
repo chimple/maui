@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/repos/game_data.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -39,7 +39,7 @@ class ReflexState extends State<Reflex> {
   @override
   void initState() {
     super.initState();
-    print('ReflexState:initState');
+//    print('ReflexState:initState');
     _initBoard();
   }
 
@@ -54,18 +54,18 @@ class ReflexState extends State<Reflex> {
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
             ..shuffle());
     }
-    print(_shuffledLetters);
+//    print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
     setState(() => _isLoading = false);
   }
 
   @override
   void didUpdateWidget(Reflex oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
+//    print(oldWidget.iteration);
+//    print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print(_allLetters);
+//      print(_allLetters);
     }
   }
 
@@ -97,13 +97,14 @@ class ReflexState extends State<Reflex> {
 
   @override
   Widget build(BuildContext context) {
-    print("ReflexState.build");
+//    print("ReflexState.build");
     if (_isLoading) {
-      return new SizedBox(
+      return new Center(
+          child: new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
-      );
+      ));
     }
     int j = 0;
     return new ResponsiveGridView(
@@ -131,7 +132,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
+//    print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
@@ -158,12 +159,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
+//    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
+//    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
         child: new GestureDetector(

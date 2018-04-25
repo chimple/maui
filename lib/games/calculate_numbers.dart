@@ -58,8 +58,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   int _tempf = 0, _tempf1 = 0;
   String _arrow = '⤵';
   String _operator = '';
-  bool _carryFlag, _carryFlag1;
-  Animation _animationShake, _animation;
+  bool _carryFlag, _carryFlag1, _showHint = true;
+  Animation _animationShake, _animation, _opacity;
   AnimationController _animationController;
   Tuple4<int, String, int, int> _data;
   bool _isLoading = true;
@@ -75,15 +75,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   List<bool> _barrowFlag = [];
   List<bool> _numbershake = [];
   int _j1;
-  int _i = 0;
+  int _i;
 
   @override
   void initState() {
     _animationController = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 150), vsync: this);
     _animationShake =
         new Tween(begin: -6.0, end: 6.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
+    _opacity = new CurvedAnimation(
+        parent: _animationController, curve: Curves.fastOutSlowIn);
     _myAnim();
     super.initState();
     _initBoard();
@@ -249,7 +251,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         _animationController.forward();
       }
     });
+    _opacity.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _animationController.forward();
+      }
+    });
     _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   bool _zeoToNine(String text) {
@@ -279,7 +294,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   String _removeText(String _text, String _gettingResult) {
     print(_gettingResult);
     if (_text == '✖') {
-      _gettingResult = '';
+      _gettingResult = ' ';
     }
     return _gettingResult;
   }
@@ -329,15 +344,27 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 print('_num2List first digit....${_num2List[_i]}');
                 setState(() {
                   _outputList[_i] =
-                      _removeZero(int.parse(_addText(text, _outputList[_i]))).toString();
+                      _removeZero(int.parse(_addText(text, _outputList[_i])))
+                          .toString();
                   _outputList[_i] = _removeText(text, _outputList[_i]);
-                  _flag[_i] = _rigltClick(text, _outputList[_i], (_num1List[_i] + _num2List[_i] + cf[_i]));
+                  _flag[_i] = _rigltClick(text, _outputList[_i],
+                      (_num1List[_i] + _num2List[_i] + cf[_i]));
                   print('printing flag value....${_flag[_i]}');
                 });
+                // if (_flag[_i] == true) {
+                //   print('coming to check flag is true or false.....$_flag[_i]');
+                //   new Future.delayed(const Duration(milliseconds: 1000), () {
+                //     setState(() {
+                //       _showHint =false;
+                  
+                //     });
+                //   });
+                // }
                 print('first output....${_outputList[_i]}');
                 print('complete list...${_outputList}');
                 if (text == '✔') {
-                  if (_rigltClick(text, _outputList[_i], (_num1List[_i] + _num2List[_i] + cf[_i])) ==
+                  if (_rigltClick(text, _outputList[_i],
+                          (_num1List[_i] + _num2List[_i] + cf[_i])) ==
                       true) {
                     setState(() {
                       _shake[_i] = true;
@@ -345,9 +372,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     });
                     if (_outputList[_i].length > 1) {
                       setState(() {
-                        _outputList[_i] = (int.parse(_outputList[_i]) % 10).toString();
+                        _outputList[_i] =
+                            (int.parse(_outputList[_i]) % 10).toString();
                         cf[_i + 1] = 1;
-                        print('printing _outputList+1 value ....$_outputList[_i+1]');
+                        print(
+                            'printing _outputList+1 value ....$_outputList[_i+1]');
                         _preValue = _outputList[_i] + _preValue;
                       });
                     } else {
@@ -370,7 +399,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
-                        _outputList[_i] = '';
+                        _outputList[_i] = ' ';
                       });
                     });
                   }
@@ -379,28 +408,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 print(' at end _i value ${_i}');
                 print(' at end j value ${_j1}');
               }
-              if ((cf[calCount(_result) - 1] ==1 && _options=='singleDigit')) {
+              if ((cf[calCount(_result) - 1] == 1 &&
+                      _options == 'singleDigit') ||
+                  (cf[calCount(_result) - 1] == 1 &&
+                      _options == 'tripleDigitWithoutCarry' &&
+                      _outputList.length == calCount(_result)) ||
+                  (cf[calCount(_result) - 1] == 1 &&
+                      _options == 'doubleDigitWithoutCarry' &&
+                      (_num1digit2 + _num2digit2 + 1) >= 10)) {
                 print("coming to check final carry is there or not...");
-                setState(() {
-                  print('printing _i value in _carryFlag function...$_i');
-                  _outputList[_i] = '1';
-                  print('printing output list...$_outputList');
-                  _preValue = _outputList[_i] + _preValue;
-                  _flag[_i] = true;
-                });
-              }
-              if (cf[calCount(_result)-1]==1 && _options=='tripleDigitWithoutCarry' && _outputList.length==calCount(_result)) {
-                print("coming to check final carry is there or not for double and triple digit...");
-                setState(() {
-                  print('printing _i value in _carryFlag function...$_i');
-                  _outputList[_i] = '1';
-                  print('printing output list...$_outputList');
-                  _preValue = _outputList[_i] + _preValue;
-                  _flag[_i] = true;
-                });
-              }
-              if (cf[calCount(_result)-1]==1 && _options=='doubleDigitWithoutCarry' && (_num1digit2+_num2digit2+1)>=10) {
-                print("coming to check final carry is there or not for double and triple digit...");
                 setState(() {
                   print('printing _i value in _carryFlag function...$_i');
                   _outputList[_i] = '1';
@@ -415,15 +431,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
               if (_j1 > 0 && _carry[_i] == 0) {
                 setState(() {
                   _outputList[_i] =
-                      _removeZero(int.parse(_addText(text, _outputList[_i]))).toString();
+                      _removeZero(int.parse(_addText(text, _outputList[_i])))
+                          .toString();
                   _outputList[_i] = _removeText(text, _outputList[_i]);
                 });
                 if (text == '✔') {
-                  if (_num1List[_i] > _num2List[_i] || _num1List[_i] == _num2List[_i]) {
-                    if (_rigltClick(text, _outputList[_i], (_num1List[_i] - _num2List[_i] + cf[_i])) ==
+                  if (_num1List[_i] > _num2List[_i] ||
+                      _num1List[_i] == _num2List[_i]) {
+                    if (_rigltClick(text, _outputList[_i],
+                            (_num1List[_i] - _num2List[_i] + cf[_i])) ==
                         true) {
                       setState(() {
-                        _flag[_i] = _rigltClick(text, _outputList[_i], (_num1List[_i] - _num2List[_i] + cf[_i]));
+                        _flag[_i] = _rigltClick(text, _outputList[_i],
+                            (_num1List[_i] - _num2List[_i] + cf[_i]));
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         _preValue = _outputList[_i] + _preValue;
@@ -433,12 +453,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       _barrowFlag[_i] = true;
                     });
-                    if (_rigltClick(
-                            text, _outputList[_i], ((_num1List[_i] + 10) - _num2List[_i] + cf[_i])) ==
+                    if (_rigltClick(text, _outputList[_i],
+                            ((_num1List[_i] + 10) - _num2List[_i] + cf[_i])) ==
                         true) {
                       setState(() {
-                        _flag[_i] = _rigltClick(
-                            text, _outputList[_i], ((_num1List[_i] + 10) - _num2List[_i] + cf[_i]));
+                        _flag[_i] = _rigltClick(text, _outputList[_i],
+                            ((_num1List[_i] + 10) - _num2List[_i] + cf[_i]));
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         cf[_i + 1] = -1;
@@ -470,7 +490,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
-                        _outputList[_i] = '';
+                        _outputList[_i] = ' ';
                       });
                     });
                   }
@@ -480,12 +500,17 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
               break;
             case '*':
               setState(() {
-                _outputList[_i] = _removeZero(int.parse(_addText(text, _outputList[_i]))).toString();
+                _outputList[_i] =
+                    _removeZero(int.parse(_addText(text, _outputList[_i])))
+                        .toString();
                 _outputList[_i] = _removeText(text, _outputList[_i]);
-                _flag[_i] = _rigltClick(text, _outputList[_i], (_num1List[_i] * _num2List[_i]));
+                _flag[_i] = _rigltClick(
+                    text, _outputList[_i], (_num1List[_i] * _num2List[_i]));
               });
               if (text == '✔') {
-                if (_rigltClick(text, _outputList[_i], (_num1List[_i] * _num2List[_i])) == true) {
+                if (_rigltClick(text, _outputList[_i],
+                        (_num1List[_i] * _num2List[_i])) ==
+                    true) {
                   setState(() {
                     _shake[_i] = true;
                     _carry[_i] = 1;
@@ -493,7 +518,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   });
                   if (_outputList[_i].length > 1) {
                     setState(() {
-                      _outputList[_i] = (int.parse(_outputList[_i]) % 10).toString();
+                      _outputList[_i] =
+                          (int.parse(_outputList[_i]) % 10).toString();
                       _outputList[_i + 1] = (_result ~/ 10).toString();
                       _flag[_i + 1] = true;
                     });
@@ -505,7 +531,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   new Future.delayed(const Duration(milliseconds: 900), () {
                     setState(() {
                       _shake[_i] = true;
-                      _outputList[_i]='';
+                      _outputList[_i] = ' ';
                     });
                   });
                 }
@@ -515,21 +541,23 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  Widget displayContainer(double _height, String num, int carry, Key _key) {
+  Widget displayContainer(
+      double _height, String num, int carry, Key _key, Color clr) {
     return new Container(
+      height: _height * 0.09,
+      width: _height * 0.05,
+      decoration: new BoxDecoration(
+        color: clr,
+        borderRadius:
+            new BorderRadius.all(new Radius.circular(_height * 0.0095)),
+      ),
       key: _key,
       child: new Center(
           child: new Text(num,
               style: new TextStyle(
-                color: carry == 0 ? Colors.limeAccent : Colors.black,
-                fontSize: _height * 0.09,
-              ))),
+                  color: carry == 0 ? Colors.limeAccent : Colors.black,
+                  fontSize: _height * 0.05,
+                  fontWeight: FontWeight.bold))),
     );
   }
 
@@ -539,15 +567,21 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         key: _key,
         animation: _shake == false ? _animationShake : _animation,
         child: new Container(
-          color: _flag == true ? Colors.green : Colors.red,
-          height: _height * 0.1,
-          width: _height * 0.1,
+          height: _height * 0.09,
+          width: _height * 0.05,
+          //  color: _flag == true ? Colors.green : Colors.red,
+          decoration: new BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: _flag == true ? Colors.green : Colors.red,
+            borderRadius:
+                new BorderRadius.all(new Radius.circular(_height * 0.0095)),
+          ),
           child: new Center(
               child: new Text(output,
                   style: new TextStyle(
-                    color: Colors.black,
-                    fontSize: _height * 0.09,
-                  ))),
+                      color: Colors.black,
+                      fontSize: _height * 0.05,
+                      fontWeight: FontWeight.bold))),
         ));
   }
 
@@ -578,37 +612,37 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
-            color: new Color(0XFFFFF7EBCB),
+            //    color: new Color(0XFFFFF7EBCB),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 new Container(
-                  margin: new EdgeInsets.only(
-                      bottom: constraints.maxHeight * 0.001),
+                  margin:
+                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
                   child: new Table(
                     defaultColumnWidth:
-                        constraints.maxHeight > constraints.maxWidth
-                            ? new FractionColumnWidth(
-                                constraints.maxHeight * 0.0005)
-                            : new FractionColumnWidth(
-                                constraints.maxHeight * 0.0009),
+                        new FractionColumnWidth(constraints.maxHeight * 0.0003),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              color: Colors.limeAccent,
-                              child: displayContainer(constraints.maxHeight,
-                                  cf[1].toString(), cf[1], new Key('carry1'))),
-                        ),
-                        new Padding(
-                          padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
-                          child: new Container(
-                              color: Colors.limeAccent,
+                              //  color: Colors.limeAccent,
                               child: displayContainer(
-                                  constraints.maxHeight, ' ', 1, new Key(''))),
+                                  constraints.maxHeight,
+                                  cf[1].toString(),
+                                  cf[1],
+                                  new Key('carry1'),
+                                  Colors.limeAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              //  color: Colors.limeAccent,
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -616,17 +650,22 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              color: new Color(0XFFFF52C5CE),
+                            //  color: new Color(0XFFFF52C5CE),
+                            child: displayContainer(constraints.maxHeight, ' ',
+                                1, new Key(''), Colors.blueAccent),
+                          ),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              //color: new Color(0XFFFF52C5CE),
                               child: displayContainer(
-                                  constraints.maxHeight, ' ', 1, new Key(''))),
-                        ),
-                        new Padding(
-                          padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
-                          child: new Container(
-                              color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  "$_num1", 1, new Key('_num1'))),
+                                  constraints.maxHeight,
+                                  "$_num1",
+                                  1,
+                                  new Key('_num1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -634,32 +673,72 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  _operator, 1, new Key('_operator'))),
+                            // color: new Color(0XFFFF52C5CE),
+                            child: displayContainer(
+                                constraints.maxHeight,
+                                _operator,
+                                1,
+                                new Key('_operator'),
+                                Colors.blueAccent),
+                          ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  "$_num2", 1, new Key('_num2'))),
+                            //  color: new Color(0XFFFF52C5CE),
+                            child: displayContainer(
+                                constraints.maxHeight,
+                                "$_num2",
+                                1,
+                                new Key('_num2'),
+                                Colors.blueAccent),
+                          ),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
-                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,):displayShake(constraints.maxHeight, _outputList[1], _flag[1],
-                              _shake[1], new Key('shake')),
+                          child: _flag[1] == true
+                              ? new Container(
+                                  height: constraints.maxHeight * 0.09,
+                                  width: constraints.maxHeight * 0.05,
+                                  child: new BlinkAnimation(
+                                    text: _outputList[1],
+                                    height: constraints.maxHeight,
+                                    animation: _opacity,
+                                    showHint: _showHint,
+                                  ),
+                                )
+                              : displayShake(
+                                  constraints.maxHeight,
+                                  _outputList[1],
+                                  _flag[1],
+                                  _shake[1],
+                                  new Key('shake')),
                         ),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
-                            child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): new Container(
-                                child: displayShake(constraints.maxHeight, _outputList[0],
-                                    _flag[0], _shake[0], new Key('shake1')))),
+                            child: _flag[0] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[0],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : new Container(
+                                    child: displayShake(
+                                        constraints.maxHeight,
+                                        _outputList[0],
+                                        _flag[0],
+                                        _shake[0],
+                                        new Key('shake1')))),
                       ]),
                     ],
                   ),
@@ -676,209 +755,298 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'doubleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
-            color: new Color(0XFFFFF7EBCB),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new Table(
-                  defaultColumnWidth: constraints.maxHeight >
-                          constraints.maxWidth
-                      ? new FractionColumnWidth(constraints.maxHeight * 0.0004)
-                      : new FractionColumnWidth(constraints.maxHeight * 0.0005),
-                  children: <TableRow>[
-                    new TableRow(children: <Widget>[
-                      //  new BarrowAnimation(),
-                      new Padding(
+                new Container(
+                  margin:
+                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
+                  child: new Table(
+                    defaultColumnWidth: new FractionColumnWidth(
+                        constraints.maxHeight * 0.00025),
+                    children: <TableRow>[
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                            padding: new EdgeInsets.all(
+                                constraints.maxHeight * 0.005),
+                            child: new Container(
+                                child: displayContainer(
+                                    constraints.maxHeight,
+                                    cf[2].toString(),
+                                    cf[2],
+                                    new Key('carry3'),
+                                    Colors.limeAccent))),
+                        new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
-                          child: new Container(
-                              color: Colors.limeAccent,
-                              child: displayContainer(constraints.maxHeight,
-                                  cf[2].toString(), cf[2], new Key('carry3')))),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Container(
-                                color: _barrowFlag[0] == true &&
-                                        _operator == '-' &&
-                                        _carryFlag == true
-                                    ? Colors.redAccent
-                                    : Colors.limeAccent,
-                                child: new Center(
-                                  child: new Text(
-                                    cf[1].toString(),
-                                    style: new TextStyle(
-                                      color: cf[1] == -1
-                                          ? Colors.black
-                                          : Colors.limeAccent,
-                                      fontSize: constraints.maxHeight * 0.09,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : new Container(
-                                color: Colors.limeAccent,
-                                child: displayContainer(
-                                    constraints.maxHeight,
-                                    cf[1].toString(),
-                                    cf[1],
-                                    new Key('carry2'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Container(
-                                color: _barrowFlag[0] == true &&
-                                        _operator == '-' &&
-                                        _carryFlag == true
-                                    ? Colors.redAccent
-                                    : Colors.limeAccent,
-                                child: new Center(
-                                  child: new Text(
-                                    _barrowFlag[0] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag == true
-                                        ? _arrow
-                                        : ' ',
-                                    style: new TextStyle(
-                                      fontSize: _barrowFlag[0] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag == true
-                                          ? constraints.maxHeight * 0.078
-                                          : constraints.maxHeight * 0.09,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : new Container(
-                                color: Colors.limeAccent,
-                                child: displayContainer(
-                                    constraints.maxHeight,
-                                    cf[0].toString(),
-                                    cf[0],
-                                    new Key('carry1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.maxHeight, ' ', 1, new Key(''))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num1digit2', 1, new Key('_num1digit2'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Shake(
-                                animation:
-                                    _numbershake[0] == false ? _animationShake : _animation,
-                                child: new GestureDetector(
-                                  onTap: _carry[0] == 0
-                                      ? () {
-                                          setState(() {
-                                            _carryFlag = true;
-                                            if (_tempf == 0 && _barrowFlag[0] == true) {
-                                              _num1digit1 = _num1digit1 + 10;
-                                              cf[1] = -1;
-                                              _tempf++;
-                                            }
-                                          });
-                                          new Future.delayed(
-                                              const Duration(
-                                                  milliseconds: 2000), () {
-                                            setState(() {
-                                              _carryFlag = false;
-                                            });
-                                          });
-                                        }
-                                      : () {},
-                                  child: new Container(
+                          child: _operator == '-'
+                              ? new Container(
+                                  height: constraints.maxHeight * 0.09,
+                                  width: constraints.maxHeight * 0.05,
+                                  decoration: new BoxDecoration(
                                     color: _barrowFlag[0] == true &&
                                             _operator == '-' &&
                                             _carryFlag == true
-                                        ? Colors.green
-                                        : new Color(0XFFFF52C5CE),
-                                    child: new Center(
-                                        child: new Text('$_num1digit1',
-                                            style: new TextStyle(
-                                              fontSize:
-                                                  constraints.maxHeight * 0.09,
-                                            ))),
+                                        ? Colors.redAccent
+                                        : Colors.limeAccent,
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.0095)),
                                   ),
-                                ),
-                              )
-                            : new Container(
-                                color: new Color(0XFFFF52C5CE),
-                                child: displayContainer(constraints.maxHeight,
-                                    '$_num1digit1', 1, new Key('_num1digit1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                _operator, 1, new Key('_operator'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num2digit2', 1, new Key('_num2digit2'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num2digit1', 1, new Key('_num2digit1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[2]==true?new _BlinkAnimation(text:_outputList[2],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[2], _flag[2],
-                              true, new Key('')),
+                                  child: new Center(
+                                    child: new Text(
+                                      cf[1].toString(),
+                                      style: new TextStyle(
+                                          color: cf[1] == -1
+                                              ? Colors.black
+                                              : Colors.limeAccent,
+                                          fontSize:
+                                              constraints.maxHeight * 0.05,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      cf[1].toString(),
+                                      cf[1],
+                                      new Key('carry2'),
+                                      Colors.limeAccent)),
                         ),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[1], _flag[1],
-                              _shake[1], new Key('shake2')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: _operator == '-'
+                              ? new Container(
+                                  height: constraints.maxHeight * 0.09,
+                                  width: constraints.maxHeight * 0.05,
+                                  decoration: new BoxDecoration(
+                                    color: _barrowFlag[0] == true &&
+                                            _operator == '-' &&
+                                            _carryFlag == true
+                                        ? Colors.redAccent
+                                        : Colors.limeAccent,
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.0095)),
+                                  ),
+                                  child: new Center(
+                                    child: new Text(
+                                      _barrowFlag[0] == true &&
+                                              _operator == '-' &&
+                                              _carryFlag == true
+                                          ? _arrow
+                                          : ' ',
+                                      style: new TextStyle(
+                                          fontSize: _barrowFlag[0] == true &&
+                                                  _operator == '-' &&
+                                                  _carryFlag == true
+                                              ? constraints.maxHeight * 0.078
+                                              : constraints.maxHeight * 0.05,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      cf[0].toString(),
+                                      cf[0],
+                                      new Key('carry1'),
+                                      Colors.limeAccent)),
                         ),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[0], _flag[0],
-                              _shake[0], new Key('shake1')),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
-                      ),
-                    ]),
-                  ],
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit2',
+                                  1,
+                                  new Key('_num1digit2'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: _operator == '-'
+                              ? new Shake(
+                                  animation: _numbershake[0] == false
+                                      ? _animationShake
+                                      : _animation,
+                                  child: new GestureDetector(
+                                    onTap: _carry[0] == 0
+                                        ? () {
+                                            setState(() {
+                                              _carryFlag = true;
+                                              if (_tempf == 0 &&
+                                                  _barrowFlag[0] == true) {
+                                                _num1digit1 = _num1digit1 + 10;
+                                                cf[1] = -1;
+                                                _tempf++;
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                _carryFlag = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
+                                    child: new Container(
+                                      height: constraints.maxHeight * 0.09,
+                                      width: constraints.maxHeight * 0.05,
+                                      decoration: new BoxDecoration(
+                                        color: _barrowFlag[0] == true &&
+                                                _operator == '-' &&
+                                                _carryFlag == true
+                                            ? Colors.green
+                                            : Colors.blueAccent,
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(
+                                                constraints.maxHeight *
+                                                    0.0095)),
+                                      ),
+                                      child: new Center(
+                                          child: new Text('$_num1digit1',
+                                              style: new TextStyle(
+                                                  fontSize:
+                                                      constraints.maxHeight *
+                                                          0.05,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                    ),
+                                  ),
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      '$_num1digit1',
+                                      1,
+                                      new Key('_num1digit1'),
+                                      Colors.blueAccent)),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  _operator,
+                                  1,
+                                  new Key('_operator'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit2',
+                                  1,
+                                  new Key('_num2digit2'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit1',
+                                  1,
+                                  new Key('_num2digit1'),
+                                  Colors.blueAccent)),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[2] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[2],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[2],
+                                    _flag[2],
+                                    true,
+                                    new Key('')),
+                          ),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[1] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[1],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[1],
+                                    _flag[1],
+                                    _shake[1],
+                                    new Key('shake2')),
+                          ),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[0] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[0],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[0],
+                                    _flag[0],
+                                    _shake[0],
+                                    new Key('shake1')),
+                          ),
+                        ),
+                      ]),
+                    ],
+                  ),
                 ),
                 new Container(
                   child: displayTable(
@@ -892,83 +1060,144 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'tripleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
-            color: new Color(0XFFFFF7EBCB),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new Table(
-                  defaultColumnWidth: constraints.maxHeight >
-                          constraints.maxWidth
-                      ? new FractionColumnWidth(constraints.maxHeight * 0.0003)
-                      : new FractionColumnWidth(constraints.maxHeight * 0.0005),
-                  children: <TableRow>[
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: Colors.limeAccent,
-                            child: displayContainer(constraints.maxHeight,
-                                cf[3].toString(), cf[3], new Key('carry4'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Container(
-                                color: _barrowFlag[1] == true &&
-                                        _operator == '-' &&
-                                        _carryFlag1 == true
-                                    ? Colors.redAccent
-                                    : Colors.limeAccent,
-                                child: new Center(
-                                  child: new Text(
-                                    _barrowFlag[1] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag1 == true
-                                        ? '-1'
-                                        : cf[2] == -1 ? '-1' : ' ',
-                                    style: new TextStyle(
-                                      fontSize: _barrowFlag[1] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag1 == true
-                                          ? constraints.maxHeight * 0.09
-                                          : constraints.maxHeight * 0.09,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : new Container(
-                                color: Colors.limeAccent,
-                                child: displayContainer(
-                                    constraints.maxHeight,
-                                    cf[2].toString(),
-                                    cf[2],
-                                    new Key('carry3'))),
-                      ),
-                      new Padding(
+                new Container(
+                  margin:
+                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
+                  child: new Table(
+                    defaultColumnWidth:
+                        new FractionColumnWidth(constraints.maxHeight * 0.0002),
+                    children: <TableRow>[
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[3].toString(),
+                                  cf[3],
+                                  new Key('carry4'),
+                                  Colors.limeAccent)),
+                        ),
+                        new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
-                              // ? barrowFlag==true
                               ? new Container(
-                                  color: (_barrowFlag[0] == true && _carryFlag == true) ||
-                                          (_barrowFlag[1] == true && _carryFlag1 == true)
-                                      ? Colors.redAccent
-                                      : Colors.limeAccent,
+                                  height: constraints.maxHeight * 0.09,
+                                  width: constraints.maxHeight * 0.05,
+                                  decoration: new BoxDecoration(
+                                    color: _barrowFlag[1] == true &&
+                                            _operator == '-' &&
+                                            _carryFlag1 == true
+                                        ? Colors.redAccent
+                                        : Colors.limeAccent,
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.0095)),
+                                  ),
                                   child: new Center(
                                     child: new Text(
-                                      _barrowFlag[1] == true && _carryFlag1 == true
-                                          ? _arrow
-                                          : cf[1].toString(),
+                                      _barrowFlag[1] == true &&
+                                              _operator == '-' &&
+                                              _carryFlag1 == true
+                                          ? '-1'
+                                          : cf[2] == -1 ? '-1' : ' ',
                                       style: new TextStyle(
+                                          fontSize:
+                                              constraints.maxHeight * 0.05,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      cf[2].toString(),
+                                      cf[2],
+                                      new Key('carry3'),
+                                      Colors.limeAccent)),
+                        ),
+                        new Padding(
+                            padding: new EdgeInsets.all(
+                                constraints.maxHeight * 0.005),
+                            child: _operator == '-'
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    decoration: new BoxDecoration(
+                                      color: (_barrowFlag[0] == true &&
+                                                  _carryFlag == true) ||
+                                              (_barrowFlag[1] == true &&
+                                                  _carryFlag1 == true)
+                                          ? Colors.redAccent
+                                          : Colors.limeAccent,
+                                      borderRadius: new BorderRadius.all(
+                                          new Radius.circular(
+                                              constraints.maxHeight * 0.0095)),
+                                    ),
+                                    child: new Center(
+                                      child: new Text(
+                                        _barrowFlag[1] == true &&
+                                                _carryFlag1 == true
+                                            ? _arrow
+                                            : cf[1].toString(),
+                                        style: new TextStyle(
                                           color: cf[1] == -1
                                               ? Colors.black
                                               : Colors.limeAccent,
                                           fontSize: _barrowFlag[1] == true &&
                                                   _carryFlag1 == true
                                               ? constraints.maxHeight * 0.078
-                                              : constraints.maxHeight * 0.09),
+                                              : constraints.maxHeight * 0.05,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : new Container(
+                                    child: displayContainer(
+                                        constraints.maxHeight,
+                                        cf[1].toString(),
+                                        cf[1],
+                                        new Key('carry2'),
+                                        Colors.limeAccent)) //,
+                            ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: _operator == '-'
+                              ? new Container(
+                                  height: constraints.maxHeight * 0.09,
+                                  width: constraints.maxHeight * 0.05,
+                                  decoration: new BoxDecoration(
+                                    color: _barrowFlag[0] == true &&
+                                            _operator == '-' &&
+                                            _carryFlag == true
+                                        ? Colors.redAccent
+                                        : Colors.limeAccent,
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.0095)),
+                                  ),
+                                  child: new Center(
+                                    child: new Text(
+                                      _barrowFlag[0] == true &&
+                                              _operator == '-' &&
+                                              _carryFlag == true
+                                          ? _arrow
+                                          : ' ',
+                                      style: new TextStyle(
+                                        fontSize: _barrowFlag[0] == true &&
+                                                _operator == '-' &&
+                                                _carryFlag == true
+                                            ? constraints.maxHeight * 0.078
+                                            : constraints.maxHeight * 0.05,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 )
@@ -976,227 +1205,298 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   color: Colors.limeAccent,
                                   child: displayContainer(
                                       constraints.maxHeight,
-                                      cf[1].toString(),
-                                      cf[1],
-                                      new Key('carry2'))) //,
-                          ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Container(
-                                color: _barrowFlag[0] == true &&
-                                        _operator == '-' &&
-                                        _carryFlag == true
-                                    ? Colors.redAccent
-                                    : Colors.limeAccent,
-                                child: new Center(
-                                  child: new Text(
-                                    _barrowFlag[0] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag == true
-                                        ? _arrow
-                                        : ' ',
-                                    style: new TextStyle(
-                                      fontSize: _barrowFlag[0] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag == true
-                                          ? constraints.maxHeight * 0.078
-                                          : constraints.maxHeight * 0.09,
+                                      cf[0].toString(),
+                                      cf[0],
+                                      new Key('carry1'),
+                                      Colors.limeAccent)),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit3',
+                                  1,
+                                  new Key('_num1digit3'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: _operator == '-'
+                              ? new Shake(
+                                  animation: _numbershake[1] == false
+                                      ? _animationShake
+                                      : _animation,
+                                  child: new GestureDetector(
+                                    onTap: _carry[1] == 0 && _carry[0] == 1
+                                        ? () {
+                                            setState(() {
+                                              _carryFlag1 = true;
+                                              if (_tempf1 == 0 &&
+                                                  _barrowFlag[1] == true) {
+                                                _num1digit2 = _num1digit2 + 10;
+                                                cf[2] = -1;
+                                                _tempf1++;
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                _carryFlag1 = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
+                                    child: new Container(
+                                      height: constraints.maxHeight * 0.09,
+                                      width: constraints.maxHeight * 0.05,
+                                      decoration: new BoxDecoration(
+                                        color: _barrowFlag[1] == true &&
+                                                _operator == '-' &&
+                                                _carryFlag1 == true
+                                            ? Colors.green
+                                            : Colors.blueAccent,
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(
+                                                constraints.maxHeight *
+                                                    0.0095)),
+                                      ),
+                                      child: new Center(
+                                          child: new Text('$_num1digit2',
+                                              style: new TextStyle(
+                                                  fontSize:
+                                                      constraints.maxHeight *
+                                                          0.05,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
                                     ),
                                   ),
-                                ),
-                              )
-                            : new Container(
-                                color: Colors.limeAccent,
-                                child: displayContainer(
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      '$_num1digit2',
+                                      1,
+                                      new Key('_num1digit2'),
+                                      Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: _operator == '-'
+                              ? new Shake(
+                                  animation: _numbershake[0] == false
+                                      ? _animationShake
+                                      : _animation,
+                                  child: new GestureDetector(
+                                    onTap: _carry[0] == 0
+                                        ? () {
+                                            setState(() {
+                                              _carryFlag = true;
+                                              if (_tempf == 0 &&
+                                                  _barrowFlag[0] == true) {
+                                                _num1digit1 = _num1digit1 + 10;
+                                                cf[1] = -1;
+                                                _tempf++;
+                                              }
+                                            });
+                                            new Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 2000), () {
+                                              setState(() {
+                                                _carryFlag = false;
+                                              });
+                                            });
+                                          }
+                                        : () {},
+                                    child: new Container(
+                                      height: constraints.maxHeight * 0.09,
+                                      width: constraints.maxHeight * 0.05,
+                                      decoration: new BoxDecoration(
+                                        color: _barrowFlag[0] == true &&
+                                                _operator == '-' &&
+                                                _carryFlag == true
+                                            ? Colors.green
+                                            : Colors.blue,
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(
+                                                constraints.maxHeight *
+                                                    0.0095)),
+                                      ),
+                                      child: new Center(
+                                          child: new Text('$_num1digit1',
+                                              style: new TextStyle(
+                                                  fontSize:
+                                                      constraints.maxHeight *
+                                                          0.05,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                    ),
+                                  ),
+                                )
+                              : new Container(
+                                  child: displayContainer(
+                                      constraints.maxHeight,
+                                      '$_num1digit1',
+                                      1,
+                                      new Key('_num1digit1'),
+                                      Colors.blueAccent)),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  _operator,
+                                  1,
+                                  new Key('_operator'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit3',
+                                  1,
+                                  new Key('_num2digit3'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit2',
+                                  1,
+                                  new Key('_num2digit2'),
+                                  Colors.blueAccent)),
+                        ),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit1',
+                                  1,
+                                  new Key('_num2digit1'),
+                                  Colors.blueAccent)),
+                        ),
+                      ]),
+                      new TableRow(children: <Widget>[
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[3] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[3],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
                                     constraints.maxHeight,
-                                    cf[0].toString(),
-                                    cf[0],
-                                    new Key('carry1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.maxHeight, ' ', 1, new Key(''))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num1digit3', 1, new Key('_num1digit3'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Shake(
-                                animation:
-                                    _numbershake[1] == false ? _animationShake : _animation,
-                                child: new GestureDetector(
-                                  onTap: _carry[1] == 0 && _carry[0] == 1
-                                      ? () {
-                                          setState(() {
-                                            _carryFlag1 = true;
-                                            if (_tempf1 == 0 && _barrowFlag[1] == true) {
-                                              _num1digit2 = _num1digit2 + 10;
-                                              cf[2] = -1;
-                                              _tempf1++;
-                                            }
-                                          });
-                                          new Future.delayed(
-                                              const Duration(
-                                                  milliseconds: 2000), () {
-                                            setState(() {
-                                              _carryFlag1 = false;
-                                            });
-                                          });
-                                        }
-                                      : () {},
-                                  child: new Container(
-                                    color: _barrowFlag[1] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag1 == true
-                                        ? Colors.green
-                                        : new Color(0XFFFF52C5CE),
-                                    child: new Center(
-                                        child: new Text('$_num1digit2',
-                                            style: new TextStyle(
-                                              fontSize:
-                                                  constraints.maxHeight * 0.09,
-                                            ))),
-                                  ),
-                                ),
-                              )
-                            : new Container(
-                                color: new Color(0XFFFF52C5CE),
-                                child: displayContainer(constraints.maxHeight,
-                                    '$_num1digit2', 1, new Key('_num1digit2'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: _operator == '-'
-                            ? new Shake(
-                                animation:
-                                    _numbershake[0] == false ? _animationShake : _animation,
-                                child: new GestureDetector(
-                                  onTap: _carry[_i] == 0
-                                      ? () {
-                                          setState(() {
-                                            _carryFlag = true;
-                                            if (_tempf == 0 && _barrowFlag[0] == true) {
-                                              _num1digit1 = _num1digit1 + 10;
-                                              cf[1] = -1;
-                                              _tempf++;
-                                            }
-                                          });
-                                          new Future.delayed(
-                                              const Duration(
-                                                  milliseconds: 2000), () {
-                                            setState(() {
-                                              _carryFlag = false;
-                                            });
-                                          });
-                                        }
-                                      : () {},
-                                  child: new Container(
-                                    color: _barrowFlag[0] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag == true
-                                        ? Colors.green
-                                        : new Color(0XFFFF52C5CE),
-                                    child: new Center(
-                                        child: new Text('$_num1digit1',
-                                            style: new TextStyle(
-                                              fontSize:
-                                                  constraints.maxHeight * 0.09,
-                                            ))),
-                                  ),
-                                ),
-                              )
-                            : new Container(
-                                color: new Color(0XFFFF52C5CE),
-                                child: displayContainer(constraints.maxHeight,
-                                    '$_num1digit1', 1, new Key('_num1digit1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                _operator, 1, new Key('_operator'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num2digit3', 1, new Key('_num2digit3'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num2digit2', 1, new Key('_num2digit2'))),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                            color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                '$_num2digit1', 1, new Key('_num2digit1'))),
-                      ),
-                    ]),
-                    new TableRow(children: <Widget>[
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[3]==true?new _BlinkAnimation(text:_outputList[3],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[3], _flag[3],
-                              _shake[3], new Key('flag2')),
+                                    _outputList[3],
+                                    _flag[3],
+                                    _shake[3],
+                                    new Key('flag2')),
+                          ),
                         ),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[2]==true?new _BlinkAnimation(text:_outputList[2],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[2], _flag[2],
-                              _shake[2], new Key('flag2')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[2] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[2],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[2],
+                                    _flag[2],
+                                    _shake[2],
+                                    new Key('flag2')),
+                          ),
                         ),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[1]==true?new _BlinkAnimation(text:_outputList[1],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[1], _flag[1],
-                              _shake[1], new Key('flag1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[1] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[1],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[1],
+                                    _flag[1],
+                                    _shake[1],
+                                    new Key('flag1')),
+                          ),
                         ),
-                      ),
-                      new Padding(
-                        padding:
-                            new EdgeInsets.all(constraints.maxHeight * 0.005),
-                        child: new Container(
-                          child:_flag[0]==true?new _BlinkAnimation(text:_outputList[0],height:constraints.maxHeight,): displayShake(constraints.maxHeight, _outputList[0], _flag[0],
-                              _shake[0], new Key('flag1')),
+                        new Padding(
+                          padding:
+                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          child: new Container(
+                            child: _flag[0] == true
+                                ? new Container(
+                                    height: constraints.maxHeight * 0.09,
+                                    width: constraints.maxHeight * 0.05,
+                                    child: new BlinkAnimation(
+                                      text: _outputList[0],
+                                      height: constraints.maxHeight,
+                                      animation: _opacity,
+                                      showHint: _showHint,
+                                    ),
+                                  )
+                                : displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[0],
+                                    _flag[0],
+                                    _shake[0],
+                                    new Key('flag1')),
+                          ),
                         ),
-                      ),
-                    ]),
-                  ],
+                      ]),
+                    ],
+                  ),
                 ),
                 new Container(
                   child: displayTable(
@@ -1229,7 +1529,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller;
   Animation<double> animation;
-  // double _height;
 
   @override
   initState() {
@@ -1280,10 +1579,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new RaisedButton(
                     onPressed: () => widget.onPress(),
                     padding: new EdgeInsets.all(widget.height * 0.02),
-                    color: Colors.orangeAccent,
+                    //  color: Colors.orangeAccent,
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.all(
-                            new Radius.circular(widget.height * 0.09))),
+                            new Radius.circular(widget.height * 0.0095))),
                     child: new Text(_displayText,
                         key: new Key('keyPad'),
                         style: new TextStyle(
@@ -1295,76 +1594,52 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-class _BlinkAnimation extends StatefulWidget {
-  _BlinkAnimation({Key key, this.text, this.height}) : super(key: key);
-  String text;
-  double height;
-  @override
-  _BlinkAnimationState createState() => new _BlinkAnimationState();
-}
-
-class _BlinkAnimationState extends State<_BlinkAnimation> with TickerProviderStateMixin {
-  AnimationController _opacityController;
-  Animation<double> _opacity;
-  bool _showHint = false;
-  String _text;
-  double _height;
-
-  @override
-  void initState() {
-    super.initState();
-    _text = widget.text;
-    _height = widget.height;
-    _opacityController = new AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 400));
-    _opacity =
-        new CurvedAnimation(parent: _opacityController, curve: Curves.easeInOut)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _opacityController.reverse();
-            } else if (status == AnimationStatus.dismissed) {
-              _opacityController.forward();
-            }
-          });
-    _opacityController.forward();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _opacityController.dispose();
-  }
+class BlinkAnimation extends AnimatedWidget {
+  BlinkAnimation(
+      {Key key, Animation animation, this.text, this.height, this.showHint})
+      : super(key: key, listenable: animation);
+ final bool showHint;
+  final String text;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
+    Animation animation = listenable;
     return new Container(
         child: new Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        !_showHint
-            ? new FadeTransition(
-                opacity: _opacity,
-                child: new Container(
-                  height: _height * 0.1,
-                  width: _height * 0.5,
+        showHint==true
+            ? new ScaleTransition(scale: animation,
+                          child: new Container(
+                decoration: new BoxDecoration(
                   color: Colors.green,
-                  child: new Center(
-                    child: new Text(
-                      _text,
-                      style: new TextStyle(
-                          fontSize: _height * 0.08, color: Colors.black),
-                    ),
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.0095)),
+                ),
+                child: new Center(
+                  child: new Text(
+                    text,
+                    style: new TextStyle(
+                        fontSize: height * 0.05,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
+              ),
+            )
             : new Container(
-                height: _height * 0.1,
-                width: _height * 0.16,
-                color: Colors.blue,
+                decoration: new BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.0095)),
+                ),
                 child: new Text(
-                  ' ',
+                  text,
                   style: new TextStyle(
-                      fontSize: _height * 0.08, color: Colors.black),
+                      fontSize: height * 0.05,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
       ],
