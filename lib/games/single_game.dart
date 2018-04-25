@@ -531,7 +531,8 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
-      case 'draw_challenge':
+       case 'draw_challenge':
+       maxIterations=1;
         return new Tuple2(
             new Draw_Challenge(
                 onScore: _onScore,
