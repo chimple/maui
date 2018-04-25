@@ -212,6 +212,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     print("Rajesh Patillllllll");
     return r;
   }
+  
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
     List<Position> points = [];

@@ -512,6 +512,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
        case 'draw_challenge':
+       maxIterations=1;
         return new Tuple2(
             new Draw_Challenge(
                 onScore: _onScore,
