@@ -58,7 +58,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   int _tempf = 0, _tempf1 = 0;
   String _arrow = '⤵';
   String _operator = '';
-  bool _carryFlag, _carryFlag1,_showHint=false;
+  bool _carryFlag, _carryFlag1, _showHint = true;
   Animation _animationShake, _animation, _opacity;
   AnimationController _animationController;
   Tuple4<int, String, int, int> _data;
@@ -80,13 +80,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   @override
   void initState() {
     _animationController = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 150), vsync: this);
     _animationShake =
         new Tween(begin: -6.0, end: 6.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
-
-    _opacity =  new CurvedAnimation(
-        parent: _animationController, curve:  Curves.bounceOut);
+    _opacity = new CurvedAnimation(
+        parent: _animationController, curve: Curves.fastOutSlowIn);
     _myAnim();
     super.initState();
     _initBoard();
@@ -352,14 +351,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       (_num1List[_i] + _num2List[_i] + cf[_i]));
                   print('printing flag value....${_flag[_i]}');
                 });
-                if(_flag[_i]==true){
-                  print('coming to check flag is true or false.....$_flag[_i]');
-                     new Future.delayed(const Duration(milliseconds: 1000), () {
-                  setState((){
-                    _showHint==true;
-                  });
-                    });
-                }
+                // if (_flag[_i] == true) {
+                //   print('coming to check flag is true or false.....$_flag[_i]');
+                //   new Future.delayed(const Duration(milliseconds: 1000), () {
+                //     setState(() {
+                //       _showHint =false;
+                  
+                //     });
+                //   });
+                // }
                 print('first output....${_outputList[_i]}');
                 print('complete list...${_outputList}');
                 if (text == '✔') {
@@ -541,7 +541,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
   }
 
-  Widget displayContainer(double _height, String num, int carry, Key _key, Color clr) {
+  Widget displayContainer(
+      double _height, String num, int carry, Key _key, Color clr) {
     return new Container(
       height: _height * 0.09,
       width: _height * 0.05,
@@ -554,7 +555,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       child: new Center(
           child: new Text(num,
               style: new TextStyle(
-                  color: carry == 0 ? Colors.limeAccent: Colors.black,
+                  color: carry == 0 ? Colors.limeAccent : Colors.black,
                   fontSize: _height * 0.05,
                   fontWeight: FontWeight.bold))),
     );
@@ -628,16 +629,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               //  color: Colors.limeAccent,
-                              child: displayContainer(constraints.maxHeight,
-                                  cf[1].toString(), cf[1], new Key('carry1'),Colors.limeAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[1].toString(),
+                                  cf[1],
+                                  new Key('carry1'),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               //  color: Colors.limeAccent,
-                              child: displayContainer(
-                                  constraints.maxHeight, ' ', 1, new Key(''),Colors.limeAccent)),
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -646,8 +651,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             //  color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(
-                                constraints.maxHeight, ' ', 1, new Key(''),Colors.blueAccent),
+                            child: displayContainer(constraints.maxHeight, ' ',
+                                1, new Key(''), Colors.blueAccent),
                           ),
                         ),
                         new Padding(
@@ -655,8 +660,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               //color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  "$_num1", 1, new Key('_num1'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  "$_num1",
+                                  1,
+                                  new Key('_num1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -665,8 +674,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             // color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                _operator, 1, new Key('_operator'),Colors.blueAccent),
+                            child: displayContainer(
+                                constraints.maxHeight,
+                                _operator,
+                                1,
+                                new Key('_operator'),
+                                Colors.blueAccent),
                           ),
                         ),
                         new Padding(
@@ -674,8 +687,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             //  color: new Color(0XFFFF52C5CE),
-                            child: displayContainer(constraints.maxHeight,
-                                "$_num2", 1, new Key('_num2'),Colors.blueAccent),
+                            child: displayContainer(
+                                constraints.maxHeight,
+                                "$_num2",
+                                1,
+                                new Key('_num2'),
+                                Colors.blueAccent),
                           ),
                         ),
                       ]),
@@ -712,7 +729,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       text: _outputList[0],
                                       height: constraints.maxHeight,
                                       animation: _opacity,
-                                       showHint: _showHint,
+                                      showHint: _showHint,
                                     ),
                                   )
                                 : new Container(
@@ -738,7 +755,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'doubleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
-            //  color: new Color(0XFFFFF7EBCB),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -746,22 +762,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   margin:
                       new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
                   child: new Table(
-                    defaultColumnWidth:
-                        new FractionColumnWidth(
-                            constraints.maxHeight * 0.00025),
+                    defaultColumnWidth: new FractionColumnWidth(
+                        constraints.maxHeight * 0.00025),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
-                        //  new BarrowAnimation(),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
                             child: new Container(
-                                ///   color: Colors.limeAccent,
                                 child: displayContainer(
                                     constraints.maxHeight,
                                     cf[2].toString(),
                                     cf[2],
-                                    new Key('carry3'),Colors.limeAccent))),
+                                    new Key('carry3'),
+                                    Colors.limeAccent))),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
@@ -770,7 +784,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   height: constraints.maxHeight * 0.09,
                                   width: constraints.maxHeight * 0.05,
                                   decoration: new BoxDecoration(
-                                    // color: Colors.blue,
                                     color: _barrowFlag[0] == true &&
                                             _operator == '-' &&
                                             _carryFlag == true
@@ -794,12 +807,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   ),
                                 )
                               : new Container(
-                                  //   color: Colors.limeAccent,
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       cf[1].toString(),
                                       cf[1],
-                                      new Key('carry2'),Colors.limeAccent)),
+                                      new Key('carry2'),
+                                      Colors.limeAccent)),
                         ),
                         new Padding(
                           padding:
@@ -836,12 +849,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   ),
                                 )
                               : new Container(
-                                  //color: Colors.limeAccent,
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       cf[0].toString(),
                                       cf[0],
-                                      new Key('carry1'),Colors.limeAccent)),
+                                      new Key('carry1'),
+                                      Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -849,17 +862,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              //  color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(
-                                  constraints.maxHeight, ' ', 1, new Key(''),Colors.blueAccent)),
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num1digit2', 1, new Key('_num1digit2'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit2',
+                                  1,
+                                  new Key('_num1digit2'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
@@ -916,12 +931,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   ),
                                 )
                               : new Container(
-                                  // color: new Color(0XFFFF52C5CE),
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       '$_num1digit1',
                                       1,
-                                      new Key('_num1digit1'),Colors.blueAccent)),
+                                      new Key('_num1digit1'),
+                                      Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -929,25 +944,34 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  _operator, 1, new Key('_operator'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  _operator,
+                                  1,
+                                  new Key('_operator'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num2digit2', 1, new Key('_num2digit2'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit2',
+                                  1,
+                                  new Key('_num2digit2'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num2digit1', 1, new Key('_num2digit1'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit1',
+                                  1,
+                                  new Key('_num2digit1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -962,7 +986,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[2],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -985,7 +1009,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[1],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -1008,7 +1032,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[0],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -1036,7 +1060,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'tripleDigitWithoutCarry':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
-            //   color: new Color(0XFFFFF7EBCB),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -1052,9 +1075,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              //   color: Colors.limeAccent,
-                              child: displayContainer(constraints.maxHeight,
-                                  cf[3].toString(), cf[3], new Key('carry4'),Colors.limeAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[3].toString(),
+                                  cf[3],
+                                  new Key('carry4'),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                           padding:
@@ -1081,25 +1107,24 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           ? '-1'
                                           : cf[2] == -1 ? '-1' : ' ',
                                       style: new TextStyle(
-                                        fontSize: constraints.maxHeight * 0.05,
-                                        fontWeight: FontWeight.bold
-                                      ),
+                                          fontSize:
+                                              constraints.maxHeight * 0.05,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 )
                               : new Container(
-                                  // color: Colors.limeAccent,
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       cf[2].toString(),
                                       cf[2],
-                                      new Key('carry3'),Colors.limeAccent)),
+                                      new Key('carry3'),
+                                      Colors.limeAccent)),
                         ),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
                             child: _operator == '-'
-                                // ? barrowFlag==true
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
@@ -1134,12 +1159,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     ),
                                   )
                                 : new Container(
-                                    // color: Colors.limeAccent,
                                     child: displayContainer(
                                         constraints.maxHeight,
                                         cf[1].toString(),
                                         cf[1],
-                                        new Key('carry2'),Colors.limeAccent)) //,
+                                        new Key('carry2'),
+                                        Colors.limeAccent)) //,
                             ),
                         new Padding(
                           padding:
@@ -1182,7 +1207,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       constraints.maxHeight,
                                       cf[0].toString(),
                                       cf[0],
-                                      new Key('carry1'),Colors.limeAccent)),
+                                      new Key('carry1'),
+                                      Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -1190,15 +1216,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              child: displayContainer(
-                                  constraints.maxHeight, ' ', 1, new Key(''),Colors.blueAccent)),
+                              child: displayContainer(constraints.maxHeight,
+                                  ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num1digit3', 1, new Key('_num1digit3'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit3',
+                                  1,
+                                  new Key('_num1digit3'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
@@ -1233,7 +1263,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       height: constraints.maxHeight * 0.09,
                                       width: constraints.maxHeight * 0.05,
                                       decoration: new BoxDecoration(
-                                        //   color: Colors.blue,
                                         color: _barrowFlag[1] == true &&
                                                 _operator == '-' &&
                                                 _carryFlag1 == true
@@ -1256,12 +1285,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   ),
                                 )
                               : new Container(
-                                  //  color: new Color(0XFFFF52C5CE),
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       '$_num1digit2',
                                       1,
-                                      new Key('_num1digit2'),Colors.blueAccent)),
+                                      new Key('_num1digit2'),
+                                      Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
@@ -1318,12 +1347,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   ),
                                 )
                               : new Container(
-                                  //  color: new Color(0XFFFF52C5CE),
                                   child: displayContainer(
                                       constraints.maxHeight,
                                       '$_num1digit1',
                                       1,
-                                      new Key('_num1digit1'),Colors.blueAccent)),
+                                      new Key('_num1digit1'),
+                                      Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -1331,33 +1360,45 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  _operator, 1, new Key('_operator'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  _operator,
+                                  1,
+                                  new Key('_operator'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              //   color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num2digit3', 1, new Key('_num2digit3'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit3',
+                                  1,
+                                  new Key('_num2digit3'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              //  color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num2digit2', 1, new Key('_num2digit2'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit2',
+                                  1,
+                                  new Key('_num2digit2'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              // color: new Color(0XFFFF52C5CE),
-                              child: displayContainer(constraints.maxHeight,
-                                  '$_num2digit1', 1, new Key('_num2digit1'),Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num2digit1',
+                                  1,
+                                  new Key('_num2digit1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -1372,7 +1413,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[3],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -1395,7 +1436,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[2],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -1418,7 +1459,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     child: new BlinkAnimation(
                                       text: _outputList[1],
                                       height: constraints.maxHeight,
-                                       animation: _opacity,
+                                      animation: _opacity,
                                       showHint: _showHint,
                                     ),
                                   )
@@ -1488,7 +1529,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
   AnimationController controller;
   Animation<double> animation;
-  // double _height;
 
   @override
   initState() {
@@ -1554,103 +1594,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-// class _BlinkAnimation extends StatefulWidget {
-//   _BlinkAnimation({Key key, this.text, this.height}) : super(key: key);
-//   String text;
-//   double height;
-//   @override
-//   _BlinkAnimationState createState() => new _BlinkAnimationState();
-// }
-
-// class _BlinkAnimationState extends State<_BlinkAnimation>
-//     with TickerProviderStateMixin {
-//   AnimationController _opacityController;
-//   Animation<double> _opacity;
-//   bool _showHint = false;
-//   String _text;
-//   double _height;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _text = widget.text;
-//     _height = widget.height;
-
-//     _opacityController = new AnimationController(
-//         vsync: this, duration: const Duration(milliseconds: 400));
-//     _opacity =
-//         new CurvedAnimation(parent: _opacityController, curve: Curves.easeInOut)
-//           ..addStatusListener((status) {
-//             if (status == AnimationStatus.completed) {
-//               _opacityController.reverse();
-//             } else if (status == AnimationStatus.dismissed) {
-//               _opacityController.forward();
-//             }
-//           });
-//     _opacityController.forward();
-
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//     _opacityController.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return new Container(
-//         child: new Stack(
-//       alignment: Alignment.center,
-//       children: <Widget>[
-//         !_showHint
-//             ? new FadeTransition(
-//                 opacity: _opacity,
-//                 child: new Container(
-//                   decoration: new BoxDecoration(
-//                     color: Colors.green,
-//                     borderRadius: new BorderRadius.all(
-//                         new Radius.circular(_height * 0.0095)),
-//                   ),
-//                   child: new Center(
-//                     child: new Text(
-//                       _text,
-//                       style: new TextStyle(
-//                           fontSize: _height * 0.05,
-//                           color: Colors.black,
-//                           fontWeight: FontWeight.bold),
-//                     ),
-//                   ),
-//                 ),
-//               )
-
-//             : new Container(
-//                 decoration: new BoxDecoration(
-//                   color: Colors.green,
-//                   borderRadius: new BorderRadius.all(
-//                       new Radius.circular(_height * 0.0095)),
-//                 ),
-//                 child: new Text(
-//                   ' ',
-//                   style: new TextStyle(
-//                       fontSize: _height * 0.05,
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//       ],
-//     ));
-//   }
-// }
-
-
 class BlinkAnimation extends AnimatedWidget {
-  BlinkAnimation({Key key, Animation animation, this.text, this.height,this.showHint})
+  BlinkAnimation(
+      {Key key, Animation animation, this.text, this.height, this.showHint})
       : super(key: key, listenable: animation);
-final  bool showHint;
- final String text;
- final double height;
+ final bool showHint;
+  final String text;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -1659,26 +1609,25 @@ final  bool showHint;
         child: new Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        !showHint
-            ? new FadeTransition(
-                opacity: animation,
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: new BorderRadius.all(
-                        new Radius.circular(height * 0.0095)),
-                  ),
-                  child: new Center(
-                    child: new Text(
-                      text,
-                      style: new TextStyle(
-                          fontSize: height * 0.05,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
+        showHint==true
+            ? new ScaleTransition(scale: animation,
+                          child: new Container(
+                decoration: new BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.0095)),
+                ),
+                child: new Center(
+                  child: new Text(
+                    text,
+                    style: new TextStyle(
+                        fontSize: height * 0.05,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
+              ),
+            )
             : new Container(
                 decoration: new BoxDecoration(
                   color: Colors.green,
@@ -1686,7 +1635,7 @@ final  bool showHint;
                       new Radius.circular(height * 0.0095)),
                 ),
                 child: new Text(
-                  ' ',
+                  text,
                   style: new TextStyle(
                       fontSize: height * 0.05,
                       color: Colors.black,
