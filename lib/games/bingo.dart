@@ -52,11 +52,13 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   static double k = 3.0;
   static double l = 3.0;
   var count = 0;
-  var x=0;
+  var x = 0;
   // stored index check
   var s = 0;
   var element;
 
+  var matchRow;
+  var matchColumn;
 
   /// datattaaaa
 
@@ -120,13 +122,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
           if (status == Status.Active) {
             print("index kirrrrran $index");
             setState(() {
-
               if (text == element || text == ques) {
-
                 setState(() {
                   _statuses[index] = Status.Visible;
                   widget.onScore(1);
-
                 });
 
                 int counter = 0;
@@ -140,7 +139,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                   }
                 }
 
-                int matchRow = bingoHorizontalChecker();
+                matchRow = bingoHorizontalChecker();
                 print({"the bingo checker response row : ": matchRow});
 
                 ///horizontall  data showing part
@@ -156,11 +155,12 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        widget.onProgress(2/1);
+                        widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 2000), () {
-                          widget.onEnd();
-                        });
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                       });
                     }
                   } else if (matchRow == 1) {
@@ -168,10 +168,11 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        widget.onProgress(2/1);
-                        new Future.delayed(const Duration(milliseconds: 2000), () {
-                          widget.onEnd();
-                        });
+                        widget.onProgress(2 / 1);
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                       });
                     }
                   } else {
@@ -179,18 +180,19 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     for (i = matchRow; i < _size + matchRow; i++) {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
-                        widget.onProgress(2/1);
+                        widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 2000), () {
-                          widget.onEnd();
-                        });
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                       });
                     }
                   }
 
                   print("thius is bngo animati curved in it $_ShakeCells");
                 }
-                int matchColumn = bingoVerticalChecker();
+                matchColumn = bingoVerticalChecker();
                 print({"the bingo checker response column: ": matchColumn});
                 if (-1 != matchColumn) {
                   //horizontall animation and Bingo
@@ -202,11 +204,12 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         print("this is great");
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        widget.onProgress(2/1);
+                        widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 2000), () {
-                          widget.onEnd();
-                        });
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                         print({"this is 1": _ColmunCells});
                       });
                     }
@@ -220,11 +223,12 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         print({"this is 2": _ColmunCells});
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        widget.onProgress(2/1);
+                        widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds:2000), () {
-                          widget.onEnd();
-                        });
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                       });
                     }
                   } else {
@@ -233,14 +237,16 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     i <= _size + matchColumn + _size;
                     i++) {
                       print("print iiiiiiiiiiii is iiiiiiii is $i");
+
                       setState(() {
                         _ColmunCells[i] = ColmunCell.CurveColumn;
                         i = i + 2;
-                        widget.onProgress(2/1);
+                        widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 2000), () {
-                          widget.onEnd();
-                        });
+                        new Future.delayed(const Duration(milliseconds: 8000),
+                                () {
+                              widget.onEnd();
+                            });
                         print({"this is 3": _ColmunCells});
                       });
                     }
@@ -252,28 +258,34 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
                 print({"this is reference": _referenceMatrix});
                 print({"this is i value ": i});
-
-                if (i <= _size * _size - 1) {
-
-                  _copyQuestion.removeWhere((val)=> val==ques);
-                  ques = _copyQuestion[i];
-
+                if (matchRow == -1 || matchColumn == -1) {
+                  if (i <= _size * _size - 1) {
+                    _copyQuestion.removeWhere((val) => val == ques);
+                    ques = _copyQuestion[i];
+                  } else {
+                    print({"where is green manu ": " hello index is over"});
+                  }
                 } else {
-                  print({"where is green manu ": " hello index is over"});
+                  _copyQuestion.removeRange(0, _copyQuestion.length);
                 }
-              }
-
-              else {
-
+              } else {
                 _ShakeCells[index] = ShakeCell.Right;
 
                 print("this is wrongg");
-                new Future.delayed(const Duration(milliseconds: 200), () {
+                new Future.delayed(const Duration(milliseconds: 300), () {
                   setState(() {
                     _ShakeCells[index] = ShakeCell.Wrong;
-                    final _random = new Random();
-                    var element = _copyQuestion[_random.nextInt(_copyQuestion.length)];
-                    ques=element;
+                    if (matchColumn == -1 && matchRow == -1) {
+                      final _random = new Random();
+                      var element =
+                      _copyQuestion[_random.nextInt(_copyQuestion.length)];
+                      ques = element;
+                    }
+//                    else if(matchColumn==1||matchRow==1){
+//
+//                       _copyQuestion.removeRange(0, _copyQuestion.length);
+//                       print("this removing all element$_copyQuestion");
+//                    }
                   });
                 });
               }
@@ -363,24 +375,28 @@ class MyButton extends StatefulWidget {
   Status status;
   ShakeCell tile;
   ColmunCell Ctile;
-
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1, controller2;
-  Animation<double> animationRight, animationWrong, animationDance;
+  Animation<double> animationRight, animationWrong, animationDance,animationOpacity;
   String _displayText;
+
+  List<String> _DisplayCol = [];
 
   initState() {
     super.initState();
 //    print("_MyButtonState.initState: ${widget.text}");
+
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
+
     controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 10), vsync: this);
+
     animationRight =
     new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller2 = new AnimationController(
@@ -396,9 +412,23 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 ////        }
     });
     controller.forward();
-    animationWrong = new Tween(begin: -8.0, end: 8.0).animate(controller1);
-    animationDance =
-    new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
+    animationWrong = new Tween(begin: -2.0, end: 2.0).animate(controller1);
+
+    animationDance = new Tween(begin: 0.9, end: 1.0).animate(
+      new CurvedAnimation(
+          parent: controller2,
+          curve: new Interval(
+            0.100,
+            0.500,
+            curve: Curves.easeIn,
+          ),
+          reverseCurve: Curves.elasticOut
+
+      ),
+    );
+    animationOpacity = new Tween(begin:0.3,end:1.0 ).animate(new CurvedAnimation(parent: controller2,
+        curve:new Interval(0.650, 0.700,curve:new Cubic(400.0, 400.0, 400.0, 400.0))));
+    //    new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
     _myAnim();
     _myZoom();
   }
@@ -441,32 +471,47 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  var _colmunMethod;
   @override
   Widget build(BuildContext context) {
+    print({"this is 123 kiran data": widget.tile});
+    _colmunMethod = widget.Ctile;
+    print({"this is column kiiiirerrrran ": widget.Ctile});
+    if (_colmunMethod != ColmunCell.values) {
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        _colmunMethod = ColmunCell.CurveColumn;
+      });
+    }
 //    print("_MyButtonState.build");
-    return new ScaleTransition(
-        scale: widget.Ctile == ColmunCell.CurveColumn ||
-            widget.tile == ShakeCell.CurveRow
-            ? animationDance
-            : animationRight,
-        child: new Shake(
-            animation: widget.tile == ShakeCell.Right
-                ? animationWrong
-                : animationRight,
-            child: new ScaleTransition(
-                scale: animationRight,
-                child: new RaisedButton(
-                    splashColor: Colors.red,
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: widget.status == Status.Visible
-                        ? Colors.yellow
-                        : Colors.teal,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                    child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0))))));
+    print("this is method $_colmunMethod");
+    return new FadeTransition(opacity:
+    widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
+        ? animationOpacity
+        : animationRight,
+        child: new ScaleTransition(
+            scale:
+            widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
+                ? animationDance
+                :
+            animationRight,
+            child: new Shake(
+                animation: widget.tile == ShakeCell.Right
+                    ? animationWrong
+                    : animationRight,
+                child: new ScaleTransition(
+                    scale: animationRight,
+                    child: new RaisedButton(
+                        splashColor: Colors.red,
+                        onPressed: () => widget.onPress(),
+//                    padding: const EdgeInsets.all(8.0),
+                        color: widget.status == Status.Visible
+                            ? Colors.pink
+                            : Colors.teal,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
+                        child: new Text(_displayText,
+                            style: new TextStyle(
+                                color: Colors.white, fontSize: 24.0)))))));
   }
 }

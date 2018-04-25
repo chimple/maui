@@ -9,7 +9,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   image_picker: ^0.4.0
-  camera: ^0.1.1
   xmlstream: ^0.10.0
   sqflite: any
   uuid: ^0.5.0
@@ -53,9 +52,21 @@ flutter:
     - assets/imageCoordinatesInfo2.json
     - assets/apple.ogg
     - assets/Shapes.png
+    - assets/koala_neutral.png
+    - assets/koala_happy.png
+    - assets/koala_sad.png
     - assets/animations/koala_happy.json
     - assets/animations/koala_sad.json
+    - assets/animations/horse_sad2.json
+    - assets/animations/goat_sad2.json
+    - assets/animations/goat_sad3.json
     - assets/animations/zebra_face.json
+    - assets/animations/happybirthday.json
+    - assets/animations/owl_happy2.json
+    - assets/animations/owl_happy3.json
+    - assets/animations/test.json
+    - assets/animations/heart.json
+    - assets/animations/ball.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
