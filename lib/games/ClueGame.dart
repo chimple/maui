@@ -197,7 +197,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-//        print("$state:${animation.value}");
+
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
           if (widget.text != null) {
