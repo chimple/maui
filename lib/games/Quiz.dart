@@ -24,7 +24,7 @@ class Quiz extends StatefulWidget {
 
 class QuizState extends State<Quiz> {
   bool _isLoading = true;
- 
+  var keys=0;
  Tuple3<String, String, List<String>> _allques;
  int _size = 2;
   String questionText;
@@ -64,20 +64,21 @@ class QuizState extends State<Quiz> {
     setState(()=>_isLoading=false);    
   }
 
-  void handleAnswer(String answer) {
-    isCorrect = (ans == answer);
-    if (isCorrect) {
-      widget.onScore(1);
-      widget.onProgress(1.0);
-      widget.onEnd();
-      _initBoard();
-    }
-  }
+  // void handleAnswer(String answer) {
+  //   isCorrect = (ans == answer);
+  //   if (isCorrect) {
+  //     widget.onScore(1);
+  //     widget.onProgress(1.0);
+  //     widget.onEnd();
+  //     _initBoard();
+  //   }
+  // }
 
   Widget _buildItem(int index, String text) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+           keys: keys++,
         onPress: () {
           if (text == ans) {
             widget.onScore(1);
@@ -99,11 +100,13 @@ class QuizState extends State<Quiz> {
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
       print(_allques);
-    }
+     }
+    // choice=[];
   }
 
     @override
   Widget build(BuildContext context) {
+     keys=0;
     Size media = MediaQuery.of(context).size;
     double ht=media.height;
     double wd = media.width;
@@ -121,29 +124,20 @@ class QuizState extends State<Quiz> {
     int j=0;
     return new Column(
               children: <Widget>[
-
-                 new Padding(
-                    padding: new EdgeInsets.all(ht * 0.015),
-                  ),
                   
-                    new Flexible(
-                      flex: 1,
-                      child: Row(
+                    new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        new QuestionText(questionText)
-                        ]
-                    )),
+                      children: [new QuestionText(questionText,keys)]
+                    ),
+                    
 
-                    new Flexible(
-                      flex: 2,
+                    new Expanded(
                       child: new ResponsiveGridView(
                       rows: _size,
                       cols: _size,
                       children: choice.map((e) => _buildItem(j++, e)).toList(growable: false),
-                      ),
-                    ),
+              ) )
               ],
     );
   }
@@ -154,15 +148,15 @@ class QuizState extends State<Quiz> {
 class QuestionText extends StatefulWidget {
 
   final String _question;
-
-  QuestionText(this._question);
+  int keys;
+  QuestionText(this._question,this.keys);
 
   @override
   State createState() => new QuestionTextState();
 }
 
 class QuestionTextState extends State<QuestionText> with SingleTickerProviderStateMixin {
-
+  
   Animation<double> _fontSizeAnimation;
   AnimationController _fontSizeAnimationController;
 
@@ -192,6 +186,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 
   @override
   Widget build(BuildContext context) {
+     widget.keys++;
     Size media = MediaQuery.of(context).size;
     double ht=media.height;
     double wd = media.width;
@@ -212,6 +207,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [ new Text( widget._question,
+                key: new Key('question'),
               style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
                   ),
               ],
@@ -223,11 +219,10 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
-
+  MyButton({Key key, this.text,this.keys, this.onPress}) : super(key: key);
   final String text;
   final VoidCallback onPress;
-
+  int keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -271,6 +266,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    widget.keys++;
     print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
@@ -289,11 +285,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(_displayText,
+                 key: new Key("${widget.keys}"),
                     style:
                         new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
 }
-
-
-
 
