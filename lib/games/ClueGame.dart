@@ -50,11 +50,12 @@ class _ClueGameState extends State<ClueGame> {
     'aw'
   ];
   List<String> _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
-
+  var keys = 0;
   Widget _builtWord(int index, String text, double _height) {
     return new MyButton(
       key: new ValueKey<int>(index),
       text: text,
+      keys: keys++,
       height: _height,
       onPress: () {
         text = text + '1';
@@ -66,6 +67,7 @@ class _ClueGameState extends State<ClueGame> {
     return new BuildCategory(
       key: new ValueKey<int>(index),
       text: text,
+      keys: keys++,
       height: _height,
     );
   }
@@ -129,6 +131,7 @@ class _ClueGameState extends State<ClueGame> {
 
   @override
   Widget build(BuildContext context) {
+    keys=0;
     return new LayoutBuilder(builder: (context, constraints) {
       double _height, _width;
       _height = constraints.maxHeight;
@@ -174,10 +177,11 @@ class _ClueGameState extends State<ClueGame> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.height, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text,this.keys, this.height, this.onPress}) : super(key: key);
 
   final String text;
   final double height;
+  int keys;
   final VoidCallback onPress;
 
   @override
@@ -211,6 +215,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    widget.keys++;
     return new TableCell(
       child: new Padding(
         padding: new EdgeInsets.all(widget.height * 0.001),
@@ -225,6 +230,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     const BorderRadius.all(const Radius.circular(8.0))),
             child: new Text(
               _displayText,
+              key: new Key("A${widget.keys}"),
               style: new TextStyle(color: Colors.white, fontSize: 24.0),
             ),
           ),
@@ -235,10 +241,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 }
 
 class BuildCategory extends StatefulWidget {
-  BuildCategory({Key key, this.height, this.text}) : super(key: key);
+  BuildCategory({Key key, this.height,this.keys, this.text}) : super(key: key);
   final String text;
   final double height;
-
+  int keys;
   @override
   _BuildCategoryState createState() => new _BuildCategoryState();
 }
@@ -248,6 +254,7 @@ class _BuildCategoryState extends State<BuildCategory> {
 
   @override
   Widget build(BuildContext context) {
+    widget.keys++;
     return new Padding(
       padding: new EdgeInsets.all(5.0),
       child: new Container(
@@ -260,6 +267,8 @@ class _BuildCategoryState extends State<BuildCategory> {
         child: new Center(
           child: new Text(
             widget.text,
+            key: new Key("A${widget.keys}"),
+
             style: new TextStyle(color: Colors.white, fontSize: 24.0),
           ),
         ),
