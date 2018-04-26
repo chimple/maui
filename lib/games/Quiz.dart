@@ -100,7 +100,6 @@ class QuizState extends State<Quiz> {
       _initBoard();
       print(_allques);
     }
-    choice=[];
   }
 
     @override
@@ -120,21 +119,33 @@ class QuizState extends State<Quiz> {
     }    
 
     int j=0;
-    // return new Column(
-    //           children: <Widget>[
-                  
-                    // new Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [new QuestionText(questionText)]
-                    // ),
-                    //new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[0], onTap: () => handleAnswer(choices[0])), 
+    return new Column(
+              children: <Widget>[
 
-                    return new ResponsiveGridView(
+                 new Padding(
+                    padding: new EdgeInsets.all(ht * 0.015),
+                  ),
+                  
+                    new Flexible(
+                      flex: 1,
+                      child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        new QuestionText(questionText)
+                        ]
+                    )),
+
+                    new Flexible(
+                      flex: 2,
+                      child: new ResponsiveGridView(
                       rows: _size,
                       cols: _size,
                       children: choice.map((e) => _buildItem(j++, e)).toList(growable: false),
-              );
+                      ),
+                    ),
+              ],
+    );
   }
     
 }
