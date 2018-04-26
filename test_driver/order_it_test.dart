@@ -32,25 +32,24 @@ void main() {
       await driver.tap(tile);
       await new Future<Duration>.delayed(const Duration(seconds: 3));
       await driver.tap(mode);
-      List<int> list = [0,1,2,3,4,5,6];
-      var i, j;
-      for (i = 0; i <=list.length-1; i++) {
-        bool scroll=true;
-        final SerializableFinder menuItem1 =
-        find.byValueKey('orderableDataWidget${list[i]}');
-        await driver.waitFor(menuItem1).then<Null>((Null value) async {
-          scroll=false;
-        // await driver.tap(menuItem1);
-        await new Future<Duration>.delayed(const Duration(seconds: 2));
-       
-      });
-      while (scroll) {
-        await driver.scroll(
-            menuItem1, 0.0, -200.0, const Duration(milliseconds: 500));
-        await new Future<Null>.delayed(const Duration(seconds: 2));
-    }
+       List<int> list = [0,1,2,3,4,5,6];
+      //var i, j;
+      //  for (i = 0; i <=list.length-1; i++) {
+       bool scroll=true;
+       print('listing ');
+        final SerializableFinder menuItem1 = find.byValueKey('orderableDataWidget${list[0]}');
+        print(menuItem1);
+      //   await driver.waitFor(menuItem1).then<Null>((Null value) async {
+      //     scroll=false;
+      //   await driver.tap(menuItem1);
+      //   await new Future<Duration>.delayed(const Duration(seconds: 2));       
+      // });
+      // while (scroll) {
+        await driver.scroll(menuItem1, 0.0, -200.0, const Duration(milliseconds: 500));
+    //     await new Future<Null>.delayed(const Duration(seconds: 2));
+    // }
       
-      }
+      // }
     //    var swap;
 
     //   if (list[i] > list[i + 1])
