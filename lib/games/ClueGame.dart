@@ -122,7 +122,7 @@ class _ClueGameState extends State<ClueGame> {
             'submit',
             style: new TextStyle(
               color: Colors.black,
-              fontSize: 20.0,
+              fontSize: 22.0,
             ),
             textAlign: TextAlign.left,
           ),
