@@ -247,6 +247,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
     return new MyButton(
         key:new  ValueKey<int>(index),
         text: text,
+         index: index,
         status: status,
           tile: tile,
         onPress: () {
@@ -257,9 +258,9 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 
               setState(() {
                 _statuses[index] = Status.Visible;
-                widget.onScore(1);
-                        widget.onProgress((count0+2) / (_copyAns.length));
-                        count0++;
+                widget.onScore(1);count0++;
+                        widget.onProgress((count0) / (_copyAns.length-1));
+                     
 
               });
               print("length is${_copyAns.length}");
@@ -270,7 +271,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
              if(i==_copyAns.length)
               {
                   k=0;
-                          count0=0;         
+                                
     count1=0;
    
     count3=0;
@@ -317,6 +318,13 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
   Widget build(BuildContext context) {
     print("MyTableState.build");
     print("MyTableState.build");
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
 
     var j = 0;
    
@@ -332,9 +340,10 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status,this.tile, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.index,this.status,this.tile, this.onPress}) : super(key: key);
 
   final String text;
+  int index;
   Status status;
    ShakeCell tile;
   final VoidCallback onPress;
@@ -423,12 +432,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   onPressed: () => widget.onPress(),
        
                   color: widget.status == Status.Visible
-                      ? Colors.yellow
+                      ? new Color(0xFFffffff)
                       : new Color(_color),
                   shape: new RoundedRectangleBorder(
                       borderRadius:
                           new BorderRadius.all(new Radius.circular(8.0))),
                   child: new Text("$_displayText",
+                  key: new Key(widget.index.toString()+"but"),
                       style:
                           new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
        ) );
