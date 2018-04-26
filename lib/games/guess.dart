@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
-
+import '../components/Sticker.dart';
 
 Map _decoded;
 
@@ -32,6 +32,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   AnimationController controller;
   Animation<double> animation, noanimation;
+
+  // final FocusNode _focusnode = new FocusNode();
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
@@ -63,13 +65,21 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   }
 
   void _onPressed() {
-    _controller.text = '';
-    if (_guess == _decoded["parts"][0]["name"]) {} else if (_guess ==
+    
+    if (_guess == _decoded["parts"][0]["name"]) {
+      _controller.text = '';
+    } else if (_guess ==
         _decoded["parts"][1]
-            ["name"]) {} else if (_guess ==
+            ["name"]) {
+              _controller.text = '';
+            } else if (_guess ==
         _decoded["parts"][2]
-            ["name"]) {} else if (_guess ==
-        _decoded["parts"][3]["name"]) {} else {
+            ["name"]) {
+              _controller.text = '';
+            } else if (_guess ==
+        _decoded["parts"][3]["name"]) {
+          _controller.text = '';
+        } else {
           this.setState((){
             _flag = 1;
             toAnimateFunction();
@@ -79,6 +89,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                     });
                     print(animation.value);
                     print(noanimation.value);
+                    _controller.text = '';
                     controller.stop();
                   });
           });
@@ -104,6 +115,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   void dispose() {
     _controller.dispose();
     controller.dispose();
+    // _focusnode.dispose();
     super.dispose();
   }
 
@@ -115,7 +127,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-
+    // FocusScope.of(context).requestFocus(_focusnode);
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
@@ -148,6 +160,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                 animation: (_flag == 0) ? noanimation : animation,
                 child: new Center(
                   child: new TextField(
+                    // focusNode: _focusnode,
                     autofocus: true,
                     controller: _controller,
                     obscureText: false,
@@ -185,7 +198,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
             ),
           ),
         ],
-      ),
-    );
+      ),);
   }
 }
