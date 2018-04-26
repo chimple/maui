@@ -32,6 +32,10 @@ class GameListView extends StatelessWidget {
               child: new Icon(Icons.camera, size: 64.0),
               onPressed: () => showModes(context, 'memory')),
           new RaisedButton(
+              key: new Key('draw_challenge'),
+              child: new Icon(Icons.add_alert, size: 64.0),
+              onPressed: () => showModes(context, 'draw_challenge')),
+          new RaisedButton(
               key: new Key('abacus'),
               child: new Icon(Icons.image, size: 64.0),
               onPressed: () => showModes(context, 'abacus')),
@@ -96,6 +100,10 @@ class GameListView extends StatelessWidget {
               child: new Icon(Icons.bluetooth_audio, size: 64.0),
               onPressed: () => showModes(context, 'tap_wrong')),
           new RaisedButton(
+              key: new Key('guess'),
+              child: new Icon(Icons.keyboard_arrow_down, size: 64.0),
+              onPressed: () => showModes(context, 'guess')),
+          new RaisedButton(
               key: new Key('clue_game'),
               child: new Icon(Icons.headset, size: 64.0),
               onPressed: () => showModes(context, 'clue_game')),
@@ -107,7 +115,6 @@ class GameListView extends StatelessWidget {
               key: new Key('spin_wheel'),
               child: new Icon(Icons.sentiment_very_satisfied, size: 64.0),
               onPressed: () => showModes(context, 'spin_wheel')),
-
         ]);
   }
 
