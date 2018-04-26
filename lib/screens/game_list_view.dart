@@ -19,6 +19,10 @@ class GameListView extends StatelessWidget {
               key: new Key('reflex'),
               child: new Icon(Icons.collections, size: 64.0),
               onPressed: () => showModes(context, 'reflex')),
+        new RaisedButton(
+              key: new Key('circle_word'),
+              child: new Icon(Icons.account_balance, size: 64.0),
+              onPressed: () => showModes(context, 'circle_word')),
           new RaisedButton(
               key: new Key('orderit'),
               child: new Icon(Icons.cake, size: 64.0),
@@ -103,6 +107,7 @@ class GameListView extends StatelessWidget {
               key: new Key('spin_wheel'),
               child: new Icon(Icons.sentiment_very_satisfied, size: 64.0),
               onPressed: () => showModes(context, 'spin_wheel')),
+
         ]);
   }
 

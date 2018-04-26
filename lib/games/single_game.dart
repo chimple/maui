@@ -25,6 +25,7 @@ import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
 import 'package:maui/games/spin_wheel.dart';
+import 'package:maui/games/circleword.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -510,6 +511,24 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
+         case 'circle_word':
+        return new Tuple2(
+            new Circleword(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+        
+
+
     }
     return null;
   }
