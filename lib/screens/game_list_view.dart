@@ -111,6 +111,10 @@ class GameListView extends StatelessWidget {
               key: new Key('spin_wheel'),
               child: new Icon(Icons.sentiment_very_satisfied, size: 64.0),
               onPressed: () => showModes(context, 'spin_wheel')),
+               new RaisedButton(
+              key: new Key('first_word'),
+              child: new Icon(Icons.child_friendly, size: 64.0),
+              onPressed: () => showModes(context, 'first_word')),
         ]);
   }
 
