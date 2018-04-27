@@ -140,9 +140,9 @@ else {_size=p.length;}
       
        print("...............$index,$_Index,$u");
       
-      // if(result==finalans){}
+       if(result==finalans&&status[4]==0){}
       
-      // else{
+       else{
 for(var i=0;i<_size;i++){
   if(_Index[0]%_size==i){
      if(Check[0]=='1'&&_Index[0]+_size>=_letters.length){
@@ -263,11 +263,12 @@ else{}
            } 
   }
   
-}
+}}
  if(result==quest){
        quest=finalans;
        status[2]=0;
        status[0]=1;
+       widget.onScore(5);
         if(result==finalans){
           _letters1[4]=finalans.toString();
           status[2]=1;
@@ -460,7 +461,7 @@ return  new Center(
         
       ), padding: new EdgeInsets.all(10.0),
       child: new Center(child:new Text(widget.text,
-      key: new Key(widget.index.toString()),
+      key: new Key(widget.index.toString()+"but"),
        style:new
                             TextStyle(color: Colors.red,))),
     )
