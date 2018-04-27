@@ -50,7 +50,7 @@ void commonScrolling(FlutterDriver driver,String gameName) async{
       final SerializableFinder gs = find.byValueKey('Game_page');
       await new Future<Duration>.delayed(const Duration(seconds: 2));
       while (scroll) {
-      await driver.scroll(gs, 0.0, -300.0, const Duration(milliseconds: 500));
+      await driver.scroll(gs, 0.0, -500.0, const Duration(milliseconds: 500));
       await new Future<Null>.delayed(kWaitBetweenActions);
       }
       await completer.future;

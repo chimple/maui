@@ -244,8 +244,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return  new ScaleTransition(
       scale: animation,
-      child:new  Shake(
-      animation: widget.status == Statuses.wrong?animation1:animation,
+    child:new  Shake(
+     animation: widget.status == Statuses.wrong?animation1:animation,
       child: new RaisedButton(
                 onPressed: () => widget.onPress(),
                 color:widget.status == Statuses.wrong?Colors.red: Colors.lightBlue,
@@ -255,6 +255,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new Text(widget.text,
                 key: new Key(widget.index.toString()),
                     style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+                        new TextStyle(color: Colors.white, fontSize: 24.0)))
+                        )
+                        );
   }
 }
