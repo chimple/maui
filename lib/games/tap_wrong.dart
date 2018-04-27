@@ -109,6 +109,7 @@ _dispText=_dispText+d;
     return new MyButton(
        key: new ValueKey<int>(index),
         text: text,
+        index: index,
         status: status,
         onPress: () {
 print("index                         $index");
@@ -197,11 +198,12 @@ print('disp text   $_dispText');
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress,this.status}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress,this.status,this.index}) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
   final Statuses status;
+  final int index;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -251,6 +253,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(widget.text,
+                key: new Key(widget.index.toString()),
                     style:
                         new TextStyle(color: Colors.white, fontSize: 24.0)))));
   }
