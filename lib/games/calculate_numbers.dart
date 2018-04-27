@@ -83,12 +83,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     _animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     _zoomOutAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
+        duration: new Duration(milliseconds: 100), vsync: this);
     _animationShake =
         new Tween(begin: -6.0, end: 6.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
     _opacity = new CurvedAnimation(
-        parent: _zoomOutAnimationController, curve: Curves.easeOut);
+        parent: _zoomOutAnimationController, curve: Curves.easeIn);
     _myAnim();
     super.initState();
     _initBoard();
@@ -259,6 +259,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     _opacity.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _zoomOutAnimationController.reverse();
+        // setState((){  _s[0]=false;});
       } else if (status == AnimationStatus.dismissed) {
         _zoomOutAnimationController.forward();
       }
@@ -367,7 +368,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       _shake[_i] = true;
                       _carry[_i] = 1;
-                      _s[_i]=true;
+                      _s[_i] = true;
                     });
                     if (_outputList[_i].length > 1) {
                       setState(() {
@@ -383,18 +384,18 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _preValue = _outputList[_i] + _preValue;
                       });
                     }
-                  }               
+                  }
                   if (_carry[_i] == 1) {
                     setState(() {
                       print('printing _i increment....');
                       _i++;
-                      _j1--;  
-                       new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                     _s[_i-1]=false;
+                      _j1--;
+                      new Future.delayed(const Duration(milliseconds: 100), () {
+                        setState(() {
+                          _s[_i - 1] = false;
+                        });
                       });
                     });
-                        });               
                   } else {
                     setState(() {
                       _shake[_i] = false;
@@ -427,13 +428,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   print('printing output list...$_outputList');
                   _preValue = _outputList[_i] + _preValue;
                   _flag[_i] = true;
-                  _s[_i]=true;
+                  _s[_i] = true;
                 });
-                 new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                     _s[_i]=false;
-                      });
-                    });
+                new Future.delayed(const Duration(milliseconds: 100), () {
+                  setState(() {
+                    _s[_i] = false;
+                  });
+                });
               }
               _final(text, _preValue);
               break;
@@ -457,7 +458,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         _preValue = _outputList[_i] + _preValue;
-                        _s[_i]=true;
+                        _s[_i] = true;
                       });
                     }
                   } else {
@@ -473,7 +474,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         cf[_i + 1] = -1;
-                         _s[_i]=true;
+                        _s[_i] = true;
                         _preValue = _outputList[_i] + _preValue;
                       });
                     } else {
@@ -481,7 +482,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _numbershake[_i] = false;
                         _shake[_i] = false;
                       });
-                      new Future.delayed(const Duration(milliseconds: 900), () {
+                      new Future.delayed(const Duration(milliseconds: 1000),
+                          () {
                         setState(() {
                           _numbershake[_i] = true;
                           _shake[_i] = true;
@@ -494,11 +496,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       _i++;
                       _j1--;
                       print('printing j value after decrement...$_j1');
-                       new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                     _s[_i-1]=false;
+                      new Future.delayed(const Duration(milliseconds: 100), () {
+                        setState(() {
+                          _s[_i - 1] = false;
+                        });
                       });
-                    });
                     });
                   } else {
                     setState(() {
@@ -531,7 +533,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   setState(() {
                     _shake[_i] = true;
                     _carry[_i] = 1;
-                    _s[_i]=true;
+                    _s[_i] = true;
                     _preValue = _outputList[_i] + _preValue;
                   });
                   if (_outputList[_i].length > 1) {
@@ -540,26 +542,26 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           (int.parse(_outputList[_i]) % 10).toString();
                       _outputList[_i + 1] = (_result ~/ 10).toString();
                       _flag[_i + 1] = true;
-                      _s[_i+1]=true;
+                      _s[_i + 1] = true;
                     });
                   }
                 } else {
                   setState(() {
                     _shake[_i] = false;
                   });
-                  new Future.delayed(const Duration(milliseconds: 900), () {
+                  new Future.delayed(const Duration(milliseconds: 1000), () {
                     setState(() {
                       _shake[_i] = true;
                       _outputList[_i] = ' ';
                     });
                   });
                 }
-                 new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                     _s[_i]=false;
-                      _s[_i+1]=false;
-                      });
-                    });
+                new Future.delayed(const Duration(milliseconds: 100), () {
+                  setState(() {
+                    _s[_i] = false;
+                    _s[_i + 1] = false;
+                  });
+                });
               }
               _final(text, _preValue);
           }
@@ -671,7 +673,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-            child: displayContainer(constraints.maxHeight, ' ',
+                            child: displayContainer(constraints.maxHeight, ' ',
                                 1, new Key(''), Colors.blueAccent),
                           ),
                         ),
@@ -1004,7 +1006,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                       text: _outputList[2],
                                       height: constraints.maxHeight,
                                       animation: _opacity,
-                                      showHint:  _s[2],
+                                      showHint: _s[2],
                                     ),
                                   )
                                 : displayShake(
@@ -1042,7 +1044,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[0] == true                                
+                            child: _s[0] == true
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
@@ -1542,48 +1544,48 @@ class MyButton extends StatefulWidget {
   _MyButtonState createState() => new _MyButtonState();
 }
 
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+class _MyButtonState
+    extends State<MyButton> /* with TickerProviderStateMixin */ {
   String _displayText;
-  AnimationController controller;
-  Animation<double> animation;
+  // AnimationController controller;
+  // Animation<double> animation;
 
   @override
   initState() {
     super.initState();
     _displayText = widget.text;
-
-    _displayText = widget.text;
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
-        // print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          //  print('dismissed');
-          if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
-    controller.forward();
+    // controller = new AnimationController(
+    //     duration: new Duration(milliseconds: 250), vsync: this);
+    // animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    //   ..addStatusListener((state) {
+    //     // print("$state:${animation.value}");
+    //     if (state == AnimationStatus.dismissed) {
+    //       //  print('dismissed');
+    //       if ( !widget.text.isEmpty) {
+    //         setState(() => _displayText = widget.text);
+    //         controller.forward();
+    //       }
+    //     }
+    //   });
+    // controller.forward();
+    // controller.forward();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
-      _displayText = widget.text;
-      controller.forward();
-    } else if (oldWidget.text != widget.text) {
-      controller.reverse();
-    }
+    // if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
+    //   _displayText = widget.text;
+    //   controller.forward();
+    // } else if (oldWidget.text != widget.text) {
+    //   controller.reverse();
+    // }
   }
 
   @override
@@ -1591,26 +1593,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new TableCell(
         child: new Padding(
             padding: new EdgeInsets.all(widget.height * 0.005),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    elevation: 12.0,
-                    splashColor: Colors.white,
-                    highlightColor: Colors.grey,
-                    onPressed: () => widget.onPress(),
-                    padding: new EdgeInsets.all(widget.height * 0.02),
-                    //  color: Colors.orangeAccent,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.all(
-                            new Radius.circular(widget.height * 0.0095))),
-                    child: new Text(_displayText,
-                        key: new Key('keyPad'),
-                        style: new TextStyle(
-                            color: Colors.white,
-                            fontSize: _displayText == '✖' || _displayText == '✔'
-                                ? widget.height * 0.042
-                                : widget.height * 0.05,
-                            fontWeight: FontWeight.bold))))));
+            child: new RaisedButton(
+                elevation: 12.0,
+                splashColor: Colors.white,
+                highlightColor: Colors.grey,
+                onPressed: () => widget.onPress(),
+                padding: new EdgeInsets.all(widget.height * 0.02),
+                //  color: Colors.orangeAccent,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.all(
+                        new Radius.circular(widget.height * 0.0095))),
+                child: new Text(_displayText,
+                    key: new Key('keyPad'),
+                    style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: _displayText == '✖' || _displayText == '✔'
+                            ? widget.height * 0.042
+                            : widget.height * 0.05,
+                        fontWeight: FontWeight.bold)))));
   }
 }
 
@@ -1618,16 +1618,13 @@ class BlinkAnimation extends AnimatedWidget {
   BlinkAnimation(
       {Key key, Animation animation, this.text, this.height, this.showHint})
       : super(key: key, listenable: animation);
-  bool showHint;
+  final bool showHint;
   final String text;
   final double height;
 
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
-    new Future.delayed(const Duration(milliseconds: 500), () {
-      showHint = false;
-    });
     return new Container(
         child: new Stack(
       alignment: Alignment.center,
