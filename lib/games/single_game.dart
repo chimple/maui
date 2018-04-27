@@ -225,6 +225,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'order_it':
+       maxIterations = 1;
         return new Tuple2(
             new OrderIt(
                 key: new GlobalObjectKey(keyName),
