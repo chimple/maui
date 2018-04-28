@@ -54,6 +54,14 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
 
     _screenController = new AnimationController(
         duration: const Duration(milliseconds: 100), vsync: this);
+    _screenController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        new Future.delayed(const Duration(milliseconds: 1000), () {
+          print('calling onEnd');
+          widget.onEnd();
+        });
+      }
+    });
 
     _screenAnim = new Tween(begin: 0.0, end: 2255.0).animate(_screenController);
 
@@ -110,13 +118,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
       });
 
       _screenController.forward(from: 0.0);
-      _screenController.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          new Future.delayed(const Duration(milliseconds: 1000), () {
-            widget.onEnd();
-          });
-        }
-      });
     } else {
       _myAnim();
       new Future.delayed(const Duration(milliseconds: 1000), () {
