@@ -318,6 +318,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             child: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
+                    elevation: 12.0,
+                    splashColor: Colors.white,
+                    highlightColor: Colors.grey,
                     onPressed: () => widget.onPress(),
                     padding: new EdgeInsets.all(widget.height * 0.02),
                     color: new Color(0XFFFED2B7),
