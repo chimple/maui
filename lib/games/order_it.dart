@@ -79,7 +79,7 @@ class OrderItState extends State<OrderIt> {
           "Rajesh patil Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return new Container(
         child: new Column(
-          //  mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //  new Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               //  ]),
