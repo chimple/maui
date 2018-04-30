@@ -4,6 +4,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/shaker.dart';
 import 'dart:math';
+import 'package:maui/components/flash_card.dart';
 
 class CalculateTheNumbers extends StatefulWidget {
   Function onScore;
@@ -77,6 +78,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   List<bool> _numbershake = [];
   int _j1;
   int _i;
+  int _wrong=0;
+bool  _isShowingFlashCard=false;
 
   @override
   void initState() {
@@ -121,6 +124,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     _carry.clear();
     _num1List.clear();
     _num2List.clear();
+     _wrong=0;
+ _isShowingFlashCard=false;
     _s.clear();
     cf.clear();
     if (_num1 % 10 == _num1 && _num2 % 10 == _num2) {
@@ -131,7 +136,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       _options = 'singleDigit';
     } else if ((calCount(_num1) <= 2 && calCount(_num2) <= 2) &&
         (calCount(_num1 + _num2) == 2 || calCount(_num1 + _num2) == 3)) {
-      _options = 'doubleDigitWithoutCarry';
+      _options = 'doubleDigit';
       _num1digit1 = _num1 % 10;
       _num1 = _num1 ~/ 10;
       _num1digit2 = _num1 % 10;
@@ -147,7 +152,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       print('printing _num2List list values..');
       print(_num2List);
     } else {
-      _options = 'tripleDigitWithoutCarry';
+      _options = 'tripleDigit';
       _num1digit1 = _num1 % 10;
       _num1 = _num1 ~/ 10;
       _num1digit2 = _num1 % 10;
@@ -177,7 +182,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       _s.add(false);
     }
     _finalResult = _result.toString();
-    if (_options == 'doubleDigitWithoutCarry' &&
+    if (_options == 'doubleDigit' &&
         _operator == '-' &&
         calCount(_result) == 1) {
       setState(() {
@@ -185,7 +190,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         _j1 = 2;
       });
     }
-    if (_options == 'tripleDigitWithoutCarry' &&
+    if (_options == 'tripleDigit' &&
         _operator == '-' &&
         calCount(_result) == 2) {
       setState(() {
@@ -193,7 +198,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         _j1 = 3;
       });
     }
-    if (_options == 'tripleDigitWithoutCarry' &&
+    if (_options == 'tripleDigit' &&
         _operator == '-' &&
         calCount(_result) == 1) {
       setState(() {
@@ -201,7 +206,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         _j1 = 3;
       });
     }
-    if (_options == 'tripleDigitWithoutCarry' &&
+    if (_options == 'tripleDigit' &&
         _operator == '-' &&
         calCount(_result) == 0) {
       setState(() {
@@ -285,7 +290,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         text == '7' ||
         text == '8' ||
         text == '9' ||
-        text == '0') {
+        text == '0'
+       ) {
       return true;
     } else
       return false;
@@ -312,10 +318,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     if (_text == '✔' && _gettingResult == _finalResult) {
       if (_scoreCount == 0) {
         print("coming to the score count section");
-        widget.onScore(1);
+        widget.onScore(4);
         widget.onProgress(1.0);
         _scoreCount = 1;
-        new Future.delayed(const Duration(milliseconds: 2000), () {
+        new Future.delayed(const Duration(milliseconds: 1000), () {
           widget.onEnd();
         });
       }
@@ -397,28 +403,41 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       });
                     });
                   } else {
+                      // if(widget.onScore()!=0)
+                        // {  
+                          widget.onScore(-1);
+                          // }
                     setState(() {
+                        _wrong=_wrong+1;
                       _shake[_i] = false;
+                     
                     });
-                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                    new Future.delayed(const Duration(milliseconds: 800), () {
                       setState(() {
                         _shake[_i] = true;
                         _outputList[_i] = ' ';
+                         
                       });
-                    });
+                    });              
                   }
                 }
                 print('printing final value....$_preValue');
                 print(' at end _i value ${_i}');
                 print(' at end j value ${_j1}');
               }
+               if ((_wrong == 4 && _options=='singleDigit') || (_wrong == 5 && _options=='doubleDigit')||(_wrong == 6 && _options=='tripleDigit')) {
+                  setState(() {
+                    _isShowingFlashCard = true;
+                    _wrong = 0;
+                  });
+                }
               if ((cf[calCount(_result) - 1] == 1 &&
                       _options == 'singleDigit') ||
                   (cf[calCount(_result) - 1] == 1 &&
-                      _options == 'tripleDigitWithoutCarry' &&
+                      _options == 'tripleDigit' &&
                       _outputList.length == calCount(_result)) ||
                   (cf[calCount(_result) - 1] == 1 &&
-                      _options == 'doubleDigitWithoutCarry' &&
+                      _options == 'doubleDigit' &&
                       (_num1digit2 + _num2digit2 + 1) >= 10)) {
                 print("coming to check final carry is there or not...");
                 setState(() {
@@ -482,8 +501,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _numbershake[_i] = false;
                         _shake[_i] = false;
                       });
-                      new Future.delayed(const Duration(milliseconds: 1000),
-                          () {
+                      new Future.delayed(const Duration(milliseconds: 800), () {
                         setState(() {
                           _numbershake[_i] = true;
                           _shake[_i] = true;
@@ -506,7 +524,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       _shake[_i] = false;
                     });
-                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                    new Future.delayed(const Duration(milliseconds: 800), () {
                       setState(() {
                         _shake[_i] = true;
                         _outputList[_i] = ' ';
@@ -549,7 +567,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   setState(() {
                     _shake[_i] = false;
                   });
-                  new Future.delayed(const Duration(milliseconds: 1000), () {
+                  new Future.delayed(const Duration(milliseconds: 800), () {
                     setState(() {
                       _shake[_i] = true;
                       _outputList[_i] = ' ';
@@ -582,14 +600,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       child: new Center(
           child: new Text(num,
               style: new TextStyle(
-                  color: carry == 0 ? Colors.limeAccent : Colors.black,
+                  color: carry == 0?Colors.lime[300]:Colors.black,
                   fontSize: _height * 0.05,
                   fontWeight: FontWeight.bold))),
     );
   }
 
   Widget displayShake(
-      double _height, String output, bool _flag, bool _shake, Key _key) {
+      double _height, String output, bool _flag, bool _shake, Key _key, Color clr) {
     return new Shake(
         key: _key,
         animation: _shake == false ? _animationShake : _animation,
@@ -598,7 +616,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
           width: _height * 0.05,
           decoration: new BoxDecoration(
             shape: BoxShape.rectangle,
-            color: _flag == true ? Colors.green : Colors.red,
+            color: _flag == true
+                ? Colors.green
+                : clr,
             borderRadius:
                 new BorderRadius.all(new Radius.circular(_height * 0.0095)),
           ),
@@ -634,6 +654,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         child: new CircularProgressIndicator(),
       );
     }
+
+     if (_isShowingFlashCard) {
+      return new FlashCard(text: _result.toString(), onChecked: () {
+        setState(() {
+         _isShowingFlashCard=false;
+         _initBoard();
+        //  widget.onEnd();
+        });
+      });
+    }
     switch (_options) {
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
@@ -643,7 +673,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
               children: <Widget>[
                 new Container(
                   margin:
-                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
+                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.08),
                   child: new Table(
                     defaultColumnWidth:
                         new FractionColumnWidth(constraints.maxHeight * 0.0003),
@@ -653,19 +683,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                              child: displayContainer(
-                                  constraints.maxHeight,
-                                  cf[1].toString(),
-                                  cf[1],
-                                  new Key('carry1'),
-                                  Colors.limeAccent)),
+                            child: displayContainer(
+                                constraints.maxHeight,
+                                cf[1].toString(),
+                                cf[1],
+                                new Key('carry1'),
+                                Colors.lime[300]),
+                          ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
-                                  ' ', 1, new Key(''), Colors.limeAccent)),
+                                  ' ', 1, new Key(''), Colors.lime[300])),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -674,7 +705,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: displayContainer(constraints.maxHeight, ' ',
-                                1, new Key(''), Colors.blueAccent),
+                                1, new Key(''), Colors.blue[200]),
                           ),
                         ),
                         new Padding(
@@ -730,13 +761,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     showHint: _s[1],
                                   ),
                                 )
-                              : displayShake(
-                                  constraints.maxHeight,
-                                  _outputList[1],
-                                  _flag[1],
-                                  _shake[1],
-                                  new Key('shake')),
+                              : new AnimatedOpacity(opacity: 1.0,duration:new Duration(milliseconds: 200),
+                                                              child: displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[1],
+                                    _flag[1],
+                                    _shake[1],
+                                    new Key('shake'), calCount(_result)>1?Colors.red: Colors.red[300],
                         ),
+                              ),),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
@@ -757,7 +790,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         _outputList[0],
                                         _flag[0],
                                         _shake[0],
-                                        new Key('shake1')))),
+                                        new Key('shake1'),Colors.red))),
                       ]),
                     ],
                   ),
@@ -771,7 +804,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
         break;
 
-      case 'doubleDigitWithoutCarry':
+      case 'doubleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
             child: new Column(
@@ -794,7 +827,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                   cf[2].toString(),
                                   cf[2],
                                   new Key('carry3'),
-                                  Colors.limeAccent)),
+                                  Colors.lime[300])),
                         ),
                         new Padding(
                           padding:
@@ -882,7 +915,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
-                                  ' ', 1, new Key(''), Colors.blueAccent)),
+                                  ' ', 1, new Key(''), Colors.blue[200])),
                         ),
                         new Padding(
                           padding:
@@ -1014,7 +1047,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[2],
                                     _flag[2],
                                     true,
-                                    new Key('shake3')),
+                                    new Key('shake3'),
+                                   calCount(_result)==2?Colors.red[200]:Colors.red),
                           ),
                         ),
                         new Padding(
@@ -1037,7 +1071,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[1],
                                     _flag[1],
                                     _shake[1],
-                                    new Key('shake2')),
+                                    new Key('shake2'), Colors.red),
                           ),
                         ),
                         new Padding(
@@ -1060,7 +1094,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[0],
                                     _flag[0],
                                     _shake[0],
-                                    new Key('shake1')),
+                                    new Key('shake1'), Colors.red),
                           ),
                         ),
                       ]),
@@ -1069,14 +1103,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 ),
                 new Container(
                   child: displayTable(
-                      constraints.maxHeight, 'doubleDigitWithoutCarry'),
+                      constraints.maxHeight, 'doubleDigit'),
                 )
               ],
             ),
           );
         });
         break;
-      case 'tripleDigitWithoutCarry':
+      case 'tripleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           return new Container(
             child: new Column(
@@ -1441,7 +1475,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[3],
                                     _flag[3],
                                     _shake[3],
-                                    new Key('flag2')),
+                                    new Key('flag2'), Colors.red),
                           ),
                         ),
                         new Padding(
@@ -1464,7 +1498,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[2],
                                     _flag[2],
                                     _shake[2],
-                                    new Key('flag2')),
+                                    new Key('flag2'), Colors.red),
                           ),
                         ),
                         new Padding(
@@ -1487,7 +1521,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[1],
                                     _flag[1],
                                     _shake[1],
-                                    new Key('flag1')),
+                                    new Key('flag1'), Colors.red),
                           ),
                         ),
                         new Padding(
@@ -1510,7 +1544,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                     _outputList[0],
                                     _flag[0],
                                     _shake[0],
-                                    new Key('flag1')),
+                                    new Key('flag1'), Colors.red),
                           ),
                         ),
                       ]),
@@ -1519,7 +1553,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 ),
                 new Container(
                   child: displayTable(
-                      constraints.maxHeight, 'tripleDigitWithoutCarry'),
+                      constraints.maxHeight, 'tripleDigit'),
                 )
               ],
             ),
@@ -1594,12 +1628,14 @@ class _MyButtonState
         child: new Padding(
             padding: new EdgeInsets.all(widget.height * 0.005),
             child: new RaisedButton(
-                elevation: 12.0,
+                //   elevation: 5.0,
                 splashColor: Colors.white,
                 highlightColor: Colors.grey,
                 onPressed: () => widget.onPress(),
                 padding: new EdgeInsets.all(widget.height * 0.02),
-                //  color: Colors.orangeAccent,
+                color: _displayText == '✖'
+                    ? Colors.red
+                    : _displayText == '✔' ? Colors.green : Colors.orange,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.all(
                         new Radius.circular(widget.height * 0.0095))),
