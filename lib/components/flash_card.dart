@@ -1,12 +1,8 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:meta/meta.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayer/audioplayer.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:meta/meta.dart';
 
 class FlashCard extends StatefulWidget {
   final String text;
@@ -23,32 +19,11 @@ class FlashCard extends StatefulWidget {
 class _FlashCardState extends State<FlashCard> {
   Unit _unit;
   bool _isLoading = true;
-  bool _isPlaying = false;
-  AudioPlayer audioPlayer;
-
-  void initAudioPlayer() {
-    audioPlayer = new AudioPlayer();
-
-    audioPlayer.setCompletionHandler(() {
-      setState(() {
-        _isPlaying = false;
-      });
-    });
-    play();
-  }
-
-  void play() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final result = await audioPlayer
-        .play(join(documentsDirectory.path, "apple.ogg"), isLocal: true);
-    if (result == 1) setState(() => _isPlaying = true);
-  }
 
   @override
   void initState() {
     super.initState();
     _getData();
-    initAudioPlayer();
   }
 
   void _getData() async {
@@ -80,22 +55,13 @@ class _FlashCardState extends State<FlashCard> {
             children: <Widget>[
               new IconButton(
                   icon: new Icon(Icons.volume_up),
-                  onPressed: _isPlaying
-                      ? null
-                      : () {
-                          play();
-                        }),
+                  onPressed: () =>
+                      AppStateContainer.of(context).play(widget.text)),
               new Expanded(child: new Image.asset('assets/apple.png')),
               new IconButton(
                   icon: new Icon(Icons.check), onPressed: widget.onChecked)
             ],
           ))
         ]));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    audioPlayer.stop();
   }
 }
