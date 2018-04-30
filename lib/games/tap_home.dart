@@ -28,24 +28,60 @@ class TapHome extends StatefulWidget {
 }
 
 class _TapState extends State<TapHome> with TickerProviderStateMixin {
-
-  Animation _animation, _animationTimer;
-  AnimationController _animationController, _animTimerController;
-  List<int> result = [2, 3, 4];
-  int _num = 0;
+  Animation _animation, _animationTimer, _screenAnim;
+  AnimationController _animationController,
+      _animTimerController,
+      _screenController;
   int count = 0;
-  List<int> a = [1, 2, 3, 4, 5];
+  bool _isLoading = true;
+  List<String> _option;
+  String _answer;
+  Tuple2<String, List<String>> _gameData;
+  double _status = 1.0;
+
   @override
   void initState() {
     super.initState();
-    _animTimerController = new AnimationController(vsync: this, duration: new Duration(seconds: 10));
-    _animationController = new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    _animTimerController = new AnimationController(
+        vsync: this, duration: new Duration(seconds: 10));
+    _animationController = new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
 
-    _animationTimer = new StepTween(begin: 0, end: 5).animate(_animTimerController);
     _animation = new Tween(begin: 0.0, end: 15.0).animate(_animationController);
-    _myAnim1();
+
+    _animationTimer =
+        new StepTween(begin: 0, end: 7).animate(_animTimerController);
+
+    _screenController = new AnimationController(
+        duration: const Duration(milliseconds: 100), vsync: this);
+    _screenController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        new Future.delayed(const Duration(milliseconds: 1000), () {
+          print('calling onEnd');
+          widget.onEnd();
+        });
+      }
+    });
+
+    _screenAnim = new Tween(begin: 0.0, end: 2255.0).animate(_screenController);
+
+    _initBoard();
   }
 
+  void _initBoard() async {
+    count = 0;
+    _status = 1.0;
+    setState(() => _isLoading = true);
+    _animation = new Tween(begin: 0.0, end: 15.0).animate(_animationController);
+    _gameData = await fetchSequenceData(widget.gameCategoryId, 7);
+    _option = _gameData.item2;
+    _answer = _gameData.item1;
+    print("data is coming $_option");
+    _myAnim1();
+    setState(() => _isLoading = false);
+  }
+
+  //used for shaking animation
   void _myAnim() {
     _animTimerController.stop();
     _animation.addStatusListener((status) {
@@ -59,152 +95,160 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
     print('Pushed the Button');
   }
 
+  //used for changing the number at proper interval
   void _myAnim1() {
     _animationTimer.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if(count == 1)
-        {
-          _animTimerController.forward(from: 0.0);
-          new Future.delayed(const Duration(milliseconds: 500), () {
-            _animTimerController.stop();
-            setState(() {
-              _num = _num + 1;
-              count = 0;
-            });
-            _animTimerController.forward(from: 0.0);
-          });
-
-        }
-        else {
-          count = count + 1;
-          _animTimerController.forward(from: 0.0);
-        }
+        _animTimerController.forward(from: 0.0);
       }
     });
+
     _animTimerController.forward(from: 0.0);
     print('Pushed the Button');
   }
 
-  void _clickText () {
-    print("value of data");
-    print(result.length);
-    print(_num);
-    if(result.length > _num) {
-      if (result[_num] == a[_animationTimer.value]) {
-        print("heloo i have stop this22222");
-        if(result.length == _num + 1 ){
-          print("heloo i have stop this");
-          _animTimerController.stop();
-        }
-        else{
-          setState(() => _num = _num + 1);
-          _animTimerController.forward(from: 0.0);
-        }
-      }
-
-      else {
-        _myAnim();
-        new Future.delayed(const Duration(milliseconds: 1000), () {
-          _animationController.stop();
-          _animTimerController.forward(from: 0.0);
-        });
-      }
-    }
-    else{
+  //this function is used for matching on tap
+  void _clickText() {
+    if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
-    }
-  }//end of _clickText function
+      widget.onScore(1);
+      widget.onProgress(1.0);
+      setState(() {
+        _status = 0.0;
+      });
 
+      _screenController.forward(from: 0.0);
+    } else {
+      _myAnim();
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        _animationController.stop();
+        _animTimerController.forward(from: 0.0);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(TapHome oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_gameData);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    return new LayoutBuilder(builder: (context, constraints)
+    {
+      print("this is  data");
+      print(constraints.maxHeight);
+      print(constraints.maxWidth);
+      double _height, _width;
+      _height = constraints.maxHeight;
+      _width = constraints.maxWidth;
+      if (_isLoading) {
+        return new SizedBox(
+          width: 20.0,
+          height: 20.0,
+          child: new CircularProgressIndicator(),
+        );
+      }
 
-    MediaQueryData media = MediaQuery.of(context);
-    double _height = media.size.height;
-    print(media.size);
-    return new Center(
-            child: new Container(
-                color: Colors.greenAccent,
-                child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    //mainAxisSize: MainAxisSize.min,
-                    children: <Widget> [
-                      new Expanded (
-                          flex: 1,
-                          child: new AspectRatio(
-                              aspectRatio: 1.0,
-                              child: new TextAnimation(
-                                  animation: _animation,
-                                  text: result[_num].toString(),
-                                  height: _height))),
-                      new Expanded(
-                          flex: 1,
-                          child: new Material(
-                              shadowColor: Colors.black87,
-                              color: Colors.transparent,
-                              type: MaterialType.circle,
-                              child: new InkWell(
-                                  onTap: _clickText,
-                                  enableFeedback: true,
-                                  highlightColor: Colors.blueGrey,
-                                  child: new Container (
-                                      alignment: Alignment.center,
-                                      color: new Color(0X00000000),
-                                      child:new Countdown(
-                                        animation: _animationTimer,
-                                        height: _height, )))))])));
+      return new Padding(
+          padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
+          child: new Stack(alignment: Alignment.topCenter, children: <Widget>[
+            new Column(
+                children: <Widget>[
+                  new GestureDetector(
+                      key:  new Key('tap'),
+                      onTap: _clickText,
+                      child: new Countdown(
+                          animation: _animationTimer,
+                          height: _height,
+                          option: _option)
+                  )
+                ]),
+            new TextAnimation(
+                animation: _status == 0.0 ? _screenAnim : _animation,
+                text: _answer.toString(),
+                height: _height,
+                width: _width,
+                status: _status)
+          ])
+      );
+    });
+  }
+
+  dispose() {
+    _animationController.dispose();
+    _animTimerController.dispose();
+    super.dispose();
   }
 }
 
 class TextAnimation extends AnimatedWidget {
-  TextAnimation({Key key, Animation animation, this.text, this.height})
+  TextAnimation(
+      {Key key, Animation animation, this.text, this.height, this.width, this.status})
       : super(key: key, listenable: animation);
   final String text;
-  final double height;
+  final double height, width, status;
 
   @override
   Widget build(BuildContext context) {
     Animation _animation = listenable;
-    return new Center(
-        child:  new Container(
-            color: Colors.greenAccent,
-            child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //mainAxisSize: MainAxisSize.min,
-                children: [
-                  new Expanded (
-                      flex: 1,
-                      child: new Container(
-                          margin: new EdgeInsets.only(left: _animation.value ?? 0,top: height * 0.1),
+    return new Container(
+        height: _animation.value < height * 0.3 ? height * 0.3 : _animation.value ,
+        width:  _animation.value < height * 0.3 ? height * 0.3 : _animation.value ,
 
-                          alignment: Alignment.center,
-                          decoration: new BoxDecoration(
-                              border: new Border.all(
-                                  color: Colors.white,
-                                  width: height * 0.01),
-                              shape: BoxShape.circle),
-                          child: new Center(
-                              child: new Text(text,
-                                  style:new
-                                  TextStyle(color: Colors.white, fontSize: height * 0.18)))))])));
+        margin: status == 1.0 ? new EdgeInsets.only(
+          left: _animation.value ?? 0, top: _animation.value < height * 0.1 ? height * 0.1 : null,
+        ) : null,
+
+        alignment: Alignment.center,
+        color: status == 1.0 ?  null: Colors.pinkAccent,
+        decoration: status == 1.0 ? new BoxDecoration(
+            color: Colors.amber,
+            border: new Border.all(color: Colors.white, width: height * 0.01),
+            shape: BoxShape.circle): null,
+        child: new Text(
+            text,
+            key: new Key('question'),
+            style:
+            new TextStyle(color: Colors.white, fontSize: height * 0.18)));
   }
 }
 
 class Countdown extends AnimatedWidget {
-  Countdown({ Key key, this.animation, this.height }) : super(key: key, listenable: animation);
+  Countdown(
+      {Key key,
+        this.animation,
+        this.height,
+        this.width,
+        this.option,
+        this.status})
+      : super(key: key, listenable: animation);
   Animation<int> animation;
-  double height;
-  List<int> a = [1, 2, 3, 4, 5];
+  double height, width, status;
+  List<String> option;
 
   @override
-  build(BuildContext context){
-    return new Text(
-        a[animation.value].toString(),
-        key: new Key('question'),
-        style: new TextStyle(
-            fontSize: height * 0.2,
-            fontWeight: FontWeight.bold,
-            color: Colors.white )
-    );
+  Widget build(BuildContext context) {
+    return new Container(
+        height: height * 0.3,
+        width: height * 0.3,
+        alignment: Alignment.center,
+        margin: new EdgeInsets.only(top: height * 0.5),
+        decoration: new BoxDecoration(
+            color: Colors.amber,
+            border: new Border.all(color: Colors.white, width: height * 0.01),
+            shape: BoxShape.rectangle),
+        child: new Text(option[animation.value].toString(),
+            key: new Key('answer'),
+            style: new TextStyle(
+                fontSize: height * 0.2,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)));
   }
 }
+

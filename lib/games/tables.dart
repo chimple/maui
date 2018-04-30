@@ -13,14 +13,13 @@ class Tables extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  Tables(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+  Tables({key,
+    this.onScore,
+    this.onProgress,
+    this.onEnd,
+    this.iteration,
+    this.gameCategoryId,
+    this.isRotated = false})
       : super(key: key);
 
   @override
@@ -59,7 +58,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    animationController =new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    animationController = new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     _initBoard();
   }
@@ -68,7 +68,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     _count = 0;
     _wrong = 0;
     _result = '';
-    setState(()=>_isLoading=true);
+    setState(() => _isLoading = true);
     _tableData = await fetchTablesData(widget.gameCategoryId);
     _tableShuffledData = [];
 
@@ -81,11 +81,12 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     int temp1 = _tableShuffledData[_count].item1;
     String temp2 = _tableShuffledData[_count].item2;
     int temp3 = _tableShuffledData[_count].item3;
-    _question= "$temp1 $temp2 $temp3";
-    _answer=  _tableShuffledData[_count].item4;
-    setState(()=>_isLoading=false);
+    _question = "$temp1 $temp2 $temp3";
+    _answer = _tableShuffledData[_count].item4;
+    setState(() => _isLoading = false);
   }
 
+  //used for shake animation
   void _myAnim() {
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -106,43 +107,43 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         text: text,
         height: _height,
         onPress: () {
-          if(text=='clear') {
+          if (text == 'clear') {
             setState(() {
               _result = _result.substring(0, _result.length - 1);
             });
           }
-          else if(text == 'submit') {
-            if( _count > 8) {
+          else if (text == 'submit') {
+            if (_count > 8) {
               print("coming.........");
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
               });
             }
 
-            if(int.parse(_result) == _answer) {
+            if (int.parse(_result) == _answer) {
               widget.onScore(1);
               setState(() {
-                _count = _count + 1 ;
+                _count = _count + 1;
                 print(_count);
                 int temp1 = _tableShuffledData[_count].item1;
                 String temp2 = _tableShuffledData[_count].item2;
                 int temp3 = _tableShuffledData[_count].item3;
-                _question= "$temp1 $temp2 $temp3";
-                _answer= _tableShuffledData[_count].item4;
+                _question = "$temp1 $temp2 $temp3";
+                _answer = _tableShuffledData[_count].item4;
                 _result = "";
                 _wrong = 0;
               });
-              widget.onProgress( _count / _tableShuffledData.length);
+              widget.onProgress(_count / _tableShuffledData.length);
             }
-            else{
+            else {
               _myAnim();
               new Future.delayed(const Duration(milliseconds: 700), () {
-                setState((){
+                setState(() {
                   _wrong = _wrong + 1;
                   _result = "";
                 });
                 animationController.stop();
-                if(_wrong == 2){
+                if (_wrong == 2) {
                   setState(() {
                     _isShowingFlashCard = true;
                     _wrong = 0;
@@ -157,7 +158,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _result = _result + text;
               }
             });
-          }});
+          }
+        });
   }
 
 
@@ -177,7 +179,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     MediaQueryData media = MediaQuery.of(context);
     print("anuj data");
     print(media.size);
-    if(_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -193,19 +195,18 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
           int temp1 = _tableShuffledData[_count].item1;
           String temp2 = _tableShuffledData[_count].item2;
           int temp3 = _tableShuffledData[_count].item3;
-          _question= "$temp1 $temp2 $temp3";
+          _question = "$temp1 $temp2 $temp3";
           _answer = _tableShuffledData[_count].item4;
         });
       });
     }
-    return new LayoutBuilder(builder: (context, constraints)
-    {
-        print("this is  data");
-        print(constraints.maxHeight);
-        print(constraints.maxWidth);
-        double _height, _width;
-        _height = constraints.maxHeight;
-        _width = constraints.maxWidth;
+    return new LayoutBuilder(builder: (context, constraints) {
+      print("this is  data");
+      print(constraints.maxHeight);
+      print(constraints.maxWidth);
+      double _height, _width;
+      _height = constraints.maxHeight;
+      _width = constraints.maxWidth;
       List<TableRow> rows = new List<TableRow>();
       var j = 0;
       for (var i = 0; i < _size + 1; ++i) {
@@ -215,42 +216,41 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             .map((e) => _buildItem(j++, e, _height))
             .toList();
         rows.add(new TableRow(children: cells));
-
       }
       return new Center(
           child: new Container(
-              color: new Color(0XFFF39B6D),
-              child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                     new Container (
-                      margin: new EdgeInsets.only(bottom: _height * 0.1),
-                      alignment: Alignment.center,
-                      color: new Color(0X00000000),
-                      child: new Text(
-                        '$_question',
-                        key: new Key('question'),
-                        style: new TextStyle(
-                          fontSize: _height * 0.1,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+            color: new Color(0XFFF39B6D),
+            child: new Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Container (
+                    margin: new EdgeInsets.only(bottom: _height * 0.1),
+                    alignment: Alignment.center,
+                    color: new Color(0X00000000),
+                    child: new Text(
+                      '$_question',
+                      key: new Key('question'),
+                      style: new TextStyle(
+                        fontSize: _height * 0.1,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
-                    new TextAnimation(
-                        animation: animation,
-                        text: _result,
-                        height: _height,
-                        width: _width,
+                  ),
+                  new TextAnimation(
+                    animation: animation,
+                    text: _result,
+                    height: _height,
+                    width: _width,
+                  ),
+                  new Container(
+                    child: new Center(
+                      child: new Table(children: rows),
                     ),
-                    new Container(
-                      child: new Center(
-                        child: new Table(children: rows),
-                      ),
-                    )
-                  ]),
-            ));
-        });
+                  )
+                ]),
+          ));
+    });
   }
 
   @override
@@ -318,21 +318,27 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             child: new ScaleTransition(
                 scale: animation,
                 child: new RaisedButton(
+                    elevation: 12.0,
+                    splashColor: Colors.white,
+                    highlightColor: Colors.grey,
                     onPressed: () => widget.onPress(),
                     padding: new EdgeInsets.all(widget.height * 0.02),
                     color: new Color(0XFFFED2B7),
                     shape: new RoundedRectangleBorder(
                         borderRadius:
-                        new BorderRadius.all(new Radius.circular(widget.height * 0.09))),
+                        new BorderRadius.all(
+                            new Radius.circular(widget.height * 0.09))),
                     child: new Text(_displayText,
                         key: new Key('keyPad$__count'),
                         style: new TextStyle(
-                            color: Colors.black, fontSize: widget.height * 0.05))))));
+                            color: Colors.black,
+                            fontSize: widget.height * 0.05))))));
   }
 }
 
 class TextAnimation extends AnimatedWidget {
-  TextAnimation({Key key, Animation animation, this.text, this.height, this.width})
+  TextAnimation(
+      {Key key, Animation animation, this.text, this.height, this.width})
       : super(key: key, listenable: animation);
   final String text;
   final double height, width;
@@ -340,21 +346,19 @@ class TextAnimation extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
-    return new LayoutBuilder(builder: (context, constraints) {
       return new Center(
-        child: new Container(
-          height: height * 0.12,
-          width: width / 3.0,
-          alignment: Alignment.center,
-          color: new Color(0XFF734052),
-          margin: new EdgeInsets.only(
-              left: animation.value ?? 0, bottom: height * 0.09),
-          child: new Text(text,
-              style: new TextStyle(
-                color: Colors.black,
-                fontSize: height * 0.1,
-                fontWeight: FontWeight.bold,))));
-    });
+          child: new Container(
+              height: height * 0.12,
+              width: width / 3.0,
+              alignment: Alignment.center,
+              color: new Color(0XFF734052),
+              margin: new EdgeInsets.only(
+                  left: animation.value ?? 0, bottom: height * 0.09),
+              child: new Text(text,
+                  style: new TextStyle(
+                    color: Colors.black,
+                    fontSize: height * 0.1,
+                    fontWeight: FontWeight.bold,))));
   }
 }
 
