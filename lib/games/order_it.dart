@@ -29,17 +29,13 @@ class OrderIt extends StatefulWidget {
   }
 }
 
-//const kItemSize = const Size.square(80.0);
-//const kChars = const ["A", "B", "C", "D"];
-
 class OrderItState extends State<OrderIt> {
-  List<String> _chars = ["A", "B", "C", "D", "E", "F", "G"];
   int _size = 12;
   List<String> _allLetters;
   List<String> _letters;
   bool _isLoading = true;
   int cnt = 0;
-
+ int flag=0;
   @override
   void initState() {
     super.initState();
@@ -52,7 +48,6 @@ class OrderItState extends State<OrderIt> {
     print("Rajesh Patil Data ${_allLetters}");
     _letters = _allLetters.sublist(0, _size);
     print("Rajesh Patil Sublisted Data ${_letters}");
-    print("Rajesh Patil HardCoded Data ${_chars}");
     setState(() => _isLoading = false);
   }
 
@@ -60,6 +55,7 @@ class OrderItState extends State<OrderIt> {
 
   @override
   Widget build(BuildContext context) {
+    
     print("OrderItState.build");
     if (_isLoading) {
       return new SizedBox(
@@ -68,6 +64,9 @@ class OrderItState extends State<OrderIt> {
         child: new CircularProgressIndicator(),
       );
     }
+    
+   var ht = (_letters.length/2)*0.01;
+
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
     print("Rajesh MediaQuery: ${gSize}");
@@ -78,54 +77,43 @@ class OrderItState extends State<OrderIt> {
         child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //  new Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              //  ]),
               preview,
-              new Expanded(
-                child: new OrderableStack<String>(
+                 new OrderableStack<String>(
                     direction: OrderItDirection.Vertical,
                     isRotated: widget.isRotated,
                     items: _letters,
-                    //itemSize: new Size(constraints.maxWidth*0.4,constraints.maxHeight*0.01),
-                    itemSize: constraints.maxHeight > 630.0 || constraints.maxWidth > 360 ? constraints.maxWidth > 730.0         
-                          ? new Size(constraints.maxWidth * 0.4,
-                              constraints.maxHeight * 0.04)
-                          : new Size(constraints.maxWidth * 0.4,
-                              constraints.maxHeight * 0.04)
-                        : new Size(constraints.maxWidth * 0.4,
-                            constraints.maxHeight * 0.001), 
+                    itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
+                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht) 
+                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht*0.7),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
                         orderNotifier.value = orderedList.toString()),
-              )
             ]),
       );
     });
   }
-
-  Widget itemBuilder({Orderable<String> data, Size itemSize}) {
+  Widget itemBuilder({Orderable<dynamic> data, Size itemSize}) {
     print("Rajesh Patil dataIndex: ${data.dataIndex}");
     print("Rajesh Patil selected: ${data.selected}");
     print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
     print("Rajesh Patil value: ${data.value}");
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
-
-    if (orderNotifier.value.compareTo(_letters.toString()) == 0) {
-      print("Game Over!!: ${cnt++}");
-      //new Future.delayed(const Duration(milliseconds: 100), () {
-      // setState(() {
-      // widget.onScore(7);
-      // widget.onProgress(1.0);
-      // widget.onEnd();
-      // });
-      // });
+    print("Rajesh Patil flag: $flag");
+ 
+    if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag==0) {
+      flag=1;
+      new Future.delayed(const Duration(milliseconds: 100), () {
+          setState(() {
+            widget.onScore(12);
+            widget.onProgress(12/_letters.length);
+            widget.onEnd();
+          });
+       });
     }
 
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected
-          ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan
-          : Colors.orange,
+      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
       width: itemSize.width,
       height: itemSize.height,
       child: new Center(

@@ -29,7 +29,7 @@ class SecondScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Expanded(child: new Drawing(output)),
-            new Container(child: new DrawOptions()),
+            new Expanded(child: new DrawOptions()),
           ],
         ));
   }
