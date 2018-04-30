@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/drawing.dart';
 import 'dart:ui' as ui;
-import 'package:material_pickers/material_pickers.dart';
 
 
 class Drawing extends StatefulWidget {
