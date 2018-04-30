@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+import 'common_function_test.dart';
 
 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 1000);
@@ -11,36 +12,39 @@ void main() {
     FlutterDriver driver;
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+       commonSignIn(driver);
+      commonGoToGames(driver);
     });
 
     // tearDownAll(() async {
     //   if (driver != null)
     //     await driver.close();
     // });
-    
-    test('signin', () async {
 
-      final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 2));
+  
+    // test('signin', () async {
 
-      final SerializableFinder user = find.byValueKey('user-Chimple');
-      await driver.tap(user);
+    //   final Completer<Null> completer = new Completer<Null>();
+    //   await new Future<Duration>.delayed(const Duration(seconds: 2));
 
-      completer.complete();
-      await completer.future;
-    },timeout: const Timeout(const Duration(minutes: 1)));
+    //   final SerializableFinder user = find.byValueKey('user-Chimple');
+    //   await driver.tap(user);
 
-    test('Game',() async{
+    //   completer.complete();
+    //   await completer.future;
+    // },timeout: const Timeout(const Duration(minutes: 1)));
 
-      final Completer<Null> completer = new Completer<Null>();
-      await new Future<Duration>.delayed(const Duration(seconds: 1));
+    // test('Game',() async{
 
-      final SerializableFinder game = find.text('Game');
-      await driver.tap(game);
+    //   final Completer<Null> completer = new Completer<Null>();
+    //   await new Future<Duration>.delayed(const Duration(seconds: 1));
 
-      completer.complete();
-      await completer.future;
-    },timeout: const Timeout(const Duration(minutes: 1)));
+    //   final SerializableFinder game = find.text('Game');
+    //   await driver.tap(game);
+
+    //   completer.complete();
+    //   await completer.future;
+    // },timeout: const Timeout(const Duration(minutes: 1)));
 
     test('scrolling', () async {
       final Completer<Null> completer = new Completer<Null>();
@@ -63,6 +67,8 @@ void main() {
        },timeout: const Timeout(const Duration(minutes: 1)));
 
    test('Gameclick',() async{
+
+     await new Future<Duration>.delayed(const Duration(seconds: 3));
 
       final Completer<Null> completer = new Completer<Null>();
       await new Future<Duration>.delayed(const Duration(seconds: 1));
@@ -87,6 +93,7 @@ void main() {
     },timeout: const Timeout(const Duration(minutes: 4)));
 
      test('PlayingGame', () async{
+       await new Future<Duration>.delayed(const Duration(seconds: 3));
        final Completer<Null> completer = new Completer<Null>();
        for(int i=0;i<=15;i++){
          for(int j=1;j<=10;j++){
