@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-//import 'package:maui/assets/Boy'
-//import 'package:maui/components/shaker.dart';
 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
@@ -110,6 +108,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   void initState() {
     super.initState();
     _initBoard();
+    new Future.delayed(
+      const Duration(milliseconds: 1000),
+    );
   }
 
   @override
@@ -135,47 +136,29 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    // _leftSideletters.clear();
-    // _rightSideLetters.clear();
-    // _shuffledLetters.clear();
-    // _shuffledLetters1.clear();
-    // _lettersLeft.clear();
-    // _lettersRight.clear();
-    // _shake.clear();
-    _allLetters = await fetchPairData(widget.gameCategoryId,6);
+    _allLetters = await fetchPairData(widget.gameCategoryId, 5);
     _allLetters.forEach((k, v) {
       _leftSideletters.add(k);
       _rightSideLetters.add(v);
     });
-    //for (int i = 0; i < 1; i++) {
     _shuffledLetters.addAll(
         _leftSideletters.take(_nextTask).toList(growable: false)..shuffle());
     _shuffledLetters1.addAll(
         _rightSideLetters.take(_nextTask).toList(growable: false)..shuffle());
-    // }
     _lettersLeft = _shuffledLetters.sublist(0, 5);
     _lettersRight = _shuffledLetters1.sublist(0, 5);
     _statusColorChange =
         _shuffledLetters.map((a) => Status.Disable).toList(growable: false);
-    // _statusShake =
-    //     _shuffledLetters1.map((e) => Status.Stopped).toList(growable: false);
     for (int i = 0; i <= 9; i++) {
       _shake.add(0);
     }
-    // print("after fatching for left:: $_leftSideletters");
-    // print("after fatching for right:: $_rightSideLetters");
-    // print("after fatching shuffle left:: $_shuffledLetters");
-    // print("after fatching shuffle right:: $_shuffledLetters1");
-    //print("shuffle data:: $_lettersLeft");
-    //print("shuffle data:: $_lettersRight");
     setState(() => _isLoading = false);
-    //print("length: : ${_leftSideletters.length}");
   }
 
   Widget _buildLeftSide(BuildContext context) {
     int j = 0;
     return new ResponsiveGridView(
-      rows:5,
+      rows: 5,
       cols: 1,
       children: _lettersLeft
           .map((e) => _buildItemsLeft(j, e, _statusColorChange[j++]))
@@ -208,6 +191,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
           indexLeftButton = index;
           leftIsTapped = 1;
           leftSideTextIndex = _leftSideletters.indexOf(_leftSideText);
+          // question=_rightSideText[ _leftSideletters.indexOf(_leftSideText)];
         });
   }
 
@@ -232,6 +216,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         onPress: () {
           indexText2 = _lettersRight.indexOf(text);
           _rightSideText = text;
+
           match(index);
         });
   }
@@ -240,29 +225,19 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1) if (leftSideTextIndex ==
             _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-      try {
-        setState(() {
-          //  _lettersLeft[indexText1] = null;
-          // _lettersRight[indexText2] = null;
-          //_statusShake[indexRightbutton] = Status.Dump;
-          //_statusColorChange[indexLeftButton] = Status.Disable;
-          _shake[indexRightbutton] = 1;
-        });
-      } catch (exception, e) {}
+      // if (identical(question, answer)) {
+
+      setState(() {
+        //  _lettersLeft[indexText1] = null;
+        // _lettersRight[indexText2] = null;
+        //_statusShake[indexRightbutton] = Status.Dump;
+        //_statusColorChange[indexLeftButton] = Status.Disable;
+        _shake[indexRightbutton] = 1;
+      });
       correct++;
       widget.onScore(1);
       widget.onProgress(correct / 5);
       leftIsTapped = 0;
-      try {
-        new Future.delayed(
-            const Duration(
-              milliseconds: 500,
-            ), () {
-          setState(() {
-            _statusShake[indexRightbutton] = Status.Color;
-          });
-        });
-      } catch (exception, e) {}
     } else {
       leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
@@ -276,7 +251,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
           });
         } catch (exception, e) {}
         try {
-          new Future.delayed(const Duration(milliseconds: 500), () {
+          new Future.delayed(const Duration(milliseconds: 700), () {
             setState(() {
               //_statusShake[indexRightbutton] = Status.Stopped;
               _statusColorChange[indexLeftButton] = Status.Disable;
@@ -301,7 +276,15 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       correct = 0;
       widget.onScore(-_wrongAttem);
       _wrongAttem = 0;
-      new Future.delayed(const Duration(milliseconds: 700), () {
+      //setState(() {});
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        _leftSideletters.clear();
+        _rightSideLetters.clear();
+        _shuffledLetters.clear();
+        _shuffledLetters1.clear();
+        _lettersLeft.clear();
+        _lettersRight.clear();
+        _shake.clear();
         widget.onEnd();
         // _initBoard();
         print("Game Over");
@@ -348,22 +331,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.initState();
     _displayText = widget.text;
     //print("button key :: ${widget.key}");
-    radiusCntroller = new AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
+
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
     controllerShake = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
-    dumpController = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 50), vsync: this);
     animationInvisible = new CurvedAnimation(
-        parent: controller, curve: new Interval(0.0, 1.0, curve: Curves.ease));
-    dumpAnimation = new CurvedAnimation(
-        parent: dumpController,
-        curve: new Interval(0.60, 1.0, curve: Curves.easeIn));
+        parent: controller,
+        curve: new Interval(0.0, 1.0, curve: Curves.easeInOut));
     animationShake = new Tween(
-      begin: -3.10,
-      end: 2.10,
+      begin: -1.50,
+      end: 1.50,
     ).animate(controllerShake);
     noAimation = new Tween(
       begin: 0.0,
@@ -371,27 +349,26 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     ).animate(controllerShake);
     controller.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
-        if (widget.text == null) {
-          setState(() => _displayText = widget.text);
-        }
+        // if (widget.text == null) {
+        setState(() => _displayText = widget.text);
+        //}
       }
     });
-    borderRadius = new BorderRadiusTween(
-      begin: new BorderRadius.circular(4.0),
-      end: new BorderRadius.circular(75.0),
-    ).animate(
-      new CurvedAnimation(
-        parent: radiusCntroller,
-        curve: new Interval(
-          0.375,
-          0.500,
-          curve: Curves.ease,
-        ),
-      ),
-    );
+    // borderRadius = new BorderRadiusTween(
+    //   begin: new BorderRadius.circular(4.0),
+    //   end: new BorderRadius.circular(75.0),
+    // ).animate(
+    //   new CurvedAnimation(
+    //     parent: radiusCntroller,
+    //     curve: new Interval(
+    //       0.375,
+    //       0.500,
+    //       curve: Curves.ease,
+    //     ),
+    //   ),
+    // );
     controller.forward();
     shake();
-    dumping();
   }
 
   @override
@@ -407,17 +384,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     // });
     // }
     // controller.forward();
-  }
-
-  void dumping() {
-    dumpController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        dumpController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        dumpController.forward();
-      }
-    });
-    dumpController.forward();
+    if (oldWidget.text != widget.text) {
+      //controller.reverse();
+      print("OldWidget ${oldWidget.text}");
+      print("New Widget:: ${widget.text}");
+    }
   }
 
   void shake() {
@@ -435,17 +406,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void dispose() {
     controllerShake.dispose();
     controller.dispose();
-    dumpController.dispose();
     super.dispose();
   }
 
   @override
-  Widget animaton() {
-    return new RichText();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final Color GRADIENT_TOP = const Color(0xFFF5F5F5);
+    final Color GRADIENT_BOTTOM = const Color(0xFFE8E8E8);
     const double radius = 8.0;
     Size media = MediaQuery.of(context).size;
     double _w = media.height;
@@ -462,33 +429,31 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       changeColor = 0xFF00FF00;
     }
     return new Shaker(
-        // key: widget.key,
         animation: widget.status == Status.Shake || widget.shake == 2
             ? animationShake
             : noAimation,
         child: new ScaleTransition(
-            scale: animationInvisible,
-            child: new RaisedButton(
+          scale: animationInvisible,
+          child: new RaisedButton(
+              //splashColor: new Color(0xFFed4a79),
               //color: new Color(_color),
-                disabledColor:
-                    widget.status == Status.Enable || widget.shake == 1
-                        ? new Color(changeColor)
-                        : new Color(_color), // red color
-                elevation: 8.0,
-                onPressed:
-                    (widget.status == Status.Disable || widget.shake == 0)
-                        ? () => widget.onPress()
-                        : null,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: widget.status == Status.Color
-                        ? const BorderRadius.all(const Radius.circular(20.0))
-                        : const BorderRadius.all(
-                            const Radius.circular(radius))),
-                child: new Text(_displayText,
-                    style: new TextStyle(
-                       color: Colors.white,
-                        fontSize: _w,
-                        fontStyle: FontStyle.italic)))));
+              disabledColor: widget.status == Status.Enable || widget.shake == 1
+                  ? new Color(changeColor)
+                  : new Color(_color), // red color
+              elevation: 8.0,
+              onPressed: (widget.status == Status.Disable || widget.shake == 0)
+                  ? () => widget.onPress()
+                  : null,
+              shape: new RoundedRectangleBorder(
+                  borderRadius: widget.shake == 1
+                      ? const BorderRadius.all(const Radius.circular(16.0))
+                      : const BorderRadius.all(const Radius.circular(radius))),
+              child: new Text(_displayText,
+                  style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: _w,
+                      fontStyle: FontStyle.italic))),
+        ));
   }
 }
 
