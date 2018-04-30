@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/drawing.dart';
 import 'dart:ui' as ui;
+import 'package:material_pickers/material_pickers.dart';
 
 
 class Drawing extends StatefulWidget {
@@ -18,11 +19,11 @@ class Drawing extends StatefulWidget {
 }
 
 class DrawScreen extends State<Drawing> {
-  DrawPadController _padController;
-  void initState() {
-    print({"init State - in drawScreen": "line 22"});
-    _padController = new DrawPadController();
-  }
+  DrawPadController _padController = new DrawPadController();
+//  void initState() {
+//    print({"init State - in drawScreen": "line 22"});
+//    _padController = new DrawPadController();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +302,7 @@ class DrawScreen extends State<Drawing> {
                                 ),
                               ),
                               new FlatButton(
-                                onPressed: () => _multiColor(0xFFF1F8E9),
+                                onPressed: () => _multiColor(0xffffd54f),
                                 child: new Container(
                                   width: constraints.maxHeight * 0.06,
                                   height: constraints.maxHeight * 0.06,
@@ -416,6 +417,7 @@ class DrawScreen extends State<Drawing> {
   }
 
   void _onUndo() {
+    print({"this is undo methode before reference " : _padController.undo()});
     _padController.undo();
     print("this is undo methode");
   }
