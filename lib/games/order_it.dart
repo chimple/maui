@@ -84,7 +84,7 @@ class OrderItState extends State<OrderIt> {
                     items: _letters,
                     itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
                       ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt) 
-                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.9),  
+                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.8),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
                         orderNotifier.value = orderedList.toString()),
