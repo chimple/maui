@@ -6,7 +6,7 @@ import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/flip_animator.dart';
 import '../components/responsive_grid_view.dart';
-import '../components/shaker.dart';
+import '../components/shake_animator.dart';
 
 class Memory extends StatefulWidget {
   Function onScore;
@@ -166,7 +166,7 @@ class MemoryState extends State<Memory> {
                 });
               }); 
 
-              new Future.delayed(const Duration(milliseconds: 500), () {
+              new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _shaker[_pressedTileIndex] = ShakeCell.Right;
                   _shaker[index] = ShakeCell.Right;
@@ -231,7 +231,7 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, shakeController;
-  Animation<double> animation, shakeAnimation;
+  Animation<double> animation, shakeAnimation,noAnimation;
   AnimationController flipController;
   String _displayText;
 
@@ -240,8 +240,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
-    shakeController = new AnimationController(duration: new Duration(milliseconds: 40), vsync: this);
+    shakeController = new AnimationController(duration: new Duration(milliseconds: 50), vsync: this);
     flipController = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
+    noAnimation = new Tween(begin: 0.0,end:0.0).animate(shakeController);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
@@ -255,7 +256,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       });
     controller.forward().then((f){flipController.reverse();});
 
-    shakeAnimation = new Tween(begin: -6.0, end: 6.0).animate(shakeController);
+    shakeAnimation = new Tween(begin: -2.0, end: 2.0).animate(shakeController);
     _myAnim();
   }
 
@@ -308,9 +309,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new Shake(
+    return new ShakeAnimator(
         animation:
-            widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
+            widget.shaker == ShakeCell.Wrong ? shakeAnimation : noAnimation,
         child: new FlipAnimator(
             controller: flipController,
             front: new ScaleTransition(
