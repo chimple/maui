@@ -78,6 +78,7 @@ class QuizState extends State<Quiz> {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+        ans: this.ans,
            keys: keys++,
         onPress: () {
           if (text == ans) {
@@ -122,8 +123,14 @@ class QuizState extends State<Quiz> {
     }    
 
     int j=0;
-    return new Column(
+    return new Material(
+      color: const Color(0xF8C43C),
+      child: new Column(
               children: <Widget>[
+
+                    new Padding(
+                      padding: new EdgeInsets.all(10.0),
+                    ),
                   
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +146,7 @@ class QuizState extends State<Quiz> {
                       children: choice.map((e) => _buildItem(j++, e)).toList(growable: false),
               ) )
               ],
-    );
+    ) );
   }
     
 }
@@ -164,7 +171,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
   void initState() {
     super.initState();
     _fontSizeAnimationController = new AnimationController(duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.bounceOut);
+    _fontSizeAnimation = new CurvedAnimation(parent: _fontSizeAnimationController, curve: Curves.elasticIn);
     _fontSizeAnimation.addListener(() => this.setState(() {print(2);}));
     _fontSizeAnimationController.forward();
   }
@@ -191,15 +198,15 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     double ht=media.height;
     double wd = media.width;
     return new Material(
-      color: const Color(0xFF54cc70),
+      color: const Color(0xFFf8c43c),
       child:  new Container(
         height: ht * 0.22,
         width: wd * 0.6,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
-              color: const Color(0xFFf8c43c),              
+              color: const Color(0xFF8ecd4e),              
               border: new Border.all(
-                  color: const Color(0xFF54cc70),
+                  color: const Color(0xFFf8c43c),
                   ),
                 ),
             child: new Center(
@@ -208,7 +215,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [ new Text( widget._question,
                 key: new Key('question'),
-              style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
+              style: new TextStyle(color: Colors.black, fontSize: ht>wd? ht*0.06 : wd*0.06, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
                   ),
               ],
               ),
@@ -219,7 +226,8 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.keys, this.onPress}) : super(key: key);
+  String ans;
+  MyButton({Key key, this.text, this.ans, this.keys, this.onPress}) : super(key: key);
   final String text;
   final VoidCallback onPress;
   int keys;
@@ -281,13 +289,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             },
             child: new RaisedButton(
                 onPressed: () => widget.onPress(),
+                color: const Color(0xFFffffff),
                 shape: new RoundedRectangleBorder(
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(_displayText,
                  key: new Key("${widget.keys}"),
                     style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+                        new TextStyle(color: Colors.black, fontSize: 24.0)))));
   }
 }
 
