@@ -50,36 +50,32 @@ class DrawLineProperty {
 class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   List<DrawLineProperty> _drawLineProperty = [];
-
 //  List<Offset> _points = [];
   var color = new Color(0xff000000);
   var width = 8.0;
   DrawPadController _controller;
-
-  MyHomePageState(controller) {
-    this._controller = controller;
-  }
-
+  MyHomePageState(this._controller);
   DrawPainting _currentPainter;
 
   void initState() {
     _controller._delegate = this;
   }
 
-
   String _encode(Object object) =>
       const JsonEncoder.withIndent(' ').convert(object);
 
-
   @override
   Widget build(BuildContext context) {
-    return new LayoutBuilder(builder: (context, constraints) {
-      print({"this is constraints of drawing component": constraints});
-      MediaQueryData media = MediaQuery.of(context);
-      print({"this is mediaaa2:": media.size});
 
-      _currentPainter =
-      new DrawPainting(_drawLineProperty, media.size); //, color, width);
+    MediaQueryData media = MediaQuery.of(context);
+    print({"this is mediaaa2:": media.size});
+
+    _currentPainter = new DrawPainting(_drawLineProperty, media.size);
+
+    return new LayoutBuilder(builder: (context, constraints) {
+
+      print({"this is constraints of drawing component": constraints});
+       //, color, width);
       return new Container(
         height: constraints.maxHeight, width: constraints.maxWidth,
           margin: new EdgeInsets.all(5.0),
@@ -96,9 +92,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                       Position convertedIntoPercentage = new Position(
                           localPosition.dx / media.size.width, localPosition.dy / media.size.height);
                       print({"convert into percentage is : ": convertedIntoPercentage});
-
                       double tolerence = 0.04;
-
                       if(_drawLineProperty.length < 1){
                         _drawLineProperty = new List.from(_drawLineProperty)
                           ..add(new DrawLineProperty(
@@ -136,8 +130,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
             ),
           )
       );
-    }
-    );
+    });
   }
 
   void clear() {
@@ -148,6 +141,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void undo() {
+    print({"the undo before state" : " callinggg"});
     setState(() {
       for (int i = _drawLineProperty.length - 2; i >= 0; i--) {
         if (_drawLineProperty[i]._position != null) {
@@ -206,12 +200,10 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     final drawJson = _encode(canvasProperty);
     print({"the drawJson is : ": drawJson.toString()});
 
-    var decode = json.decode(drawJson);
-    print({"the object is : ": decode});
-    var _output = decode;
-    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SecondScreen(_output)));
-
-
+//    var decode = json.decode(drawJson);
+//    print({"the object is : ": decode});
+//    var _output = decode;
+    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SecondScreen(drawJson)));
 
   }
 
@@ -232,14 +224,10 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void multiWidth(widthValue) {
-    //  print({"I am getting final width here  " : widthValue});
     setState(() {
       width = widthValue;
     });
   }
-
-//  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-
 }
 
 class DrawPainting extends CustomPainter {
@@ -300,14 +288,6 @@ class DrawPainting extends CustomPainter {
 //        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
-
-//    List<Offset> position= [];
-//    for(var element in drawLineProperty)
-//      position.add(element._position);
-//
-//    paint.strokeWidth = 5.0;
-//    canvas.drawPoints(PointMode.points,position , paint);
-
   }
   @override
   bool shouldRepaint(DrawPainting oldDelegate){
