@@ -225,7 +225,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'order_it':
-       maxIterations = 1;
+        maxIterations = 1;
         return new Tuple2(
             new OrderIt(
                 key: new GlobalObjectKey(keyName),
@@ -401,14 +401,17 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 4;
         return new Tuple2(
             new MatchTheFollowing(
-              key: new GlobalObjectKey(keyName),
-              onScore: _onScore,
-              onProgress: _onProgress,
-              onEnd: () => _onEnd(context),
-              iteration: _iteration,
-              isRotated: widget.isRotated,
-              gameCategoryId: widget.gameCategoryId,
-            ),
+                key: new GlobalObjectKey(keyName),
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
                 scaffoldBackgroundColor: new Color(0xFF28c9c9), //bg
                 backgroundColor: new Color(0xFFfcc335), //behind progress bar
