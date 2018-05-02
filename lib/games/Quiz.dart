@@ -107,33 +107,44 @@ class QuizState extends State<Quiz> {
     }
 
     int j = 0;
-    return new Material(
-        color: const Color(0xFFF8C43C),
-        child: new Column(
-          children: <Widget>[
-            new Padding(
-              padding: new EdgeInsets.all(20.0),
-            ),
-            new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [new QuestionText(questionText, keys)]),
-            new Expanded(
-                child: new ResponsiveGridView(
-              rows: _size,
-              cols: _size,
-              children:
-                  choice.map((e) => _buildItem(j++, e)).toList(growable: false),
-            ))
-          ],
-        ));
+    return new LayoutBuilder(builder: (context, constraints) {
+      double ht = constraints.maxHeight;
+      double wd = constraints.maxWidth;
+      print("My Height - $ht");
+      print("My Width - $wd");
+      return new Material(
+          color: const Color(0xFFF8C43C),
+          child: new Column(
+            children: <Widget>[
+              new Padding(
+                padding: new EdgeInsets.all(ht * 0.03),
+              ),
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [new QuestionText(questionText, keys, ht, wd)]),
+              new Padding(
+                padding: new EdgeInsets.all(ht * 0.03),
+              ),
+              new Expanded(
+                  child: new ResponsiveGridView(
+                rows: _size,
+                cols: _size,
+                children: choice
+                    .map((e) => _buildItem(j++, e))
+                    .toList(growable: false),
+              ))
+            ],
+          ));
+    });
   }
 }
 
 class QuestionText extends StatefulWidget {
   final String _question;
   int keys;
-  QuestionText(this._question, this.keys);
+  double ht, wd;
+  QuestionText(this._question, this.keys, this.ht, this.wd);
 
   @override
   State createState() => new QuestionTextState();
@@ -150,7 +161,7 @@ class QuestionTextState extends State<QuestionText>
     _fontSizeAnimationController = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.bounceOut);
+        parent: _fontSizeAnimationController, curve: Curves.decelerate);
     _fontSizeAnimation.addListener(() => this.setState(() {
           print(2);
         }));
@@ -167,7 +178,6 @@ class QuestionTextState extends State<QuestionText>
   void didUpdateWidget(QuestionText oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.reset();
       _fontSizeAnimationController.forward();
     }
   }
@@ -175,14 +185,11 @@ class QuestionTextState extends State<QuestionText>
   @override
   Widget build(BuildContext context) {
     widget.keys++;
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
     return new Material(
       color: const Color(0xFFf8c43c),
       child: new Container(
-        height: ht * 0.22,
-        width: wd * 0.6,
+        height: widget.ht * 0.22,
+        width: widget.wd * 0.6,
         decoration: new BoxDecoration(
           borderRadius: new BorderRadius.circular(25.0),
           color: const Color(0xFF8ecd4e),
@@ -199,7 +206,9 @@ class QuestionTextState extends State<QuestionText>
                   key: new Key('question'),
                   style: new TextStyle(
                       color: Colors.black,
-                      fontSize: ht > wd ? ht * 0.06 : wd * 0.06,
+                      fontSize: widget.ht > widget.wd
+                          ? widget.ht * 0.06
+                          : widget.wd * 0.06,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic)),
             ],
@@ -249,17 +258,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-     if (oldWidget.text!= widget.text) {
+    // if (oldWidget.text != widget.text) {
       controller.reset();
       controller.forward();
-    }
+    // }
     // if (oldWidget.text == null && widget.text != null) {
     //   _displayText = widget.text;
     //   // initState();
     //   // controller.forward();
-    // } 
+    // }
     // else if (oldWidget.text != widget.text) {
-      // controller.reverse(); 
+    // controller.reverse();
     // }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
