@@ -406,6 +406,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print(widget.text);
     controller.reverse();
   }
+    @override
+  void dispose() {
+    
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
