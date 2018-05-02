@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/components/flip_animator.dart';
 import '../components/responsive_grid_view.dart';
 import '../components/shaker.dart';
@@ -11,7 +13,7 @@ class Memory extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Memory(
@@ -20,7 +22,7 @@ class Memory extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -33,6 +35,7 @@ enum ShakeCell { Right, Wrong }
 
 class MemoryState extends State<Memory> {
   int _size = 4;
+  int _maxSize = 4;
   List<String> _allLetters = [];
   List<String> _shuffledLetters = [];
   List<String> _letters;
@@ -50,13 +53,20 @@ class MemoryState extends State<Memory> {
   void initState() {
     super.initState();
     print('MemoryState:initState');
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 2;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 4;
+    } else {
+      _maxSize = 4;
+    }
     _initBoard();
   }
 
   void _initBoard() async {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
-    _data = await fetchPairData(widget.gameCategoryId, 8);
+    _data = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
@@ -66,7 +76,7 @@ class MemoryState extends State<Memory> {
     });
     print("Rajesh-Data-after-Mapping: ${_allLetters}");
 
-    _size = min(4, sqrt(_allLetters.length).floor());
+    _size = min(_maxSize, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
@@ -134,11 +144,11 @@ class MemoryState extends State<Memory> {
 
               _matched++;
               widget.onScore(2);
-              widget.onProgress((_progressCnt) / (_allLetters.length / 2));
+              widget.onProgress((_progressCnt) / ((_maxSize*_maxSize)/2));
               _progressCnt++;
 
               print("Rajesh-Matched${_matched}");
-              if (_matched == 8) {
+              if (_matched == ((_maxSize*_maxSize)/2)) {
                 _matched = 0;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
@@ -208,8 +218,7 @@ class MemoryState extends State<Memory> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status, this.shaker, this.onPress})
-      : super(key: key);
+  MyButton({Key key, this.text, this.status, this.shaker, this.onPress}) : super(key: key);
 
   final String text;
   Status status;
@@ -306,25 +315,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             controller: flipController,
             front: new ScaleTransition(
                 scale: animation,
-                child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.teal,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(const Radius.circular(4.0))),
-                    child: new Text(_displayText,
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 24.0)))),
-            back: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.teal,
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(' ',
-                    style:
-                        new TextStyle(color: Colors.teal, fontSize: 24.0)))));
+                child: new UnitButton(
+                  onPress: widget.onPress,
+                  text: _displayText,
+                  unitMode: UnitMode.text,
+                 )),
+            back: new UnitButton(
+                  onPress: widget.onPress,
+                  text: ' ',
+                  unitMode: UnitMode.text,
+                 )));
   }
 }
