@@ -421,8 +421,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: new Color(0xFFed4a79)));
         break;
       case 'calculate_numbers':
-        playTime = 15000;
-        maxIterations = 4;
+        playTime = 25000;
+        maxIterations = 10;
         return new Tuple2(
             new CalculateTheNumbers(
                 onScore: _onScore,
@@ -475,6 +475,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'quiz':
+        playTime = 15000;
+        maxIterations = 10;
         return new Tuple2(
             new Quiz(
                 onScore: _onScore,
