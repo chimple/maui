@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
-import '../components/Sticker.dart';
+// import '../components/Sticker.dart';
 
 Map _decoded;
 
@@ -168,6 +168,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     // FocusScope.of(context).requestFocus(_focusnode);
+    ThemeData themeData = Theme.of(context);
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
@@ -252,20 +253,55 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            new Positioned(
-              left: x,
-              top: y,
-              child: new Text(
-                paste,
-                style: new TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic),
+            new RepaintBoundary(
+              child: new CustomPaint(
+                painter:  new Stickers(
+                  text: paste,
+                  x:x,
+                  y:y,
+                ),
+                isComplex: false,
+                willChange: false,
               ),
-            ),
+            )
+            // new Positioned(
+            //   left: x,
+            //   top: y,
+            //   child: new Text(
+            //     paste,
+            //     style: new TextStyle(
+            //         fontSize: 20.0,
+            //         fontWeight: FontWeight.bold,
+            //         fontStyle: FontStyle.italic),
+            //   ),
+            // ),
           ],
         ),
       ),
     ]);
+  }
+}
+
+class Stickers extends CustomPainter {
+  Stickers({this.text, this.x, this.y});
+  final String text;
+  final double x;
+  final double y;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // TODO: implement paint
+    TextSpan span = new TextSpan(text: text, style: new TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.bold ));
+    TextPainter tp = new TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
+    tp.layout();
+    tp.paint(canvas, new Offset(x, y));
+    //canvas.restore();
+    canvas.save();
+  }
+
+  @override
+  bool shouldRepaint(Stickers oldDelegate) {
+    // TODO: implement shouldRepaint
+    return true;
   }
 }
