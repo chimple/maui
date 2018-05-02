@@ -56,7 +56,7 @@ class MemoryState extends State<Memory> {
      if (widget.gameConfig.level < 4) {
       _maxSize = 2;
     } else if (widget.gameConfig.level < 7) {
-      _maxSize = 3;
+      _maxSize = 4;
     } else {
       _maxSize = 4;
     }
@@ -144,11 +144,11 @@ class MemoryState extends State<Memory> {
 
               _matched++;
               widget.onScore(2);
-              widget.onProgress((_progressCnt) / (_allLetters.length / 2));
+              widget.onProgress((_progressCnt) / ((_maxSize*_maxSize)/2));
               _progressCnt++;
 
               print("Rajesh-Matched${_matched}");
-              if (_matched == 8) {
+              if (_matched == ((_maxSize*_maxSize)/2)) {
                 _matched = 0;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
