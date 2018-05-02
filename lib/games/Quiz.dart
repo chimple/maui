@@ -31,9 +31,9 @@ class Quiz extends StatefulWidget {
 
 class QuizState extends State<Quiz> {
   bool _isLoading = true;
-  var keys = 0;
-  Tuple3<String, String, List<String>> _allques;
-  int _size = 2;
+  var keys=0;
+ Tuple3<String, String, List<String>> _allques;
+ int _size = 2;
   String questionText;
   String ans;
   List<String> ch;
@@ -67,15 +67,25 @@ class QuizState extends State<Quiz> {
     _size = min(2, sqrt(choice.length).floor());
 
     print("My shuffled Choices - $choice");
-    setState(() => _isLoading = false);
+    setState(()=>_isLoading=false);    
   }
+
+  // void handleAnswer(String answer) {
+  //   isCorrect = (ans == answer);
+  //   if (isCorrect) {
+  //     widget.onScore(1);
+  //     widget.onProgress(1.0);
+  //     widget.onEnd();
+  //     _initBoard();
+  //   }
+  // }
 
   Widget _buildItem(int index, String text) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         ans: this.ans,
-        keys: keys++,
+           keys: keys++,
         onPress: () {
           if (text == ans) {
             widget.onScore(4);
@@ -89,9 +99,19 @@ class QuizState extends State<Quiz> {
         });
   }
 
-  @override
+    @override
+  void didUpdateWidget(Quiz oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_allques);
+     }
+  }
+
+    @override
   Widget build(BuildContext context) {
-    keys = 0;
+     keys=0;
     Size media = MediaQuery.of(context).size;
     double ht = media.height;
     double wd = media.width;
@@ -104,39 +124,33 @@ class QuizState extends State<Quiz> {
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
-    }
+    }    
 
-    int j = 0;
-    return new LayoutBuilder(builder: (context, constraints) {
-      double ht = constraints.maxHeight;
-      double wd = constraints.maxWidth;
-      print("My Height - $ht");
-      print("My Width - $wd");
-      return new Material(
-          color: const Color(0xFFF8C43C),
-          child: new Column(
-            children: <Widget>[
-              new Padding(
-                padding: new EdgeInsets.all(ht * 0.03),
-              ),
-              new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [new QuestionText(questionText, keys, ht, wd)]),
-              new Padding(
-                padding: new EdgeInsets.all(ht * 0.03),
-              ),
-              new Expanded(
-                  child: new ResponsiveGridView(
-                rows: _size,
-                cols: _size,
-                children: choice
-                    .map((e) => _buildItem(j++, e))
-                    .toList(growable: false),
-              ))
-            ],
-          ));
-    });
+    int j=0;
+    return new Material(
+      color: const Color(0xF8C43C),
+      child: new Column(
+              children: <Widget>[
+
+                    new Padding(
+                      padding: new EdgeInsets.all(10.0),
+                    ),
+                  
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [new QuestionText(questionText, keys, ht, wd)]
+                    ),
+                    
+
+                    new Expanded(
+                      child: new ResponsiveGridView(
+                      rows: _size,
+                      cols: _size,
+                      children: choice.map((e) => _buildItem(j++, e)).toList(growable: false),
+              ) )
+              ],
+    ) );
   }
 }
 
@@ -144,14 +158,14 @@ class QuestionText extends StatefulWidget {
   final String _question;
   int keys;
   double ht, wd;
-  QuestionText(this._question, this.keys, this.ht, this.wd);
+  QuestionText(this._question,this.keys, this.ht, this.wd);
 
   @override
   State createState() => new QuestionTextState();
 }
 
-class QuestionTextState extends State<QuestionText>
-    with SingleTickerProviderStateMixin {
+class QuestionTextState extends State<QuestionText> with SingleTickerProviderStateMixin {
+  
   Animation<double> _fontSizeAnimation;
   AnimationController _fontSizeAnimationController;
 
@@ -258,18 +272,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // if (oldWidget.text != widget.text) {
       controller.reset();
       controller.forward();
-    // }
-    // if (oldWidget.text == null && widget.text != null) {
-    //   _displayText = widget.text;
-    //   // initState();
-    //   // controller.forward();
-    // }
-    // else if (oldWidget.text != widget.text) {
-    // controller.reverse();
-    // }
+    
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
