@@ -60,8 +60,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   String _arrow = '⤵';
   String _operator = '';
   bool _carryFlag, _carryFlag1;
-  Animation _animationShake, _animation, _opacity;
-  AnimationController _animationController, _zoomOutAnimationController;
+  Animation _animationShake, _animation, _opacity,_zoomOutputBox;
+  AnimationController _animationController, _zoomOutAnimationController,_zoomOutputBoxController;
   Tuple4<int, String, int, int> _data;
   bool _isLoading = true;
   String _options;
@@ -80,18 +80,28 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   int _i;
   int _wrong=0;
 bool  _isShowingFlashCard=false;
+bool _zoomFirstTime=true;
 
   @override
   void initState() {
     _animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     _zoomOutAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 700), vsync: this);
+        _zoomOutputBoxController=new AnimationController(
+        duration: new Duration(milliseconds: 2000), vsync: this);
     _animationShake =
         new Tween(begin: -6.0, end: 6.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
     _opacity = new CurvedAnimation(
-        parent: _zoomOutAnimationController, curve: Curves.easeIn);
+        parent: _zoomOutAnimationController, curve: Curves.bounceIn);
+        _zoomOutputBox=new CurvedAnimation(
+        parent:_zoomOutputBoxController, curve: Curves.decelerate);
+    //  _zoomOutputBox=   new Tween(begin: 0.0, end: 50.0).chain(
+    // new CurveTween(
+    //     curve: Curves.easeIn,
+    //     )
+    //  ).animate(_zoomOutAnimationController);
     _myAnim();
     super.initState();
     _initBoard();
@@ -124,6 +134,7 @@ bool  _isShowingFlashCard=false;
     _carry.clear();
     _num1List.clear();
     _num2List.clear();
+    _zoomFirstTime=true;
      _wrong=0;
  _isShowingFlashCard=false;
     _s.clear();
@@ -248,6 +259,9 @@ bool  _isShowingFlashCard=false;
 
   @override
   void didUpdateWidget(CalculateTheNumbers oldWidget) {
+    // if(_outputList[_i]==' '){
+    //   _zoomOutputBoxController.forward();
+    // }
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -262,21 +276,30 @@ bool  _isShowingFlashCard=false;
       }
     });
     _opacity.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
+      if (status == AnimationStatus.completed) {   
         _zoomOutAnimationController.reverse();
-        // setState((){  _s[0]=false;});
       } else if (status == AnimationStatus.dismissed) {
         _zoomOutAnimationController.forward();
       }
     });
-    _animationController.forward();
-    _zoomOutAnimationController.forward();
+     _zoomOutputBox.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _zoomOutputBoxController.reverse();
+      } 
+      else if (status == AnimationStatus.dismissed) {
+        _zoomOutputBoxController.forward();
+      } 
+    });
+     _animationController.forward();
+     _zoomOutAnimationController.forward();
+     _zoomOutputBoxController.forward();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
     _zoomOutAnimationController.dispose();
+     _zoomOutputBoxController.dispose();
     super.dispose();
   }
 
@@ -290,7 +313,8 @@ bool  _isShowingFlashCard=false;
         text == '7' ||
         text == '8' ||
         text == '9' ||
-        text == '0'
+        text == '0'||
+        text=='_'
        ) {
       return true;
     } else
@@ -357,14 +381,27 @@ bool  _isShowingFlashCard=false;
                 print('_num1List first digit....${_num1List[_i]}');
                 print('_num2List first digit....${_num2List[_i]}');
                 setState(() {
+                      _outputList[_i] = _removeText(text, _outputList[_i]);
                   _outputList[_i] =
                       _removeZero(int.parse(_addText(text, _outputList[_i])))
                           .toString();
-                  _outputList[_i] = _removeText(text, _outputList[_i]);
+              
                   _flag[_i] = _rigltClick(text, _outputList[_i],
                       (_num1List[_i] + _num2List[_i] + cf[_i]));
                   print('printing flag value....${_flag[_i]}');
-                });
+                });             
+                // if(_outputList[_i]==' '){
+                //  new Future.delayed(const Duration(milliseconds: 200), () {
+                //         setState(() {                   
+                //            _zoomFirstTime=true;
+                //         });
+                //       });       
+                // }   
+                //  if(_outputList[_i]!=' '){          
+                //   setState((){
+                //   _zoomFirstTime=false;
+                //   });
+                // }      
                 print('first output....${_outputList[_i]}');
                 print('complete list...${_outputList}');
                 if (text == '✔') {
@@ -401,6 +438,11 @@ bool  _isShowingFlashCard=false;
                           _s[_i - 1] = false;
                         });
                       });
+                      //  new Future.delayed(const Duration(milliseconds: 600), () {
+                      //   setState(() {                   
+                      //      _zoomFirstTime=true;
+                      //   });
+                      // });
                     });
                   } else {
                       // if(widget.onScore()!=0)
@@ -465,6 +507,11 @@ bool  _isShowingFlashCard=false;
                           .toString();
                   _outputList[_i] = _removeText(text, _outputList[_i]);
                 });
+                if(_outputList[_i]!=' '){          
+                  setState((){
+                  _zoomFirstTime=false;
+                  });
+                }      
                 if (text == '✔') {
                   if (_num1List[_i] > _num2List[_i] ||
                       _num1List[_i] == _num2List[_i]) {
@@ -519,6 +566,11 @@ bool  _isShowingFlashCard=false;
                           _s[_i - 1] = false;
                         });
                       });
+                       new Future.delayed(const Duration(milliseconds: 600), () {
+                        setState(() {                   
+                           _zoomFirstTime=true;
+                        });
+                      });
                     });
                   } else {
                     setState(() {
@@ -544,6 +596,11 @@ bool  _isShowingFlashCard=false;
                 _flag[_i] = _rigltClick(
                     text, _outputList[_i], (_num1List[_i] * _num2List[_i]));
               });
+              if(_outputList[_i]!=' '){          
+                  setState((){
+                  _zoomFirstTime=false;
+                  });
+                }     
               if (text == '✔') {
                 if (_rigltClick(text, _outputList[_i],
                         (_num1List[_i] * _num2List[_i])) ==
@@ -600,7 +657,7 @@ bool  _isShowingFlashCard=false;
       child: new Center(
           child: new Text(num,
               style: new TextStyle(
-                  color: carry == 0?Colors.lime[300]:Colors.black,
+                  color: carry == 0?Colors.limeAccent:Colors.black,
                   fontSize: _height * 0.05,
                   fontWeight: FontWeight.bold))),
     );
@@ -664,6 +721,23 @@ bool  _isShowingFlashCard=false;
         });
       });
     }
+    //  setState(() { _outputList[_i]='_'; });
+
+    if(_outputList[_i]==' '){
+      setState((){
+        _zoomFirstTime=true;
+      });
+       new Future.delayed(const Duration(milliseconds: 5000), () {
+                  setState(() {
+                    _zoomFirstTime=false;
+                  });
+                });
+      new Future.delayed(const Duration(milliseconds:9000), () {
+                  setState(() {
+                    _zoomFirstTime=true;
+                  });
+                });
+    }
     switch (_options) {
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
@@ -688,7 +762,7 @@ bool  _isShowingFlashCard=false;
                                 cf[1].toString(),
                                 cf[1],
                                 new Key('carry1'),
-                                Colors.lime[300]),
+                                Colors.limeAccent),
                           ),
                         ),
                         new Padding(
@@ -696,7 +770,7 @@ bool  _isShowingFlashCard=false;
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
-                                  ' ', 1, new Key(''), Colors.lime[300])),
+                                  ' ', 1, new Key(''), Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
@@ -705,7 +779,7 @@ bool  _isShowingFlashCard=false;
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: displayContainer(constraints.maxHeight, ' ',
-                                1, new Key(''), Colors.blue[200]),
+                                1, new Key(''), Colors.blueAccent),
                           ),
                         ),
                         new Padding(
@@ -767,21 +841,23 @@ bool  _isShowingFlashCard=false;
                                     _outputList[1],
                                     _flag[1],
                                     _shake[1],
-                                    new Key('shake'), calCount(_result)>1?Colors.red: Colors.red[300],
+                                    new Key('shake'), calCount(_result)>1?Colors.red: Colors.red,
                         ),
                               ),),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
-                            child: _s[0] == true
+                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[0],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[0],
+                                      animation:_s[0]!=true? _zoomOutputBox : _opacity ,
+                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : new Container(
@@ -827,7 +903,7 @@ bool  _isShowingFlashCard=false;
                                   cf[2].toString(),
                                   cf[2],
                                   new Key('carry3'),
-                                  Colors.lime[300])),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                           padding:
@@ -915,7 +991,7 @@ bool  _isShowingFlashCard=false;
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
-                                  ' ', 1, new Key(''), Colors.blue[200])),
+                                  ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
@@ -1048,22 +1124,26 @@ bool  _isShowingFlashCard=false;
                                     _flag[2],
                                     true,
                                     new Key('shake3'),
-                                   calCount(_result)==2?Colors.red[200]:Colors.red),
+                                   Colors.red),
                           ),
                         ),
                         new Padding(
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[1] == true
+                            child: _s[1] == true||(_carry[0]==1 &&_carry[1]==0&& _outputList[1]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[1],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[1],
+                                      // animation: _opacity,
+                                      // showHint: _s[1],
+                                        animation:_s[1]!=true?_zoomOutputBox: _opacity,
+                                      showHint: _s[1]==true?_s[1]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[1]!=true && _carry[1]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : displayShake(
@@ -1078,15 +1158,19 @@ bool  _isShowingFlashCard=false;
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[0] == true
+                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[0],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[0],
+                                      // animation: _opacity,
+                                      // showHint: _s[0],
+                                       animation:_s[0]!=true?_zoomOutputBox: _opacity,
+                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : displayShake(
@@ -1482,15 +1566,19 @@ bool  _isShowingFlashCard=false;
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[2] == true
+                            child: _s[2] == true||(_carry[2]==0&& _carry[1]==1&& _carry[0]==1 && _outputList[2]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[2],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[2],
+                                      // animation: _opacity,
+                                      // showHint: _s[2],
+                                        animation:_s[2]!=true?_zoomOutputBox: _opacity,
+                                      showHint: _s[2]==true?_s[2]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[2]!=true && _carry[2]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : displayShake(
@@ -1505,15 +1593,19 @@ bool  _isShowingFlashCard=false;
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[1] == true
+                            child: _s[1] == true||(_carry[1]==0&& _carry[0]==1 && _outputList[1]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[1],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[1],
+                                      // animation: _opacity,
+                                      // showHint: _s[1],
+                                         animation:_s[1]!=true?_zoomOutputBox: _opacity,
+                                      showHint: _s[1]==true?_s[1]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[1]!=true && _carry[1]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : displayShake(
@@ -1528,15 +1620,19 @@ bool  _isShowingFlashCard=false;
                           padding:
                               new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[0] == true
+                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
                                 ? new Container(
                                     height: constraints.maxHeight * 0.09,
                                     width: constraints.maxHeight * 0.05,
                                     child: new BlinkAnimation(
                                       text: _outputList[0],
                                       height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[0],
+                                      // animation: _opacity,
+                                      // showHint: _s[0],
+                                         animation:_s[0]!=true?_zoomOutputBox: _opacity,
+                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
+                                     // carry:_carry[0],
+                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
                                     ),
                                   )
                                 : displayShake(
@@ -1652,15 +1748,21 @@ class _MyButtonState
 
 class BlinkAnimation extends AnimatedWidget {
   BlinkAnimation(
-      {Key key, Animation animation, this.text, this.height, this.showHint})
+      {Key key, Animation animation, this.text, this.height, this.showHint,this.carry,this.clr})
       : super(key: key, listenable: animation);
-  final bool showHint;
+  // final
+   bool showHint;
   final String text;
   final double height;
+  final int carry;
+  final Color clr;
 
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
+    //  new Future.delayed(const Duration(milliseconds: 300), () {
+    //              showHint=false;
+    //             });
     return new Container(
         child: new Stack(
       alignment: Alignment.center,
@@ -1670,7 +1772,7 @@ class BlinkAnimation extends AnimatedWidget {
                 scale: animation,
                 child: new Container(
                   decoration: new BoxDecoration(
-                    color: Colors.green,
+                    color:clr,
                     borderRadius: new BorderRadius.all(
                         new Radius.circular(height * 0.0095)),
                   ),
@@ -1687,7 +1789,7 @@ class BlinkAnimation extends AnimatedWidget {
               )
             : new Container(
                 decoration: new BoxDecoration(
-                  color: Colors.green,
+                  color: clr,
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.0095)),
                 ),
