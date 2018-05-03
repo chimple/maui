@@ -507,6 +507,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     scale: animationRight,
                     child: new UnitButton(
                         onPress: () => widget.onPress(),
+
 //                    padding: const EdgeInsets.all(8.0),
 //                        color: widget.status == Status.Visible
 //                            ? Colors.pink
