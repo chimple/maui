@@ -40,18 +40,17 @@ class _FlashCardState extends State<FlashCard> {
         child: new CircularProgressIndicator(),
       );
     }
-    return new Card(
-        child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+    return new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
           new Container(
               alignment: const Alignment(0.0, 0.0),
               padding: const EdgeInsets.all(8.0),
               color: Colors.teal,
               child: new Text(_unit?.name ?? widget.text,
                   style: new TextStyle(color: Colors.white, fontSize: 24.0))),
-          new Expanded(
-              child: new Row(
+          new Row(
             children: <Widget>[
               new IconButton(
                   icon: new Icon(Icons.volume_up),
@@ -61,7 +60,7 @@ class _FlashCardState extends State<FlashCard> {
               new IconButton(
                   icon: new Icon(Icons.check), onPressed: widget.onChecked)
             ],
-          ))
-        ]));
+          )
+        ]);
   }
 }
