@@ -15,6 +15,7 @@ import 'package:maui/games/casino.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/games/crossword.dart';
 import 'package:maui/games/drawing_game.dart';
+import 'package:maui/games/dice_game.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/games/first_word.dart';
@@ -296,6 +297,20 @@ class _SingleGameState extends State<SingleGame> {
       case 'drawing':
         return new Tuple2(
             new Drawing(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                isRotated: widget.isRotated,
+                iteration: _iteration),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'dice':
+        return new Tuple2(
+            new Dice(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),

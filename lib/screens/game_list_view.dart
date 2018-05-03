@@ -53,6 +53,8 @@ class GameListView extends StatelessWidget {
               new Icon(Icons.favorite, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'drawing', 'drawing',
               new Icon(Icons.format_paint, size: iconSize), Colors.amberAccent),
+          _buildButton(context, 'dice', 'dice',
+              new Icon(Icons.beach_access, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'fill_in_the_blanks', 'fill_in_the_blanks',
               new Icon(Icons.call, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'calculate_numbers', 'calculate_numbers',
