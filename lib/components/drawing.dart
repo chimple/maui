@@ -76,8 +76,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
       print({"this is constraints of drawing component": constraints});
        //, color, width);
+
       return new Container(
-        height: constraints.maxHeight, width: constraints.maxWidth,
           margin: new EdgeInsets.all(5.0),
           child: new Card(
             child: new ConstrainedBox(
@@ -92,7 +92,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                       Position convertedIntoPercentage = new Position(
                           localPosition.dx / media.size.width, localPosition.dy / media.size.height);
                       print({"convert into percentage is : ": convertedIntoPercentage});
-                      double tolerence = 0.04;
+                      double tolerence = 0.06;
                       if(_drawLineProperty.length < 1){
                         _drawLineProperty = new List.from(_drawLineProperty)
                           ..add(new DrawLineProperty(

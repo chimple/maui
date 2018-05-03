@@ -60,6 +60,9 @@ class _UnitButtonState extends State<UnitButton> {
         },
         child: new RaisedButton(
             onPressed: widget.onPress,
+            color: widget.unitMode == UnitMode.image
+                ? Colors.white
+                : Theme.of(context).buttonColor,
             shape: new RoundedRectangleBorder(
                 borderRadius:
                     const BorderRadius.all(const Radius.circular(8.0))),
