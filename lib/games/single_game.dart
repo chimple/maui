@@ -385,7 +385,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'tables':
-        playTime = 20000;
+        playTime = 60000;
         maxIterations = 1;
         return new Tuple2(
             new Tables(
@@ -510,7 +510,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: new Color(0xFFed2d85)));
         break;
       case 'tap_home':
-        playTime = 20000;
+        playTime = 60000;
         maxIterations = 10;
         return new Tuple2(
             new TapHome(
