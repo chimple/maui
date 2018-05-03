@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
-import '../components/Sticker.dart';
+// import '../components/Sticker.dart';
 
 Map _decoded;
 
@@ -31,8 +31,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   final TextEditingController _controller = new TextEditingController();
   String _guess = '';
   int _flag = 0;
-  double x, y ;
-  String paste='';
+  double x, y = 0.0;
+  String paste = '';
 
   AnimationController controller;
   Animation<double> animation, noanimation;
@@ -68,19 +68,33 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     // _parserJsonForGame(jsonGameInfo);
   }
 
+  // void drawName(Canvas context, String name, double x, double y) {
+  //   TextSpan span = new TextSpan(
+  //       style: new TextStyle(
+  //           color: Colors.blue[800], fontSize: 24.0, fontFamily: 'Roboto'),
+  //       text: name);
+  //   TextPainter tp = new TextPainter(
+  //       text: span,
+  //       textAlign: TextAlign.left,
+  //       textDirection: TextDirection.ltr);
+  //   tp.layout();
+  //   tp.paint(context, new Offset(x, y));
+  // }
+
   void _validate() {
     if (_guess == _decoded["parts"][0]["name"]) {
       print(_guess);
       _controller.text = '';
-      this.setState((){
+      this.setState(() {
         x = 50.0;
         y = 100.0;
         paste = _guess;
       });
+      // drawName(  , _guess, 50.0, 100.0);
     } else if (_guess == _decoded["parts"][1]["name"]) {
       print(_guess);
       _controller.text = '';
-      this.setState((){
+      this.setState(() {
         x = 250.0;
         y = 100.0;
         paste = _guess;
@@ -88,7 +102,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     } else if (_guess == _decoded["parts"][2]["name"]) {
       print(_guess);
       _controller.text = '';
-      this.setState((){
+      this.setState(() {
         x = 150.0;
         y = 100.0;
         paste = _guess;
@@ -96,7 +110,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     } else if (_guess == _decoded["parts"][3]["name"]) {
       print(_guess);
       _controller.text = '';
-      this.setState((){
+      this.setState(() {
         x = 200.0;
         y = 100.0;
         paste = _guess;
@@ -107,6 +121,9 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         toAnimateFunction();
         new Future.delayed(const Duration(milliseconds: 1000), () {
           setState(() {
+            x = 0.0;
+            y = 0.0;
+            paste = '';
             _flag = 0;
           });
           print(animation.value);
@@ -115,7 +132,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
           controller.stop();
         });
       });
-      paste = '';
+      // paste = '';
     }
   }
 
@@ -151,94 +168,140 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     // FocusScope.of(context).requestFocus(_focusnode);
+    ThemeData themeData = Theme.of(context);
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
-    return new Stack(
-      children: <Widget>[
-        new Scaffold(
-          // backgroundColor: Colors.red[100],
-          body: new Column(
-            children: <Widget>[
-              new Expanded(
-                flex: 2,
-                child: new Image(
-                  image: AssetImage('assets/' + _decoded["id"]),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              new Expanded(
-                flex: 1,
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    border: new Border(
-                        bottom: new BorderSide(
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        top: new BorderSide(
-                          width: 0.5,
-                          color: Colors.black,
-                        )),
+    return new Flex(direction: Axis.vertical, children: <Widget>[
+      new Expanded(
+        child: new Stack(
+          fit: StackFit.passthrough,
+          children: <Widget>[
+            new Scaffold(
+              // backgroundColor: Colors.red[100],
+              body: new Column(
+                children: <Widget>[
+                  new Expanded(
+                    flex: 2,
+                    child: new Image(
+                      image: AssetImage('assets/' + _decoded["id"]),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  child: new Shake(
-                    animation: (_flag == 0) ? noanimation : animation,
-                    child: new Center(
-                      child: new TextField(
-                        // focusNode: _focusnode,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        controller: _controller,
-                        obscureText: false,
-                        style:new TextStyle(color: Colors.black, fontSize: 20.0),
-                        decoration: new InputDecoration(
-                          // hintText: "name what you see and press check",
-                          // hintStyle: new TextStyle(color: Colors.blueGrey[200]),
-                          border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(5.0),
-                            borderSide: new BorderSide(style: BorderStyle.solid, width: 10.0, color: Colors.red )
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.5,
+                              color: Colors.black,
+                            ),
+                            top: new BorderSide(
+                              width: 0.5,
+                              color: Colors.black,
+                            )),
+                      ),
+                      child: new Shake(
+                        animation: (_flag == 0) ? noanimation : animation,
+                        child: new Center(
+                          child: new TextField(
+                            // focusNode: _focusnode,
+                            textAlign: TextAlign.center,
+                            autofocus: true,
+                            controller: _controller,
+                            obscureText: false,
+                            style: new TextStyle(
+                                color: Colors.black, fontSize: 20.0),
+                            decoration: new InputDecoration(
+                              // hintText: "name what you see and press check",
+                              // hintStyle: new TextStyle(color: Colors.blueGrey[200]),
+                              border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(5.0),
+                                  borderSide: new BorderSide(
+                                      style: BorderStyle.solid,
+                                      width: 10.0,
+                                      color: Colors.red)),
+                            ),
+                            onChanged: (String str) {
+                              _guess = str.toLowerCase();
+                              print(_guess);
+                              // setState((){
+                              //   _guess = str;
+                              // });
+                              // _controller.text = '';
+                            },
                           ),
                         ),
-                        onChanged: (String str) {
-                          _guess = str.toLowerCase();
-                          print(_guess);
-                          // setState((){
-                          //   _guess = str;
-                          // });
-                          // _controller.text = '';
-                        },
                       ),
                     ),
                   ),
-                ),
+                  new Expanded(
+                    flex: 1,
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new RaisedButton(
+                          key: new Key("checking"),
+                          child: new Text("Check"),
+                          onPressed: () => _validate(),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              new Expanded(
-                flex: 1,
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new RaisedButton(
-                      key: new Key("checking"),
-                      child: new Text("Check"),
-                      onPressed: () => _validate(),
-                    )
-                  ],
+            ),
+            new RepaintBoundary(
+              child: new CustomPaint(
+                painter:  new Stickers(
+                  text: paste,
+                  x:x,
+                  y:y,
                 ),
+                isComplex: false,
+                willChange: false,
               ),
-            ],
-          ),
+            )
+            // new Positioned(
+            //   left: x,
+            //   top: y,
+            //   child: new Text(
+            //     paste,
+            //     style: new TextStyle(
+            //         fontSize: 20.0,
+            //         fontWeight: FontWeight.bold,
+            //         fontStyle: FontStyle.italic),
+            //   ),
+            // ),
+          ],
         ),
-        new Positioned(
-          left: x,
-          top: y,
-          child: new Text(
-            paste,
-            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
-          ),
-          
-        )
-      ],
-    );
+      ),
+    ]);
+  }
+}
+
+class Stickers extends CustomPainter {
+  Stickers({this.text, this.x, this.y});
+  final String text;
+  final double x;
+  final double y;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // TODO: implement paint
+    TextSpan span = new TextSpan(text: text, style: new TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.bold ));
+    TextPainter tp = new TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
+    tp.layout();
+    tp.paint(canvas, new Offset(x, y));
+    //canvas.restore();
+    canvas.save();
+  }
+
+  @override
+  bool shouldRepaint(Stickers oldDelegate) {
+    // TODO: implement shouldRepaint
+    return true;
   }
 }
