@@ -41,7 +41,7 @@ class GameListView extends StatelessWidget {
         children: <Widget>[
           _buildButton(context, 'reflex', 'Reflex',
               new Icon(Icons.collections, size: iconSize), Colors.amberAccent),
-          _buildButton(context, 'orderit', 'orderit',
+          _buildButton(context, 'order_it', 'order_it',
               new Icon(Icons.cake, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'memory', 'memory',
               new Icon(Icons.camera, size: iconSize), Colors.amberAccent),

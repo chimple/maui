@@ -13,7 +13,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
 
 enum ChatItemType { card, text, game }
-enum ChatMode { teach, conversation, quiz }
+enum ChatMode { teach, conversation, quiz, revise }
 
 class ChatItem {
   final ChatItemType chatItemType;
@@ -39,6 +39,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   String _expectedAnswer;
   final botId = 'bot';
   int _currentChatIndex = 0;
+  ChatMode _currentMode = ChatMode.teach;
   Map<ChatMode, Tuple2<int, int>> _chatHistory =
       new Map<ChatMode, Tuple2<int, int>>();
   List<LessonUnit> _toQuiz = new List<LessonUnit>();
@@ -160,10 +161,13 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   _displayNextChat(ChatItem currentChatItem) {
-    if (_toQuiz.isNotEmpty &&
-        _lessonUnitIndex > 0 &&
-        _lessonUnitIndex % 4 == 0) {
-      //quiz
+    if ((_currentMode == ChatMode.teach && _toQuiz.length >= 4) ||
+        (_currentMode == ChatMode.revise &&
+            _chatHistory[ChatMode.quiz].item2 >= _toQuiz.length) ||
+        (_currentMode == ChatMode.quiz &&
+            _toQuiz.isNotEmpty &&
+            _chatHistory[ChatMode.quiz].item2 < 4)) {
+      _currentMode = ChatMode.quiz;
       setState(() {
         var random = new Random();
         _toQuiz.shuffle();
@@ -183,7 +187,19 @@ class ChatBotScreenState extends State<ChatBotScreen> {
             choices: choices,
             onSubmit: _handleSubmitted);
       });
+    } else if (_currentMode == ChatMode.quiz &&
+        _chatHistory[ChatMode.quiz].item2 >= 4) {
+      int index = _currentMode == ChatMode.revise
+          ? 0
+          : _chatHistory[ChatMode.revise].item2;
+      _currentMode = ChatMode.revise;
+      setState(() {
+        _addChatItem(
+            ChatMode.revise, ChatItemType.card, _toQuiz[index].subjectUnitId);
+        input = new TextChoice(onSubmit: _handleSubmitted);
+      });
     } else {
+      _currentMode = ChatMode.teach;
       setState(() {
         _addChatItem(ChatMode.teach, ChatItemType.card,
             _lessonUnits[_lessonUnitIndex].subjectUnitId);
