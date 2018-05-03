@@ -16,12 +16,12 @@ class CalculateTheNumbers extends StatefulWidget {
 
   CalculateTheNumbers(
       {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+        this.onScore,
+        this.onProgress,
+        this.onEnd,
+        this.iteration,
+        this.gameCategoryId,
+        this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();
@@ -60,8 +60,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   String _arrow = '⤵';
   String _operator = '';
   bool _carryFlag, _carryFlag1;
-  Animation _animationShake, _animation, _opacity,_zoomOutputBox;
-  AnimationController _animationController, _zoomOutAnimationController,_zoomOutputBoxController;
+  Animation _animationShake, _animation, _opacity;
+  AnimationController _animationController, _zoomOutAnimationController;
   Tuple4<int, String, int, int> _data;
   bool _isLoading = true;
   String _options;
@@ -78,30 +78,21 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   List<bool> _numbershake = [];
   int _j1;
   int _i;
-  int _wrong=0;
-bool  _isShowingFlashCard=false;
-bool _zoomFirstTime=true;
+  int _score=0;
+  int _wrong = 0;
+  bool _isShowingFlashCard = false;
 
   @override
   void initState() {
     _animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     _zoomOutAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 700), vsync: this);
-        _zoomOutputBoxController=new AnimationController(
-        duration: new Duration(milliseconds: 2000), vsync: this);
+        duration: new Duration(milliseconds: 100), vsync: this);
     _animationShake =
         new Tween(begin: -6.0, end: 6.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
     _opacity = new CurvedAnimation(
-        parent: _zoomOutAnimationController, curve: Curves.bounceIn);
-        _zoomOutputBox=new CurvedAnimation(
-        parent:_zoomOutputBoxController, curve: Curves.decelerate);
-    //  _zoomOutputBox=   new Tween(begin: 0.0, end: 50.0).chain(
-    // new CurveTween(
-    //     curve: Curves.easeIn,
-    //     )
-    //  ).animate(_zoomOutAnimationController);
+        parent: _zoomOutAnimationController, curve: Curves.easeIn);
     _myAnim();
     super.initState();
     _initBoard();
@@ -131,12 +122,11 @@ bool _zoomFirstTime=true;
     _preValue = '';
     _barrowFlag.clear();
     cf.clear();
+    _wrong=0;
+    _isShowingFlashCard=false;
     _carry.clear();
     _num1List.clear();
     _num2List.clear();
-    _zoomFirstTime=true;
-     _wrong=0;
- _isShowingFlashCard=false;
     _s.clear();
     cf.clear();
     if (_num1 % 10 == _num1 && _num2 % 10 == _num2) {
@@ -259,9 +249,6 @@ bool _zoomFirstTime=true;
 
   @override
   void didUpdateWidget(CalculateTheNumbers oldWidget) {
-    // if(_outputList[_i]==' '){
-    //   _zoomOutputBoxController.forward();
-    // }
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -271,35 +258,28 @@ bool _zoomFirstTime=true;
     _animationShake.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _animationController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
+      }
+      else if (status == AnimationStatus.dismissed) {
         _animationController.forward();
       }
     });
     _opacity.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {   
+      if (status == AnimationStatus.completed) {
         _zoomOutAnimationController.reverse();
+        // setState((){  _s[0]=false;});
+
       } else if (status == AnimationStatus.dismissed) {
         _zoomOutAnimationController.forward();
       }
     });
-     _zoomOutputBox.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _zoomOutputBoxController.reverse();
-      } 
-      else if (status == AnimationStatus.dismissed) {
-        _zoomOutputBoxController.forward();
-      } 
-    });
-     _animationController.forward();
-     _zoomOutAnimationController.forward();
-     _zoomOutputBoxController.forward();
+    _animationController.forward();
+    _zoomOutAnimationController.forward();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
     _zoomOutAnimationController.dispose();
-     _zoomOutputBoxController.dispose();
     super.dispose();
   }
 
@@ -313,9 +293,7 @@ bool _zoomFirstTime=true;
         text == '7' ||
         text == '8' ||
         text == '9' ||
-        text == '0'||
-        text=='_'
-       ) {
+        text == '0') {
       return true;
     } else
       return false;
@@ -344,6 +322,9 @@ bool _zoomFirstTime=true;
         print("coming to the score count section");
         widget.onScore(4);
         widget.onProgress(1.0);
+        setState((){
+          _score=_score+4;
+        });
         _scoreCount = 1;
         new Future.delayed(const Duration(milliseconds: 1000), () {
           widget.onEnd();
@@ -381,37 +362,24 @@ bool _zoomFirstTime=true;
                 print('_num1List first digit....${_num1List[_i]}');
                 print('_num2List first digit....${_num2List[_i]}');
                 setState(() {
-                      _outputList[_i] = _removeText(text, _outputList[_i]);
                   _outputList[_i] =
                       _removeZero(int.parse(_addText(text, _outputList[_i])))
                           .toString();
-              
+                  _outputList[_i] = _removeText(text, _outputList[_i]);
                   _flag[_i] = _rigltClick(text, _outputList[_i],
                       (_num1List[_i] + _num2List[_i] + cf[_i]));
                   print('printing flag value....${_flag[_i]}');
-                });             
-                // if(_outputList[_i]==' '){
-                //  new Future.delayed(const Duration(milliseconds: 200), () {
-                //         setState(() {                   
-                //            _zoomFirstTime=true;
-                //         });
-                //       });       
-                // }   
-                //  if(_outputList[_i]!=' '){          
-                //   setState((){
-                //   _zoomFirstTime=false;
-                //   });
-                // }      
+                });
                 print('first output....${_outputList[_i]}');
                 print('complete list...${_outputList}');
                 if (text == '✔') {
                   if (_rigltClick(text, _outputList[_i],
-                          (_num1List[_i] + _num2List[_i] + cf[_i])) ==
+                      (_num1List[_i] + _num2List[_i] + cf[_i])) ==
                       true) {
                     setState(() {
                       _shake[_i] = true;
                       _carry[_i] = 1;
-                      _s[_i] = true;
+                      _s[_i]=true;
                     });
                     if (_outputList[_i].length > 1) {
                       setState(() {
@@ -435,46 +403,41 @@ bool _zoomFirstTime=true;
                       _j1--;
                       new Future.delayed(const Duration(milliseconds: 100), () {
                         setState(() {
-                          _s[_i - 1] = false;
+                          _s[_i-1]=false;
                         });
                       });
-                      //  new Future.delayed(const Duration(milliseconds: 600), () {
-                      //   setState(() {                   
-                      //      _zoomFirstTime=true;
-                      //   });
-                      // });
                     });
                   } else {
-                      // if(widget.onScore()!=0)
-                        // {  
-                          widget.onScore(-1);
-                          // }
+                    if(_score > 0)
+                      widget.onScore(-1);
+
                     setState(() {
-                        _wrong=_wrong+1;
+                      _score = _score > 0 ? _score - 1 : _score;
                       _shake[_i] = false;
-                     
+                      _wrong=_wrong+1;
                     });
-                    new Future.delayed(const Duration(milliseconds: 800), () {
+                    new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
                         _outputList[_i] = ' ';
-                         
                       });
-                    });              
+                    });
                   }
                 }
-                print('printing final value....$_preValue');
-                print(' at end _i value ${_i}');
-                print(' at end j value ${_j1}');
-              }
-               if ((_wrong == 4 && _options=='singleDigit') || (_wrong == 5 && _options=='doubleDigit')||(_wrong == 6 && _options=='tripleDigit')) {
+                if( (_options == 'singleDigit' && _wrong==4)||
+                    _options == 'doubleDigit'&& _wrong==5 ||
+                    _options == 'tripleDigit' && _wrong==6 ){
                   setState(() {
                     _isShowingFlashCard = true;
                     _wrong = 0;
                   });
                 }
+                print('printing final value....$_preValue');
+                print(' at end _i value ${_i}');
+                print(' at end j value ${_j1}');
+              }
               if ((cf[calCount(_result) - 1] == 1 &&
-                      _options == 'singleDigit') ||
+                  _options == 'singleDigit') ||
                   (cf[calCount(_result) - 1] == 1 &&
                       _options == 'tripleDigit' &&
                       _outputList.length == calCount(_result)) ||
@@ -489,11 +452,11 @@ bool _zoomFirstTime=true;
                   print('printing output list...$_outputList');
                   _preValue = _outputList[_i] + _preValue;
                   _flag[_i] = true;
-                  _s[_i] = true;
+                  _s[_i]=true;
                 });
                 new Future.delayed(const Duration(milliseconds: 100), () {
                   setState(() {
-                    _s[_i] = false;
+                    _s[_i]=false;
                   });
                 });
               }
@@ -507,16 +470,11 @@ bool _zoomFirstTime=true;
                           .toString();
                   _outputList[_i] = _removeText(text, _outputList[_i]);
                 });
-                if(_outputList[_i]!=' '){          
-                  setState((){
-                  _zoomFirstTime=false;
-                  });
-                }      
                 if (text == '✔') {
                   if (_num1List[_i] > _num2List[_i] ||
                       _num1List[_i] == _num2List[_i]) {
                     if (_rigltClick(text, _outputList[_i],
-                            (_num1List[_i] - _num2List[_i] + cf[_i])) ==
+                        (_num1List[_i] - _num2List[_i] + cf[_i])) ==
                         true) {
                       setState(() {
                         _flag[_i] = _rigltClick(text, _outputList[_i],
@@ -524,7 +482,7 @@ bool _zoomFirstTime=true;
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         _preValue = _outputList[_i] + _preValue;
-                        _s[_i] = true;
+                        _s[_i]=true;
                       });
                     }
                   } else {
@@ -532,7 +490,7 @@ bool _zoomFirstTime=true;
                       _barrowFlag[_i] = true;
                     });
                     if (_rigltClick(text, _outputList[_i],
-                            ((_num1List[_i] + 10) - _num2List[_i] + cf[_i])) ==
+                        ((_num1List[_i] + 10) - _num2List[_i] + cf[_i])) ==
                         true) {
                       setState(() {
                         _flag[_i] = _rigltClick(text, _outputList[_i],
@@ -540,7 +498,7 @@ bool _zoomFirstTime=true;
                         _shake[_i] = true;
                         _carry[_i] = 1;
                         cf[_i + 1] = -1;
-                        _s[_i] = true;
+                        _s[_i]=true;
                         _preValue = _outputList[_i] + _preValue;
                       });
                     } else {
@@ -548,7 +506,7 @@ bool _zoomFirstTime=true;
                         _numbershake[_i] = false;
                         _shake[_i] = false;
                       });
-                      new Future.delayed(const Duration(milliseconds: 800), () {
+                      new Future.delayed(const Duration(milliseconds: 1000), () {
                         setState(() {
                           _numbershake[_i] = true;
                           _shake[_i] = true;
@@ -563,26 +521,33 @@ bool _zoomFirstTime=true;
                       print('printing j value after decrement...$_j1');
                       new Future.delayed(const Duration(milliseconds: 100), () {
                         setState(() {
-                          _s[_i - 1] = false;
-                        });
-                      });
-                       new Future.delayed(const Duration(milliseconds: 600), () {
-                        setState(() {                   
-                           _zoomFirstTime=true;
+                          _s[_i-1]=false;
                         });
                       });
                     });
                   } else {
+                    if(_score > 0)
+                      widget.onScore(-1);
                     setState(() {
+                      _score = _score > 0 ? _score - 1 : _score;
                       _shake[_i] = false;
+                      _wrong=_wrong+1;
                     });
-                    new Future.delayed(const Duration(milliseconds: 800), () {
+                    new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
                         _outputList[_i] = ' ';
                       });
                     });
                   }
+                }
+                if( (_options == 'singleDigit' && _wrong==4)||
+                    _options == 'doubleDigit'&& _wrong==5 ||
+                    _options == 'tripleDigit' && _wrong==6 ){
+                  setState(() {
+                    _isShowingFlashCard = true;
+                    _wrong = 0;
+                  });
                 }
               }
               _final(text, _preValue);
@@ -596,19 +561,14 @@ bool _zoomFirstTime=true;
                 _flag[_i] = _rigltClick(
                     text, _outputList[_i], (_num1List[_i] * _num2List[_i]));
               });
-              if(_outputList[_i]!=' '){          
-                  setState((){
-                  _zoomFirstTime=false;
-                  });
-                }     
               if (text == '✔') {
                 if (_rigltClick(text, _outputList[_i],
-                        (_num1List[_i] * _num2List[_i])) ==
+                    (_num1List[_i] * _num2List[_i])) ==
                     true) {
                   setState(() {
                     _shake[_i] = true;
                     _carry[_i] = 1;
-                    _s[_i] = true;
+                    _s[_i]=true;
                     _preValue = _outputList[_i] + _preValue;
                   });
                   if (_outputList[_i].length > 1) {
@@ -617,14 +577,18 @@ bool _zoomFirstTime=true;
                           (int.parse(_outputList[_i]) % 10).toString();
                       _outputList[_i + 1] = (_result ~/ 10).toString();
                       _flag[_i + 1] = true;
-                      _s[_i + 1] = true;
+                      _s[_i+1]=true;
                     });
                   }
                 } else {
+                  if(_score > 0)
+                    widget.onScore(-1);
                   setState(() {
+                    _score = _score > 0 ? _score - 1 : _score;
                     _shake[_i] = false;
+                    _wrong=_wrong+1;
                   });
-                  new Future.delayed(const Duration(milliseconds: 800), () {
+                  new Future.delayed(const Duration(milliseconds: 1000), () {
                     setState(() {
                       _shake[_i] = true;
                       _outputList[_i] = ' ';
@@ -633,10 +597,14 @@ bool _zoomFirstTime=true;
                 }
                 new Future.delayed(const Duration(milliseconds: 100), () {
                   setState(() {
-                    _s[_i] = false;
-                    _s[_i + 1] = false;
+                    _s[_i]=false;
+                    _s[_i+1]=false;
                   });
                 });
+              }
+              if( (_options == 'singleDigit' && _wrong==4)){
+                _isShowingFlashCard = true;
+                _wrong = 0;
               }
               _final(text, _preValue);
           }
@@ -651,20 +619,20 @@ bool _zoomFirstTime=true;
       decoration: new BoxDecoration(
         color: clr,
         borderRadius:
-            new BorderRadius.all(new Radius.circular(_height * 0.0095)),
+        new BorderRadius.all(new Radius.circular(_height * 0.0095)),
       ),
       key: _key,
       child: new Center(
           child: new Text(num,
               style: new TextStyle(
-                  color: carry == 0?Colors.limeAccent:Colors.black,
+                  color: carry == 0 ? Colors.limeAccent : Colors.black,
                   fontSize: _height * 0.05,
                   fontWeight: FontWeight.bold))),
     );
   }
 
   Widget displayShake(
-      double _height, String output, bool _flag, bool _shake, Key _key, Color clr) {
+      double _height, String output, bool _flag, bool _shake, Key _key) {
     return new Shake(
         key: _key,
         animation: _shake == false ? _animationShake : _animation,
@@ -673,11 +641,9 @@ bool _zoomFirstTime=true;
           width: _height * 0.05,
           decoration: new BoxDecoration(
             shape: BoxShape.rectangle,
-            color: _flag == true
-                ? Colors.green
-                : clr,
+            color: _flag == true ? Colors.green : Colors.red,
             borderRadius:
-                new BorderRadius.all(new Radius.circular(_height * 0.0095)),
+            new BorderRadius.all(new Radius.circular(_height * 0.0095)),
           ),
           child: new Center(
               child: new Text(output,
@@ -711,32 +677,13 @@ bool _zoomFirstTime=true;
         child: new CircularProgressIndicator(),
       );
     }
-
-     if (_isShowingFlashCard) {
-      return new FlashCard(text: _result.toString(), onChecked: () {
+    if (_isShowingFlashCard) {
+      return new FlashCard(text:_result.toString(), onChecked: () {
         setState(() {
-         _isShowingFlashCard=false;
-         _initBoard();
-        //  widget.onEnd();
+          _isShowingFlashCard = false;
+          _initBoard();
         });
       });
-    }
-    //  setState(() { _outputList[_i]='_'; });
-
-    if(_outputList[_i]==' '){
-      setState((){
-        _zoomFirstTime=true;
-      });
-       new Future.delayed(const Duration(milliseconds: 5000), () {
-                  setState(() {
-                    _zoomFirstTime=false;
-                  });
-                });
-      new Future.delayed(const Duration(milliseconds:9000), () {
-                  setState(() {
-                    _zoomFirstTime=true;
-                  });
-                });
     }
     switch (_options) {
       case 'singleDigit':
@@ -747,27 +694,26 @@ bool _zoomFirstTime=true;
               children: <Widget>[
                 new Container(
                   margin:
-                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.08),
+                  new EdgeInsets.only(bottom: constraints.maxHeight * 0.08),
                   child: new Table(
                     defaultColumnWidth:
-                        new FractionColumnWidth(constraints.maxHeight * 0.0003),
+                    new FractionColumnWidth(constraints.maxHeight * 0.0003),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: displayContainer(
-                                constraints.maxHeight,
-                                cf[1].toString(),
-                                cf[1],
-                                new Key('carry1'),
-                                Colors.limeAccent),
-                          ),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[1].toString(),
+                                  cf[1],
+                                  new Key('carry1'),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
                                   ' ', 1, new Key(''), Colors.limeAccent)),
@@ -776,7 +722,7 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: displayContainer(constraints.maxHeight, ' ',
                                 1, new Key(''), Colors.blueAccent),
@@ -784,7 +730,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -797,7 +743,7 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: displayContainer(
                                 constraints.maxHeight,
@@ -809,7 +755,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: displayContainer(
                                 constraints.maxHeight,
@@ -823,50 +769,46 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _s[1] == true
                               ? new Container(
-                                  height: constraints.maxHeight * 0.09,
-                                  width: constraints.maxHeight * 0.05,
-                                  child: new BlinkAnimation(
-                                    text: _outputList[1],
-                                    height: constraints.maxHeight,
-                                    animation: _opacity,
-                                    showHint: _s[1],
-                                  ),
-                                )
-                              : new AnimatedOpacity(opacity: 1.0,duration:new Duration(milliseconds: 200),
-                                                              child: displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[1],
-                                    _flag[1],
-                                    _shake[1],
-                                    new Key('shake'), calCount(_result)>1?Colors.red: Colors.red,
+                            height: constraints.maxHeight * 0.09,
+                            width: constraints.maxHeight * 0.05,
+                            child: new BlinkAnimation(
+                              text: _outputList[1],
+                              height: constraints.maxHeight,
+                              animation: _opacity,
+                              showHint: _s[1],
+                            ),
+                          )
+                              : displayShake(
+                              constraints.maxHeight,
+                              _outputList[1],
+                              _flag[1],
+                              _shake[1],
+                              new Key('shake')),
                         ),
-                              ),),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
-                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
+                            child: _s[0] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[0],
-                                      height: constraints.maxHeight,
-                                      animation:_s[0]!=true? _zoomOutputBox : _opacity ,
-                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[0],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[0],
+                              ),
+                            )
                                 : new Container(
-                                    child: displayShake(
-                                        constraints.maxHeight,
-                                        _outputList[0],
-                                        _flag[0],
-                                        _shake[0],
-                                        new Key('shake1'),Colors.red))),
+                                child: displayShake(
+                                    constraints.maxHeight,
+                                    _outputList[0],
+                                    _flag[0],
+                                    _shake[0],
+                                    new Key('shake1')))),
                       ]),
                     ],
                   ),
@@ -888,7 +830,7 @@ bool _zoomFirstTime=true;
               children: <Widget>[
                 new Container(
                   margin:
-                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
+                  new EdgeInsets.only(bottom: constraints.maxHeight * 0.08),
                   child: new Table(
                     defaultColumnWidth: new FractionColumnWidth(
                         constraints.maxHeight * 0.00025),
@@ -896,7 +838,7 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -907,95 +849,95 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  height: constraints.maxHeight * 0.09,
-                                  width: constraints.maxHeight * 0.05,
-                                  decoration: new BoxDecoration(
-                                    color: _barrowFlag[0] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag == true
-                                        ? Colors.redAccent
+                            height: constraints.maxHeight * 0.09,
+                            width: constraints.maxHeight * 0.05,
+                            decoration: new BoxDecoration(
+                              color: _barrowFlag[0] == true &&
+                                  _operator == '-' &&
+                                  _carryFlag == true
+                                  ? Colors.redAccent
+                                  : Colors.limeAccent,
+                              borderRadius: new BorderRadius.all(
+                                  new Radius.circular(
+                                      constraints.maxHeight * 0.0095)),
+                            ),
+                            child: new Center(
+                              child: new Text(
+                                cf[1].toString(),
+                                style: new TextStyle(
+                                    color: cf[1] == -1
+                                        ? Colors.black
                                         : Colors.limeAccent,
-                                    borderRadius: new BorderRadius.all(
-                                        new Radius.circular(
-                                            constraints.maxHeight * 0.0095)),
-                                  ),
-                                  child: new Center(
-                                    child: new Text(
-                                      cf[1].toString(),
-                                      style: new TextStyle(
-                                          color: cf[1] == -1
-                                              ? Colors.black
-                                              : Colors.limeAccent,
-                                          fontSize:
-                                              constraints.maxHeight * 0.05,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
+                                    fontSize:
+                                    constraints.maxHeight * 0.05,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      cf[1].toString(),
-                                      cf[1],
-                                      new Key('carry2'),
-                                      Colors.limeAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[1].toString(),
+                                  cf[1],
+                                  new Key('carry2'),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
                             child: _operator == '-'
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    decoration: new BoxDecoration(
-                                      color: _barrowFlag[0] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag == true
-                                          ? Colors.redAccent
-                                          : Colors.limeAccent,
-                                      borderRadius: new BorderRadius.all(
-                                          new Radius.circular(
-                                              constraints.maxHeight * 0.0095)),
-                                    ),
-                                    child: new Center(
-                                      child: new Text(
-                                        _barrowFlag[0] == true &&
-                                                _operator == '-' &&
-                                                _carryFlag == true
-                                            ? _arrow
-                                            : ' ',
-                                        style: new TextStyle(
-                                            fontSize: _barrowFlag[0] == true &&
-                                                    _operator == '-' &&
-                                                    _carryFlag == true
-                                                ? constraints.maxHeight * 0.078
-                                                : constraints.maxHeight * 0.05,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              decoration: new BoxDecoration(
+                                color: _barrowFlag[0] == true &&
+                                    _operator == '-' &&
+                                    _carryFlag == true
+                                    ? Colors.redAccent
+                                    : Colors.limeAccent,
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(
+                                        constraints.maxHeight * 0.0095)),
+                              ),
+                              child: new Center(
+                                child: new Text(
+                                  _barrowFlag[0] == true &&
+                                      _operator == '-' &&
+                                      _carryFlag == true
+                                      ? _arrow
+                                      : ' ',
+                                  style: new TextStyle(
+                                      fontSize: _barrowFlag[0] == true &&
+                                          _operator == '-' &&
+                                          _carryFlag == true
+                                          ? constraints.maxHeight * 0.078
+                                          : constraints.maxHeight * 0.05,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
                                 : new Container(
-                                    child: displayContainer(
-                                        constraints.maxHeight,
-                                        cf[0].toString(),
-                                        cf[0],
-                                        new Key('carry1'),
-                                        Colors.limeAccent))),
+                                child: displayContainer(
+                                    constraints.maxHeight,
+                                    cf[0].toString(),
+                                    cf[0],
+                                    new Key('carry1'),
+                                    Colors.limeAccent))),
                       ]),
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
                                   ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1006,71 +948,71 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Shake(
-                                  animation: _numbershake[0] == false
-                                      ? _animationShake
-                                      : _animation,
-                                  child: new GestureDetector(
-                                    onTap: _carry[0] == 0
-                                        ? () {
-                                            setState(() {
-                                              _carryFlag = true;
-                                              if (_tempf == 0 &&
-                                                  _barrowFlag[0] == true) {
-                                                _num1digit1 = _num1digit1 + 10;
-                                                cf[1] = -1;
-                                                _tempf++;
-                                              }
-                                            });
-                                            new Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 2000), () {
-                                              setState(() {
-                                                _carryFlag = false;
-                                              });
-                                            });
-                                          }
-                                        : () {},
-                                    child: new Container(
-                                      height: constraints.maxHeight * 0.09,
-                                      width: constraints.maxHeight * 0.05,
-                                      decoration: new BoxDecoration(
-                                        color: _barrowFlag[0] == true &&
-                                                _operator == '-' &&
-                                                _carryFlag == true
-                                            ? Colors.green
-                                            : Colors.blueAccent,
-                                        borderRadius: new BorderRadius.all(
-                                            new Radius.circular(
-                                                constraints.maxHeight *
-                                                    0.0095)),
-                                      ),
-                                      child: new Center(
-                                          child: new Text('$_num1digit1',
-                                              style: new TextStyle(
-                                                  fontSize:
-                                                      constraints.maxHeight *
-                                                          0.05,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                    ),
-                                  ),
-                                )
+                            animation: _numbershake[0] == false
+                                ? _animationShake
+                                : _animation,
+                            child: new GestureDetector(
+                              onTap: _carry[0] == 0
+                                  ? () {
+                                setState(() {
+                                  _carryFlag = true;
+                                  if (_tempf == 0 &&
+                                      _barrowFlag[0] == true) {
+                                    _num1digit1 = _num1digit1 + 10;
+                                    cf[1] = -1;
+                                    _tempf++;
+                                  }
+                                });
+                                new Future.delayed(
+                                    const Duration(
+                                        milliseconds: 2000), () {
+                                  setState(() {
+                                    _carryFlag = false;
+                                  });
+                                });
+                              }
+                                  : () {},
+                              child: new Container(
+                                height: constraints.maxHeight * 0.09,
+                                width: constraints.maxHeight * 0.05,
+                                decoration: new BoxDecoration(
+                                  color: _barrowFlag[0] == true &&
+                                      _operator == '-' &&
+                                      _carryFlag == true
+                                      ? Colors.green
+                                      : Colors.blueAccent,
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(
+                                          constraints.maxHeight *
+                                              0.0095)),
+                                ),
+                                child: new Center(
+                                    child: new Text('$_num1digit1',
+                                        style: new TextStyle(
+                                            fontSize:
+                                            constraints.maxHeight *
+                                                0.05,
+                                            fontWeight:
+                                            FontWeight.bold))),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      '$_num1digit1',
-                                      1,
-                                      new Key('_num1digit1'),
-                                      Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit1',
+                                  1,
+                                  new Key('_num1digit1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1081,7 +1023,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1092,7 +1034,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1105,80 +1047,71 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: _s[2] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[2],
-                                      height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[2],
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[2],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint:  _s[2],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[2],
-                                    _flag[2],
-                                    true,
-                                    new Key('shake3'),
-                                   Colors.red),
+                                constraints.maxHeight,
+                                _outputList[2],
+                                _flag[2],
+                                true,
+                                new Key('shake3')),
                           ),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[1] == true||(_carry[0]==1 &&_carry[1]==0&& _outputList[1]==' ')
+                            child: _s[1] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[1],
-                                      height: constraints.maxHeight,
-                                      // animation: _opacity,
-                                      // showHint: _s[1],
-                                        animation:_s[1]!=true?_zoomOutputBox: _opacity,
-                                      showHint: _s[1]==true?_s[1]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[1]!=true && _carry[1]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[1],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[1],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[1],
-                                    _flag[1],
-                                    _shake[1],
-                                    new Key('shake2'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[1],
+                                _flag[1],
+                                _shake[1],
+                                new Key('shake2')),
                           ),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
+                            child: _s[0] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[0],
-                                      height: constraints.maxHeight,
-                                      // animation: _opacity,
-                                      // showHint: _s[0],
-                                       animation:_s[0]!=true?_zoomOutputBox: _opacity,
-                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[0],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[0],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[0],
-                                    _flag[0],
-                                    _shake[0],
-                                    new Key('shake1'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[0],
+                                _flag[0],
+                                _shake[0],
+                                new Key('shake1')),
                           ),
                         ),
                       ]),
@@ -1202,15 +1135,15 @@ bool _zoomFirstTime=true;
               children: <Widget>[
                 new Container(
                   margin:
-                      new EdgeInsets.only(bottom: constraints.maxHeight * 0.05),
+                  new EdgeInsets.only(bottom: constraints.maxHeight * 0.08),
                   child: new Table(
                     defaultColumnWidth:
-                        new FractionColumnWidth(constraints.maxHeight * 0.0002),
+                    new FractionColumnWidth(constraints.maxHeight * 0.0002),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1221,144 +1154,144 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  height: constraints.maxHeight * 0.09,
-                                  width: constraints.maxHeight * 0.05,
-                                  decoration: new BoxDecoration(
-                                    color: _barrowFlag[1] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag1 == true
-                                        ? Colors.redAccent
-                                        : Colors.limeAccent,
-                                    borderRadius: new BorderRadius.all(
-                                        new Radius.circular(
-                                            constraints.maxHeight * 0.0095)),
-                                  ),
-                                  child: new Center(
-                                    child: new Text(
-                                      _barrowFlag[1] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag1 == true
-                                          ? '-1'
-                                          : cf[2] == -1 ? '-1' : ' ',
-                                      style: new TextStyle(
-                                          fontSize:
-                                              constraints.maxHeight * 0.05,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
+                            height: constraints.maxHeight * 0.09,
+                            width: constraints.maxHeight * 0.05,
+                            decoration: new BoxDecoration(
+                              color: _barrowFlag[1] == true &&
+                                  _operator == '-' &&
+                                  _carryFlag1 == true
+                                  ? Colors.redAccent
+                                  : Colors.limeAccent,
+                              borderRadius: new BorderRadius.all(
+                                  new Radius.circular(
+                                      constraints.maxHeight * 0.0095)),
+                            ),
+                            child: new Center(
+                              child: new Text(
+                                _barrowFlag[1] == true &&
+                                    _operator == '-' &&
+                                    _carryFlag1 == true
+                                    ? '-1'
+                                    : cf[2] == -1 ? '-1' : ' ',
+                                style: new TextStyle(
+                                    fontSize:
+                                    constraints.maxHeight * 0.05,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      cf[2].toString(),
-                                      cf[2],
-                                      new Key('carry3'),
-                                      Colors.limeAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[2].toString(),
+                                  cf[2],
+                                  new Key('carry3'),
+                                  Colors.limeAccent)),
                         ),
                         new Padding(
                             padding: new EdgeInsets.all(
                                 constraints.maxHeight * 0.005),
                             child: _operator == '-'
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    decoration: new BoxDecoration(
-                                      color: (_barrowFlag[0] == true &&
-                                                  _carryFlag == true) ||
-                                              (_barrowFlag[1] == true &&
-                                                  _carryFlag1 == true)
-                                          ? Colors.redAccent
-                                          : Colors.limeAccent,
-                                      borderRadius: new BorderRadius.all(
-                                          new Radius.circular(
-                                              constraints.maxHeight * 0.0095)),
-                                    ),
-                                    child: new Center(
-                                      child: new Text(
-                                        _barrowFlag[1] == true &&
-                                                _carryFlag1 == true
-                                            ? _arrow
-                                            : cf[1].toString(),
-                                        style: new TextStyle(
-                                          color: cf[1] == -1
-                                              ? Colors.black
-                                              : Colors.limeAccent,
-                                          fontSize: _barrowFlag[1] == true &&
-                                                  _carryFlag1 == true
-                                              ? constraints.maxHeight * 0.078
-                                              : constraints.maxHeight * 0.05,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              decoration: new BoxDecoration(
+                                color: (_barrowFlag[0] == true &&
+                                    _carryFlag == true) ||
+                                    (_barrowFlag[1] == true &&
+                                        _carryFlag1 == true)
+                                    ? Colors.redAccent
+                                    : Colors.limeAccent,
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(
+                                        constraints.maxHeight * 0.0095)),
+                              ),
+                              child: new Center(
+                                child: new Text(
+                                  _barrowFlag[1] == true &&
+                                      _carryFlag1 == true
+                                      ? _arrow
+                                      : cf[1].toString(),
+                                  style: new TextStyle(
+                                    color: cf[1] == -1
+                                        ? Colors.black
+                                        : Colors.limeAccent,
+                                    fontSize: _barrowFlag[1] == true &&
+                                        _carryFlag1 == true
+                                        ? constraints.maxHeight * 0.078
+                                        : constraints.maxHeight * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
                                 : new Container(
-                                    child: displayContainer(
-                                        constraints.maxHeight,
-                                        cf[1].toString(),
-                                        cf[1],
-                                        new Key('carry2'),
-                                        Colors.limeAccent)) //,
-                            ),
+                                child: displayContainer(
+                                    constraints.maxHeight,
+                                    cf[1].toString(),
+                                    cf[1],
+                                    new Key('carry2'),
+                                    Colors.limeAccent)) //,
+                        ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Container(
-                                  height: constraints.maxHeight * 0.09,
-                                  width: constraints.maxHeight * 0.05,
-                                  decoration: new BoxDecoration(
-                                    color: _barrowFlag[0] == true &&
-                                            _operator == '-' &&
-                                            _carryFlag == true
-                                        ? Colors.redAccent
-                                        : Colors.limeAccent,
-                                    borderRadius: new BorderRadius.all(
-                                        new Radius.circular(
-                                            constraints.maxHeight * 0.0095)),
-                                  ),
-                                  child: new Center(
-                                    child: new Text(
-                                      _barrowFlag[0] == true &&
-                                              _operator == '-' &&
-                                              _carryFlag == true
-                                          ? _arrow
-                                          : ' ',
-                                      style: new TextStyle(
-                                        fontSize: _barrowFlag[0] == true &&
-                                                _operator == '-' &&
-                                                _carryFlag == true
-                                            ? constraints.maxHeight * 0.078
-                                            : constraints.maxHeight * 0.05,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                )
+                            height: constraints.maxHeight * 0.09,
+                            width: constraints.maxHeight * 0.05,
+                            decoration: new BoxDecoration(
+                              color: _barrowFlag[0] == true &&
+                                  _operator == '-' &&
+                                  _carryFlag == true
+                                  ? Colors.redAccent
+                                  : Colors.limeAccent,
+                              borderRadius: new BorderRadius.all(
+                                  new Radius.circular(
+                                      constraints.maxHeight * 0.0095)),
+                            ),
+                            child: new Center(
+                              child: new Text(
+                                _barrowFlag[0] == true &&
+                                    _operator == '-' &&
+                                    _carryFlag == true
+                                    ? _arrow
+                                    : ' ',
+                                style: new TextStyle(
+                                  fontSize: _barrowFlag[0] == true &&
+                                      _operator == '-' &&
+                                      _carryFlag == true
+                                      ? constraints.maxHeight * 0.078
+                                      : constraints.maxHeight * 0.05,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  color: Colors.limeAccent,
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      cf[0].toString(),
-                                      cf[0],
-                                      new Key('carry1'),
-                                      Colors.limeAccent)),
+                              color: Colors.limeAccent,
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  cf[0].toString(),
+                                  cf[0],
+                                  new Key('carry1'),
+                                  Colors.limeAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(constraints.maxHeight,
                                   ' ', 1, new Key(''), Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1369,133 +1302,133 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Shake(
-                                  animation: _numbershake[1] == false
-                                      ? _animationShake
-                                      : _animation,
-                                  child: new GestureDetector(
-                                    onTap: _carry[1] == 0 && _carry[0] == 1
-                                        ? () {
-                                            setState(() {
-                                              _carryFlag1 = true;
-                                              if (_tempf1 == 0 &&
-                                                  _barrowFlag[1] == true) {
-                                                _num1digit2 = _num1digit2 + 10;
-                                                cf[2] = -1;
-                                                _tempf1++;
-                                              }
-                                            });
-                                            new Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 2000), () {
-                                              setState(() {
-                                                _carryFlag1 = false;
-                                              });
-                                            });
-                                          }
-                                        : () {},
-                                    child: new Container(
-                                      height: constraints.maxHeight * 0.09,
-                                      width: constraints.maxHeight * 0.05,
-                                      decoration: new BoxDecoration(
-                                        color: _barrowFlag[1] == true &&
-                                                _operator == '-' &&
-                                                _carryFlag1 == true
-                                            ? Colors.green
-                                            : Colors.blueAccent,
-                                        borderRadius: new BorderRadius.all(
-                                            new Radius.circular(
-                                                constraints.maxHeight *
-                                                    0.0095)),
-                                      ),
-                                      child: new Center(
-                                          child: new Text('$_num1digit2',
-                                              style: new TextStyle(
-                                                  fontSize:
-                                                      constraints.maxHeight *
-                                                          0.05,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                    ),
-                                  ),
-                                )
+                            animation: _numbershake[1] == false
+                                ? _animationShake
+                                : _animation,
+                            child: new GestureDetector(
+                              onTap: _carry[1] == 0 && _carry[0] == 1
+                                  ? () {
+                                setState(() {
+                                  _carryFlag1 = true;
+                                  if (_tempf1 == 0 &&
+                                      _barrowFlag[1] == true) {
+                                    _num1digit2 = _num1digit2 + 10;
+                                    cf[2] = -1;
+                                    _tempf1++;
+                                  }
+                                });
+                                new Future.delayed(
+                                    const Duration(
+                                        milliseconds: 2000), () {
+                                  setState(() {
+                                    _carryFlag1 = false;
+                                  });
+                                });
+                              }
+                                  : () {},
+                              child: new Container(
+                                height: constraints.maxHeight * 0.09,
+                                width: constraints.maxHeight * 0.05,
+                                decoration: new BoxDecoration(
+                                  color: _barrowFlag[1] == true &&
+                                      _operator == '-' &&
+                                      _carryFlag1 == true
+                                      ? Colors.green
+                                      : Colors.blueAccent,
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(
+                                          constraints.maxHeight *
+                                              0.0095)),
+                                ),
+                                child: new Center(
+                                    child: new Text('$_num1digit2',
+                                        style: new TextStyle(
+                                            fontSize:
+                                            constraints.maxHeight *
+                                                0.05,
+                                            fontWeight:
+                                            FontWeight.bold))),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      '$_num1digit2',
-                                      1,
-                                      new Key('_num1digit2'),
-                                      Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit2',
+                                  1,
+                                  new Key('_num1digit2'),
+                                  Colors.blueAccent)),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: _operator == '-'
                               ? new Shake(
-                                  animation: _numbershake[0] == false
-                                      ? _animationShake
-                                      : _animation,
-                                  child: new GestureDetector(
-                                    onTap: _carry[0] == 0
-                                        ? () {
-                                            setState(() {
-                                              _carryFlag = true;
-                                              if (_tempf == 0 &&
-                                                  _barrowFlag[0] == true) {
-                                                _num1digit1 = _num1digit1 + 10;
-                                                cf[1] = -1;
-                                                _tempf++;
-                                              }
-                                            });
-                                            new Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 2000), () {
-                                              setState(() {
-                                                _carryFlag = false;
-                                              });
-                                            });
-                                          }
-                                        : () {},
-                                    child: new Container(
-                                      height: constraints.maxHeight * 0.09,
-                                      width: constraints.maxHeight * 0.05,
-                                      decoration: new BoxDecoration(
-                                        color: _barrowFlag[0] == true &&
-                                                _operator == '-' &&
-                                                _carryFlag == true
-                                            ? Colors.green
-                                            : Colors.blue,
-                                        borderRadius: new BorderRadius.all(
-                                            new Radius.circular(
-                                                constraints.maxHeight *
-                                                    0.0095)),
-                                      ),
-                                      child: new Center(
-                                          child: new Text('$_num1digit1',
-                                              style: new TextStyle(
-                                                  fontSize:
-                                                      constraints.maxHeight *
-                                                          0.05,
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                    ),
-                                  ),
-                                )
+                            animation: _numbershake[0] == false
+                                ? _animationShake
+                                : _animation,
+                            child: new GestureDetector(
+                              onTap: _carry[0] == 0
+                                  ? () {
+                                setState(() {
+                                  _carryFlag = true;
+                                  if (_tempf == 0 &&
+                                      _barrowFlag[0] == true) {
+                                    _num1digit1 = _num1digit1 + 10;
+                                    cf[1] = -1;
+                                    _tempf++;
+                                  }
+                                });
+                                new Future.delayed(
+                                    const Duration(
+                                        milliseconds: 2000), () {
+                                  setState(() {
+                                    _carryFlag = false;
+                                  });
+                                });
+                              }
+                                  : () {},
+                              child: new Container(
+                                height: constraints.maxHeight * 0.09,
+                                width: constraints.maxHeight * 0.05,
+                                decoration: new BoxDecoration(
+                                  color: _barrowFlag[0] == true &&
+                                      _operator == '-' &&
+                                      _carryFlag == true
+                                      ? Colors.green
+                                      : Colors.blue,
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(
+                                          constraints.maxHeight *
+                                              0.0095)),
+                                ),
+                                child: new Center(
+                                    child: new Text('$_num1digit1',
+                                        style: new TextStyle(
+                                            fontSize:
+                                            constraints.maxHeight *
+                                                0.05,
+                                            fontWeight:
+                                            FontWeight.bold))),
+                              ),
+                            ),
+                          )
                               : new Container(
-                                  child: displayContainer(
-                                      constraints.maxHeight,
-                                      '$_num1digit1',
-                                      1,
-                                      new Key('_num1digit1'),
-                                      Colors.blueAccent)),
+                              child: displayContainer(
+                                  constraints.maxHeight,
+                                  '$_num1digit1',
+                                  1,
+                                  new Key('_num1digit1'),
+                                  Colors.blueAccent)),
                         ),
                       ]),
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1506,7 +1439,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1517,7 +1450,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1528,7 +1461,7 @@ bool _zoomFirstTime=true;
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                               child: displayContainer(
                                   constraints.maxHeight,
@@ -1541,106 +1474,94 @@ bool _zoomFirstTime=true;
                       new TableRow(children: <Widget>[
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
                             child: _s[3] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[3],
-                                      height: constraints.maxHeight,
-                                      animation: _opacity,
-                                      showHint: _s[3],
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[3],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[3],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[3],
-                                    _flag[3],
-                                    _shake[3],
-                                    new Key('flag2'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[3],
+                                _flag[3],
+                                _shake[3],
+                                new Key('flag2')),
                           ),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[2] == true||(_carry[2]==0&& _carry[1]==1&& _carry[0]==1 && _outputList[2]==' ')
+                            child: _s[2] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[2],
-                                      height: constraints.maxHeight,
-                                      // animation: _opacity,
-                                      // showHint: _s[2],
-                                        animation:_s[2]!=true?_zoomOutputBox: _opacity,
-                                      showHint: _s[2]==true?_s[2]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[2]!=true && _carry[2]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[2],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[2],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[2],
-                                    _flag[2],
-                                    _shake[2],
-                                    new Key('flag2'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[2],
+                                _flag[2],
+                                _shake[2],
+                                new Key('flag2')),
                           ),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[1] == true||(_carry[1]==0&& _carry[0]==1 && _outputList[1]==' ')
+                            child: _s[1] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[1],
-                                      height: constraints.maxHeight,
-                                      // animation: _opacity,
-                                      // showHint: _s[1],
-                                         animation:_s[1]!=true?_zoomOutputBox: _opacity,
-                                      showHint: _s[1]==true?_s[1]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[1]!=true && _carry[1]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[1],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[1],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[1],
-                                    _flag[1],
-                                    _shake[1],
-                                    new Key('flag1'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[1],
+                                _flag[1],
+                                _shake[1],
+                                new Key('flag1')),
                           ),
                         ),
                         new Padding(
                           padding:
-                              new EdgeInsets.all(constraints.maxHeight * 0.005),
+                          new EdgeInsets.all(constraints.maxHeight * 0.005),
                           child: new Container(
-                            child: _s[0] == true ||(_carry[0]==0 && _outputList[0]==' ')
+                            child: _s[0] == true
                                 ? new Container(
-                                    height: constraints.maxHeight * 0.09,
-                                    width: constraints.maxHeight * 0.05,
-                                    child: new BlinkAnimation(
-                                      text: _outputList[0],
-                                      height: constraints.maxHeight,
-                                      // animation: _opacity,
-                                      // showHint: _s[0],
-                                         animation:_s[0]!=true?_zoomOutputBox: _opacity,
-                                      showHint: _s[0]==true?_s[0]:_zoomFirstTime,
-                                     // carry:_carry[0],
-                                      clr:_s[0]!=true && _carry[0]==0?Colors.red:Colors.green
-                                    ),
-                                  )
+                              height: constraints.maxHeight * 0.09,
+                              width: constraints.maxHeight * 0.05,
+                              child: new BlinkAnimation(
+                                text: _outputList[0],
+                                height: constraints.maxHeight,
+                                animation: _opacity,
+                                showHint: _s[0],
+                              ),
+                            )
                                 : displayShake(
-                                    constraints.maxHeight,
-                                    _outputList[0],
-                                    _flag[0],
-                                    _shake[0],
-                                    new Key('flag1'), Colors.red),
+                                constraints.maxHeight,
+                                _outputList[0],
+                                _flag[0],
+                                _shake[0],
+                                new Key('flag1')),
                           ),
                         ),
                       ]),
@@ -1663,6 +1584,8 @@ bool _zoomFirstTime=true;
   }
 }
 
+
+
 class MyButton extends StatefulWidget {
   MyButton({Key key, this.text, this.height, this.onPress}) : super(key: key);
   final String text;
@@ -1674,8 +1597,7 @@ class MyButton extends StatefulWidget {
   _MyButtonState createState() => new _MyButtonState();
 }
 
-class _MyButtonState
-    extends State<MyButton> /* with TickerProviderStateMixin */ {
+class _MyButtonState extends State<MyButton> /* with TickerProviderStateMixin */ {
   String _displayText;
   // AnimationController controller;
   // Animation<double> animation;
@@ -1684,6 +1606,7 @@ class _MyButtonState
   initState() {
     super.initState();
     _displayText = widget.text;
+
     // controller = new AnimationController(
     //     duration: new Duration(milliseconds: 250), vsync: this);
     // animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
@@ -1724,14 +1647,12 @@ class _MyButtonState
         child: new Padding(
             padding: new EdgeInsets.all(widget.height * 0.005),
             child: new RaisedButton(
-                //   elevation: 5.0,
+                elevation: 12.0,
                 splashColor: Colors.white,
                 highlightColor: Colors.grey,
                 onPressed: () => widget.onPress(),
                 padding: new EdgeInsets.all(widget.height * 0.02),
-                color: _displayText == '✖'
-                    ? Colors.red
-                    : _displayText == '✔' ? Colors.green : Colors.orange,
+                  color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green:Colors.orange,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.all(
                         new Radius.circular(widget.height * 0.0095))),
@@ -1740,7 +1661,7 @@ class _MyButtonState
                     style: new TextStyle(
                         color: Colors.white,
                         fontSize: _displayText == '✖' || _displayText == '✔'
-                            ? widget.height * 0.042
+                            ? widget.height * 0.043
                             : widget.height * 0.05,
                         fontWeight: FontWeight.bold)))));
   }
@@ -1748,48 +1669,25 @@ class _MyButtonState
 
 class BlinkAnimation extends AnimatedWidget {
   BlinkAnimation(
-      {Key key, Animation animation, this.text, this.height, this.showHint,this.carry,this.clr})
+      {Key key, Animation animation, this.text, this.height, this.showHint})
       : super(key: key, listenable: animation);
-  // final
-   bool showHint;
+  final bool showHint;
   final String text;
   final double height;
-  final int carry;
-  final Color clr;
 
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
-    //  new Future.delayed(const Duration(milliseconds: 300), () {
-    //              showHint=false;
-    //             });
     return new Container(
         child: new Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        showHint == true
-            ? new ScaleTransition(
-                scale: animation,
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    color:clr,
-                    borderRadius: new BorderRadius.all(
-                        new Radius.circular(height * 0.0095)),
-                  ),
-                  child: new Center(
-                    child: new Text(
-                      text,
-                      style: new TextStyle(
-                          fontSize: height * 0.05,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              )
-            : new Container(
+          alignment: Alignment.center,
+          children: <Widget>[
+            showHint == true
+                ? new ScaleTransition(
+              scale: animation,
+              child: new Container(
                 decoration: new BoxDecoration(
-                  color: clr,
+                  color: Colors.green,
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.0095)),
                 ),
@@ -1803,7 +1701,24 @@ class BlinkAnimation extends AnimatedWidget {
                   ),
                 ),
               ),
-      ],
-    ));
+            )
+                : new Container(
+              decoration: new BoxDecoration(
+                color: Colors.green,
+                borderRadius: new BorderRadius.all(
+                    new Radius.circular(height * 0.0095)),
+              ),
+              child: new Center(
+                child: new Text(
+                  text,
+                  style: new TextStyle(
+                      fontSize: height * 0.05,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
