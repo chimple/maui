@@ -6,7 +6,7 @@ import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/flip_animator.dart';
 import '../components/responsive_grid_view.dart';
-import '../components/shake_animator.dart';
+import '../components/shaker.dart';
 
 class Memory extends StatefulWidget {
   Function onScore;
@@ -240,7 +240,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(duration: new Duration(milliseconds: 800), vsync: this);
-    shakeController = new AnimationController(duration: new Duration(milliseconds: 70), vsync: this);
+    shakeController = new AnimationController(duration: new Duration(milliseconds: 50), vsync: this);
     flipController = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
     noAnimation = new Tween(begin: 0.0,end:0.0).animate(shakeController);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
@@ -256,7 +256,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       });
     controller.forward().then((f){flipController.reverse();});
 
-    shakeAnimation = new Tween(begin: -2.0, end: 1.0).animate(shakeController);
+    shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
     _myAnim();
   }
 
@@ -311,8 +311,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new ScaleTransition(
       scale: animation,
-          child: new ShakeAnimator(
-          animation: widget.shaker == ShakeCell.Wrong ? shakeAnimation : noAnimation,
+          child: new Shake(
+          animation: widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
           child: new FlipAnimator(
               controller: flipController,
               front: new ScaleTransition(
