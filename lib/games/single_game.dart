@@ -605,16 +605,22 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 1;
         return new Tuple2(
             new Draw_Challenge(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
+                iteration: _iteration,
                 isRotated: widget.isRotated,
-                iteration: _iteration),
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
                 scaffoldBackgroundColor: Colors.lime, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: Colors.cyan));
         break;
     }
     return null;
