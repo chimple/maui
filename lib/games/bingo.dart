@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:maui/components/unit_button.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 
 class Bingo extends StatefulWidget {
@@ -10,7 +12,7 @@ class Bingo extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Bingo(
@@ -19,7 +21,7 @@ class Bingo extends StatefulWidget {
         this.onProgress,
         this.onEnd,
         this.iteration,
-        this.gameCategoryId,
+        this.gameConfig,
         this.isRotated = false})
       : super(key: key);
 
@@ -59,7 +61,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
   var matchRow;
   var matchColumn;
-
+  int _maxSize = 3;
   /// datattaaaa
 
   bool _isLoading = true;
@@ -70,6 +72,13 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    if (widget.gameConfig.level < 4) {
+      _maxSize = 2;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 3;
+    } else {
+      _maxSize = 3;
+    }
     _initBoard();
   }
 
@@ -78,7 +87,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         duration: new Duration(milliseconds: 100), vsync: this);
     animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
     setState(() => _isLoading = true);
-    _Bingodata = await fetchPairData(widget.gameCategoryId, _size * _size);
+    _Bingodata = await fetchPairData(widget.gameConfig.gameCategoryId, _size * _size);
     print({"kiran data": _Bingodata});
 
     _Bingodata.forEach((e, v) {
@@ -484,11 +493,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     }
 //    print("_MyButtonState.build");
     print("this is method $_colmunMethod");
-    return new FadeTransition(opacity:
-    widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
-        ? animationOpacity
-        : animationRight,
-        child: new ScaleTransition(
+    return new ScaleTransition(
             scale:
             widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
                 ? animationDance
@@ -500,18 +505,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     : animationRight,
                 child: new ScaleTransition(
                     scale: animationRight,
-                    child: new RaisedButton(
-                        splashColor: Colors.red,
-                        onPressed: () => widget.onPress(),
+                    child: new UnitButton(
+                        onPress: () => widget.onPress(),
 //                    padding: const EdgeInsets.all(8.0),
-                        color: widget.status == Status.Visible
-                            ? Colors.pink
-                            : Colors.teal,
-                        shape: new RoundedRectangleBorder(
-                            borderRadius:
-                            const BorderRadius.all(const Radius.circular(8.0))),
-                        child: new Text(_displayText,
-                            style: new TextStyle(
-                                color: Colors.white, fontSize: 24.0)))))));
+//                        color: widget.status == Status.Visible
+//                            ? Colors.pink
+//                            : Colors.teal,
+//                        shape: new RoundedRectangleBorder(
+//                            borderRadius:
+//                            const BorderRadius.all(const Radius.circular(8.0))),
+//                        text: new Text(_displayText,
+//                            style: new TextStyle(
+//                                color: Colors.white, fontSize: 24.0))
+                          text: _displayText,
+                        unitMode: UnitMode.text
+
+                    ))));
   }
 }
