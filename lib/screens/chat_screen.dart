@@ -1,17 +1,16 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   final String myId;
@@ -65,15 +64,23 @@ class ChatScreenState extends State<ChatScreen> {
                   Animation<double> animation, int index) {
                 return snapshot.value['senderId'] == myId
                     ? new ChatMessage(
-                        snapshot: snapshot,
                         animation: animation,
-                        image: myImage,
-                      )
+                        imageFile: myImage,
+                        child: snapshot.value['imageUrl'] != null
+                            ? new Image.network(
+                                snapshot.value['imageUrl'],
+                                width: 250.0,
+                              )
+                            : new Text(snapshot.value['text']))
                     : new ChatMessage(
-                        snapshot: snapshot,
                         animation: animation,
                         imageUrl: widget.friendImageUrl,
-                      );
+                        child: snapshot.value['imageUrl'] != null
+                            ? new Image.network(
+                                snapshot.value['imageUrl'],
+                                width: 250.0,
+                              )
+                            : new Text(snapshot.value['text']));
               },
             ),
           ),
@@ -96,11 +103,11 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
+                    File imageFile =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
                     var uuid = new Uuid().v4();
-                    StorageReference ref = FirebaseStorage.instance
-                        .ref()
-                        .child("image_$uuid.jpg");
+                    StorageReference ref =
+                        FirebaseStorage.instance.ref().child("image_$uuid.jpg");
                     StorageUploadTask uploadTask = ref.put(imageFile);
                     Uri downloadUrl = (await uploadTask.future).downloadUrl;
                     _sendMessage(imageUrl: downloadUrl.toString());
