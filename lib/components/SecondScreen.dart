@@ -21,6 +21,8 @@ class SecondScreen extends StatelessWidget {
   Widget _build(BuildContext context, BoxConstraints constraints) {
 //    print([constraints.maxWidth, constraints.maxHeight]);
 //    print({"the output is : " : output});
+  var height = constraints.maxHeight;
+  var width = constraints.maxWidth;
     return new Scaffold(
         appBar: new AppBar(
           title: new Text('Drawing'),
@@ -28,8 +30,14 @@ class SecondScreen extends StatelessWidget {
         body: new Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Expanded(child: new Drawing(output)),
-            new Expanded(child: new DrawOptions()),
+            new Container(
+                height: height > width ? height * 0.5 : height*.5 ,
+                width:  width >  height ? width * 0.5 : width*.6 ,
+            child: new Drawing(output)),
+            new Expanded(
+//                height: constraints.maxHeight*.3, width: constraints.maxWidth,
+                child: new DrawOptions()
+            ),
           ],
         ));
   }
@@ -76,7 +84,7 @@ class MyDrawPageState extends State<MyImagePage> {
 
   MyDrawPageState(this.output);
 
-  List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
+//  List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
   DrawPainting currentPainter;
 
   @override
@@ -102,14 +110,15 @@ class MyDrawPageState extends State<MyImagePage> {
 class DrawPainting extends CustomPainter {
   String canvasProperty = null;
 
-  Canvas _lastCanvas;
-  Size _lastSize;
 
   DrawPainting(this.canvasProperty);
 
   void paint(Canvas canvas, Size size) {
-    _lastCanvas = canvas;
-    _lastSize = size;
+    double _height = size.height;
+    double _width = size.width;
+     double _hsize = _height > _width ? _height*2.5 : _height;
+    double _wsize = _width > _height ? _width* 1.5 : _width;
+
     Paint paint = new Paint()..strokeCap = StrokeCap.round;
 
 //    print({"the canvasproperty value is : " : canvasProperty});
@@ -129,11 +138,11 @@ class DrawPainting extends CustomPainter {
         paint.color = new Color(draw['color']);
 
         if (position[j]['x'] != null && position[j + 1]['x'] != null) {
-          Offset currentPixel = new Offset(((position[j]['x']) * size.width),
-              ((position[j]['y']) * size.height));
+          Offset currentPixel = new Offset(((position[j]['x']) * _wsize),
+              ((position[j]['y']) * _hsize));
 
-          Offset nextPixel = new Offset(((position[j + 1]['x']) * size.width),
-              ((position[j + 1]['y']) * size.height));
+          Offset nextPixel = new Offset(((position[j + 1]['x']) * _wsize),
+              ((position[j + 1]['y']) * _hsize));
 
           canvas.drawLine(currentPixel, nextPixel, paint);
         }

@@ -46,9 +46,9 @@ class OrderItState extends State<OrderIt> {
      if (widget.gameConfig.level < 4) {
       _maxSize = 5;
     } else if (widget.gameConfig.level < 7) {
-      _maxSize = 5;
+      _maxSize = 7;
     } else {
-      _maxSize = 5;
+      _maxSize = 12;
     }
     _initBoard();
   }

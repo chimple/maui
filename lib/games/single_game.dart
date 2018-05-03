@@ -249,6 +249,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'true_or_false':
         return new Tuple2(
             new TrueFalseGame(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -327,6 +328,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'fill_in_the_blanks':
+         playTime = 20000;
+        maxIterations = 5;
         return new Tuple2(
             new FillInTheBlanks(
                 key: new GlobalObjectKey(keyName),
@@ -487,6 +490,7 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 10;
         return new Tuple2(
             new Quiz(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -494,8 +498,8 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
+                backgroundColor: const Color(0xFF9d4e70), //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
@@ -610,16 +614,22 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 1;
         return new Tuple2(
             new Draw_Challenge(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
+                iteration: _iteration,
                 isRotated: widget.isRotated,
-                iteration: _iteration),
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
                 scaffoldBackgroundColor: Colors.lime, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: Colors.cyan));
         break;
     }
     return null;
