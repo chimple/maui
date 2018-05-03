@@ -37,6 +37,7 @@ class QuizState extends State<Quiz> {
   var keys=0;
   Tuple3<String, String, List<String>> _allques;
   int _size = 2;
+  int scoretrack = 0;
   String questionText;
   String ans;
   List<String> ch;
@@ -87,6 +88,7 @@ class QuizState extends State<Quiz> {
         keys: keys++,
         onPress: () {
           if (text == ans) {
+            scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
@@ -100,7 +102,13 @@ class QuizState extends State<Quiz> {
                           _statuses[index] = Status.Active;               
                             });
             });
-            widget.onScore(-1);
+            if(scoretrack > 0){
+              scoretrack = scoretrack - 1;
+              widget.onScore(-1);
+            } else {
+              scoretrack = scoretrack + 0;
+              widget.onScore(0);
+            }
           }
         });
   }
