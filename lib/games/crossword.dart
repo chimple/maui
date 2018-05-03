@@ -117,10 +117,9 @@ class CrosswordState extends State<Crossword> {
       }
     }
     code= rng.nextInt(499)+rng.nextInt(500);
-    if(code<100){
     while(code<100){
       code= rng.nextInt(499)+rng.nextInt(500);
-    }}
+    }
     _flag=[];
      print('flag ${_flag.length}');
     for (var i = 0; i <(_rows*_cols)+(_rightcols)*2+1; i++) {
@@ -231,7 +230,7 @@ class CrosswordState extends State<Crossword> {
     return new Container(
      padding: media.orientation==Orientation.portrait?
      new EdgeInsets.symmetric(vertical:rheight*.04,horizontal:rwidth*.12)
-     :new EdgeInsets.symmetric(vertical:rheight*.05),
+     :new EdgeInsets.symmetric(vertical:rheight*.03),
         color: Colors.purple[300],
         child: media.orientation==Orientation.portrait?new Column(
           // portrait mode

@@ -7,7 +7,7 @@ import './orderable.dart';
 /// Widget factory method
 typedef Widget WidgetFactory({Orderable data, Size itemSize});
 
-const kMargin = 10.0;
+const kMargin = 8.0;
 
 const kMinSize = 50.0;
 const kMaxHeight = 600.0;
@@ -44,16 +44,16 @@ class OrderableStack<T> extends StatefulWidget {
 
   ///
   OrderableStack(
-      {@required this.items,
+    { @required this.items,
       @required this.itemBuilder,
-      Key key,
-      this.onChange,
-      this.itemSize = kDefaultItemSize,
-      this.margin = kMargin,
-      this.direction = OrderItDirection.Horizontal,
-      this.isRotated = false,
-      this.shuffle = true})
-      : super(key: key);
+        Key key,
+        this.onChange,
+        this.itemSize = kDefaultItemSize,
+        this.margin = kMargin,
+        this.direction = OrderItDirection.Horizontal,
+        this.isRotated = false,
+        this.shuffle = true})
+        : super(key: key);
 
   @override
   _OrderableStackState createState() => new _OrderableStackState<T>(

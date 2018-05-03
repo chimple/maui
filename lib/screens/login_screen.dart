@@ -33,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
   getImage(BuildContext context) async {
     var _fileName = await ImagePicker.pickImage(
         source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
-    var user = await new UserRepo().insert(new User(image: _fileName.path));
+    var user = await new UserRepo()
+        .insert(new User(image: _fileName.path, currentLessonId: 1));
     AppStateContainer.of(context).setLoggedInUser(user);
   }
 
@@ -41,7 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     return loggedInUser != null
-        ? new TabHome(title: "Maui",)
+        ? new TabHome(
+            title: "Maui",
+          )
         : new Scaffold(
             body: _isLoading
                 ? new SizedBox(
