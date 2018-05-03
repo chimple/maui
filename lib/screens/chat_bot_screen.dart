@@ -12,7 +12,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
 
 enum ChatItemType { card, text, game }
-enum ChatMode { teach, conversation, quiz, revise }
+enum ChatMode { teach, conversation, quiz }
 
 class ChatItem {
   final ChatItemType chatItemType;
@@ -43,9 +43,8 @@ class ChatBotScreenState extends State<ChatBotScreen> {
       new Map<ChatMode, Tuple2<int, int>>();
   List<LessonUnit> _toQuiz;
   List<LessonUnit> _toTeach;
-  List<LessonUnit> _wrongAnswer;
   LessonUnit _currentQuizLesson;
-  User user;
+  User _user;
 
   @override
   void initState() {
@@ -58,9 +57,9 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   void _initState() async {
-    user = AppStateContainer.of(context).state.loggedInUser;
+    _user = AppStateContainer.of(context).state.loggedInUser;
     _lessonUnits = await new LessonUnitRepo()
-        .getLessonUnitsByLessonId(user.currentLessonId);
+        .getLessonUnitsByLessonId(_user.currentLessonId);
     _displayNextChat(null);
   }
 
@@ -90,7 +89,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 : new ChatMessage(
                     side: Side.left,
                     animation: animation,
-                    imageFile: user.image,
+                    imageFile: _user.image,
                     child: _buildChatMessage(chatItem));
           },
         ),
@@ -129,6 +128,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
     }
   }
 
+  _handleTextInput(String text) {
+    _handleSubmitted(new ChatItem(
+        chatItemType: ChatItemType.text, content: text, sender: _user.id));
+  }
+
   _handleSubmitted(ChatItem chatItem) {
     setState(() {
       _chatItems.insert(0, chatItem);
@@ -143,12 +147,12 @@ class ChatBotScreenState extends State<ChatBotScreen> {
             chatItemType: ChatItemType.text,
             content: 'Awesome!',
             sender: botId);
+        _toTeach.remove(_currentQuizLesson);
       } else {
         response = new ChatItem(
             chatItemType: ChatItemType.text,
             content: 'Too bad!',
             sender: botId);
-        _wrongAnswer.add(_currentQuizLesson);
       }
       setState(() {
         _chatItems.insert(0, response);
@@ -163,65 +167,71 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   _displayNextChat(ChatItem currentChatItem) async {
-    if ((_currentMode == ChatMode.teach &&
-            _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
-        (_currentMode == ChatMode.quiz &&
-            _chatHistory[ChatMode.quiz].item2 < _toQuiz.length)) {
-      print('Current: $_currentMode Next: quiz History: $_chatHistory');
-      if (_currentMode != ChatMode.quiz) {
-        _toQuiz = List.from(_toTeach)..shuffle();
-        _wrongAnswer = [];
-      }
-      int index = _currentMode != ChatMode.quiz
-          ? 0
-          : _chatHistory[ChatMode.quiz]?.item2 ?? 0;
-
+    if ((_toTeach == null || _toTeach.isEmpty) &&
+        (_currentMode != ChatMode.conversation ||
+            (_currentMode == ChatMode.conversation &&
+                _chatHistory[ChatMode.conversation].item2 < 2))) {
       setState(() {
-        _currentQuizLesson = _toQuiz[index];
-        var question = _currentQuizLesson.objectUnitId;
-        _expectedAnswer = _currentQuizLesson.subjectUnitId;
-        List<LessonUnit> lessonUnits = List.from(_lessonUnits, growable: false)
-          ..shuffle();
-        List<String> choices = lessonUnits
-            .where((l) => l.subjectUnitId != _expectedAnswer)
-            .take(3)
-            .map((l) => l.objectUnitId)
-            .toList(growable: false);
-        _addChatItem(ChatMode.quiz, ChatItemType.card, question);
-        input = new JoinText(
-            answer: _expectedAnswer,
-            choices: choices,
-            onSubmit: _handleSubmitted);
+        _addChatItem(ChatMode.conversation, ChatItemType.card, 'hello');
+        input = new TextField(
+          onSubmitted: _handleTextInput,
+          autofocus: true,
+        );
       });
     } else {
-      print('Current: $_currentMode Next: teach History: $_chatHistory');
-      if (_currentMode != ChatMode.teach) {
-        _toTeach = _toTeach
-            ?.where((l) => _wrongAnswer.contains(l))
-            ?.toList(growable: false);
-        if (_toTeach == null || _toTeach.isEmpty) {
-          if (_lessonUnitIndex >= _lessonUnits.length) {
-            //TODO: decide to progress the user's lesson or not
-            _lessonUnits = await new LessonUnitRepo()
-                .getLessonUnitsByLessonId(user.currentLessonId);
-            _lessonUnitIndex = 0;
-          }
-          _toTeach = _lessonUnits
-              .skip(_lessonUnitIndex)
-              .take(4)
-              .toList(growable: false);
-          _lessonUnitIndex += 4;
+      if ((_currentMode == ChatMode.teach &&
+              _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
+          (_currentMode == ChatMode.quiz &&
+              _chatHistory[ChatMode.quiz].item2 < _toQuiz.length)) {
+        print('Current: $_currentMode Next: quiz History: $_chatHistory');
+        if (_currentMode != ChatMode.quiz) {
+          _toQuiz = List.from(_toTeach)..shuffle();
         }
-      }
-      int index = _currentMode != ChatMode.teach
-          ? 0
-          : _chatHistory[ChatMode.teach]?.item2 ?? 0;
+        int index = _currentMode != ChatMode.quiz
+            ? 0
+            : _chatHistory[ChatMode.quiz]?.item2 ?? 0;
 
-      setState(() {
-        _addChatItem(
-            ChatMode.teach, ChatItemType.card, _toTeach[index].subjectUnitId);
-        input = new TextChoice(onSubmit: _handleSubmitted);
-      });
+        setState(() {
+          _currentQuizLesson = _toQuiz[index];
+          var question = _currentQuizLesson.objectUnitId;
+          _expectedAnswer = _currentQuizLesson.subjectUnitId;
+          List<LessonUnit> lessonUnits =
+              List.from(_lessonUnits, growable: false)..shuffle();
+          List<String> choices = lessonUnits
+              .where((l) => l.subjectUnitId != _expectedAnswer)
+              .take(3)
+              .map((l) => l.objectUnitId)
+              .toList(growable: false);
+          _addChatItem(ChatMode.quiz, ChatItemType.card, question);
+          input = new JoinText(
+              answer: _expectedAnswer,
+              choices: choices,
+              onSubmit: _handleSubmitted);
+        });
+      } else {
+        print('Current: $_currentMode Next: teach History: $_chatHistory');
+        if (_currentMode != ChatMode.teach) {
+          if (_toTeach == null || _toTeach.isEmpty) {
+            if (_lessonUnitIndex >= _lessonUnits.length) {
+              //TODO: decide to progress the user's lesson or not
+              _lessonUnits = await new LessonUnitRepo()
+                  .getLessonUnitsByLessonId(_user.currentLessonId);
+              _lessonUnitIndex = 0;
+            }
+            _toTeach = _lessonUnits.skip(_lessonUnitIndex).take(4).toList();
+            _lessonUnitIndex += 4;
+          }
+        }
+        int index = _currentMode != ChatMode.teach
+            ? 0
+            : _chatHistory[ChatMode.teach]?.item2 ?? 0;
+
+        setState(() {
+          _addChatItem(
+              ChatMode.teach, ChatItemType.card, _toTeach[index].subjectUnitId);
+          input = new TextChoice(onSubmit: _handleSubmitted);
+        });
+      }
     }
     _animatedListKey.currentState
         .insertItem(0, duration: new Duration(milliseconds: 250));
