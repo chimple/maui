@@ -322,6 +322,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'fill_in_the_blanks':
+         playTime = 20000;
+        maxIterations = 5;
         return new Tuple2(
             new FillInTheBlanks(
                 key: new GlobalObjectKey(keyName),
