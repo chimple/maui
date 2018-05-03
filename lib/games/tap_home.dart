@@ -32,7 +32,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   AnimationController _animationController,
       _animTimerController,
       _screenController;
-  int count = 0;
+  int count = 0, score = 0;
   bool _isLoading = true;
   List<String> _option;
   String _answer;
@@ -44,22 +44,45 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
     super.initState();
     _animTimerController = new AnimationController(
         vsync: this, duration: new Duration(seconds: 10));
+
     _animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
 
     _animation = new Tween(begin: 0.0, end: 15.0).animate(_animationController);
 
-    _animationTimer =
-        new StepTween(begin: 0, end: 7).animate(_animTimerController);
+    _animationTimer = new StepTween(begin: 0, end: 7).animate(_animTimerController);
 
     _screenController = new AnimationController(
-        duration: const Duration(milliseconds: 100), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
     _screenController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        setState(() {
+          _animTimerController.stop();
+        });
         new Future.delayed(const Duration(milliseconds: 1000), () {
           print('calling onEnd');
           widget.onEnd();
         });
+      }
+    });
+
+    _animationTimer.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        print("count $count");
+        _animTimerController.forward(from: 0.0);
+        if(count > 3) {
+          widget.onProgress(1.0);
+          setState(() {
+            _status = 0.0;
+          });
+          _screenController.forward(from: 0.0);
+        }
+        else {
+          setState(() {
+            count = count + 1;
+          });
+          print("elsecount $count");
+        }
       }
     });
 
@@ -97,11 +120,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
 
   //used for changing the number at proper interval
   void _myAnim1() {
-    _animationTimer.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _animTimerController.forward(from: 0.0);
-      }
-    });
 
     _animTimerController.forward(from: 0.0);
     print('Pushed the Button');
@@ -111,17 +129,32 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   void _clickText() {
     if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
-      widget.onScore(1);
+      widget.onScore(4);
       widget.onProgress(1.0);
       setState(() {
+        score = score + 4;
         _status = 0.0;
       });
 
       _screenController.forward(from: 0.0);
     } else {
+      if(score > 0)
+        widget.onScore(-1);
+
+      setState(() {
+        count = count + 1;
+        score = score > 0 ? score - 1 : score;
+      });
       _myAnim();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         _animationController.stop();
+        if(count == 4) {
+          widget.onProgress(1.0);
+          setState(() {
+            _status = 0.0;
+          });
+          _screenController.forward(from: 0.0);
+        }
         _animTimerController.forward(from: 0.0);
       });
     }
@@ -198,8 +231,8 @@ class TextAnimation extends AnimatedWidget {
   Widget build(BuildContext context) {
     Animation _animation = listenable;
     return new Container(
-        height: _animation.value < height * 0.3 ? height * 0.3 : _animation.value ,
-        width:  _animation.value < height * 0.3 ? height * 0.3 : _animation.value ,
+        height: _animation.value < height * 0.3 ? height * 0.35 : _animation.value ,
+        width:  _animation.value < height * 0.3 ? height * 0.35 : _animation.value ,
 
         margin: status == 1.0 ? new EdgeInsets.only(
           left: _animation.value ?? 0, top: _animation.value < height * 0.1 ? height * 0.1 : null,
@@ -208,14 +241,14 @@ class TextAnimation extends AnimatedWidget {
         alignment: Alignment.center,
         color: status == 1.0 ?  null: Colors.pinkAccent,
         decoration: status == 1.0 ? new BoxDecoration(
-            color: Colors.amber,
-            border: new Border.all(color: Colors.white, width: height * 0.01),
+            color: Colors.pinkAccent,
+            border: new Border.all(color: Colors.pinkAccent, width: height * 0.01),
             shape: BoxShape.circle): null,
         child: new Text(
             text,
             key: new Key('question'),
             style:
-            new TextStyle(color: Colors.white, fontSize: height * 0.18)));
+            new TextStyle(color: Colors.white, fontSize: height * 0.15)));
   }
 }
 
@@ -235,18 +268,17 @@ class Countdown extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        height: height * 0.3,
-        width: height * 0.3,
+        height: height * 0.35,
+        width: height * 0.35,
         alignment: Alignment.center,
-        margin: new EdgeInsets.only(top: height * 0.5),
+        margin: new EdgeInsets.only(top: height * 0.55),
         decoration: new BoxDecoration(
-            color: Colors.amber,
             border: new Border.all(color: Colors.white, width: height * 0.01),
-            shape: BoxShape.rectangle),
+            shape: BoxShape.circle),
         child: new Text(option[animation.value].toString(),
             key: new Key('answer'),
             style: new TextStyle(
-                fontSize: height * 0.2,
+                fontSize: height * 0.15,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)));
   }
