@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
 import '../repos/game_data.dart';
@@ -9,8 +10,8 @@ class OrderIt extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
-  int gameCategoryId;
 
   OrderIt(
       {key,
@@ -18,7 +19,7 @@ class OrderIt extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -29,30 +30,35 @@ class OrderIt extends StatefulWidget {
   }
 }
 
-//const kItemSize = const Size.square(80.0);
-//const kChars = const ["A", "B", "C", "D"];
-
 class OrderItState extends State<OrderIt> {
-  List<String> _chars = ["A", "B", "C", "D", "E", "F", "G"];
   int _size = 12;
+  int _maxSize = 4;
   List<String> _allLetters;
   List<String> _letters;
   bool _isLoading = true;
   int cnt = 0;
-
+  int flag = 0;
+  int temp = 0;
   @override
   void initState() {
     super.initState();
+     print('OrderItState:initState');
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 5;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 7;
+    } else {
+      _maxSize = 12;
+    }
     _initBoard();
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _allLetters = await fetchSerialData(widget.gameCategoryId);
+    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
     print("Rajesh Patil Data ${_allLetters}");
-    _letters = _allLetters.sublist(0, _size);
+    _letters = _allLetters.sublist(0, _maxSize);
     print("Rajesh Patil Sublisted Data ${_letters}");
-    print("Rajesh Patil HardCoded Data ${_chars}");
     setState(() => _isLoading = false);
   }
 
@@ -60,6 +66,7 @@ class OrderItState extends State<OrderIt> {
 
   @override
   Widget build(BuildContext context) {
+    
     print("OrderItState.build");
     if (_isLoading) {
       return new SizedBox(
@@ -69,7 +76,7 @@ class OrderItState extends State<OrderIt> {
       );
     }
     
-   var ht = (_letters.length/2)*0.01;
+   var hgt = 0.78*(1/_letters.length);
 
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
@@ -79,31 +86,19 @@ class OrderItState extends State<OrderIt> {
           "Rajesh patil Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return new Container(
         child: new Column(
-          //  mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //  new Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              //  ]),
               preview,
-             // new Expanded(
                  new OrderableStack<String>(
                     direction: OrderItDirection.Vertical,
                     isRotated: widget.isRotated,
                     items: _letters,
-                   // itemSize: new Size(constraints.maxWidth*0.4,constraints.maxHeight*ht),
-                   // itemSize: constraints.maxHeight > 630.0 || constraints.maxWidth > 360 ? constraints.maxWidth > 730.0         
-                        //  ? new Size(constraints.maxWidth * 0.4,
-                           //   constraints.maxHeight *ht)
-                         // : new Size(constraints.maxWidth * 0.4,
-                         //     constraints.maxHeight*ht)
-                         // : new Size(constraints.maxWidth * 0.4,
-                         //     constraints.maxHeight *ht), 
                     itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
-                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht) 
-                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht*0.7),  
+                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt) 
+                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.8),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
                         orderNotifier.value = orderedList.toString()),
-             // )
             ]),
       );
     });
@@ -114,27 +109,22 @@ class OrderItState extends State<OrderIt> {
     print("Rajesh Patil visibleIndex: ${data.visibleIndex}");
     print("Rajesh Patil value: ${data.value}");
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
+    print("Rajesh Patil flag: $flag");
 
-    //if(cnt == 0)
-   // {
-    if (orderNotifier.value.compareTo(_letters.toString()) == 0) {
-      print("Game Over!!: ${cnt++}");
-     // new Future.delayed(const Duration(milliseconds: 100), () {
-      // setState(() {
-      // widget.onScore(7);
-      // widget.onProgress(1.0);   
-      // widget.onEnd();
-      // print("Game Over Called afyter widget.onendddddddddddddddddddddddddd");
-      // });
-      // });
+    if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag==0) {
+      flag=1;
+      new Future.delayed(const Duration(milliseconds: 100), () {
+          setState(() {
+            widget.onScore(_maxSize);
+            widget.onProgress(_maxSize/_letters.length);
+            widget.onEnd();
+          });
+       });
     }
-    //}
 
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected
-          ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan
-          : Colors.orange,
+      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
       width: itemSize.width,
       height: itemSize.height,
       child: new Center(
