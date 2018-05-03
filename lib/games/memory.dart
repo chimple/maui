@@ -230,7 +230,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
-    controller = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
+    controller = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
     shakeController = new AnimationController(duration: new Duration(milliseconds: 40), vsync: this);
     flipController = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
@@ -299,7 +299,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new Shake(
+    return new ScaleTransition(
+      scale: animation,
+     child: new Shake(
         animation:
             widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
         child: new FlipAnimator(
@@ -325,6 +327,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         const BorderRadius.all(const Radius.circular(8.0))),
                 child: new Text(' ',
                     style:
-                        new TextStyle(color: Colors.teal, fontSize: 24.0)))));
+                        new TextStyle(color: Colors.teal, fontSize: 24.0))))));
   }
 }

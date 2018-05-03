@@ -15,12 +15,12 @@ class Bingo extends StatefulWidget {
 
   Bingo(
       {key,
-        this.onScore,
-        this.onProgress,
-        this.onEnd,
-        this.iteration,
-        this.gameCategoryId,
-        this.isRotated = false})
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -157,10 +157,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         _ShakeCells[i] = ShakeCell.CurveRow;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                       });
                     }
                   } else if (matchRow == 1) {
@@ -169,10 +169,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _ShakeCells[i] = ShakeCell.CurveRow;
                         widget.onProgress(2 / 1);
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                       });
                     }
                   } else {
@@ -182,10 +182,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         _ShakeCells[i] = ShakeCell.CurveRow;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                       });
                     }
                   }
@@ -206,18 +206,18 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         i = i + 2;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                         print({"this is 1": _ColmunCells});
                       });
                     }
                   } else if (matchColumn == 1) {
                     print("this is 1111second column of kiran $matchColumn ");
                     for (i = matchColumn;
-                    i <= _size + matchColumn + _size;
-                    i++) {
+                        i <= _size + matchColumn + _size;
+                        i++) {
                       print("print iiiiiiiiiiii is iiiiiiii is $i");
                       setState(() {
                         print({"this is 2": _ColmunCells});
@@ -225,17 +225,17 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         i = i + 2;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                       });
                     }
                   } else {
                     print("this is 2222third column of kiran $matchColumn ");
                     for (i = matchColumn;
-                    i <= _size + matchColumn + _size;
-                    i++) {
+                        i <= _size + matchColumn + _size;
+                        i++) {
                       print("print iiiiiiiiiiii is iiiiiiii is $i");
 
                       setState(() {
@@ -243,10 +243,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         i = i + 2;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              widget.onEnd();
-                            });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onEnd();
+                        });
                         print({"this is 3": _ColmunCells});
                       });
                     }
@@ -278,7 +278,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     if (matchColumn == -1 && matchRow == -1) {
                       final _random = new Random();
                       var element =
-                      _copyQuestion[_random.nextInt(_copyQuestion.length)];
+                          _copyQuestion[_random.nextInt(_copyQuestion.length)];
                       ques = element;
                     }
 //                    else if(matchColumn==1||matchRow==1){
@@ -319,13 +319,13 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                             color: Colors.black, fontSize: 30.0)))),
             new Expanded(
                 child: new ResponsiveGridView(
-                  rows: _size,
-                  cols: _size,
-                  children: _letters
-                      .map((e) => _buildItem(
+              rows: _size,
+              cols: _size,
+              children: _letters
+                  .map((e) => _buildItem(
                       j, e, _statuses[j], _ShakeCells[j], _ColmunCells[j++]))
-                      .toList(growable: false),
-                )),
+                  .toList(growable: false),
+            )),
           ],
         ),
       );
@@ -381,10 +381,11 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1, controller2;
-  Animation<double> animationRight, animationWrong, animationDance,animationOpacity;
+  Animation<double> animationRight,
+      animationWrong,
+      animationDance,
+      animationOpacity;
   String _displayText;
-
-  List<String> _DisplayCol = [];
 
   initState() {
     super.initState();
@@ -398,7 +399,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 10), vsync: this);
 
     animationRight =
-    new CurvedAnimation(parent: controller, curve: Curves.decelerate);
+        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller2 = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controller.addStatusListener((state) {
@@ -422,13 +423,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             0.500,
             curve: Curves.easeIn,
           ),
-          reverseCurve: Curves.elasticOut
-
-      ),
+          reverseCurve: Curves.elasticOut),
     );
-    animationOpacity = new Tween(begin:0.3,end:1.0 ).animate(new CurvedAnimation(parent: controller2,
-        curve:new Interval(0.650, 0.700,curve:new Cubic(400.0, 400.0, 400.0, 400.0))));
-    //    new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
+    animationOpacity = new Tween(begin: 0.3, end: 1.0).animate(
+        new CurvedAnimation(
+            parent: controller2,
+            curve: new Interval(0.650, 0.700,
+                curve: new Cubic(400.0, 400.0, 400.0, 400.0))));
+        new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
     _myAnim();
     _myZoom();
   }
@@ -474,26 +476,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   var _colmunMethod;
   @override
   Widget build(BuildContext context) {
-    print({"this is 123 kiran data": widget.tile});
-    _colmunMethod = widget.Ctile;
-    print({"this is column kiiiirerrrran ": widget.Ctile});
-    if (_colmunMethod != ColmunCell.values) {
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        _colmunMethod = ColmunCell.CurveColumn;
-      });
-    }
 //    print("_MyButtonState.build");
     print("this is method $_colmunMethod");
-    return new FadeTransition(opacity:
-    widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
-        ? animationOpacity
-        : animationRight,
-        child: new ScaleTransition(
-            scale:
-            widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
+    return new ScaleTransition(
+            scale: widget.Ctile == ColmunCell.CurveColumn ||
+                    widget.tile == ShakeCell.CurveRow
                 ? animationDance
-                :
-            animationRight,
+                : animationRight,
             child: new Shake(
                 animation: widget.tile == ShakeCell.Right
                     ? animationWrong
@@ -508,10 +497,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             ? Colors.pink
                             : Colors.teal,
                         shape: new RoundedRectangleBorder(
-                            borderRadius:
-                            const BorderRadius.all(const Radius.circular(8.0))),
+                            borderRadius: const BorderRadius.all(
+                                const Radius.circular(8.0))),
                         child: new Text(_displayText,
                             style: new TextStyle(
-                                color: Colors.white, fontSize: 24.0)))))));
+                                color: Colors.white, fontSize: 24.0))))));
   }
 }

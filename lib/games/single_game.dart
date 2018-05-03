@@ -24,6 +24,7 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
+import 'package:maui/games/friendWord.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -268,6 +269,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'bingo':
         return new Tuple2(
             new Bingo(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -406,6 +408,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_number':
         return new Tuple2(
             new Fillnumber(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -481,6 +484,21 @@ class _SingleGameState extends State<SingleGame> {
       case 'wordgrid':
         return new Tuple2(
             new Wordgrid(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+      case 'friendWord':
+        return new Tuple2(
+            new FriendWord(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
