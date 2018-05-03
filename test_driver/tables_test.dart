@@ -71,7 +71,7 @@ test('playing the game', () async
       final Completer<Null> completer = new Completer<Null>();
       final SerializableFinder question=find.byValueKey('question');
       await new Future<Null>.delayed(kWaitBetweenActions);
-      for(int i=0;i<20;i++) {
+      for(int i=0;i<10;i++) {
       var text = await driver.getText(question);
       print(text);
       var array = text.split('*');
@@ -123,7 +123,7 @@ test('playing the game', () async
         print('TWO DIGITS'); 
       } 
        await new Future<Null>.delayed(kWaitBetweenActions);
-      final SerializableFinder tapp1= find.text('submit');
+      final SerializableFinder tapp1= find.text('✔');
       await driver.tap(tapp1);   
           
       }
@@ -133,7 +133,7 @@ test('playing the game', () async
            await new Future<Null>.delayed(kWaitBetweenActions);
           await driver.tap(tap);
           print('SINGLE DIGITS');
-          final SerializableFinder tapp1= find.text('submit');
+          final SerializableFinder tapp1= find.text('✔');
           await driver.tap(tapp1);
    
        } 
