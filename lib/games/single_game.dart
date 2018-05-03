@@ -31,6 +31,8 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
+import 'package:maui/games/spin_wheel.dart';
+import 'package:maui/games/circleword.dart';
 import 'package:tuple/tuple.dart';
 
 enum GameMode { timed, iterations }
@@ -488,6 +490,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_number':
         return new Tuple2(
             new Fillnumber(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -521,6 +524,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'connect_the_dots':
         return new Tuple2(
             new Connectdots(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -609,10 +613,10 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
-      case 'first_word':
+         case 'circle_word':
         return new Tuple2(
-            new FirstWord(
-                key: new GlobalObjectKey(keyName),
+            new Circleword(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -625,6 +629,7 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
+
       case 'draw_challenge':
         maxIterations = 1;
         return new Tuple2(

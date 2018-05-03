@@ -39,6 +39,7 @@ class GameListView extends StatelessWidget {
         mainAxisSpacing: 4.0,
         crossAxisCount: media.size.height > media.size.width ? 4 : 6,
         children: <Widget>[
+
           _buildButton(context, 'reflex', 'Reflex',
               new Icon(Icons.collections, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'order_it', 'order_it',
