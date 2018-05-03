@@ -225,7 +225,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'order_it':
-       maxIterations = 1;
+        playTime = 15000;
+        maxIterations = 1;
         return new Tuple2(
             new OrderIt(
                 key: new GlobalObjectKey(keyName),
@@ -234,16 +235,21 @@ class _SingleGameState extends State<SingleGame> {
                 onEnd: () => _onEnd(context),
                 iteration: _iteration,
                 isRotated: widget.isRotated,
-                gameCategoryId: widget.gameCategoryId),
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.blue, //bg
+                scaffoldBackgroundColor: Colors.teal, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: Colors.cyan));
         break;
       case 'true_or_false':
         return new Tuple2(
             new TrueFalseGame(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -317,6 +323,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'fill_in_the_blanks':
+         playTime = 20000;
+        maxIterations = 5;
         return new Tuple2(
             new FillInTheBlanks(
                 key: new GlobalObjectKey(keyName),
@@ -380,7 +388,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'tables':
-        playTime = 20000;
+        playTime = 60000;
         maxIterations = 1;
         return new Tuple2(
             new Tables(
@@ -401,14 +409,17 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 4;
         return new Tuple2(
             new MatchTheFollowing(
-              key: new GlobalObjectKey(keyName),
-              onScore: _onScore,
-              onProgress: _onProgress,
-              onEnd: () => _onEnd(context),
-              iteration: _iteration,
-              isRotated: widget.isRotated,
-              gameCategoryId: widget.gameCategoryId,
-            ),
+                key: new GlobalObjectKey(keyName),
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
                 scaffoldBackgroundColor: new Color(0xFF28c9c9), //bg
                 backgroundColor: new Color(0xFFfcc335), //behind progress bar
@@ -416,8 +427,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: new Color(0xFFed4a79)));
         break;
       case 'calculate_numbers':
-        playTime = 15000;
-        maxIterations = 4;
+        playTime = 25000;
+        maxIterations = 10;
         return new Tuple2(
             new CalculateTheNumbers(
                 onScore: _onScore,
@@ -433,6 +444,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.orange));
         break;
       case 'memory':
+        playTime = 15000;
+        maxIterations = 1;
         return new Tuple2(
             new Memory(
                 key: new GlobalObjectKey(keyName),
@@ -441,12 +454,16 @@ class _SingleGameState extends State<SingleGame> {
                 onEnd: () => _onEnd(context),
                 iteration: _iteration,
                 isRotated: widget.isRotated,
-                gameCategoryId: widget.gameCategoryId),
+                gameConfig: new GameConfig(
+                    gameCategoryId: widget.gameCategoryId,
+                    questionUnitMode: UnitMode.values[random.nextInt(3)],
+                    answerUnitMode: UnitMode.values[random.nextInt(3)],
+                    level: random.nextInt(10) + 1)),
             new ThemeData(
                 scaffoldBackgroundColor: Colors.lime, //bg
                 backgroundColor: Colors.amber, //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: Colors.cyan));
         break;
       case 'fill_number':
         return new Tuple2(
@@ -464,8 +481,11 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.pink));
         break;
       case 'quiz':
+        playTime = 15000;
+        maxIterations = 10;
         return new Tuple2(
             new Quiz(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -473,8 +493,8 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
+                backgroundColor: const Color(0xFF9d4e70), //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
@@ -494,7 +514,7 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: new Color(0xFFed2d85)));
         break;
       case 'tap_home':
-        playTime = 20000;
+        playTime = 60000;
         maxIterations = 10;
         return new Tuple2(
             new TapHome(
