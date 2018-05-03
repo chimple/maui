@@ -319,10 +319,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new Center(
-                    child: new Text(widget.text,
+                    child: new Text(widget.text.toLowerCase(),
                         key: new Key('${widget.keys}'),
                         style:
-                            new TextStyle(color: Colors.black, fontSize: 24.0)),
+                            new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                   ),
                 );
               },
@@ -345,10 +345,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                 ),
                 child: new Center(
-                  child: new Text(widget.text,
+                  child: new Text(widget.text.toLowerCase(),
                       key: new Key("A${widget.keys}"),
                       style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)),
+                          new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                 )),
           ),
           feedback: new Container(
@@ -363,11 +363,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               child: new Transform.rotate(
                 angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
                 child: new Text(
-                  widget.text,
+                  widget.text.toLowerCase(),
                   style: new TextStyle(
                     color: Colors.black,
                     decoration: TextDecoration.none,
-                    fontSize: 26.0,
+                    fontSize: media.size.height*0.04,
                   ),
                 ),
               ),

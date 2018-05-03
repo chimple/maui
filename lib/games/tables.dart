@@ -50,9 +50,9 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     '7',
     '8',
     '9',
-    'clear',
+    '✖',
     '0',
-    'submit',
+    '✔',
   ];
 
   @override
@@ -107,14 +107,16 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         text: text,
         height: _height,
         onPress: () {
-          if (text == 'clear') {
+          if (text == '✖') {
             setState(() {
               _result = _result.substring(0, _result.length - 1);
             });
           }
-          else if (text == 'submit') {
-            if (_count > 8) {
+          else if (text == '✔') {
+            if (_count  == _tableShuffledData.length - 1 ) {
               print("coming.........");
+              int _temp = _tableShuffledData.length;
+              print("$_count $_temp");
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
               });
@@ -122,6 +124,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
 
             if (int.parse(_result) == _answer) {
               widget.onScore(1);
+              widget.onProgress((_count + 1) / _tableShuffledData.length);
               setState(() {
                 _count = _count + 1;
                 print(_count);
@@ -133,7 +136,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _result = "";
                 _wrong = 0;
               });
-              widget.onProgress(_count / _tableShuffledData.length);
             }
             else {
               _myAnim();
