@@ -249,6 +249,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'true_or_false':
         return new Tuple2(
             new TrueFalseGame(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -484,6 +485,7 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 10;
         return new Tuple2(
             new Quiz(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -491,8 +493,8 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
+                scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
+                backgroundColor: const Color(0xFF9d4e70), //behind progress bar
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.pink));
         break;
