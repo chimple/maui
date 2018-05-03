@@ -35,7 +35,7 @@ class OrderItState extends State<OrderIt> {
   List<String> _letters;
   bool _isLoading = true;
   int cnt = 0;
- int flag=0;
+  int flag=0;
   @override
   void initState() {
     super.initState();
@@ -65,7 +65,7 @@ class OrderItState extends State<OrderIt> {
       );
     }
     
-   var ht = (_letters.length/2)*0.01;
+   var hgt = 0.78*(1/_letters.length);
 
     OrderPreview preview = new OrderPreview(orderNotifier: orderNotifier);
     Size gSize = MediaQuery.of(context).size;
@@ -83,8 +83,8 @@ class OrderItState extends State<OrderIt> {
                     isRotated: widget.isRotated,
                     items: _letters,
                     itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
-                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht) 
-                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * ht*0.7),  
+                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt) 
+                      : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.9),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
                         orderNotifier.value = orderedList.toString()),
@@ -104,8 +104,8 @@ class OrderItState extends State<OrderIt> {
       flag=1;
       new Future.delayed(const Duration(milliseconds: 100), () {
           setState(() {
-            widget.onScore(12);
-            widget.onProgress(12/_letters.length);
+            widget.onScore(_size);
+            widget.onProgress(_size/_letters.length);
             widget.onEnd();
           });
        });
