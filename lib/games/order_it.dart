@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
 import '../repos/game_data.dart';
@@ -9,8 +10,8 @@ class OrderIt extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
-  int gameCategoryId;
 
   OrderIt(
       {key,
@@ -18,7 +19,7 @@ class OrderIt extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -31,22 +32,32 @@ class OrderIt extends StatefulWidget {
 
 class OrderItState extends State<OrderIt> {
   int _size = 12;
+  int _maxSize = 4;
   List<String> _allLetters;
   List<String> _letters;
   bool _isLoading = true;
   int cnt = 0;
-  int flag=0;
+  int flag = 0;
+  int temp = 0;
   @override
   void initState() {
     super.initState();
+     print('OrderItState:initState');
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 5;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 5;
+    } else {
+      _maxSize = 5;
+    }
     _initBoard();
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _allLetters = await fetchSerialData(widget.gameCategoryId);
+    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
     print("Rajesh Patil Data ${_allLetters}");
-    _letters = _allLetters.sublist(0, _size);
+    _letters = _allLetters.sublist(0, _maxSize);
     print("Rajesh Patil Sublisted Data ${_letters}");
     setState(() => _isLoading = false);
   }
@@ -99,13 +110,13 @@ class OrderItState extends State<OrderIt> {
     print("Rajesh Patil value: ${data.value}");
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
     print("Rajesh Patil flag: $flag");
- 
+
     if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag==0) {
       flag=1;
       new Future.delayed(const Duration(milliseconds: 100), () {
           setState(() {
-            widget.onScore(_size);
-            widget.onProgress(_size/_letters.length);
+            widget.onScore(_maxSize);
+            widget.onProgress(_maxSize/_letters.length);
             widget.onEnd();
           });
        });
