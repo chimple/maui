@@ -421,6 +421,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'fill_number':
         return new Tuple2(
             new Fillnumber(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -451,6 +452,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'connect_the_dots':
         return new Tuple2(
             new Connectdots(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -540,6 +542,7 @@ class _SingleGameState extends State<SingleGame> {
          case 'circle_word':
         return new Tuple2(
             new Circleword(
+                  key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),

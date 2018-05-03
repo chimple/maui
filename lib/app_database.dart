@@ -91,6 +91,8 @@ class AppDatabase {
     fetchTablesData(36).then((m)=>print(m));
     fetchFillNumberData(57, 4).then((f)=>print(f));
     fetchCrosswordData(1).then((c)=>print(c));
+    fetchCirclewrdData(1).then((e)=>print(e));
+
     fetchMultipleChoiceData(58, 3).then((m)=>print(m));
     fetchMultipleChoiceData(60, 6).then((m)=>print(m));
     fetchWordData(61, 10, 3).then((m)=>print(m));
