@@ -244,6 +244,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'true_or_false':
         return new Tuple2(
             new TrueFalseGame(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
@@ -468,6 +469,7 @@ class _SingleGameState extends State<SingleGame> {
         maxIterations = 10;
         return new Tuple2(
             new Quiz(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
