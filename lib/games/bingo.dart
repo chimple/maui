@@ -497,8 +497,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             scale:
             widget.Ctile ==  ColmunCell.CurveColumn || widget.tile == ShakeCell.CurveRow
                 ? animationDance
-                :
-            animationRight,
+                : animationRight,
             child: new Shake(
                 animation: widget.tile == ShakeCell.Right
                     ? animationWrong
