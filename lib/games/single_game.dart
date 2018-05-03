@@ -501,7 +501,7 @@ class _SingleGameState extends State<SingleGame> {
                 scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
                 backgroundColor: const Color(0xFF9d4e70), //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                buttonColor: const Color(0xFFffffff)));
         break;
       case 'connect_the_dots':
         return new Tuple2(
