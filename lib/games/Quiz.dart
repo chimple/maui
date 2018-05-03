@@ -45,6 +45,7 @@ class QuizState extends State<Quiz> {
   List<String> choice = [];
   List<Status> _statuses = [];
   bool isCorrect;
+  int scoretrack = 0;
 
   @override
   void initState() {
@@ -89,6 +90,7 @@ class QuizState extends State<Quiz> {
         keys: keys++,
         onPress: () {
           if (text == ans) {
+            scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
@@ -102,7 +104,14 @@ class QuizState extends State<Quiz> {
                 _statuses[index] = Status.Active;
               });
             });
-            widget.onScore(-1);
+            if(scoretrack > 0) {
+              scoretrack = scoretrack - 1;
+              widget.onScore(-1);
+            } else {
+              widget.onScore(0);
+            }
+            
+
           }
         });
   }
