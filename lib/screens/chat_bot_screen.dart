@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +38,13 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   String _expectedAnswer;
   final botId = 'bot';
   int _currentChatIndex = 0;
-  ChatMode _currentMode = ChatMode.teach;
+  ChatMode _currentMode;
   Map<ChatMode, Tuple2<int, int>> _chatHistory =
       new Map<ChatMode, Tuple2<int, int>>();
-  List<LessonUnit> _toQuiz = new List<LessonUnit>();
+  List<LessonUnit> _toQuiz;
+  List<LessonUnit> _toTeach;
+  List<LessonUnit> _wrongAnswer;
+  LessonUnit _currentQuizLesson;
   User user;
 
   @override
@@ -141,12 +143,12 @@ class ChatBotScreenState extends State<ChatBotScreen> {
             chatItemType: ChatItemType.text,
             content: 'Awesome!',
             sender: botId);
-        _toQuiz.removeLast();
       } else {
         response = new ChatItem(
             chatItemType: ChatItemType.text,
             content: 'Too bad!',
             sender: botId);
+        _wrongAnswer.add(_currentQuizLesson);
       }
       setState(() {
         _chatItems.insert(0, response);
@@ -160,20 +162,24 @@ class ChatBotScreenState extends State<ChatBotScreen> {
     });
   }
 
-  _displayNextChat(ChatItem currentChatItem) {
-    if ((_currentMode == ChatMode.teach && _toQuiz.length >= 4) ||
-        (_currentMode == ChatMode.revise &&
-            _chatHistory[ChatMode.quiz].item2 >= _toQuiz.length) ||
+  _displayNextChat(ChatItem currentChatItem) async {
+    if ((_currentMode == ChatMode.teach &&
+            _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
         (_currentMode == ChatMode.quiz &&
-            _toQuiz.isNotEmpty &&
-            _chatHistory[ChatMode.quiz].item2 < 4)) {
-      _currentMode = ChatMode.quiz;
+            _chatHistory[ChatMode.quiz].item2 < _toQuiz.length)) {
+      print('Current: $_currentMode Next: quiz History: $_chatHistory');
+      if (_currentMode != ChatMode.quiz) {
+        _toQuiz = List.from(_toTeach)..shuffle();
+        _wrongAnswer = [];
+      }
+      int index = _currentMode != ChatMode.quiz
+          ? 0
+          : _chatHistory[ChatMode.quiz]?.item2 ?? 0;
+
       setState(() {
-        var random = new Random();
-        _toQuiz.shuffle();
-        var quizUnit = _toQuiz[_toQuiz.length - 1];
-        var question = quizUnit.objectUnitId;
-        _expectedAnswer = quizUnit.subjectUnitId;
+        _currentQuizLesson = _toQuiz[index];
+        var question = _currentQuizLesson.objectUnitId;
+        _expectedAnswer = _currentQuizLesson.subjectUnitId;
         List<LessonUnit> lessonUnits = List.from(_lessonUnits, growable: false)
           ..shuffle();
         List<String> choices = lessonUnits
@@ -187,23 +193,33 @@ class ChatBotScreenState extends State<ChatBotScreen> {
             choices: choices,
             onSubmit: _handleSubmitted);
       });
-    } else if (_currentMode == ChatMode.quiz &&
-        _chatHistory[ChatMode.quiz].item2 >= 4) {
-      int index = _currentMode == ChatMode.revise
+    } else {
+      print('Current: $_currentMode Next: teach History: $_chatHistory');
+      if (_currentMode != ChatMode.teach) {
+        _toTeach = _toTeach
+            ?.where((l) => _wrongAnswer.contains(l))
+            ?.toList(growable: false);
+        if (_toTeach == null || _toTeach.isEmpty) {
+          if (_lessonUnitIndex >= _lessonUnits.length) {
+            //TODO: decide to progress the user's lesson or not
+            _lessonUnits = await new LessonUnitRepo()
+                .getLessonUnitsByLessonId(user.currentLessonId);
+            _lessonUnitIndex = 0;
+          }
+          _toTeach = _lessonUnits
+              .skip(_lessonUnitIndex)
+              .take(4)
+              .toList(growable: false);
+          _lessonUnitIndex += 4;
+        }
+      }
+      int index = _currentMode != ChatMode.teach
           ? 0
-          : _chatHistory[ChatMode.revise].item2;
-      _currentMode = ChatMode.revise;
+          : _chatHistory[ChatMode.teach]?.item2 ?? 0;
+
       setState(() {
         _addChatItem(
-            ChatMode.revise, ChatItemType.card, _toQuiz[index].subjectUnitId);
-        input = new TextChoice(onSubmit: _handleSubmitted);
-      });
-    } else {
-      _currentMode = ChatMode.teach;
-      setState(() {
-        _addChatItem(ChatMode.teach, ChatItemType.card,
-            _lessonUnits[_lessonUnitIndex].subjectUnitId);
-        _toQuiz.add(_lessonUnits[_lessonUnitIndex]);
+            ChatMode.teach, ChatItemType.card, _toTeach[index].subjectUnitId);
         input = new TextChoice(onSubmit: _handleSubmitted);
       });
     }
@@ -212,15 +228,15 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   _addChatItem(ChatMode chatMode, ChatItemType chatItemType, String content) {
-    _lessonUnitIndex++;
+    _currentChatIndex++;
     var chatHist = _chatHistory[chatMode] ?? new Tuple2(_currentChatIndex, 0);
-    _chatHistory[chatMode] =
-        chatHist.item1 + chatHist.item2 == _currentChatIndex
-            ? new Tuple2(chatHist.item1, chatHist.item2 + 1)
-            : new Tuple2(_currentChatIndex, 1);
+    _chatHistory[chatMode] = _currentMode == chatMode
+        ? new Tuple2(chatHist.item1, chatHist.item2 + 1)
+        : new Tuple2(_currentChatIndex, 1);
     _chatItems.insert(
         0,
         new ChatItem(
             sender: botId, chatItemType: chatItemType, content: content));
+    _currentMode = chatMode;
   }
 }

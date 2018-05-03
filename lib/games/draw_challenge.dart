@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import '../components/drawing_match.dart';
+import 'package:maui/games/single_game.dart';
 import 'dart:ui' as ui;
 
 
@@ -10,18 +11,35 @@ class Draw_Challenge extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
 
-  Draw_Challenge({key, this.onScore, this.onProgress, this.onEnd, this.iteration, this.isRotated})
+  Draw_Challenge(
+     {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
-
   @override
   State<StatefulWidget> createState() => new Draw_Challenge_Screen();
 }
 
 class Draw_Challenge_Screen extends State<Draw_Challenge> {
+  int _maxSize = 4;
   DrawPadController _padController;
+
   void initState() {
+    print('Draw_Challenge:initState');
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 1;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 2;
+    } else {
+      _maxSize = 3;
+    }
     print({"init State - in drawScreen": "line 22"});
     _padController = new DrawPadController();
   }
