@@ -2,16 +2,17 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data.dart';
-import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/game_data.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Reflex(
@@ -20,7 +21,7 @@ class Reflex extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -30,6 +31,7 @@ class Reflex extends StatefulWidget {
 
 class ReflexState extends State<Reflex> {
   int _size = 4;
+  int _maxSize = 4;
   List<String> _allLetters;
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
@@ -39,33 +41,40 @@ class ReflexState extends State<Reflex> {
   @override
   void initState() {
     super.initState();
-    print('ReflexState:initState');
+    if (widget.gameConfig.level < 4) {
+      _maxSize = 2;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 3;
+    } else {
+      _maxSize = 4;
+    }
+//    print('ReflexState:initState');
     _initBoard();
   }
 
   void _initBoard() async {
     _currentIndex = 0;
     setState(() => _isLoading = true);
-    _allLetters = await fetchSerialData(widget.gameCategoryId);
-    _size = min(4, sqrt(_allLetters.length).floor());
+    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
+    _size = min(_maxSize, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
     for (var i = 0; i < _allLetters.length; i += _size * _size) {
       _shuffledLetters.addAll(
           _allLetters.skip(i).take(_size * _size).toList(growable: false)
             ..shuffle());
     }
-    print(_shuffledLetters);
+//    print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
     setState(() => _isLoading = false);
   }
 
   @override
   void didUpdateWidget(Reflex oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
+//    print(oldWidget.iteration);
+//    print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print(_allLetters);
+//      print(_allLetters);
     }
   }
 
@@ -74,6 +83,7 @@ class ReflexState extends State<Reflex> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
+          print('_buildItem.onPress');
           if (text == _allLetters[_currentIndex]) {
             setState(() {
               _letters[index] =
@@ -97,13 +107,14 @@ class ReflexState extends State<Reflex> {
 
   @override
   Widget build(BuildContext context) {
-    print("ReflexState.build");
+//    print("ReflexState.build");
     if (_isLoading) {
-      return new SizedBox(
+      return new Center(
+          child: new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
-      );
+      ));
     }
     int j = 0;
     return new ResponsiveGridView(
@@ -131,7 +142,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
+//    print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
@@ -158,30 +169,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
+//    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
+//    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
-        child: new GestureDetector(
-            onLongPress: () {
-              showDialog(
-                  context: context,
-                  child: new FractionallySizedBox(
-                      heightFactor: 0.5,
-                      widthFactor: 0.8,
-                      child: new FlashCard(text: widget.text)));
-            },
-            child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(_displayText,
-                    style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+        child: new UnitButton(
+          onPress: widget.onPress,
+          text: _displayText,
+          unitMode: UnitMode.text,
+        ));
   }
 }
