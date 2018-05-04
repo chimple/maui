@@ -1,564 +1,9 @@
-// import 'dart:async' show Future;
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/animation.dart';
-// import 'package:flutter/services.dart' show rootBundle;
-
-// // String test = '';
-
-// Map _decoded;
-
-// class IdentifyGame extends StatefulWidget {
-//   Function onScore;
-//   Function onProgress;
-//   Function onEnd;
-//   int iteration;
-//   bool isRotated;
-
-//   IdentifyGame(
-//       {key,
-//       this.onScore,
-//       this.onProgress,
-//       this.onEnd,
-//       this.iteration,
-//       this.isRotated = false})
-//       : super(key: key);
-
-//   @override
-//   State<StatefulWidget> createState() => new _IdentifyGameState();
-// }
-
-// class _IdentifyGameState extends State<IdentifyGame> {
-//   Future<String> _loadGameAsset() async {
-//     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
-//   }
-
-//   Future _loadGameInfo() async {
-//     String jsonGameInfo = await _loadGameAsset();
-//     print(jsonGameInfo);
-//     this.setState(() {
-//       _decoded = json.decode(jsonGameInfo);
-//     });
-//     print(_decoded["id"]);
-//     print(_decoded["height"]);
-//     print(_decoded["width"]);
-//     print(_decoded["parts"][0]["name"]);
-//     // _parserJsonForGame(jsonGameInfo);
-//   }
-
-//   // void _parserJsonForGame(String jsonString) {
-//   //   this.setState((){
-//   //     _decoded = json.decode(jsonString);
-//   //   });
-//   //   print(_decoded["id"]);
-//   //   print(_decoded["height"]);
-//   //   print(_decoded["width"]);
-//   //   print(_decoded["parts"][0]["name"]);
-//   // }
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     this._loadGameInfo();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size media = MediaQuery.of(context).size;
-//     double _height = media.height;
-//     double _width = media.width;
-//     print("height is $_height ");
-//     print("width is $_width");
-//     return new Stack(
-//       children: <Widget>[
-//         new DropTarget(new Offset(0.0, 0.0)),
-//         new DragBox(new Offset(_width * 0.05, _height * 0.7),
-//             _decoded["parts"][0]["name"], Colors.red),
-//         new DragBox(new Offset((_width * 0.55), _height * 0.7),
-//             _decoded["parts"][1]["name"], Colors.lightBlue),
-//         new DragBox(new Offset((_width * 0.80), _height * 0.7),
-//             _decoded["parts"][2]["name"], Colors.green),
-//         new DragBox(new Offset((_width * 0.30), _height * 0.7),
-//             _decoded["parts"][3]["name"], Colors.orange),
-//       ],
-//     );
-//     // return new Column(
-//     //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-//     //   children: <Widget>[
-//     //     new Padding(
-//     //       padding: new EdgeInsets.only(top: 30.0),
-//     //     ),
-//     //     // new Expanded(
-//     //     //   flex: 1,
-//     //     //   child: new Padding(
-//     //     //     padding: new EdgeInsets.only(top: 5.0)
-//     //     //   ),
-//     //     // ),
-//     //     new Expanded(
-//     //       flex: 3,
-//     //       child: new DropTarget(),
-//     //       // child: new Row(
-//     //       // mainAxisAlignment: MainAxisAlignment.center,
-//     //       // children: <Widget>[
-//     //       //   new Expanded(
-//     //       //     flex:1,
-//     //       //     child: new DropTarget(),
-//     //       //   ),
-//     //       //   // new Expanded(
-//     //       //   //   flex: 1,
-//     //       //   //   child:  new DropTarget('hand', Colors.red),
-//     //       //   // ),
-//     //       //   // new Expanded(
-//     //       //   //   flex: 1,
-//     //       //   //   child: new DropTarget('head', Colors.orange),
-//     //       //   // ),
-//     //       //   // new Expanded(
-//     //       //   //   flex: 1,
-//     //       //   //   child: new DropTarget('body', Colors.green),
-//     //       //   // )
-//     //       //   // new DropTarget('leg', Colors.lightBlue),
-//     //       //   // new DropTarget('hand', Colors.red),
-//     //       //   // new DropTarget('head', Colors.orange),
-//     //       //   // new DropTarget('body', Colors.green),
-//     //       //   ],
-//     //       // ),
-//     //     ),
-//     //     new Expanded(
-//     //       flex: 1,
-//     //       child: new Row(
-//     //         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//     //         children: <Widget>[
-//     //           new Expanded(
-//     //             flex: 1,
-//     //             child: new DragBox('face', Colors.red),
-//     //           ),
-//     //           new Expanded(
-//     //             flex: 1,
-//     //             child: new DragBox('cap', Colors.orange),
-//     //           ),
-//     //           new Expanded(
-//     //             flex: 1,
-//     //             child: new DragBox('hand', Colors.lightBlue),
-//     //           ),
-//     //           new Expanded(
-//     //             flex: 1,
-//     //             child: new DragBox('body', Colors.green),
-//     //           ),
-//     //           // new DragBox('a', Colors.red),
-//     //           // new DragBox('b', Colors.orange),
-//     //           // new DragBox('c', Colors.lightBlue),
-//     //         ],
-//     //       ),
-//     //     ),
-//     //   ],
-//     // );
-//   }
-// }
-
-// // class DragBoxCopy extends StatefulWidget {
-// //   final Offset initpos;
-// //   final String label;
-// //   final Color itemColor;
-// //   DragBoxCopy(this.initpos, this.label, this.itemColor);
-
-// //   @override
-// //   DragBoxCopyState createState() => new DragBoxCopyState();
-// // }
-
-// // class DragBoxCopyState extends State<DragBoxCopy> {
-// //   Offset position = new Offset(0.0, 0.0);
-// //   Color draggedBoxColor;
-// //   String draggedText;
-
-// //   @override
-// //   void initState() {
-// //     // TODO: implement initState
-// //     super.initState();
-
-// //     position = widget.initpos;
-// //     draggedBoxColor = widget.itemColor;
-// //     draggedText = widget.label;
-// //   }
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return new Positioned(
-// //         left: position.dx,
-// //         top: position.dy,
-// //         child: new Container(
-// //           height: 50.0,
-// //           width: 50.0,
-// //           color: draggedBoxColor.withOpacity(0.5),
-// //           child: new Center(
-// //             child: new Text(
-// //               draggedText,
-// //               style: new TextStyle(
-// //                 color: Colors.white,
-// //                 decoration: TextDecoration.none,
-// //                 fontSize: 15.0,
-// //               ),
-// //             ),
-// //           ),
-// //         ));
-// //   }
-// // }
-
-// class DropTarget extends StatefulWidget {
-//   final Offset intipos;
-//   // final String expectedLabel;
-//   // final Color dropColor;
-
-//   // DropTarget(this.expectedLabel, this.dropColor);
-//   DropTarget(this.intipos);
-
-//   @override
-//   DropTargetState createState() => new DropTargetState();
-// }
-
-// class DropTargetState extends State<DropTarget> {
-//   Offset position = new Offset(0.0, 0.0);
-//   // String caughtText = '';
-//   // String expectedText = '';
-//   // Color targetColor = Colors.cyan;
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     position = widget.intipos;
-//     // expectedText = widget.expectedLabel;
-//     // targetColor = widget.dropColor;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size media = MediaQuery.of(context).size;
-//     double _height = media.height;
-//     double _width = media.width;
-//     return new Positioned(
-//       left: position.dx,
-//       right: position.dy,
-//       // child: new Container(
-//       //   decoration: new BoxDecoration(
-//       //     border: new Border.all(color: Colors.red)
-//       //   ),
-//       //   child: image,
-//       // ),
-//       child: new Image(
-//         image: new AssetImage('assets/' + _decoded["id"]),
-//         // fit: BoxFit.contain,
-//         height: _height * 0.5,
-//         width: _width,
-//       ),
-//       // child: new Image(
-//       //   image: new AssetImage('assets/Shapes.png'),
-//       //   // height: height * 0.7,
-//       //   // width: width * 0.6,
-//       // ),
-//       // // child: new Container(
-//       // //   decoration: new BoxDecoration(
-//       // //     image: new DecorationImage(
-//       // //       image: new AssetImage('assets/Boy.png'),
-//       // //       fit: BoxFit.contain,
-//       // //     ),
-//       // //   ),
-//       // // ),
-//     );
-//     // return new DragTarget(
-//     //   // onAccept: (String text) {
-//     //   //   if (text == expectedText) {
-//     //   //     caughtText = text;
-//     //   //     test = caughtText;
-//     //   //   } else {
-//     //   //     caughtText = '';
-//     //   //     test = '';
-//     //   //   }
-//     //   // },
-//     //   builder: (
-//     //     BuildContext context,
-//     //     List<dynamic> accepted,
-//     //     List<dynamic> rejected,
-//     //   ) {
-//     //     return new Container(
-//     //       decoration: new BoxDecoration(
-//     //         image: new DecorationImage(
-//     //           image: new AssetImage('assets/Boy.png'),
-//     //           fit: BoxFit.contain,
-//     //         ),
-//     //       ),
-//     //     );
-//     //     // return new Container(
-//     //     //   width: 120.0,
-//     //     //   height: 120.0,
-//     //     //   decoration: new BoxDecoration(
-//     //     //     // color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-//     //     //     color: targetColor,
-//     //     //   ),
-//     //     //   child: new Center(
-//     //     //     child: new Text(
-//     //     //       accepted.isEmpty ? caughtText : '',
-//     //     //     ),
-//     //     //   ),
-//     //     // );
-//     //   },
-//     // );
-//   }
-// }
-
-// class DragBox extends StatefulWidget {
-//   final Offset intipos;
-//   final String label;
-//   final Color itemColor;
-
-//   DragBox(this.intipos, this.label, this.itemColor);
-
-//   @override
-//   DragBoxState createState() => new DragBoxState();
-// }
-
-// class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
-//   Offset position = new Offset(0.0, 0.0);
-//   AnimationController controller, shakeController;
-//   Animation<double> animation, shakeAnimation, noanimation;
-
-//   Color draggableColor;
-//   String draggableText;
-//   int _flag = 0;
-
-//   // void _parseJsonIdentifyGame(String jsonString) {
-//   //   Map _decoded = json.decode(jsonString);
-//   //   print(_decoded);
-//   // }
-
-//   void toAnimateFunction() {
-//     animation.addStatusListener((AnimationStatus status) {
-//       if (status == AnimationStatus.completed) {
-//         controller.reverse();
-//       } else if (status == AnimationStatus.dismissed) {
-//         controller.forward();
-//       }
-//     });
-//     controller.forward();
-//   }
-
-//   void toAnimateButton() {
-//     // shakeAnimation.addStatusListener((AnimationStatus status) {
-//     //   if(status == AnimationStatus.completed){
-//     //     shakeController.reverse();
-//     //   }else if (status == AnimationStatus.dismissed){
-//     //     shakeController.forward();
-//     //   }
-//     // });
-//     shakeController.forward();
-//   }
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-
-//     shakeController = new AnimationController(
-//         duration: new Duration(milliseconds: 800), vsync: this);
-//     controller = new AnimationController(
-//         duration: new Duration(milliseconds: 80), vsync: this);
-//     animation = new Tween(begin: -3.0, end: 3.0).animate(controller);
-
-//     animation.addListener(() {
-//       setState(() {});
-//     });
-//     shakeAnimation =
-//         new CurvedAnimation(parent: shakeController, curve: Curves.easeOut);
-//     noanimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
-//     position = widget.intipos;
-//     draggableColor = widget.itemColor;
-//     draggableText = widget.label;
-
-//     toAnimateButton();
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     shakeController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size media = MediaQuery.of(context).size;
-//     double _height = media.height;
-//     double _width = media.width;
-//     return new Positioned(
-//       left: position.dx,
-//       top: position.dy,
-//       child: new ScaleTransition(
-//           scale: shakeAnimation,
-//           child: new Draggable(
-//               data: draggableText,
-//               child: new AnimatedDrag(
-//                   animation: (_flag == 0) ? noanimation : animation,
-//                   draggableColor: draggableColor,
-//                   draggableText: draggableText),
-//               feedback: new AnimatedFeedback(
-//                   animation: animation,
-//                   draggableColor: draggableColor,
-//                   draggableText: draggableText),
-//               onDraggableCanceled: (velocity, offset) {
-//                 // if (test == draggableText) {
-//                 //   controller.stop();
-//                 // } else if (test == '') {
-//                 //   toAnimateFunction();
-//                 //   new Future.delayed(const Duration(milliseconds: 1000), () {
-//                 //     controller.stop();
-//                 //   });
-//                 // }
-//                 setState(() {
-//                   // new DragBoxCopy(new Offset(position.dx, position.dy),
-//                   //     draggableText, draggableColor);
-//                   if ((draggableText == _decoded["parts"][0]["name"]) &&
-//                       (offset.dx > 0.0 && offset.dx < _decoded["parts"][0]["data"]["width"]) &&
-//                       (offset.dy > 0.0 && offset.dy < _decoded["parts"][0]["data"]["height"])) {
-//                     print(offset.dx);
-//                     print(offset.dy);
-//                     position = offset;
-//                   } else if (draggableText == _decoded["parts"][1]["name"] &&
-//                       (offset.dx > (_width - 130) && offset.dx < 370.0) &&
-//                       (offset.dy > 0.0 && offset.dy < 120.0)) {
-//                     print(offset.dx);
-//                     print(offset.dy);
-//                     position = offset;
-//                   } else if (draggableText == _decoded["parts"][3]["name"] &&
-//                       (offset.dx > 0.0 && offset.dx < 130.0) &&
-//                       (offset.dy > 160.0 && offset.dy < 290.0)) {
-//                     print(offset.dx);
-//                     print(offset.dy);
-//                     position = offset;
-//                   } else if (draggableText == _decoded["parts"][2]["name"] &&
-//                       (offset.dx > (_width - 110) && offset.dx < 370.0) &&
-//                       (offset.dy > 170 && offset.dy < 290.0)) {
-//                     print(offset.dx);
-//                     print(offset.dy);
-//                     position = offset;
-//                   } else {
-//                     _flag = 1;
-//                     toAnimateFunction();
-//                     new Future.delayed(const Duration(milliseconds: 1000), () {
-//                       setState(() {
-//                         _flag = 0;
-//                       });
-//                       controller.stop();
-//                     });
-//                   }
-//                 });
-//               })),
-//     );
-//   }
-// }
-
-// class AnimatedFeedback extends AnimatedWidget {
-//   AnimatedFeedback(
-//       {Key key,
-//       Animation<double> animation,
-//       this.draggableColor,
-//       this.draggableText})
-//       : super(key: key, listenable: animation);
-
-//   final Color draggableColor;
-//   final String draggableText;
-
-//   Widget build(BuildContext context) {
-//     Size media = MediaQuery.of(context).size;
-//     double _height = media.height;
-//     double _width = media.width;
-//     final Animation<double> animation = listenable;
-//     return new Container(
-//       width: _width * 0.15,
-//       height: _height * 0.06,
-//       color: draggableColor.withOpacity(0.5),
-//       child: new Center(
-//         child: new Text(
-//           draggableText,
-//           style: new TextStyle(
-//             color: Colors.white,
-//             decoration: TextDecoration.none,
-//             fontSize: _width * 0.03,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class AnimatedDrag extends AnimatedWidget {
-//   AnimatedDrag(
-//       {Key key,
-//       Animation<double> animation,
-//       this.draggableColor,
-//       this.draggableText})
-//       : super(key: key, listenable: animation);
-
-//   final Color draggableColor;
-//   final String draggableText;
-
-//   Widget build(BuildContext context) {
-//     Size media = MediaQuery.of(context).size;
-//     double _height = media.height;
-//     double _width = media.width;
-//     final Animation<double> animation = listenable;
-//     double translateX = animation.value;
-//     print("value: $translateX");
-//     return new Transform(
-//       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
-//       child: new Container(
-//         width: _width * 0.15,
-//         height: _height * 0.06,
-//         color: draggableColor,
-//         // margin: new EdgeInsets.only(
-//         //     left: animation.value ?? 0, right: animation.value ?? 0),
-//         child: new Center(
-//           child: new Text(
-//             draggableText,
-//             style: new TextStyle(
-//               color: Colors.white,
-//               decoration: TextDecoration.none,
-//               fontSize: _width * 0.03,
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//     // return new Container(
-//     //   width: width * 0.1,
-//     //   height: height * 0.08,
-//     //   color: draggableColor,
-//     //   margin: new EdgeInsets.only(
-//     //       left: animation.value ?? 0, right: animation.value ?? 0),
-//     //   child: new Center(
-//     //     child: new Text(
-//     //       draggableText,
-//     //       style: new TextStyle(
-//     //         color: Colors.white,
-//     //         decoration: TextDecoration.none,
-//     //         fontSize: 15.0,
-//     //       ),
-//     //     ),
-//     //   ),
-//     // );
-//   }
-// }
-
-
-
-
-
-
-
 import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:maui/components/responsive_grid_view.dart';
 
 // String test = '';
 
@@ -585,7 +30,6 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame> {
-
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
   }
@@ -593,7 +37,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
   Future _loadGameInfo() async {
     String jsonGameInfo = await _loadGameAsset();
     print(jsonGameInfo);
-    this.setState((){
+    this.setState(() {
       _decoded = json.decode(jsonGameInfo);
     });
     print(_decoded["id"]);
@@ -619,7 +63,25 @@ class _IdentifyGameState extends State<IdentifyGame> {
     super.initState();
     this._loadGameInfo();
   }
+  List<String> list=['a','a','a','a','sa','s','s','sa','s'];
+  Widget _builtButton(BuildContext context){
+    int j=0;
+    int r = (list.length/5 + list.length%5).toInt();
+    return new ResponsiveGridView(
+      rows: r,
+      cols: 5,
+      maxAspectRatio: 1.0,
+      children:
+        list.map((e)=>_buildItems(j++,e)).toList(growable:false),
+    );
+  }
 
+Widget _buildItems(int i,String part){
+  return new DragBox(
+    key: new ValueKey<int>(i),
+    part: part,
+  );
+}
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
@@ -627,262 +89,84 @@ class _IdentifyGameState extends State<IdentifyGame> {
     double _width = media.width;
     print("height is $_height ");
     print("width is $_width");
-    return new Stack(
+    var x = _decoded["parts"][0]["data"]["height"];
+    print("this is $x height in pixels");
+    return new Flex(
+     // mainAxisAlignment: MainAxisAlignment.center,
+      direction: Axis.vertical,
       children: <Widget>[
-        new DropTarget(new Offset(0.0, 0.0)),
-        new DragBox(new Offset(_width*0.05, _height*0.75), _decoded["parts"][0]["name"], Colors.red),
-        new DragBox(new Offset((_width*0.30), _height*0.75), _decoded["parts"][3]["name"], Colors.orange),
-        new DragBox(new Offset((_width*0.55), _height*0.75), _decoded["parts"][1]["name"], Colors.lightBlue),
-        new DragBox(new Offset((_width*0.80), _height*0.75), _decoded["parts"][2]["name"], Colors.green),
+        new Expanded(
+            child: new Stack(
+          fit: StackFit.passthrough,
+          children: <Widget>[
+            new Scaffold(
+              body: new Column(
+                children: <Widget>[
+                  new Expanded(
+                    flex: 3,
+                    child: new Image(
+                      image: AssetImage('assets/' + _decoded["id"]),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  new Center(
+                    child: 
+                  _builtButton(context))
+                  
+                 
+                  // new Expanded(
+                  //   flex: 1,
+                  //   child: new Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: <Widget>[
+                  //       new DragBox(_decoded["parts"][0]),
+                  //       new DragBox( _decoded["parts"][1]),
+                  //       new DragBox(_decoded["parts"][2]),
+                  //       new DragBox(_decoded["parts"][3]),
+                  //     ],
+                  //   ),
+                  // )
+                ],
+              ),
+            ),
+            // new RepaintBoundary(
+            //   child: new CustomPaint(
+            //     painter: new Stickers(
+            //       text: paste,
+            //       x: x,
+            //       y: y,
+            //     ),
+            //     isComplex: false,
+            //     willChange: false,
+            //   ),
+            // )
+          ],
+        )),
       ],
     );
-    // return new Column(
-    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //   children: <Widget>[
-    //     new Padding(
-    //       padding: new EdgeInsets.only(top: 30.0),
-    //     ),
-    //     // new Expanded(
-    //     //   flex: 1,
-    //     //   child: new Padding(
-    //     //     padding: new EdgeInsets.only(top: 5.0)
-    //     //   ),
-    //     // ),
-    //     new Expanded(
-    //       flex: 3,
-    //       child: new DropTarget(),
-    //       // child: new Row(
-    //       // mainAxisAlignment: MainAxisAlignment.center,
-    //       // children: <Widget>[
-    //       //   new Expanded(
-    //       //     flex:1,
-    //       //     child: new DropTarget(),
-    //       //   ),
-    //       //   // new Expanded(
-    //       //   //   flex: 1,
-    //       //   //   child:  new DropTarget('hand', Colors.red),
-    //       //   // ),
-    //       //   // new Expanded(
-    //       //   //   flex: 1,
-    //       //   //   child: new DropTarget('head', Colors.orange),
-    //       //   // ),
-    //       //   // new Expanded(
-    //       //   //   flex: 1,
-    //       //   //   child: new DropTarget('body', Colors.green),
-    //       //   // )
-    //       //   // new DropTarget('leg', Colors.lightBlue),
-    //       //   // new DropTarget('hand', Colors.red),
-    //       //   // new DropTarget('head', Colors.orange),
-    //       //   // new DropTarget('body', Colors.green),
-    //       //   ],
-    //       // ),
-    //     ),
-    //     new Expanded(
-    //       flex: 1,
-    //       child: new Row(
-    //         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //         children: <Widget>[
-    //           new Expanded(
-    //             flex: 1,
-    //             child: new DragBox('face', Colors.red),
-    //           ),
-    //           new Expanded(
-    //             flex: 1,
-    //             child: new DragBox('cap', Colors.orange),
-    //           ),
-    //           new Expanded(
-    //             flex: 1,
-    //             child: new DragBox('hand', Colors.lightBlue),
-    //           ),
-    //           new Expanded(
-    //             flex: 1,
-    //             child: new DragBox('body', Colors.green),
-    //           ),
-    //           // new DragBox('a', Colors.red),
-    //           // new DragBox('b', Colors.orange),
-    //           // new DragBox('c', Colors.lightBlue),
-    //         ],
-    //       ),
-    //     ),
-    //   ],
-    // );
-  }
-}
-
-// class DragBoxCopy extends StatefulWidget {
-//   final Offset initpos;
-//   final String label;
-//   final Color itemColor;
-//   DragBoxCopy(this.initpos, this.label, this.itemColor);
-
-//   @override
-//   DragBoxCopyState createState() => new DragBoxCopyState();
-// }
-
-// class DragBoxCopyState extends State<DragBoxCopy> {
-//   Offset position = new Offset(0.0, 0.0);
-//   Color draggedBoxColor;
-//   String draggedText;
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-
-//     position = widget.initpos;
-//     draggedBoxColor = widget.itemColor;
-//     draggedText = widget.label;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Positioned(
-//         left: position.dx,
-//         top: position.dy,
-//         child: new Container(
-//           height: 50.0,
-//           width: 50.0,
-//           color: draggedBoxColor.withOpacity(0.5),
-//           child: new Center(
-//             child: new Text(
-//               draggedText,
-//               style: new TextStyle(
-//                 color: Colors.white,
-//                 decoration: TextDecoration.none,
-//                 fontSize: 15.0,
-//               ),
-//             ),
-//           ),
-//         ));
-//   }
-// }
-
-class DropTarget extends StatefulWidget {
-  final Offset intipos;
-  // final String expectedLabel;
-  // final Color dropColor;
-
-  // DropTarget(this.expectedLabel, this.dropColor);
-  DropTarget(this.intipos);
-
-  @override
-  DropTargetState createState() => new DropTargetState();
-}
-
-class DropTargetState extends State<DropTarget> {
-  Offset position = new Offset(0.0, 0.0);
-  // String caughtText = '';
-  // String expectedText = '';
-  // Color targetColor = Colors.cyan;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    position = widget.intipos;
-    // expectedText = widget.expectedLabel;
-    // targetColor = widget.dropColor;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double _height = media.height;
-    double _width = media.width;
-    return new Positioned(
-      left: position.dx,
-      right: position.dy,
-      // child: new Container(
-      //   decoration: new BoxDecoration(
-      //     border: new Border.all(color: Colors.red)
-      //   ),
-      //   child: image,
-      // ),
-      child: new Image(
-        image: new AssetImage('assets/' + _decoded["id"]),
-        // fit: BoxFit.contain,
-        height: _height*0.5,
-        width: _width,
-      ),
-      // child: new Image(
-      //   image: new AssetImage('assets/Shapes.png'),
-      //   // height: height * 0.7,
-      //   // width: width * 0.6,
-      // ),
-      // // child: new Container(
-      // //   decoration: new BoxDecoration(
-      // //     image: new DecorationImage(
-      // //       image: new AssetImage('assets/Boy.png'),
-      // //       fit: BoxFit.contain,
-      // //     ),
-      // //   ),
-      // // ),
-    );
-    // return new DragTarget(
-    //   // onAccept: (String text) {
-    //   //   if (text == expectedText) {
-    //   //     caughtText = text;
-    //   //     test = caughtText;
-    //   //   } else {
-    //   //     caughtText = '';
-    //   //     test = '';
-    //   //   }
-    //   // },
-    //   builder: (
-    //     BuildContext context,
-    //     List<dynamic> accepted,
-    //     List<dynamic> rejected,
-    //   ) {
-    //     return new Container(
-    //       decoration: new BoxDecoration(
-    //         image: new DecorationImage(
-    //           image: new AssetImage('assets/Boy.png'),
-    //           fit: BoxFit.contain,
-    //         ),
-    //       ),
-    //     );
-    //     // return new Container(
-    //     //   width: 120.0,
-    //     //   height: 120.0,
-    //     //   decoration: new BoxDecoration(
-    //     //     // color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-    //     //     color: targetColor,
-    //     //   ),
-    //     //   child: new Center(
-    //     //     child: new Text(
-    //     //       accepted.isEmpty ? caughtText : '',
-    //     //     ),
-    //     //   ),
-    //     // );
-    //   },
-    // );
   }
 }
 
 class DragBox extends StatefulWidget {
-  final Offset intipos;
-  final String label;
-  final Color itemColor;
+  // final String label;
+  // final Color itemColor;
+  String part;
 
-  DragBox(this.intipos, this.label, this.itemColor);
-
+  DragBox({Key key,this.part,}):super(key:key);
+  
   @override
   DragBoxState createState() => new DragBoxState();
 }
 
 class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
-  Offset position = new Offset(0.0, 0.0);
   AnimationController controller, shakeController;
   Animation<double> animation, shakeAnimation, noanimation;
 
-  Color draggableColor;
-  String draggableText;
+  // Color draggableColor;
+  // String draggableText;
+  String part;
   int _flag = 0;
-
-  // void _parseJsonIdentifyGame(String jsonString) {
-  //   Map _decoded = json.decode(jsonString);
-  //   print(_decoded);
-  // }
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
@@ -896,13 +180,6 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   }
 
   void toAnimateButton() {
-    // shakeAnimation.addStatusListener((AnimationStatus status) {
-    //   if(status == AnimationStatus.completed){
-    //     shakeController.reverse();
-    //   }else if (status == AnimationStatus.dismissed){
-    //     shakeController.forward();
-    //   }
-    // });
     shakeController.forward();
   }
 
@@ -923,9 +200,9 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     shakeAnimation =
         new CurvedAnimation(parent: shakeController, curve: Curves.easeOut);
     noanimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
-    position = widget.intipos;
-    draggableColor = widget.itemColor;
-    draggableText = widget.label;
+    // draggableColor = widget.itemColor;
+    // draggableText = widget.label;
+    part = widget.part;
 
     toAnimateButton();
   }
@@ -942,69 +219,57 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
-    return new Positioned(
-      left: position.dx,
-      top: position.dy,
-      child: new ScaleTransition(
-          scale: shakeAnimation,
-          child: new Draggable(
-              data: draggableText,
-              child: new AnimatedDrag(
-                  animation: (_flag == 0) ? noanimation : animation,
-                  draggableColor: draggableColor,
-                  draggableText: draggableText),
-              feedback: new AnimatedFeedback(
-                  animation: animation,
-                  draggableColor: draggableColor,
-                  draggableText: draggableText),
-              onDraggableCanceled: (velocity, offset) {
-                // if (test == draggableText) {
-                //   controller.stop();
-                // } else if (test == '') {
-                //   toAnimateFunction();
-                //   new Future.delayed(const Duration(milliseconds: 1000), () {
-                //     controller.stop();
-                //   });
-                // }
+    return new ScaleTransition(
+      scale: shakeAnimation,
+      child: new Draggable(
+        data: part,
+        child: new AnimatedDrag(
+            animation: (_flag == 0) ? noanimation : animation,
+            draggableColor: Colors.red,
+            draggableText: part),
+        feedback: new AnimatedFeedback(
+            animation: animation,
+            draggableColor: Colors.green,
+            draggableText: part),
+        onDraggableCanceled: (velocity, offset) {
+          setState(() {
+            if ((part == _decoded["parts"][0]["name"]) &&
+                (offset.dx > 0.0 && offset.dx < 100.0) &&
+                (offset.dy > 0.0 && offset.dy < 100.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part == _decoded["parts"][1]["name"] &&
+                (offset.dx > (_width - 130) && offset.dx < 370.0) &&
+                (offset.dy > 0.0 && offset.dy < 120.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part == _decoded["parts"][3]["name"] &&
+                (offset.dx > 0.0 && offset.dx < 130.0) &&
+                (offset.dy > 160.0 && offset.dy < 290.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part == _decoded["parts"][2]["name"] &&
+                (offset.dx > (_width - 110) && offset.dx < 370.0) &&
+                (offset.dy > 170 && offset.dy < 290.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else {
+              _flag = 1;
+              toAnimateFunction();
+              new Future.delayed(const Duration(milliseconds: 1000), () {
                 setState(() {
-                  // new DragBoxCopy(new Offset(position.dx, position.dy),
-                  //     draggableText, draggableColor);
-                  if ((draggableText == _decoded["parts"][0]["name"]) &&
-                      (offset.dx > 0.0 && offset.dx < 100.0) &&
-                      (offset.dy > 0.0 && offset.dy < 100.0)) {
-                    position = offset;
-                    print(offset.dx);
-                    print(offset.dy);
-                  } else if (draggableText == _decoded["parts"][1]["name"] &&
-                      (offset.dx > (_width - 130) && offset.dx < 370.0) &&
-                      (offset.dy > 0.0 && offset.dy < 120.0)) {
-                    position = offset;
-                    print(offset.dx);
-                    print(offset.dy);
-                  } else if (draggableText == _decoded["parts"][3]["name"] &&
-                      (offset.dx > 0.0 && offset.dx < 130.0) &&
-                      (offset.dy > 160.0 && offset.dy < 290.0)) {
-                    position = offset;
-                    print(offset.dx);
-                    print(offset.dy);
-                  } else if (draggableText == _decoded["parts"][2]["name"] &&
-                      (offset.dx > (_width - 110) && offset.dx < 370.0) &&
-                      (offset.dy > 170 && offset.dy < 290.0)) {
-                    position = offset;
-                    print(offset.dx);
-                    print(offset.dy);
-                  } else {
-                    _flag = 1;
-                    toAnimateFunction();
-                    new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                        _flag = 0;
-                      });
-                      controller.stop();
-                    });
-                  }
+                  _flag = 0;
                 });
-              })),
+                controller.stop();
+              });
+            }
+          });
+        },
+      ),
     );
   }
 }
@@ -1067,8 +332,6 @@ class AnimatedDrag extends AnimatedWidget {
         width: _width * 0.15,
         height: _height * 0.06,
         color: draggableColor,
-        // margin: new EdgeInsets.only(
-        //     left: animation.value ?? 0, right: animation.value ?? 0),
         child: new Center(
           child: new Text(
             draggableText,
@@ -1081,22 +344,5 @@ class AnimatedDrag extends AnimatedWidget {
         ),
       ),
     );
-    // return new Container(
-    //   width: width * 0.1,
-    //   height: height * 0.08,
-    //   color: draggableColor,
-    //   margin: new EdgeInsets.only(
-    //       left: animation.value ?? 0, right: animation.value ?? 0),
-    //   child: new Center(
-    //     child: new Text(
-    //       draggableText,
-    //       style: new TextStyle(
-    //         color: Colors.white,
-    //         decoration: TextDecoration.none,
-    //         fontSize: 15.0,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -2,10 +2,11 @@
     "id": "Boy.png",
     "height": 419.0,
     "width": 249.0,
+    "num": 4,
     "parts": [
         {
             "name": "face",
-            "color":"red",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 96.469,
                 "width": 212.005,
@@ -15,7 +16,7 @@
         },
         {
             "name": "cap",
-            "color":"blue",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 228.796,
                 "width": 247.739,
@@ -25,7 +26,7 @@
         },
         {
             "name": "hand",
-            "color":"green",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 110.718,
                 "width": 79.506,
@@ -37,7 +38,7 @@
         },
         {
             "name": "body",
-            "color":"yellow",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 145.532,
                 "width": 112.076,
