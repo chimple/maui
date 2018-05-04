@@ -658,6 +658,21 @@ class _SingleGameState extends State<SingleGame> {
                 accentColor: Colors.brown, //progress bar
                 buttonColor: Colors.cyan));
         break;
+         case 'first_word':
+        return new Tuple2(
+            new FirstWord(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
     }
     return null;
   }

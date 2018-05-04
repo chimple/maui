@@ -67,7 +67,7 @@ int j=0;int i=0;
              //   width: 200.0,
                height: 40.0,
                 color: Colors.brown[300],
-                child: new Text(_category[0],style: new TextStyle(fontSize: 24.0),),
+                child: new Text(_category[0],textAlign: TextAlign.center,style: new TextStyle(fontWeight:FontWeight.bold,fontSize: 24.0),),
               )),
               new Flexible(
                 flex:1,
@@ -75,7 +75,7 @@ int j=0;int i=0;
                 child:new Container(
                   height: 40.0,
                 color: Colors.brown[50],
-                child: new Text(randomWord[0],style: new TextStyle(fontSize: 24.0)),
+                child: new Text(randomWord[0],textAlign: TextAlign.center,style: new TextStyle(fontSize: 24.0)),
               ))
             ],
           )),
@@ -94,6 +94,9 @@ int j=0;int i=0;
                height: 40.0,
                 color: Colors.brown[300],
                 child:new TextField(
+                  decoration: new InputDecoration(border: InputBorder.none),
+                  style: new TextStyle(fontWeight: FontWeight.bold,letterSpacing: 2.0,fontSize: 22.0),
+                  textAlign: TextAlign.center,
                   onChanged: (text){setState((){ _dispText=text;});},
                   onSubmitted: (text){submit(text);},
                 ),
@@ -106,7 +109,7 @@ int j=0;int i=0;
              //   width: 100.0,
                 height: 40.0,
                 color: Colors.brown[50],
-                child: new Text(_dispText1,style: new TextStyle(fontSize: 18.0,color: Colors.blue)),
+                child: new Text(_dispText1,textAlign: TextAlign.center,style: new TextStyle(fontSize: 18.0,color: Colors.blue)),
               ))
             ],
           )),
