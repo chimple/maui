@@ -127,6 +127,11 @@ class GameListView extends StatelessWidget {
               'friend_word',
               'friend_word',
               new Icon(Icons.voice_chat, size: iconSize),
+              Colors.amberAccent), _buildButton(
+              context,
+              'word_fight',
+              'word_fight',
+              new Icon(Icons.blur_on, size: iconSize),
               Colors.amberAccent),
         ]);
   }

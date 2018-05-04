@@ -496,3 +496,31 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
   }
   return null;
 }
+
+Future<Tuple2<List<String >, String >>
+    fetchFirstWordData(int categoryId) async {
+  var rand = new Random();
+      var startNum = rand.nextInt(max(0, 3));
+  switch (startNum) {
+    case 0:
+      return new Tuple2(['cricket','tennis','golf','hockey','football'
+        
+       
+      ], 'SPORTS');
+      break;
+      case 1:
+      return new Tuple2(['cat','dog','elephant','horse'
+    
+  
+  ],'ANIMALS');
+  break;
+  case 2:
+   return new Tuple2(['car','bus','train'
+   
+  
+  ],'VEHICLES');
+  break;
+ 
+  }
+  return null;
+}
