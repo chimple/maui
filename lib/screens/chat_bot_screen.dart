@@ -103,7 +103,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
         child: input,
       ));
     }
-    return new Column(children: widgets);
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Chatbot'),
+        ),
+        body: new Column(children: widgets));
   }
 
   Widget _buildChatMessage(ChatItem chatItem) {
@@ -162,7 +166,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
       _expectedAnswer = null;
     }
     new Future.delayed(const Duration(milliseconds: 1000), () {
-      _displayNextChat(chatItem);
+      if (mounted) _displayNextChat(chatItem);
     });
   }
 
@@ -248,5 +252,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
         new ChatItem(
             sender: botId, chatItemType: chatItemType, content: content));
     _currentMode = chatMode;
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

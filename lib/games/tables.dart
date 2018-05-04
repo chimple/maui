@@ -152,6 +152,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 });
                 animationController.stop();
                 if (_wrong == 4) {
+                  widget.onProgress((_count + 1) / _tableShuffledData.length);
                   setState(() {
                     _isShowingFlashCard = true;
                     _wrong = 0;
@@ -337,7 +338,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     style: new TextStyle(
                         color: Colors.black,
                         fontSize: _displayText == '✖' || _displayText == '✔'
-                            ? widget.height * 0.043
+                            ? widget.height * 0.05
                             : widget.height * 0.05,
                         fontWeight: FontWeight.bold)))));
   }
@@ -359,9 +360,13 @@ class TextAnimation extends AnimatedWidget {
               height: height * 0.12,
               width: width / 3.0,
               alignment: Alignment.center,
-              color: new Color(0XFF734052),
               margin: new EdgeInsets.only(
                   left: animation.value ?? 0, bottom: height * 0.09),
+              decoration: new BoxDecoration(
+                  color:  new Color(0XFF734052),
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.0095)),
+                  shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
                     color: Colors.black,
