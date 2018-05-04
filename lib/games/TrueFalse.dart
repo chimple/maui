@@ -138,16 +138,10 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 print(1);
                 overlayShouldBeVisible = false;
               }); 
-              if(isCorrect){
-              widget.onEnd();
-              _initBoard();
-              } else {
-                print("No Update");
-              }
-              // new Future.delayed(const Duration(milliseconds: 20), () {
-                
-              //   _initBoard();
-              // });         
+              new Future.delayed(const Duration(milliseconds: 20), () {
+                widget.onEnd();
+                _initBoard();
+              });         
             }
         )) : new Container()
       ],
