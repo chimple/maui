@@ -18,6 +18,7 @@ enum Statuses {right,wrong}
 class FirstWordState extends State<FirstWord> {
  
 String _dispText='';
+String _dispText1='';
 List<String> data=['','','','',''];
 List<String> _category=['sports'];
 List<String> _catList=['cricket','football','tennis','golf','basketball'];
@@ -35,10 +36,10 @@ List<String> _catList=['cricket','football','tennis','golf','basketball'];
    void submit(text){
     // print('testing cases     ${text.toLowerCase()}');
 if(text.toLowerCase()==randomWord){
-  _dispText='CORRECT';
+  _dispText1='CORRECT';
 }
 else {
-  _dispText='WRONG';
+  _dispText1='WRONG';
 }
    }
  
@@ -78,6 +79,7 @@ int j=0;int i=0;
               ))
             ],
           )),
+          new Container(child: new Text(_dispText.toUpperCase(),style:new TextStyle(fontSize: 20.0,color: Colors.red)),),
             new Container(
       padding: new EdgeInsets.all(size.width/10),
          child: new Row(
@@ -92,6 +94,7 @@ int j=0;int i=0;
                height: 40.0,
                 color: Colors.brown[300],
                 child:new TextField(
+                  onChanged: (text){setState((){ _dispText=text;});},
                   onSubmitted: (text){submit(text);},
                 ),
               )),
@@ -103,7 +106,7 @@ int j=0;int i=0;
              //   width: 100.0,
                 height: 40.0,
                 color: Colors.brown[50],
-                child: new Text(_dispText,style: new TextStyle(fontSize: 18.0,color: Colors.blue)),
+                child: new Text(_dispText1,style: new TextStyle(fontSize: 18.0,color: Colors.blue)),
               ))
             ],
           )),
