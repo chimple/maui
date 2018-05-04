@@ -360,6 +360,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
+      print("keys of all element is ${widget.index}");
     _displayText = widget.text;
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 10), vsync: this);
@@ -372,6 +373,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
+        
           if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();

@@ -2,10 +2,12 @@ import 'dart:math';
 import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
+import 'package:maui/components/unit_button.dart';
 import 'package:tuple/tuple.dart';
 
 class Quiz extends StatefulWidget {
@@ -37,13 +39,13 @@ class QuizState extends State<Quiz> {
   var keys=0;
   Tuple3<String, String, List<String>> _allques;
   int _size = 2;
-  int scoretrack = 0;
   String questionText;
   String ans;
   List<String> ch;
   List<String> choice = [];
   List<Status> _statuses = [];
   bool isCorrect;
+  int scoretrack = 0;
 
   @override
   void initState() {
@@ -95,20 +97,21 @@ class QuizState extends State<Quiz> {
             choice.removeRange(0, choice.length);
           } else {
             setState(() {
-                          _statuses[index] = Status.Wrong;
-                        });
+              _statuses[index] = Status.Wrong;
+            });
             new Future.delayed(const Duration(milliseconds: 300), (){
               setState(() {
-                          _statuses[index] = Status.Active;               
-                            });
+                _statuses[index] = Status.Active;
+              });
             });
-            if(scoretrack > 0){
+            if(scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
             } else {
-              scoretrack = scoretrack + 0;
               widget.onScore(0);
             }
+            
+
           }
         });
   }
@@ -138,7 +141,7 @@ class QuizState extends State<Quiz> {
     }
 
     int j=0;
-     return new LayoutBuilder(builder: (context, constraints)
+    return new LayoutBuilder(builder: (context, constraints)
     {
       double ht=constraints.maxHeight;
       double wd = constraints.maxWidth;
@@ -303,14 +306,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     wrongController.forward();
   }
 
-  // @override
-  // void didUpdateWidget(MyButton oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   controller.reset();
-  //   controller.forward();
-
-  //   print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
-  // }
 
   @override
   void dispose() {
@@ -325,28 +320,33 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     widget.keys++;
     print("_MyButtonState.build");
     return new Shake(
-      animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-      child: new ScaleTransition(
-        scale: animation,
-        child: new GestureDetector(
-            onLongPress: () {
-              showDialog(
-                  context: context,
-                  child: new FractionallySizedBox(
-                      heightFactor: 0.5,
-                      widthFactor: 0.8,
-                      child: new FlashCard(text: widget.text)));
-            },
-            child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                color: const Color(0xFFffffff),
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                    const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(_displayText,
-                    key: new Key("${widget.keys}"),
-                    style:
-                    new TextStyle(color: Colors.black, fontSize: 24.0))
-                    ))));
+        animation: widget.status == Status.Wrong ? wrongAnimation : animation,
+        child: new ScaleTransition(
+            scale: animation,
+            child: new GestureDetector(
+                onLongPress: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new FlashCard(text: widget.text)));
+                },
+                 child: new UnitButton(
+                   onPress: () => widget.onPress(),
+                   text: _displayText,
+                   unitMode: UnitMode.text,
+//                child: new RaisedButton(
+//                    onPressed: () => widget.onPress(),
+//                    color: const Color(0xFFffffff),
+//                    shape: new RoundedRectangleBorder(
+//                        borderRadius:
+//                        const BorderRadius.all(const Radius.circular(8.0))),
+//                    child: new Text(_displayText,
+//                        key: new Key("${widget.keys}"),
+//                        style:
+//                        new TextStyle(color: Colors.black, fontSize: 24.0))
+                )
+            )));
   }
 }
