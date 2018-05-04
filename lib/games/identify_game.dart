@@ -63,7 +63,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
     super.initState();
     this._loadGameInfo();
   }
-  List<String> list=['a','a','a','a','sa','s','s','sa','s'];
+  List<String> list=['square','circle','hexagon','triangle','trapezium','rectangle','rhombus','paralleogram','rightangled'];
   Widget _builtButton(BuildContext context){
     int j=0;
     int r = (list.length/5 + list.length%5).toInt();
@@ -103,15 +103,15 @@ Widget _buildItems(int i,String part){
               body: new Column(
                 children: <Widget>[
                   new Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: new Image(
                       image: AssetImage('assets/' + _decoded["id"]),
                       fit: BoxFit.contain,
                     ),
                   ),
-                  new Center(
-                    child: 
-                  _builtButton(context))
+                  new Expanded(
+                    flex: 1,
+                    child: _builtButton(context))
                   
                  
                   // new Expanded(
