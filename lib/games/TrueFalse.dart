@@ -27,6 +27,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
   bool tf;
   bool isCorrect;
   bool overlayShouldBeVisible = false;
+  int scoretrack = 0;
 
   @override
   void initState() {
@@ -48,8 +49,16 @@ class TrueFalseGameState extends State<TrueFalseGame> {
   void handleAnswer(bool answer) {
     isCorrect = (tf == answer);
     if (isCorrect) {
-      widget.onScore(1);
+      scoretrack = scoretrack + 4;
+      widget.onScore(4);
       widget.onProgress(1.0);
+    } else {
+      if(scoretrack > 0){        
+      scoretrack = scoretrack - 1;
+      widget.onScore(-1);
+      } else {
+        widget.onScore(0);
+      }
     }
     this.setState(() {
       print(4);
@@ -129,10 +138,16 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 print(1);
                 overlayShouldBeVisible = false;
               }); 
-              new Future.delayed(const Duration(milliseconds: 20), () {
-                widget.onEnd();
-                _initBoard();
-              });         
+              if(isCorrect){
+              widget.onEnd();
+              _initBoard();
+              } else {
+                print("No Update");
+              }
+              // new Future.delayed(const Duration(milliseconds: 20), () {
+                
+              //   _initBoard();
+              // });         
             }
         )) : new Container()
       ],

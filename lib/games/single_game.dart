@@ -247,6 +247,8 @@ class _SingleGameState extends State<SingleGame> {
                 buttonColor: Colors.cyan));
         break;
       case 'true_or_false':
+        playTime = 15000;
+        maxIterations = 10;
         return new Tuple2(
             new TrueFalseGame(
                 key: new GlobalObjectKey(keyName),
@@ -501,7 +503,8 @@ class _SingleGameState extends State<SingleGame> {
                 scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
                 backgroundColor: const Color(0xFF9d4e70), //behind progress bar
                 accentColor: Colors.brown, //progress bar
-                buttonColor: const Color(0xFFffffff)));
+                textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors. black),
+                buttonColor: Colors.purple));
         break;
       case 'connect_the_dots':
         return new Tuple2(
