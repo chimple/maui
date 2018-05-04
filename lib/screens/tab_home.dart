@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/story/story_list_view.dart';
-
-import 'chat_bot_screen.dart';
 
 class TabHome extends StatelessWidget {
   final String title;
@@ -13,13 +12,14 @@ class TabHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new DefaultTabController(
-      length: 4,
+      length: 3,
       child: new Scaffold(
+        drawer: new ProfileDrawer(),
         appBar: new AppBar(
           title: new Text(title),
+          leading: new ProfileDrawerIcon(),
           bottom: new TabBar(
             tabs: <Widget>[
-              new Tab(text: 'Hoodie', icon: new Icon(Icons.face)),
               new Tab(text: 'Chat', icon: new Icon(Icons.chat)),
               new Tab(
                 text: 'Game',
@@ -31,7 +31,6 @@ class TabHome extends StatelessWidget {
         ),
         body: new TabBarView(
           children: <Widget>[
-            new ChatBotScreen(),
             new FriendListView(),
             new GameListView(),
             new StoryListView()

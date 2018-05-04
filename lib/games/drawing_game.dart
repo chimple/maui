@@ -416,7 +416,6 @@ class DrawScreen extends State<Drawing> {
   }
 
   void _onUndo() {
-    print({"this is undo methode before reference " : _padController.undo()});
     _padController.undo();
     print("this is undo methode");
   }
