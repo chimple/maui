@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/components/join_text.dart';
 import 'package:maui/components/text_choice.dart';
@@ -27,6 +28,7 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class ChatBotScreenState extends State<ChatBotScreen> {
+  static const platform = const MethodChannel('org.sutara.maui/rivescript');
   final GlobalKey<AnimatedListState> _animatedListKey =
       new GlobalKey<AnimatedListState>();
 
@@ -175,8 +177,15 @@ class ChatBotScreenState extends State<ChatBotScreen> {
         (_currentMode != ChatMode.conversation ||
             (_currentMode == ChatMode.conversation &&
                 _chatHistory[ChatMode.conversation].item2 < 2))) {
+      String reply = 'hello';
+      if (currentChatItem?.chatItemType == ChatItemType.text) {
+        try {
+          reply = await platform.invokeMethod(
+              'getReply', <String, dynamic>{'query': currentChatItem.content});
+        } on PlatformException catch (e) {}
+      }
       setState(() {
-        _addChatItem(ChatMode.conversation, ChatItemType.card, 'hello');
+        _addChatItem(ChatMode.conversation, ChatItemType.card, reply);
         input = new TextField(
           onSubmitted: _handleTextInput,
           autofocus: true,
