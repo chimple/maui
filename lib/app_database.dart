@@ -54,13 +54,6 @@ class AppDatabase {
           .asUint8List(audioData.offsetInBytes, audioData.lengthInBytes);
       await new File(audioPath).writeAsBytes(audioBytes);
 
-      String rsPath = join(documentsDirectory.path, "testsuite.rs");
-      ByteData rsData =
-          await rootBundle.load(join("assets", "rivescript/testsuite.rs"));
-      List<int> rsBytes =
-          rsData.buffer.asUint8List(rsData.offsetInBytes, rsData.lengthInBytes);
-      await new File(rsPath).writeAsBytes(rsBytes);
-
       await new UserDao().insert(new User(
           id: 'dbb24390-20f0-11e8-c6ee-c11cc1dabc53',
           name: 'Chimple',
