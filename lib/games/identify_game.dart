@@ -63,24 +63,30 @@ class _IdentifyGameState extends State<IdentifyGame> {
     super.initState();
     this._loadGameInfo();
   }
-  List<String> list=['square','circle','hexagon','triangle','trapezium','rectangle','rhombus','paralleogram','rightangled'];
+  // List<String> list=['square','circle','hexagon','triangle','trapezium','rectangle','rhombus','paralleogram','rightangled'];
   Widget _builtButton(BuildContext context){
+    print(_decoded["parts"].length);
+    // print(list);
     int j=0;
-    int r = (list.length/5 + list.length%5).toInt();
+    int r = (_decoded["parts"].length/5 + _decoded["parts"].length%5).toInt();
+    print(r);
     return new ResponsiveGridView(
       rows: r,
       cols: 5,
       maxAspectRatio: 1.0,
       children:
-        list.map((e)=>_buildItems(j++,e)).toList(growable:false),
+        (_decoded["parts"] as List).map((e)=>_buildItems(j++,e)).toList(growable:false),
     );
   }
 
-Widget _buildItems(int i,String part){
+Widget _buildItems(int i,var part){
+  print(part);
   return new DragBox(
     key: new ValueKey<int>(i),
     part: part,
-  );
+  );  
+  
+  // return new Text("data");
 }
   @override
   Widget build(BuildContext context) {
@@ -151,7 +157,7 @@ Widget _buildItems(int i,String part){
 class DragBox extends StatefulWidget {
   // final String label;
   // final Color itemColor;
-  String part;
+  var part;
 
   DragBox({Key key,this.part,}):super(key:key);
   
@@ -165,7 +171,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
 
   // Color draggableColor;
   // String draggableText;
-  String part;
+  var part;
   int _flag = 0;
 
   void toAnimateFunction() {
@@ -222,36 +228,36 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     return new ScaleTransition(
       scale: shakeAnimation,
       child: new Draggable(
-        data: part,
+        data: part["name"],
         child: new AnimatedDrag(
             animation: (_flag == 0) ? noanimation : animation,
             draggableColor: Colors.red,
-            draggableText: part),
+            draggableText: part["name"]),
         feedback: new AnimatedFeedback(
             animation: animation,
             draggableColor: Colors.green,
-            draggableText: part),
+            draggableText: part["name"]),
         onDraggableCanceled: (velocity, offset) {
           setState(() {
-            if ((part == _decoded["parts"][0]["name"]) &&
+            if ((part["name"] == _decoded["parts"][0]["name"]) &&
                 (offset.dx > 0.0 && offset.dx < 100.0) &&
                 (offset.dy > 0.0 && offset.dy < 100.0)) {
               // position = offset;
               print(offset.dx);
               print(offset.dy);
-            } else if (part == _decoded["parts"][1]["name"] &&
+            } else if (part["name"] == _decoded["parts"][1]["name"] &&
                 (offset.dx > (_width - 130) && offset.dx < 370.0) &&
                 (offset.dy > 0.0 && offset.dy < 120.0)) {
               // position = offset;
               print(offset.dx);
               print(offset.dy);
-            } else if (part == _decoded["parts"][3]["name"] &&
+            } else if (part["name"] == _decoded["parts"][3]["name"] &&
                 (offset.dx > 0.0 && offset.dx < 130.0) &&
                 (offset.dy > 160.0 && offset.dy < 290.0)) {
               // position = offset;
               print(offset.dx);
               print(offset.dy);
-            } else if (part == _decoded["parts"][2]["name"] &&
+            } else if (part["name"] == _decoded["parts"][2]["name"] &&
                 (offset.dx > (_width - 110) && offset.dx < 370.0) &&
                 (offset.dy > 170 && offset.dy < 290.0)) {
               // position = offset;
