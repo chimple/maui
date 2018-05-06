@@ -40,27 +40,31 @@ class _FlashCardState extends State<FlashCard> {
         child: new CircularProgressIndicator(),
       );
     }
-    return new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          new Container(
-              alignment: const Alignment(0.0, 0.0),
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.teal,
-              child: new Text(_unit?.name ?? widget.text,
-                  style: new TextStyle(color: Colors.white, fontSize: 24.0))),
-          new Row(
+    return new Card(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.volume_up),
-                  onPressed: () =>
-                      AppStateContainer.of(context).play(widget.text)),
-              new Expanded(child: new Image.asset('assets/apple.png')),
-              new IconButton(
-                  icon: new Icon(Icons.check), onPressed: widget.onChecked)
-            ],
-          )
-        ]);
+              new Container(
+                  alignment: const Alignment(0.0, 0.0),
+                  padding: const EdgeInsets.all(8.0),
+                  color: Colors.teal,
+                  child: new Text(_unit?.name ?? widget.text,
+                      style:
+                          new TextStyle(color: Colors.white, fontSize: 24.0))),
+              new Row(
+                children: <Widget>[
+                  new IconButton(
+                      icon: new Icon(Icons.volume_up),
+                      onPressed: () =>
+                          AppStateContainer.of(context).play(widget.text)),
+                  new Expanded(child: new Image.asset('assets/apple.png')),
+                  new IconButton(
+                      icon: new Icon(Icons.check), onPressed: widget.onChecked)
+                ],
+              )
+            ]));
   }
 }
