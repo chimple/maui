@@ -68,7 +68,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
     print(_decoded["parts"].length);
     // print(list);
     int j=0;
-    int r = (_decoded["parts"].length/5 + _decoded["parts"].length%5).toInt();
+    int r = (_decoded["parts"].length/5 + (((_decoded["parts"].length%5) == 0) ? 0 : 1)).toInt();
     print(r);
     return new ResponsiveGridView(
       rows: r,
