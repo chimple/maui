@@ -1,4 +1,13 @@
-enum UnitType { letter, phonetic, syllable, word, sentence }
+enum UnitType {
+  dummy,
+  letter,
+  phonetic,
+  syllable,
+  word,
+  sentence,
+  lower_case_letter,
+  upper_case_letter
+}
 
 class Unit {
   static const table = 'unit';
@@ -44,14 +53,14 @@ CREATE TABLE $table (
     };
   }
 
-  Unit.fromMap(Map<String, dynamic> map, {String prefix=''})
+  Unit.fromMap(Map<String, dynamic> map, {String prefix = ''})
       : this(
-            id: map[prefix+idCol],
-            name: map[prefix+nameCol],
-            type: UnitType.values[map[prefix+typeCol]],
-            image: map[prefix+imageCol],
-            sound: map[prefix+soundCol],
-            phonemeSound: map[prefix+phonemeSoundCol]);
+            id: map[prefix + idCol],
+            name: map[prefix + nameCol],
+            type: UnitType.values[map[prefix + typeCol]],
+            image: map[prefix + imageCol],
+            sound: map[prefix + soundCol],
+            phonemeSound: map[prefix + phonemeSoundCol]);
 
   @override
   int get hashCode =>
