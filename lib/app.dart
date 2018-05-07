@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/screens/chat_bot_screen.dart';
+import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
-import 'package:maui/screens/game_category_list_screen.dart';
-import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class MauiApp extends StatelessWidget {
@@ -18,6 +19,7 @@ class MauiApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new LoginScreen(),
         '/tab': (BuildContext context) => new TabHome(title: 'Maui'),
+        '/chatbot': (BuildContext context) => new ChatBotScreen()
       },
       onGenerateRoute: _getRoute,
     );
@@ -32,9 +34,10 @@ class MauiApp extends StatelessWidget {
       return new MaterialPageRoute<Null>(
           settings: settings,
           builder: (BuildContext context) => new ChatScreen(
-              myId: AppStateContainer.of(context).state.loggedInUser.id,
-              friendId: path[2],
-              friendImageUrl: path[3].replaceAll(new RegExp(r'&#x2F;'), '/'),));
+                myId: AppStateContainer.of(context).state.loggedInUser.id,
+                friendId: path[2],
+                friendImageUrl: path[3].replaceAll(new RegExp(r'&#x2F;'), '/'),
+              ));
     }
 
     if (path[1] == 'categories' && path.length == 3) {
