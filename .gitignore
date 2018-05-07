@@ -10,3 +10,5 @@ packages
 .flutter-plugins
 
 local.properties
+
+pubspec.lock

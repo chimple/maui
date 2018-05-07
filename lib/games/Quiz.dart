@@ -110,8 +110,6 @@ class QuizState extends State<Quiz> {
             } else {
               widget.onScore(0);
             }
-            
-
           }
         });
   }
@@ -346,7 +344,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //                        key: new Key("${widget.keys}"),
 //                        style:
 //                        new TextStyle(color: Colors.black, fontSize: 24.0))
-                )
+                ),
             )));
   }
 }
