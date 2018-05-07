@@ -70,7 +70,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
         child: new Jitter(
             animation: shakeAnimation,
             child: new Image.asset(
-              'assets/koala_$_emotion.png',
+              'assets/hoodie/reflex.png',
               height: 100.0,
             )));
   }
