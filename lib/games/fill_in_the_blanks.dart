@@ -86,7 +86,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
   }
-
+   String data;
   Widget droptarget(int index, String text, int flag) {
     return new MyButton(
         key: new ValueKey<int>(index),
@@ -96,16 +96,17 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         onAccepted: (targetindex) {
           flag1 = 0;
           var flagtemp = 0;
-          if (index == indexOfDragText) {
-            flag1 = 1;
-            progres++;
-            widget.onProgress(progres / space);
-            dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
-            dragBoxData[targetindex - 100] = '1';
+           if (dropTargetData[index].isEmpty) {
+            if (_holdDataOfDragBox[index].toLowerCase() == data.toLowerCase()) {
+              flag1 = 1;
+              progres++;
+              widget.onProgress(progres / space);
+              dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+            }
           }
           if (progres == space) {
-            widget.onScore(2);
-            new Future.delayed(const Duration(milliseconds: 500), () {
+            widget.onScore(4);
+            new Future.delayed(const Duration(milliseconds: 700), () {
               setState(() {
                 _isShowingFlashCard = true;
               });
@@ -145,6 +146,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
+           data = text;
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
   }
@@ -317,10 +319,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new Center(
-                    child: new Text(widget.text,
+                    child: new Text(widget.text.toLowerCase(),
                         key: new Key('${widget.keys}'),
                         style:
-                            new TextStyle(color: Colors.black, fontSize: 24.0)),
+                            new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                   ),
                 );
               },
@@ -328,22 +330,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           ),
         ),
       );
-    } else if (widget.index >= 100 && widget.text == '1') {
-      print("object$widget.text");
-      return new ScaleTransition(
-          scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: Colors.grey,
-              border: new Border.all(width: 1.0, color: Colors.cyan[300]),
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new Center(
-              child: new Text(_displayText,
-                  key: new Key("A${widget.keys}"),
-                  style: new TextStyle(color: Colors.black, fontSize: 24.0)),
-            ),
-          ));
     } else if (widget.index >= 100) {
       return new Draggable(
           onDragStarted: widget.onDrag,
@@ -359,16 +345,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                 ),
                 child: new Center(
-                  child: new Text(widget.text,
+                  child: new Text(widget.text.toLowerCase(),
                       key: new Key("A${widget.keys}"),
                       style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)),
+                          new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                 )),
           ),
           feedback: new Container(
-            height: 100.0,
-            width: 100.0,
-            decoration: new BoxDecoration(
+            height: media.orientation==Orientation.portrait?media.size.height*.09:media.size.height*.15,
+           width: media.orientation==Orientation.portrait?media.size.width*.16:media.size.width*.09,
+           decoration: new BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
               color: new Color(0xffffe04444),
@@ -377,11 +363,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               child: new Transform.rotate(
                 angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
                 child: new Text(
-                  widget.text,
+                  widget.text.toLowerCase(),
                   style: new TextStyle(
                     color: Colors.black,
                     decoration: TextDecoration.none,
-                    fontSize: 26.0,
+                    fontSize: media.size.height*0.04,
                   ),
                 ),
               ),

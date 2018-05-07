@@ -359,6 +359,44 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   ]);
 }
 
+Future<Tuple2<List<List<String >>, String >>
+    fetchCirclewrdData(int categoryId) async {
+  var rand = new Random();
+      var startNum = rand.nextInt(max(0, 4));
+  switch (0) {
+    case 0:
+      return new Tuple2([
+        ['catseings',' actings','casing','cast','cat','scat','act','ta','st','sat','sac','at','tas','as','ats'],
+       
+      ], null);
+      break;
+      case 1:
+      return new Tuple2([
+    ['upsc','cusp','scup','cup','pus','sup','ups','up','us'],
+  
+  ],null);
+  break;
+  case 2:
+   return new Tuple2([
+    ['ucts','scut','cut','uts','st','us','ut'],
+  
+  ],null);
+  break;
+  case 3:
+   return new Tuple2([
+    ['hate','eath','haet','heat','thae','eth','hae','hat','het','the','ah',
+    'eh','ha','he','ate','eat','eta','tae','tea','ae','at','ea','et','ta','te'],
+  
+  ],null);
+  break;
+  }
+  
+}
+
+
+
+
+
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
     int categoryId, int maxChoices) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);

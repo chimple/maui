@@ -409,6 +409,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 color: Colors.orange,
                 height: 40.0,
                 child: new Center(
+                  
                     child: new Text("$ssum",
                         style: new TextStyle(
                             color: Colors.black, fontSize: 30.0)))),
