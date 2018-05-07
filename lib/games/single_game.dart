@@ -73,7 +73,7 @@ class SingleGame extends StatefulWidget {
   final Key key;
 
   static final Map<String, List<Color>> gameColors = {
-    'reflex': [Color(0xFFC79690), Color(0xFF7A8948), Color(0xFF7592BC)],
+    'reflex': [Color(0xFF533f72), Color(0xFFffb300), Color(0xFFDB5D40)],
     'abacus': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
     'bingo': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
     'calculate_numbers': [
@@ -578,8 +578,6 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
-        
-
 
       case 'draw_challenge':
         maxIterations = 1;
