@@ -115,6 +115,9 @@ class MemoryState extends State<Memory> {
           print("Pressed Text: ${text}");
           print("Pressed Statuses before checking: ${_statuses}");
 
+          if(_statuses[index] == Status.Disappear)
+           return;
+
           int numOfVisible = _statuses.fold(0,(prev, element) => element == Status.Visible ? prev + 1 : prev);
 
           if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || cnt > 2) 
@@ -289,7 +292,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       controller.forward();
     } else if (oldWidget.text != widget.text) {
        print("Rajesh2");
-      controller.reverse();
+      //controller.reverse();
     } else {
        print("Rajesh3");
       if (oldWidget.status != widget.status) {

@@ -345,6 +345,8 @@ class _SingleGameState extends State<SingleGame> {
                 level: random.nextInt(10) + 1));
         break;
       case 'true_or_false':
+        playTime = 15000;
+        maxIterations = 10;
         return new TrueFalseGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -576,6 +578,8 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
+        
+
 
       case 'draw_challenge':
         maxIterations = 1;
