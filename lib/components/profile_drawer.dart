@@ -28,7 +28,7 @@ class ProfileDrawerIcon extends StatelessWidget {
     var user = AppStateContainer.of(context).state.loggedInUser;
     return new FlatButton(
         child: new CircleAvatar(
-          child: new Image.file(new File(user.image)),
+          backgroundImage: new FileImage(new File(user.image)),
           backgroundColor: Colors.white,
         ),
         onPressed: () => Scaffold.of(context).openDrawer());
