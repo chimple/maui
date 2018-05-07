@@ -9,8 +9,8 @@ class LessonRepo {
 
   const LessonRepo();
 
-  Future<Lesson> getLesson(int gameCategoryId) async {
-    return await lessonDao.getLesson(gameCategoryId);
+  Future<Lesson> getLesson(int id) async {
+    return await lessonDao.getLesson(id);
   }
 
   Future<Lesson> getLessonsBySeq(int seq) async {
@@ -20,5 +20,13 @@ class LessonRepo {
   Future<List<Lesson>> getLessonsBelowSeqAndByConceptId(
       int seq, List<int> conceptIds) async {
     return await lessonDao.getLessonsBelowSeqAndByConceptId(seq, conceptIds);
+  }
+
+  Future<List<Lesson>> getLessons() async {
+    return await lessonDao.getLessons();
+  }
+
+  Future<List<Lesson>> getLessonsByHasOrder(int hasOrder) async {
+    return await lessonDao.getLessonsByHasOrder(hasOrder);
   }
 }
