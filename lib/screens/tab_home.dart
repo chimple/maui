@@ -15,6 +15,10 @@ class TabHome extends StatelessWidget {
       length: 3,
       child: new Scaffold(
         drawer: new ProfileDrawer(),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
+          child: new Image.asset('assets/koala_neutral.png'),
+        ),
         appBar: new AppBar(
           title: new Text(title),
           leading: new ProfileDrawerIcon(),
