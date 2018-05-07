@@ -304,10 +304,10 @@ class _SingleGameState extends State<SingleGame> {
                     answerUnitMode: UnitMode.values[random.nextInt(3)],
                     level: random.nextInt(10) + 1)),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.teal, //bg
-                backgroundColor: Colors.amber, //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.cyan));
+                scaffoldBackgroundColor: Colors.white, //bg
+                primaryColor: new Color(0xFFC79690),
+                accentColor: new Color(0xFF7A8948), //behind progress bar
+                buttonColor: new Color(0xFF7592BC)));
         break;
       case 'true_or_false':
         return new Tuple2(
