@@ -17,7 +17,7 @@ enum Category { letter, number }
 Future<List<String>> fetchSerialData(int lessonId) async {
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
-  return lessonUnits.map((e) => e.objectUnitId).toList(growable: false);
+  return lessonUnits.map((e) => e.subjectUnitId).toList(growable: false);
 }
 
 Future<Tuple2<String, List<String>>> fetchSequenceData(
