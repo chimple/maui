@@ -218,16 +218,13 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     widget.keys++;
     return new Material(
-      color: const Color(0xFFf8c43c),
       child: new Container(
         height: widget.ht * 0.22,
         width: widget.wd * 0.6,
         decoration: new BoxDecoration(
           borderRadius: new BorderRadius.circular(25.0),
           color: const Color(0xFF8ecd4e),
-          border: new Border.all(
-            color: const Color(0xFFf8c43c),
-          ),
+          
         ),
         child: new Center(
           child: new Column(
@@ -239,7 +236,7 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
                   style: new TextStyle(
                       color: Colors.black,
                       fontSize: widget.ht > widget.wd
-                          ? widget.ht * 0.06
+                          ? widget.ht * 0.1
                           : widget.wd * 0.06,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic)),
