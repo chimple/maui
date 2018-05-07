@@ -56,13 +56,20 @@ class DiceGameState extends State<Dice> {
   List<String> _data1 = new List();
   List _sortletters = [];
   bool _isLoading = true;
-
+  List<int> X = [];
 //  String img , dragdata;
   int _rows, _cols, code, dindex, dcode;
   int len, _rightlen, _rightcols;
   List<String> arr = new List<String>();
-  String _counter = "1";
-
+  String _counter = "";
+  String _counter1 = "";
+  String _counter2 = "";
+  String _counter3 = "";
+ int count=0;
+ int count1=0;
+ int sum=0;
+ int sub=0;
+ int flag=0;
 
   @override
   void initState() {
@@ -86,25 +93,97 @@ class DiceGameState extends State<Dice> {
         text: text,
         color1: 1,
         onPress: () {
-          setState(() {
-            print("hellow manuuuu $text");
-          });
+          count1=count1+1;
+
+            setState(() {
+              var Z = int.parse(text);
+              for (var i = 0; i < X.length; i++) {
+                sum = sum + X[i];
+                sub = X[i] - sub;
+                print({"manu sum": sum});
+                print({"manu sub": sub});
+              }
+              if (Z == sum) {
+//                print({"shant sum": sum});
+                count = 0;
+                X.removeRange(0, X.length);
+                _counter = " ";
+                _counter1 = " ";
+                _counter2 = " ";
+                _counter3 = " ";
+                sum = 0;
+                sub = 0;
+                if(flag == 0)
+                  {
+                    flag = 1;
+                  }
+                else {
+                  flag = 0;
+                }
+              }
+              else if (sub == Z) {
+                flag = 1;
+//                print({"shant sub": sub});
+                count = 0;
+                X.removeRange(0, X.length);
+                _counter = " ";
+                _counter1 = " ";
+                _counter2 = " ";
+                _counter3 = " ";
+                sub = 0;
+                sum = 0;
+                if(flag == 0)
+                {
+                  flag = 1;
+                }
+                else {
+                  flag = 0;
+                }
+              }
+              else {
+                sum=0;
+              }
+              print("hellow manuuuu $text");
+            });
+
         },
         );
   }
 
   void _randomVal() {
     setState(() {
-      final _random = new Random();
-      var dElement = diceData[_random.nextInt(diceData.length)];
-     _counter = dElement;
-      print("dice data $_counter ");
-    ;
+      if(flag==0) {
+        if (count <= 1) {
+          count = count + 1;
+          final _random = new Random();
+          var dElement = diceData[_random.nextInt(diceData.length)];
+
+          var f = int.parse(dElement);
+          X.add(f);
+          _counter1 = dElement;
+          _counter = "$_counter" + "$dElement" + ",";
+          print("dice data $_counter ");
+        }
+      }
+      else {
+        if(count <= 1) {
+          count = count + 1;
+          final _random = new Random();
+          var dElement = diceData[_random.nextInt(diceData.length)];
+
+          var f = int.parse(dElement);
+          X.add(f);
+          _counter2 = dElement;
+          _counter3 = "$_counter3" + "$dElement" + ",";
+          print("dice data $_counter3 ");
+        }
+    };
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
     var j = 0, h = 0, k = 100;
     return new Container(
@@ -122,10 +201,24 @@ class DiceGameState extends State<Dice> {
                     data.map((e) => _buildItem(j++, e)).toList(growable: false),
               ),
             ),
+       new Row(
+           mainAxisAlignment: MainAxisAlignment.center,
+           crossAxisAlignment: CrossAxisAlignment.center,
+         children: <Widget>[
+           new Container(
+             height: 50.0,width: 100.0,
+             color: Colors.red,
+               margin: EdgeInsets.only(right: 20.0),
+               child: new Center(
+                   child: new Text("$_counter",
+                       style: new TextStyle(
+                           color: Colors.black, fontSize: 25.0)))
+           ),
        new GestureDetector(
           onTap: _randomVal,
            child: new Container(
-              height: constraints.maxHeight*.3, width: constraints.maxWidth*.3,
+              height: media.size.height > media.size.width ?constraints.maxHeight*.2 : constraints.maxHeight*.3 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.2 : constraints.maxWidth*.3 ,
                decoration: new BoxDecoration(
                  color: const Color(0xFFF1F8E9),
                  boxShadow: [new BoxShadow(
@@ -139,9 +232,20 @@ class DiceGameState extends State<Dice> {
                  ),
                ),
               child: new Center(
-              child: new Text('$_counter',
+              child: new Text('$_counter1',
               style: new TextStyle(fontSize: 100.0))
             ))),
+           new Container(
+             height: 50.0, width: 100.0,
+             color: Colors.blue,
+               margin: EdgeInsets.only(left: 20.0),
+               child: new Center(
+                   child: new Text("$_counter3",
+                       style: new TextStyle(
+                           color: Colors.black, fontSize: 25.0)))
+
+           ),
+            ]),
             new Flexible(
               flex: 3,
               child: new ResponsiveGridView(
