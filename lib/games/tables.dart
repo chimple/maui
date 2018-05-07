@@ -30,7 +30,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
   String _question = "";
   String _result = "";
-  int _count = 0;
+  int _count = 0, score = 0;
   int _wrong = 0;
   int _answer;
   bool _isLoading = true;
@@ -50,9 +50,9 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     '7',
     '8',
     '9',
-    'clear',
+    '✖',
     '0',
-    'submit',
+    '✔',
   ];
 
   @override
@@ -60,7 +60,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     super.initState();
     animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
-    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+    animation = new Tween(begin: 0.0, end: 15.0).animate(animationController);
     _initBoard();
   }
 
@@ -107,21 +107,24 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
         text: text,
         height: _height,
         onPress: () {
-          if (text == 'clear') {
+          if (text == '✖') {
             setState(() {
               _result = _result.substring(0, _result.length - 1);
             });
           }
-          else if (text == 'submit') {
-            if (_count > 8) {
+          else if (text == '✔') {
+            if (_count  == _tableShuffledData.length - 1 ) {
               print("coming.........");
+              int _temp = _tableShuffledData.length;
+              print("$_count $_temp");
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
               });
             }
 
             if (int.parse(_result) == _answer) {
-              widget.onScore(1);
+              widget.onScore(4);
+              widget.onProgress((_count + 1) / _tableShuffledData.length);
               setState(() {
                 _count = _count + 1;
                 print(_count);
@@ -132,18 +135,24 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _answer = _tableShuffledData[_count].item4;
                 _result = "";
                 _wrong = 0;
+                score = score + 4;
               });
-              widget.onProgress(_count / _tableShuffledData.length);
             }
             else {
+              if(score > 0) {
+                print("Score $score");
+                widget.onScore(-1);
+              }
               _myAnim();
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _wrong = _wrong + 1;
                   _result = "";
+                  score = score > 0 ? score - 1 : score;
                 });
                 animationController.stop();
-                if (_wrong == 2) {
+                if (_wrong == 4) {
+                  widget.onProgress((_count + 1) / _tableShuffledData.length);
                   setState(() {
                     _isShowingFlashCard = true;
                     _wrong = 0;
@@ -311,26 +320,29 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
     return new TableCell(
         child: new Padding(
-            padding: new EdgeInsets.all(widget.height * 0.001),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    onPressed: () => widget.onPress(),
-                    padding: new EdgeInsets.all(widget.height * 0.02),
-                    color: new Color(0XFFFED2B7),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                        new BorderRadius.all(
-                            new Radius.circular(widget.height * 0.09))),
-                    child: new Text(_displayText,
-                        key: new Key('keyPad$__count'),
-                        style: new TextStyle(
-                            color: Colors.black,
-                            fontSize: widget.height * 0.05))))));
+            padding: new EdgeInsets.all(widget.height * 0.005),
+            child: new RaisedButton(
+                elevation: 12.0,
+                splashColor: Colors.white,
+                highlightColor: Colors.grey,
+                onPressed: () => widget.onPress(),
+                padding: new EdgeInsets.all(widget.height * 0.02),
+                color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0XFFFED2B7),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.all(
+                        new Radius.circular(widget.height * 0.0095))),
+                child: new Text(_displayText,
+                    key: new Key('keyPad'),
+                    style: new TextStyle(
+                        color: Colors.black,
+                        fontSize: _displayText == '✖' || _displayText == '✔'
+                            ? widget.height * 0.05
+                            : widget.height * 0.05,
+                        fontWeight: FontWeight.bold)))));
   }
+
 }
 
 class TextAnimation extends AnimatedWidget {
@@ -348,9 +360,13 @@ class TextAnimation extends AnimatedWidget {
               height: height * 0.12,
               width: width / 3.0,
               alignment: Alignment.center,
-              color: new Color(0XFF734052),
               margin: new EdgeInsets.only(
                   left: animation.value ?? 0, bottom: height * 0.09),
+              decoration: new BoxDecoration(
+                  color:  new Color(0XFF734052),
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.0095)),
+                  shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
                     color: Colors.black,

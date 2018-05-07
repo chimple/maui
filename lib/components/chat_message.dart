@@ -1,48 +1,66 @@
 import 'dart:io';
-import 'package:meta/meta.dart';
+
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:meta/meta.dart';
+
+enum Side { left, right }
 
 class ChatMessage extends StatelessWidget {
   ChatMessage(
-      {@required this.snapshot,
-      @required this.animation,
-      this.image,
-      this.imageUrl});
-  final DataSnapshot snapshot;
+      {@required this.animation,
+      @required this.child,
+      this.side = Side.left,
+      this.imageFile,
+      this.imageUrl,
+      this.imageAsset});
   final Animation animation;
+  final Widget child;
+  final Side side;
   final String imageUrl;
-  final String image;
+  final String imageFile;
+  final String imageAsset;
 
   Widget build(BuildContext context) {
+    var image = imageFile != null
+        ? new FileImage(new File(imageFile))
+        : imageAsset != null
+            ? new AssetImage(imageAsset)
+            : new NetworkImage(imageUrl);
     return new SizeTransition(
       sizeFactor: new CurvedAnimation(parent: animation, curve: Curves.easeOut),
       axisAlignment: 0.0,
       child: new Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Container(
-              margin: const EdgeInsets.only(right: 16.0),
-              child: new CircleAvatar(
-                  backgroundImage: image != null
-                      ? new FileImage(new File(image))
-                      : new NetworkImage(imageUrl)),
-            ),
-            new Expanded(
-              child: new Container(
-                margin: const EdgeInsets.only(top: 5.0),
-                child: snapshot.value['imageUrl'] != null
-                    ? new Image.network(
-                        snapshot.value['imageUrl'],
-                        width: 250.0,
-                      )
-                    : new Text(snapshot.value['text']),
+        child: side == Side.left
+            ? new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  new Container(
+                    margin: const EdgeInsets.only(right: 16.0),
+                    child: new CircleAvatar(backgroundImage: image),
+                  ),
+                  new Flexible(
+                      child: new Card(
+                    color: Colors.lightBlue,
+                    child: child,
+                  )),
+                ],
+              )
+            : new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Card(
+                    color: Colors.lightBlue,
+                    child: child,
+                  ),
+                  new Container(
+                    margin: const EdgeInsets.only(left: 16.0),
+                    child: new CircleAvatar(backgroundImage: image),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
