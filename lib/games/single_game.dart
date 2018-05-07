@@ -72,6 +72,51 @@ class SingleGame extends StatefulWidget {
   final GameDisplay gameDisplay;
   final Key key;
 
+  static final Map<String, List<Color>> gameColors = {
+    'reflex': [Color(0xFFC79690), Color(0xFF7A8948), Color(0xFF7592BC)],
+    'abacus': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'bingo': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'calculate_numbers': [
+      Color(0xFF7A8948),
+      Color(0xFFC79690),
+      Color(0xFF7592BC)
+    ],
+    'casino': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'circle_word': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'clue_game': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'connect_the_dots': [
+      Color(0xFF7A8948),
+      Color(0xFFC79690),
+      Color(0xFF7592BC)
+    ],
+    'crossword': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'draw_challenge': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'drawing': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'fill_in_the_blanks': [
+      Color(0xFF7A8948),
+      Color(0xFFC79690),
+      Color(0xFF7592BC)
+    ],
+    'fill_number': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'friend_word': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'guess': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'identify': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'match_the_following': [
+      Color(0xFF7A8948),
+      Color(0xFFC79690),
+      Color(0xFF7592BC)
+    ],
+    'memory': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'order_it': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'quiz': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'spin_wheel': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'tables': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'tap_home': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'tap_wrong': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'true_or_false': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)]
+  };
+
   SingleGame(this.gameName,
       {this.key,
       this.gameMode = GameMode.iterations,
@@ -114,7 +159,8 @@ class _SingleGameState extends State<SingleGame> {
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     print(widget.key.toString());
-    var theme = getGameTheme(widget.gameName);
+    var colors = SingleGame.gameColors[widget.gameName];
+    var theme = new ThemeData(primaryColor: colors[0], buttonColor: colors[1]);
     var game = buildSingleGame(context, widget.gameDisplay.toString());
     return new Theme(
         data: theme,
@@ -564,196 +610,6 @@ class _SingleGameState extends State<SingleGame> {
                 questionUnitMode: UnitMode.values[random.nextInt(3)],
                 answerUnitMode: UnitMode.values[random.nextInt(3)],
                 level: random.nextInt(10) + 1));
-        break;
-    }
-    return null;
-  }
-
-  static ThemeData getGameTheme(String gameName) {
-    switch (gameName) {
-      case 'reflex':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.white, //bg
-            primaryColor: new Color(0xFFC79690),
-            accentColor: new Color(0xFF7A8948), //behind progress bar
-            buttonColor: new Color(0xFF7592BC));
-        break;
-      case 'order_it':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.teal, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.cyan);
-        break;
-      case 'true_or_false':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.orange, //bg
-            backgroundColor: Colors.purpleAccent, //behind progress bar
-            accentColor: Colors.deepPurple, //progress bar
-            buttonColor: Colors.red);
-        break;
-      case 'identify':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'abacus':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'drawing':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'bingo':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'fill_in_the_blanks':
-        return new ThemeData(
-          scaffoldBackgroundColor: new Color(0xffff8edda3), //bg
-          backgroundColor: new Color(0xffffeaca8b), //behind progress bar
-          accentColor: Colors.brown, //progress bar
-        );
-        break;
-      case 'clue_game':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: new Color(0xffffefce97));
-        break;
-      case 'casino':
-        return new ThemeData(
-          scaffoldBackgroundColor: new Color(0xfffffef7c3a), //bg
-          backgroundColor: new Color(0xfffff2d0d21), //behind progress bar
-          accentColor: Colors.brown, //progress bar
-          buttonColor: new Color(0xffffff8c43c),
-          // primaryTextTheme:new TextTheme(display1: ),
-        );
-        break;
-      case 'crossword':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'tables':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'match_the_following':
-        return new ThemeData(
-            scaffoldBackgroundColor: new Color(0xFF28c9c9), //bg
-            backgroundColor: new Color(0xFFfcc335), //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: new Color(0xFFed4a79));
-        break;
-      case 'calculate_numbers':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.orange[100], //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.orange);
-        break;
-      case 'memory':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.cyan);
-        break;
-      case 'fill_number':
-        return new ThemeData(
-            scaffoldBackgroundColor: new Color(0xFFf7ebcb), //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.black, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'quiz':
-        return new ThemeData(
-            scaffoldBackgroundColor: const Color(0xFFf8c43c), //bg
-            backgroundColor: const Color(0xFF9d4e70), //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: const Color(0xFFffffff));
-        break;
-      case 'connect_the_dots':
-        return new ThemeData(
-            scaffoldBackgroundColor: new Color(0xFFf5c5b7), //bg
-            backgroundColor: new Color(0xFF951664), //behind progress bar
-            accentColor: new Color(0xFFfff176), //progress bar
-            buttonColor: new Color(0xFFed2d85));
-        break;
-      case 'tap_home':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'tap_wrong':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'wordgrid':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'guess':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-      case 'spin_wheel':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'circle_word':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-
-      case 'draw_challenge':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.cyan);
-        break;
-      case 'friend_word':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.cyan);
         break;
     }
     return null;
