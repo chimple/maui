@@ -121,10 +121,20 @@ class OrderItState extends State<OrderIt> {
           });
        });
     }
-
+   
     return new Container(
       key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
+      decoration: new BoxDecoration(  
+        boxShadow: [
+          new BoxShadow(
+          color: const Color(0x44000000),
+          spreadRadius: 2.0,
+          offset: const Offset(0.0, 1.0),
+          )
+        ],
+       borderRadius: new BorderRadius.circular(12.0), 
+       color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
+      ),
       width: itemSize.width,
       height: itemSize.height,
       child: new Center(
