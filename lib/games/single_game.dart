@@ -530,6 +530,8 @@ class _SingleGameState extends State<SingleGame> {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameCategoryId);
         break;
+        
+
 
       case 'draw_challenge':
         maxIterations = 1;
