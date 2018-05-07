@@ -166,7 +166,7 @@ class MemoryState extends State<Memory> {
                 });
               }); 
 
-              new Future.delayed(const Duration(milliseconds: 500), () {
+              new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _shaker[_pressedTileIndex] = ShakeCell.Right;
                   _shaker[index] = ShakeCell.Right;
@@ -231,7 +231,7 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, shakeController;
-  Animation<double> animation, shakeAnimation;
+  Animation<double> animation, shakeAnimation, noAnimation;
   AnimationController flipController;
   String _displayText;
 
@@ -239,9 +239,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
-    controller = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
-    shakeController = new AnimationController(duration: new Duration(milliseconds: 40), vsync: this);
+    controller = new AnimationController(duration: new Duration(milliseconds: 800), vsync: this);
+    shakeController = new AnimationController(duration: new Duration(milliseconds: 50), vsync: this);
     flipController = new AnimationController(duration: new Duration(milliseconds: 250), vsync: this);
+    noAnimation = new Tween(begin: 0.0,end:0.0).animate(shakeController);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
@@ -255,7 +256,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       });
     controller.forward().then((f){flipController.reverse();});
 
-    shakeAnimation = new Tween(begin: -6.0, end: 6.0).animate(shakeController);
+    shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
     _myAnim();
   }
 
@@ -308,22 +309,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-    return new Shake(
-        animation:
-            widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
-        child: new FlipAnimator(
-            controller: flipController,
-            front: new ScaleTransition(
-                scale: animation,
-                child: new UnitButton(
-                  onPress: widget.onPress,
-                  text: _displayText,
-                  unitMode: UnitMode.text,
-                 )),
-            back: new UnitButton(
-                  onPress: widget.onPress,
-                  text: ' ',
-                  unitMode: UnitMode.text,
-                 )));
+    return new ScaleTransition(
+      scale: animation,
+          child: new Shake(
+          animation: widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
+          child: new FlipAnimator(
+              controller: flipController,
+              front: new ScaleTransition(
+                  scale: animation,
+                  child: new UnitButton(
+                    onPress: widget.onPress,
+                    text: _displayText,
+                    unitMode: UnitMode.text,
+                   )),
+              back: new UnitButton(
+                    onPress: widget.onPress,
+                    text: ' ',
+                    unitMode: UnitMode.text,
+                   ))),
+    );
   }
 }

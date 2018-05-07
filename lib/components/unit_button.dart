@@ -58,11 +58,15 @@ class _UnitButtonState extends State<UnitButton> {
                     child: new FlashCard(text: widget.text)));
           }
         },
-        child: new RaisedButton(
+        child: new FlatButton(
+            splashColor: Theme.of(context).primaryColor,
+            highlightColor: Theme.of(context).primaryColor,
             onPressed: widget.onPress,
             shape: new RoundedRectangleBorder(
+                side: new BorderSide(
+                    color: Theme.of(context).buttonColor, width: 4.0),
                 borderRadius:
-                    const BorderRadius.all(const Radius.circular(8.0))),
+                    const BorderRadius.all(const Radius.circular(16.0))),
             child: _buildUnit()));
   }
 
@@ -75,7 +79,8 @@ class _UnitButtonState extends State<UnitButton> {
           : new Image.asset('assets/apple.png');
     }
     return new Text(widget.text,
-        style: new TextStyle(color: Colors.white, fontSize: 24.0));
+        style: new TextStyle(
+            color: Theme.of(context).buttonColor, fontSize: 24.0));
   }
 
   @override

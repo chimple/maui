@@ -37,7 +37,8 @@ class OrderItState extends State<OrderIt> {
   List<String> _letters;
   bool _isLoading = true;
   int cnt = 0;
-  int flag=0;
+  int flag = 0;
+  int temp = 0;
   @override
   void initState() {
     super.initState();
@@ -109,13 +110,13 @@ class OrderItState extends State<OrderIt> {
     print("Rajesh Patil value: ${data.value}");
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
     print("Rajesh Patil flag: $flag");
- 
+
     if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag==0) {
       flag=1;
       new Future.delayed(const Duration(milliseconds: 100), () {
           setState(() {
-            widget.onScore(_size);
-            widget.onProgress(_size/_letters.length);
+            widget.onScore(_maxSize);
+            widget.onProgress(_maxSize/_letters.length);
             widget.onEnd();
           });
        });
