@@ -284,7 +284,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  int __count = 0;
 
   initState() {
     super.initState();
@@ -338,7 +337,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     style: new TextStyle(
                         color: Colors.black,
                         fontSize: _displayText == '✖' || _displayText == '✔'
-                            ? widget.height * 0.05
+                            ? widget.height * 0.043
                             : widget.height * 0.05,
                         fontWeight: FontWeight.bold)))));
   }
