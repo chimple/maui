@@ -73,7 +73,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new ResponsiveGridView(
       rows: r,
       cols: 5,
-      maxAspectRatio: 1.0,
+      maxAspectRatio: 2.0,
       children:
         (_decoded["parts"] as List).map((e)=>_buildItems(j++,e)).toList(growable:false),
     );
@@ -235,7 +235,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             draggableText: part["name"]),
         feedback: new AnimatedFeedback(
             animation: animation,
-            draggableColor: Colors.green,
+            draggableColor: Colors.black,
             draggableText: part["name"]),
         onDraggableCanceled: (velocity, offset) {
           setState(() {
@@ -297,8 +297,9 @@ class AnimatedFeedback extends AnimatedWidget {
     double _width = media.width;
     final Animation<double> animation = listenable;
     return new Container(
-      width: _width * 0.15,
-      height: _height * 0.06,
+      // width: _width * 0.15,
+      // height: _height * 0.06,
+      padding: new EdgeInsets.all(10.0),
       color: draggableColor.withOpacity(0.5),
       child: new Center(
         child: new Text(
@@ -306,7 +307,7 @@ class AnimatedFeedback extends AnimatedWidget {
           style: new TextStyle(
             color: Colors.white,
             decoration: TextDecoration.none,
-            fontSize: _width * 0.03,
+            fontSize: (_width > _height)? _width * 0.02 : _width * 0.03,
           ),
         ),
       ),
@@ -335,8 +336,8 @@ class AnimatedDrag extends AnimatedWidget {
     return new Transform(
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Container(
-        width: _width * 0.15,
-        height: _height * 0.06,
+        // width: _width * 0.15,
+        // height: _height * 0.06,
         color: draggableColor,
         child: new Center(
           child: new Text(
@@ -344,7 +345,7 @@ class AnimatedDrag extends AnimatedWidget {
             style: new TextStyle(
               color: Colors.white,
               decoration: TextDecoration.none,
-              fontSize: _width * 0.03,
+              fontSize: (_width > _height)? _width * 0.02 : _width * 0.03,
             ),
           ),
         ),
