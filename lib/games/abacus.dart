@@ -13,7 +13,7 @@ class Abacus extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-   GameConfig gameConfig;
+  GameConfig gameConfig;
   bool isRotated;
 
   Abacus(
@@ -22,7 +22,7 @@ class Abacus extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-         this.gameConfig,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -122,19 +122,18 @@ class AbacusState extends State<Abacus> {
     //print(' data from database${fetchMathData(1)}');
   }
 
-  Widget _buildItem(int index, String text,int stat,String flag) {
- Size size=MediaQuery.of(context).size;
-    final TextEditingController t1= new TextEditingController(text: text);
+  Widget _buildItem(int index, String text, int stat, String flag) {
+    Size size = MediaQuery.of(context).size;
+    final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
-      key:new  ValueKey<int>(index),
-      text: text,
-      index: index,
-      screenSize:size.width,
-      colorflag: stat,
-      size: _size,
-      flag:flag,
-      onac: (index) {
-      
+        key: new ValueKey<int>(index),
+        text: text,
+        index: index,
+        screenSize: size.width,
+        colorflag: stat,
+        size: _size,
+        flag: flag,
+        onac: (index) {
           print('control transfer');
           print('index$index');
           setState(() {
@@ -292,7 +291,7 @@ class AbacusState extends State<Abacus> {
 
   @override
   Widget build(BuildContext context) {
-     Size size=MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     print("MyTableState.build");
     print("letters1 $_letters1");
     print("letters $_letters");
@@ -304,42 +303,47 @@ class AbacusState extends State<Abacus> {
         child: new CircularProgressIndicator(),
       );
     }
-    int k=100;
-    int j=0;
-   return new Column(
-     children: <Widget>[
-      //  new Container(
-      //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
-      //  ),
-       new Container(
-         height: 80.0,
-         width: size.width,
-         child: new ResponsiveGridView(
-           padding: new EdgeInsets.all(0.0),
-           rows: 1,
-           cols: 5,
-           children: _letters1.map((e) => _buildItem(k, e,status[k++-100],flags[1])).toList(growable: false),
-         ),
-       ),
-       new Container(height: 4.0,
-       color: Colors.pink,
-       ),
-       new Expanded(
-         child: new ResponsiveGridView(
-          
-           padding: new EdgeInsets.all(0.0),
-          // mainAxisSpacing: 0.0,
-          // crossAxisSpacing: 0.0,
-           rows: 14,
-           cols: _size,
-           children: _letters.map((e) => _buildItem(j, e,status[1],flags[j++])).toList(growable: false),
-         ),
-       ), new Container(height: 4.0,
-       color: Colors.pink,
-       ),
-     ],
-   );
-  
+    int k = 100;
+    int j = 0;
+    return new Column(
+      children: <Widget>[
+        //  new Container(
+        //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+        //  ),
+        new Container(
+          height: 80.0,
+          width: size.width,
+          child: new ResponsiveGridView(
+            padding: 0.0,
+            rows: 1,
+            cols: 5,
+            children: _letters1
+                .map((e) => _buildItem(k, e, status[k++ - 100], flags[1]))
+                .toList(growable: false),
+          ),
+        ),
+        new Container(
+          height: 4.0,
+          color: Colors.pink,
+        ),
+        new Expanded(
+          child: new ResponsiveGridView(
+            padding: 0.0,
+            // mainAxisSpacing: 0.0,
+            // crossAxisSpacing: 0.0,
+            rows: 14,
+            cols: _size,
+            children: _letters
+                .map((e) => _buildItem(j, e, status[1], flags[j++]))
+                .toList(growable: false),
+          ),
+        ),
+        new Container(
+          height: 4.0,
+          color: Colors.pink,
+        ),
+      ],
+    );
   }
 }
 
@@ -369,8 +373,17 @@ class Shake extends AnimatedWidget {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.index,this.onac,this.colorflag,this.size,this.flag,this.screenSize}) : super(key: key);
- 
+  MyButton(
+      {Key key,
+      this.text,
+      this.index,
+      this.onac,
+      this.colorflag,
+      this.size,
+      this.flag,
+      this.screenSize})
+      : super(key: key);
+
   final String text;
   final DragTargetAccept onac;
   final int colorflag;
@@ -398,28 +411,29 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
-    controller =new
-        AnimationController(duration:new Duration(milliseconds:500), vsync: this);
-        controller1 =new
-        AnimationController(duration:new Duration(milliseconds:500), vsync: this);
-   // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
-   animation1= new Tween(begin: -widget.screenSize/10, end: 00.0).animate(controller1)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 500), vsync: this);
+    controller1 = new AnimationController(
+        duration: new Duration(milliseconds: 500), vsync: this);
+    // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
+    animation1 = new Tween(begin: -widget.screenSize / 10, end: 00.0)
+        .animate(controller1)
+          ..addStatusListener((state) {
+            print("$state:${animation.value}");
 
-        if (state == AnimationStatus.dismissed) {
-          controller1.forward();
-        }
-      }
-      );
-animation = new Tween(begin: widget.screenSize/10, end: 00.0).animate(controller)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
+            if (state == AnimationStatus.dismissed) {
+              controller1.forward();
+            }
+          });
+    animation =
+        new Tween(begin: widget.screenSize / 10, end: 00.0).animate(controller)
+          ..addStatusListener((state) {
+            print("$state:${animation.value}");
 
-        if (state == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      });
+            if (state == AnimationStatus.dismissed) {
+              controller.forward();
+            }
+          });
 
     controller.forward();
     controller1.forward();
@@ -440,97 +454,96 @@ animation = new Tween(begin: widget.screenSize/10, end: 00.0).animate(controller
 
     print("_MyButtonState.didUpdateWidget: ${widget.flag} ${oldWidget.flag}");
   }
-   @override
+
+  @override
   void dispose() {
-   
     controller.dispose();
     controller1.dispose();
     super.dispose();
   }
 
-var tt=0.0;
+  var tt = 0.0;
   @override
   Widget build(BuildContext context) {
-     Size size=MediaQuery.of(context).size;
-if(size.height>size.width)
-tt=size.width;
-else tt=size.height;
+    Size size = MediaQuery.of(context).size;
+    if (size.height > size.width)
+      tt = size.width;
+    else
+      tt = size.height;
     print("_MyButtonState.build");
 
-   if(widget.index>=100){
+    if (widget.index >= 100) {
+      return new Center(
+          child: new Container(
+        // height: 50.0,
+        // width: 50.0,
+        decoration: new BoxDecoration(
+            color: widget.colorflag != 0 ? Colors.white30 : Colors.yellowAccent,
+            shape: BoxShape.rectangle),
+        padding: new EdgeInsets.all(10.0),
+        child: new Center(
+            child: new Text(widget.text,
+                key: new Key(widget.index.toString() + "but"),
+                style: new TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0))),
+      ));
+    } else if (widget.index < widget.size) {
+      return new Container(
+        // height: 50.0,
+        // width: 50.0,
+        decoration:
+            new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
+        padding: new EdgeInsets.all(10.0),
+        child: new Text(widget.text,
+            textAlign: TextAlign.center,
+            style: new TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: tt / 30)),
+      );
+    } else {
+      return new Center(
+          child: new Container(
+        // height: 35.0,
+        //   width: 35.0,
 
-return  new Center(
-   child:  new Container(
-    // height: 50.0,
-    // width: 50.0,
-      decoration: new BoxDecoration(
-        color:widget.colorflag!=0? Colors.white30:Colors.yellowAccent,
-        shape: BoxShape.rectangle
-        
-      ), padding: new EdgeInsets.all(10.0),
-      child: new Center(child:new Text(widget.text,
-      key: new Key(widget.index.toString()+"but"),
-       style:new
-                            TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 20.0))),
-    )
-  )
-
-;
-
-   }
-   else if(widget.index<widget.size){
-    return  new Container(
-    // height: 50.0,
-    // width: 50.0,
-      decoration: new BoxDecoration(
-        color:Colors.blue,
-        shape: BoxShape.rectangle
-        
-      ), padding: new EdgeInsets.all(10.0),
-      child: new Text(widget.text,textAlign: TextAlign.center,
-       style:new
-                            TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: tt/30 )) ,
-    );
-   }
-   else{
-    return  new Center(
-           child:    new Container(
-           // height: 35.0,
-          //   width: 35.0,
-           
-            child:new Stack( alignment: const Alignment(0.0, 0.0), children: <Widget>[
-             
-                 new Container(
-        //  height: 4000.0,
-          width: tt/140,
-          color: Colors.black,
-        ), //new Column(  
-    new Shake(
-              animation:widget.flag=='1'?animation:animation1,
-               child:new Draggable(
+        child:
+            new Stack(alignment: const Alignment(0.0, 0.0), children: <Widget>[
+          new Container(
+            //  height: 4000.0,
+            width: tt / 140,
+            color: Colors.black,
+          ), //new Column(
+          new Shake(
+              animation: widget.flag == '1' ? animation : animation1,
+              child: new Draggable(
                 affinity: Axis.vertical,
-                 onDragStarted: ()=>widget.onac(widget.index),
-                 child: 
-               
-  new GestureDetector(
-               
-  //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
-             child:  new Container(
-               margin: new EdgeInsets.only(top: 5.0),
-            // height: 10.0,
-           //  width: 10.0,
-          decoration:widget.text!=''? new BoxDecoration(
-        color: Colors.red[400],
-        shape: BoxShape.circle, 
-      ):new BoxDecoration(), padding: new EdgeInsets.all(5.0),
-                    // child:new Text(widget.text,
-                    //     style:new
-                    //         TextStyle(color: Colors.white, fontSize: 34.0))),
-             ) 
-             ),
-             feedback: new Container(),
-                         //   onDragStarted: ()=>widget.onac(widget.index),
-                          
-    ))]),));}
+                onDragStarted: () => widget.onac(widget.index),
+                child: new GestureDetector(
+
+                    //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
+                    child: new Container(
+                  margin: new EdgeInsets.only(top: 5.0),
+                  // height: 10.0,
+                  //  width: 10.0,
+                  decoration: widget.text != ''
+                      ? new BoxDecoration(
+                          color: Colors.red[400],
+                          shape: BoxShape.circle,
+                        )
+                      : new BoxDecoration(),
+                  padding: new EdgeInsets.all(5.0),
+                  // child:new Text(widget.text,
+                  //     style:new
+                  //         TextStyle(color: Colors.white, fontSize: 34.0))),
+                )),
+                feedback: new Container(),
+                //   onDragStarted: ()=>widget.onac(widget.index),
+              ))
+        ]),
+      ));
+    }
   }
 }
