@@ -38,6 +38,7 @@ import 'package:tuple/tuple.dart';
 
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
+import 'package:maui/games/first_word.dart';
 
 
 enum GameMode { timed, iterations }
@@ -379,7 +380,11 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+             gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId,
+                questionUnitMode: UnitMode.values[random.nextInt(3)],
+                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                level: random.nextInt(10) + 1));
         break;
       case 'drawing':
         return new Drawing(
@@ -549,12 +554,17 @@ class _SingleGameState extends State<SingleGame> {
         break;
       case 'tap_wrong':
         return new TapWrong(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+             gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId,
+                questionUnitMode: UnitMode.values[random.nextInt(3)],
+                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                level: random.nextInt(10) + 1));
         break;
       case 'wordgrid':
         return new Wordgrid(
@@ -623,81 +633,33 @@ class _SingleGameState extends State<SingleGame> {
                 answerUnitMode: UnitMode.values[random.nextInt(3)],
                 level: random.nextInt(10) + 1));
         break;
-    }
-    return null;
-  }
-
-  static ThemeData getGameTheme(String gameName) {
-    switch (gameName) {
-      case 'reflex':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.white, //bg
-            primaryColor: new Color(0xFFC79690),
-            accentColor: new Color(0xFF7A8948), //behind progress bar
-            buttonColor: new Color(0xFF7592BC));
+         case 'first_word':
+        return new FirstWord(
+               key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+             gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId,
+                questionUnitMode: UnitMode.values[random.nextInt(3)],
+                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                level: random.nextInt(10) + 1));
         break;
-      case 'order_it':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.teal, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.cyan);
-        break;
-      case 'true_or_false':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.orange, //bg
-            backgroundColor: Colors.purpleAccent, //behind progress bar
-            accentColor: Colors.deepPurple, //progress bar
-            buttonColor: Colors.red);
-        break;
-      case 'identify':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'abacus':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'drawing':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'dice':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'bingo':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: Colors.pink);
-        break;
-      case 'fill_in_the_blanks':
-        return new ThemeData(
-          scaffoldBackgroundColor: new Color(0xffff8edda3), //bg
-          backgroundColor: new Color(0xffffeaca8b), //behind progress bar
-          accentColor: Colors.brown, //progress bar
-        );
-        break;
-      case 'clue_game':
-        return new ThemeData(
-            scaffoldBackgroundColor: Colors.lime, //bg
-            backgroundColor: Colors.amber, //behind progress bar
-            accentColor: Colors.brown, //progress bar
-            buttonColor: new Color(0xffffefce97));
+          case 'word_fight':
+        return  new WordFight(
+               key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _iteration,
+            isRotated: widget.isRotated,
+             gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId,
+                questionUnitMode: UnitMode.values[random.nextInt(3)],
+                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                level: random.nextInt(10) + 1));
         break;
       case 'casino':
         return new ThemeData(
@@ -819,37 +781,6 @@ class _SingleGameState extends State<SingleGame> {
             backgroundColor: Colors.amber, //behind progress bar
             accentColor: Colors.brown, //progress bar
             buttonColor: Colors.cyan);
-
-        //  case 'first_word':
-        // return new Tuple2(
-        //     new FirstWord(
-        //         onScore: _onScore,
-        //         onProgress: _onProgress,
-        //         onEnd: () => _onEnd(context),
-        //         iteration: _iteration,
-        //         isRotated: widget.isRotated,
-        //         gameCategoryId: widget.gameCategoryId),
-        //     new ThemeData(
-        //         scaffoldBackgroundColor: Colors.lime, //bg
-        //         backgroundColor: Colors.amber, //behind progress bar
-        //         accentColor: Colors.brown, //progress bar
-        //         buttonColor: Colors.pink));
-        // break;
-        //   case 'word_fight':
-        // return new Tuple2(
-        //     new WordFight(
-        //         onScore: _onScore,
-        //         onProgress: _onProgress,
-        //         onEnd: () => _onEnd(context),
-        //         iteration: _iteration,
-        //         isRotated: widget.isRotated,
-        //         gameCategoryId: widget.gameCategoryId),
-        //     new ThemeData(
-        //         scaffoldBackgroundColor: Colors.lime, //bg
-        //         backgroundColor: Colors.amber, //behind progress bar
-        //         accentColor: Colors.brown, //progress bar
-        //         buttonColor: Colors.pink));
-        // break;
     }
     return null;
   }
