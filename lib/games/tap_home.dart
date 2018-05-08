@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/components/flash_card.dart';
 
 class TapHome extends StatefulWidget {
   Function onScore;
@@ -188,7 +187,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         );
       }
 
-      return new Padding(
+      return  new Padding(
           padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
           child: new Stack(alignment: Alignment.topCenter, children: <Widget>[
             new Column(
@@ -273,14 +272,14 @@ class Countdown extends AnimatedWidget {
         alignment: Alignment.center,
         margin: new EdgeInsets.only(top: height * 0.55),
         decoration: new BoxDecoration(
-            border: new Border.all(color: Colors.white, width: height * 0.01),
+            border: new Border.all(color: Colors.black, width: height * 0.01),
             shape: BoxShape.circle),
         child: new Text(option[animation.value].toString(),
             key: new Key('answer'),
             style: new TextStyle(
                 fontSize: height * 0.15,
                 fontWeight: FontWeight.bold,
-                color: Colors.white)));
+                color: Colors.black)));
   }
 }
 
