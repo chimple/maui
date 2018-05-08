@@ -73,7 +73,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new ResponsiveGridView(
       rows: r,
       cols: 5,
-      maxAspectRatio: 2.0,
+      maxAspectRatio: 5.0,
       children:
         (_decoded["parts"] as List).map((e)=>_buildItems(j++,e)).toList(growable:false),
     );
@@ -110,9 +110,13 @@ Widget _buildItems(int i,var part){
                 children: <Widget>[
                   new Expanded(
                     flex: 2,
-                    child: new Image(
-                      image: AssetImage('assets/' + _decoded["id"]),
-                      fit: BoxFit.contain,
+                    child: new GestureDetector(
+                      onVerticalDragStart: (d) => print("dragging vertically"),
+                      onHorizontalDragStart: (d) => print("dragging horizontally"),
+                                          child: new Image(
+                        image: AssetImage('assets/' + _decoded["id"]),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                   new Expanded(
