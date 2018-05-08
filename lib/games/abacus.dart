@@ -315,7 +315,7 @@ class AbacusState extends State<Abacus> {
          height: 80.0,
          width: size.width,
          child: new ResponsiveGridView(
-           padding: new EdgeInsets.all(0.0),
+           padding:0.0,
            rows: 1,
            cols: 5,
            children: _letters1.map((e) => _buildItem(k, e,status[k++-100],flags[1])).toList(growable: false),
@@ -327,7 +327,7 @@ class AbacusState extends State<Abacus> {
        new Expanded(
          child: new ResponsiveGridView(
           
-           padding: new EdgeInsets.all(0.0),
+           padding: 0.0,
           // mainAxisSpacing: 0.0,
           // crossAxisSpacing: 0.0,
            rows: 14,
