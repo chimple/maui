@@ -16,6 +16,7 @@ import 'package:maui/games/circleword.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/games/crossword.dart';
 import 'package:maui/games/drawing_game.dart';
+import 'package:maui/games/dice_game.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
 import 'package:maui/games/fill_number.dart';
 import 'package:maui/games/friendWord.dart';
@@ -34,6 +35,11 @@ import 'package:maui/games/wordgrid.dart';
 import 'package:maui/screens/score_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
+
+import 'package:maui/games/friendWord.dart';
+import 'package:maui/games/word_fight.dart';
+import 'package:maui/games/first_word.dart';
+
 
 enum GameMode { timed, iterations }
 
@@ -92,6 +98,7 @@ class SingleGame extends StatefulWidget {
     'crossword': [Color(0xFF37A061), Color(0xFFd32f2f), Color(0xFF2D1707)],
     'draw_challenge': [Color(0xFF3F1F12), Color(0xFFef4822), Color(0xFF673E6B)],
     'drawing': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
+    'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
     'fill_in_the_blanks': [
       Color(0xFF7A8948),
       Color(0xFFC79690),
@@ -304,297 +311,342 @@ class _SingleGameState extends State<SingleGame> {
         playTime = 15000;
         maxIterations = 1;
         return new Reflex(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'order_it':
         playTime = 15000;
         maxIterations = 1;
         return new OrderIt(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'true_or_false':
         playTime = 15000;
         maxIterations = 10;
         return new TrueFalseGame(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'identify':
         return new IdentifyGame(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            isRotated: widget.isRotated ,
             iteration: _iteration);
         break;
       case 'abacus':
         return new Abacus(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
+            gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
+                level: random.nextInt(10) + 1));
         break;
       case 'drawing':
         return new Drawing(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            isRotated: widget.isRotated ,
+            iteration: _iteration);
+        break;
+      case 'dice':
+        return new Dice(
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            isRotated: widget.isRotated ,
             iteration: _iteration);
         break;
       case 'bingo':
         return new Bingo(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'fill_in_the_blanks':
         playTime = 20000;
         maxIterations = 5;
         return new FillInTheBlanks(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'clue_game':
         return new ClueGame(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'casino':
         return new Casino(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'crossword':
         return new Crossword(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            isRotated: widget.isRotated ,
             iteration: _iteration);
         break;
       case 'tables':
         playTime = 60000;
         maxIterations = 1;
         return new Tables(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'match_the_following':
         playTime = 15000;
         maxIterations = 4;
         return new MatchTheFollowing(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'calculate_numbers':
         playTime = 25000;
         maxIterations = 10;
         return new CalculateTheNumbers(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'memory':
         playTime = 15000;
         maxIterations = 1;
         return new Memory(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'fill_number':
         return new Fillnumber(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'quiz':
         playTime = 15000;
         maxIterations = 10;
         return new Quiz(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'connect_the_dots':
         return new Connectdots(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'tap_home':
         playTime = 60000;
         maxIterations = 10;
         return new TapHome(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'tap_wrong':
         return new TapWrong(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
+            gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
+                level: random.nextInt(10) + 1));
         break;
       case 'wordgrid':
         return new Wordgrid(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'guess':
         return new GuessIt(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
             isRotated: widget.isRotated);
       case 'spin_wheel':
         return new SpinWheel(
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
       case 'circle_word':
         return new Circleword(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameCategoryId: widget.gameCategoryId);
         break;
 
       case 'draw_challenge':
         maxIterations = 1;
         return new Draw_Challenge(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
       case 'friend_word':
         maxIterations = 1;
         return new FriendWord(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: _iteration,
-            isRotated: widget.isRotated,
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
             gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
+                level: random.nextInt(10) + 1));
+        break;
+      case 'first_word':
+        return new FirstWord(
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
+            gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
+                level: random.nextInt(10) + 1));
+        break;
+      case 'word_fight':
+        return new WordFight(
+            key: new GlobalObjectKey(keyName) ,
+            onScore: _onScore ,
+            onProgress: _onProgress ,
+            onEnd: () => _onEnd(context) ,
+            iteration: _iteration ,
+            isRotated: widget.isRotated ,
+            gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId ,
+                questionUnitMode: UnitMode.values[random.nextInt(3)] ,
+                answerUnitMode: UnitMode.values[random.nextInt(3)] ,
                 level: random.nextInt(10) + 1));
         break;
     }
