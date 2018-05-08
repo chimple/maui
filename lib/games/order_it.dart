@@ -147,7 +147,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
           child: new Container( 
           key: new Key("orderableDataWidget${data.dataIndex}"),
           decoration: new BoxDecoration(  
-              border: new Border.all(color: Color(0xff7592bc), width: 3.0),
+              border: new Border.all(color: Color(0xff441c06), width: 3.0),
               boxShadow: [
                 new BoxShadow(
                 color: const Color(0x44000000),
@@ -165,7 +165,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
               new Text(
                 "${data.value}",
                 style: new TextStyle(
-                    fontSize: itemSize.height * 0.6, color: Color(0xff7592bc)),
+                    fontSize: itemSize.height * 0.6, color: Color(0xff441c06)),
               )
           ])),
     ),
