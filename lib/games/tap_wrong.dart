@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
@@ -11,10 +12,10 @@ class TapWrong extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
- int gameCategoryId;
+  GameConfig gameConfig;
  bool isRotated;
 
-  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
+  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig, this.isRotated=false})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ Tuple2<List<String>,List<String>> data;
     numOFWrongElem=0;
     _dispText='';
      setState(() => _isLoading = true);
-data=await fetchWordData(widget.gameCategoryId,3,2);
+data=await fetchWordData(widget.gameConfig.gameCategoryId,3,2);
    print('datat  ${data.item1}');
     data.item1.forEach((d) {
      
@@ -218,7 +219,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 10), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
         controller1 = new AnimationController(
         duration: new Duration(milliseconds: 40), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -239,6 +240,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controller1.forward();
   }
+  @override
+  void dispose() {
+ 
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");

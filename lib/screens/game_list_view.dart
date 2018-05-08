@@ -69,6 +69,7 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'spin_wheel', 'spin_wheel'),
           _buildButton(context, 'first_word', 'first_word'),
           _buildButton(context, 'friend_word', 'friend_word'),
+          _buildButton(context, 'dice', 'dice'),
         ]);
   }
 
