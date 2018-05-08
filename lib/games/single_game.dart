@@ -506,10 +506,11 @@ class _SingleGameState extends State<SingleGame> {
                 isRotated: widget.isRotated,
                 gameCategoryId: widget.gameCategoryId),
             new ThemeData(
-                scaffoldBackgroundColor: Colors.orange[100], //bg
-                backgroundColor: Colors.amber, //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.orange));
+                scaffoldBackgroundColor: Colors.white, //bg
+                primaryColor: new Color(0xFFC79690),
+                accentColor: new Color(0xFF7A8948), //behind progress bar
+                buttonColor: new Color(0xFF6D3A6A))
+            );
         break;
       case 'memory':
         playTime = 15000;
