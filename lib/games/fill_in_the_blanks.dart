@@ -94,6 +94,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
     }
+    for (int j = 0; j < dropTargetData.length; j++) {
+      if (dropTargetData[j].isEmpty) 
+      dropTargetData[j]='_';
+    }
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
   }
@@ -111,7 +115,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           dindex=int.parse(dragdata.substring(0,3));
           dcode=int.parse(dragdata.substring(4));
           if(code==dcode){
-           if (dropTargetData[index].isEmpty) {
+           if (dropTargetData[index]=='_') {
              if (_holdDataOfDragBox[index] ==
                  data) {
                flag1 = 1;
@@ -122,6 +126,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
              }
              else
              {
+                dragcount++;
                if(scoretrack > 0){
                  scoretrack = scoretrack - 1;
                  widget.onScore(-1);
@@ -138,7 +143,22 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                  });
                });
              }
-           }
+           } else {
+              dragcount++;
+              if (scoretrack > 0) {
+                scoretrack = scoretrack - 1;
+                widget.onScore(-1);
+              } else {
+                widget.onScore(0);
+              }
+            }
+            if (dragcount == space + 2) {
+              new Future.delayed(const Duration(milliseconds: 700), () {
+                setState(() {
+                  _isShowingFlashCard = true;
+                });
+              });
+            }
 
           setState(() {
             if (flag1 == 0) {
@@ -214,7 +234,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Padding(padding: new EdgeInsets.all(10.0)),
+           // new Padding(padding: new EdgeInsets.all(10.0)),
             new Expanded(
               flex: 1,
               child: new Container(
@@ -231,16 +251,13 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             ),
             new Expanded(
               flex: 2,
-              child: new Container(
-                color: Colors.pink[100],
-                child: new ResponsiveGridView(
-                    rows: 1,
-                    cols: dragBoxData.length,
-                    maxAspectRatio: 1.0,
-                    children: dragBoxData
-                        .map((e) => dragbox(k++, e, _flag[a++]))
-                        .toList(growable: false)),
-              ),
+              child: new ResponsiveGridView(
+                  rows: 1,
+                  cols: dragBoxData.length,
+                  maxAspectRatio: 1.0,
+                  children: dragBoxData
+                      .map((e) => dragbox(k++, e, _flag[a++]))
+                      .toList(growable: false)),
             ),
           ],
         ),
@@ -333,38 +350,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         animation: widget.flag == 1 ? animationShake : animation,
         child: new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: new Color(0xffffe04444),
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new DragTarget(
-              onAccept: (String data) => widget.onAccepted(data),
-              builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-              ) {
-                return new Container(
-                  decoration: new BoxDecoration(
-                    color:
-                        widget.flag == 1 ? Colors.yellowAccent : Colors.white10,
-//                    border: new Border.all(
-//                        width: 3.0,
-//                        color:
-//                            accepted.isEmpty ? Colors.white : Colors.black),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(8.0)),
-                  ),
-                  child: new Center(
-                    child: new Text(widget.text,
-                        key: new Key('${widget.keys}'),
-                        style:
-                            new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
-                  ),
-                );
-              },
-            ),
+          child: new DragTarget(
+            onAccept: (String data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return new Center(
+                child: new Text(widget.text,
+                    key: new Key('${widget.keys}'),
+                    style:
+                        new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
+              );
+            },
           ),
         ),
       );
@@ -372,7 +371,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       return new Draggable(
           onDragStarted: widget.onDrag,
          maxSimultaneousDrags: 1,
-           dragAnchor: DragAnchor.pointer,
+           dragAnchor: DragAnchor.child,
           data: '${widget.index}'+'_'+'${widget.code}',
           child: new ScaleTransition(
             scale: animation,
@@ -389,25 +388,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                 )),
           ),
-          feedback: new Container(
-            height: media.orientation==Orientation.portrait?media.size.height*.09:media.size.height*.15,
-           width: media.orientation==Orientation.portrait?media.size.width*.16:media.size.width*.09,
-//           decoration: new BoxDecoration(
-//              shape: BoxShape.rectangle,
-//              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-//              color: new Color(0xffffe04444),
-//            ),
-            child: new Center(
-              child: new Transform.rotate(
-                angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
-                child: new Text(
-                  widget.text,
-                  style: new TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    fontSize: media.size.height*0.04,
-                  ),
-                ),
+          feedback: new Transform.rotate(
+            angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
+            child: new Text(
+              widget.text,
+              style: new TextStyle(
+                color: Colors.black,
+                decoration: TextDecoration.none,
+                fontSize: media.size.height*0.04,
               ),
             ),
           ));
