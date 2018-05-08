@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
+import 'package:maui/games/single_game.dart';
 class FirstWord extends StatefulWidget {
  Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
- int gameCategoryId;
+ GameConfig gameConfig;
  bool isRotated;
 
-  FirstWord({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
+  FirstWord({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig,this.isRotated=false})
       : super(key: key);
 
   @override
@@ -42,7 +43,7 @@ List<String> _catList=[];//['cricket','football','tennis','golf','basketball'];
    _category='';
    _catList=[];
    setState(() => _isLoading = true);
-data=await fetchFirstWordData(widget.gameCategoryId);
+data=await fetchFirstWordData(widget.gameConfig.gameCategoryId);
 _category=data.item2;
 _catList=data.item1;
  randNum =rand.nextInt(_catList.length);
