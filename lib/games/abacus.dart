@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'dart:ui' show window;
 import 'dart:math';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 
@@ -12,7 +13,7 @@ class Abacus extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Abacus(
@@ -21,7 +22,7 @@ class Abacus extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -73,7 +74,7 @@ class AbacusState extends State<Abacus> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    data = await fetchMathData(widget.gameCategoryId);
+    data = await fetchMathData(widget.gameConfig.gameCategoryId);
     print('data is $data');
     print('data is ${data.item1}');
     var q = data.item4.toString();
@@ -122,11 +123,13 @@ class AbacusState extends State<Abacus> {
   }
 
   Widget _buildItem(int index, String text, int stat, String flag) {
+    Size size = MediaQuery.of(context).size;
     final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         index: index,
+        screenSize: size.width,
         colorflag: stat,
         size: _size,
         flag: flag,
@@ -288,6 +291,7 @@ class AbacusState extends State<Abacus> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     print("MyTableState.build");
     print("letters1 $_letters1");
     print("letters $_letters");
@@ -303,15 +307,12 @@ class AbacusState extends State<Abacus> {
     int j = 0;
     return new Column(
       children: <Widget>[
-        new Container(
-          child: new Text(
-            'result==$result',
-            style: new TextStyle(color: Colors.red),
-          ),
-        ),
+        //  new Container(
+        //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+        //  ),
         new Container(
           height: 80.0,
-          width: 200.0,
+          width: size.width,
           child: new ResponsiveGridView(
             padding: 0.0,
             rows: 1,
@@ -379,13 +380,14 @@ class MyButton extends StatefulWidget {
       this.onac,
       this.colorflag,
       this.size,
-      this.flag})
+      this.flag,
+      this.screenSize})
       : super(key: key);
 
   final String text;
   final DragTargetAccept onac;
   final int colorflag;
-  final int textflag;
+  final double screenSize;
   String flag;
   final int size;
   List<String> letters;
@@ -414,22 +416,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
-    animation1 = new Tween(begin: -60.0, end: 00.0).animate(controller1)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
+    animation1 = new Tween(begin: -widget.screenSize / 10, end: 00.0)
+        .animate(controller1)
+          ..addStatusListener((state) {
+            print("$state:${animation.value}");
 
-        if (state == AnimationStatus.dismissed) {
-          controller1.forward();
-        }
-      });
-    animation = new Tween(begin: 60.0, end: 00.0).animate(controller)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
+            if (state == AnimationStatus.dismissed) {
+              controller1.forward();
+            }
+          });
+    animation =
+        new Tween(begin: widget.screenSize / 10, end: 00.0).animate(controller)
+          ..addStatusListener((state) {
+            print("$state:${animation.value}");
 
-        if (state == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      });
+            if (state == AnimationStatus.dismissed) {
+              controller.forward();
+            }
+          });
 
     controller.forward();
     controller1.forward();
@@ -451,9 +455,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.didUpdateWidget: ${widget.flag} ${oldWidget.flag}");
   }
 
-  var tt = '';
+  @override
+  void dispose() {
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
+
+  var tt = 0.0;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    if (size.height > size.width)
+      tt = size.width;
+    else
+      tt = size.height;
     print("_MyButtonState.build");
 
     if (widget.index >= 100) {
@@ -469,8 +485,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             child: new Text(widget.text,
                 key: new Key(widget.index.toString() + "but"),
                 style: new TextStyle(
-                  color: Colors.red,
-                ))),
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0))),
       ));
     } else if (widget.index < widget.size) {
       return new Container(
@@ -480,9 +497,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
         padding: new EdgeInsets.all(10.0),
         child: new Text(widget.text,
+            textAlign: TextAlign.center,
             style: new TextStyle(
-              color: Colors.red,
-            )),
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: tt / 30)),
       );
     } else {
       return new Center(
@@ -494,7 +513,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             new Stack(alignment: const Alignment(0.0, 0.0), children: <Widget>[
           new Container(
             //  height: 4000.0,
-            width: 3.0,
+            width: tt / 140,
             color: Colors.black,
           ), //new Column(
           new Shake(
@@ -503,21 +522,23 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 affinity: Axis.vertical,
                 onDragStarted: () => widget.onac(widget.index),
                 child: new GestureDetector(
-                  //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
-                  child: new Container(
-                      // height: 10.0,
-                      //  width: 10.0,
-                      decoration: widget.text != ''
-                          ? new BoxDecoration(
-                              color: Colors.red[400],
-                              shape: BoxShape.circle,
-                            )
-                          : new BoxDecoration(),
-                      padding: new EdgeInsets.all(5.0),
-                      child: new Text(widget.text,
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 24.0))),
-                ),
+
+                    //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
+                    child: new Container(
+                  margin: new EdgeInsets.only(top: 5.0),
+                  // height: 10.0,
+                  //  width: 10.0,
+                  decoration: widget.text != ''
+                      ? new BoxDecoration(
+                          color: Colors.red[400],
+                          shape: BoxShape.circle,
+                        )
+                      : new BoxDecoration(),
+                  padding: new EdgeInsets.all(5.0),
+                  // child:new Text(widget.text,
+                  //     style:new
+                  //         TextStyle(color: Colors.white, fontSize: 34.0))),
+                )),
                 feedback: new Container(),
                 //   onDragStarted: ()=>widget.onac(widget.index),
               ))

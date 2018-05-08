@@ -395,6 +395,7 @@ flutter:
     - assets/hoodie/2x/true_or_false_sad.png
     - assets/hoodie/3x/true_or_false_sad.png
     - assets/hoodie/4x/true_or_false_sad.png
+    - assets/background_tile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

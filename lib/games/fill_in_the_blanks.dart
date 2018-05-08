@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
+import 'dart:math';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
@@ -30,9 +31,12 @@ class FillInTheBlanks extends StatefulWidget {
 class FillInTheBlanksState extends State<FillInTheBlanks> {
   bool _isLoading = true;
   var flag1 = 0;
+  int code,dcode,dindex;
   bool _isShowingFlashCard = false;
   var keys = 0;
   int _size;
+  int scoretrack = 0;
+  String dragdata;
   List<String> dragBoxData, _holdDataOfDragBox, shuffleData, dragBoxDataStore;
   List<String> dropTargetData;
   List<Tuple2<String, String>> _fillData;
@@ -49,12 +53,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   List<String> shufflelist;
   int newprogress = 0;
   int count = 0;
+  int dragcount = 0;
   int progres = 0;
   int space = 0;
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
     fruit = ' ';
+    dragcount = 0;
     space = 0;
     setState(() => _isLoading = true);
     _fillData = await fetchWordWithBlanksData(widget.gameCategoryId);
@@ -74,6 +80,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         fruit = fruit + dropTargetData[i];
       }
     }
+    var rng = new Random();
+    code= rng.nextInt(499)+rng.nextInt(500);
+    while(code<100){
+      code= rng.nextInt(499)+rng.nextInt(500);
+    }
     setState(() => _isLoading = false);
     _size = dragBoxData.length;
     _flag.length = dragBoxData.length + _size + 1;
@@ -82,6 +93,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     }
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
+    }
+    for (int j = 0; j < dropTargetData.length; j++) {
+      if (dropTargetData[j].isEmpty) 
+      dropTargetData[j]='_';
     }
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
@@ -93,25 +108,58 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         index: index,
         text: text,
         color1: 1,
-        onAccepted: (targetindex) {
+        onAccepted: (dcindex) {
           flag1 = 0;
           var flagtemp = 0;
-           if (dropTargetData[index].isEmpty) {
-            if (_holdDataOfDragBox[index].toLowerCase() == data.toLowerCase()) {
-              flag1 = 1;
-              progres++;
-              widget.onProgress(progres / space);
-              dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+          dragdata=dcindex;
+          dindex=int.parse(dragdata.substring(0,3));
+          dcode=int.parse(dragdata.substring(4));
+          if(code==dcode){
+           if (dropTargetData[index]=='_') {
+             if (_holdDataOfDragBox[index] ==
+                 data) {
+               flag1 = 1;
+               progres++;
+               widget.onProgress(progres / space);
+               dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+
+             }
+             else
+             {
+                dragcount++;
+               if(scoretrack > 0){
+                 scoretrack = scoretrack - 1;
+                 widget.onScore(-1);
+               } else {
+                 widget.onScore(0);
+               }
+             }
+             if (progres == space) {
+               scoretrack = scoretrack + 4;
+               widget.onScore(4);
+               new Future.delayed(const Duration(milliseconds: 700), () {
+                 setState(() {
+                   _isShowingFlashCard = true;
+                 });
+               });
+             }
+           } else {
+              dragcount++;
+              if (scoretrack > 0) {
+                scoretrack = scoretrack - 1;
+                widget.onScore(-1);
+              } else {
+                widget.onScore(0);
+              }
             }
-          }
-          if (progres == space) {
-            widget.onScore(4);
-            new Future.delayed(const Duration(milliseconds: 700), () {
-              setState(() {
-                _isShowingFlashCard = true;
+            if (dragcount == space + 2) {
+              new Future.delayed(const Duration(milliseconds: 700), () {
+                setState(() {
+                  _isShowingFlashCard = true;
+                });
               });
-            });
-          }
+            }
+
           setState(() {
             if (flag1 == 0) {
               _flag[index] = 1;
@@ -129,9 +177,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 });
               });
             }
-          });
+          });}
         },
         flag: flag,
+        code:code,
         isRotated: widget.isRotated,
         keys: keys++);
   }
@@ -142,6 +191,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         index: index,
         text: text,
         color1: 1,
+        code:code,
         flag: flag,
         isRotated: widget.isRotated,
         keys: keys++,
@@ -184,20 +234,23 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Padding(padding: new EdgeInsets.all(10.0)),
+           // new Padding(padding: new EdgeInsets.all(10.0)),
             new Expanded(
               flex: 1,
-              child: new ResponsiveGridView(
-                rows: 1,
-                cols: dropTargetData.length,
-                maxAspectRatio: 1.0,
-                children: dropTargetData
-                    .map((e) => droptarget(j++, e, _flag[h++]))
-                    .toList(growable: false),
+              child: new Container(
+                color: new Color(0xffffa3bc8b),
+                child: new ResponsiveGridView(
+                  rows: 1,
+                  cols: dropTargetData.length,
+                  maxAspectRatio: 1.0,
+                  children: dropTargetData
+                      .map((e) => droptarget(j++, e, _flag[h++]))
+                      .toList(growable: false),
+                ),
               ),
             ),
             new Expanded(
-              flex: 1,
+              flex: 2,
               child: new ResponsiveGridView(
                   rows: 1,
                   cols: dragBoxData.length,
@@ -222,6 +275,7 @@ class MyButton extends StatefulWidget {
       this.flag,
       this.onAccepted,
       this.arr,
+        this.code,
       this.onDrag,
       this.isRotated = false,
       this.keys})
@@ -233,6 +287,7 @@ class MyButton extends StatefulWidget {
 
   final String text;
   List arr;
+  final int code;
   bool isRotated;
   int keys;
   final DragTargetAccept onAccepted;
@@ -250,8 +305,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     _displayText = widget.text;
     //_displayText = widget.text;
     controllerShake = new AnimationController(
-        duration: new Duration(milliseconds: 40), vsync: this);
-    animationShake = new Tween(end: -3.0, begin: 3.0).animate(controllerShake);
+        duration: new Duration(milliseconds: 60), vsync: this);
+    animationShake = new Tween(end: -5.0, begin: 5.0).animate(controllerShake);
     controller = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeInOut)
@@ -295,38 +350,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         animation: widget.flag == 1 ? animationShake : animation,
         child: new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: new Color(0xffffe04444),
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new DragTarget(
-              onAccept: (var data) => widget.onAccepted(data),
-              builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-              ) {
-                return new Container(
-                  decoration: new BoxDecoration(
-                    color:
-                        widget.flag == 1 ? Colors.yellowAccent : Colors.white10,
-                    border: new Border.all(
-                        width: 3.0,
-                        color:
-                            accepted.isEmpty ? Colors.white : Colors.black),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(8.0)),
-                  ),
-                  child: new Center(
-                    child: new Text(widget.text.toLowerCase(),
-                        key: new Key('${widget.keys}'),
-                        style:
-                            new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
-                  ),
-                );
-              },
-            ),
+          child: new DragTarget(
+            onAccept: (String data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return new Center(
+                child: new Text(widget.text,
+                    key: new Key('${widget.keys}'),
+                    style:
+                        new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
+              );
+            },
           ),
         ),
       );
@@ -335,41 +372,30 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           onDragStarted: widget.onDrag,
          maxSimultaneousDrags: 1,
            dragAnchor: DragAnchor.child,
-          data: widget.index,
+          data: '${widget.index}'+'_'+'${widget.code}',
           child: new ScaleTransition(
             scale: animation,
             child: new Container(
                 decoration: new BoxDecoration(
-                  color: new Color(0xffffffffff),
-                  border: new Border.all(width: 1.0, color: Colors.cyan[300]),
+                //  color: new Color(0xffffffffff),
+                  border: new Border.all(width: 3.0, color: Colors.cyan[300]),
                   borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                 ),
                 child: new Center(
-                  child: new Text(widget.text.toLowerCase(),
+                  child: new Text(widget.text,
                       key: new Key("A${widget.keys}"),
                       style:
                           new TextStyle(color: Colors.black, fontSize: media.size.height*0.04)),
                 )),
           ),
-          feedback: new Container(
-            height: media.orientation==Orientation.portrait?media.size.height*.09:media.size.height*.15,
-           width: media.orientation==Orientation.portrait?media.size.width*.16:media.size.width*.09,
-           decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              color: new Color(0xffffe04444),
-            ),
-            child: new Center(
-              child: new Transform.rotate(
-                angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
-                child: new Text(
-                  widget.text.toLowerCase(),
-                  style: new TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    fontSize: media.size.height*0.04,
-                  ),
-                ),
+          feedback: new Transform.rotate(
+            angle: widget.isRotated == true ? portf == 0 ? 3.14 : 0.0 : 0.0,
+            child: new Text(
+              widget.text,
+              style: new TextStyle(
+                color: Colors.black,
+                decoration: TextDecoration.none,
+                fontSize: media.size.height*0.04,
               ),
             ),
           ));
