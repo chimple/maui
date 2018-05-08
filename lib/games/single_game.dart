@@ -35,6 +35,10 @@ import 'package:maui/screens/score_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
 
+import 'package:maui/games/friendWord.dart';
+import 'package:maui/games/word_fight.dart';
+
+
 enum GameMode { timed, iterations }
 
 enum GameDisplay {
@@ -608,6 +612,36 @@ class _SingleGameState extends State<SingleGame> {
                 questionUnitMode: UnitMode.values[random.nextInt(3)],
                 answerUnitMode: UnitMode.values[random.nextInt(3)],
                 level: random.nextInt(10) + 1));
+        break;
+         case 'first_word':
+        return new Tuple2(
+            new FirstWord(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
+        break;
+          case 'word_fight':
+        return new Tuple2(
+            new WordFight(
+                onScore: _onScore,
+                onProgress: _onProgress,
+                onEnd: () => _onEnd(context),
+                iteration: _iteration,
+                isRotated: widget.isRotated,
+                gameCategoryId: widget.gameCategoryId),
+            new ThemeData(
+                scaffoldBackgroundColor: Colors.lime, //bg
+                backgroundColor: Colors.amber, //behind progress bar
+                accentColor: Colors.brown, //progress bar
+                buttonColor: Colors.pink));
         break;
     }
     return null;
