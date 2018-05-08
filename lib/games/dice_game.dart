@@ -28,7 +28,8 @@ class Dice extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new DiceGameState();
 }
-
+enum Stext1 {Active, Visible}
+enum Stext2 { Right, InActive }
 class DiceGameState extends State<Dice> {
   var flag1 = 0;
   var correct = 0;
@@ -49,17 +50,10 @@ class DiceGameState extends State<Dice> {
   ];
   List<String> _rightwords = [];
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
-  List<String> _letters = new List();
-  List<String> _data2 = new List();
-  List<int> _data3 = new List();
-  List<int> _flag = new List();
-  List<String> _data1 = new List();
   List _sortletters = [];
   bool _isLoading = true;
   List<int> X = [];
-//  String img , dragdata;
-  int _rows, _cols, code, dindex, dcode;
-  int len, _rightlen, _rightcols;
+  int code, dindex, dcode;
   List<String> arr = new List<String>();
   String _counter = "";
   String _counter1 = "";
@@ -79,11 +73,6 @@ class DiceGameState extends State<Dice> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-//    for(var i=0;i<99;i++)
-//    {
-//      arr.add("1");
-//      print({"this is an array":arr});
-//    }
   }
 
   Widget _buildItem(int index, String text) {
@@ -104,7 +93,6 @@ class DiceGameState extends State<Dice> {
                 print({"manu sub": sub});
               }
               if (Z == sum) {
-//                print({"shant sum": sum});
                 count = 0;
                 X.removeRange(0, X.length);
                 _counter = " ";
@@ -123,7 +111,6 @@ class DiceGameState extends State<Dice> {
               }
               else if (sub == Z) {
                 flag = 1;
-//                print({"shant sub": sub});
                 count = 0;
                 X.removeRange(0, X.length);
                 _counter = " ";
@@ -338,7 +325,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new ScaleTransition(
         scale: animation,
         child:new Container(
-          height: 20.0, width: 100.0,
         child: new RaisedButton(
           onPressed: widget.onPress,
           child: new Text("$_displayText",

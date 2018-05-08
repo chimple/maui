@@ -337,18 +337,12 @@ class _SingleGameState extends State<SingleGame> {
             iteration: _iteration);
         break;
       case 'dice':
-        return new Tuple2(
-            new Dice(
+           return new Dice(
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
                 isRotated: widget.isRotated,
-                iteration: _iteration),
-            new ThemeData(
-                scaffoldBackgroundColor: Colors.lime, //bg
-                backgroundColor: Colors.amber, //behind progress bar
-                accentColor: Colors.brown, //progress bar
-                buttonColor: Colors.pink));
+                iteration: _iteration);
         break;
       case 'bingo':
         return new Bingo(
@@ -618,6 +612,13 @@ class _SingleGameState extends State<SingleGame> {
             buttonColor: Colors.pink);
         break;
       case 'drawing':
+        return new ThemeData(
+            scaffoldBackgroundColor: Colors.lime, //bg
+            backgroundColor: Colors.amber, //behind progress bar
+            accentColor: Colors.brown, //progress bar
+            buttonColor: Colors.pink);
+        break;
+      case 'dice':
         return new ThemeData(
             scaffoldBackgroundColor: Colors.lime, //bg
             backgroundColor: Colors.amber, //behind progress bar
