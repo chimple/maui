@@ -31,7 +31,7 @@ class IdentifyGame extends StatefulWidget {
 
 class _IdentifyGameState extends State<IdentifyGame> {
   Future<String> _loadGameAsset() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
+    return await rootBundle.loadString("assets/imageCoordinatesInfo2.json");
   }
 
   Future _loadGameInfo() async {
