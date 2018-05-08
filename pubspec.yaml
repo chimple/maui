@@ -71,6 +71,7 @@ flutter:
     - assets/hoodie/2x/reflex.png
     - assets/hoodie/3x/reflex.png
     - assets/hoodie/4x/reflex.png
+    - assets/background_tile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
