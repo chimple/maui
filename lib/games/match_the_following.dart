@@ -112,21 +112,27 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     // );
   }
 
+  int _constant, _constant1;
   void initState() {
     super.initState();
     print("initState called::");
     if (widget.gameConfig.level < 4) {
       print("level <4");
-      _nextTask = 3;
+      _nextTask = 2;
+      _constant = 0;
+      _constant1 = 0;
     } else if (widget.gameConfig.level < 6) {
       print("level <8");
       _nextTask = 4;
+      _constant = 0;
+      _constant1 = 1;
     } else if (widget.gameConfig.level < 8) {
       print("level <10");
       _nextTask = 6;
-    } else {
-      _nextTask = 5;
+      _constant = 1;
+      _constant1 = 2;
     }
+   
     _initBoard();
     new Future.delayed(
       const Duration(milliseconds: 1000),
@@ -285,7 +291,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _wrongAttem++;
       }
     }
-    if (_wrongAttem >= correct - 1 && _wrongAttem == _nextTask - 2) {
+    if (_wrongAttem >= correct - _constant && _wrongAttem == _nextTask - _constant1) {
       _wrongAttem = 0;
       widget.onScore(-correct);
       correct = 0;

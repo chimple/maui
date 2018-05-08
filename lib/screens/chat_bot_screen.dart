@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/components/join_text.dart';
 import 'package:maui/components/text_choice.dart';
@@ -28,6 +28,7 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class ChatBotScreenState extends State<ChatBotScreen> {
+  static const platform = const MethodChannel('org.sutara.maui/rivescript');
   final GlobalKey<AnimatedListState> _animatedListKey =
       new GlobalKey<AnimatedListState>();
 
@@ -39,10 +40,13 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   String _expectedAnswer;
   final botId = 'bot';
   int _currentChatIndex = 0;
+  ChatMode _currentMode;
   Map<ChatMode, Tuple2<int, int>> _chatHistory =
       new Map<ChatMode, Tuple2<int, int>>();
-  List<LessonUnit> _toQuiz = new List<LessonUnit>();
-  User user;
+  List<LessonUnit> _toQuiz;
+  List<LessonUnit> _toTeach;
+  LessonUnit _currentQuizLesson;
+  User _user;
 
   @override
   void initState() {
@@ -55,9 +59,9 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   void _initState() async {
-    user = AppStateContainer.of(context).state.loggedInUser;
+    _user = AppStateContainer.of(context).state.loggedInUser;
     _lessonUnits = await new LessonUnitRepo()
-        .getLessonUnitsByLessonId(user.currentLessonId);
+        .getLessonUnitsByLessonId(_user.currentLessonId);
     _displayNextChat(null);
   }
 
@@ -87,7 +91,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 : new ChatMessage(
                     side: Side.left,
                     animation: animation,
-                    imageFile: user.image,
+                    imageFile: _user.image,
                     child: _buildChatMessage(chatItem));
           },
         ),
@@ -101,7 +105,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
         child: input,
       ));
     }
-    return new Column(children: widgets);
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Chatbot'),
+        ),
+        body: new Column(children: widgets));
   }
 
   Widget _buildChatMessage(ChatItem chatItem) {
@@ -126,6 +134,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
     }
   }
 
+  _handleTextInput(String text) {
+    _handleSubmitted(new ChatItem(
+        chatItemType: ChatItemType.text, content: text, sender: _user.id));
+  }
+
   _handleSubmitted(ChatItem chatItem) {
     setState(() {
       _chatItems.insert(0, chatItem);
@@ -140,7 +153,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
             chatItemType: ChatItemType.text,
             content: 'Awesome!',
             sender: botId);
-        _toQuiz.removeLast();
+        _toTeach.remove(_currentQuizLesson);
       } else {
         response = new ChatItem(
             chatItemType: ChatItemType.text,
@@ -155,56 +168,104 @@ class ChatBotScreenState extends State<ChatBotScreen> {
       _expectedAnswer = null;
     }
     new Future.delayed(const Duration(milliseconds: 1000), () {
-      _displayNextChat(chatItem);
+      if (mounted) _displayNextChat(chatItem);
     });
   }
 
-  _displayNextChat(ChatItem currentChatItem) {
-    if (_toQuiz.isNotEmpty &&
-        _lessonUnitIndex > 0 &&
-        _lessonUnitIndex % 4 == 0) {
-      //quiz
+  _displayNextChat(ChatItem currentChatItem) async {
+    if ((_toTeach == null || _toTeach.isEmpty) &&
+        (_currentMode != ChatMode.conversation ||
+            (_currentMode == ChatMode.conversation &&
+                _chatHistory[ChatMode.conversation].item2 < 2))) {
+      String reply = 'hello';
+      if (currentChatItem?.chatItemType == ChatItemType.text) {
+        try {
+          reply = await platform.invokeMethod(
+              'getReply', <String, dynamic>{'query': currentChatItem.content});
+        } on PlatformException catch (e) {}
+      }
       setState(() {
-        var random = new Random();
-        _toQuiz.shuffle();
-        var quizUnit = _toQuiz[_toQuiz.length - 1];
-        var question = quizUnit.objectUnitId;
-        _expectedAnswer = quizUnit.subjectUnitId;
-        List<LessonUnit> lessonUnits = List.from(_lessonUnits, growable: false)
-          ..shuffle();
-        List<String> choices = lessonUnits
-            .where((l) => l.subjectUnitId != _expectedAnswer)
-            .take(3)
-            .map((l) => l.objectUnitId)
-            .toList(growable: false);
-        _addChatItem(ChatMode.quiz, ChatItemType.card, question);
-        input = new JoinText(
-            answer: _expectedAnswer,
-            choices: choices,
-            onSubmit: _handleSubmitted);
+        _addChatItem(ChatMode.conversation, ChatItemType.card, reply);
+        input = new TextField(
+          onSubmitted: _handleTextInput,
+          autofocus: true,
+        );
       });
     } else {
-      setState(() {
-        _addChatItem(ChatMode.teach, ChatItemType.card,
-            _lessonUnits[_lessonUnitIndex].subjectUnitId);
-        _toQuiz.add(_lessonUnits[_lessonUnitIndex]);
-        input = new TextChoice(onSubmit: _handleSubmitted);
-      });
+      if ((_currentMode == ChatMode.teach &&
+              _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
+          (_currentMode == ChatMode.quiz &&
+              _chatHistory[ChatMode.quiz].item2 < _toQuiz.length)) {
+        print('Current: $_currentMode Next: quiz History: $_chatHistory');
+        if (_currentMode != ChatMode.quiz) {
+          _toQuiz = List.from(_toTeach)..shuffle();
+        }
+        int index = _currentMode != ChatMode.quiz
+            ? 0
+            : _chatHistory[ChatMode.quiz]?.item2 ?? 0;
+
+        setState(() {
+          _currentQuizLesson = _toQuiz[index];
+          var question = _currentQuizLesson.objectUnitId;
+          _expectedAnswer = _currentQuizLesson.subjectUnitId;
+          List<LessonUnit> lessonUnits =
+              List.from(_lessonUnits, growable: false)..shuffle();
+          List<String> choices = lessonUnits
+              .where((l) => l.subjectUnitId != _expectedAnswer)
+              .take(3)
+              .map((l) => l.objectUnitId)
+              .toList(growable: false);
+          _addChatItem(ChatMode.quiz, ChatItemType.card, question);
+          input = new JoinText(
+              answer: _expectedAnswer,
+              choices: choices,
+              onSubmit: _handleSubmitted);
+        });
+      } else {
+        print('Current: $_currentMode Next: teach History: $_chatHistory');
+        if (_currentMode != ChatMode.teach) {
+          if (_toTeach == null || _toTeach.isEmpty) {
+            if (_lessonUnitIndex >= _lessonUnits.length) {
+              //TODO: decide to progress the user's lesson or not
+              _lessonUnits = await new LessonUnitRepo()
+                  .getLessonUnitsByLessonId(_user.currentLessonId);
+              _lessonUnitIndex = 0;
+            }
+            _toTeach = _lessonUnits.skip(_lessonUnitIndex).take(4).toList();
+            _lessonUnitIndex += 4;
+          }
+        }
+        int index = _currentMode != ChatMode.teach
+            ? 0
+            : _chatHistory[ChatMode.teach]?.item2 ?? 0;
+
+        setState(() {
+          _addChatItem(
+              ChatMode.teach, ChatItemType.card, _toTeach[index].subjectUnitId);
+          input = new TextChoice(onSubmit: _handleSubmitted);
+        });
+      }
     }
     _animatedListKey.currentState
         .insertItem(0, duration: new Duration(milliseconds: 250));
   }
 
   _addChatItem(ChatMode chatMode, ChatItemType chatItemType, String content) {
-    _lessonUnitIndex++;
+    _currentChatIndex++;
     var chatHist = _chatHistory[chatMode] ?? new Tuple2(_currentChatIndex, 0);
-    _chatHistory[chatMode] =
-        chatHist.item1 + chatHist.item2 == _currentChatIndex
-            ? new Tuple2(chatHist.item1, chatHist.item2 + 1)
-            : new Tuple2(_currentChatIndex, 1);
+    _chatHistory[chatMode] = _currentMode == chatMode
+        ? new Tuple2(chatHist.item1, chatHist.item2 + 1)
+        : new Tuple2(_currentChatIndex, 1);
     _chatItems.insert(
         0,
         new ChatItem(
             sender: botId, chatItemType: chatItemType, content: content));
+    _currentMode = chatMode;
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

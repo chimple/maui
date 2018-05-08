@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
+import '../components/shaker.dart';
 import '../repos/game_data.dart';
 
 class OrderIt extends StatefulWidget {
@@ -43,12 +44,13 @@ class OrderItState extends State<OrderIt> {
   void initState() {
     super.initState();
      print('OrderItState:initState');
-     if (widget.gameConfig.level < 4) {
+
+    if (widget.gameConfig.level < 4) {
       _maxSize = 5;
     } else if (widget.gameConfig.level < 7) {
-      _maxSize = 5;
+      _maxSize = 7;
     } else {
-      _maxSize = 5;
+      _maxSize = 12;
     }
     _initBoard();
   }
@@ -121,20 +123,31 @@ class OrderItState extends State<OrderIt> {
           });
        });
     }
-
-    return new Container(
-      key: new Key("orderableDataWidget${data.dataIndex}"),
-      color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.cyan : Colors.orange,
-      width: itemSize.width,
-      height: itemSize.height,
-      child: new Center(
-          child: new Column(children: [
-        new Text(
-          "${data.value}",
-          style: new TextStyle(
-              fontSize: itemSize.height * 0.7, color: Colors.white),
-        )
-      ])),
+   
+        return new Container( 
+        key: new Key("orderableDataWidget${data.dataIndex}"),
+        decoration: new BoxDecoration(  
+            border: new Border.all(color: Color(0xff7592bc), width: 3.0),
+            boxShadow: [
+              new BoxShadow(
+              color: const Color(0x44000000),
+                spreadRadius: 2.0,
+                offset: const Offset(0.0, 1.0),
+              )
+            ],
+         borderRadius: new BorderRadius.circular(12.0), 
+         color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.white: Colors.orange,
+        ),
+        width: itemSize.width,
+        height: itemSize.height,
+        child: new Center(
+              child: new Column(children: [
+            new Text(
+              "${data.value}",
+              style: new TextStyle(
+                  fontSize: itemSize.height * 0.7, color: Color(0xff7592bc)),
+            )
+        ])),
     );
   }
 }

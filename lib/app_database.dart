@@ -3,12 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:maui/db/dao/lesson_dao.dart';
-import 'package:maui/db/dao/lesson_unit_dao.dart';
 import 'package:maui/db/dao/unit_dao.dart';
 import 'package:maui/db/dao/user_dao.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/db/dao/lesson_dao.dart';
+import 'package:maui/db/dao/lesson_unit_dao.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -78,34 +78,38 @@ class AppDatabase {
     new LessonUnitDao()
         .getEagerLessonUnitsBelowSeqAndByConceptId(100, 3)
         .then((r) => print(r));
-    fetchPairData(1, 16).then((p) => print(p));
-    fetchTrueOrFalse(12).then((t) => print(t));
-    fetchRollingData(13, 5).then((r) => print(r));
-    fetchWordWithBlanksData(13).then((c) => print(c));
-    fetchMathData(15).then((m) => print(m));
-    fetchMathData(16).then((m) => print(m));
-    fetchMathData(17).then((m) => print(m));
-    fetchMathData(18).then((m) => print(m));
-    fetchMathData(19).then((m) => print(m));
-    fetchMathData(20).then((m) => print(m));
-    fetchMathData(21).then((m) => print(m));
-    fetchMathData(22).then((m) => print(m));
-    fetchMathData(23).then((m) => print(m));
-    fetchMathData(24).then((m) => print(m));
-    fetchMathData(25).then((m) => print(m));
-    fetchMathData(26).then((m) => print(m));
-    fetchMathData(27).then((m) => print(m));
-    fetchMathData(28).then((m) => print(m));
-    fetchTablesData(36).then((m) => print(m));
-    fetchFillNumberData(57, 4).then((f) => print(f));
+    fetchPairData(57, 16).then((p) => print(p));
+    fetchTrueOrFalse(56).then((t) => print(t));
+    fetchRollingData(56, 5).then((r) => print(r));
+    fetchWordWithBlanksData(56).then((c) => print(c));
+    fetchMathData(1).then((m) => print(m));
+    fetchMathData(2).then((m) => print(m));
+    fetchMathData(3).then((m) => print(m));
+    fetchMathData(4).then((m) => print(m));
+    fetchMathData(5).then((m) => print(m));
+    fetchMathData(6).then((m) => print(m));
+    fetchMathData(7).then((m) => print(m));
+    fetchMathData(8).then((m) => print(m));
+    fetchMathData(9).then((m) => print(m));
+    fetchMathData(10).then((m) => print(m));
+    fetchMathData(11).then((m) => print(m));
+    fetchMathData(12).then((m) => print(m));
+    fetchMathData(13).then((m) => print(m));
+    fetchMathData(14).then((m) => print(m));
+    fetchTablesData(21).then((m) => print(m));
+    fetchFillNumberData(39, 4).then((f) => print(f));
     fetchCrosswordData(1).then((c) => print(c));
-    fetchMultipleChoiceData(58, 3).then((m) => print(m));
-    fetchMultipleChoiceData(60, 6).then((m) => print(m));
-    fetchWordData(61, 10, 3).then((m) => print(m));
-    fetchWordData(62, 8, 5).then((m) => print(m));
-    fetchConsecutiveData(63, 6, 3).then((d) => print(d));
-    fetchConsecutiveData(64, 12, 4).then((d) => print(d));
-    fetchSequenceData(65, 8).then((s) => print(s));
-    fetchSequenceData(67, 12).then((s) => print(s));
+    fetchCirclewrdData(1).then((e) => print(e));
+
+    fetchMultipleChoiceData(1, 3).then((m) => print(m));
+    fetchMultipleChoiceData(4, 6).then((m) => print(m));
+    fetchMultipleChoiceData(56, 6).then((m) => print(m));
+    fetchWordData(56, 10, 3).then((m) => print(m));
+    fetchWordData(4, 8, 5).then((m) => print(m));
+    fetchConsecutiveData(46, 6, 3)
+        .then((d) => print('fetchConsecutiveData: ${d.toString()}'));
+    fetchConsecutiveData(47, 12, 4).then((d) => print(d));
+    fetchSequenceData(1, 8).then((s) => print(s));
+    fetchSequenceData(57, 12).then((s) => print(s));
   }
 }

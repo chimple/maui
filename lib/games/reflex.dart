@@ -120,6 +120,8 @@ class ReflexState extends State<Reflex> {
     return new ResponsiveGridView(
       rows: _size,
       cols: _size,
+      maxAspectRatio: 1.3,
+      padding: 4.0,
       children: _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
     );
   }
