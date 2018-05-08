@@ -381,7 +381,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       });
     controller.forward();
-    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
+    animationWrong = new Tween(begin: -2.0, end: 2.0).animate(controller1);
     _myAnim();
   }
   void _myAnim() {
