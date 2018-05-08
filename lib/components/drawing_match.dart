@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'draw_convert.dart';
@@ -19,11 +20,12 @@ abstract class _DrawPadDelegate {
 
 class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
+  var _maxSize;
 
-  MyDrawPage(this.controller, {Key key}) : super(key: key);
+  MyDrawPage(this.controller, this._maxSize, {Key key}) : super(key: key);
 
   State<StatefulWidget> createState() {
-    return new MyHomePageState(this.controller);
+    return new MyHomePageState(this.controller , this._maxSize);
   }
 }
 
@@ -40,6 +42,7 @@ class DrawLineProperty {
 }
 
 class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
+  bool visible ;
 
   List<DrawLineProperty> _drawLineProperty = [];
 
@@ -47,14 +50,27 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   var color = new Color(0xff000000);
   var width = 8.0;
   DrawPadController _controller;
+  var _maxSize;
 
-  MyHomePageState(controller) {
+  MyHomePageState(controller , _maxSize) {
     this._controller = controller;
+    this._maxSize = _maxSize;
   }
 
   DrawPainting _currentPainter;
 
   void initState() {
+    print("Drawing Match Game Leveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeel $_maxSize");
+    if(_maxSize == 3) {
+      visible = false;
+        print("Flag Before delay $visible");
+        new Future.delayed(const Duration(milliseconds: 4000), () {
+          print("Flag After delay $visible");  
+                  setState(() {
+                    visible = true;
+                  });
+                });   
+    }
     _controller._delegate = this;
   }
 
@@ -62,10 +78,12 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   String _encode(Object object) =>
       const JsonEncoder.withIndent(' ').convert(object);
 
-
   @override
   Widget build(BuildContext context) {
-    return new LayoutBuilder(builder: (context, constraints) {
+
+    if(_maxSize == 1) {
+      /************Level1******************************************/
+      return new LayoutBuilder(builder: (context, constraints) {
       print({"this is constraints of drawing component": constraints});
       MediaQueryData media = MediaQuery.of(context);
       print({"this is mediaaa2:": media.size});
@@ -73,6 +91,82 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       _currentPainter =
       new DrawPainting(_drawLineProperty, media.size); //, color, width);
       return new Container(
+
+       decoration: new BoxDecoration(
+          image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+            image: new AssetImage("assets/apple.png"),
+            fit: BoxFit.fill
+          )
+        ),
+
+        height: constraints.maxHeight, width: constraints.maxWidth,
+          margin: new EdgeInsets.all(5.0),
+            child: new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new GestureDetector(
+                  onPanUpdate: (DragUpdateDetails details) {
+                    setState(() {
+                      RenderBox referenceBox = context.findRenderObject();
+                      Offset localPosition = referenceBox.globalToLocal(
+                          details.globalPosition);
+
+                      Position convertedIntoPercentage = new Position(
+                          localPosition.dx / media.size.width, localPosition.dy / media.size.height);
+                      print({"convert into percentage is : ": convertedIntoPercentage});
+
+                      double tolerence = 0.04;
+
+                      if(_drawLineProperty.length < 1){
+                        _drawLineProperty = new List.from(_drawLineProperty)
+                          ..add(new DrawLineProperty(
+                              convertedIntoPercentage, color, width));
+                      }else{
+                        if(_drawLineProperty.last._position != null){
+                          if(_drawLineProperty.last._position.x+tolerence >  convertedIntoPercentage.x && convertedIntoPercentage.x >  _drawLineProperty.last._position.x-tolerence
+                              && _drawLineProperty.last._position.y+tolerence >  convertedIntoPercentage.y && convertedIntoPercentage.y >  _drawLineProperty.last._position.y-tolerence){
+                            _drawLineProperty = new List.from(_drawLineProperty)
+                              ..add(new DrawLineProperty(
+                                  convertedIntoPercentage, color, width));
+                            print({"the value is added ...." : "point is tolerable"});
+                          }
+                        }else{
+                          _drawLineProperty = new List.from(_drawLineProperty)
+                            ..add(new DrawLineProperty(
+                                convertedIntoPercentage, color, width));
+                        }
+                      }
+                    });
+                  },
+                  onPanEnd: (DragEndDetails details) {
+                    _drawLineProperty.add(
+                        new DrawLineProperty(null, color, width));
+                  },
+                  child: new RepaintBoundary(
+                    child: new CustomPaint(
+                      painter: _currentPainter,
+                      isComplex: true,
+                      willChange: false,
+
+                    ),
+                  )
+              ),
+            ),
+      );
+    }
+    );
+
+    }else if (_maxSize == 2) {
+      /************Level2************************************ */
+        return new LayoutBuilder(builder: (context, constraints) {
+      print({"this is constraints of drawing component": constraints});
+      MediaQueryData media = MediaQuery.of(context);
+      print({"this is mediaaa2:": media.size});
+
+      _currentPainter =
+      new DrawPainting(_drawLineProperty, media.size); //, color, width);
+      return new Container(
+
         height: constraints.maxHeight, width: constraints.maxWidth,
           margin: new EdgeInsets.all(5.0),
           child: new Card(
@@ -126,10 +220,87 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   )
               ),
             ),
-          )
+          ),
       );
     }
     );
+
+    }else {
+      /***********Level3****************************************/
+      return new LayoutBuilder(builder: (context, constraints) {
+      print({"this is constraints of drawing component": constraints});
+      MediaQueryData media = MediaQuery.of(context);
+      print({"this is mediaaa2:": media.size});
+
+      _currentPainter =
+      new DrawPainting(_drawLineProperty, media.size); //, color, width);
+      return new Container(
+
+        height: constraints.maxHeight, width: constraints.maxWidth,
+          margin: new EdgeInsets.all(5.0),
+              child: visible == false ? new Container(   
+                decoration: new BoxDecoration(
+                image: new DecorationImage(
+                colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                image: new AssetImage("assets/apple.png"),
+                fit: BoxFit.fill
+              )
+            ),): new Card(
+            child: new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new GestureDetector(
+                  onPanUpdate: (DragUpdateDetails details) {
+                    setState(() {
+                      RenderBox referenceBox = context.findRenderObject();
+                      Offset localPosition = referenceBox.globalToLocal(
+                          details.globalPosition);
+
+                      Position convertedIntoPercentage = new Position(
+                          localPosition.dx / media.size.width, localPosition.dy / media.size.height);
+                      print({"convert into percentage is : ": convertedIntoPercentage});
+
+                      double tolerence = 0.04;
+
+                      if(_drawLineProperty.length < 1){
+                        _drawLineProperty = new List.from(_drawLineProperty)
+                          ..add(new DrawLineProperty(
+                              convertedIntoPercentage, color, width));
+                      }else{
+                        if(_drawLineProperty.last._position != null){
+                          if(_drawLineProperty.last._position.x+tolerence >  convertedIntoPercentage.x && convertedIntoPercentage.x >  _drawLineProperty.last._position.x-tolerence
+                              && _drawLineProperty.last._position.y+tolerence >  convertedIntoPercentage.y && convertedIntoPercentage.y >  _drawLineProperty.last._position.y-tolerence){
+                            _drawLineProperty = new List.from(_drawLineProperty)
+                              ..add(new DrawLineProperty(
+                                  convertedIntoPercentage, color, width));
+                            print({"the value is added ...." : "point is tolerable"});
+                          }
+                        }else{
+                          _drawLineProperty = new List.from(_drawLineProperty)
+                            ..add(new DrawLineProperty(
+                                convertedIntoPercentage, color, width));
+                        }
+                      }
+                    });
+                  },
+                  onPanEnd: (DragEndDetails details) {
+                    _drawLineProperty.add(
+                        new DrawLineProperty(null, color, width));
+                  },
+                  child: new RepaintBoundary(
+                    child: new CustomPaint(
+                      painter: _currentPainter,
+                      isComplex: true,
+                      willChange: false,
+
+                    ),
+                  )
+              ),
+            ),
+          ),
+      );
+    }
+    );
+    }
   }
 
   void clear() {
@@ -159,8 +330,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     int min = 5;
     int max = 10;
     rnd = new Random();
-    int r = min + rnd.nextInt(max - min);
-    print("$r Rajesh Patillllllllllllllllllllis in the range of $min and $max");
+    int random = min + rnd.nextInt(max - min);
+    print("$random Rajesh Patillllllllllllllllllllis in the range of $min and $max");
 
 
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
@@ -210,7 +381,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     print({"the object is : ": decode});
     var _output = decode;
     print("Rajesh Patillllllll");
-    return r;
+    return random;
   }
   
 

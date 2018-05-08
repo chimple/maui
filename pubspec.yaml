@@ -67,6 +67,10 @@ flutter:
     - assets/animations/test.json
     - assets/animations/heart.json
     - assets/animations/ball.json
+    - assets/hoodie/reflex.png
+    - assets/hoodie/2x/reflex.png
+    - assets/hoodie/3x/reflex.png
+    - assets/hoodie/4x/reflex.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

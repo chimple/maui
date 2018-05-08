@@ -13,14 +13,15 @@ class ProgressCircle extends StatefulWidget {
   }
 }
 
-class _ProgressCircleState extends State<ProgressCircle> with SingleTickerProviderStateMixin {
+class _ProgressCircleState extends State<ProgressCircle>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    if(widget.time != null) {
+    if (widget.time != null) {
       _controller = new AnimationController(
           duration: new Duration(milliseconds: widget.time), vsync: this);
       _animation = new Tween(begin: 1.0, end: 0.0).animate(_controller)
@@ -42,7 +43,9 @@ class _ProgressCircleState extends State<ProgressCircle> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return new CircularProgressIndicator(
-      backgroundColor: Theme.of(context).primaryColor,
+      valueColor:
+          new AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+      strokeWidth: 8.0,
       value: _animation != null ? _animation.value : widget.progress,
     );
   }
