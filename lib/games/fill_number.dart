@@ -47,7 +47,7 @@ class MyFillnumberState extends State<Fillnumber> {
       Ansr = 0,
       x = 0,
       y,
-      z=3,
+      z = 3,
       count1 = 0;
 
   List<String> num3 = [];
@@ -123,7 +123,7 @@ class MyFillnumberState extends State<Fillnumber> {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
-         index: index,
+        index: index,
         status: status,
         bgstatus: bgstatus,
         onPress: () {
@@ -133,7 +133,7 @@ class MyFillnumberState extends State<Fillnumber> {
               setState(() {
                 ssum = '$text';
                 print('qwer $ssum');
-                 _center.add(index);
+                _center.add(index);
               });
 
               val = index;
@@ -143,10 +143,9 @@ class MyFillnumberState extends State<Fillnumber> {
               });
               print('helo this is in status os the values stored n $_statuses');
 
+              print(
+                  "hello this repeating one value once level is completed $ssum");
 
-              print("hello this repeating one value once level is completed $ssum");
-
-             
               _Index.add(index);
               sum = sum + text;
               if (sum == Ansr) {
@@ -233,17 +232,14 @@ class MyFillnumberState extends State<Fillnumber> {
                   center == _size + _size ||
                   center == _size + _size + _size) {
                 x = center;
-              }
-
-              else if (center == _size-1 ||
-                  center == _size+ _size-1 ||
-                  center == _size + _size+ _size-1) {
-
+              } else if (center == _size - 1 ||
+                  center == _size + _size - 1 ||
+                  center == _size + _size + _size - 1) {
                 y = center;
-              print("hello this iiis yyyy$y");
+                print("hello this iiis yyyy$y");
               }
 
-              if (( (index == center + R && y!= center )||
+              if (((index == center + R && y != center) ||
                   index == center + B ||
                   (index == center - L && x != center) ||
                   index == center - T)) {
@@ -293,8 +289,10 @@ class MyFillnumberState extends State<Fillnumber> {
                             count = count + 1;
                           }
                         });
-                        setState(() { ssum = '';});
-                        
+                        setState(() {
+                          ssum = '';
+                        });
+
                         _letters.removeWhere((value) => value == null);
                         for (var i = 0; i < count; i++) {
                           _letters.add(null);
@@ -335,14 +333,14 @@ class MyFillnumberState extends State<Fillnumber> {
                       print("helllo this letters$k");
                       if (_letters[z] == null) {
                         setState(() {
-                        print("its reload time ");
+                          print("its reload time ");
                           k = 0;
                           Ansr = 0;
                           ssum = '';
                           sum = 0;
                           _Index.removeRange(0, _Index.length);
                           _letters.removeRange(0, _letters.length);
-                            _center.removeRange(0, _center.length);
+                          _center.removeRange(0, _center.length);
                         });
                         new Future.delayed(const Duration(milliseconds: 250),
                             () {
@@ -409,13 +407,12 @@ class MyFillnumberState extends State<Fillnumber> {
                 color: Colors.orange,
                 height: 40.0,
                 child: new Center(
-                  
                     child: new Text("$ssum",
                         style: new TextStyle(
                             color: Colors.black, fontSize: 30.0)))),
             new Expanded(
                 child: new ResponsiveGridView(
-                  padding: new EdgeInsets.all(0.0),
+              padding: 0.0,
               rows: _size,
               cols: _size,
               maxAspectRatio: 1.0,
@@ -431,7 +428,13 @@ class MyFillnumberState extends State<Fillnumber> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.index,this.status, this.bgstatus, this.onPress})
+  MyButton(
+      {Key key,
+      this.text,
+      this.index,
+      this.status,
+      this.bgstatus,
+      this.onPress})
       : super(key: key);
 
   final int text;
@@ -448,7 +451,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   int _displayText;
-  
 
   initState() {
     super.initState();
@@ -489,22 +491,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         //   borderRadius: new BorderRadius.circular(.0),
         // ),
         child: new ScaleTransition(
-          scale: animation,
-          child: new GestureDetector(
-
-              child: new RaisedButton(
-                  onPressed: () => widget.onPress(),
-       
-                  color: widget.status == Status.Visible
-                      ? new Color(0xFFffffff)
-                      : Colors.teal,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0))),
-                  child: new Text("$_displayText",
-                  key: new Key(widget.index.toString()+"but"),
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
-        ));
+      scale: animation,
+      child: new GestureDetector(
+          child: new RaisedButton(
+              onPressed: () => widget.onPress(),
+              color: widget.status == Status.Visible
+                  ? new Color(0xFFffffff)
+                  : Colors.teal,
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.all(new Radius.circular(8.0))),
+              child: new Text("$_displayText",
+                  key: new Key(widget.index.toString() + "but"),
+                  style: new TextStyle(color: Colors.black, fontSize: 24.0)))),
+    ));
   }
 }
