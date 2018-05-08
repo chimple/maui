@@ -722,8 +722,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 new Container(
 //                    padding:  new EdgeInsets.only(bottom:constraints.maxHeight*0.04),
                     child: new Table(
-                      defaultColumnWidth:
-                          new FractionColumnWidth(constraints.maxWidth>constraints.maxHeight?constraints.maxWidth * 0.000099:constraints.maxWidth * 0.00015),
+//                      defaultColumnWidth:
+//                          new FractionColumnWidth(constraints.maxWidth>constraints.maxHeight?constraints.maxWidth * 0.000099:constraints.maxWidth * 0.00015),
                       children: <TableRow>[
                         new TableRow(children: <Widget>[
                           new Padding(
