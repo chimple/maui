@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
@@ -11,10 +12,10 @@ class TapWrong extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
- int gameCategoryId;
+  GameConfig gameConfig;
  bool isRotated;
 
-  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
+  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig, this.isRotated=false})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ Tuple2<List<String>,List<String>> data;
     numOFWrongElem=0;
     _dispText='';
      setState(() => _isLoading = true);
-data=await fetchWordData(widget.gameCategoryId,3,2);
+data=await fetchWordData(widget.gameConfig.gameCategoryId,3,2);
    print('datat  ${data.item1}');
     data.item1.forEach((d) {
      
