@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:maui/games/single_game.dart';
 class WordFight extends StatefulWidget {
  Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
- int gameCategoryId;
+GameConfig gameConfig;
  bool isRotated;
 
-  WordFight({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
+  WordFight({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig, this.isRotated=false})
       : super(key: key);
 
   @override
