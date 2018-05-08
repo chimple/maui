@@ -78,6 +78,7 @@ class DrawScreen extends State<Drawing> {
                                 child: new Text("Send"),
                                 color: Colors.blue,
                                 onPressed: _onSend,
+                                key: new Key('send_btn'),
                               ),
                             ]
                         )
