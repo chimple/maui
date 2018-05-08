@@ -60,13 +60,12 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       leftIsTapped = 0,
       leftSideTextIndex = 0;
   bool _isLoading = true;
-  int indexL,
-      flag = 0,
-      flag1 = 0,
-      correct = 0,
-      _wrongAttem = 0,
-      _constant = 0,
-      _constant1 = 0;
+  int indexL, flag = 0, flag1 = 0, correct = 0, _wrongAttem = 0;
+  List<String> image = [
+    'assets/back.jpg',
+    'assets/back1.jpg',
+    'assets/background.jpg'
+  ];
   List<int> _shake = [];
   @override
   Widget build(BuildContext context) {
@@ -113,6 +112,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     // );
   }
 
+  int _constant, _constant1;
   void initState() {
     super.initState();
     print("initState called::");
@@ -132,6 +132,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _constant = 1;
       _constant1 = 2;
     }
+   
     _initBoard();
     new Future.delayed(
       const Duration(milliseconds: 1000),
@@ -254,6 +255,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       // if (identical(question, answer)) {
 
       setState(() {
+        //  _lettersLeft[indexText1] = null;
+        // _lettersRight[indexText2] = null;
+        //_statusShake[indexRightbutton] = Status.Dump;
+        //_statusColorChange[indexLeftButton] = Status.Disable;
         _shake[indexRightbutton] = 1;
       });
       correct++;
@@ -263,6 +268,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     } else {
       leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
+        //widget.onScore(-1);
         try {
           setState(() {
             _shake[indexRightbutton] = 1;
@@ -285,25 +291,30 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _wrongAttem++;
       }
     }
-    print("Wrong :: $_wrongAttem");
-    print("Correct $correct");
-    if (_wrongAttem >= (correct - _constant ) && _wrongAttem ==( _nextTask - _constant1)) {
+    if (_wrongAttem >= correct - _constant && _wrongAttem == _nextTask - _constant1) {
+      _wrongAttem = 0;
       widget.onScore(-correct);
-
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+      correct = 0;
+      new Future.delayed(const Duration(milliseconds: 700), () {
         widget.onEnd();
-
-        _wrongAttem = 0;
-        correct = 0;
+        // _initBoard();
       });
     }
     if (correct == _nextTask) {
-      //print('Game Over::');
+      print('Game Over::');
       print("score::$correct-$_wrongAttem}");
       widget.onScore(-_wrongAttem);
-
+      //setState(() {});
       new Future.delayed(const Duration(milliseconds: 1000), () {
+        _leftSideletters.clear();
+        _rightSideLetters.clear();
+        _shuffledLetters.clear();
+        _shuffledLetters1.clear();
+        _lettersLeft.clear();
+        _lettersRight.clear();
+        _shake.clear();
         widget.onEnd();
+        // _initBoard();
         _wrongAttem = 0;
         correct = 0;
       });
