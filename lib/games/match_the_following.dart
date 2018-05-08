@@ -56,7 +56,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   final int score = 2;
   int indexText1, indexText2, indexLeftButton;
   int _oldIndexforLeftButton = 0,
-      _nextTask = 6,
+      _nextTask,
       leftIsTapped = 0,
       leftSideTextIndex = 0;
   bool _isLoading = true;
@@ -132,7 +132,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _constant = 1;
       _constant1 = 2;
     }
-   
+
     _initBoard();
     new Future.delayed(
       const Duration(milliseconds: 1000),
@@ -180,6 +180,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _shake.add(0);
     }
     setState(() => _isLoading = false);
+    print("All data :: $_allLetters");
   }
 
   Widget _buildLeftSide(BuildContext context) {
@@ -291,7 +292,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _wrongAttem++;
       }
     }
-    if (_wrongAttem >= correct - _constant && _wrongAttem == _nextTask - _constant1) {
+    if (_wrongAttem >= correct - _constant &&
+        _wrongAttem == _nextTask - _constant1) {
       _wrongAttem = 0;
       widget.onScore(-correct);
       correct = 0;
@@ -300,10 +302,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         // _initBoard();
       });
     }
+
     if (correct == _nextTask) {
-      print('Game Over::');
-      print("score::$correct-$_wrongAttem}");
+      //print('Game Over::');
+      //  print("score::$correct-$_wrongAttem}");
+      _wrongAttem = 0;
+      correct = 0;
       widget.onScore(-_wrongAttem);
+
       //setState(() {});
       new Future.delayed(const Duration(milliseconds: 1000), () {
         _leftSideletters.clear();
@@ -314,11 +320,12 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _lettersRight.clear();
         _shake.clear();
         widget.onEnd();
+
         // _initBoard();
-        _wrongAttem = 0;
-        correct = 0;
       });
     }
+    print("Correct ::$correct ");
+    print("Total task:: $_nextTask");
   }
 }
 
