@@ -119,12 +119,13 @@ else {_size=p.length;}
   }
 
   Widget _buildItem(int index, String text,int stat,String flag) {
-
+ Size size=MediaQuery.of(context).size;
     final TextEditingController t1= new TextEditingController(text: text);
     return new MyButton(
       key:new  ValueKey<int>(index),
       text: text,
       index: index,
+      screenSize:size.width,
       colorflag: stat,
       size: _size,
       flag:flag,
@@ -289,6 +290,7 @@ print("result==$result");
 
   @override
   Widget build(BuildContext context) {
+     Size size=MediaQuery.of(context).size;
     print("MyTableState.build");
 print("letters1 $_letters1");
 print("letters $_letters");
@@ -304,12 +306,12 @@ print('flagsss      $flags');
     int j=0;
    return new Column(
      children: <Widget>[
-       new Container(
-         child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
-       ),
+      //  new Container(
+      //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+      //  ),
        new Container(
          height: 80.0,
-         width: 200.0,
+         width: size.width,
          child: new ResponsiveGridView(
            padding: new EdgeInsets.all(0.0),
            rows: 1,
@@ -368,12 +370,12 @@ class Shake extends AnimatedWidget {
 
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.index,this.onac,this.colorflag,this.size,this.flag}) : super(key: key);
+  MyButton({Key key, this.text,this.index,this.onac,this.colorflag,this.size,this.flag,this.screenSize}) : super(key: key);
  
   final String text;
   final DragTargetAccept onac;
   final int colorflag;
-  final int textflag;
+  final double screenSize;
   String flag;
 final int size;
 List<String> letters;
@@ -404,7 +406,7 @@ String let='';
         controller1 =new
         AnimationController(duration:new Duration(milliseconds:500), vsync: this);
    // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
-   animation1= new Tween(begin: -60.0, end: 00.0).animate(controller1)
+   animation1= new Tween(begin: -widget.screenSize/10, end: 00.0).animate(controller1)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         
@@ -414,7 +416,7 @@ String let='';
         }
       }
       );
-animation = new Tween(begin: 60.0, end: 00.0).animate(controller)
+animation = new Tween(begin: widget.screenSize/10, end: 00.0).animate(controller)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         
@@ -443,10 +445,21 @@ animation = new Tween(begin: 60.0, end: 00.0).animate(controller)
     print("_MyButtonState.didUpdateWidget: ${widget.flag} ${oldWidget.flag}");
   
   }
+   @override
+  void dispose() {
+   
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
 
-var tt='';
+var tt=0.0;
   @override
   Widget build(BuildContext context) {
+     Size size=MediaQuery.of(context).size;
+if(size.height>size.width)
+tt=size.width;
+else tt=size.height;
     print("_MyButtonState.build");
 
    if(widget.index>=100){
@@ -463,7 +476,7 @@ return  new Center(
       child: new Center(child:new Text(widget.text,
       key: new Key(widget.index.toString()+"but"),
        style:new
-                            TextStyle(color: Colors.red,))),
+                            TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 20.0))),
     )
   )
 
@@ -479,9 +492,9 @@ return  new Center(
         shape: BoxShape.rectangle
         
       ), padding: new EdgeInsets.all(10.0),
-      child: new Text(widget.text,
+      child: new Text(widget.text,textAlign: TextAlign.center,
        style:new
-                            TextStyle(color: Colors.red, )) ,
+                            TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: tt/30 )) ,
     );
    }
    else{
@@ -494,7 +507,7 @@ return  new Center(
              
                  new Container(
         //  height: 4000.0,
-          width: 3.0,
+          width: tt/140,
           color: Colors.black,
         ), //new Column(  
     new Shake(
@@ -508,16 +521,17 @@ return  new Center(
                
   //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
              child:  new Container(
+               margin: new EdgeInsets.only(top: 5.0),
             // height: 10.0,
            //  width: 10.0,
           decoration:widget.text!=''? new BoxDecoration(
         color: Colors.red[400],
         shape: BoxShape.circle, 
       ):new BoxDecoration(), padding: new EdgeInsets.all(5.0),
-                    child:new Text(widget.text,
-                        style:new
-                            TextStyle(color: Colors.white, fontSize: 24.0))),
-                        
+                    // child:new Text(widget.text,
+                    //     style:new
+                    //         TextStyle(color: Colors.white, fontSize: 34.0))),
+             ) 
              ),
              feedback: new Container(),
                          //   onDragStarted: ()=>widget.onac(widget.index),

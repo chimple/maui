@@ -218,7 +218,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 10), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
         controller1 = new AnimationController(
         duration: new Duration(milliseconds: 40), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -239,6 +239,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controller1.forward();
   }
+  @override
+  void dispose() {
+ 
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");

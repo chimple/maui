@@ -544,6 +544,7 @@ class _SingleGameState extends State<SingleGame> {
       case 'tap_wrong':
         return new Tuple2(
             new TapWrong(
+                key: new GlobalObjectKey(keyName),
                 onScore: _onScore,
                 onProgress: _onProgress,
                 onEnd: () => _onEnd(context),
