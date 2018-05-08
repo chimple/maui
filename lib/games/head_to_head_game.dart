@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'single_game.dart';
 
 class HeadToHeadGame extends StatefulWidget {
@@ -19,6 +20,15 @@ class HeadToHeadGame extends StatefulWidget {
 class HeadToHeadGameState extends State<HeadToHeadGame> {
   int _myScore = 0;
   int _otherScore = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
 
   setMyScore(int score) {
     _myScore = score;
@@ -96,5 +106,11 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                     onGameEnd: onGameEnd)),
             new Expanded(child: myGame)
           ]);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
   }
 }
