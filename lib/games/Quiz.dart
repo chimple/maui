@@ -157,7 +157,10 @@ class QuizState extends State<Quiz> {
               new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [new QuestionText(questionText, keys, ht, wd)]
+                  children: [
+                    new Expanded(
+                      child: new QuestionText(questionText, keys, ht, wd)
+                    )]
               ),
 
 
@@ -219,13 +222,10 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     widget.keys++;
     return new Material(
       child: new Container(
-        height: widget.ht * 0.22,
+        height: widget.ht * 0.35,
         width: widget.wd * 0.6,
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(25.0),
-          color: const Color(0xFF8ecd4e),
-          
-        ),
+        color: const Color(0xFF8ecd4e),
+        
         child: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

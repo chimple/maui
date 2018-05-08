@@ -87,7 +87,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       print("My Height - $ht");
       print("My Width - $wd");
       return new Material(
-      color: const Color(0xFF54cc70),
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
