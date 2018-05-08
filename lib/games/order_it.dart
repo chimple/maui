@@ -31,7 +31,7 @@ class OrderIt extends StatefulWidget {
   }
 }
 
-class OrderItState extends State<OrderIt> {
+class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
   int _size = 12;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -40,10 +40,21 @@ class OrderItState extends State<OrderIt> {
   int cnt = 0;
   int flag = 0;
   int temp = 0;
+  AnimationController controller, shakeController;
+  Animation<double> animation , noAnimation, shakeAnimation;
   @override
   void initState() {
     super.initState();
      print('OrderItState:initState');
+     controller = new AnimationController(duration: new Duration(milliseconds: 800), vsync: this);
+     noAnimation = new Tween(begin: 0.0,end:0.0).animate(controller);
+     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+      ..addStatusListener((state) {
+        print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+          print('dismissed');         
+        }
+      });
 
     if (widget.gameConfig.level < 4) {
       _maxSize = 5;
@@ -52,7 +63,14 @@ class OrderItState extends State<OrderIt> {
     } else {
       _maxSize = 12;
     }
+     controller.forward();
     _initBoard();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   void _initBoard() async {
@@ -96,7 +114,7 @@ class OrderItState extends State<OrderIt> {
                     isRotated: widget.isRotated,
                     items: _letters,
                     itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
-                      ? new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt) 
+                      ? new Size(constraints.maxWidth * 0.65, constraints.maxHeight * hgt) 
                       : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.8),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
@@ -124,31 +142,34 @@ class OrderItState extends State<OrderIt> {
        });
     }
    
-        return new Container( 
-        key: new Key("orderableDataWidget${data.dataIndex}"),
-        decoration: new BoxDecoration(  
-            border: new Border.all(color: Color(0xff7592bc), width: 3.0),
-            boxShadow: [
-              new BoxShadow(
-              color: const Color(0x44000000),
-                spreadRadius: 2.0,
-                offset: const Offset(0.0, 1.0),
+        return new ScaleTransition(
+          scale: animation,
+          child: new Container( 
+          key: new Key("orderableDataWidget${data.dataIndex}"),
+          decoration: new BoxDecoration(  
+              border: new Border.all(color: Color(0xff7592bc), width: 3.0),
+              boxShadow: [
+                new BoxShadow(
+                color: const Color(0x44000000),
+                  spreadRadius: 2.0,
+                  offset: const Offset(0.0, 1.0),
+                )
+              ],
+           borderRadius: new BorderRadius.circular(12.0), 
+           color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.white: Colors.orange,
+          ),
+          width: itemSize.width,
+          height: itemSize.height,
+          child: new Center(
+                child: new Column(children: [
+              new Text(
+                "${data.value}",
+                style: new TextStyle(
+                    fontSize: itemSize.height * 0.7, color: Color(0xff7592bc)),
               )
-            ],
-         borderRadius: new BorderRadius.circular(12.0), 
-         color: data != null && !data.selected ? data.dataIndex == data.visibleIndex ? Colors.lime : Colors.white: Colors.orange,
-        ),
-        width: itemSize.width,
-        height: itemSize.height,
-        child: new Center(
-              child: new Column(children: [
-            new Text(
-              "${data.value}",
-              style: new TextStyle(
-                  fontSize: itemSize.height * 0.7, color: Color(0xff7592bc)),
-            )
-        ])),
-    );
+          ])),
+    ),
+        );
   }
 }
 
