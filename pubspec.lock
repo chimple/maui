@@ -7,7 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.31.1"
+    version: "0.31.2-alpha.2"
   args:
     dependency: transitive
     description:
@@ -147,7 +147,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9+1"
+    version: "1.0.12"
   event_stream:
     dependency: transitive
     description:
@@ -218,7 +218,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0-alpha.9"
+    version: "0.1.0-alpha.12"
   glob:
     dependency: transitive
     description:
@@ -323,7 +323,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0-alpha.9"
+    version: "0.3.0-alpha.12"
   logging:
     dependency: transitive
     description:
@@ -624,5 +624,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.35 <=2.0.0-edge.c080951d45e79cd25df98036c4be835b284a269c"
+  dart: ">=2.0.0-dev.35 <=2.0.0-edge.3c4dccbd46f152be9e1b6ca95c57357e8e48057c"
   flutter: ">=0.1.4 <2.0.0"
