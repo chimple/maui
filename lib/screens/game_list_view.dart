@@ -39,7 +39,6 @@ class GameListView extends StatelessWidget {
         mainAxisSpacing: 4.0,
         crossAxisCount: media.size.height > media.size.width ? 4 : 6,
         children: <Widget>[
-
           _buildButton(context, 'reflex', 'Reflex',
               new Icon(Icons.collections, size: iconSize), Colors.amberAccent),
           _buildButton(context, 'order_it', 'order_it',
@@ -122,11 +121,11 @@ class GameListView extends StatelessWidget {
               'first_word',
               new Icon(Icons.child_friendly, size: iconSize),
               Colors.amberAccent),
-          _buildButton(
+              _buildButton(
               context,
-              'friend_word',
-              'friend_word',
-              new Icon(Icons.voice_chat, size: iconSize),
+              'circle_word',
+              'circle_word',
+              new Icon(Icons.account_balance, size: iconSize),
               Colors.amberAccent),
         ]);
   }

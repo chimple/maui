@@ -2,10 +2,11 @@
     "id": "Shapes.png",
     "height": 286.0,
     "width": 370.0,
+    "num" : 4,
     "parts": [
         {
             "name": "square",
-            "color":"red",
+            "color": "0XFFFFCDD2",
             "data": {
                 "height": 100.0,
                 "width": 100.0,
@@ -15,7 +16,7 @@
         },
         {
             "name": "circle",
-            "color":"blue",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 120.0,
                 "width": 120.0,
@@ -25,7 +26,7 @@
         },
         {
             "name": "hexagon",
-            "color":"green",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 116.264,
                 "width": 100.687,
@@ -34,7 +35,7 @@
         },
         {
             "name": "triangle",
-            "color":"yellow",
+            "color":"0XFFFFCDD2",
             "data": {
                 "height": 130.0,
                 "width": 130.0,
