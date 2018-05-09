@@ -273,6 +273,13 @@ class WordgridState extends State<Wordgrid> {
 
   @override
   Widget build(BuildContext context) {
+      if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     var j = 0;
 
     return new ResponsiveGridView(
@@ -350,6 +357,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void _handleTouch() {
     print(widget.text);
     controller.reverse();
+  }
+   @override
+  void dispose() {
+    
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
   }
 
   @override

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/jitter.dart';
 
 class Nima extends StatefulWidget {
-  int score;
-  Nima(this.score);
+  final String name;
+  final int score;
+  Nima({this.name, this.score});
 
   @override
   _NimaState createState() {
@@ -21,7 +22,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _prevScore = widget.score;
-    _emotion = 'neutral';
+    _emotion = '';
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     shakeAnimation = new Tween(begin: -1.0, end: 1.0).animate(shakeController)
@@ -30,7 +31,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
             state == AnimationStatus.completed) {
           shakeController.reset();
           setState(() {
-            _emotion = 'neutral';
+            _emotion = '';
           });
         }
       });
@@ -47,7 +48,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
             if (state == AnimationStatus.completed) {
 //              scaleController.reset();
               setState(() {
-                _emotion = 'neutral';
+                _emotion = '';
               });
             }
           });
@@ -56,11 +57,11 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (_prevScore < widget.score) {
-      _emotion = 'happy';
+      _emotion = '_happy';
       print('emotion: $_emotion');
       scaleController.forward(from: 0.7);
     } else if (_prevScore > widget.score) {
-      _emotion = 'sad';
+      _emotion = '_sad';
       shakeController.forward();
     }
     print('emotion: $_emotion');
@@ -70,7 +71,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
         child: new Jitter(
             animation: shakeAnimation,
             child: new Image.asset(
-              'assets/hoodie/reflex.png',
+              'assets/hoodie/${widget.name}$_emotion.png',
               height: 100.0,
             )));
   }
