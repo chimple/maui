@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_circle.dart';
-import 'package:maui/games/ClueGame.dart';
+import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/abacus.dart';
@@ -79,7 +79,7 @@ class SingleGame extends StatefulWidget {
   final Key key;
 
   static final Map<String, List<Color>> gameColors = {
-    'reflex': [Color(0xFF533f72), Color(0xFFffb300), Color(0xFFDB5D40)],
+    'reflex': [Color(0xFF6D3A6A), Color(0xFFFF80AB), Color(0xFFDB5D40)],
     'abacus': [Color(0xFF492515), Color(0xFFffb300), Color(0xFF713D72)],
     'bingo': [Color(0xFF52c5ce), Color(0xFFfafafa), Color(0xFFE25A9B)],
     'calculate_numbers': [
@@ -167,59 +167,47 @@ class _SingleGameState extends State<SingleGame> {
     print(media.size);
     print(widget.key.toString());
     var colors = SingleGame.gameColors[widget.gameName];
-    var theme = new ThemeData(primaryColor: colors[0], buttonColor: colors[1]);
+    var theme = new ThemeData(primaryColor: colors[0], accentColor: colors[1]);
     var game = buildSingleGame(context, widget.gameDisplay.toString());
     return new Theme(
         data: theme,
-        child: new Scaffold(
+        child: Scaffold(
             resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.white,
-            body: media.size.height > media.size.width ||
-                    widget.gameDisplay != GameDisplay.single
-                ? new Column(children: <Widget>[
-                    new Material(
-                        elevation: 8.0,
-                        color: theme.primaryColor,
-                        child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: widget.gameDisplay == GameDisplay.single
-                                ? <Widget>[
-                                    new Expanded(
-                                      child: new Row(children: <Widget>[
-                                        new InkWell(
-                                            child: new Icon(Icons.arrow_back),
-                                            onTap: () =>
-                                                Navigator.of(context).pop()),
-                                        _hud(context)
-                                      ]),
-                                      flex: 1,
-                                    ),
-                                    new Expanded(
-                                        child: new Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: new Nima(_score)),
-                                        flex: 1),
-                                    new Expanded(
-                                        child: new Text('$_score'), flex: 1)
-                                  ]
-                                : <Widget>[
-                                    _hud(context),
-                                    new Text('$_score')
-                                  ])),
-                    new Expanded(child: game)
-                  ])
-                : new Row(children: <Widget>[
-                    new Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: widget.gameDisplay == GameDisplay.single
-                            ? <Widget>[
-                                new Nima(_score),
-                                new Text('$_score'),
-                                _hud(context)
-                              ]
-                            : <Widget>[new Text('$_score'), _hud(context)]),
-                    new Expanded(child: game)
-                  ])));
+            body: new Column(children: <Widget>[
+              new Material(
+                  elevation: 8.0,
+                  color: colors[0],
+                  child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: widget.gameDisplay == GameDisplay.single
+                          ? <Widget>[
+                              new Expanded(
+                                child: new Row(children: <Widget>[
+                                  new InkWell(
+                                      child: new Icon(Icons.arrow_back),
+                                      onTap: () => Navigator.of(context).pop()),
+                                  _hud(context)
+                                ]),
+                                flex: 1,
+                              ),
+                              new Expanded(
+                                  child: new Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: new Nima(_score)),
+                                  flex: 1),
+                              new Expanded(child: new Text('$_score'), flex: 1)
+                            ]
+                          : <Widget>[_hud(context), new Text('$_score')])),
+              new Expanded(
+                  child: new Stack(fit: StackFit.expand, children: <Widget>[
+                Image.asset(
+                  'assets/background_tile.png',
+                  repeat: ImageRepeat.repeat,
+                ),
+                game
+              ]))
+            ])));
   }
 
   _hud(BuildContext context) {
@@ -272,7 +260,7 @@ class _SingleGameState extends State<SingleGame> {
 
   _onScore(int incrementScore) {
     setState(() {
-      _score += incrementScore;
+      _score = max(0, _score + incrementScore);
     });
     if (widget.onScore != null) widget.onScore(_score);
   }
@@ -418,7 +406,7 @@ class _SingleGameState extends State<SingleGame> {
         break;
       case 'fill_in_the_blanks':
         playTime = 20000;
-        maxIterations = 5;
+        maxIterations = 10;
         return new FillInTheBlanks(
             key: new GlobalObjectKey(keyName) ,
             onScore: _onScore ,
