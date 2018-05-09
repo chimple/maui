@@ -24,7 +24,7 @@ class FlipAnimatorState extends State<FlipAnimator> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
     return new Stack(
-          //fit: StackFit.expand,
+          fit: StackFit.expand,
           children: <Widget>[
             new AnimatedBuilder(
               child: widget.front,
