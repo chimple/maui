@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'single_game.dart';
+import 'package:maui/screens/score_screen.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class HeadToHeadGame extends StatefulWidget {
   final String gameName;
@@ -40,31 +42,16 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   onGameEnd(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
-    showDialog<String>(
-        context: context,
-        child: new AlertDialog(
-            content: media.size.height > media.size.width
-                ? new Column(
-                    children: <Widget>[
-                      new Expanded(
-                          child: new RotatedBox(
-                        child: new Text('$_otherScore'),
-                        quarterTurns: 2,
-                      )),
-                      new Expanded(child: new Text('$_myScore'))
-                    ],
-                  )
-                : new Row(
-                    children: <Widget>[
-                      new Expanded(
-                          child: new Center(child: new Text('$_otherScore'))),
-                      new Expanded(
-                          child: new Center(child: new Text('$_myScore')))
-                    ],
-                  ))).then<Null>((String s) {
-      Navigator.pop(context);
-    });
+    Navigator.of(context).pop();
+    Navigator.push(context,
+        new MaterialPageRoute<void>(builder: (BuildContext context) {
+      return new ScoreScreen(
+        gameName: widget.gameName,
+        gameDisplay: GameDisplay.myHeadToHead,
+        myUser: AppStateContainer.of(context).state.loggedInUser,
+        myScore: _myScore,
+      );
+    }));
   }
 
   @override
