@@ -426,14 +426,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller2 = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controller.addStatusListener((state) {
-//        print("$state:${animationRight.value}");
-////        if (state == AnimationStatus.completed) {
-//////        /  print('dismissed');
-//////          if (!widget.text.isEmpty) {
-//////            setState(() => _displayText = widget.text);
-//////            controller.stop();
-//////          }
-////        }
     });
     controller.forward();
     animationWrong = new Tween(begin: -2.0, end: 2.0).animate(controller1);
