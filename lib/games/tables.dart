@@ -30,7 +30,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
   final int _size = 3;
   String _question = "";
   String _result = "";
-  int _count = 0;
+  int _count = 0, score = 0;
   int _wrong = 0;
   int _answer;
   bool _isLoading = true;
@@ -60,7 +60,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     super.initState();
     animationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
-    animation = new Tween(begin: 0.0, end: 20.0).animate(animationController);
+    animation = new Tween(begin: 0.0, end: 15.0).animate(animationController);
     _initBoard();
   }
 
@@ -123,7 +123,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             }
 
             if (int.parse(_result) == _answer) {
-              widget.onScore(1);
+              widget.onScore(4);
               widget.onProgress((_count + 1) / _tableShuffledData.length);
               setState(() {
                 _count = _count + 1;
@@ -135,17 +135,24 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _answer = _tableShuffledData[_count].item4;
                 _result = "";
                 _wrong = 0;
+                score = score + 4;
               });
             }
             else {
+              if(score > 0) {
+                print("Score $score");
+                widget.onScore(-1);
+              }
               _myAnim();
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _wrong = _wrong + 1;
                   _result = "";
+                  score = score > 0 ? score - 1 : score;
                 });
                 animationController.stop();
-                if (_wrong == 2) {
+                if (_wrong == 4) {
+                  widget.onProgress((_count + 1) / _tableShuffledData.length);
                   setState(() {
                     _isShowingFlashCard = true;
                     _wrong = 0;
@@ -221,14 +228,13 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       }
       return new Center(
           child: new Container(
-            color: new Color(0XFFF39B6D),
             child: new Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Container (
-                    margin: new EdgeInsets.only(bottom: _height * 0.1),
+                    margin: new EdgeInsets.only(bottom: _height * 0.05),
                     alignment: Alignment.center,
-                    color: new Color(0X00000000),
+                    color: Colors.blue,
                     child: new Text(
                       '$_question',
                       key: new Key('question'),
@@ -245,11 +251,13 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                     height: _height,
                     width: _width,
                   ),
-                  new Container(
-                    child: new Center(
-                      child: new Table(children: rows),
-                    ),
-                  )
+                  new Padding(
+                    padding: new EdgeInsets.only(
+                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
+                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
+                        bottom: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.03:constraints.maxWidth*0.03),
+                    child: new Table(children: rows),
+                  ),
                 ]),
           ));
     });
@@ -277,7 +285,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  int __count = 0;
 
   initState() {
     super.initState();
@@ -310,32 +317,37 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
-
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
     return new TableCell(
         child: new Padding(
-            padding: new EdgeInsets.all(widget.height * 0.001),
-            child: new ScaleTransition(
-                scale: animation,
-                child: new RaisedButton(
-                    elevation: 12.0,
-                    splashColor: Colors.white,
-                    highlightColor: Colors.grey,
-                    onPressed: () => widget.onPress(),
-                    padding: new EdgeInsets.all(widget.height * 0.02),
-                    color: new Color(0XFFFED2B7),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius:
-                        new BorderRadius.all(
-                            new Radius.circular(widget.height * 0.09))),
-                    child: new Text(_displayText,
-                        key: new Key('keyPad$__count'),
-                        style: new TextStyle(
-                            color: Colors.black,
-                            fontSize: widget.height * 0.05))))));
+            padding:new EdgeInsets.all( widget.height * 0.008 ),
+            child: new RaisedButton(
+                splashColor: Theme.of(context).primaryColor,
+                highlightColor: Theme.of(context).primaryColor,
+                onPressed: () => widget.onPress(),
+                padding: new EdgeInsets.all(widget.height * 0.028),
+                color: Colors.white,
+                shape: new RoundedRectangleBorder(
+                    side: new BorderSide(
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        width:widget.height * 0.0075),
+                    borderRadius:
+                    new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
+                child: new Center(
+                  child: new Text(_displayText,
+                      key: new Key('keyPad'),
+                      style: new TextStyle(
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
+                          fontSize: _displayText == '✖' || _displayText == '✔'
+                              ? widget.height * 0.053
+                              : widget.height * 0.06,
+                          fontWeight: FontWeight.bold)),
+                )))
+      // )
+    );
   }
+
 }
 
 class TextAnimation extends AnimatedWidget {
@@ -351,15 +363,23 @@ class TextAnimation extends AnimatedWidget {
       return new Center(
           child: new Container(
               height: height * 0.12,
-              width: width / 3.0,
+              width: height / 4.0,
               alignment: Alignment.center,
-              color: new Color(0XFF734052),
               margin: new EdgeInsets.only(
-                  left: animation.value ?? 0, bottom: height * 0.09),
+                  left: animation.value ?? 0, bottom: height * 0.05),
+              decoration: new BoxDecoration(
+                  color:  Colors.white,
+                  borderRadius: new BorderRadius.all(
+                      new Radius.circular(height * 0.015)),
+                  border: new Border.all(
+                    color: Colors.blueAccent,
+                    width: height * 0.0075,
+                  ),
+                  shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
                     color: Colors.black,
-                    fontSize: height * 0.1,
+                    fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
 }

@@ -109,6 +109,7 @@ class _CasinoState extends State<Casino> {
     return new Container(
       // height: 100.0,
       // width: 50.0,
+
       padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
@@ -128,12 +129,21 @@ class _CasinoState extends State<Casino> {
               print("buttonNumber  $buttonNumber is triggered");
 
               for (int i = 0; i < givenWordList.length; i++) {
-                if (buttonNumber == i &&
-                    givenWordList[i] == scrollingLetterList[index]) {
+                if (buttonNumber == i) {
                   print(
-                      "correct index $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
-                  lst.add(scrollingLetterList[index]);
-                  count++;
+                      "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
+                  if (givenWordList[i] == scrollingLetterList[index]) {
+                    print("Letters matched");
+                    lst.add(scrollingLetterList[index]);
+                    count++;
+                  } else if (givenWordList[i] != scrollingLetterList[index] &&
+                      lst.isNotEmpty) {
+                    print("Letters are not equal");
+                    if (lst.contains(givenWordList[i])) {
+                      print("Letter removed");
+                      lst.removeAt(i);
+                    }
+                  }
                 }
               }
               lst.sort();
@@ -143,6 +153,7 @@ class _CasinoState extends State<Casino> {
               finalList = new List<String>.from(finalSet);
 
               print(" finalList = $finalList");
+
               print(" finalGivenWordList = $finalGivenWordList");
               print("count = $count");
               if (const IterableEquality()
@@ -206,7 +217,7 @@ class _CasinoState extends State<Casino> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Container(
-              height: 100.0,
+              height: 200.0,
               width: 200.0,
               color: new Color(0xffff52c5ce),
               child: new Center(
@@ -217,18 +228,24 @@ class _CasinoState extends State<Casino> {
                 overflow: TextOverflow.clip,
                 style: new TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 50.0,
+                    fontSize: 100.0,
                     letterSpacing: 5.0,
                     color: Colors.white),
               ))),
           new Expanded(
-            child: new ResponsiveGridView(
-              cols: data.length,
-              rows: 1,
-              maxAspectRatio: 0.7,
-              children: data.map((s) {
-                return _buildScrollButton(s, scrollbuttonNumber++);
-              }).toList(growable: false),
+            child: new Container(
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius:
+                      new BorderRadius.all(const Radius.circular(16.0))),
+              child: new ResponsiveGridView(
+                cols: data.length,
+                rows: 1,
+                maxAspectRatio: 0.7,
+                children: data.map((s) {
+                  return _buildScrollButton(s, scrollbuttonNumber++);
+                }).toList(growable: false),
+              ),
             ),
           ),
         ],

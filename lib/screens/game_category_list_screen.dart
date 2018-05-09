@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/repos/game_category_repo.dart';
@@ -16,7 +17,7 @@ class GameCategoryListScreen extends StatefulWidget {
 }
 
 class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
-  List<GameCategory> _gameCategories;
+  List<Tuple2<int, String>> _gameCategories;
   bool _isLoading = false;
 
   @override
@@ -27,13 +28,8 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .getGameCategoriesByGame(widget.game)
         .then((gameCategories) {
       if (gameCategories.isEmpty) {
-        gameCategories = <GameCategory>[
-          new GameCategory(
-              id: 1,
-              seq: 1,
-              game: widget.game,
-              conceptId: 1,
-              name: 'Todo Placeholder')
+        gameCategories = <Tuple2<int, String>>[
+          new Tuple2<int, String>(1, 'Todo Placeholder')
         ];
       }
 
@@ -55,7 +51,8 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
               )
             : new Scaffold(
                 appBar: new AppBar(title: new Text('Categories')),
-                body: new GameCategoryList(gameCategories: _gameCategories),
+                body: new GameCategoryList(
+                    game: widget.game, gameCategories: _gameCategories),
               ));
   }
 }
