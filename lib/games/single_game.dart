@@ -552,7 +552,12 @@ class _SingleGameState extends State<SingleGame> {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: _iteration,
-            isRotated: widget.isRotated);
+            isRotated: widget.isRotated,
+              gameConfig: new GameConfig(
+                gameCategoryId: widget.gameCategoryId,
+                questionUnitMode: UnitMode.values[random.nextInt(3)],
+                answerUnitMode: UnitMode.values[random.nextInt(3)],
+                level: random.nextInt(10) + 1));
         break;
       case 'wordgrid':
         return new Wordgrid(
