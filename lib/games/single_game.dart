@@ -199,7 +199,9 @@ class _SingleGameState extends State<SingleGame> {
                               new Expanded(
                                   child: new Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: new Nima(_score)),
+                                      child: new Nima(
+                                          name: widget.gameName,
+                                          score: _score)),
                                   flex: 1),
                               new Expanded(child: new Text('$_score'), flex: 1)
                             ]
