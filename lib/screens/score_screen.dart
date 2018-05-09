@@ -32,19 +32,73 @@ class ScoreScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new Row(
+                children: <Widget>[
+                  new Padding(
+                padding: new EdgeInsets.only(left: 10.0),
+              ),
+
+              new Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: scores),
+                
+                new Padding(
+                  padding: new EdgeInsets.only(right: 10.0),
+                ),
+                
+                myScore > 0 ? {(myScore>10 && myScore<20) ? new Icon(Icons.home) : new Icon(icon)} : 
+                ],
+              ),  
+              
               new Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(
+                  new Container(
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: new Border.all(
+                        color: Colors.white,
+                        width: 2.5,
+                      ),
+                      color: Colors.white
+                    ),
+                    child: IconButton(
                     icon: new Icon(Icons.home),
                     onPressed: () => Navigator.of(context).pushNamed('/tab'),
                   )
+                  ),
+                  new Container(
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: new Border.all(
+                        color: Colors.white,
+                        width: 2.5,
+                      ),
+                      color: Colors.white
+                    ),
+                    child: IconButton(
+                    icon: new Icon(Icons.fast_forward),
+                    onPressed: () => Navigator.of(context).pushNamed('/tab'),
+                  ),
+                  ),
+                  
+                  new Container(
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: new Border.all(
+                        color: Colors.white,
+                        width: 2.5,
+                      ),
+                      color: Colors.white
+                    ),
+                    child: IconButton(
+                    icon: new Icon(Icons.refresh),
+                    onPressed: () => Navigator.of(context).pushNamed('/tab'),
+                  ),
+                  ),
                 ],
               )
             ]));

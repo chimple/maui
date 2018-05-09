@@ -146,7 +146,6 @@ class QuizState extends State<Quiz> {
       print("My Height - $ht");
       print("My Width - $wd");
       return new Material(
-          color: const Color(0xF8C43C),
           child: new Column(
             children: <Widget>[
 
@@ -157,16 +156,35 @@ class QuizState extends State<Quiz> {
               new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [new QuestionText(questionText, keys, ht, wd)]
+                  children: [
+                    new Expanded(
+                      child: new QuestionText(questionText, keys, ht, wd)
+                    )]
               ),
 
+              new Padding(
+                padding: new EdgeInsets.all(ht * 0.1),
+              ),
 
-              new Expanded(
-                  child: new ResponsiveGridView(
+              new Row(
+                children: <Widget>[
+                 new Padding(
+                padding: new EdgeInsets.only(left: 50.0),
+              ),
+
+               new Expanded(
+                 child: new ResponsiveGridView(
                     rows: _size,
                     cols: _size,
                     children: choice.map((e) => _buildItem(_statuses[j], j++, e)).toList(growable: false),
-                  ) )
+                  )),
+
+                  new Padding(
+                padding: new EdgeInsets.only(right: 50.0),
+              ),
+                ]
+              )
+               
             ],
           ) ); });
   }
@@ -218,15 +236,14 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     widget.keys++;
     return new Material(
-      color: const Color(0xFFf8c43c),
+      color: const Color(0xFFed4a79),
       child: new Container(
-        height: widget.ht * 0.22,
+        height: widget.ht * 0.6,
         width: widget.wd * 0.6,
         decoration: new BoxDecoration(
           borderRadius: new BorderRadius.circular(25.0),
-          color: const Color(0xFF8ecd4e),
           border: new Border.all(
-            color: const Color(0xFFf8c43c),
+            color: const Color(0xFFed4a79),
           ),
         ),
         child: new Center(
@@ -237,9 +254,9 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
               new Text(widget._question,
                   key: new Key('question'),
                   style: new TextStyle(
-                      color: Colors.black,
+                      color: const Color(0xFF35C9C1),
                       fontSize: widget.ht > widget.wd
-                          ? widget.ht * 0.06
+                          ? widget.ht * 0.1
                           : widget.wd * 0.06,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic)),
