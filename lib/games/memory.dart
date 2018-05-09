@@ -37,6 +37,8 @@ class MemoryState extends State<Memory> {
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters = [];
+  List<String> _allLettersUpperCase = [];
+  List<String> _allLettersLowerCase = [];
   List<String> _shuffledLetters = [];
   List<String> _letters;
   List<Status> _statuses;
@@ -48,6 +50,7 @@ class MemoryState extends State<Memory> {
   var _pressedTile;
   var _pressedTileIndex;
   var cnt = 0;
+  int var1, var2, flag1=0, flag2 = 0;
 
   @override
   void initState() {
@@ -56,9 +59,9 @@ class MemoryState extends State<Memory> {
      if (widget.gameConfig.level < 4) {
       _maxSize = 2;
     } else if (widget.gameConfig.level < 7) {
-      _maxSize = 4;
+      _maxSize = 8;
     } else {
-      _maxSize = 4;
+      _maxSize = 8;
     }
     _initBoard();
   }
@@ -66,23 +69,26 @@ class MemoryState extends State<Memory> {
   void _initBoard() async {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
-    _data = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
     _data.forEach((k, v) {
       _allLetters.add(k);
+      _allLettersUpperCase.add(k);
       _allLetters.add(v);
+      _allLettersLowerCase.add(v);
     });
+    
     print("Rajesh-Data-after-Mapping: ${_allLetters}");
+    print("Rajesh-Data-after-Mapping _allletters1: ${_allLettersUpperCase}");
+    print("Rajesh-Data-after-Mapping _allLetters2: ${_allLettersLowerCase}");
 
     _size = min(_maxSize, sqrt(_allLetters.length).floor());
     _shuffledLetters = [];
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
-      _shuffledLetters.addAll(
-          _allLetters.skip(i).take(_size * _size).toList(growable: false)
+    _shuffledLetters.addAll(
+          _allLetters.take(_size * _size).toList(growable: false)
             ..shuffle());
-    }
     print("Rajesh-Data-after-Shuffling: ${_shuffledLetters}");
     _letters = _shuffledLetters.sublist(0, _size * _size);
     _statuses = [];
@@ -132,17 +138,28 @@ class MemoryState extends State<Memory> {
           print("Pressed Statuses1: ${_statuses}");
 
           if (cnt == 2) {
-            if (_pressedTile == text) {
-              new Future.delayed(const Duration(milliseconds: 250), () {
-                setState(() {
-                  _letters[_pressedTileIndex] = null;
-                  _letters[index] = null;
-                  _statuses[_pressedTileIndex] = Status.Disappear;
-                  _statuses[index] = Status.Disappear;
-                  _pressedTileIndex = -1;
-                  _pressedTile = null;
-                  cnt = 0;
-                });
+              if (flag1==1)
+              {
+                var2=_allLettersUpperCase.indexOf(text);
+                flag1=0;
+              }
+              else {
+                var1=_allLettersLowerCase.indexOf(text);
+                flag2=0;
+              }
+
+             if(var1 == var2) {
+                print("Olaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                new Future.delayed(const Duration(milliseconds: 250), () {
+                  setState(() {
+                    _letters[_pressedTileIndex] = null;
+                    _letters[index] = null;
+                    _statuses[_pressedTileIndex] = Status.Disappear;
+                    _statuses[index] = Status.Disappear;
+                    _pressedTileIndex = -1;
+                    _pressedTile = null;
+                    cnt = 0;
+                  });
               });
 
               _matched++;
@@ -160,8 +177,8 @@ class MemoryState extends State<Memory> {
               }
               print("Pressed Statuses2: ${_statuses}");
               print("Matched");
-            } 
-            else {
+             }
+             else {
               new Future.delayed(const Duration(milliseconds: 50), () {
                 setState(() {
                   _shaker[_pressedTileIndex] = ShakeCell.Wrong;
@@ -188,13 +205,23 @@ class MemoryState extends State<Memory> {
               });
 
               print("Unmatched");
-            }
+             }
+           
             print("Pressed Statuses4: ${_statuses}");
             return;
           }
           _pressedTileIndex = index;
           _pressedTile = text;
-        });
+          if (_allLettersLowerCase.indexOf(_pressedTile) >= 0)
+          {
+            var1 = _allLettersLowerCase.indexOf(_pressedTile);
+            flag1 = 1;
+           }
+          else {
+            var2 = _allLettersUpperCase.indexOf(_pressedTile);
+            flag2 = 1;
+          }
+     });
   }
 
   @override
