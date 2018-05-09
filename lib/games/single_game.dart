@@ -69,7 +69,7 @@ enum Learning { literacy, maths }
 
 class SingleGame extends StatefulWidget {
   final String gameName;
-  final int gameCategoryId;
+  final GameConfig gameConfig;
   final Function onGameEnd;
   final Function onScore;
   final GameMode gameMode;
@@ -127,7 +127,7 @@ class SingleGame extends StatefulWidget {
       {this.key,
       this.gameMode = GameMode.iterations,
       this.gameDisplay = GameDisplay.single,
-      this.gameCategoryId,
+      this.gameConfig,
       this.onGameEnd,
       this.onScore,
       this.isRotated = false})
@@ -312,7 +312,6 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   Widget buildSingleGame(BuildContext context, String keyName) {
-    Random random = new Random();
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
@@ -324,11 +323,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'order_it':
         playTime = 15000;
@@ -340,11 +335,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'true_or_false':
         playTime = 15000;
@@ -356,7 +347,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'identify':
         return new IdentifyGame(
@@ -375,11 +366,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'drawing':
         return new Drawing(
@@ -405,11 +392,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'fill_in_the_blanks':
         playTime = 20000;
@@ -421,7 +404,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'clue_game':
         return new ClueGame(
@@ -430,7 +413,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'casino':
         return new Casino(
@@ -440,7 +423,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'crossword':
         return new Crossword(
@@ -459,7 +442,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'match_the_following':
         playTime = 15000;
@@ -471,11 +454,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'calculate_numbers':
         playTime = 25000;
@@ -486,7 +465,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'memory':
         playTime = 15000;
@@ -498,11 +477,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'fill_number':
         return new Fillnumber(
@@ -512,7 +487,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'quiz':
         playTime = 15000;
@@ -524,7 +499,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'connect_the_dots':
         return new Connectdots(
@@ -534,7 +509,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'tap_home':
         playTime = 60000;
@@ -545,7 +520,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'tap_wrong':
         return new TapWrong(
@@ -568,7 +543,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'guess':
         return new GuessIt(
@@ -585,7 +560,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'circle_word':
         return new Circleword(
@@ -595,7 +570,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameCategoryId);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
 
       case 'draw_challenge':
@@ -607,11 +582,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'friend_word':
         maxIterations = 1;
@@ -622,11 +593,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'first_word':
         return new FirstWord(
@@ -646,11 +613,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
     }
     return null;

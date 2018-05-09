@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'single_game.dart';
@@ -6,10 +7,10 @@ import 'single_game.dart';
 class HeadToHeadGame extends StatefulWidget {
   final String gameName;
   final GameMode gameMode;
-  final int gameCategoryId;
+  final GameConfig gameConfig;
 
   HeadToHeadGame(this.gameName,
-      {this.gameMode = GameMode.iterations, @required this.gameCategoryId});
+      {this.gameMode = GameMode.iterations, @required this.gameConfig});
 
   @override
   HeadToHeadGameState createState() {
@@ -74,7 +75,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
       key: new GlobalObjectKey('SingleGame.my'),
       gameMode: widget.gameMode,
       gameDisplay: GameDisplay.myHeadToHead,
-      gameCategoryId: widget.gameCategoryId,
+      gameConfig: widget.gameConfig,
       onScore: setMyScore,
       onGameEnd: onGameEnd,
     );
@@ -87,7 +88,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                           key: new GlobalObjectKey('SingleGame.other'),
                           gameMode: widget.gameMode,
                           gameDisplay: GameDisplay.otherHeadToHead,
-                          gameCategoryId: widget.gameCategoryId,
+                          gameConfig: widget.gameConfig,
                           onScore: setOtherScore,
                           onGameEnd: onGameEnd,
                           isRotated: true),
@@ -101,7 +102,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                     key: new GlobalObjectKey('SingleGame.other'),
                     gameDisplay: GameDisplay.otherHeadToHead,
                     gameMode: widget.gameMode,
-                    gameCategoryId: widget.gameCategoryId,
+                    gameConfig: widget.gameConfig,
                     onScore: setOtherScore,
                     onGameEnd: onGameEnd)),
             new Expanded(child: myGame)
