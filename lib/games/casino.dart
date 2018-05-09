@@ -139,7 +139,7 @@ class _CasinoState extends State<Casino> {
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
                       lst.isNotEmpty) {
                     print("Letters are not equal");
-                    if (lst.contains(givenWordList[i])) {
+                    if (lst.contains(givenWordList[i]) && buttonNumber==i) {
                       print("Letter removed");
                       lst.removeAt(i);
                     }
