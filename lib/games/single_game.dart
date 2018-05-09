@@ -304,6 +304,8 @@ class _SingleGameState extends State<SingleGame> {
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(
+          gameName: widget.gameName,
+          gameDisplay: GameDisplay.single,
           myUser: AppStateContainer.of(context).state.loggedInUser,
           myScore: _score,
         );
@@ -530,11 +532,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-              gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+            gameConfig: widget.gameConfig);
         break;
       case 'wordgrid':
         return new Wordgrid(
