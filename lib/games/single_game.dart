@@ -406,7 +406,7 @@ class _SingleGameState extends State<SingleGame> {
         break;
       case 'fill_in_the_blanks':
         playTime = 20000;
-        maxIterations = 5;
+        maxIterations = 10;
         return new FillInTheBlanks(
             key: new GlobalObjectKey(keyName) ,
             onScore: _onScore ,
