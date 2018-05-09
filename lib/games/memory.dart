@@ -49,8 +49,8 @@ class MemoryState extends State<Memory> {
   var _progressCnt = 1;
   var _pressedTile;
   var _pressedTileIndex;
-  var cnt = 0;
-  int var1, var2, flag1=0, flag2 = 0;
+  var _clickCnt = 0;
+  int _firstClickedId, _secondClickedId, _allLettersUpperCaseTriggred = 0, _allLettersLowerCaseTriggred = 0;
 
   @override
   void initState() {
@@ -69,7 +69,7 @@ class MemoryState extends State<Memory> {
   void _initBoard() async {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
-    _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
+    _data = await fetchPairData(widget.gameConfig.gameCategoryId,  8);
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
@@ -126,10 +126,10 @@ class MemoryState extends State<Memory> {
 
           int numOfVisible = _statuses.fold(0,(prev, element) => element == Status.Visible ? prev + 1 : prev);
 
-          if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || cnt > 2) 
+          if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || _clickCnt > 2) 
             return;
 
-          cnt++;
+          _clickCnt++;
 
           setState(() {
             _statuses[index] = Status.Visible;
@@ -137,18 +137,18 @@ class MemoryState extends State<Memory> {
 
           print("Pressed Statuses1: ${_statuses}");
 
-          if (cnt == 2) {
-              if (flag1==1)
+          if (_clickCnt == 2) {
+
+              if (_allLettersUpperCaseTriggred==1)
               {
-                var2=_allLettersUpperCase.indexOf(text);
-                flag1=0;
+                _secondClickedId=_allLettersLowerCase.indexOf(text);
+                _allLettersUpperCaseTriggred=0;
               }
               else {
-                var1=_allLettersLowerCase.indexOf(text);
-                flag2=0;
+                _firstClickedId=_allLettersUpperCase.indexOf(text);
+                _allLettersLowerCaseTriggred=0;
               }
-
-             if(var1 == var2) {
+             if(_firstClickedId == _secondClickedId) {
                 print("Olaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   setState(() {
@@ -158,7 +158,7 @@ class MemoryState extends State<Memory> {
                     _statuses[index] = Status.Disappear;
                     _pressedTileIndex = -1;
                     _pressedTile = null;
-                    cnt = 0;
+                    _clickCnt = 0;
                   });
               });
 
@@ -168,7 +168,7 @@ class MemoryState extends State<Memory> {
               _progressCnt++;
 
               print("Rajesh-Matched${_matched}");
-              if (_matched == ((_maxSize*_maxSize)/2)) {
+              if (_matched == ((_size*_size)/2)) {
                 _matched = 0;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
@@ -199,7 +199,7 @@ class MemoryState extends State<Memory> {
                   _statuses[index] = Status.Hidden;
                   _pressedTileIndex = -1;
                   _pressedTile = null;
-                  cnt = 0;
+                  _clickCnt = 0;
                 });
                 print("Pressed Statuses3: ${_statuses}");
               });
@@ -212,14 +212,14 @@ class MemoryState extends State<Memory> {
           }
           _pressedTileIndex = index;
           _pressedTile = text;
-          if (_allLettersLowerCase.indexOf(_pressedTile) >= 0)
+          if (_allLettersUpperCase.indexOf(_pressedTile) >= 0)
           {
-            var1 = _allLettersLowerCase.indexOf(_pressedTile);
-            flag1 = 1;
+            _firstClickedId = _allLettersUpperCase.indexOf(_pressedTile);
+            _allLettersUpperCaseTriggred = 1;
            }
           else {
-            var2 = _allLettersUpperCase.indexOf(_pressedTile);
-            flag2 = 1;
+            _secondClickedId = _allLettersLowerCase.indexOf(_pressedTile);
+            _allLettersLowerCaseTriggred = 1;
           }
      });
   }
