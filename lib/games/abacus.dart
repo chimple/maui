@@ -303,42 +303,47 @@ class AbacusState extends State<Abacus> {
         child: new CircularProgressIndicator(),
       );
     }
-    int k=100;
-    int j=0;
-   return new Column(
-     children: <Widget>[
-      //  new Container(
-      //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
-      //  ),
-       new Container(
-         height: 80.0,
-         width: size.width,
-         child: new ResponsiveGridView(
-           padding:0.0,
-           rows: 1,
-           cols: 5,
-           children: _letters1.map((e) => _buildItem(k, e,status[k++-100],flags[1])).toList(growable: false),
-         ),
-       ),
-       new Container(height: 4.0,
-       color: Colors.pink,
-       ),
-       new Expanded(
-         child: new ResponsiveGridView(
-          
-           padding: 0.0,
-          // mainAxisSpacing: 0.0,
-          // crossAxisSpacing: 0.0,
-           rows: 14,
-           cols: _size,
-           children: _letters.map((e) => _buildItem(j, e,status[1],flags[j++])).toList(growable: false),
-         ),
-       ), new Container(height: 4.0,
-       color: Colors.pink,
-       ),
-     ],
-   );
-  
+    int k = 100;
+    int j = 0;
+    return new Column(
+      children: <Widget>[
+        //  new Container(
+        //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+        //  ),
+        new Container(
+          height: 80.0,
+          width: size.width,
+          child: new ResponsiveGridView(
+            padding: 0.0,
+            rows: 1,
+            cols: 5,
+            children: _letters1
+                .map((e) => _buildItem(k, e, status[k++ - 100], flags[1]))
+                .toList(growable: false),
+          ),
+        ),
+        new Container(
+          height: 4.0,
+          color: Colors.pink,
+        ),
+        new Expanded(
+          child: new ResponsiveGridView(
+            padding: 0.0,
+            // mainAxisSpacing: 0.0,
+            // crossAxisSpacing: 0.0,
+            rows: 14,
+            cols: _size,
+            children: _letters
+                .map((e) => _buildItem(j, e, status[1], flags[j++]))
+                .toList(growable: false),
+          ),
+        ),
+        new Container(
+          height: 4.0,
+          color: Colors.pink,
+        ),
+      ],
+    );
   }
 }
 
