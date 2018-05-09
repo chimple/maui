@@ -139,7 +139,12 @@ print('disp text   $_dispText');
             num1++;
           numOFWrongElem++;
        print('array 1           $arr1');
-      arr1.removeAt(index);
+        new Future.delayed(const Duration(milliseconds: 200), () {
+                  setState(() {
+                 //   _statusList.removeAt(index);
+                  arr1.removeAt(index);
+                  });});
+    
       print('array 1 after     $arr1');
             widget.onScore(2);
             widget.onProgress(num1 / others.length);
