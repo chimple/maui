@@ -67,13 +67,16 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     'assets/background.jpg'
   ];
   List<int> _shake = [];
+  String loading = 'Loading..';
+  int c1 = 0;
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return new SizedBox(
-        width: 10.0,
-        height: 10.0,
-        child: new CircularProgressIndicator(),
+      return new Center(
+        child: new Text(
+          loading,
+          style: new TextStyle(fontSize: 40.0, color: Colors.green),
+        ),
       );
     }
 
@@ -141,7 +144,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
-    //super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     // print(oldWidget.iteration);
     //print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -188,6 +191,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
+      maxAspectRatio: 1.3,
+      maxChars: _nextTask,
+      padding: 4.0,
       //padding: const EdgeInsets.all(5.0),
       // maxAspectRatio: 4.0,
       children: _lettersLeft
@@ -230,6 +236,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
+      maxChars: _nextTask,
+      padding: 4.0,
+      maxAspectRatio: 1.3,
       children: _lettersRight
           .map((e) => _buildItemsRight(j, e, _shake[j++]))
           .toList(growable: false),
@@ -269,7 +278,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     } else {
       leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
-        //widget.onScore(-1);
+        widget.onScore(-1);
         try {
           setState(() {
             _shake[indexRightbutton] = 1;
