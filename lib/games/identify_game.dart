@@ -73,7 +73,7 @@ class _IdentifyGameState extends State<IdentifyGame> {
     return new ResponsiveGridView(
       rows: r,
       cols: 5,
-      maxAspectRatio: 5.0,
+      // maxAspectRatio: 5.0,
       children:
         (_decoded["parts"] as List).map((e)=>_buildItems(j++,e)).toList(growable:false),
     );
@@ -82,9 +82,9 @@ class _IdentifyGameState extends State<IdentifyGame> {
 Widget _buildItems(int i,var part){
   print(part);
   return new DragBox(
-    key: new ValueKey<int>(i),
-    part: part,
-  );  
+      key: new ValueKey<int>(i),
+      part: part,
+    );  
   
   // return new Text("data");
 }
@@ -111,12 +111,12 @@ Widget _buildItems(int i,var part){
                   new Expanded(
                     flex: 2,
                     child: new GestureDetector(
-                      onVerticalDragStart: (d) => print("dragging vertically"),
                       onHorizontalDragStart: (d) => print("dragging horizontally"),
+      onVerticalDragStart: (d) => print("dragging vertically"),
                                           child: new Image(
-                        image: AssetImage('assets/' + _decoded["id"]),
-                        fit: BoxFit.contain,
-                      ),
+                          image: AssetImage('assets/' + _decoded["id"]),
+                          fit: BoxFit.contain,
+                        ),
                     ),
                   ),
                   new Expanded(
@@ -232,54 +232,54 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     return new ScaleTransition(
       scale: shakeAnimation,
       child: new Draggable(
-        data: part["name"],
-        child: new AnimatedDrag(
-            animation: (_flag == 0) ? noanimation : animation,
-            draggableColor: Colors.red,
-            draggableText: part["name"]),
-        feedback: new AnimatedFeedback(
-            animation: animation,
-            draggableColor: Colors.black,
-            draggableText: part["name"]),
-        onDraggableCanceled: (velocity, offset) {
-          setState(() {
-            if ((part["name"] == _decoded["parts"][0]["name"]) &&
-                (offset.dx > 0.0 && offset.dx < 100.0) &&
-                (offset.dy > 0.0 && offset.dy < 100.0)) {
-              // position = offset;
-              print(offset.dx);
-              print(offset.dy);
-            } else if (part["name"] == _decoded["parts"][1]["name"] &&
-                (offset.dx > (_width - 130) && offset.dx < 370.0) &&
-                (offset.dy > 0.0 && offset.dy < 120.0)) {
-              // position = offset;
-              print(offset.dx);
-              print(offset.dy);
-            } else if (part["name"] == _decoded["parts"][3]["name"] &&
-                (offset.dx > 0.0 && offset.dx < 130.0) &&
-                (offset.dy > 160.0 && offset.dy < 290.0)) {
-              // position = offset;
-              print(offset.dx);
-              print(offset.dy);
-            } else if (part["name"] == _decoded["parts"][2]["name"] &&
-                (offset.dx > (_width - 110) && offset.dx < 370.0) &&
-                (offset.dy > 170 && offset.dy < 290.0)) {
-              // position = offset;
-              print(offset.dx);
-              print(offset.dy);
-            } else {
-              _flag = 1;
-              toAnimateFunction();
-              new Future.delayed(const Duration(milliseconds: 1000), () {
-                setState(() {
-                  _flag = 0;
+          data: part["name"],
+          child: new AnimatedDrag(
+              animation: (_flag == 0) ? noanimation : animation,
+              draggableColor: Colors.red,
+              draggableText: part["name"]),
+          feedback: new AnimatedFeedback(
+              animation: animation,
+              draggableColor: Colors.black,
+              draggableText: part["name"]),
+          onDraggableCanceled: (velocity, offset) {
+            setState(() {
+              if ((part["name"] == _decoded["parts"][0]["name"]) &&
+                  (offset.dx > 0.0 && offset.dx < 100.0) &&
+                  (offset.dy > 0.0 && offset.dy < 100.0)) {
+                // position = offset;
+                print(offset.dx);
+                print(offset.dy);
+              } else if (part["name"] == _decoded["parts"][1]["name"] &&
+                  (offset.dx > (_width - 130) && offset.dx < 370.0) &&
+                  (offset.dy > 0.0 && offset.dy < 120.0)) {
+                // position = offset;
+                print(offset.dx);
+                print(offset.dy);
+              } else if (part["name"] == _decoded["parts"][3]["name"] &&
+                  (offset.dx > 0.0 && offset.dx < 130.0) &&
+                  (offset.dy > 160.0 && offset.dy < 290.0)) {
+                // position = offset;
+                print(offset.dx);
+                print(offset.dy);
+              } else if (part["name"] == _decoded["parts"][2]["name"] &&
+                  (offset.dx > (_width - 110) && offset.dx < 370.0) &&
+                  (offset.dy > 170 && offset.dy < 290.0)) {
+                // position = offset;
+                print(offset.dx);
+                print(offset.dy);
+              } else {
+                _flag = 1;
+                toAnimateFunction();
+                new Future.delayed(const Duration(milliseconds: 1000), () {
+                  setState(() {
+                    _flag = 0;
+                  });
+                  controller.stop();
                 });
-                controller.stop();
-              });
-            }
-          });
-        },
-      ),
+              }
+            });
+          },
+        ),
     );
   }
 }
