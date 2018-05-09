@@ -33,6 +33,7 @@ class ReflexState extends State<Reflex> {
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters;
+  List<String> _solvedLetters = [];
   var _currentIndex = 0;
   List<String> _shuffledLetters = [];
   List<String> _letters;
@@ -78,10 +79,11 @@ class ReflexState extends State<Reflex> {
     }
   }
 
-  Widget _buildItem(int index, String text) {
+  Widget _buildItem(int index, String text, int maxChars) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+        maxChars: maxChars,
         onPress: () {
           print('_buildItem.onPress');
           if (text == _allLetters[_currentIndex]) {
@@ -94,6 +96,11 @@ class ReflexState extends State<Reflex> {
             });
             widget.onScore(1);
             widget.onProgress(_currentIndex / _allLetters.length);
+            new Future.delayed(const Duration(milliseconds: 250), () {
+              setState(() {
+                _solvedLetters.insert(0, text);
+              });
+            });
             if (_currentIndex >= _allLetters.length) {
               new Future.delayed(const Duration(milliseconds: 250), () {
                 widget.onEnd();
@@ -107,7 +114,7 @@ class ReflexState extends State<Reflex> {
 
   @override
   Widget build(BuildContext context) {
-//    print("ReflexState.build");
+    MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new Center(
           child: new SizedBox(
@@ -117,20 +124,55 @@ class ReflexState extends State<Reflex> {
       ));
     }
     int j = 0;
-    return new ResponsiveGridView(
-      rows: _size,
-      cols: _size,
-      maxAspectRatio: 1.3,
-      children: _letters.map((e) => _buildItem(j++, e)).toList(growable: false),
+    var maxChars = _size *
+        (_allLetters != null
+            ? _allLetters.fold(
+                1,
+                (prev, element) =>
+                    element.length > prev ? element.length : prev)
+            : 1);
+
+    return new Column(
+      children: <Widget>[
+        new LimitedBox(
+            maxHeight: media.size.height / 10,
+            child: new Material(
+                color: Theme.of(context).accentColor,
+                elevation: 4.0,
+                textStyle: new TextStyle(
+                    color: Colors.white,
+                    fontSize: max(12.0, min(36.0, 96.0 - 2.9 * maxChars))),
+                child: new ListView(
+                    reverse: true,
+                    scrollDirection: Axis.horizontal,
+                    children: _solvedLetters
+                        .map((l) => new Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                            child: Text(l)))
+                        .toList(growable: false)))),
+        new Expanded(
+            child: ResponsiveGridView(
+          rows: _size,
+          cols: _size,
+          maxAspectRatio: 1.3,
+          padding: 4.0,
+          maxChars: maxChars,
+          children: _letters
+              .map((e) => _buildItem(j++, e, maxChars))
+              .toList(growable: false),
+        ))
+      ],
     );
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress}) : super(key: key);
+  MyButton({Key key, this.text, this.onPress, this.maxChars}) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
+  final int maxChars;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -181,6 +223,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new UnitButton(
           onPress: widget.onPress,
           text: _displayText,
+          maxChars: widget.maxChars,
           unitMode: UnitMode.text,
         ));
   }

@@ -32,19 +32,22 @@ class FriendWordState extends State<FriendWord> {
   var flag1 = 0;
   var correct = 0;
   var keys = 0;
+  static int  _size = 9;
   List<String> data = ['' , '' , '' , '' , '' , '' , '' , '' , ''];
   List<String> _rightwords = [];
   List<String> dragData = ['c' , 'a' , 't' , 'r'];
   List<String> _letters = new List();
   List<String> _data2 = new List();
-  List<int> _data3 = new List();
+  List<int> _starList = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
   List _sortletters = [];
   bool _isLoading = true;
   String img , dragdata;
+  var L ,R;
   int _rows , _cols , code , dindex , dcode;
-  int len , _rightlen , _rightcols;
+  static double  x = _size/2.ceil();
+  int median=4;
   List<String> arr = new List<String>();
   @override
   void initState() {
@@ -53,13 +56,70 @@ class FriendWordState extends State<FriendWord> {
   }
 
   void _initBoard() async {
+
     setState(() => _isLoading = true);
 //    List<String> arr = new List<String>();
+
+    print("thhiiis kiiirran mean value is $median");
     for(var i=0;i<99;i++)
     {
-      arr.add("a");
+      arr.add(" $i");
       print({"this is an array":arr});
     }
+    _starList.add(median);
+
+    for(var j =0;j <4;j++)
+      {
+         median = median +_size - 1;
+         L = median;
+         _starList.add(median);
+
+         print("this is $L");
+         print("this is ${_size * median}");
+      }
+      median=4;
+      print(" ths value o llllll id $L");
+    if(L ==(_size * median))
+      { median=L;
+        print(" its comming in if");
+        for(var j=0;j<4;j++ ){
+          median = median + _size+1;
+
+          _starList.add(median);
+          L=median;
+
+        }
+
+      }
+median =4;
+    for (var j= 0;j<4;j++)
+    {
+      median = median + _size +1;
+      R = median;
+      _starList.add(median);
+    }
+    median=4;
+    print(" ths value o llllll id $L");
+    if(R ==((_size * median)+(_size-1)))
+    { median=R;
+    print(" its comming in if");
+    for(var j=0;j<4;j++ ){
+      median = median + _size - 1;
+
+      _starList.add(median);
+      R = median;
+
+    }
+
+    }
+
+    _starList.forEach((e){
+      arr[e]="*";
+    });
+
+
+
+
     _flag.length = data.length + dragData.length +1;
     for (var i = 0; i < _flag.length; i++) {
       _flag[i] = 0;
@@ -75,6 +135,11 @@ class FriendWordState extends State<FriendWord> {
         color1: 1 ,
         onAccepted: (dcindex) {
           print('dataa $dcindex');
+          print({"array data index":arr[index]});
+          setState(() {
+            arr[index] = dcindex;
+          });
+//          arr[index] = dcindex;
 
         } ,
 //        flag: flag ,
@@ -251,7 +316,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
-        data: '${widget.index}'+'_'+'${widget.code}',
+        data: _displayText,
         child: new ScaleTransition(
             scale: animation,
             child: new Container(
