@@ -228,13 +228,13 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       }
       return new Center(
           child: new Container(
-            color: new Color(0XFFF39B6D),
             child: new Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Container (
                     margin: new EdgeInsets.only(bottom: _height * 0.05),
                     alignment: Alignment.center,
+                    color: Colors.blue,
                     child: new Text(
                       '$_question',
                       key: new Key('question'),
@@ -253,8 +253,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                   ),
                   new Padding(
                     padding: new EdgeInsets.only(
-                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.25:constraints.maxWidth*0.2,
-                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.25:constraints.maxWidth*0.2,
+                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
+                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
                         bottom: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.03:constraints.maxWidth*0.03),
                     child: new Table(children: rows),
                   ),
@@ -366,16 +366,20 @@ class TextAnimation extends AnimatedWidget {
               width: height / 4.0,
               alignment: Alignment.center,
               margin: new EdgeInsets.only(
-                  left: animation.value ?? 0, bottom: height * 0.08),
+                  left: animation.value ?? 0, bottom: height * 0.05),
               decoration: new BoxDecoration(
-                  color:  new Color(0XFF734052),
+                  color:  Colors.white,
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.015)),
+                  border: new Border.all(
+                    color: Colors.blueAccent,
+                    width: height * 0.0075,
+                  ),
                   shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
                     color: Colors.black,
-                    fontSize: height * 0.1,
+                    fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
 }
