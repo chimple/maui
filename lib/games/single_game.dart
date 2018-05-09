@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_circle.dart';
-import 'package:maui/games/ClueGame.dart';
+import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/TrueFalse.dart';
 import 'package:maui/games/abacus.dart';
@@ -406,7 +406,7 @@ class _SingleGameState extends State<SingleGame> {
         break;
       case 'fill_in_the_blanks':
         playTime = 20000;
-        maxIterations = 5;
+        maxIterations = 10;
         return new FillInTheBlanks(
             key: new GlobalObjectKey(keyName) ,
             onScore: _onScore ,
