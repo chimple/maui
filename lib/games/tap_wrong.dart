@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
+import 'package:maui/components/unit_button.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -138,7 +139,12 @@ print('disp text   $_dispText');
             num1++;
           numOFWrongElem++;
        print('array 1           $arr1');
-      arr1.removeAt(index);
+        new Future.delayed(const Duration(milliseconds: 200), () {
+                  setState(() {
+                 //   _statusList.removeAt(index);
+                  arr1.removeAt(index);
+                  });});
+    
       print('array 1 after     $arr1');
             widget.onScore(2);
             widget.onProgress(num1 / others.length);
@@ -255,15 +261,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       scale: animation,
       child:new  Shake(
       animation: widget.status == Statuses.wrong?animation1:animation,
-      child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                color:widget.status == Statuses.wrong?Colors.red: Colors.lightBlue,
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(widget.text,
-                key: new Key(widget.index.toString()),
-                    style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+      child: new UnitButton(
+          onPress: widget.onPress,
+          text: widget.text,
+          unitMode: UnitMode.text,
+        )));
   }
 }
