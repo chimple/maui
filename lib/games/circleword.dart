@@ -147,7 +147,8 @@ class  CirclewordState extends State<Circleword> {
       // }
       
       Color _myColor = Colors.teal;
-    
+    double constraintss=_height;
+   double  maxHeight=_height;
       return new Container(
         child: new Column(
            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -159,21 +160,23 @@ class  CirclewordState extends State<Circleword> {
           //           child: new Text(" value"),
           //         ),
           new Expanded(
-          child:  new Container(
+          child:  new ConstrainedBox(
           //  width: _width+_width,
-            height: _height,
-            width: _width,
+            // height: _height,
+           
+           
+            // width: _width,
              
-               alignment: Alignment.center,
+            //    alignment: Alignment.center,
      
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                    border: new Border.all(
-                        ),  
-                    shape: BoxShape.circle),
-                  
+              //  constraints: new BoxDecoration(
+              //     color: Colors.white,
+              //       border: new Border.all(
+              //           ),  
+              //       shape: BoxShape.circle),
+                    constraints: new BoxConstraints(minHeight: constraintss),
                      
-             child: new Stack(
+             child: new Column(
               
                children: <Widget>[
       //            new Container(
@@ -194,7 +197,18 @@ class  CirclewordState extends State<Circleword> {
              new Align(
             // alignment: Alignment.center,
             alignment: const Alignment(0.0, 0.0),
-              child: new RaisedButton(
+              child: new Container(
+                     width: 100.0,
+          height: 100.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,),
+             child:  new Card(
+                elevation: 50.0,
+          // shape: const  CircleBorder(
+       
+          //          ),
+               child:new RaisedButton(
+               
               color:_statuses[0] == Status.Active ? Colors.teal : Colors.yellow,
               padding: new  EdgeInsets.all(15.0),
                  onPressed:() { 
@@ -229,6 +243,8 @@ class  CirclewordState extends State<Circleword> {
                           
                   child: new Text("${_letters[0]}")
                     )
+              )
+              )
           ),
               new Align(
             // alignment: Alignment.center,

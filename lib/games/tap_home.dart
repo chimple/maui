@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/components/flash_card.dart';
 
 class TapHome extends StatefulWidget {
   Function onScore;
@@ -53,7 +52,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
     _animationTimer = new StepTween(begin: 0, end: 7).animate(_animTimerController);
 
     _screenController = new AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
+        duration: const Duration(milliseconds: 100), vsync: this);
     _screenController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
@@ -96,10 +95,10 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
     _status = 1.0;
     setState(() => _isLoading = true);
     _animation = new Tween(begin: 0.0, end: 15.0).animate(_animationController);
-    _gameData = await fetchSequenceData(widget.gameCategoryId, 7);
+    _gameData = await fetchSequenceDataForCategory(widget.gameCategoryId, 7);
     _option = _gameData.item2;
     _answer = _gameData.item1;
-    print("data is coming $_option");
+    print("data is coming $_gameData");
     _myAnim1();
     setState(() => _isLoading = false);
   }
@@ -188,7 +187,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         );
       }
 
-      return new Padding(
+      return  new Padding(
           padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
           child: new Stack(alignment: Alignment.topCenter, children: <Widget>[
             new Column(
@@ -231,24 +230,20 @@ class TextAnimation extends AnimatedWidget {
   Widget build(BuildContext context) {
     Animation _animation = listenable;
     return new Container(
-        height: _animation.value < height * 0.3 ? height * 0.35 : _animation.value ,
-        width:  _animation.value < height * 0.3 ? height * 0.35 : _animation.value ,
-
-        margin: status == 1.0 ? new EdgeInsets.only(
-          left: _animation.value ?? 0, top: _animation.value < height * 0.1 ? height * 0.1 : null,
+        height: _animation.value < height * 0.4 ? height * 0.4 : _animation.value ,
+        width:  _animation.value < width ? width : _animation.value ,
+        color: new Color(0xFFFFDC48),
+        padding: status == 1.0 ? new EdgeInsets.only(
+          left: _animation.value ?? 0
         ) : null,
 
         alignment: Alignment.center,
-        color: status == 1.0 ?  null: Colors.pinkAccent,
-        decoration: status == 1.0 ? new BoxDecoration(
-            color: Colors.pinkAccent,
-            border: new Border.all(color: Colors.pinkAccent, width: height * 0.01),
-            shape: BoxShape.circle): null,
+
         child: new Text(
             text,
             key: new Key('question'),
             style:
-            new TextStyle(color: Colors.white, fontSize: height * 0.15)));
+            new TextStyle(color: new Color(0xFFDD5E5E), fontSize: height * 0.18, fontWeight: FontWeight.bold,)));
   }
 }
 
@@ -271,16 +266,16 @@ class Countdown extends AnimatedWidget {
         height: height * 0.35,
         width: height * 0.35,
         alignment: Alignment.center,
-        margin: new EdgeInsets.only(top: height * 0.55),
+        margin: new EdgeInsets.only(top: height * 0.52),
         decoration: new BoxDecoration(
-            border: new Border.all(color: Colors.white, width: height * 0.01),
+            border: new Border.all(color:new Color(0xFFDD5E5E), width: height * 0.01),
             shape: BoxShape.circle),
         child: new Text(option[animation.value].toString(),
             key: new Key('answer'),
             style: new TextStyle(
                 fontSize: height * 0.15,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)));
+                fontWeight: FontWeight.w500,
+                color: new Color(0xFFDD5E5E))));
   }
 }
 
