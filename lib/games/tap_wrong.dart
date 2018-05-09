@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
+import 'package:maui/components/unit_button.dart';
 import 'dart:async';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
@@ -11,10 +13,10 @@ class TapWrong extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
- int gameCategoryId;
+  GameConfig gameConfig;
  bool isRotated;
 
-  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,this.gameCategoryId, this.isRotated=false})
+  TapWrong({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig, this.isRotated=false})
       : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ Tuple2<List<String>,List<String>> data;
     numOFWrongElem=0;
     _dispText='';
      setState(() => _isLoading = true);
-data=await fetchWordData(widget.gameCategoryId,3,2);
+data=await fetchWordData(widget.gameConfig.gameCategoryId,3,2);
    print('datat  ${data.item1}');
     data.item1.forEach((d) {
      
@@ -137,7 +139,12 @@ print('disp text   $_dispText');
             num1++;
           numOFWrongElem++;
        print('array 1           $arr1');
-      arr1.removeAt(index);
+        new Future.delayed(const Duration(milliseconds: 200), () {
+                  setState(() {
+                 //   _statusList.removeAt(index);
+                  arr1.removeAt(index);
+                  });});
+    
       print('array 1 after     $arr1');
             widget.onScore(2);
             widget.onProgress(num1 / others.length);
@@ -218,7 +225,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 10), vsync: this);
+        duration: new Duration(milliseconds: 1000), vsync: this);
         controller1 = new AnimationController(
         duration: new Duration(milliseconds: 40), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -240,21 +247,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1.forward();
   }
   @override
+  void dispose() {
+ 
+    controller.dispose();
+    controller1.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
     return  new ScaleTransition(
       scale: animation,
       child:new  Shake(
       animation: widget.status == Statuses.wrong?animation1:animation,
-      child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                color:widget.status == Statuses.wrong?Colors.red: Colors.lightBlue,
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(widget.text,
-                key: new Key(widget.index.toString()),
-                    style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+      child: new UnitButton(
+          onPress: widget.onPress,
+          text: widget.text,
+          unitMode: UnitMode.text,
+        )));
   }
 }
