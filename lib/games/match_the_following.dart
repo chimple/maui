@@ -126,7 +126,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _nextTask = 4;
       _constant = 0;
       _constant1 = 1;
-    } else if (widget.gameConfig.level < 8) {
+    } else {
       print("level <10");
       _nextTask = 6;
       _constant = 1;
@@ -162,6 +162,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   void _initBoard() async {
     setState(() => _isLoading = true);
+    print('initBoard $_nextTask');
     _allLetters =
         await fetchPairData(widget.gameConfig.gameCategoryId, _nextTask);
     _allLetters.forEach((k, v) {
