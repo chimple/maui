@@ -56,7 +56,27 @@ class ScoreScreen extends StatelessWidget {
                   padding: new EdgeInsets.only(right: 10.0),
                 ),
                 
-                myScore > 0 ? {(myScore>10 && myScore<20) ? new Icon(Icons.home) : new Icon(icon)} : 
+                myScore <= 10 ? new Icon(Icons.star) : (myScore>10 && myScore<=20) ? new Row(
+                  children: <Widget>[
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                  ], 
+                ) :  (myScore>20 && myScore<=30) ? new Row(
+                  children: <Widget>[
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                  ], 
+                ) : new Row(
+                  children: <Widget>[
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                    new Icon(Icons.star),
+                  ], 
+                ),
+
+                
                 ],
               ),  
               
