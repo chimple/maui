@@ -227,9 +227,18 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     }
     print("space is $space");
     if (space == 0) {
-      widget.onScore();
+      setState(() {
+        _initFillBlanks();
+      });
     }
     var j = 0, k = 100, h = 0, a = 0;
+    var maxChars = _size *
+        (_holdDataOfDragBox != null
+            ? _holdDataOfDragBox.fold(
+            1,
+                (prev, element) =>
+            element.length > prev ? element.length : prev)
+            : 1);
     return new Container(
       child: new Center(
         child: new Column(
@@ -242,6 +251,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 color: new Color(0xffffa3bc8b),
                 child: new ResponsiveGridView(
                   rows: 1,
+                  padding: 10.0,
+                  maxChars: maxChars,
                   cols: dropTargetData.length,
                   maxAspectRatio: 1.0,
                   children: dropTargetData
@@ -256,6 +267,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   rows: 1,
                   cols: dragBoxData.length,
                   maxAspectRatio: 1.0,
+                  maxChars: maxChars,
+                  padding: 10.0,
                   children: dragBoxData
                       .map((e) => dragbox(k++, e, _flag[a++]))
                       .toList(growable: false)),
@@ -309,7 +322,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 60), vsync: this);
     animationShake = new Tween(end: -5.0, begin: 5.0).animate(controllerShake);
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 400), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeInOut)
       ..addStatusListener((state) {
         if (state == AnimationStatus.dismissed) {
@@ -362,7 +375,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new Text(widget.text,
                     key: new Key('${widget.keys}'),
                     style: new TextStyle(
-                        color: Colors.black,
+                        color: new Color(0xffff000000),
                         fontSize: media.size.height * 0.04)),
               );
             },
@@ -390,7 +403,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       child: new Text(widget.text,
                           key: new Key("A${widget.keys}"),
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: new Color(0xffff000000),
                               fontSize: media.size.height * 0.04)),
                     ),
                   ),
@@ -401,7 +414,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: new Text(
                       widget.text,
                       style: new TextStyle(
-                        color: Colors.black,
+                        color: new Color(0xffff000000),
                         decoration: TextDecoration.none,
                         fontSize: media.size.height * 0.07,
                         fontWeight: FontWeight.bold,
