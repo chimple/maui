@@ -445,8 +445,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // RenderBox getBox = context.findRenderObject();
+    MediaQueryData media = MediaQuery.of(context);
+ //   print('height ${getBox.}');
     return new LayoutBuilder(builder: (context, constraints) {
-      MediaQueryData media = MediaQuery.of(context);
+      print('hi    ${constraints.maxHeight}');
       if (widget.index < 100 && widget.color1 != 0) {
         return new ScaleTransition(
           scale: animation,
