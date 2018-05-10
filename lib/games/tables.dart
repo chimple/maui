@@ -229,33 +229,42 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       return new Center(
           child: new Container(
             child: new Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  new Container (
-                    margin: new EdgeInsets.only(bottom: _height * 0.05),
-                    alignment: Alignment.center,
-                    color: Colors.blue,
-                    child: new Text(
-                      '$_question',
-                      key: new Key('question'),
-                      style: new TextStyle(
-                        fontSize: _height * 0.1,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  new Container(
+                      height: _height * 0.35,
+                      width: _width ,
+                      color: new Color(0xFFFF812C),
+                      child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      new Container (
+                        margin: new EdgeInsets.only(bottom: _height * 0.05),
+                        alignment: Alignment.center,
+                        child: new Text(
+                          '$_question',
+                          key: new Key('question'),
+                          style: new TextStyle(
+                            fontSize: _height * 0.1,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  new TextAnimation(
-                    animation: animation,
-                    text: _result,
-                    height: _height,
+                      new TextAnimation(
+                        animation: animation,
+                        text: _result,
+                        height: _height,
+                        width: _width,
+                      )])),
+                  new Container(
+                    height: _height * 0.65,
                     width: _width,
-                  ),
-                  new Padding(
                     padding: new EdgeInsets.only(
                         right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
                         left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
-                        bottom: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.03:constraints.maxWidth*0.03),
+                        bottom: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.03:constraints.maxWidth*0.03,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.04:constraints.maxWidth*0.04),
                     child: new Table(children: rows),
                   ),
                 ]),
