@@ -287,7 +287,7 @@ Future<List<Tuple4<int, String, int, int>>> fetchTablesData(
       var number = int.parse(category.name.substring(0, 1));
       var table = <Tuple4<int, String, int, int>>[];
       for (var i = 1; i <= 10; i++) {
-        table.add(new Tuple4(number, '*', i, number * i));
+        table.add(new Tuple4(number, 'X', i, number * i));
       }
       return table;
     }
