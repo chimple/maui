@@ -78,48 +78,48 @@ class SingleGame extends StatefulWidget {
   final Key key;
 
   static final Map<String, List<Color>> gameColors = {
-    'reflex': [Color(0xFF52B3CC), Color(0xFFFF80AB), Color(0xFF36B241)],
-    'abacus': [Color(0xFF492515), Color(0xFFffb300), Color(0xFF713D72)],
-    'bingo': [Color(0xFF52c5ce), Color(0xFFfafafa), Color(0xFFE25A9B)],
+    'reflex': [Color(0xFF48AECC), Color(0xFFffb300), Color(0xFFD154BF)],
+    'abacus': [Color(0xFFAD85F9), Color(0xFFFFB300), Color(0xFF43D162)],
+    'bingo': [Color(0xFF52C5CE), Color(0xFFFAFAFA), Color(0xFFE25A9B)],
     'calculate_numbers': [
-      Color(0xFF6D3A6A),
+      Color(0xFFFFCE73),
       Color(0xFFff80ab),
-      Color(0xFF42152D)
+      Color(0xFF74D1D6)
     ],
     'casino': [Color(0xFFD64C60), Color(0xFF734052), Color(0xFFf9a346)],
-    'circle_word': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
-    'clue_game': [Color(0xFF7ccc83c), Color(0xFFe27329), Color(0xFF301a0b)],
+    'circle_word': [Color(0xFFA1EF6F), Color(0xFF7592BC), Color(0xFFFF9D7F)],
+    'clue_game': [Color(0xFF57DBFF), Color(0xFFe27329), Color(0xFF77DB65)],
     'connect_the_dots': [
-      Color(0xFFAF3773),
+      Color(0xFFFF8481),
       Color(0xFF76abd3),
-      Color(0xFF5B3C27)
+      Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF37A061), Color(0xFFd32f2f), Color(0xFF2D1707)],
-    'draw_challenge': [Color(0xFF3F1F12), Color(0xFFef4822), Color(0xFF673E6B)],
-    'drawing': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
+    'crossword': [Color(0xFF87D62B), Color(0xFFFAFAFA), Color(0xFF87D62B)],
+    'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
+    'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
     'fill_in_the_blanks': [
-      Color(0xFF7A8948),
-      Color(0xFFC79690),
-      Color(0xFF7592BC)
+      Color(0xFFDD6154),
+      Color(0xFFa3bc8b),
+      Color(0xFF9A66CC)
     ],
-    'fill_number': [Color(0xFFd83242), Color(0xFFa3bc8b), Color(0xFF663a5c)],
-    'friend_word': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
-    'guess': [Color(0xFF2abcaa), Color(0xFFe58a28), Color(0xFF7301a0b)],
-    'identify': [Color(0xFF754cc70), Color(0xFF9b671b), Color(0xFF2D1505)],
+    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF8F3), Color(0xFF1EC1A1)],
+    'friend_word': [Color(0xFF48AECC), Color(0xFFfcc335), Color(0xFFD154BF)],
+    'guess': [Color(0xFF77DB65), Color(0xFFe58a28), Color(0xFF57C3FF)],
+    'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
     'match_the_following': [
       Color(0xFFDD4785),
-      Color(0xFF3d3d3d),
+      Color(0xFFEFEFEF),
       Color(0xFFf99b67)
     ],
-    'memory': [Color(0xFF7F3B6C), Color(0xFFffffca), Color(0xFFD84C77)],
-    'order_it': [Color(0xFF441c06), Color(0xFF2ed8d3), Color(0xFFe05570)],
-    'quiz': [Color(0xFF35C9C1), Color(0xFFed4a79), Color(0xFF2D1A49)],
-    'spin_wheel': [Color(0xFFD14AA1), Color(0xFF000000), Color(0xFFc14d4d)],
-    'tables': [Color(0xFFED546A), Color(0xFF5b1d12), Color(0xFF54cc70)],
-    'tap_home': [Color(0xFFDD5E5E), Color(0xFFffdc48), Color(0xFF42AD56)],
-    'tap_wrong': [Color(0xFF331A0A), Color(0xFF30d858), Color(0xFF6d4103)],
-    'true_or_false': [Color(0xFFDD4A74), Color(0xFF18c9c0), Color(0xFFEF886C)],
+    'memory': [Color(0xFFFF7676), Color(0xFFffffca), Color(0xFF896EDB)],
+    'order_it': [Color(0xFFE66796), Color(0xFF75F2F2), Color(0xFFFFBB22)],
+    'quiz': [Color(0xFF35C9C1), Color(0xFFed4a79), Color(0xFFEDC23B)],
+    'spin_wheel': [Color(0xFF30C9E2), Color(0xFFFFF176), Color(0xFFEE69A3)],
+    'tables': [Color(0xFFA46DBA), Color(0xFFFF812C), Color(0xFF4FC449)],
+    'tap_home': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
+    'tap_wrong': [Color(0xFFF47C5D), Color(0xFF30d858), Color(0xFFA367F9)],
+    'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
     'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)]
   };
 
