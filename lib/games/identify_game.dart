@@ -105,54 +105,51 @@ Widget _buildItems(int i,var part){
             child: new Stack(
           fit: StackFit.passthrough,
           children: <Widget>[
-            new Scaffold(
-              body: new Column(
-                children: <Widget>[
-                  new Expanded(
-                    flex: 2,
-                    child: new GestureDetector(
-                      onHorizontalDragStart: (d) => print("dragging horizontally"),
-      onVerticalDragStart: (d) => print("dragging vertically"),
-                                          child: new Image(
-                          image: AssetImage('assets/' + _decoded["id"]),
-                          fit: BoxFit.contain,
-                        ),
+              new Scaffold(
+                body: new Column(
+                  children: <Widget>[
+                    new Expanded(
+                      flex: 2,
+                      child: new Image(
+                            image: AssetImage('assets/' + _decoded["id"]),
+                            fit: BoxFit.contain,
+                          ),
                     ),
-                  ),
-                  new Expanded(
-                    flex: 1,
-                    child: _builtButton(context))
-                  
-                 
-                  // new Expanded(
-                  //   flex: 1,
-                  //   child: new Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: <Widget>[
-                  //       new DragBox(_decoded["parts"][0]),
-                  //       new DragBox( _decoded["parts"][1]),
-                  //       new DragBox(_decoded["parts"][2]),
-                  //       new DragBox(_decoded["parts"][3]),
-                  //     ],
-                  //   ),
-                  // )
-                ],
+                    new Expanded(
+                      flex: 1,
+                      child: _builtButton(context))
+                    
+                   
+                    // new Expanded(
+                    //   flex: 1,
+                    //   child: new Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: <Widget>[
+                    //       new DragBox(_decoded["parts"][0]),
+                    //       new DragBox( _decoded["parts"][1]),
+                    //       new DragBox(_decoded["parts"][2]),
+                    //       new DragBox(_decoded["parts"][3]),
+                    //     ],
+                    //   ),
+                    // )
+                  ],
+                ),
               ),
-            ),
-            // new RepaintBoundary(
-            //   child: new CustomPaint(
-            //     painter: new Stickers(
-            //       text: paste,
-            //       x: x,
-            //       y: y,
-            //     ),
-            //     isComplex: false,
-            //     willChange: false,
-            //   ),
-            // )
+              // new RepaintBoundary(
+              //   child: new CustomPaint(
+              //     painter: new Stickers(
+              //       text: paste,
+              //       x: x,
+              //       y: y,
+              //     ),
+              //     isComplex: false,
+              //     willChange: false,
+              //   ),
+              // )
           ],
-        )),
+        ),
+            ),
       ],
     );
   }
