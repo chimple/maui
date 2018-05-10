@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:math';
-
+import 'package:maui/games/single_game.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/flash_card.dart';
 
 class Wordgrid extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Wordgrid(
@@ -21,8 +24,8 @@ class Wordgrid extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+this.gameConfig,      
+  this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new WordgridState();
@@ -34,7 +37,6 @@ enum ShakeCell { Right, InActive, Dance, CurveRow }
 class WordgridState extends State<Wordgrid> {
   var i = 0;
   var count = 0;
-
   final int _size = 3;
   static int size = 3;
   var T = size;
@@ -45,7 +47,6 @@ class WordgridState extends State<Wordgrid> {
   var k = 0;
   var R = 1;
   var L = 1;
-
   var count1 = 0;
   var count2 = 0;
   var count3 = 0;
@@ -57,7 +58,10 @@ class WordgridState extends State<Wordgrid> {
   var center = 0;
   var rand;
   var flag = 0;
-
+  String words='';
+  int _maxSize = 4;
+  int _otherSize=1;
+ bool _isShowingFlashCard = false;
   List<String> numbers = [];
   List<String> _shuffledLetters = [];
   List _copyAns = [];
@@ -74,11 +78,22 @@ class WordgridState extends State<Wordgrid> {
   void initState() {
     super.initState();
     _initBoard();
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 3;
+      _otherSize=1;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 5;
+      _otherSize=4;
+    } else {
+      _maxSize = 7;
+      _otherSize=9;
+    }
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    data = await fetchWordData(widget.gameCategoryId, 5, 4);
+   // _copyAns=[];
+    data = await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_otherSize);
     print("this data is coming from fetchng ${data.item1}");
     data.item1.forEach((e) {
       _copyAns.add(e);
@@ -235,7 +250,13 @@ class WordgridState extends State<Wordgrid> {
               });
               i++;
               if (i == _copyAns.length) {
-                new Future.delayed(const Duration(milliseconds: 300), () {
+              _copyAns.forEach((e){ words="$words"+"$e";
+
+              });
+
+                 _copyAns.removeRange(0, _copyAns.length);
+                 i=0;
+                new Future.delayed(const Duration(milliseconds: 500), () {
                   k = 0;
                   center = 0;
                   flag = 0;
@@ -246,6 +267,7 @@ class WordgridState extends State<Wordgrid> {
                   count6 = 0;
                   count4 = 0;
                   count5 = 0;
+                  words='';
                   _todnumber.removeRange(0, _todnumber.length);
                   _letters.removeRange(0, _letters.length);
 
@@ -253,8 +275,12 @@ class WordgridState extends State<Wordgrid> {
                   numbers.removeRange(0, numbers.length);
 
                   _shuffledLetters.removeRange(0, _shuffledLetters.length);
-
-                  widget.onEnd();
+                //  _copyAns.removeRange(0, _copyAns.length);
+                 new Future.delayed(const Duration(milliseconds: 500), () {
+            setState(() {
+               _isShowingFlashCard = true; // widget.onEnd();
+             }); });
+               //  
                 });
               }
             } else {
@@ -273,22 +299,47 @@ class WordgridState extends State<Wordgrid> {
 
   @override
   Widget build(BuildContext context) {
-      if (_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
     }
-    var j = 0;
+     if (_isShowingFlashCard) {
+      return new FlashCard(
+          text:words,
+          onChecked: () {
+         widget.onEnd();    // _initBoard();
+          
 
-    return new ResponsiveGridView(
-      rows: _size,
-      cols: _size,
-      maxAspectRatio: 1.0,
-      children: _letters
-          .map((e) => _buildItem(j, e, _statuses[j], _ShakeCells[j++]))
-          .toList(growable: false),
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          });
+    }
+    var j = 0;
+    return new Column(
+      children: [
+        new Expanded(
+            flex: 2,
+            child: new Container(
+                color: Colors.orange,
+                child: new Center(child: new Text('$words')))),
+        new Expanded(
+            flex: 6,
+            child: new Container(
+                color: Colors.white,
+                child: new ResponsiveGridView(
+                  rows: _size,
+                  cols: _size,
+                  maxAspectRatio: 1.0,
+                  children: _letters
+                      .map((e) =>
+                          _buildItem(j, e, _statuses[j], _ShakeCells[j++]))
+                      .toList(growable: false),
+                )))
+      ],
     );
   }
 }
@@ -358,9 +409,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print(widget.text);
     controller.reverse();
   }
-   @override
+
+  @override
   void dispose() {
-    
     controller.dispose();
     controller1.dispose();
     super.dispose();
@@ -377,21 +428,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new ScaleTransition(
         scale: animation,
         child: new Shake(
-          animation:
-              widget.tile == ShakeCell.Right ? animationWrong : animationRight,
-          child: new ScaleTransition(
-              scale: animationRight,
-              child: new RaisedButton(
-                  onPressed: () => widget.onPress(),
-                  color: widget.status == Status.Visible
-                      ? Colors.yellow
-                      : new Color(_color),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0))),
-                  child: new Text("$_displayText",
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)))),
-        ));
+            animation: widget.tile == ShakeCell.Right
+                ? animationWrong
+                : animationRight,
+            child: new ScaleTransition(
+                scale: animationRight,
+                child: new UnitButton(
+                  text: _displayText,
+                  onPress: () => widget.onPress(),
+                  unitMode: UnitMode.text,
+                ))));
   }
 }
