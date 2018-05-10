@@ -149,9 +149,7 @@ class QuizState extends State<Quiz> {
           child: new Column(
             children: <Widget>[
 
-              new Padding(
-                padding: new EdgeInsets.all(10.0),
-              ),
+              
 
               new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,8 +160,10 @@ class QuizState extends State<Quiz> {
                     )]
               ),
 
-              new Padding(
+               ht > wd ? new Padding(
                 padding: new EdgeInsets.all(ht * 0.1),
+              ) : new Padding(
+                padding: new EdgeInsets.only(top: ht * 0.08),
               ),
 
               new Row(

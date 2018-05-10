@@ -10,6 +10,7 @@ class ScoreScreen extends StatelessWidget {
   User otherUser;
   int myScore;
   int otherScore;
+  List<Widget> otherscore;
 
   ScoreScreen(
       {Key key,
@@ -24,60 +25,95 @@ class ScoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> scores = [
-      new Column(
-          children: <Widget>[new UserItem(user: myUser), new Text('$myScore')])
-    ];
+      new Container(
+        child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new UserItem(user: myUser), 
+            new Text('$myScore')])
+      )];
     if (otherUser != null) {
-      scores.add(new Column(children: <Widget>[
-        new UserItem(user: myUser),
-        new Text('$myScore')
+      scores.add(new Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+        new UserItem(user: otherUser),
+        new Text('$otherScore')
       ]));
     }
     return new Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              new Row(
+              new Container(
+                child: new Row(
+                 mainAxisSize: MainAxisSize.max,
+                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  new Padding(
-                padding: new EdgeInsets.only(left: 10.0),
-              ),
-
-              new Row(
-                  mainAxisSize: MainAxisSize.max,
+                  
+                  //First user's score
+                new Container(
+                  child: new Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: scores),
-                
-                new Padding(
-                  padding: new EdgeInsets.only(right: 10.0),
                 ),
                 
-                myScore <= 10 ? new Icon(Icons.star) : (myScore>10 && myScore<=20) ? new Row(
+                
+                
+                //Stars Being Displayed according to the score
+                myScore <= 10 ? new Container(
+                  child: new Column(
                   children: <Widget>[
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                  ], 
-                ) :  (myScore>20 && myScore<=30) ? new Row(
-                  children: <Widget>[
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                  ], 
-                ) : new Row(
-                  children: <Widget>[
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                    new Icon(Icons.star),
-                  ], 
-                ),
+                    new Row(
+                      children: <Widget>[
+                        new Icon(Icons.star),
+                        new Icon(Icons.star_border),
+                        new Icon(Icons.star_border),
+                        new Icon(Icons.star_border),
+                      ])])) : (myScore>10 && myScore<=20) ? new Container(
+                        child: new Column(
+                        children: <Widget>[
+                        new Row(
+                          children: <Widget>[
+                            new Icon(Icons.star),
+                            new Icon(Icons.star),
+                            new Icon(Icons.star_border),
+                            new Icon(Icons.star_border)
+                          ])])) :  (myScore>20 && myScore<=30) ? new Container(
+                            child: new Column(
+                            children: <Widget>[
+                              new Row(
+                                children: <Widget>[
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star_border),
+                          ])]))  : new Container(
+                            child: new Column(
+                            children: <Widget>[
+                              new Row(
+                                children: <Widget>[
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star),
+                                    new Icon(Icons.star),
+                          ])])), 
 
+                //OtherUser's Score
+                otherUser != null ? new Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: otherscore) : new Column(),
                 
                 ],
+              ),
               ),  
               
               new Row(

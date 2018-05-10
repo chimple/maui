@@ -247,9 +247,7 @@ class AnswerButton extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       new Icon(_answer == true ? Icons.check : Icons.close, size: ht>wd? ht*0.15 : wd*0.15, color: Colors.white,),
-                      new Text(_answer == true ? "(True)" : "(False)",
-                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.02 : wd*0.02, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-                      )
+                      
                     ],
                   )
                 ),
