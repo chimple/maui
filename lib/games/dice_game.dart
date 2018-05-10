@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
@@ -33,8 +31,23 @@ enum Stext2 { Right, InActive }
 class DiceGameState extends State<Dice> {
   var flag1 = 0;
   var correct = 0;
+
   var keys = 0;
-  List<String> data = [
+ static List<String> data = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12'
+  ];
+  static List<String> data1 = [
     '1',
     '2',
     '3',
@@ -49,6 +62,9 @@ class DiceGameState extends State<Dice> {
     '12'
   ];
   List<String> _rightwords = [];
+  List<Stext1> _status1=[];
+  List<Stext2> _status2=[];
+
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
   List _sortletters = [];
   bool _isLoading = true;
@@ -64,6 +80,7 @@ class DiceGameState extends State<Dice> {
  int sum=0;
  int sub=0;
  int flag=0;
+ var flag2=0;
 
   @override
   void initState() {
@@ -73,62 +90,144 @@ class DiceGameState extends State<Dice> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
+    _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
+    _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+    _status1 = data1.map((a)=>Stext1.Active).toList(growable: false);
+    _status2 = data1.map((a)=>Stext2.InActive).toList(growable: false);
+
   }
 
-  Widget _buildItem(int index, String text) {
+  Widget _buildItem(int index, String text,Stext1 status,Stext2 status2) {
     return new MyButton(
         key: new ValueKey<int>(index),
         index: index,
         text: text,
+      status: status,
+      status2: status2,
         color1: 1,
         onPress: () {
           count1=count1+1;
-
             setState(() {
               var Z = int.parse(text);
               for (var i = 0; i < X.length; i++) {
+
                 sum = sum + X[i];
-                sub = X[i] - sub;
+                sub = X[i] - (sub);
                 print({"manu sum": sum});
                 print({"manu sub": sub});
               }
-              if (Z == sum) {
-                count = 0;
-                X.removeRange(0, X.length);
-                _counter = " ";
-                _counter1 = " ";
-                _counter2 = " ";
-                _counter3 = " ";
-                sum = 0;
-                sub = 0;
-                if(flag == 0)
+              if(sub < 0) {
+                sub = -sub;
+              }
+              _status1.forEach((e){
+                if(e==Stext1.Visible)
                   {
-                    flag = 1;
+                    flag2=1;
                   }
-                else {
-                  flag = 0;
+              });
+//              _status2.forEach((e){
+//                if(e==Stext2.InActive)
+//                {
+//                  flag2=0;
+//                }
+//              });
+
+              if(flag2==0) {
+                if (status == Stext1.Active) {
+                  if (Z == sum) {
+                    count = 0;
+                    X.removeRange(0, X.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sum = 0;
+                    sub = 0;
+                    setState(() {
+                      _status1[index] = Stext1.Visible;
+                    });
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+
+                  else if (sub == Z) {
+                    flag = 1;
+                    count = 0;
+                    X.removeRange(0, X.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sub = 0;
+                    sum = 0;
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+                  else {
+                    sum = 0;
+                  }
                 }
               }
-              else if (sub == Z) {
-                flag = 1;
-                count = 0;
-                X.removeRange(0, X.length);
-                _counter = " ";
-                _counter1 = " ";
-                _counter2 = " ";
-                _counter3 = " ";
-                sub = 0;
-                sum = 0;
-                if(flag == 0)
-                {
-                  flag = 1;
+              else{
+                print("mannu is data is");
+                if (status == Stext1.Active) {
+                  if (Z == sum) {
+                    count = 0;
+                    X.removeRange(0, X.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sum = 0;
+                    sub = 0;
+                    setState(() {
+                      _status1[index] = Stext1.Visible;
+                      _status2[index]=Stext2.Right;
+                    });
+//                setState(() {
+//                  text[i] = null;
+//                });
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+
+                  else if (sub == Z) {
+                    flag = 1;
+                    count = 0;
+                    X.removeRange(0, X.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sub = 0;
+                    sum = 0;
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+                  else {
+                    sum = 0;
+                  }
+
+                  _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+                  _status1 = data1.map((a)=>Stext1.Active).toList(growable: false);
                 }
-                else {
-                  flag = 0;
-                }
-              }
-              else {
-                sum=0;
+                flag2=0;
               }
               print("hellow manuuuu $text");
             });
@@ -160,7 +259,7 @@ class DiceGameState extends State<Dice> {
 
           var f = int.parse(dElement);
           X.add(f);
-          _counter2 = dElement;
+          _counter1 = dElement;
           _counter3 = "$_counter3" + "$dElement" + ",";
           print("dice data $_counter3 ");
         }
@@ -185,7 +284,7 @@ class DiceGameState extends State<Dice> {
                 cols: 6,
                 maxAspectRatio: 1.0,
                 children:
-                    data.map((e) => _buildItem(j++, e)).toList(growable: false),
+                    data1.map((e) => _buildItem(j, e,_status1[j],_status2[j++])).toList(growable: false),
               ),
             ),
        new Row(
@@ -220,7 +319,7 @@ class DiceGameState extends State<Dice> {
                ),
               child: new Center(
               child: new Text('$_counter1',
-              style: new TextStyle(fontSize: 100.0))
+              style: new TextStyle(fontSize: 50.0))
             ))),
            new Container(
              height: 50.0, width: 100.0,
@@ -240,7 +339,7 @@ class DiceGameState extends State<Dice> {
                 cols: 6,
                 maxAspectRatio: 1.0,
                 children:
-                    data.map((e) => _buildItem(j++, e)).toList(growable: false),
+                    data.map((e) => _buildItem(j=0, e,_status1[j],_status2[j++])).toList(growable: false),
               ),
             ),
           ],
@@ -260,6 +359,8 @@ class MyButton extends StatefulWidget {
       this.code,
       this.isRotated,
       this.img,
+        this.status,
+        this.status2,
         this.onPress,
       this.keys})
       : super(key: key);
@@ -267,6 +368,8 @@ class MyButton extends StatefulWidget {
   final int color1;
   final int flag;
   final int code;
+  Stext1 status;
+  Stext2 status2;
   final bool isRotated;
   final String text;
   final String img;
