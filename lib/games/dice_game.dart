@@ -91,10 +91,8 @@ class DiceGameState extends State<Dice> {
   void _initBoard() async {
     setState(() => _isLoading = true);
     _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
-
     _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
     _status1 = data1.map((a)=>Stext1.Active).toList(growable: false);
-
     _status2 = data1.map((a)=>Stext2.InActive).toList(growable: false);
 
   }
@@ -127,6 +125,13 @@ class DiceGameState extends State<Dice> {
                     flag2=1;
                   }
               });
+//              _status2.forEach((e){
+//                if(e==Stext2.InActive)
+//                {
+//                  flag2=0;
+//                }
+//              });
+
               if(flag2==0) {
                 if (status == Stext1.Active) {
                   if (Z == sum) {
@@ -185,6 +190,7 @@ class DiceGameState extends State<Dice> {
                     sub = 0;
                     setState(() {
                       _status1[index] = Stext1.Visible;
+                      _status2[index]=Stext2.Right;
                     });
 //                setState(() {
 //                  text[i] = null;
@@ -313,7 +319,7 @@ class DiceGameState extends State<Dice> {
                ),
               child: new Center(
               child: new Text('$_counter1',
-              style: new TextStyle(fontSize: 100.0))
+              style: new TextStyle(fontSize: 50.0))
             ))),
            new Container(
              height: 50.0, width: 100.0,
