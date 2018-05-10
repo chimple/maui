@@ -24,8 +24,8 @@ class Wordgrid extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-this.gameConfig,      
-  this.isRotated = false})
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new WordgridState();
@@ -58,10 +58,10 @@ class WordgridState extends State<Wordgrid> {
   var center = 0;
   var rand;
   var flag = 0;
-  String words='';
+  String words = '';
   int _maxSize = 4;
-  int _otherSize=1;
- bool _isShowingFlashCard = false;
+  int _otherSize = 1;
+  bool _isShowingFlashCard = false;
   List<String> numbers = [];
   List<String> _shuffledLetters = [];
   List _copyAns = [];
@@ -78,22 +78,23 @@ class WordgridState extends State<Wordgrid> {
   void initState() {
     super.initState();
     _initBoard();
-     if (widget.gameConfig.level < 4) {
+    if (widget.gameConfig.level < 4) {
       _maxSize = 3;
-      _otherSize=1;
+      _otherSize = 1;
     } else if (widget.gameConfig.level < 7) {
       _maxSize = 5;
-      _otherSize=4;
+      _otherSize = 4;
     } else {
       _maxSize = 7;
-      _otherSize=9;
+      _otherSize = 9;
     }
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-   // _copyAns=[];
-    data = await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_otherSize);
+    // _copyAns=[];
+    data = await fetchWordData(
+        widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
     print("this data is coming from fetchng ${data.item1}");
     data.item1.forEach((e) {
       _copyAns.add(e);
@@ -250,12 +251,14 @@ class WordgridState extends State<Wordgrid> {
               });
               i++;
               if (i == _copyAns.length) {
-              _copyAns.forEach((e){ words="$words"+"$e";
+                setState(() {
+                  _copyAns.forEach((e) {
+                    words = "$words" + "$e";
+                  });
+                });
 
-              });
-
-                 _copyAns.removeRange(0, _copyAns.length);
-                 i=0;
+                _copyAns.removeRange(0, _copyAns.length);
+                i = 0;
                 new Future.delayed(const Duration(milliseconds: 500), () {
                   k = 0;
                   center = 0;
@@ -267,7 +270,7 @@ class WordgridState extends State<Wordgrid> {
                   count6 = 0;
                   count4 = 0;
                   count5 = 0;
-                  words='';
+                  words = '';
                   _todnumber.removeRange(0, _todnumber.length);
                   _letters.removeRange(0, _letters.length);
 
@@ -275,12 +278,13 @@ class WordgridState extends State<Wordgrid> {
                   numbers.removeRange(0, numbers.length);
 
                   _shuffledLetters.removeRange(0, _shuffledLetters.length);
-                //  _copyAns.removeRange(0, _copyAns.length);
-                 new Future.delayed(const Duration(milliseconds: 500), () {
-            setState(() {
-               _isShowingFlashCard = true; // widget.onEnd();
-             }); });
-               //  
+                  //  _copyAns.removeRange(0, _copyAns.length);
+                  new Future.delayed(const Duration(milliseconds: 500), () {
+                    setState(() {
+                      _isShowingFlashCard = true; // widget.onEnd();
+                    });
+                  });
+                  //
                 });
               }
             } else {
@@ -306,12 +310,11 @@ class WordgridState extends State<Wordgrid> {
         child: new CircularProgressIndicator(),
       );
     }
-     if (_isShowingFlashCard) {
+    if (_isShowingFlashCard) {
       return new FlashCard(
-          text:words,
+          text: words,
           onChecked: () {
-         widget.onEnd();    // _initBoard();
-          
+            widget.onEnd(); // _initBoard();
 
             setState(() {
               _isShowingFlashCard = false;
