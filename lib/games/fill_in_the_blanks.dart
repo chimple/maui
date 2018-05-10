@@ -388,7 +388,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new Container(
           decoration: new BoxDecoration(
             //  color: new Color(0xffffffffff),
-            border: new Border.all(width: 3.0, color: Colors.cyan[300]),
+            border: new Border.all(width: 3.0, color: new Color(0xffDD6154)),
             borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
           ),
           child: new Center(
@@ -397,8 +397,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   maxSimultaneousDrags: 1,
                   data: '${widget.index}' + '_' + '${widget.code}',
                   child: new Container(
-                    height: media.size.height * 0.07,
-                    width: media.size.height * 0.07,
+                    height: media.size.height * 0.09,
+                    width: media.size.height * 0.09,
                     child: new Center(
                       child: new Text(widget.text,
                           key: new Key("A${widget.keys}"),
