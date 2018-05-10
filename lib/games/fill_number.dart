@@ -446,7 +446,7 @@ class MyFillnumberState extends State<Fillnumber> {
           //                   color: new Color(0xFFd83242), fontSize: 30.0)))),
        new LimitedBox(
             maxHeight: media.size.height/2,
-            child: new Column(
+            child: new Column( 
               children: <Widget>[
                     new   Container(
                 color: new Color(0xFFFFF8F3),

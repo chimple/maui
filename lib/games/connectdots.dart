@@ -305,7 +305,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
                print("hello shake cell list$_ShakeCells");
                  new Future.delayed(const Duration(milliseconds: 400), () {
                   setState(() {
-                     widget.onScore(-1);
+                     widget.onScore(-1); 
                      
                     _ShakeCells[index] = ShakeCell.InActive;
                   });
