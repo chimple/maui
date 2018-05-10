@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/user_item.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/db/entity/user.dart';
 
 class ScoreScreen extends StatelessWidget {
+  String gameName;
+  GameDisplay gameDisplay;
   User myUser;
   User otherUser;
   int myScore;
   int otherScore;
 
   ScoreScreen(
-      {Key key, this.myUser, this.otherUser, this.myScore, this.otherScore})
+      {Key key,
+      this.gameName,
+      this.gameDisplay,
+      this.myUser,
+      this.otherUser,
+      this.myScore,
+      this.otherScore})
       : super(key: key);
 
   @override
