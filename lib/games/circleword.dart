@@ -43,18 +43,29 @@ class  CirclewordState extends State<Circleword> {
   int _size =3;
   String ssum = '';
   var count=0;
+  int state = 1;
   List<ShakeCell> _ShakeCells = [];
   List<Status> _statuses;
   List<String> _letters= [];
-  
+ List<String> _letters4= [];
+  List<String> _letters5= [];
+   List<String> _letters6= [];
+    List<String> _letters7= [];
+     List<String> _letters8= [];
+      List<String> _letters9= [];
+ List<String> _letters10= [];
+
    List<String>  _worddata=[];
    List<String> _letters2 =[];
     List<String> _letters3 =[];
+      var flag1=0;
     // ['acts','cast','cats','cat','scat','act','ta','st','sat','sac','at','tas','as','ats'];
  List<LessonUnit> lessonUnits;
 
   Tuple2<List<List<String >>,String> data;
  String dssum = '';
+
+  get color => null;
 
  @override
   void initState() {
@@ -81,9 +92,28 @@ class  CirclewordState extends State<Circleword> {
   //  _letters2.forEach((e){ _letters3.add(e);});
    
    _letters=_letters2[0].split('') ;
+   _letters4=_letters.sublist(1,2);
+   _letters5=_letters.sublist(2,3);
+   _letters6=_letters.sublist(3,4);
+   _letters7=_letters.sublist(4,5);
+   _letters8=_letters.sublist(5,6);
+   _letters9=_letters.sublist(6,7);
+
+   print(" the data is$_letters4 ");
    print("data is 222 $_letters");
   _statuses = _letters.map((a)=>Status.Active).toList(growable: false);
  _ShakeCells=_worddata.map((a)=>ShakeCell.InActive).toList(growable: false);
+  List<TableRow> rows = new List<TableRow>();
+      var j = 0;
+      // for (var i = 0; i < _size; ++i) {
+      //   List<Widget> cells = _letters
+      //       .skip(i)
+      //       .take(1)
+      //       .map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++]))
+      //       .toList();
+      //   rows.add(new TableRow( 
+      //     children: cells));
+      // }
 
   }
  @override
@@ -105,18 +135,20 @@ class  CirclewordState extends State<Circleword> {
      
        List<TableRow> rows = new List<TableRow>();
       var j = 0;
-      for (var i = 0; i < _size; ++i) {
-        List<Widget> cells = _letters
-            .skip(i * _size)
-            .take(_size)
-            .map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++]))
-            .toList();
-        rows.add(new TableRow( 
-          children: cells));
-      }
+      // for (var i = 0; i < _size; ++i) {
+      //   List<Widget> cells = _letters
+      //       .skip(i * _size)
+      //       .take(_size)
+      //       .map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++]))
+      //       .toList();
+      //   rows.add(new TableRow( 
+      //     children: cells));
+      //     print("rows is ${rows[0]}");
+      // }
       
-      
-    
+      Color _myColor = Colors.teal;
+    double constraintss=_height;
+   double  maxHeight=_height;
       return new Container(
         child: new Column(
            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -128,36 +160,326 @@ class  CirclewordState extends State<Circleword> {
           //           child: new Text(" value"),
           //         ),
           new Expanded(
-          child:  new Container(
+          child:  new ConstrainedBox(
           //  width: _width+_width,
-            height: _height,
-            width: _width,
+            // height: _height,
+           
+           
+            // width: _width,
              
-               alignment: Alignment.center,
+            //    alignment: Alignment.center,
      
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                    border: new Border.all(
-                        ),  
-                    shape: BoxShape.circle),
-                  
+              //  constraints: new BoxDecoration(
+              //     color: Colors.white,
+              //       border: new Border.all(
+              //           ),  
+              //       shape: BoxShape.circle),
+                    constraints: new BoxConstraints(minHeight: constraintss),
                      
-             child: new Stack(
+             child: new Column(
+              
                children: <Widget>[
-                 new Container(
-                   height: _height*0.7,
-                 width: _width*0.5,
-                    child: new Center(
+      //            new Container(
+      //              height: _height*0.7,
+      //            width: _width*0.5,
+      //               child: new Center(
                 
-              // padding: new  EdgeInsets.all(0.03*_width ),
-           child:new  Container(  
-            //  child: new Padding(
-            //    padding: new  EdgeInsets.all(0.03*_width ),
-      child: new Table(children: rows),
-                      // )
-                      ) 
-                       ),
-                 )
+      //         // padding: new  EdgeInsets.all(0.03*_width ),
+      //      child:new  Container(  
+      //       //  child: new Padding(
+      //       //    padding: new  EdgeInsets.all(0.03*_width ),
+      // child: new Table(children: rows),
+      //                 // )
+      //                 ) 
+      //                  ),
+      //            )
+      
+             new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(0.0, 0.0),
+              child: new Container(
+                     width: 100.0,
+          height: 100.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,),
+             child:  new Card(
+                elevation: 50.0,
+          // shape: const  CircleBorder(
+       
+          //          ),
+               child:new RaisedButton(
+               
+              color:_statuses[0] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[0]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[0],color);
+                    setState(() { _statuses[0] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[0]}")
+                    )
+              )
+              )
+          ),
+              new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(0.35, 0.25),
+              child: new RaisedButton(
+              color:_statuses[1] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[1]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[1],color);
+                    setState(() { _statuses[1] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[1]}")
+                    )
+          ),
+            new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(-0.3, 0.0),
+            child: new RaisedButton(
+              color:_statuses[2] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[2]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[2],color);
+                    setState(() { _statuses[2] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[2]}")
+                    )
+          ),
+            new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(-0.031, 0.28),
+              child: new RaisedButton(
+              color:_statuses[3] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[3]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[3],color);
+                    setState(() { _statuses[3] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[3]}")
+                    )
+          ),
+            new Align(
+            // alignment: Alignment.centerLeft,
+            alignment: const Alignment(1.0, 0.03),
+            child: new RaisedButton(
+              color:_statuses[4] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[4]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[4],color);
+                    setState(() { _statuses[4] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[4]}")
+                    )
+         ),
+            new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(0.25, -0.54),
+            child: new RaisedButton(
+              color:_statuses[5] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[5]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[5],color);
+                    setState(() { _statuses[5] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[5]}")
+                    )
+          ),
+            new Align(
+            // alignment: Alignment.center,
+            alignment: const Alignment(-0.20, -0.515),
+             child: new RaisedButton(
+              color:_statuses[6] == Status.Active ? Colors.teal : Colors.yellow,
+              padding: new  EdgeInsets.all(15.0),
+                 onPressed:() { 
+                   print("dsata osssssssss $_statuses"); 
+                 
+                  print("dsata opppsssssssss $_statuses"); 
+                    if(_statuses[6]==Status.Active){setState(() {
+                     flag1=1;
+                    
+                // if (_myColor  == Colors.teal) {
+                  
+                //  _myColor  = Colors.orange;
+                // }
+                // else {
+                
+                //   _myColor = Colors.teal;
+                // }
+                   
+                 });
+                   method1(_letters[6],color);
+                    setState(() { _statuses[6] = Status.Visible;});
+                 }
+                 },
+                 
+                 
+       
+                 
+                  shape: new CircleBorder(
+                  
+                    
+                  ),
+                          
+                  child: new Text("${_letters[6]}")
+                    )
+          ),
                ],
                
               
@@ -167,14 +489,14 @@ class  CirclewordState extends State<Circleword> {
                new Container(
                  margin: new EdgeInsets.only(left: 250.0,bottom: 40.0),
           child: new RaisedButton(
-             
+              
                  onPressed:(() => method()),
        
                  
                   shape: new RoundedRectangleBorder(
                     
                       borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0))),
+                          new BorderRadius.all(new Radius.circular(30.0))),
                           
                   child: new Text("submit")
                     )
@@ -270,6 +592,12 @@ class  CirclewordState extends State<Circleword> {
     ssum='';
    
 
+  }
+
+  method1(String letter, color) {
+    ssum="$ssum"+"$letter";
+    color=new Color(0xFF8b3);
+    print("tthhhhhheee data  isss $ssum");
   }
 
 }

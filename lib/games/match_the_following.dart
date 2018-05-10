@@ -56,25 +56,27 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   final int score = 2;
   int indexText1, indexText2, indexLeftButton;
   int _oldIndexforLeftButton = 0,
-      _nextTask = 6,
+      _nextTask,
       leftIsTapped = 0,
       leftSideTextIndex = 0;
   bool _isLoading = true;
-  int indexL,
-      flag = 0,
-      flag1 = 0,
-      correct = 0,
-      _wrongAttem = 0,
-      _constant = 0,
-      _constant1 = 0;
+  int indexL, flag = 0, flag1 = 0, correct = 0, _wrongAttem = 0;
+  List<String> image = [
+    'assets/back.jpg',
+    'assets/back1.jpg',
+    'assets/background.jpg'
+  ];
   List<int> _shake = [];
+  String loading = 'Loading..';
+  int c1 = 0;
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return new SizedBox(
-        width: 10.0,
-        height: 10.0,
-        child: new CircularProgressIndicator(),
+      return new Center(
+        child: new Text(
+          loading,
+          style: new TextStyle(fontSize: 40.0, color: Colors.green),
+        ),
       );
     }
 
@@ -113,6 +115,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     // );
   }
 
+  int _constant, _constant1;
   void initState() {
     super.initState();
     print("initState called::");
@@ -126,12 +129,13 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _nextTask = 4;
       _constant = 0;
       _constant1 = 1;
-    } else if (widget.gameConfig.level < 8) {
+    } else {
       print("level <10");
       _nextTask = 6;
       _constant = 1;
       _constant1 = 2;
     }
+
     _initBoard();
     new Future.delayed(
       const Duration(milliseconds: 1000),
@@ -140,7 +144,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
-    //super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     // print(oldWidget.iteration);
     //print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -161,6 +165,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
   void _initBoard() async {
     setState(() => _isLoading = true);
+    print('initBoard $_nextTask');
     _allLetters =
         await fetchPairData(widget.gameConfig.gameCategoryId, _nextTask);
     _allLetters.forEach((k, v) {
@@ -179,6 +184,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _shake.add(0);
     }
     setState(() => _isLoading = false);
+    print("All data :: $_allLetters");
   }
 
   Widget _buildLeftSide(BuildContext context) {
@@ -186,6 +192,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
+      maxAspectRatio: 1.3,
+      maxChars: _nextTask,
+      padding: 4.0,
       //padding: const EdgeInsets.all(5.0),
       // maxAspectRatio: 4.0,
       children: _lettersLeft
@@ -228,6 +237,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
+      maxChars: _nextTask,
+      padding: 4.0,
+      maxAspectRatio: 1.3,
       children: _lettersRight
           .map((e) => _buildItemsRight(j, e, _shake[j++]))
           .toList(growable: false),
@@ -254,6 +266,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       // if (identical(question, answer)) {
 
       setState(() {
+        //  _lettersLeft[indexText1] = null;
+        // _lettersRight[indexText2] = null;
+        //_statusShake[indexRightbutton] = Status.Dump;
+        //_statusColorChange[indexLeftButton] = Status.Disable;
         _shake[indexRightbutton] = 1;
       });
       correct++;
@@ -263,6 +279,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     } else {
       leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
+        widget.onScore(-1);
         try {
           setState(() {
             _shake[indexRightbutton] = 1;
@@ -285,29 +302,40 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _wrongAttem++;
       }
     }
-    print("Wrong :: $_wrongAttem");
-    print("Correct $correct");
-    if (_wrongAttem >= (correct - _constant ) && _wrongAttem ==( _nextTask - _constant1)) {
+    if (_wrongAttem >= correct - _constant &&
+        _wrongAttem == _nextTask - _constant1) {
+      _wrongAttem = 0;
       widget.onScore(-correct);
-
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+      correct = 0;
+      new Future.delayed(const Duration(milliseconds: 700), () {
         widget.onEnd();
-
-        _wrongAttem = 0;
-        correct = 0;
+        // _initBoard();
       });
     }
+
     if (correct == _nextTask) {
       //print('Game Over::');
-      print("score::$correct-$_wrongAttem}");
+      //  print("score::$correct-$_wrongAttem}");
+      _wrongAttem = 0;
+      correct = 0;
       widget.onScore(-_wrongAttem);
 
+      //setState(() {});
       new Future.delayed(const Duration(milliseconds: 1000), () {
+        _leftSideletters.clear();
+        _rightSideLetters.clear();
+        _shuffledLetters.clear();
+        _shuffledLetters1.clear();
+        _lettersLeft.clear();
+        _lettersRight.clear();
+        _shake.clear();
         widget.onEnd();
-        _wrongAttem = 0;
-        correct = 0;
+
+        // _initBoard();
       });
     }
+    print("Correct ::$correct ");
+    print("Total task:: $_nextTask");
   }
 }
 

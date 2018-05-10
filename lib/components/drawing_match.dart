@@ -330,8 +330,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     int min = 5;
     int max = 10;
     rnd = new Random();
-    int r = min + rnd.nextInt(max - min);
-    print("$r Rajesh Patillllllllllllllllllllis in the range of $min and $max");
+    int random = min + rnd.nextInt(max - min);
+    print("$random Rajesh Patillllllllllllllllllllis in the range of $min and $max");
 
 
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
@@ -381,7 +381,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     print({"the object is : ": decode});
     var _output = decode;
     print("Rajesh Patillllllll");
-    return r;
+    return random;
   }
   
 

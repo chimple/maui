@@ -326,9 +326,9 @@ class CrosswordState extends State<Crossword> {
                         cols: _cols,
                         padding: rheight < 300.0
                             ? _rightlen > _cols
-                                ? const EdgeInsets.all(2.0)
-                                : const EdgeInsets.all(4.0)
-                            : const EdgeInsets.all(4.0),
+                                ? 2.0
+                                : 4.0
+                            : 4.0,
                         maxAspectRatio: rheight < 300.0
                             ? _rightlen > _cols
                                 ? rwidth / (rheight * 0.38)
