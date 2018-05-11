@@ -40,10 +40,11 @@ class CrosswordState extends State<Crossword> {
   List<int> _flag = new List();
   List<String> _data1 = new List();
   List _sortletters = [];
+  List _gridsize = [];
   bool _isLoading = true;
   String img, dragdata;
   int _rows, _cols, code, dindex, dcode;
-  int len, _rightlen, _rightcols, j, k;
+  int len, _rightlen, j, k;
   @override
   void initState() {
     super.initState();
@@ -136,9 +137,16 @@ class CrosswordState extends State<Crossword> {
         }
     }
     var rng = new Random();
-    var i = 0;
+
+    var i = 0, f = 0;
     for (; i < _letters.length; i++) {
-      if (_letters[i] != null) {
+      f = 0;
+      for (var j = 0; j < _data3.length; j++) {
+        if (i == _data3[j]) {
+          f = 1;
+        }
+      }
+      if (_letters[i] != null && f != 1) {
         if (rng.nextInt(2) == 1) {
           _rightwords.add(_letters[i]);
           _sortletters.add(_letters[i]);
@@ -156,7 +164,7 @@ class CrosswordState extends State<Crossword> {
     for (var i = 1; i < _sortletters.length; i += 2) {
       _letters[_sortletters[i]] = '';
     }
-    _rightlen = _rightcols = _rightwords.length;
+    _rightlen = _rightwords.length;
     _rightwords.shuffle();
     // if(_rightlen>6){
     //   _rightcols=(_rightlen/2).floor()!=_rightlen/2?
@@ -238,6 +246,7 @@ class CrosswordState extends State<Crossword> {
             }
           },
           flag: flag,
+          grid: _gridsize,
           textsize: textsize,
           code: code,
           isRotated: widget.isRotated,
@@ -253,6 +262,7 @@ class CrosswordState extends State<Crossword> {
           textsize: textsize,
           onAccepted: (text) {},
           code: code,
+          grid: _gridsize,
           isRotated: widget.isRotated,
           img: img,
           keys: keys);
@@ -307,16 +317,24 @@ class CrosswordState extends State<Crossword> {
                   // portrait mode
                   children: <Widget>[
                     new Flexible(
-                      flex: 4,
-                      child: new ResponsiveGridView(
-                        rows: _rows,
-                        cols: _cols,
-                        maxAspectRatio: rwidth / (rheight * 0.65),
-                        children: _letters
-                            .map((e) => _buildItem(j, e, _flag[j++]))
-                            .toList(growable: false),
-                      ),
-                    ),
+                        flex: 4,
+                        child:
+                            new LayoutBuilder(builder: (context, constraints) {
+                          j = 0;
+                          _gridsize = [];
+                          _gridsize
+                              .add((constraints.maxHeight / (_rows * 2)) * .75);
+                          _gridsize.add((constraints.maxWidth / _cols) * .9);
+                          print('zzzz ${constraints.maxHeight/_rows}');
+                          return new ResponsiveGridView(
+                            rows: _rows,
+                            cols: _cols,
+                            // maxAspectRatio: rwidth / (rheight * 0.65),
+                            children: _letters
+                                .map((e) => _buildItem(j, e, _flag[j++]))
+                                .toList(growable: false),
+                          );
+                        })),
                     new Flexible(
                       // flex:1,
                       //   widthFactor: _cols>_finalcols?0.75:null,
@@ -324,16 +342,16 @@ class CrosswordState extends State<Crossword> {
                       child: new ResponsiveGridView(
                         rows: _rightlen > _cols ? 2 : 1,
                         cols: _cols,
-                        padding: rheight < 300.0
-                            ? _rightlen > _cols
-                                ? 2.0
-                                : 4.0
-                            : 4.0,
-                        maxAspectRatio: rheight < 300.0
-                            ? _rightlen > _cols
-                                ? rwidth / (rheight * 0.38)
-                                : rwidth / (rheight * 0.58)
-                            : rwidth / (rheight * 0.58),
+                        // padding: rheight < 300.0
+                        //     ? _rightlen > _cols
+                        //         ? 2.0
+                        //         : 4.0
+                        //     : 4.0,
+                        // maxAspectRatio: rheight < 300.0
+                        //     ? _rightlen > _cols
+                        //         ? rwidth / (rheight * 0.38)
+                        //         : rwidth / (rheight * 0.58)
+                        //     : rwidth / (rheight * 0.58),
                         children: _rightwords
                             .map((e) => _buildItem(k++, e, _flag[j++]))
                             .toList(growable: false),
@@ -345,16 +363,24 @@ class CrosswordState extends State<Crossword> {
                   // landsape mode
                   children: <Widget>[
                     new Flexible(
-                      flex: 3,
-                      child: new ResponsiveGridView(
-                        rows: _rows,
-                        cols: _cols,
-                        maxAspectRatio: rwidth / (rheight * 1.1),
-                        children: _letters
-                            .map((e) => _buildItem(j, e, _flag[j++]))
-                            .toList(growable: false),
-                      ),
-                    ),
+                        flex: 3,
+                        child:
+                            new LayoutBuilder(builder: (context, constraints) {
+                          j = 0;
+                          _gridsize = [];
+                          _gridsize
+                              .add((constraints.maxHeight / (_rows * 2)) * .8);
+                          _gridsize.add((constraints.maxWidth / _cols) * .8);
+                          print('zzzz ${constraints.maxHeight/_rows}');
+                          return new ResponsiveGridView(
+                            rows: _rows,
+                            cols: _cols,
+                            //  maxAspectRatio: rwidth / (rheight * 1.1),
+                            children: _letters
+                                .map((e) => _buildItem(j, e, _flag[j++]))
+                                .toList(growable: false),
+                          );
+                        })),
                     new Padding(padding: new EdgeInsets.all(rwidth * .03)),
                     new Flexible(
                       // child:new FractionallySizedBox(
@@ -363,7 +389,7 @@ class CrosswordState extends State<Crossword> {
                       child: new ResponsiveGridView(
                         rows: _rows,
                         cols: 2,
-                        maxAspectRatio: rwidth / (rheight * 1.3),
+                        //  maxAspectRatio: rwidth / (rheight * 1.3),
                         children: _rightwords
                             .map((e) => _buildItem(k++, e, _flag[j++]))
                             .toList(growable: false),
@@ -387,6 +413,7 @@ class MyButton extends StatefulWidget {
       this.isRotated,
       this.textsize,
       this.img,
+      this.grid,
       this.keys})
       : super(key: key);
   final index;
@@ -399,6 +426,7 @@ class MyButton extends StatefulWidget {
   final DragTargetAccept onAccepted;
   final keys;
   final textsize;
+  final List grid;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -445,147 +473,150 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new LayoutBuilder(builder: (context, constraints) {
-      MediaQueryData media = MediaQuery.of(context);
-      if (widget.index < 100 && widget.color1 != 0) {
-        return new ScaleTransition(
+    if (widget.grid.length < 2) {
+      print('enterdd condition');
+      widget.grid.add(30.0);
+      widget.grid.add(40.0);
+    }
+    MediaQueryData media = MediaQuery.of(context);
+    if (widget.index < 100 && widget.color1 != 0) {
+      return new ScaleTransition(
+        scale: animation,
+        child: new Shake(
+            animation: widget.flag == 1 ? animation1 : animation,
+            child: new ScaleTransition(
+                scale: animation,
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    color: new Color(0xffff37A061),
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(8.0)),
+                  ),
+                  child: new DragTarget(
+                    onAccept: (String data) => widget.onAccepted(data),
+                    builder: (
+                      BuildContext context,
+                      List<dynamic> accepted,
+                      List<dynamic> rejected,
+                    ) {
+                      return new Container(
+                        decoration: new BoxDecoration(
+                          color: widget.flag == 1
+                              ? Colors.redAccent
+                              : new Color(0xffff37A061),
+                          borderRadius:
+                              new BorderRadius.all(new Radius.circular(8.0)),
+                          image: widget.img != null
+                              ? new DecorationImage(
+                                  image: new AssetImage(widget.img),
+                                  fit: BoxFit.contain)
+                              : null,
+                        ),
+                        child: new Center(
+                          child: new Text(widget.text,
+                              overflow: TextOverflow.clip,
+                              key: new Key('A${widget.keys}'),
+                              style: new TextStyle(
+                                  color: Colors.black,
+                                  fontSize: widget.textsize,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      );
+                    },
+                  ),
+                ))),
+      );
+    } else if (widget.index >= 100 &&
+        (widget.text == '' || widget.text.length == 2)) {
+      if (widget.text == '') {
+        newtext = '';
+      } else {
+        newtext = widget.text[0];
+      }
+      return new ScaleTransition(
           scale: animation,
-          child: new Shake(
-              animation: widget.flag == 1 ? animation1 : animation,
-              child: new ScaleTransition(
-                  scale: animation,
-                  child: new Container(
-                    decoration: new BoxDecoration(
-                      color: new Color(0xffff37A061),
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                    ),
-                    child: new DragTarget(
-                      onAccept: (String data) => widget.onAccepted(data),
-                      builder: (
-                        BuildContext context,
-                        List<dynamic> accepted,
-                        List<dynamic> rejected,
-                      ) {
-                        return new Container(
-                          decoration: new BoxDecoration(
-                            color: widget.flag == 1
-                                ? Colors.redAccent
-                                : new Color(0xffff37A061),
-                            borderRadius:
-                                new BorderRadius.all(new Radius.circular(8.0)),
-                            image: widget.img != null
-                                ? new DecorationImage(
-                                    image: new AssetImage(widget.img),
-                                    fit: BoxFit.contain)
-                                : null,
-                          ),
-                          child: new Center(
-                            child: new Text(widget.text,
-                                overflow: TextOverflow.clip,
-                                key: new Key('A${widget.keys}'),
-                                style: new TextStyle(
-                                    color: Colors.black,
-                                    fontSize: widget.textsize,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        );
-                      },
-                    ),
-                  ))),
-        );
-      } else if (widget.index >= 100 &&
-          (widget.text == '' || widget.text.length == 2)) {
-        if (widget.text == '') {
-          newtext = '';
-        } else {
-          newtext = widget.text[0];
-        }
-        return new ScaleTransition(
-            scale: animation,
-            child: new Container(
-              decoration: new BoxDecoration(
-                color: widget.text == ''
-                    ? new Color(0xffffE0DEE1)
-                    : Color(0xffffEAE8E4),
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              ),
-              child: new Center(
-                child: new Text(newtext,
-                    overflow: TextOverflow.clip,
-                    style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: widget.textsize,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ));
-      } else if (widget.index >= 100) {
-        return new Draggable(
-          data: '${widget.index}' + '_' + '${widget.code}',
-          child: new ScaleTransition(
-              scale: animation,
-              child: new Container(
-                decoration: new BoxDecoration(
-                  color: widget.color1 == 1
-                      ? Color(0xffff37A061)
-                      : Color(0xffffE0DEE1),
-                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-                ),
-                child: new Center(
-                  child: new Text(_displayText,
-                      overflow: TextOverflow.clip,
-                      key: new Key('B${widget.keys}'),
-                      style: new TextStyle(
-                          color: Colors.black,
-                          fontSize: widget.textsize,
-                          fontWeight: FontWeight.bold)),
-                ),
-              )),
-          //  childWhenDragging: new Container(),
-          feedback: new Container(
-            height: constraints.maxHeight,
-            width: constraints.maxWidth,
+          child: new Container(
             decoration: new BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-                color: Color(0xffff37A061)),
+              color: widget.text == ''
+                  ? new Color(0xffffE0DEE1)
+                  : Color(0xffffEAE8E4),
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
             child: new Center(
-              child: new Transform.rotate(
-                angle: widget.isRotated == true
-                    ? media.orientation == Orientation.portrait ? 3.14 : 0.0
-                    : 0.0,
-                alignment: Alignment.center,
-                child: new Text(
-                  widget.text,
+              child: new Text(newtext,
                   overflow: TextOverflow.clip,
                   style: new TextStyle(
                       color: Colors.black,
-                      decoration: TextDecoration.none,
                       fontSize: widget.textsize,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+                      fontWeight: FontWeight.bold)),
             ),
-          ),
-        );
-      } else {
-        return new ScaleTransition(
+          ));
+    } else if (widget.index >= 100) {
+      return new Draggable(
+        data: '${widget.index}' + '_' + '${widget.code}',
+        child: new ScaleTransition(
             scale: animation,
             child: new Container(
               decoration: new BoxDecoration(
-                color: Colors.grey,
+                color: widget.color1 == 1
+                    ? Color(0xffff37A061)
+                    : Color(0xffffE0DEE1),
                 borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
               ),
               child: new Center(
                 child: new Text(_displayText,
                     overflow: TextOverflow.clip,
+                    key: new Key('B${widget.keys}'),
                     style: new TextStyle(
                         color: Colors.black,
                         fontSize: widget.textsize,
                         fontWeight: FontWeight.bold)),
               ),
-            ));
-      }
-    });
+            )),
+        //  childWhenDragging: new Container(),
+        feedback: new Container(
+          height: widget.grid[0],
+          width: widget.grid[1],
+          decoration: new BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+              color: Color(0xffff37A061)),
+          child: new Center(
+            child: new Transform.rotate(
+              angle: widget.isRotated == true
+                  ? media.orientation == Orientation.portrait ? 3.14 : 0.0
+                  : 0.0,
+              alignment: Alignment.center,
+              child: new Text(
+                widget.text,
+                overflow: TextOverflow.clip,
+                style: new TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.none,
+                    fontSize: widget.textsize,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      return new ScaleTransition(
+          scale: animation,
+          child: new Container(
+            decoration: new BoxDecoration(
+              color: Colors.grey,
+              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+            ),
+            child: new Center(
+              child: new Text(_displayText,
+                  overflow: TextOverflow.clip,
+                  style: new TextStyle(
+                      color: Colors.black,
+                      fontSize: widget.textsize,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ));
+    }
   }
 }
