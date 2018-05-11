@@ -15,12 +15,16 @@ class UnitButton extends StatefulWidget {
   final UnitMode unitMode;
   final bool disabled;
   final bool showHelp;
+  final double maxWidth;
+  final double maxHeight;
 
   UnitButton(
       {Key key,
       @required this.text,
       this.onPress,
-      this.maxChars = 24,
+      this.maxChars = 8,
+      this.maxWidth = 100.0,
+      this.maxHeight = 70.0,
       this.disabled = false,
       this.showHelp = true,
       this.unitMode = UnitMode.text})
@@ -30,6 +34,13 @@ class UnitButton extends StatefulWidget {
   _UnitButtonState createState() {
     return new _UnitButtonState();
   }
+
+  static double getFontSize(int maxChars, double maxWidth, double maxHeight) {
+    final fontSizeByWidth = maxWidth / (maxChars * 0.7);
+    final fontSizeByHeight = maxHeight / 1.8;
+    return min(fontSizeByHeight, fontSizeByWidth);
+  }
+
 }
 
 class _UnitButtonState extends State<UnitButton> {
@@ -71,22 +82,40 @@ class _UnitButtonState extends State<UnitButton> {
   }
 
   Widget _buildButton() {
-    return new FlatButton(
-        splashColor: Theme.of(context).accentColor,
-        highlightColor: Theme.of(context).accentColor,
-        disabledColor: Color(0xFFDDDDDD),
-        onPressed: widget.disabled ? null : widget.onPress,
-        shape: new RoundedRectangleBorder(
-            side: new BorderSide(
-                color: widget.disabled
-                    ? Color(0xFFDDDDDD)
-                    : Theme.of(context).primaryColor,
-                width: 4.0),
-            borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-        child: _buildUnit());
+    final maxWidth = widget.maxWidth;
+    final maxHeight = widget.maxHeight;
+    final fontSize = UnitButton.getFontSize(widget.maxChars, maxWidth, maxHeight)
+    final double radius = min(maxWidth, maxHeight) / 8.0;
+
+    final width = (widget.maxChars == 1 || widget.unitMode != UnitMode.text)
+        ? min(maxWidth, maxHeight)
+        : fontSize * widget.maxChars * 0.7;
+    final height = (widget.maxChars == 1 || widget.unitMode != UnitMode.text)
+        ? min(maxWidth, maxHeight)
+        : min(maxHeight, maxWidth * 0.75);
+    print(
+        'fontsize: $fontSize width: ${width} height: ${height} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${widget.maxChars}');
+
+    return SizedBox(
+        height: height,
+        width: width,
+        child: FlatButton(
+            splashColor: Theme.of(context).accentColor,
+            highlightColor: Theme.of(context).accentColor,
+            disabledColor: Color(0xFFDDDDDD),
+            onPressed: widget.disabled ? null : widget.onPress,
+            padding: EdgeInsets.all(0.0),
+            shape: new RoundedRectangleBorder(
+                side: new BorderSide(
+                    color: widget.disabled
+                        ? Color(0xFFDDDDDD)
+                        : Theme.of(context).primaryColor,
+                    width: 4.0),
+                borderRadius: BorderRadius.all(Radius.circular(radius))),
+            child: _buildUnit(fontSize)));
   }
 
-  Widget _buildUnit() {
+  Widget _buildUnit(double fontSize) {
     if (widget.unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (widget.unitMode == UnitMode.image) {
@@ -94,14 +123,15 @@ class _UnitButtonState extends State<UnitButton> {
           ? new Text(widget.text)
           : new Image.asset('assets/apple.png');
     }
-    return new Text(widget.text,
-        style: new TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: max(12.0, min(36.0, 96.0 - 2.9 * widget.maxChars))));
+    return Center(
+        child: Text(widget.text,
+            style: new TextStyle(
+                color: Theme.of(context).primaryColor, fontSize: fontSize)));
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
 }

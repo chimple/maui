@@ -235,9 +235,9 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     var maxChars = _size *
         (_holdDataOfDragBox != null
             ? _holdDataOfDragBox.fold(
-            1,
+                1,
                 (prev, element) =>
-            element.length > prev ? element.length : prev)
+                    element.length > prev ? element.length : prev)
             : 1);
     return new Container(
       child: new Center(
@@ -252,7 +252,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 child: new ResponsiveGridView(
                   rows: 1,
                   padding: 10.0,
-                  maxChars: maxChars,
                   cols: dropTargetData.length,
                   maxAspectRatio: 1.0,
                   children: dropTargetData
@@ -267,7 +266,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   rows: 1,
                   cols: dragBoxData.length,
                   maxAspectRatio: 1.0,
-                  maxChars: maxChars,
                   padding: 10.0,
                   children: dragBoxData
                       .map((e) => dragbox(k++, e, _flag[a++]))

@@ -79,11 +79,14 @@ class ReflexState extends State<Reflex> {
     }
   }
 
-  Widget _buildItem(int index, String text, int maxChars) {
+  Widget _buildItem(
+      int index, String text, int maxChars, double maxWidth, double maxHeight) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         maxChars: maxChars,
+        maxHeight: maxHeight,
+        maxWidth: maxWidth,
         onPress: () {
           print('_buildItem.onPress');
           if (text == _allLetters[_currentIndex]) {
@@ -124,55 +127,78 @@ class ReflexState extends State<Reflex> {
       ));
     }
     int j = 0;
-    var maxChars = _size *
-        (_allLetters != null
-            ? _allLetters.fold(
-                1,
-                (prev, element) =>
-                    element.length > prev ? element.length : prev)
-            : 1);
+    final maxChars = (_allLetters != null
+        ? _allLetters.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
 
-    return new Column(
-      children: <Widget>[
-        new LimitedBox(
-            maxHeight: media.size.height / 10,
-            child: new Material(
-                color: Theme.of(context).accentColor,
-                elevation: 4.0,
-                textStyle: new TextStyle(
-                    color: Colors.white,
-                    fontSize: max(12.0, min(36.0, 96.0 - 2.9 * maxChars))),
-                child: new ListView(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    children: _solvedLetters
-                        .map((l) => new Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: Text(l)))
-                        .toList(growable: false)))),
-        new Expanded(
-            child: ResponsiveGridView(
-          rows: _size,
-          cols: _size,
-          maxAspectRatio: 1.3,
-          padding: 4.0,
-          maxChars: maxChars,
-          children: _letters
-              .map((e) => _buildItem(j++, e, maxChars))
-              .toList(growable: false),
-        ))
-      ],
-    );
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 3);
+      final vPadding = pow(constraints.maxHeight / 150.0, 3);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+
+      return new Column(
+        children: <Widget>[
+          new LimitedBox(
+              maxHeight: maxHeight,
+              child: new Material(
+                  color: Theme.of(context).accentColor,
+                  elevation: 4.0,
+                  textStyle: new TextStyle(
+                      color: Colors.white,
+                      fontSize: UnitButton.getFontSize(
+                          maxChars, maxWidth, maxHeight)),
+                  child: new ListView(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      children: _solvedLetters
+                          .map((l) => new Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                              child: Text(l)))
+                          .toList(growable: false)))),
+          new Expanded(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+                  child: ResponsiveGridView(
+                    rows: _size,
+                    cols: _size,
+                    children: _letters
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(
+                                j++, e, maxChars, maxWidth, maxHeight)))
+                        .toList(growable: false),
+                  )))
+        ],
+      );
+    });
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress, this.maxChars}) : super(key: key);
+  MyButton(
+      {Key key,
+      this.text,
+      this.onPress,
+      this.maxChars,
+      this.maxWidth,
+      this.maxHeight})
+      : super(key: key);
 
   final String text;
   final VoidCallback onPress;
   final int maxChars;
+  final double maxWidth;
+  final double maxHeight;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -224,6 +250,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           onPress: widget.onPress,
           text: _displayText,
           maxChars: widget.maxChars,
+          maxWidth: widget.maxWidth,
+          maxHeight: widget.maxHeight,
           unitMode: UnitMode.text,
         ));
   }
