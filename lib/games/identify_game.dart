@@ -63,31 +63,50 @@ class _IdentifyGameState extends State<IdentifyGame> {
     super.initState();
     this._loadGameInfo();
   }
+
   // List<String> list=['square','circle','hexagon','triangle','trapezium','rectangle','rhombus','paralleogram','rightangled'];
-  Widget _builtButton(BuildContext context){
+  Widget _builtButton(BuildContext context) {
     print(_decoded["parts"].length);
     // print(list);
-    int j=0;
-    int r = (_decoded["parts"].length/5 + (((_decoded["parts"].length%5) == 0) ? 0 : 1)).toInt();
+    int j = 0;
+    int r = (_decoded["parts"].length / 5 +
+            (((_decoded["parts"].length % 5) == 0) ? 0 : 1))
+        .toInt();
     print(r);
     return new ResponsiveGridView(
       rows: r,
       cols: 5,
       // maxAspectRatio: 5.0,
-      children:
-        (_decoded["parts"] as List).map((e)=>_buildItems(j++,e)).toList(growable:false),
+      children: (_decoded["parts"] as List)
+          .map((e) => _buildItems(j++, e))
+          .toList(growable: false),
     );
   }
 
-Widget _buildItems(int i,var part){
-  print(part);
-  return new DragBox(
+  Widget _buildItems(int i, var part) {
+    print(part);
+    return new DragBox(
       key: new ValueKey<int>(i),
       part: part,
-    );  
-  
-  // return new Text("data");
-}
+    );
+
+    // return new Text("data");
+  }
+
+  _onDragStart(BuildContext context, DragStartDetails start) {
+    print(start.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(start.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
+  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
+    print(update.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(update.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
@@ -98,58 +117,65 @@ Widget _buildItems(int i,var part){
     var x = _decoded["parts"][0]["data"]["height"];
     print("this is $x height in pixels");
     return new Flex(
-     // mainAxisAlignment: MainAxisAlignment.center,
+      // mainAxisAlignment: MainAxisAlignment.center,
       direction: Axis.vertical,
       children: <Widget>[
         new Expanded(
-            child: new Stack(
-          fit: StackFit.passthrough,
-          children: <Widget>[
-              new Scaffold(
-                body: new Column(
-                  children: <Widget>[
-                    new Expanded(
-                      flex: 2,
-                      child: new Image(
-                            image: AssetImage('assets/' + _decoded["id"]),
-                            fit: BoxFit.contain,
-                          ),
-                    ),
-                    new Expanded(
-                      flex: 1,
-                      child: _builtButton(context))
-                    
-                   
-                    // new Expanded(
-                    //   flex: 1,
-                    //   child: new Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //     crossAxisAlignment: CrossAxisAlignment.center,
-                    //     children: <Widget>[
-                    //       new DragBox(_decoded["parts"][0]),
-                    //       new DragBox( _decoded["parts"][1]),
-                    //       new DragBox(_decoded["parts"][2]),
-                    //       new DragBox(_decoded["parts"][3]),
-                    //     ],
-                    //   ),
-                    // )
-                  ],
+          child: new GestureDetector(
+            onHorizontalDragStart: (DragStartDetails start) =>
+            _onDragStart(context, start),
+        onHorizontalDragUpdate: (DragUpdateDetails update) =>
+            _onDragUpdate(context, update),
+        onVerticalDragStart: (DragStartDetails start) =>
+            _onDragStart(context, start),
+        onVerticalDragUpdate: (DragUpdateDetails update) =>
+            _onDragUpdate(context, update),
+                      child: new Stack(
+              fit: StackFit.passthrough,
+              children: <Widget>[
+                new Scaffold(
+                  body: new Column(
+                    children: <Widget>[
+                      new Expanded(
+                        flex: 2,
+                        child: new Image(
+                          image: AssetImage('assets/' + _decoded["id"]),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      new Expanded(flex: 1, child: _builtButton(context))
+
+                      // new Expanded(
+                      //   flex: 1,
+                      //   child: new Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: <Widget>[
+                      //       new DragBox(_decoded["parts"][0]),
+                      //       new DragBox( _decoded["parts"][1]),
+                      //       new DragBox(_decoded["parts"][2]),
+                      //       new DragBox(_decoded["parts"][3]),
+                      //     ],
+                      //   ),
+                      // )
+                    ],
+                  ),
                 ),
-              ),
-              // new RepaintBoundary(
-              //   child: new CustomPaint(
-              //     painter: new Stickers(
-              //       text: paste,
-              //       x: x,
-              //       y: y,
-              //     ),
-              //     isComplex: false,
-              //     willChange: false,
-              //   ),
-              // )
-          ],
-        ),
+                // new RepaintBoundary(
+                //   child: new CustomPaint(
+                //     painter: new Stickers(
+                //       text: paste,
+                //       x: x,
+                //       y: y,
+                //     ),
+                //     isComplex: false,
+                //     willChange: false,
+                //   ),
+                // )
+              ],
             ),
+          ),
+        ),
       ],
     );
   }
@@ -160,8 +186,11 @@ class DragBox extends StatefulWidget {
   // final Color itemColor;
   var part;
 
-  DragBox({Key key,this.part,}):super(key:key);
-  
+  DragBox({
+    Key key,
+    this.part,
+  }) : super(key: key);
+
   @override
   DragBoxState createState() => new DragBoxState();
 }
@@ -174,6 +203,20 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   // String draggableText;
   var part;
   int _flag = 0;
+
+  _onDragStart(BuildContext context, DragStartDetails start) {
+    // print(start.globalPosition.toString());
+    RenderBox getBox = context.findRenderObject();
+    var local = getBox.globalToLocal(start.globalPosition);
+    print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
+  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
+    // print(update.globalPosition.toString());
+    RenderBox getBox = context.findRenderObject();
+    var local = getBox.globalToLocal(update.globalPosition);
+    print(local.dx.toString() + "|" + local.dy.toString());
+  }
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
@@ -229,54 +272,54 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     return new ScaleTransition(
       scale: shakeAnimation,
       child: new Draggable(
-          data: part["name"],
-          child: new AnimatedDrag(
-              animation: (_flag == 0) ? noanimation : animation,
-              draggableColor: Colors.red,
-              draggableText: part["name"]),
-          feedback: new AnimatedFeedback(
-              animation: animation,
-              draggableColor: Colors.black,
-              draggableText: part["name"]),
-          onDraggableCanceled: (velocity, offset) {
-            setState(() {
-              if ((part["name"] == _decoded["parts"][0]["name"]) &&
-                  (offset.dx > 0.0 && offset.dx < 100.0) &&
-                  (offset.dy > 0.0 && offset.dy < 100.0)) {
-                // position = offset;
-                print(offset.dx);
-                print(offset.dy);
-              } else if (part["name"] == _decoded["parts"][1]["name"] &&
-                  (offset.dx > (_width - 130) && offset.dx < 370.0) &&
-                  (offset.dy > 0.0 && offset.dy < 120.0)) {
-                // position = offset;
-                print(offset.dx);
-                print(offset.dy);
-              } else if (part["name"] == _decoded["parts"][3]["name"] &&
-                  (offset.dx > 0.0 && offset.dx < 130.0) &&
-                  (offset.dy > 160.0 && offset.dy < 290.0)) {
-                // position = offset;
-                print(offset.dx);
-                print(offset.dy);
-              } else if (part["name"] == _decoded["parts"][2]["name"] &&
-                  (offset.dx > (_width - 110) && offset.dx < 370.0) &&
-                  (offset.dy > 170 && offset.dy < 290.0)) {
-                // position = offset;
-                print(offset.dx);
-                print(offset.dy);
-              } else {
-                _flag = 1;
-                toAnimateFunction();
-                new Future.delayed(const Duration(milliseconds: 1000), () {
-                  setState(() {
-                    _flag = 0;
+            data: part["name"],
+            child: new AnimatedDrag(
+                animation: (_flag == 0) ? noanimation : animation,
+                draggableColor: Colors.red,
+                draggableText: part["name"]),
+            feedback: new AnimatedFeedback(
+                animation: animation,
+                draggableColor: Colors.black,
+                draggableText: part["name"]),
+            onDraggableCanceled: (velocity, offset) {
+              setState(() {
+                if ((part["name"] == _decoded["parts"][0]["name"]) &&
+                    (offset.dx > 0.0 && offset.dx < 100.0) &&
+                    (offset.dy > 0.0 && offset.dy < 100.0)) {
+                  // position = offset;
+                  print(offset.dx);
+                  print(offset.dy);
+                } else if (part["name"] == _decoded["parts"][1]["name"] &&
+                    (offset.dx > (_width - 130) && offset.dx < 370.0) &&
+                    (offset.dy > 0.0 && offset.dy < 120.0)) {
+                  // position = offset;
+                  print(offset.dx);
+                  print(offset.dy);
+                } else if (part["name"] == _decoded["parts"][3]["name"] &&
+                    (offset.dx > 0.0 && offset.dx < 130.0) &&
+                    (offset.dy > 160.0 && offset.dy < 290.0)) {
+                  // position = offset;
+                  print(offset.dx);
+                  print(offset.dy);
+                } else if (part["name"] == _decoded["parts"][2]["name"] &&
+                    (offset.dx > (_width - 110) && offset.dx < 370.0) &&
+                    (offset.dy > 170 && offset.dy < 290.0)) {
+                  // position = offset;
+                  print(offset.dx);
+                  print(offset.dy);
+                } else {
+                  _flag = 1;
+                  toAnimateFunction();
+                  new Future.delayed(const Duration(milliseconds: 1000), () {
+                    setState(() {
+                      _flag = 0;
+                    });
+                    controller.stop();
                   });
-                  controller.stop();
-                });
-              }
-            });
-          },
-        ),
+                }
+              });
+            },
+          ),
     );
   }
 }
@@ -308,7 +351,7 @@ class AnimatedFeedback extends AnimatedWidget {
           style: new TextStyle(
             color: Colors.white,
             decoration: TextDecoration.none,
-            fontSize: (_width > _height)? _width * 0.02 : _width * 0.03,
+            fontSize: (_width > _height) ? _width * 0.02 : _width * 0.03,
           ),
         ),
       ),
@@ -346,7 +389,7 @@ class AnimatedDrag extends AnimatedWidget {
             style: new TextStyle(
               color: Colors.white,
               decoration: TextDecoration.none,
-              fontSize: (_width > _height)? _width * 0.02 : _width * 0.03,
+              fontSize: (_width > _height) ? _width * 0.02 : _width * 0.03,
             ),
           ),
         ),
