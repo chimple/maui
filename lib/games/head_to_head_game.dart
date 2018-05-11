@@ -61,8 +61,12 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
       widget.gameName,
       key: new GlobalObjectKey('SingleGame.my'),
       gameMode: widget.gameMode,
-      gameDisplay: GameDisplay.myHeadToHead,
-      gameConfig: widget.gameConfig,
+      gameConfig: new GameConfig(
+          questionUnitMode: widget.gameConfig.questionUnitMode,
+          answerUnitMode: widget.gameConfig.answerUnitMode,
+          gameCategoryId: widget.gameConfig.gameCategoryId,
+          level: widget.gameConfig.level,
+          gameDisplay: GameDisplay.myHeadToHead),
       onScore: setMyScore,
       onGameEnd: onGameEnd,
     );
@@ -74,8 +78,13 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                       child: new SingleGame(widget.gameName,
                           key: new GlobalObjectKey('SingleGame.other'),
                           gameMode: widget.gameMode,
-                          gameDisplay: GameDisplay.otherHeadToHead,
-                          gameConfig: widget.gameConfig,
+                          gameConfig: new GameConfig(
+                              questionUnitMode:
+                                  widget.gameConfig.questionUnitMode,
+                              answerUnitMode: widget.gameConfig.answerUnitMode,
+                              gameCategoryId: widget.gameConfig.gameCategoryId,
+                              level: widget.gameConfig.level,
+                              gameDisplay: GameDisplay.otherHeadToHead),
                           onScore: setOtherScore,
                           onGameEnd: onGameEnd,
                           isRotated: true),
@@ -87,9 +96,13 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
             new Expanded(
                 child: new SingleGame(widget.gameName,
                     key: new GlobalObjectKey('SingleGame.other'),
-                    gameDisplay: GameDisplay.otherHeadToHead,
                     gameMode: widget.gameMode,
-                    gameConfig: widget.gameConfig,
+                    gameConfig: new GameConfig(
+                        questionUnitMode: widget.gameConfig.questionUnitMode,
+                        answerUnitMode: widget.gameConfig.answerUnitMode,
+                        gameCategoryId: widget.gameConfig.gameCategoryId,
+                        level: widget.gameConfig.level,
+                        gameDisplay: GameDisplay.otherHeadToHead),
                     onScore: setOtherScore,
                     onGameEnd: onGameEnd)),
             new Expanded(child: myGame)
