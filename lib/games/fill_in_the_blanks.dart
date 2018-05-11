@@ -122,6 +122,27 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 widget.onProgress(progres / space);
                 dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
               } else {
+                if (dropTargetData[index] == '_') {
+                  dragcount++;
+                  if (scoretrack > 0) {
+                    scoretrack = scoretrack - 1;
+                    widget.onScore(-1);
+                  } else {
+                    widget.onScore(0);
+                  }
+                }
+              }
+              if (progres == space) {
+                scoretrack = scoretrack + 4;
+                widget.onScore(4);
+                new Future.delayed(const Duration(milliseconds: 400), () {
+                  setState(() {
+                    _isShowingFlashCard = true;
+                  });
+                });
+              }
+            } else {
+              if (dropTargetData[index] == '_') {
                 dragcount++;
                 if (scoretrack > 0) {
                   scoretrack = scoretrack - 1;
@@ -129,23 +150,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 } else {
                   widget.onScore(0);
                 }
-              }
-              if (progres == space) {
-                scoretrack = scoretrack + 4;
-                widget.onScore(4);
-                new Future.delayed(const Duration(milliseconds: 700), () {
-                  setState(() {
-                    _isShowingFlashCard = true;
-                  });
-                });
-              }
-            } else {
-              dragcount++;
-              if (scoretrack > 0) {
-                scoretrack = scoretrack - 1;
-                widget.onScore(-1);
-              } else {
-                widget.onScore(0);
               }
             }
             if (dragcount == space + 2) {
@@ -157,27 +161,30 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             }
 
             setState(() {
-              if (flag1 == 0) {
-                _flag[index] = 1;
-                if (dropTargetData[index] == '') {
-                  dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
-                  flagtemp = 1;
-                }
-                new Future.delayed(const Duration(milliseconds: 400), () {
-                  setState(() {
-                    _flag[index] = 0;
-                    if (flagtemp == 1) {
-                      dropTargetData[index] = '';
-                      flagtemp = 0;
-                    }
+              if (dropTargetData[index] == '_') {
+                if (flag1 == 0) {
+                  _flag[index] = 1;
+                  if (dropTargetData[index] == '') {
+                    dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+                    flagtemp = 1;
+                  }
+                  new Future.delayed(const Duration(milliseconds: 400), () {
+                    setState(() {
+                      _flag[index] = 0;
+                      if (flagtemp == 1) {
+                        dropTargetData[index] = '';
+                        flagtemp = 0;
+                      }
+                    });
                   });
-                });
+                }
               }
             });
           }
         },
         flag: flag,
         code: code,
+        length: dropTargetData.length,
         isRotated: widget.isRotated,
         keys: keys++);
   }
@@ -190,6 +197,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         color1: 1,
         code: code,
         flag: flag,
+        length: dragBoxData.length,
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
@@ -239,6 +247,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 (prev, element) =>
                     element.length > prev ? element.length : prev)
             : 1);
+    MediaQueryData media = MediaQuery.of(context);
     return new Container(
       child: new Center(
         child: new Column(
@@ -251,7 +260,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 color: new Color(0xffffa3bc8b),
                 child: new ResponsiveGridView(
                   rows: 1,
-                  padding: 10.0,
+                  padding: media.orientation == Orientation.portrait
+                      ? dropTargetData.length < 5 ? 80.0 : 20.0
+                      : dropTargetData.length < dropTargetData.length * 2
+                          ? 0.0
+                          : 80.0,
                   cols: dropTargetData.length,
                   maxAspectRatio: 1.0,
                   children: dropTargetData
@@ -288,6 +301,7 @@ class MyButton extends StatefulWidget {
       this.onAccepted,
       this.arr,
       this.code,
+      this.length,
       this.onDrag,
       this.isRotated = false,
       this.keys})
@@ -296,7 +310,7 @@ class MyButton extends StatefulWidget {
   var index;
   final int color1;
   final int flag;
-
+  final int length;
   final String text;
   List arr;
   final int code;
@@ -373,8 +387,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new Text(widget.text,
                     key: new Key('${widget.keys}'),
                     style: new TextStyle(
-                        color: new Color(0xffff000000),
-                        fontSize: media.size.height * 0.04)),
+                        color: new Color(0xffDD6154),
+                        fontSize: media.size.height * 0.06)),
               );
             },
           ),
@@ -386,7 +400,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new Container(
           decoration: new BoxDecoration(
             //  color: new Color(0xffffffffff),
-            border: new Border.all(width: 3.0, color: Colors.cyan[300]),
+            border: new Border.all(width: 3.0, color: new Color(0xffDD6154)),
             borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
           ),
           child: new Center(
@@ -394,27 +408,37 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   onDragStarted: widget.onDrag,
                   maxSimultaneousDrags: 1,
                   data: '${widget.index}' + '_' + '${widget.code}',
-                  child: new Container(
-                    height: media.size.height * 0.07,
-                    width: media.size.height * 0.07,
-                    child: new Center(
-                      child: new Text(widget.text,
-                          key: new Key("A${widget.keys}"),
-                          style: new TextStyle(
-                              color: new Color(0xffff000000),
-                              fontSize: media.size.height * 0.04)),
+                  child: new Center(
+                    child: new Container(
+                      height: media.orientation == Orientation.portrait
+                          ? widget.length > 10
+                              ? media.size.height * 0.01
+                              : media.size.height * 0.06
+                          : media.size.height * 0.13,
+                      width: media.orientation == Orientation.portrait
+                          ? widget.length > 10
+                              ? media.size.width * 0.1
+                              : media.size.width * 0.06
+                          : media.size.width * 0.07,
+                      child: new Center(
+                        child: new Text(widget.text,
+                            key: new Key("A${widget.keys}"),
+                            style: new TextStyle(
+                                color: new Color(0xffDD6154),
+                                fontSize: media.size.height * 0.04)),
+                      ),
                     ),
                   ),
                   feedback: new Transform.rotate(
                     angle: widget.isRotated == true
                         ? portf == 0 ? 3.14 : 0.0
-                        : 0.0,
+                        : 0.3,
                     child: new Text(
                       widget.text,
                       style: new TextStyle(
-                        color: new Color(0xffff000000),
+                        color: new Color(0xffDD6154),
                         decoration: TextDecoration.none,
-                        fontSize: media.size.height * 0.07,
+                        fontSize: media.size.height * 0.08,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
