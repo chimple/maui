@@ -94,7 +94,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF76abd3),
       Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF87D62B), Color(0xFFFAFAFA), Color(0xFF87D62B)],
+    'crossword': [Color(0xFF77DB65), Color(0xFFFAFAFA), Color(0xFF379EDD)],
     'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
     'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
@@ -103,7 +103,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFFa3bc8b),
       Color(0xFF9A66CC)
     ],
-    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF8F3), Color(0xFF1EC1A1)],
+    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
     'friend_word': [Color(0xFF48AECC), Color(0xFFfcc335), Color(0xFFD154BF)],
     'guess': [Color(0xFF77DB65), Color(0xFFe58a28), Color(0xFF57C3FF)],
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
