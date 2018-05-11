@@ -103,7 +103,12 @@ class _UnitButtonState extends State<UnitButton> {
             splashColor: Theme.of(context).accentColor,
             highlightColor: Theme.of(context).accentColor,
             disabledColor: Color(0xFFDDDDDD),
-            onPressed: widget.disabled ? null : widget.onPress,
+            onPressed: widget.disabled
+                ? null
+                : () {
+                    AppStateContainer.of(context).play(widget.text);
+                    widget.onPress();
+                  },
             padding: EdgeInsets.all(0.0),
             shape: new RoundedRectangleBorder(
                 side: new BorderSide(

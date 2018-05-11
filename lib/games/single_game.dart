@@ -285,18 +285,12 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   _onEnd(BuildContext context) {
-    if (widget.gameMode == GameMode.iterations) {
-      if (_iteration + 1 < maxIterations) {
-        setState(() {
-          _iteration++;
-        });
-      } else {
-        _onGameEnd(context);
-      }
-    } else {
+    if (_iteration + 1 < maxIterations) {
       setState(() {
         _iteration++;
       });
+    } else {
+      _onGameEnd(context);
     }
   }
 
