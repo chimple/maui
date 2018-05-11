@@ -50,8 +50,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> _blackpet;
 
   void _initClueGame() {
-    _words = [
-      'ap',
+    _words = [    
       'e',
       'ery',
       'pa',
