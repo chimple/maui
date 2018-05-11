@@ -87,7 +87,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       print("My Height - $ht");
       print("My Width - $wd");
       return new Material(
-      color: const Color(0xFF54cc70),
       child: new Stack(
       fit: StackFit.loose,
       children: <Widget>[
@@ -99,7 +98,10 @@ class TrueFalseGameState extends State<TrueFalseGame> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                new QuestionText(questionText, ht, wd),]
+                new Expanded(
+                  child:   new QuestionText(questionText, ht, wd),
+                )
+              ]
             ),
 
             new Row(
@@ -196,16 +198,13 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
   @override
   Widget build(BuildContext context) {
       return new Material(
-      color: const Color(0xFF54cc70),
       child:  new Container(
         height: widget.ht * 0.3,
         width: widget.ht>widget.wd? widget.wd * 0.6 : widget.wd*0.5,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(25.0),
               color: const Color(0xFFf8c43c),              
-              border: new Border.all(
-                  color: const Color(0xFF54cc70),
-                  ),
+              
                 ),
             child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -231,8 +230,7 @@ class AnswerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return new Expanded( 
-      child: new Material(
-        color: const Color(0xFF54cc70),        
+      child: new Material(      
         child: new InkWell(
           onTap: () => _onTap(),
           child: new Container( 
@@ -249,9 +247,7 @@ class AnswerButton extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       new Icon(_answer == true ? Icons.check : Icons.close, size: ht>wd? ht*0.15 : wd*0.15, color: Colors.white,),
-                      new Text(_answer == true ? "(True)" : "(False)",
-                    style: new TextStyle(color: Colors.white, fontSize: ht>wd? ht*0.02 : wd*0.02, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)
-                      )
+                      
                     ],
                   )
                 ),

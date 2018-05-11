@@ -67,6 +67,7 @@ class MyFillnumberState extends State<Fillnumber> {
   List _center = [];
   List<int> _letters;
   String ssum = '';
+  String nul1='';
   List<Status> _statuses;
   List<Bgstatus> _Bgstatus;
 
@@ -98,10 +99,11 @@ class MyFillnumberState extends State<Fillnumber> {
           .addAll(_copyVal.skip(i).take(_size * _size).toList(growable: true));
     }
     _Bgstatus = _copyVal.map((a) => Bgstatus.BgActive).toList(growable: false);
-    _statuses = _copyVal.map((a) => Status.Active).toList(growable: false);
+    // _statuses = _copyVal.map((a) => Status.Active).toList(growable: false);
 
     print("data in _shuffledLetters of shanthu $_shuffledLetters");
     _letters = _shuffledLetters.sublist(0, _size * _size);
+     _statuses = _letters.map((a) => Status.Active).toList(growable: false);
 
     setState(() => _isLoading = false);
     _val2 = _shuffledLetters.sublist(0, 4);
@@ -130,12 +132,25 @@ class MyFillnumberState extends State<Fillnumber> {
         status: status,
         bgstatus: bgstatus,
         onPress: () {
+          if(ssum==null)
+          {
+             setState(() {
+                          ssum = nul1;
+                        });
+          }
           num1 = text;
+          if(text!=null) {
           if (status == Status.Active) {
             if (sum == 0) {
               setState(() {
                 ssum = '$text';
-                print('qwer $ssum');
+                  if(ssum==null)
+          {
+          
+                          ssum ='\0';
+                 
+          }
+                print('qwer shanttttthuuu $ssum');
                 _center.add(index);
               });
 
@@ -177,6 +192,15 @@ class MyFillnumberState extends State<Fillnumber> {
                   for (var i = 0; i < count; i++) {
                     _letters.add(null);
                   }
+                  for(var j=0; j<_letters.length;j++)
+                  {
+                     if(j==null){
+                     setState(() {
+                _statuses[j] = Status.Disappear;});
+                     }
+                  }
+
+                
                   print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
                   _val2.removeRange(0, _val2.length);
@@ -335,12 +359,15 @@ class MyFillnumberState extends State<Fillnumber> {
                       k = _letters[4];
                       print("helllo this letters$k");
                       if (_letters[z] == null) {
-                         setState(() { ssum = '';});
+                         setState(() { ssum = "";});
                         setState(() {
                           print("its reload time ");
                           k = 0;
                           Ansr = 0;
-                          ssum = '';
+                          if(ssum==null){
+                              setState(() { ssum = "";});
+                          }
+                      
                           sum = 0;
                           _Index.removeRange(0, _Index.length);
                           _letters.removeRange(0, _letters.length);
@@ -374,6 +401,7 @@ class MyFillnumberState extends State<Fillnumber> {
               center = 0;
             });
           }
+          }
         });
   }
 
@@ -391,32 +419,60 @@ class MyFillnumberState extends State<Fillnumber> {
     }
 
     return new LayoutBuilder(builder: (context, constraints) {
-      var j = 0;
-
+      var j = 0; 
+                MediaQueryData media = MediaQuery.of(context);
       return new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Container(
-                color: new Color(0xFFf16761),
-                height: 50.0,
-                width: 50.0,
-                padding: const EdgeInsets.all(10.0),
+           
+          // new   Container(
+          //       color: new Color(0xFFFFF8F3),
+          //       height: 30.0,
+              
+          //       // padding: const EdgeInsets.all(10.0),
+          //       child: new Center(
+          //           child: new Text("$Ansr",
+          //               style: new TextStyle(
+          //                  color: new Color(0xFFd83242), fontSize: 25.0)))),
+          //   new Container(
+          //     // margin: new EdgeInsets.only(top: 5.0),
+          //    color: new Color(0xFFFFF8F3),
+          //       height: 80.0,
+          //       child: new Center(
+          //           child: new Text("$ssum",
+          //               style: new TextStyle(
+          //                   color: new Color(0xFFd83242), fontSize: 30.0)))),
+       new LimitedBox(
+            maxHeight: media.size.height/2,
+            child: new Column( 
+              children: <Widget>[
+                    new   Container(
+                color: new Color(0xFFFFF8F3),
+                // height: 30.0,
+              
+                // padding: const EdgeInsets.all(10.0),
                 child: new Center(
                     child: new Text("$Ansr",
                         style: new TextStyle(
-                            color: Colors.black, fontSize: 25.0)))),
+                           color: new Color(0xFFd83242), fontSize: 25.0)))),
             new Container(
-                color: Colors.orange,
-                height: 40.0,
+              // margin: new EdgeInsets.only(top: 5.0),
+             color: new Color(0xFFFFF8F3),
+                // height: 80.0,
                 child: new Center(
                     child: new Text("$ssum",
                         style: new TextStyle(
-                            color: Colors.black, fontSize: 30.0)))),
+                            color: new Color(0xFFd83242), fontSize: 30.0)))),
+              ],
+            ),
+       ),
+
+
             new Expanded(
                 child: new ResponsiveGridView(
-              padding: 0.0,
+          
               rows: _size,
               cols: _size,
               maxAspectRatio: 1.0,
@@ -498,7 +554,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale: animation,
           child: new GestureDetector(
                        child: new Container(
-                         margin: new EdgeInsets.all(3.0),
+                        //  margin: new EdgeInsets.all(3.0),
               // child: new RaisedButton(
               
               //     onPressed: () => widget.onPress(),
@@ -529,6 +585,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   //         )
                   onPress:() => widget.onPress(),
                   text:_displayText.toString(),
+               
                   unitMode: UnitMode.text,
                           ) 
                           )      ),
