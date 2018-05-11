@@ -99,7 +99,7 @@ class _CasinoState extends State<Casino> {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
       if (scrollingLetterList[random] == givenWordList[j]) {
-        _selectedItemIndex = givenWordList.length-1;
+        _selectedItemIndex = givenWordList.length - 1;
         print("Hey data shuffled");
         print("scrollingLetterList = $scrollingLetterList");
       }
@@ -139,7 +139,7 @@ class _CasinoState extends State<Casino> {
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
                       lst.isNotEmpty) {
                     print("Letters are not equal");
-                    if (lst.contains(givenWordList[i]) && buttonNumber==i) {
+                    if (lst.contains(givenWordList[i]) && buttonNumber == i) {
                       print("Letter removed");
                       lst.removeAt(i);
                     }
@@ -213,26 +213,31 @@ class _CasinoState extends State<Casino> {
 
     return new Container(
       color: new Color(0xfffff7ebcb),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: new Flex(
+        direction: Axis.vertical,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          new Container(
-              height: 200.0,
-              width: 200.0,
-              color: new Color(0xffff52c5ce),
-              child: new Center(
-                  child: new Text(
-                givenWord,
-                key: new Key("fruit"),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.clip,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 100.0,
-                    letterSpacing: 5.0,
-                    color: Colors.white),
-              ))),
           new Expanded(
+            flex: 2,
+            child: new Container(
+                height: 200.0,
+                width: 200.0,
+                color: new Color(0xffff52c5ce),
+                child: new Center(
+                    child: new Text(
+                  givenWord,
+                  key: new Key("fruit"),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 100.0,
+                      letterSpacing: 5.0,
+                      color: Colors.white),
+                ))),
+          ),
+          new Expanded(
+            flex: 1,
             child: new Container(
               decoration: new BoxDecoration(
                   shape: BoxShape.rectangle,
