@@ -16,16 +16,34 @@ class ProfileDrawer extends StatelessWidget {
                  currentAccountPicture: new Image.file(new File(user.image)),
             ),
 
-        new RaisedButton(
-            child: const Text('Score Card'),
-            textColor: Colors.white,
-            color: Theme.of(context).accentColor,
-            elevation: 4.0,
-            splashColor: Color(0xff2196f3),
-            onPressed: () {
-              // To Perform some action
-            },
-          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new RaisedButton(
+                  child: const Text('Score'),
+                  textColor: Colors.white,
+                  color: Theme.of(context).accentColor,
+                  elevation: 4.0,
+                  splashColor: Color(0xff2196f3),
+                  onPressed: () {
+                    // To Perform some action
+                  },
+                ),
+                
+              new RaisedButton(
+                  child: const Text('Graph'),
+                  textColor: Colors.white,
+                  color: Theme.of(context).accentColor,
+                  elevation: 4.0,
+                  splashColor: Color(0xff2196f3),
+                  onPressed: () {
+                    // To Perform some action
+                  },
+                ),
+              ],
+            ),
+
+        
 
           new Container(
             height: 450.0,
