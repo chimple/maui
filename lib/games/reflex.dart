@@ -133,8 +133,8 @@ class ReflexState extends State<Reflex> {
         : 1);
 
     return new LayoutBuilder(builder: (context, constraints) {
-      final hPadding = pow(constraints.maxWidth / 150.0, 3);
-      final vPadding = pow(constraints.maxHeight / 150.0, 3);
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);

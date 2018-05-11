@@ -40,7 +40,6 @@ class UnitButton extends StatefulWidget {
     final fontSizeByHeight = maxHeight / 1.8;
     return min(fontSizeByHeight, fontSizeByWidth);
   }
-
 }
 
 class _UnitButtonState extends State<UnitButton> {
@@ -84,7 +83,8 @@ class _UnitButtonState extends State<UnitButton> {
   Widget _buildButton() {
     final maxWidth = widget.maxWidth;
     final maxHeight = widget.maxHeight;
-    final fontSize = UnitButton.getFontSize(widget.maxChars, maxWidth, maxHeight)
+    final fontSize =
+        UnitButton.getFontSize(widget.maxChars, maxWidth, maxHeight);
     final double radius = min(maxWidth, maxHeight) / 8.0;
 
     final width = (widget.maxChars == 1 || widget.unitMode != UnitMode.text)
@@ -133,5 +133,4 @@ class _UnitButtonState extends State<UnitButton> {
   void dispose() {
     super.dispose();
   }
-
 }
