@@ -7,6 +7,8 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 //import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
@@ -43,6 +45,7 @@ enum StatusShake {
 //enum color {0xFFaa0e42}
 class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
+  final double middle_spacing = 60.0;
   int c = 0;
   int start = 0, increament = 0;
   List<String> _leftSideletters = [];
@@ -80,18 +83,46 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       );
     }
 
-    return new Container(
-        //color: new Color(0xffAB47BC),
-        child: new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        new Expanded(
-          child: _buildLeftSide(context),
-        ),
-        new Padding(padding: new EdgeInsets.all(60.0)),
-        new Expanded(child: _buildRightSide(context)),
-      ],
-    ));
+    var maxChars = (_leftSideletters != null
+        ? _leftSideletters.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+
+    maxChars = (_rightSideLetters != null
+        ? _rightSideLetters.fold(maxChars,
+            (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth =
+          (constraints.maxWidth - hPadding * 2) / 2 - middle_spacing;
+      double maxHeight =
+          (constraints.maxHeight - vPadding * 2) / _allLetters.length;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Container(
+          padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Expanded(
+                child: _buildLeftSide(context, buttonPadding),
+              ),
+              new Padding(padding: new EdgeInsets.all(middle_spacing)),
+              new Expanded(child: _buildRightSide(context, buttonPadding)),
+            ],
+          ));
+    });
     // return new Stack(
     //   fit: StackFit.expand,
     //   children: <Widget>[
@@ -187,18 +218,15 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     print("All data :: $_allLetters");
   }
 
-  Widget _buildLeftSide(BuildContext context) {
+  Widget _buildLeftSide(BuildContext context, double buttonPadding) {
     int j = 0;
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
-      maxAspectRatio: 1.3,
-      maxChars: _nextTask,
-      padding: 4.0,
-      //padding: const EdgeInsets.all(5.0),
-      // maxAspectRatio: 4.0,
       children: _lettersLeft
-          .map((e) => _buildItemsLeft(j, e, _statusColorChange[j++]))
+          .map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItemsLeft(j, e, _statusColorChange[j++])))
           .toList(growable: false),
     );
   }
@@ -232,16 +260,17 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         });
   }
 
-  Widget _buildRightSide(BuildContext context) {
+  Widget _buildRightSide(BuildContext context, double buttonPadding) {
     int j = _nextTask;
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
-      maxChars: _nextTask,
       padding: 4.0,
       maxAspectRatio: 1.3,
       children: _lettersRight
-          .map((e) => _buildItemsRight(j, e, _shake[j++]))
+          .map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItemsRight(j, e, _shake[j++])))
           .toList(growable: false),
     );
   }
@@ -491,7 +520,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 ? () => widget.onPress()
                 : null,
             text: _displayText,
-            unitMode: UnitMode.text,
+            unitMode: UnitMode.image,
             // disableColor: widget.status == Status.Enable || widget.shake == 1
             //     ? new Color(changeColor)
             //     : new Color(_color),
