@@ -343,7 +343,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                         width:widget.height * 0.0075),
                     borderRadius:
                     new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
@@ -385,7 +385,7 @@ class TextAnimation extends AnimatedWidget {
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.015)),
                   border: new Border.all(
-                    color: Colors.blueAccent,
+                    color: new Color(0xFFA46DBA),
                     width: height * 0.0075,
                   ),
                   shape: BoxShape.rectangle),
