@@ -9,7 +9,7 @@ class FlashCard extends StatefulWidget {
   final String image;
   final VoidCallback onChecked;
 
-  FlashCard({Key key, @required this.text,  @required this.image, this.onChecked}) : super(key: key);
+  FlashCard({Key key, @required this.text, this.image, this.onChecked}) : super(key: key);
 
   @override
   _FlashCardState createState() {
@@ -69,7 +69,7 @@ class _FlashCardState extends State<FlashCard> {
                     new Expanded(child
                         : new SizedBox(  height:  constraints.maxHeight > constraints.maxWidth ? constraints.maxHeight * 0.4 : constraints.maxWidth * 0.3,
                         width: constraints.maxHeight > constraints.maxWidth ? constraints.maxWidth * 0.9 : constraints.maxHeight * 0.5,
-                        child:  new Image.asset(widget.image))),
+                        child: widget.image == null ? new Image.asset ('assets/apple.png') : new Image.asset(widget.image))),
                     new IconButton(
                         icon: new Icon(Icons.arrow_right),
                         onPressed: widget.onChecked,

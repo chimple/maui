@@ -216,9 +216,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       }
 
       if (_isShowingFlashCard) {
-        return new Container(
-            color: new Color(0xFFFF812C),
-            child: FractionallySizedBox(
+        return  FractionallySizedBox(
             widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
             heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
             child: new FlashCard(text: _answer.toString(), image: 'assets/apple.png', onChecked: () {
@@ -231,7 +229,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _question = "$temp1 $temp2 $temp3";
                 _answer = _tableShuffledData[_count].item4;
               });
-            })));
+            }));
       }
       return new Center(
           child: new Container(
