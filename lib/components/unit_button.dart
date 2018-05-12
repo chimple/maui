@@ -129,7 +129,7 @@ class _UnitButtonState extends State<UnitButton> {
     } else if (widget.unitMode == UnitMode.image) {
       return _isLoading
           ? new Text(widget.text)
-          : new Image.asset('assets/apple.png');
+          : new Image.asset('assets/dict/${widget.text}.png');
     }
     return Center(
         child: Text(widget.text,

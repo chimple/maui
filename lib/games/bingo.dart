@@ -6,6 +6,8 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
@@ -142,7 +144,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               var str2 = _copyQuestion1.indexOf(ques);
               print("index of");
               if (str1 == str2) {
-
                 print("heloo this shanttttthuuuuu");
                 setState(() {
                   _statuses[index] = Status.Visible;
@@ -283,7 +284,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                   }
                 } else {
                   _copyQuestion.removeRange(0, _copyQuestion.length);
-
                 }
               } else {
                 widget.onScore(-1);
@@ -321,7 +321,26 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
+    final maxChars = (_letters != null
+        ? _letters.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+
     return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight =
+          (constraints.maxHeight - vPadding * 2) / (_size) - 100.0;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
       var j = 0;
       return new Container(
         child: new Column(
@@ -338,7 +357,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 child: new ResponsiveGridView(
               rows: _size,
               cols: _size,
-              padding: 50.0,
               children: _letters
                   .map((e) => _buildItem(j, e, _statuses[j], _ShakeCells[j],
                       _ColmunCells[j], _RowCells[j++]))
@@ -495,19 +513,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print({"this is 123 kiran data": widget.tile});
-    return new ScaleTransition(
-        scale: widget.Ctile == ColmunCell.CurveColumn ||
-                widget.Rtile == RowCell.CurveRow
-            ? animationDance
-            : animationRight,
-        child: new Shake(
-            animation: widget.tile == ShakeCell.Right
-                ? animationWrong
-                : animationRight,
-            child: new ScaleTransition(
-                scale: animationRight,
-                child: new UnitButton(
-                    onPress: () => widget.onPress(),
+    return UnitButton(
+        onPress: () => widget.onPress(),
 
 //                    padding: const EdgeInsets.all(8.0),
 //                        color: widget.status == Status.Visible
@@ -519,7 +526,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //                        text: new Text(_displayText,
 //                            style: new TextStyle(
 //                                color: Colors.white, fontSize: 24.0))
-                    text: _displayText,
-                    unitMode: UnitMode.text))));
+        text: _displayText,
+        unitMode: UnitMode.text);
   }
 }
