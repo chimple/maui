@@ -6,6 +6,8 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -143,6 +145,8 @@ class ReflexState extends State<Reflex> {
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
 
       return new Column(
         children: <Widget>[
@@ -152,17 +156,21 @@ class ReflexState extends State<Reflex> {
                   color: Theme.of(context).accentColor,
                   elevation: 4.0,
                   textStyle: new TextStyle(
-                      color: Colors.white,
-                      fontSize: UnitButton.getFontSize(
-                          maxChars, maxWidth, maxHeight)),
+                      color: Colors.white, fontSize: state.buttonFontSize),
                   child: new ListView(
                       reverse: true,
                       scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.all(buttonPadding),
+                      itemExtent: state.buttonWidth,
                       children: _solvedLetters
-                          .map((l) => new Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                              child: Text(l)))
+                          .map((l) => Center(
+                              child: Padding(
+                                  padding: EdgeInsets.all(buttonPadding),
+                                  child: UnitButton(
+                                    text: l,
+                                    primary: false,
+                                    onPress: () {},
+                                  ))))
                           .toList(growable: false)))),
           new Expanded(
               child: Padding(
@@ -249,9 +257,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new UnitButton(
           onPress: widget.onPress,
           text: _displayText,
-          maxChars: widget.maxChars,
-          maxWidth: widget.maxWidth,
-          maxHeight: widget.maxHeight,
           unitMode: UnitMode.text,
         ));
   }

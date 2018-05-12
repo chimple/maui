@@ -3,6 +3,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 
@@ -10,23 +11,21 @@ import 'flash_card.dart';
 
 class UnitButton extends StatefulWidget {
   final String text;
-  final int maxChars;
   final VoidCallback onPress;
   final UnitMode unitMode;
   final bool disabled;
+  final bool highlighted;
+  final bool primary;
   final bool showHelp;
-  final double maxWidth;
-  final double maxHeight;
 
   UnitButton(
       {Key key,
       @required this.text,
       this.onPress,
-      this.maxChars = 8,
-      this.maxWidth = 100.0,
-      this.maxHeight = 70.0,
       this.disabled = false,
       this.showHelp = true,
+      this.highlighted = false,
+      this.primary = true,
       this.unitMode = UnitMode.text})
       : super(key: key);
 
@@ -35,10 +34,22 @@ class UnitButton extends StatefulWidget {
     return new _UnitButtonState();
   }
 
-  static double getFontSize(int maxChars, double maxWidth, double maxHeight) {
+  static void saveButtonSize(
+      BuildContext context, int maxChars, double maxWidth, double maxHeight) {
+    AppState state = AppStateContainer.of(context).state;
     final fontSizeByWidth = maxWidth / (maxChars * 0.7);
     final fontSizeByHeight = maxHeight / 1.8;
-    return min(fontSizeByHeight, fontSizeByWidth);
+    state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
+    state.buttonRadius = min(maxWidth, maxHeight) / 8.0;
+
+    state.buttonWidth = (maxChars == 1)
+        ? min(maxWidth, maxHeight)
+        : state.buttonFontSize * maxChars * 0.7;
+    state.buttonHeight = (maxChars == 1)
+        ? min(maxWidth, maxHeight)
+        : min(maxHeight, maxWidth * 0.75);
+    print(
+        'fontsize: ${state.buttonFontSize} width: ${state.buttonWidth} height: ${state.buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
   }
 }
 
@@ -76,43 +87,40 @@ class _UnitButtonState extends State<UnitButton> {
                         child: new FlashCard(text: widget.text)));
               }
             },
-            child: _buildButton())
-        : _buildButton();
+            child: _buildButton(context))
+        : _buildButton(context);
   }
 
-  Widget _buildButton() {
-    final maxWidth = widget.maxWidth;
-    final maxHeight = widget.maxHeight;
-    final fontSize =
-        UnitButton.getFontSize(widget.maxChars, maxWidth, maxHeight);
-    final double radius = min(maxWidth, maxHeight) / 8.0;
-
-    final width = (widget.maxChars == 1 || widget.unitMode != UnitMode.text)
-        ? min(maxWidth, maxHeight)
-        : fontSize * widget.maxChars * 0.7;
-    final height = (widget.maxChars == 1 || widget.unitMode != UnitMode.text)
-        ? min(maxWidth, maxHeight)
-        : min(maxHeight, maxWidth * 0.75);
-    print(
-        'fontsize: $fontSize width: ${width} height: ${height} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${widget.maxChars}');
-
+  Widget _buildButton(BuildContext context) {
+    AppState state = AppStateContainer.of(context).state;
     return SizedBox(
-        height: height,
-        width: width,
+        height: state.buttonHeight,
+        width: state.buttonWidth,
         child: FlatButton(
+            color: widget.highlighted
+                ? Theme.of(context).primaryColor
+                : Colors.transparent,
             splashColor: Theme.of(context).accentColor,
             highlightColor: Theme.of(context).accentColor,
             disabledColor: Color(0xFFDDDDDD),
-            onPressed: widget.disabled ? null : widget.onPress,
+            onPressed: widget.disabled
+                ? null
+                : () {
+                    AppStateContainer.of(context).play(widget.text);
+                    widget.onPress();
+                  },
             padding: EdgeInsets.all(0.0),
             shape: new RoundedRectangleBorder(
                 side: new BorderSide(
                     color: widget.disabled
                         ? Color(0xFFDDDDDD)
-                        : Theme.of(context).primaryColor,
+                        : widget.primary
+                            ? Theme.of(context).primaryColor
+                            : Colors.white,
                     width: 4.0),
-                borderRadius: BorderRadius.all(Radius.circular(radius))),
-            child: _buildUnit(fontSize)));
+                borderRadius:
+                    BorderRadius.all(Radius.circular(state.buttonRadius))),
+            child: _buildUnit(state.buttonFontSize)));
   }
 
   Widget _buildUnit(double fontSize) {
@@ -126,7 +134,10 @@ class _UnitButtonState extends State<UnitButton> {
     return Center(
         child: Text(widget.text,
             style: new TextStyle(
-                color: Theme.of(context).primaryColor, fontSize: fontSize)));
+                color: widget.highlighted || !widget.primary
+                    ? Colors.white
+                    : Theme.of(context).primaryColor,
+                fontSize: fontSize)));
   }
 
   @override

@@ -57,56 +57,34 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    final myGame = new SingleGame(
-      widget.gameName,
-      key: new GlobalObjectKey('SingleGame.my'),
-      gameMode: widget.gameMode,
-      gameConfig: new GameConfig(
-          questionUnitMode: widget.gameConfig.questionUnitMode,
-          answerUnitMode: widget.gameConfig.answerUnitMode,
-          gameCategoryId: widget.gameConfig.gameCategoryId,
-          level: widget.gameConfig.level,
-          gameDisplay: GameDisplay.myHeadToHead),
-      onScore: setMyScore,
-      onGameEnd: onGameEnd,
-    );
-    return media.size.height > media.size.width
-        ? new Column(
-            children: <Widget>[
-              new Expanded(
-                  child: new RotatedBox(
-                      child: new SingleGame(widget.gameName,
-                          key: new GlobalObjectKey('SingleGame.other'),
-                          gameMode: widget.gameMode,
-                          gameConfig: new GameConfig(
-                              questionUnitMode:
-                                  widget.gameConfig.questionUnitMode,
-                              answerUnitMode: widget.gameConfig.answerUnitMode,
-                              gameCategoryId: widget.gameConfig.gameCategoryId,
-                              level: widget.gameConfig.level,
-                              gameDisplay: GameDisplay.otherHeadToHead),
-                          onScore: setOtherScore,
-                          onGameEnd: onGameEnd,
-                          isRotated: true),
-                      quarterTurns: 2)),
-              new Expanded(child: myGame)
-            ],
-          )
-        : new Row(children: <Widget>[
-            new Expanded(
-                child: new SingleGame(widget.gameName,
-                    key: new GlobalObjectKey('SingleGame.other'),
-                    gameMode: widget.gameMode,
-                    gameConfig: new GameConfig(
-                        questionUnitMode: widget.gameConfig.questionUnitMode,
-                        answerUnitMode: widget.gameConfig.answerUnitMode,
-                        gameCategoryId: widget.gameConfig.gameCategoryId,
-                        level: widget.gameConfig.level,
-                        gameDisplay: GameDisplay.otherHeadToHead),
-                    onScore: setOtherScore,
-                    onGameEnd: onGameEnd)),
-            new Expanded(child: myGame)
-          ]);
+    return Row(children: <Widget>[
+      new Expanded(
+          child: new SingleGame(
+        widget.gameName,
+        key: new GlobalObjectKey('SingleGame.my'),
+        gameMode: widget.gameMode,
+        gameConfig: new GameConfig(
+            questionUnitMode: widget.gameConfig.questionUnitMode,
+            answerUnitMode: widget.gameConfig.answerUnitMode,
+            gameCategoryId: widget.gameConfig.gameCategoryId,
+            level: widget.gameConfig.level,
+            gameDisplay: GameDisplay.myHeadToHead),
+        onScore: setMyScore,
+        onGameEnd: onGameEnd,
+      )),
+      new Expanded(
+          child: new SingleGame(widget.gameName,
+              key: new GlobalObjectKey('SingleGame.other'),
+              gameMode: widget.gameMode,
+              gameConfig: new GameConfig(
+                  questionUnitMode: widget.gameConfig.questionUnitMode,
+                  answerUnitMode: widget.gameConfig.answerUnitMode,
+                  gameCategoryId: widget.gameConfig.gameCategoryId,
+                  level: widget.gameConfig.level,
+                  gameDisplay: GameDisplay.otherHeadToHead),
+              onScore: setOtherScore,
+              onGameEnd: onGameEnd)),
+    ]);
   }
 
   @override
