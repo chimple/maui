@@ -114,7 +114,7 @@ class MemoryState extends State<Memory> {
     }
   }
 
-  Widget _buildItem(int index, String text, Status status, ShakeCell shaker) {
+  Widget _buildItem(int index, String text, int maxChars, double maxWidth, double maxHeight, Status status, ShakeCell shaker) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -265,8 +265,7 @@ class MemoryState extends State<Memory> {
                     children: _letters
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(
-                                j, e, _statuses[j], _shaker[j++])))
+                            child: _buildItem(j, e, maxChars,  maxWidth, maxHeight, _statuses[j], _shaker[j++])))
                         .toList(growable: false),
                   ));
     });
@@ -389,7 +388,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               back: new UnitButton(
                 onPress: widget.onPress,
                 text: ' ',
-                unitMode: UnitMode.image,
+                unitMode: UnitMode.text,
               ))),
     );
   }
