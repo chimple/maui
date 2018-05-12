@@ -252,7 +252,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                           style: new TextStyle(
                             fontSize: _height * 0.1,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color:new Color(0xFFA46DBA),
                           ),
                         ),
                       ),
@@ -351,7 +351,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                           fontSize: _displayText == '✖' || _displayText == '✔'
                               ? widget.height * 0.053
                               : widget.height * 0.06,
@@ -391,7 +391,7 @@ class TextAnimation extends AnimatedWidget {
                   shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
-                    color: Colors.black,
+                    color: new Color(0xFFA46DBA),
                     fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
