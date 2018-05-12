@@ -7,7 +7,7 @@ import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
-import 'package:maui/games/TrueFalse.dart';
+import 'package:maui/games/true_false.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/calculate_numbers.dart';
@@ -53,15 +53,17 @@ enum GameDisplay {
 enum UnitMode { text, image, audio }
 
 class GameConfig {
-  final UnitMode questionUnitMode;
-  final UnitMode answerUnitMode;
-  final int gameCategoryId;
-  final int level;
+  UnitMode questionUnitMode;
+  UnitMode answerUnitMode;
+  int gameCategoryId;
+  int level;
+  GameDisplay gameDisplay;
 
   GameConfig(
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
+      this.gameDisplay,
       this.level});
 }
 
@@ -74,7 +76,6 @@ class SingleGame extends StatefulWidget {
   final Function onScore;
   final GameMode gameMode;
   final bool isRotated;
-  final GameDisplay gameDisplay;
   final Key key;
 
   static final Map<String, List<Color>> gameColors = {
@@ -94,7 +95,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF76abd3),
       Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF87D62B), Color(0xFFFAFAFA), Color(0xFF87D62B)],
+    'crossword': [Color(0xFF77DB65), Color(0xFFFAFAFA), Color(0xFF379EDD)],
     'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
     'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
@@ -103,7 +104,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFFa3bc8b),
       Color(0xFF9A66CC)
     ],
-    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF8F3), Color(0xFF1EC1A1)],
+    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
     'friend_word': [Color(0xFF48AECC), Color(0xFFfcc335), Color(0xFFD154BF)],
     'guess': [Color(0xFF77DB65), Color(0xFFe58a28), Color(0xFF57C3FF)],
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
@@ -126,7 +127,6 @@ class SingleGame extends StatefulWidget {
   SingleGame(this.gameName,
       {this.key,
       this.gameMode = GameMode.iterations,
-      this.gameDisplay = GameDisplay.single,
       this.gameConfig,
       this.onGameEnd,
       this.onScore,
@@ -167,25 +167,29 @@ class _SingleGameState extends State<SingleGame> {
     print(widget.key.toString());
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
-        primaryColor: widget.gameDisplay == GameDisplay.otherHeadToHead
-            ? colors[2]
-            : colors[0],
+        primaryColor:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? colors[2]
+                : colors[0],
         accentColor: colors[1]);
-    var game = buildSingleGame(context, widget.gameDisplay.toString());
+    var game =
+        buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     return new Theme(
         data: theme,
         child: Scaffold(
             resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.white,
             body: new Column(children: <Widget>[
-              new Material(
+              Material(
                   elevation: 8.0,
-                  color: widget.gameDisplay == GameDisplay.otherHeadToHead
+                  color: widget.gameConfig.gameDisplay ==
+                          GameDisplay.otherHeadToHead
                       ? colors[2]
                       : colors[0],
                   child: new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.gameDisplay == GameDisplay.single
+                      children: widget.gameConfig.gameDisplay ==
+                              GameDisplay.single
                           ? <Widget>[
                               new Expanded(
                                 child: new Row(children: <Widget>[
@@ -281,18 +285,12 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   _onEnd(BuildContext context) {
-    if (widget.gameMode == GameMode.iterations) {
-      if (_iteration + 1 < maxIterations) {
-        setState(() {
-          _iteration++;
-        });
-      } else {
-        _onGameEnd(context);
-      }
-    } else {
+    if (_iteration + 1 < maxIterations) {
       setState(() {
         _iteration++;
       });
+    } else {
+      _onGameEnd(context);
     }
   }
 
@@ -541,7 +539,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'guess':
         return new GuessIt(
