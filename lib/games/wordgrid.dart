@@ -9,7 +9,8 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
-
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 class Wordgrid extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -37,13 +38,8 @@ enum ShakeCell { Right, InActive, Dance, CurveRow }
 class WordgridState extends State<Wordgrid> {
   var i = 0;
   var count = 0;
-  final int _size = 3;
-  static int size = 3;
-  var T = size;
-  var B = size;
-  var j = size;
-  var n = size;
-  var m = size;
+  var _size;
+  var size,T,B,j,n,m;
   var k = 0;
   var R = 1;
   var L = 1;
@@ -95,7 +91,16 @@ class WordgridState extends State<Wordgrid> {
     // _copyAns=[];
     data = await fetchWordData(
         widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
-    print("this data is coming from fetchng ${data.item1}");
+        print('original data $data');
+    print("this data 1 ${data.item1}");
+    print('data 2 ${data.item2}');
+   _size= sqrt(data.item1.length+data.item2.length).toInt();
+   T = _size;
+   B = _size;
+   j = _size;
+   n = _size;
+   m = _size;
+  size=_size;
     data.item1.forEach((e) {
       _copyAns.add(e);
     });
@@ -270,7 +275,7 @@ class WordgridState extends State<Wordgrid> {
                   count6 = 0;
                   count4 = 0;
                   count5 = 0;
-                  words = '';
+                  
                   _todnumber.removeRange(0, _todnumber.length);
                   _letters.removeRange(0, _letters.length);
 
@@ -312,38 +317,64 @@ class WordgridState extends State<Wordgrid> {
     }
     if (_isShowingFlashCard) {
       return new FlashCard(
-          text: words,
+          text:words,
           onChecked: () {
             widget.onEnd(); // _initBoard();
 
             setState(() {
               _isShowingFlashCard = false;
+              words = '';
             });
           });
     }
     var j = 0;
+    return new LayoutBuilder(builder: (context, constraints) {
+
+    final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
     return new Column(
       children: [
-        new Expanded(
-            flex: 2,
-            child: new Container(
-                color: Colors.orange,
-                child: new Center(child: new Text('$words')))),
-        new Expanded(
-            flex: 6,
-            child: new Container(
-                color: Colors.white,
+        new LimitedBox(
+              maxHeight: maxHeight,
+              child: new Material(
+                  color: Colors.orange,
+                  elevation: 4.0,
+                  textStyle: new TextStyle(
+                      color: Colors.white, fontSize: state.buttonFontSize,letterSpacing: 8.0),
+                  child: new Container(
+                  padding: EdgeInsets.all(buttonPadding),
+                  child: new Center(
+                    child: new Text(words),
+                  ),
+                ))),
+          new Expanded(
+           child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+          
                 child: new ResponsiveGridView(
                   rows: _size,
                   cols: _size,
-                  maxAspectRatio: 1.0,
+              //    maxAspectRatio: 1.0,
                   children: _letters
-                      .map((e) =>
-                          _buildItem(j, e, _statuses[j], _ShakeCells[j++]))
+                      .map((e) =>Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                          child:_buildItem(j, e, _statuses[j], _ShakeCells[j++])))
                       .toList(growable: false),
                 )))
       ],
-    );
+    );});
   }
 }
 
@@ -437,6 +468,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             child: new ScaleTransition(
                 scale: animationRight,
                 child: new UnitButton(
+                  disabled:widget.status==Status.Visible?true:false,
                   text: _displayText,
                   onPress: () => widget.onPress(),
                   unitMode: UnitMode.text,
