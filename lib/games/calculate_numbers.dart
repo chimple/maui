@@ -88,11 +88,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   @override
   void initState() {
     _animationController = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 150), vsync: this);
     _zoomOutAnimationController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     _animationShake =
-        new Tween(begin: -6.0, end: 6.0).animate(_animationController);
+        new Tween(begin: -5.0, end: 5.0).animate(_animationController);
     _animation = new Tween(begin: 0.0, end: 0.0).animate(_animationController);
     _opacity = new CurvedAnimation(
         parent: _zoomOutAnimationController, curve: Curves.easeIn);
@@ -623,7 +623,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       decoration: new BoxDecoration(
         color: clr,
         shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.all(new Radius.circular(16.0)),
+        borderRadius: new BorderRadius.all(new Radius.circular(_height*0.02)),
         border: new Border.all(color: clrBorder, width: _height * 0.0075),
       ),
       key: _key,
@@ -651,7 +651,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
             color: _flag == true ? Colors.green : Colors.white,
             border: new Border.all(
                 color: new Color(0xFF6D3A6A), width: _height * 0.0075),
-            borderRadius: new BorderRadius.all(new Radius.circular(16.0)),
+            borderRadius: new BorderRadius.all(new Radius.circular(_height*0.02)),
           ),
           child: new Center(
               child: new Text(output,
@@ -710,17 +710,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.6
-                          : constraints.maxHeight * 0.3,
+                          ? constraints.maxWidth*0.4
+                          : constraints.maxHeight * 0.25,
                       left: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.6
-                          : constraints.maxHeight * 0.3,
-                      top: constraints.maxHeight * 0.015),
+                          ? constraints.maxWidth * 0.4
+                          : constraints.maxHeight * 0.25,
+                      top: constraints.maxHeight * 0.02),
                   child: new Table(
-                    //  defaultColumnWidth: new FractionColumnWidth(
-                    //      constraints.maxWidth > constraints.maxHeight
-                    //          ? constraints.maxHeight * 0.00015
-                    //          : constraints.maxHeight * 0.00019),
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
                         new Padding(
@@ -863,7 +859,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         bottom: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxHeight * 0.06
                             : constraints.maxWidth * 0.06,
-                        top: constraints.maxHeight * 0.03),
+                        top: constraints.maxHeight * 0.01),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'singleDigit')),
@@ -887,10 +883,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.49
+                          ? constraints.maxWidth*0.35
                           : constraints.maxHeight * 0.19,
                       left: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.49
+                          ? constraints.maxWidth*0.35
                           : constraints.maxHeight * 0.19,
                       top: constraints.maxHeight * 0.015),
                   child: new Table(
@@ -925,7 +921,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(16.0)),
+                                        new Radius.circular(constraints.maxHeight *0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -967,7 +963,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           width:
                                               constraints.maxHeight * 0.0075),
                                       borderRadius: new BorderRadius.all(
-                                          new Radius.circular(16.0)),
+                                          new Radius.circular(constraints.maxHeight *0.02)),
                                     ),
                                     child: new Center(
                                       child: new Text(
@@ -1063,7 +1059,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                          new Radius.circular(16.0),
+                                          new Radius.circular(constraints.maxHeight *0.02),
                                         ),
                                       ),
                                       child: new Center(
@@ -1206,14 +1202,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     padding: new EdgeInsets.only(
                         right: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
+                            : constraints.maxWidth * 0.1,
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
+                            : constraints.maxWidth * 0.1,
                         bottom: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxHeight * 0.06
                             : constraints.maxWidth * 0.07,
-                        top: constraints.maxHeight * 0.03),
+                        top: constraints.maxHeight * 0.01),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'doubleDigit')),
@@ -1240,12 +1236,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.5
-                          : constraints.maxHeight * 0.2,
+                          ? constraints.maxWidth*0.3
+                          : constraints.maxWidth * 0.18,
                       left: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxHeight * 0.5
-                          : constraints.maxHeight * 0.2,
-                      top: constraints.maxHeight * 0.015),
+                          ? constraints.maxWidth*0.3
+                          : constraints.maxHeight * 0.18,
+                      top: constraints.maxWidth * 0.015),
                   child: new Table(
                     children: <TableRow>[
                       new TableRow(children: <Widget>[
@@ -1278,7 +1274,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(16.0)),
+                                        new Radius.circular(constraints.maxHeight *0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -1322,7 +1318,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           width:
                                               constraints.maxHeight * 0.0075),
                                       borderRadius: new BorderRadius.all(
-                                          new Radius.circular(16.0)),
+                                          new Radius.circular(constraints.maxHeight *0.02)),
                                     ),
                                     child: new Center(
                                       child: new Text(
@@ -1369,7 +1365,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(16.0)),
+                                        new Radius.circular(constraints.maxHeight *0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -1468,7 +1464,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                            new Radius.circular(16.0)),
+                                            new Radius.circular(constraints.maxHeight *0.02)),
                                       ),
                                       child: new Center(
                                           child: new Text('$_num1digit2',
@@ -1534,7 +1530,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                            new Radius.circular(16.0)),
+                                            new Radius.circular(constraints.maxHeight *0.02)),
                                       ),
                                       child: new Center(
                                           child: new Text('$_num1digit1',
@@ -1711,14 +1707,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     padding: new EdgeInsets.only(
                         right: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
+                            : constraints.maxWidth * 0.1,
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
+                            : constraints.maxWidth * 0.1,
                         bottom: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxHeight * 0.06
                             : constraints.maxWidth * 0.07,
-                        top: constraints.maxHeight * 0.03),
+                        top: constraints.maxHeight * 0.01),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'tripleDigit')),
@@ -1800,7 +1796,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new TableCell(
         child: new Padding(
-            padding: new EdgeInsets.all(widget.height * 0.004),
+            padding:new EdgeInsets.all( widget.height * 0.008 ),
             child: new RaisedButton(
                 splashColor: Theme.of(context).primaryColor,
                 highlightColor: Theme.of(context).primaryColor,
@@ -1809,30 +1805,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color: _displayText == '✖'
-                            ? Colors.red
-                            : _displayText == '✔'
-                                ? Colors.green
-                                : new Color(0xFF6D3A6A),
-                        width: widget.height * 0.0075),
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        width:widget.height * 0.0075),
                     borderRadius:
-                        const BorderRadius.all(const Radius.circular(16.0))),
+                    new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
                 child: new Center(
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color: _displayText == '✖'
-                              ? Colors.red
-                              : _displayText == '✔'
-                                  ? Colors.green
-                                  : new Color(0xFF6D3A6A),
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
                           fontSize: _displayText == '✖' || _displayText == '✔'
-                              ? widget.height * 0.043
-                              : widget.height * 0.05,
+                              ? widget.height>widget.width? widget.height * 0.037:widget.width*0.017
+                              :  widget.height>widget.width? widget.height * 0.045:widget.width*0.02,
                           fontWeight: FontWeight.bold)),
                 )))
-        // )
-        );
+      // )
+    );
   }
 //   Widget build(BuildContext context) {
 // //    print("_MyButtonState.build");
