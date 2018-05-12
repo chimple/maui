@@ -18,7 +18,12 @@ class GameListView extends StatelessWidget {
       onPressed: () => showModes(context, gameName),
       child: new Column(
         children: <Widget>[
-          new Expanded(child: new Image.asset('assets/hoodie/$gameName.png')),
+          new Expanded(
+              child: Align(
+                  child: new Image.asset(
+            'assets/hoodie/$gameName.png',
+            scale: 0.3,
+          ))),
           new Text(
             displayName,
             overflow: TextOverflow.ellipsis,
