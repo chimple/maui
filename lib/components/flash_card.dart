@@ -62,17 +62,17 @@ class _FlashCardState extends State<FlashCard> {
                         onPressed: widget.onChecked,
                         iconSize: constraints.maxHeight * 0.15,
                         color: Colors.white),
-                    new Expanded(child
-                        : new Image.asset('assets/apple.png')),
+                    new Expanded(child: new Image.asset('assets/dict/add.png')),
                     new IconButton(
-                        icon: new Icon(Icons.arrow_right),
-                        onPressed: widget.onChecked,
-                        iconSize: constraints.maxHeight * 0.15,
-                        color: Colors.white,)
+                      icon: new Icon(Icons.arrow_right),
+                      onPressed: widget.onChecked,
+                      iconSize: constraints.maxHeight * 0.15,
+                      color: Colors.white,
+                    )
                   ],
                 ),
                 new Container(
-                    height: constraints.maxHeight * 0.2 ,
+                    height: constraints.maxHeight * 0.2,
                     width: constraints.maxWidth * 0.9,
                     alignment: const Alignment(0.0, 0.0),
                     padding: const EdgeInsets.all(8.0),
@@ -83,7 +83,10 @@ class _FlashCardState extends State<FlashCard> {
                             new Radius.circular(constraints.maxHeight * 0.015)),
                         shape: BoxShape.rectangle),
                     child: new Text(_unit?.name ?? widget.text,
-                        style: new TextStyle(color: Colors.white, fontSize: constraints.maxHeight * 0.15))),
+                        style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: constraints.maxHeight * 0.15))),
               ]));
     });
-  }}
+  }
+}
