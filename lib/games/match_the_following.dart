@@ -34,14 +34,8 @@ class MatchTheFollowing extends StatefulWidget {
   State<StatefulWidget> createState() => new _MatchTheFollowingState();
 }
 
-enum Status { Disable, Enable, Dump, Shake, Stopped, Color }
-enum StatusShake {
-  Stopped,
-  ShakeRight,
-  Shake,
-}
+enum Status { Disable, Enable, Shake, Stopped }
 
-//enum color {0xFFaa0e42}
 class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
   final double middle_spacing = 50.0;
@@ -52,7 +46,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   List<String> _lettersLeft = [], _lettersRight = [];
   List<String> _shuffledLetters = [], _shuffledLetters1 = [];
   List<Status> _statusColorChange = [];
-  List<Status> _statusShake = [];
   Map<String, String> _allLetters;
   String _leftSideText, _rightSideText;
   final int score = 2;
@@ -64,7 +57,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   bool _isLoading = true;
   int indexL, flag = 0, flag1 = 0, correct = 0, _wrongAttem = 0;
   List<int> _shake = [];
-  String loading = 'Loading..';
+  String loading = 'Loading...';
   int c1 = 0;
   @override
   Widget build(BuildContext context) {
@@ -86,15 +79,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         ? _rightSideLetters.fold(maxChars,
             (prev, element) => element.length > prev ? element.length : prev)
         : 1);
-        print("MaxChar value:: $maxChars");
+    print("MaxChar value:: $maxChars");
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth =
           (constraints.maxWidth - hPadding * 2) / 2 - middle_spacing;
-      double maxHeight =
-          (constraints.maxHeight - vPadding * 2) / _numButtons;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / _numButtons;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -112,7 +104,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
               new Expanded(
                 child: _buildLeftSide(context, buttonPadding),
               ),
-              new Padding(padding: new EdgeInsets.symmetric(horizontal: middle_spacing)),
+              new Padding(
+                  padding:
+                      new EdgeInsets.symmetric(horizontal: middle_spacing)),
               new Expanded(child: _buildRightSide(context, buttonPadding)),
             ],
           ));
@@ -149,8 +143,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   @override
   void didUpdateWidget(MatchTheFollowing oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // print(oldWidget.iteration);
-    //print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _leftSideletters.clear();
       _rightSideLetters.clear();
@@ -160,10 +152,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _lettersRight.clear();
       _shake.clear();
       _initBoard();
-      print("Iteration:: ${oldWidget.iteration}");
-      print("New Iteration:: ${widget.iteration}");
-      print("shuffle data:: $_lettersLeft");
-      print("shuffle data:: $_lettersRight");
     }
   }
 
@@ -224,12 +212,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
               flag = 0;
             });
           }
-          //_statusColorChange[index]=Status.Enable;
           _oldIndexforLeftButton = index;
           indexLeftButton = index;
           leftIsTapped = 1;
           leftSideTextIndex = _leftSideletters.indexOf(_leftSideText);
-          // question=_rightSideText[ _leftSideletters.indexOf(_leftSideText)];
         });
   }
 
@@ -272,6 +258,11 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       widget.onScore(1);
       widget.onProgress(correct / _numButtons);
       leftIsTapped = 0;
+      new Future.delayed(const Duration(milliseconds: 400), () {
+        setState(() {
+          _statusColorChange[_oldIndexforLeftButton] = Status.Disable;
+        });
+      });
     } else {
       leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
@@ -279,7 +270,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         try {
           setState(() {
             _shake[indexRightbutton] = 1;
-           
             _statusColorChange[indexLeftButton] = Status.Shake;
             _shake[indexRightbutton] = 2;
             flag1 = 1;
@@ -288,7 +278,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         try {
           new Future.delayed(const Duration(milliseconds: 700), () {
             setState(() {
-              
               _statusColorChange[indexLeftButton] = Status.Disable;
               _shake[indexRightbutton] = 0;
             });
@@ -305,12 +294,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       correct = 0;
       new Future.delayed(const Duration(milliseconds: 700), () {
         widget.onEnd();
-        
       });
     }
 
     if (correct == _numButtons) {
-      
       _wrongAttem = 0;
       correct = 0;
       widget.onScore(-_wrongAttem);
@@ -407,8 +394,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       controllerPress.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controllerPress.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-        }
+        } else if (status == AnimationStatus.dismissed) {}
       });
     }
     controllerPress.forward();
@@ -443,7 +429,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale:
               widget.status == Status.Enable ? buttonPress : animationInvisible,
           child: new UnitButton(
-            disabled: widget.status==Status.Disable || widget.shake==0? false: true,
+            disabled: widget.status == Status.Disable || widget.shake == 0
+                ? false
+                : true,
             onPress: (widget.status == Status.Disable || widget.shake == 0)
                 ? () => widget.onPress()
                 : null,
