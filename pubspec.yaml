@@ -51,6 +51,8 @@ flutter:
     - assets/imageCoordinatesInfo.json
     - assets/imageCoordinatesInfo2.json
     - assets/apple.ogg
+    - assets/dice_3.png
+    - assets/dice5.gif
     - assets/Shapes.png
     - assets/koala_neutral.png
     - assets/koala_happy.png
