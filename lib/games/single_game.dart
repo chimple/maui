@@ -298,7 +298,7 @@ class _SingleGameState extends State<SingleGame> {
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(

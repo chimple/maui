@@ -164,8 +164,12 @@ class ScoreScreen extends StatelessWidget {
                         child: IconButton(
                           iconSize: 100.0,
                           icon: new Icon(Icons.home),
-                          onPressed: () =>
-                              Navigator.of(context).pushNamed('/tab'),
+                          onPressed: () {
+                              // Navigator.of(context).pushNamed('/tab');
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              }
                         )),
                   ),
                   new Expanded(
