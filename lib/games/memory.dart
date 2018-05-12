@@ -269,14 +269,6 @@ class MemoryState extends State<Memory> {
                                 j, e, _statuses[j], _shaker[j++])))
                         .toList(growable: false),
                   ));
-
-      // return new ResponsiveGridView(
-      //   rows: _size,
-      //   cols: _size,
-      //   children: _letters
-      //       .map((e) => _buildItem(j, e, _statuses[j], _shaker[j++]))
-      //       .toList(growable: false),
-      // );
     });
   }
 }
