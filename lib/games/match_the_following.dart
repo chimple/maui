@@ -44,7 +44,7 @@ enum StatusShake {
 //enum color {0xFFaa0e42}
 class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
-  final double middle_spacing = 60.0;
+  final double middle_spacing = 50.0;
   int c = 0;
   int start = 0, increament = 0;
   List<String> _leftSideletters = [];
@@ -323,8 +323,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         _lettersRight.clear();
         _shake.clear();
         widget.onEnd();
-
-        // _initBoard();
       });
     }
     print("Correct ::$correct ");
@@ -445,6 +443,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale:
               widget.status == Status.Enable ? buttonPress : animationInvisible,
           child: new UnitButton(
+            disabled: widget.status==Status.Disable || widget.shake==0? false: true,
             onPress: (widget.status == Status.Disable || widget.shake == 0)
                 ? () => widget.onPress()
                 : null,
