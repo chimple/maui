@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
+
+import '../components/unit_button.dart';
 
 class Connectdots extends StatefulWidget {
   Function onScore;
@@ -271,6 +274,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
              if(i==_copyAns.length)
               {
                   k=0;
+                  count0=count0-1;
                                 
     count1=0;
    
@@ -301,6 +305,8 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
                print("hello shake cell list$_ShakeCells");
                  new Future.delayed(const Duration(milliseconds: 400), () {
                   setState(() {
+                     widget.onScore(-1); 
+                     
                     _ShakeCells[index] = ShakeCell.InActive;
                   });
                 });
@@ -437,19 +443,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
               child: new ScaleTransition(
                 scale: animationRight,
-             child: new RaisedButton(
-                  onPressed: () => widget.onPress(),
+             child: new UnitButton(
+                  // onPressed: () => widget.onPress(),
        
-                  color: widget.status == Status.Visible
-                      ? new Color(0xFFffffff)
-                      : new Color(_color),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0))),
-                  child: new Text("$_displayText",
-                  key: new Key(widget.index.toString()+"but"),
-                      style:
-                          new TextStyle(color: Colors.black, fontSize: 24.0)))      ),
+                  // color: widget.status == Status.Visible
+                  //     ? new Color(0xFFffffff)
+                  //     : new Color(_color),
+                  // shape: new RoundedRectangleBorder(
+                  //     borderRadius:
+                  //         new BorderRadius.all(new Radius.circular(8.0))),
+                  // child: new Text("$_displayText",
+                  // key: new Key(widget.index.toString()+"but"),
+                  //     style:
+                  //         new TextStyle(color: Colors.black, fontSize: 24.0)
+                  //         )
+                  onPress:() => widget.onPress(),
+                  text:_displayText,
+                  unitMode: UnitMode.text,
+                          )      ),
        ) );
   }
 }

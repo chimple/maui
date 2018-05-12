@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
@@ -50,36 +51,51 @@ class MauiApp extends StatelessWidget {
 
     if (path[1] == 'games' && path.length == 6) {
       int gameCategoryId = int.parse(path[4], onError: (source) => null);
+      Random random = new Random();
+      var gameConfig = new GameConfig(
+          gameCategoryId: gameCategoryId,
+          questionUnitMode: UnitMode.values[random.nextInt(3)],
+          answerUnitMode: UnitMode.values[random.nextInt(3)],
+          level: random.nextInt(10) + 1);
+
       switch (path[5]) {
         case 'single_iterations':
+          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
                   path[2],
                   gameMode: GameMode.iterations,
-                  gameCategoryId: gameCategoryId,
+                  gameConfig: gameConfig,
                 ),
           );
         case 'single_timed':
+          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
                   path[2],
                   gameMode: GameMode.timed,
-                  gameCategoryId: gameCategoryId,
+                  gameConfig: gameConfig,
                 ),
           );
         case 'h2h_iterations':
           return new MaterialPageRoute<Null>(
             settings: settings,
-            builder: (BuildContext context) => new HeadToHeadGame(path[2],
-                gameMode: GameMode.iterations, gameCategoryId: gameCategoryId),
+            builder: (BuildContext context) => new HeadToHeadGame(
+                  path[2],
+                  gameMode: GameMode.iterations,
+                  gameConfig: gameConfig,
+                ),
           );
         case 'h2h_timed':
           return new MaterialPageRoute<Null>(
             settings: settings,
-            builder: (BuildContext context) => new HeadToHeadGame(path[2],
-                gameMode: GameMode.timed, gameCategoryId: gameCategoryId),
+            builder: (BuildContext context) => new HeadToHeadGame(
+                  path[2],
+                  gameMode: GameMode.timed,
+                  gameConfig: gameConfig,
+                ),
           );
       }
     }
