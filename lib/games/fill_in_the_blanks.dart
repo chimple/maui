@@ -122,14 +122,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 widget.onProgress(progres / space);
                 dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
               } else {
-                if(dropTargetData[index]=='_'){
-                dragcount++;
-                if (scoretrack > 0) {
-                  scoretrack = scoretrack - 1;
-                  widget.onScore(-1);
-                } else {
-                  widget.onScore(0);
-                }
+                if (dropTargetData[index] == '_') {
+                  dragcount++;
+                  if (scoretrack > 0) {
+                    scoretrack = scoretrack - 1;
+                    widget.onScore(-1);
+                  } else {
+                    widget.onScore(0);
+                  }
                 }
               }
               if (progres == space) {
@@ -142,15 +142,15 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 });
               }
             } else {
-               if(dropTargetData[index]=='_'){
-              dragcount++;
-              if (scoretrack > 0) {
-                scoretrack = scoretrack - 1;
-                widget.onScore(-1);
-              } else {
-                widget.onScore(0);
+              if (dropTargetData[index] == '_') {
+                dragcount++;
+                if (scoretrack > 0) {
+                  scoretrack = scoretrack - 1;
+                  widget.onScore(-1);
+                } else {
+                  widget.onScore(0);
+                }
               }
-               }
             }
             if (dragcount == space + 2) {
               new Future.delayed(const Duration(milliseconds: 700), () {
@@ -161,24 +161,23 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             }
 
             setState(() {
-               if(dropTargetData[index]=='_')
-              {
-              if (flag1 == 0) {
-                _flag[index] = 1;
-                if (dropTargetData[index] == '') {
-                  dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
-                  flagtemp = 1;
-                }
-                new Future.delayed(const Duration(milliseconds: 400), () {
-                  setState(() {
-                    _flag[index] = 0;
-                    if (flagtemp == 1) {
-                      dropTargetData[index] = '';
-                      flagtemp = 0;
-                    }
+              if (dropTargetData[index] == '_') {
+                if (flag1 == 0) {
+                  _flag[index] = 1;
+                  if (dropTargetData[index] == '') {
+                    dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+                    flagtemp = 1;
+                  }
+                  new Future.delayed(const Duration(milliseconds: 400), () {
+                    setState(() {
+                      _flag[index] = 0;
+                      if (flagtemp == 1) {
+                        dropTargetData[index] = '';
+                        flagtemp = 0;
+                      }
+                    });
                   });
-                });
-              }
+                }
               }
             });
           }
@@ -244,11 +243,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     var maxChars = _size *
         (_holdDataOfDragBox != null
             ? _holdDataOfDragBox.fold(
-            1,
+                1,
                 (prev, element) =>
-            element.length > prev ? element.length : prev)
+                    element.length > prev ? element.length : prev)
             : 1);
-     MediaQueryData media = MediaQuery.of(context);
+    MediaQueryData media = MediaQuery.of(context);
     return new Container(
       child: new Center(
         child: new Column(
@@ -261,8 +260,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 color: new Color(0xffffa3bc8b),
                 child: new ResponsiveGridView(
                   rows: 1,
-                  padding: media.orientation==Orientation.portrait?dropTargetData.length<5?80.0:20.0:dropTargetData.length<dropTargetData.length*2?0.0:80.0,
-                  maxChars: maxChars,
+                  padding: media.orientation == Orientation.portrait
+                      ? dropTargetData.length < 5 ? 80.0 : 20.0
+                      : dropTargetData.length < dropTargetData.length * 2
+                          ? 0.0
+                          : 80.0,
                   cols: dropTargetData.length,
                   maxAspectRatio: 1.0,
                   children: dropTargetData
@@ -277,8 +279,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   rows: 1,
                   cols: dragBoxData.length,
                   maxAspectRatio: 1.0,
-                  maxChars: maxChars,
-                //  padding: 10.0,
+                  padding: 10.0,
                   children: dragBoxData
                       .map((e) => dragbox(k++, e, _flag[a++]))
                       .toList(growable: false)),
@@ -386,7 +387,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new Text(widget.text,
                     key: new Key('${widget.keys}'),
                     style: new TextStyle(
-                        color:  new Color(0xffDD6154),
+                        color: new Color(0xffDD6154),
                         fontSize: media.size.height * 0.06)),
               );
             },
@@ -406,18 +407,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               child: new Draggable(
                   onDragStarted: widget.onDrag,
                   maxSimultaneousDrags: 1,
-                
                   data: '${widget.index}' + '_' + '${widget.code}',
                   child: new Center(
                     child: new Container(
-                      height:media.orientation==Orientation.portrait?widget.length>10?media.size.height * 0.01:media.size.height*0.06:media.size.height*0.13,
-                      width: media.orientation==Orientation.portrait?widget.length>10?media.size.width * 0.1:media.size.width*0.06:media.size.width*0.07,
-                     
+                      height: media.orientation == Orientation.portrait
+                          ? widget.length > 10
+                              ? media.size.height * 0.01
+                              : media.size.height * 0.06
+                          : media.size.height * 0.13,
+                      width: media.orientation == Orientation.portrait
+                          ? widget.length > 10
+                              ? media.size.width * 0.1
+                              : media.size.width * 0.06
+                          : media.size.width * 0.07,
                       child: new Center(
                         child: new Text(widget.text,
                             key: new Key("A${widget.keys}"),
                             style: new TextStyle(
-                                color:  new Color(0xffDD6154),
+                                color: new Color(0xffDD6154),
                                 fontSize: media.size.height * 0.04)),
                       ),
                     ),
@@ -429,7 +436,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: new Text(
                       widget.text,
                       style: new TextStyle(
-                        color:  new Color(0xffDD6154),
+                        color: new Color(0xffDD6154),
                         decoration: TextDecoration.none,
                         fontSize: media.size.height * 0.08,
                         fontWeight: FontWeight.bold,

@@ -193,7 +193,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       rows: _nextTask,
       cols: 1,
       maxAspectRatio: 1.3,
-      maxChars: _nextTask,
       padding: 4.0,
       //padding: const EdgeInsets.all(5.0),
       // maxAspectRatio: 4.0,
@@ -237,7 +236,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     return new ResponsiveGridView(
       rows: _nextTask,
       cols: 1,
-      maxChars: _nextTask,
       padding: 4.0,
       maxAspectRatio: 1.3,
       children: _lettersRight
