@@ -252,7 +252,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                           style: new TextStyle(
                             fontSize: _height * 0.1,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color:new Color(0xFFA46DBA),
                           ),
                         ),
                       ),
@@ -343,7 +343,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                         width:widget.height * 0.0075),
                     borderRadius:
                     new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
@@ -351,7 +351,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                           fontSize: _displayText == '✖' || _displayText == '✔'
                               ? widget.height * 0.053
                               : widget.height * 0.06,
@@ -385,13 +385,13 @@ class TextAnimation extends AnimatedWidget {
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.015)),
                   border: new Border.all(
-                    color: Colors.blueAccent,
+                    color: new Color(0xFFA46DBA),
                     width: height * 0.0075,
                   ),
                   shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
-                    color: Colors.black,
+                    color: new Color(0xFFA46DBA),
                     fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
