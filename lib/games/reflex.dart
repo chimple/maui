@@ -152,40 +152,38 @@ class ReflexState extends State<Reflex> {
         children: <Widget>[
           new LimitedBox(
               maxHeight: maxHeight,
+              child: ListView(
+                  reverse: true,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.all(buttonPadding),
+                  itemExtent: state.buttonWidth,
+                  children: _solvedLetters
+                      .map((l) => Center(
+                          child: Padding(
+                              padding: EdgeInsets.all(buttonPadding),
+                              child: UnitButton(
+                                text: l,
+                                primary: false,
+                                onPress: () {},
+                              ))))
+                      .toList(growable: false))),
+          new Expanded(
               child: new Material(
                   color: Theme.of(context).accentColor,
-                  elevation: 4.0,
-                  textStyle: new TextStyle(
-                      color: Colors.white, fontSize: state.buttonFontSize),
-                  child: new ListView(
-                      reverse: true,
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.all(buttonPadding),
-                      itemExtent: state.buttonWidth,
-                      children: _solvedLetters
-                          .map((l) => Center(
-                              child: Padding(
-                                  padding: EdgeInsets.all(buttonPadding),
-                                  child: UnitButton(
-                                    text: l,
-                                    primary: false,
-                                    onPress: () {},
-                                  ))))
-                          .toList(growable: false)))),
-          new Expanded(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: vPadding, horizontal: hPadding),
-                  child: ResponsiveGridView(
-                    rows: _size,
-                    cols: _size,
-                    children: _letters
-                        .map((e) => Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(
-                                j++, e, maxChars, maxWidth, maxHeight)))
-                        .toList(growable: false),
-                  )))
+                  elevation: 8.0,
+                  child: new Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: vPadding, horizontal: hPadding),
+                      child: ResponsiveGridView(
+                        rows: _size,
+                        cols: _size,
+                        children: _letters
+                            .map((e) => Padding(
+                                padding: EdgeInsets.all(buttonPadding),
+                                child: _buildItem(
+                                    j++, e, maxChars, maxWidth, maxHeight)))
+                            .toList(growable: false),
+                      ))))
         ],
       );
     });
