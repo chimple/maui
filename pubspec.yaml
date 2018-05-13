@@ -68,335 +68,404 @@ flutter:
     - assets/animations/heart.json
     - assets/animations/ball.json
     - assets/hoodie/reflex.png
-    - assets/hoodie/2x/reflex.png
-    - assets/hoodie/3x/reflex.png
-    - assets/hoodie/4x/reflex.png
     - assets/hoodie/abacus.png
-    - assets/hoodie/2x/abacus.png
-    - assets/hoodie/3x/abacus.png
-    - assets/hoodie/4x/abacus.png
     - assets/hoodie/bingo.png
-    - assets/hoodie/2x/bingo.png
-    - assets/hoodie/3x/bingo.png
-    - assets/hoodie/4x/bingo.png
     - assets/hoodie/calculate_numbers.png
-    - assets/hoodie/2x/calculate_numbers.png
-    - assets/hoodie/3x/calculate_numbers.png
-    - assets/hoodie/4x/calculate_numbers.png
     - assets/hoodie/casino.png
-    - assets/hoodie/2x/casino.png
-    - assets/hoodie/3x/casino.png
-    - assets/hoodie/4x/casino.png
     - assets/hoodie/circle_words.png
-    - assets/hoodie/2x/circle_words.png
-    - assets/hoodie/3x/circle_words.png
-    - assets/hoodie/4x/circle_words.png
     - assets/hoodie/clue_game.png
-    - assets/hoodie/2x/clue_game.png
-    - assets/hoodie/3x/clue_game.png
-    - assets/hoodie/4x/clue_game.png
     - assets/hoodie/connect_the_dots.png
-    - assets/hoodie/2x/connect_the_dots.png
-    - assets/hoodie/3x/connect_the_dots.png
-    - assets/hoodie/4x/connect_the_dots.png
     - assets/hoodie/crossword.png
-    - assets/hoodie/2x/crossword.png
-    - assets/hoodie/3x/crossword.png
-    - assets/hoodie/4x/crossword.png
     - assets/hoodie/draw_challenge.png
-    - assets/hoodie/2x/draw_challenge.png
-    - assets/hoodie/3x/draw_challenge.png
-    - assets/hoodie/4x/draw_challenge.png
     - assets/hoodie/drawing.png
-    - assets/hoodie/2x/drawing.png
-    - assets/hoodie/3x/drawing.png
-    - assets/hoodie/4x/drawing.png
     - assets/hoodie/fill_in_the_blanks.png
-    - assets/hoodie/2x/fill_in_the_blanks.png
-    - assets/hoodie/3x/fill_in_the_blanks.png
-    - assets/hoodie/4x/fill_in_the_blanks.png
     - assets/hoodie/fill_number.png
-    - assets/hoodie/2x/fill_number.png
-    - assets/hoodie/3x/fill_number.png
-    - assets/hoodie/4x/fill_number.png
     - assets/hoodie/first_word.png
-    - assets/hoodie/2x/first_word.png
-    - assets/hoodie/3x/first_word.png
-    - assets/hoodie/4x/first_word.png
     - assets/hoodie/friend_word.png
-    - assets/hoodie/2x/friend_word.png
-    - assets/hoodie/3x/friend_word.png
-    - assets/hoodie/4x/friend_word.png
     - assets/hoodie/guess.png
-    - assets/hoodie/2x/guess.png
-    - assets/hoodie/3x/guess.png
-    - assets/hoodie/4x/guess.png
     - assets/hoodie/identify.png
-    - assets/hoodie/2x/identify.png
-    - assets/hoodie/3x/identify.png
-    - assets/hoodie/4x/identify.png
     - assets/hoodie/identify.png
-    - assets/hoodie/2x/identify.png
-    - assets/hoodie/3x/identify.png
-    - assets/hoodie/4x/identify.png
     - assets/hoodie/match_the_following.png
-    - assets/hoodie/2x/match_the_following.png
-    - assets/hoodie/3x/match_the_following.png
-    - assets/hoodie/4x/match_the_following.png
     - assets/hoodie/memory.png
-    - assets/hoodie/2x/memory.png
-    - assets/hoodie/3x/memory.png
-    - assets/hoodie/4x/memory.png
     - assets/hoodie/order_it.png
-    - assets/hoodie/2x/order_it.png
-    - assets/hoodie/3x/order_it.png
-    - assets/hoodie/4x/order_it.png
     - assets/hoodie/quiz.png
-    - assets/hoodie/2x/quiz.png
-    - assets/hoodie/3x/quiz.png
-    - assets/hoodie/4x/quiz.png
     - assets/hoodie/spin_wheel.png
-    - assets/hoodie/2x/spin_wheel.png
-    - assets/hoodie/3x/spin_wheel.png
-    - assets/hoodie/4x/spin_wheel.png
     - assets/hoodie/tables.png
-    - assets/hoodie/2x/tables.png
-    - assets/hoodie/3x/tables.png
-    - assets/hoodie/4x/tables.png
     - assets/hoodie/tap_home.png
-    - assets/hoodie/2x/tap_home.png
-    - assets/hoodie/3x/tap_home.png
-    - assets/hoodie/4x/tap_home.png
     - assets/hoodie/tap_wrong.png
-    - assets/hoodie/2x/tap_wrong.png
-    - assets/hoodie/3x/tap_wrong.png
-    - assets/hoodie/4x/tap_wrong.png 
     - assets/hoodie/true_or_false.png
-    - assets/hoodie/2x/true_or_false.png
-    - assets/hoodie/3x/true_or_false.png
-    - assets/hoodie/4x/true_or_false.png
-    
+
     #happy
     - assets/hoodie/reflex_happy.png
-    - assets/hoodie/2x/reflex_happy.png
-    - assets/hoodie/3x/reflex_happy.png
-    - assets/hoodie/4x/reflex_happy.png
     - assets/hoodie/abacus_happy.png
-    - assets/hoodie/2x/abacus_happy.png
-    - assets/hoodie/3x/abacus_happy.png
-    - assets/hoodie/4x/abacus_happy.png
     - assets/hoodie/bingo_happy.png
-    - assets/hoodie/2x/bingo_happy.png
-    - assets/hoodie/3x/bingo_happy.png
-    - assets/hoodie/4x/bingo_happy.png
     - assets/hoodie/calculate_numbers_happy.png
-    - assets/hoodie/2x/calculate_numbers_happy.png
-    - assets/hoodie/3x/calculate_numbers_happy.png
-    - assets/hoodie/4x/calculate_numbers_happy.png
     - assets/hoodie/casino_happy.png
-    - assets/hoodie/2x/casino_happy.png
-    - assets/hoodie/3x/casino_happy.png
-    - assets/hoodie/4x/casino_happy.png
     - assets/hoodie/circle_words_happy.png
-    - assets/hoodie/2x/circle_words_happy.png
-    - assets/hoodie/3x/circle_words_happy.png
-    - assets/hoodie/4x/circle_words_happy.png
     - assets/hoodie/clue_game_happy.png
-    - assets/hoodie/2x/clue_game_happy.png
-    - assets/hoodie/3x/clue_game_happy.png
-    - assets/hoodie/4x/clue_game_happy.png
     - assets/hoodie/connect_the_dots_happy.png
-    - assets/hoodie/2x/connect_the_dots_happy.png
-    - assets/hoodie/3x/connect_the_dots_happy.png
-    - assets/hoodie/4x/connect_the_dots_happy.png
     - assets/hoodie/crossword_happy.png
-    - assets/hoodie/2x/crossword_happy.png
-    - assets/hoodie/3x/crossword_happy.png
-    - assets/hoodie/4x/crossword_happy.png
     - assets/hoodie/draw_challenge_happy.png
-    - assets/hoodie/2x/draw_challenge_happy.png
-    - assets/hoodie/3x/draw_challenge_happy.png
-    - assets/hoodie/4x/draw_challenge_happy.png
     - assets/hoodie/drawing_happy.png
-    - assets/hoodie/2x/drawing_happy.png
-    - assets/hoodie/3x/drawing_happy.png
-    - assets/hoodie/4x/drawing_happy.png
     - assets/hoodie/fill_in_the_blanks_happy.png
-    - assets/hoodie/2x/fill_in_the_blanks_happy.png
-    - assets/hoodie/3x/fill_in_the_blanks_happy.png
-    - assets/hoodie/4x/fill_in_the_blanks_happy.png
     - assets/hoodie/fill_number_happy.png
-    - assets/hoodie/2x/fill_number_happy.png
-    - assets/hoodie/3x/fill_number_happy.png
-    - assets/hoodie/4x/fill_number_happy.png
     - assets/hoodie/first_word_happy.png
-    - assets/hoodie/2x/first_word_happy.png
-    - assets/hoodie/3x/first_word_happy.png
-    - assets/hoodie/4x/first_word_happy.png
     - assets/hoodie/friend_word_happy.png
-    - assets/hoodie/2x/friend_word_happy.png
-    - assets/hoodie/3x/friend_word_happy.png
-    - assets/hoodie/4x/friend_word_happy.png
     - assets/hoodie/guess_happy.png
-    - assets/hoodie/2x/guess_happy.png
-    - assets/hoodie/3x/guess_happy.png
-    - assets/hoodie/4x/guess_happy.png
     - assets/hoodie/identify_happy.png
-    - assets/hoodie/2x/identify_happy.png
-    - assets/hoodie/3x/identify_happy.png
-    - assets/hoodie/4x/identify_happy.png
     - assets/hoodie/identify_happy.png
-    - assets/hoodie/2x/identify_happy.png
-    - assets/hoodie/3x/identify_happy.png
-    - assets/hoodie/4x/identify_happy.png
     - assets/hoodie/match_the_following_happy.png
-    - assets/hoodie/2x/match_the_following_happy.png
-    - assets/hoodie/3x/match_the_following_happy.png
-    - assets/hoodie/4x/match_the_following_happy.png
     - assets/hoodie/memory_happy.png
-    - assets/hoodie/2x/memory_happy.png
-    - assets/hoodie/3x/memory_happy.png
-    - assets/hoodie/4x/memory_happy.png
     - assets/hoodie/order_it_happy.png
-    - assets/hoodie/2x/order_it_happy.png
-    - assets/hoodie/3x/order_it_happy.png
-    - assets/hoodie/4x/order_it_happy.png
     - assets/hoodie/quiz_happy.png
-    - assets/hoodie/2x/quiz_happy.png
-    - assets/hoodie/3x/quiz_happy.png
-    - assets/hoodie/4x/quiz_happy.png
     - assets/hoodie/spin_wheel_happy.png
-    - assets/hoodie/2x/spin_wheel_happy.png
-    - assets/hoodie/3x/spin_wheel_happy.png
-    - assets/hoodie/4x/spin_wheel_happy.png
     - assets/hoodie/tables_happy.png
-    - assets/hoodie/2x/tables_happy.png
-    - assets/hoodie/3x/tables_happy.png
-    - assets/hoodie/4x/tables_happy.png
     - assets/hoodie/tap_home_happy.png
-    - assets/hoodie/2x/tap_home_happy.png
-    - assets/hoodie/3x/tap_home_happy.png
-    - assets/hoodie/4x/tap_home_happy.png
     - assets/hoodie/tap_wrong_happy.png
-    - assets/hoodie/2x/tap_wrong_happy.png
-    - assets/hoodie/3x/tap_wrong_happy.png
-    - assets/hoodie/4x/tap_wrong_happy.png 
     - assets/hoodie/true_or_false_happy.png
-    - assets/hoodie/2x/true_or_false_happy.png
-    - assets/hoodie/3x/true_or_false_happy.png
-    - assets/hoodie/4x/true_or_false_happy.png
-    
+
     #sad
     - assets/hoodie/reflex_sad.png
-    - assets/hoodie/2x/reflex_sad.png
-    - assets/hoodie/3x/reflex_sad.png
-    - assets/hoodie/4x/reflex_sad.png
     - assets/hoodie/abacus_sad.png
-    - assets/hoodie/2x/abacus_sad.png
-    - assets/hoodie/3x/abacus_sad.png
-    - assets/hoodie/4x/abacus_sad.png
     - assets/hoodie/bingo_sad.png
-    - assets/hoodie/2x/bingo_sad.png
-    - assets/hoodie/3x/bingo_sad.png
-    - assets/hoodie/4x/bingo_sad.png
     - assets/hoodie/calculate_numbers_sad.png
-    - assets/hoodie/2x/calculate_numbers_sad.png
-    - assets/hoodie/3x/calculate_numbers_sad.png
-    - assets/hoodie/4x/calculate_numbers_sad.png
     - assets/hoodie/casino_sad.png
-    - assets/hoodie/2x/casino_sad.png
-    - assets/hoodie/3x/casino_sad.png
-    - assets/hoodie/4x/casino_sad.png
     - assets/hoodie/circle_words_sad.png
-    - assets/hoodie/2x/circle_words_sad.png
-    - assets/hoodie/3x/circle_words_sad.png
-    - assets/hoodie/4x/circle_words_sad.png
     - assets/hoodie/clue_game_sad.png
-    - assets/hoodie/2x/clue_game_sad.png
-    - assets/hoodie/3x/clue_game_sad.png
-    - assets/hoodie/4x/clue_game_sad.png
     - assets/hoodie/connect_the_dots_sad.png
-    - assets/hoodie/2x/connect_the_dots_sad.png
-    - assets/hoodie/3x/connect_the_dots_sad.png
-    - assets/hoodie/4x/connect_the_dots_sad.png
     - assets/hoodie/crossword_sad.png
-    - assets/hoodie/2x/crossword_sad.png
-    - assets/hoodie/3x/crossword_sad.png
-    - assets/hoodie/4x/crossword_sad.png
     - assets/hoodie/draw_challenge_sad.png
-    - assets/hoodie/2x/draw_challenge_sad.png
-    - assets/hoodie/3x/draw_challenge_sad.png
-    - assets/hoodie/4x/draw_challenge_sad.png
     - assets/hoodie/drawing_sad.png
-    - assets/hoodie/2x/drawing_sad.png
-    - assets/hoodie/3x/drawing_sad.png
-    - assets/hoodie/4x/drawing_sad.png
     - assets/hoodie/fill_in_the_blanks_sad.png
-    - assets/hoodie/2x/fill_in_the_blanks_sad.png
-    - assets/hoodie/3x/fill_in_the_blanks_sad.png
-    - assets/hoodie/4x/fill_in_the_blanks_sad.png
     - assets/hoodie/fill_number_sad.png
-    - assets/hoodie/2x/fill_number_sad.png
-    - assets/hoodie/3x/fill_number_sad.png
-    - assets/hoodie/4x/fill_number_sad.png
     - assets/hoodie/first_word_sad.png
-    - assets/hoodie/2x/first_word_sad.png
-    - assets/hoodie/3x/first_word_sad.png
-    - assets/hoodie/4x/first_word_sad.png
     - assets/hoodie/friend_word_sad.png
-    - assets/hoodie/2x/friend_word_sad.png
-    - assets/hoodie/3x/friend_word_sad.png
-    - assets/hoodie/4x/friend_word_sad.png
     - assets/hoodie/guess_sad.png
-    - assets/hoodie/2x/guess_sad.png
-    - assets/hoodie/3x/guess_sad.png
-    - assets/hoodie/4x/guess_sad.png
     - assets/hoodie/identify_sad.png
-    - assets/hoodie/2x/identify_sad.png
-    - assets/hoodie/3x/identify_sad.png
-    - assets/hoodie/4x/identify_sad.png
     - assets/hoodie/identify_sad.png
-    - assets/hoodie/2x/identify_sad.png
-    - assets/hoodie/3x/identify_sad.png
-    - assets/hoodie/4x/identify_sad.png
     - assets/hoodie/match_the_following_sad.png
-    - assets/hoodie/2x/match_the_following_sad.png
-    - assets/hoodie/3x/match_the_following_sad.png
-    - assets/hoodie/4x/match_the_following_sad.png
     - assets/hoodie/memory_sad.png
-    - assets/hoodie/2x/memory_sad.png
-    - assets/hoodie/3x/memory_sad.png
-    - assets/hoodie/4x/memory_sad.png
     - assets/hoodie/order_it_sad.png
-    - assets/hoodie/2x/order_it_sad.png
-    - assets/hoodie/3x/order_it_sad.png
-    - assets/hoodie/4x/order_it_sad.png
     - assets/hoodie/quiz_sad.png
-    - assets/hoodie/2x/quiz_sad.png
-    - assets/hoodie/3x/quiz_sad.png
-    - assets/hoodie/4x/quiz_sad.png
     - assets/hoodie/spin_wheel_sad.png
-    - assets/hoodie/2x/spin_wheel_sad.png
-    - assets/hoodie/3x/spin_wheel_sad.png
-    - assets/hoodie/4x/spin_wheel_sad.png
     - assets/hoodie/tables_sad.png
-    - assets/hoodie/2x/tables_sad.png
-    - assets/hoodie/3x/tables_sad.png
-    - assets/hoodie/4x/tables_sad.png
     - assets/hoodie/tap_home_sad.png
-    - assets/hoodie/2x/tap_home_sad.png
-    - assets/hoodie/3x/tap_home_sad.png
-    - assets/hoodie/4x/tap_home_sad.png
     - assets/hoodie/tap_wrong_sad.png
-    - assets/hoodie/2x/tap_wrong_sad.png
-    - assets/hoodie/3x/tap_wrong_sad.png
-    - assets/hoodie/4x/tap_wrong_sad.png 
     - assets/hoodie/true_or_false_sad.png
-    - assets/hoodie/2x/true_or_false_sad.png
-    - assets/hoodie/3x/true_or_false_sad.png
-    - assets/hoodie/4x/true_or_false_sad.png
     - assets/background_tile.png
-
+    # dictionary
+    - assets/dict/acid.png
+    - assets/dict/add.png
+    - assets/dict/addition.png
+    - assets/dict/adult.png
+    - assets/dict/age.png
+    - assets/dict/anger.png
+    - assets/dict/ankle.png
+    - assets/dict/ape.png
+    - assets/dict/area.png
+    - assets/dict/arm.png
+    - assets/dict/art.png
+    - assets/dict/aunt.png
+    - assets/dict/axe.png
+    - assets/dict/baby.png
+    - assets/dict/ball.png
+    - assets/dict/bank.png
+    - assets/dict/baseball.png
+    - assets/dict/bench.png
+    - assets/dict/birth.png
+    - assets/dict/boat.png
+    - assets/dict/body.png
+    - assets/dict/boil.png
+    - assets/dict/book.png
+    - assets/dict/bow.png
+    - assets/dict/box.png
+    - assets/dict/brush.png
+    - assets/dict/cage.png
+    - assets/dict/cake.png
+    - assets/dict/campfire.png
+    - assets/dict/can.png
+    - assets/dict/carrot.png
+    - assets/dict/cash.png
+    - assets/dict/city.png
+    - assets/dict/cow.png
+    - assets/dict/crop.png
+    - assets/dict/cross.png
+    - assets/dict/dad.png
+    - assets/dict/dam.png
+    - assets/dict/dance.png
+    - assets/dict/danger.png
+    - assets/dict/date.png
+    - assets/dict/desire.png
+    - assets/dict/diary.png
+    - assets/dict/dinner.png
+    - assets/dict/dog.png
+    - assets/dict/dust.png
+    - assets/dict/duster.png
+    - assets/dict/eagle.png
+    - assets/dict/earthworm.png
+    - assets/dict/east.png
+    - assets/dict/eat.png
+    - assets/dict/eel.png
+    - assets/dict/elbow.png
+    - assets/dict/engine.png
+    - assets/dict/eraser.png
+    - assets/dict/even.png
+    - assets/dict/evening.png
+    - assets/dict/exam.png
+    - assets/dict/exercise.png
+    - assets/dict/eye.png
+    - assets/dict/face.png
+    - assets/dict/father.png
+    - assets/dict/feet.png
+    - assets/dict/fence.png
+    - assets/dict/fig.png
+    - assets/dict/finger.png
+    - assets/dict/fish.png
+    - assets/dict/fist.png
+    - assets/dict/flag.png
+    - assets/dict/food.png
+    - assets/dict/forest.png
+    - assets/dict/furniture.png
+    - assets/dict/gain.png
+    - assets/dict/galaxy.png
+    - assets/dict/game.png
+    - assets/dict/garden.png
+    - assets/dict/gem.png
+    - assets/dict/giant.png
+    - assets/dict/glass.png
+    - assets/dict/globe.png
+    - assets/dict/gloves.png
+    - assets/dict/goat.png
+    - assets/dict/grape.png
+    - assets/dict/guitar.png
+    - assets/dict/gun.png
+    - assets/dict/hand.png
+    - assets/dict/hanger.png
+    - assets/dict/happy.png
+    - assets/dict/hare.png
+    - assets/dict/head.png
+    - assets/dict/hen.png
+    - assets/dict/honey.png
+    - assets/dict/hot.png
+    - assets/dict/hut.png
+    - assets/dict/iceberg.png
+    - assets/dict/idea.png
+    - assets/dict/iguana.png
+    - assets/dict/impala.png
+    - assets/dict/industry.png
+    - assets/dict/infant.png
+    - assets/dict/injury.png
+    - assets/dict/ink.png
+    - assets/dict/insect.png
+    - assets/dict/inside.png
+    - assets/dict/internet.png
+    - assets/dict/inventor.png
+    - assets/dict/invitation.png
+    - assets/dict/iron.png
+    - assets/dict/jar.png
+    - assets/dict/jaw.png
+    - assets/dict/jeep.png
+    - assets/dict/jelly.png
+    - assets/dict/jet.png
+    - assets/dict/jewel.png
+    - assets/dict/jewelry.png
+    - assets/dict/jog.png
+    - assets/dict/jug.png
+    - assets/dict/juice-01.png
+    - assets/dict/jump.png
+    - assets/dict/jungle.png
+    - assets/dict/jupiter.png
+    - assets/dict/kangaroo.png
+    - assets/dict/kettle.png
+    - assets/dict/key.png
+    - assets/dict/keyboard.png
+    - assets/dict/kid.png
+    - assets/dict/kidney.png
+    - assets/dict/kind.png
+    - assets/dict/king.png
+    - assets/dict/kite.png
+    - assets/dict/kitten.png
+    - assets/dict/kiwi.png
+    - assets/dict/knee.png
+    - assets/dict/kneel.png
+    - assets/dict/knight.png
+    - assets/dict/knowledge.png
+    - assets/dict/lace.png
+    - assets/dict/lake.png
+    - assets/dict/lamb.png
+    - assets/dict/lamp.png
+    - assets/dict/land.png
+    - assets/dict/laugh.png
+    - assets/dict/lava.png
+    - assets/dict/lemon.png
+    - assets/dict/letter.png
+    - assets/dict/lion.png
+    - assets/dict/lips.png
+    - assets/dict/log.png
+    - assets/dict/love.png
+    - assets/dict/mad.png
+    - assets/dict/magic.png
+    - assets/dict/magnet.png
+    - assets/dict/mammal.png
+    - assets/dict/man.png
+    - assets/dict/many.png
+    - assets/dict/map.png
+    - assets/dict/marble.png
+    - assets/dict/march.png
+    - assets/dict/mask.png
+    - assets/dict/meat.png
+    - assets/dict/metal.png
+    - assets/dict/milk.png
+    - assets/dict/money.png
+    - assets/dict/nail.png
+    - assets/dict/nailpolish.png
+    - assets/dict/necklace.png
+    - assets/dict/needle.png
+    - assets/dict/neighbour.png
+    - assets/dict/newspaper.png
+    - assets/dict/night.png
+    - assets/dict/nightingale.png
+    - assets/dict/noodles.png
+    - assets/dict/noon.png
+    - assets/dict/north.png
+    - assets/dict/nurse.png
+    - assets/dict/nut.png
+    - assets/dict/oatmeal.png
+    - assets/dict/ocean.png
+    - assets/dict/octagon.png
+    - assets/dict/octopus.png
+    - assets/dict/odd.png
+    - assets/dict/oil.png
+    - assets/dict/old.png
+    - assets/dict/olive.png
+    - assets/dict/omelet.png
+    - assets/dict/onion.png
+    - assets/dict/orange.png
+    - assets/dict/outside.png
+    - assets/dict/oval.png
+    - assets/dict/oven.png
+    - assets/dict/owl.png
+    - assets/dict/paint.png
+    - assets/dict/pajamas.png
+    - assets/dict/palm.png
+    - assets/dict/pan.png
+    - assets/dict/panda.png
+    - assets/dict/pant.png
+    - assets/dict/paper.png
+    - assets/dict/parrot.png
+    - assets/dict/pen.png
+    - assets/dict/people.png
+    - assets/dict/photo.png
+    - assets/dict/pig.png
+    - assets/dict/quail.png
+    - assets/dict/qualify.png
+    - assets/dict/quality.png
+    - assets/dict/quantity.png
+    - assets/dict/quartz.png
+    - assets/dict/quetzal.png
+    - assets/dict/quick.png
+    - assets/dict/quill.png
+    - assets/dict/quite.png
+    - assets/dict/quiver.png
+    - assets/dict/quiz.png
+    - assets/dict/quokka.png
+    - assets/dict/rabbit.png
+    - assets/dict/race.png
+    - assets/dict/racket.png
+    - assets/dict/radio.png
+    - assets/dict/radish.png
+    - assets/dict/rainbow.png
+    - assets/dict/read.png
+    - assets/dict/red.png
+    - assets/dict/remote.png
+    - assets/dict/rice.png
+    - assets/dict/river.png
+    - assets/dict/rock.png
+    - assets/dict/sad-.png
+    - assets/dict/sail.png
+    - assets/dict/sailfish.png
+    - assets/dict/salad.png
+    - assets/dict/sand.png
+    - assets/dict/sandal.png
+    - assets/dict/saturn.png
+    - assets/dict/saw.png
+    - assets/dict/shirt.png
+    - assets/dict/shoes.png
+    - assets/dict/signal.png
+    - assets/dict/snail.png
+    - assets/dict/snake.png
+    - assets/dict/soap.png
+    - assets/dict/socks.png
+    - assets/dict/table.png
+    - assets/dict/talk.png
+    - assets/dict/tape.png
+    - assets/dict/target.png
+    - assets/dict/taste.png
+    - assets/dict/tea.png
+    - assets/dict/team.png
+    - assets/dict/tent.png
+    - assets/dict/text.png
+    - assets/dict/thigh.png
+    - assets/dict/thin.png
+    - assets/dict/thread.png
+    - assets/dict/umpire.png
+    - assets/dict/under.png
+    - assets/dict/undo.png
+    - assets/dict/unhappy.png
+    - assets/dict/unicorn.png
+    - assets/dict/unicycle.png
+    - assets/dict/uniform.png
+    - assets/dict/unique.png
+    - assets/dict/upset.png
+    - assets/dict/urban.png
+    - assets/dict/urn.png
+    - assets/dict/user.png
+    - assets/dict/utensils.png
+    - assets/dict/vacation.png
+    - assets/dict/value.png
+    - assets/dict/van.png
+    - assets/dict/vase.png
+    - assets/dict/vehicle.png
+    - assets/dict/vessel.png
+    - assets/dict/vest.png
+    - assets/dict/victory.png
+    - assets/dict/video.png
+    - assets/dict/village.png
+    - assets/dict/violet.png
+    - assets/dict/violin.png
+    - assets/dict/voice.png
+    - assets/dict/volume.png
+    - assets/dict/vote.png
+    - assets/dict/walk.png
+    - assets/dict/war.png
+    - assets/dict/wash.png
+    - assets/dict/wasp.png
+    - assets/dict/watch.png
+    - assets/dict/water.png
+    - assets/dict/waterfall.png
+    - assets/dict/wax.png
+    - assets/dict/web.png
+    - assets/dict/whale.png
+    - assets/dict/whistle.png
+    - assets/dict/xray.png
+    - assets/dict/xylophone.png
+    - assets/dict/yacht.png
+    - assets/dict/yak.png
+    - assets/dict/yam.png
+    - assets/dict/yarn.png
+    - assets/dict/yawn.png
+    - assets/dict/yell.png
+    - assets/dict/yogurt.png
+    - assets/dict/yolk.png
+    - assets/dict/you.png
+    - assets/dict/young.png
+    - assets/dict/youth.png
+    - assets/dict/zebra.png
+    - assets/dict/zero.png
+    - assets/dict/zigzag.png
+    - assets/dict/zip.png
+    - assets/dict/zodiac.png
+    - assets/dict/zoo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

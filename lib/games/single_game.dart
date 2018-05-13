@@ -7,7 +7,7 @@ import 'package:maui/components/nima.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
-import 'package:maui/games/TrueFalse.dart';
+import 'package:maui/games/true_false.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/calculate_numbers.dart';
@@ -53,15 +53,17 @@ enum GameDisplay {
 enum UnitMode { text, image, audio }
 
 class GameConfig {
-  final UnitMode questionUnitMode;
-  final UnitMode answerUnitMode;
-  final int gameCategoryId;
-  final int level;
+  UnitMode questionUnitMode;
+  UnitMode answerUnitMode;
+  int gameCategoryId;
+  int level;
+  GameDisplay gameDisplay;
 
   GameConfig(
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
+      this.gameDisplay,
       this.level});
 }
 
@@ -74,7 +76,6 @@ class SingleGame extends StatefulWidget {
   final Function onScore;
   final GameMode gameMode;
   final bool isRotated;
-  final GameDisplay gameDisplay;
   final Key key;
 
   static final Map<String, List<Color>> gameColors = {
@@ -94,7 +95,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF76abd3),
       Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF87D62B), Color(0xFFFAFAFA), Color(0xFF87D62B)],
+    'crossword': [Color(0xFF77DB65), Color(0xFFFAFAFA), Color(0xFF379EDD)],
     'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
     'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
@@ -103,7 +104,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFFa3bc8b),
       Color(0xFF9A66CC)
     ],
-    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF8F3), Color(0xFF1EC1A1)],
+    'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
     'friend_word': [Color(0xFF48AECC), Color(0xFFfcc335), Color(0xFFD154BF)],
     'guess': [Color(0xFF77DB65), Color(0xFFe58a28), Color(0xFF57C3FF)],
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
@@ -126,7 +127,6 @@ class SingleGame extends StatefulWidget {
   SingleGame(this.gameName,
       {this.key,
       this.gameMode = GameMode.iterations,
-      this.gameDisplay = GameDisplay.single,
       this.gameConfig,
       this.onGameEnd,
       this.onScore,
@@ -167,102 +167,163 @@ class _SingleGameState extends State<SingleGame> {
     print(widget.key.toString());
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
-        primaryColor: widget.gameDisplay == GameDisplay.otherHeadToHead
-            ? colors[2]
-            : colors[0],
+        primaryColor:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? colors[2]
+                : colors[0],
         accentColor: colors[1]);
-    var game = buildSingleGame(context, widget.gameDisplay.toString());
+    var game =
+        buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     return new Theme(
         data: theme,
         child: Scaffold(
             resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.white,
             body: new Column(children: <Widget>[
-              new Material(
-                  elevation: 8.0,
-                  color: widget.gameDisplay == GameDisplay.otherHeadToHead
-                      ? colors[2]
-                      : colors[0],
-                  child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.gameDisplay == GameDisplay.single
-                          ? <Widget>[
-                              new Expanded(
-                                child: new Row(children: <Widget>[
-                                  new InkWell(
-                                      child: new Icon(Icons.arrow_back),
-                                      onTap: () => Navigator.of(context).pop()),
-                                  _hud(context)
-                                ]),
-                                flex: 1,
-                              ),
-                              new Expanded(
-                                  child: new Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: new Nima(
-                                          name: widget.gameName,
-                                          score: _score)),
-                                  flex: 1),
-                              new Expanded(child: new Text('$_score'), flex: 1)
-                            ]
-                          : <Widget>[_hud(context), new Text('$_score')])),
+              SizedBox(
+                  height: media.size.height / 8.0,
+                  child: Material(
+                      elevation: 8.0,
+                      color: widget.gameConfig.gameDisplay ==
+                              GameDisplay.otherHeadToHead
+                          ? colors[2]
+                          : colors[0],
+                      child: new Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Stack(
+                              alignment: AlignmentDirectional.centerStart,
+                              children: <Widget>[
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: widget.gameConfig.gameDisplay !=
+                                            GameDisplay.otherHeadToHead
+                                        ? <Widget>[
+                                            new Flexible(
+                                                flex: 1,
+                                                child: _hud(
+                                                    context: context,
+                                                    height:
+                                                        media.size.height / 8.0,
+                                                    backgroundColor: colors[2],
+                                                    foregroundColor:
+                                                        colors[1])),
+                                            new Nima(
+                                                name: widget.gameName,
+                                                score: _score),
+                                            new Flexible(
+                                                child: Container(), flex: 1)
+                                          ]
+                                        : <Widget>[
+                                            new Flexible(
+                                                child: Container(), flex: 1),
+                                            new Nima(
+                                                name: widget.gameName,
+                                                score: _score),
+                                            new Flexible(
+                                                flex: 1,
+                                                child: _hud(
+                                                    context: context,
+                                                    height:
+                                                        media.size.height / 8.0,
+                                                    backgroundColor: colors[0],
+                                                    foregroundColor:
+                                                        colors[1])),
+                                          ]),
+                                new InkWell(
+                                    child: new Align(
+                                        alignment:
+                                            AlignmentDirectional.centerStart,
+                                        child: Icon(
+                                          Icons.arrow_back,
+                                          color: Colors.white,
+                                          size: 36.0,
+                                        )),
+                                    onTap: () => Navigator.of(context).pop()),
+                              ])))),
               new Expanded(
+                  flex: 10,
                   child: new Stack(fit: StackFit.expand, children: <Widget>[
-                Image.asset(
-                  'assets/background_tile.png',
-                  repeat: ImageRepeat.repeat,
-                ),
-                game
-              ]))
+                    Image.asset(
+                      'assets/background_tile.png',
+                      repeat: ImageRepeat.repeat,
+                    ),
+                    game
+                  ]))
             ])));
   }
 
-  _hud(BuildContext context) {
-    print(Theme.of(context).primaryColor);
+  _hud(
+      {BuildContext context,
+      double height,
+      Color backgroundColor,
+      Color foregroundColor}) {
+    height = height * 0.7;
+    final fontSize = min(18.0, height / 2.5);
     var user = AppStateContainer.of(context).state.loggedInUser;
 
-    return new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    var headers = <Widget>[
+      new Stack(
+        alignment: AlignmentDirectional.center,
         children: <Widget>[
-          Text(user.name, style: new TextStyle(fontSize: 24.0)),
-          new Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: new Stack(
-                alignment: AlignmentDirectional.center,
-                children: <Widget>[
-                  new Container(
-                      width: 64.0,
-                      height: 64.0,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                              image: new FileImage(new File(user.image)),
-                              fit: BoxFit.fill))),
-                  new SizedBox(
-                      width: 64.0,
-                      height: 64.0,
-                      child: new CircularProgressIndicator(
-                        strokeWidth: 8.0,
-                        value: 1.0,
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(Colors.white),
-                      )),
-                  new SizedBox(
-                      width: 64.0,
-                      height: 64.0,
-                      child: widget.gameMode == GameMode.timed
-                          ? new ProgressCircle(
-                              time: playTime, onEnd: () => _onGameEnd(context))
-                          : new ProgressCircle(progress: _progress)),
-                ],
+          new Container(
+              width: height,
+              height: height,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: new DecorationImage(
+                      image: new FileImage(new File(user.image)),
+                      fit: BoxFit.fill))),
+          new SizedBox(
+              width: height,
+              height: height,
+              child: new CircularProgressIndicator(
+                strokeWidth: height / 8.0,
+                value: 1.0,
+                valueColor: new AlwaysStoppedAnimation<Color>(backgroundColor),
               )),
-          new Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Text(
-                '$_score',
-                style: new TextStyle(fontSize: 24.0),
-              ))
-        ]);
+          new SizedBox(
+              width: height,
+              height: height,
+              child: widget.gameMode == GameMode.timed
+                  ? new ProgressCircle(
+                      time: playTime,
+                      onEnd: () => _onGameEnd(context),
+                      strokeWidth: height / 8.0,
+                    )
+                  : new ProgressCircle(
+                      progress: _progress,
+                      strokeWidth: height / 8.0,
+                    )),
+        ],
+      ),
+      new Column(
+        crossAxisAlignment:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            user.name,
+            style: new TextStyle(fontSize: fontSize, color: foregroundColor),
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            '$_score',
+            style: new TextStyle(fontSize: fontSize, color: foregroundColor),
+          )
+        ],
+      )
+    ];
+
+    return new Row(
+        mainAxisAlignment:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+        children: widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+            ? headers.reversed.toList(growable: false)
+            : headers);
   }
 
   _onScore(int incrementScore) {
@@ -281,18 +342,12 @@ class _SingleGameState extends State<SingleGame> {
   }
 
   _onEnd(BuildContext context) {
-    if (widget.gameMode == GameMode.iterations) {
-      if (_iteration + 1 < maxIterations) {
-        setState(() {
-          _iteration++;
-        });
-      } else {
-        _onGameEnd(context);
-      }
-    } else {
+    if (_iteration + 1 < maxIterations) {
       setState(() {
         _iteration++;
       });
+    } else {
+      _onGameEnd(context);
     }
   }
 
@@ -300,7 +355,7 @@ class _SingleGameState extends State<SingleGame> {
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(
@@ -541,7 +596,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'guess':
         return new GuessIt(
