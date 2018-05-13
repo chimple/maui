@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Second extends StatelessWidget {
+class Score extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     return new Container(
+    return new Container(
                 child: new ListView(
                   shrinkWrap: true,
                     children: <Widget>[ 
@@ -22,7 +22,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Reflex                                80%"), 
+                         title: new Text("Reflex", textAlign: TextAlign.left), 
                       ),
                     ),
 
@@ -45,7 +45,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("OrderIt                                80%"), 
+                         title: new Text("OrderIt", textAlign: TextAlign.left), 
                       ),
                     ),
 
@@ -68,7 +68,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Memory                               80%"), 
+                         title: new Text("Memory", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -91,7 +91,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Draw_Challenge                  80%"), 
+                         title: new Text("Draw_Challenge", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -115,7 +115,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Abacus                             80%"), 
+                         title: new Text("Abacus", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -139,7 +139,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Cross_Word                    80%"), 
+                         title: new Text("Cross_Word", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -163,7 +163,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Drawing                        80%"), 
+                         title: new Text("Drawing", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -186,7 +186,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Fill_in_the_Blanks              80%"), 
+                         title: new Text("Fill_in_the_Blanks", textAlign: TextAlign.left), 
                       ),
                     ),
 
@@ -209,7 +209,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Calculate_the_numbers           80%"), 
+                         title: new Text("Calculate_the_numbers", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -232,7 +232,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Casino                         80%"), 
+                         title: new Text("Casino", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -255,7 +255,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Match_the_Following            80%"), 
+                         title: new Text("Match_the_Following", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -278,7 +278,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Bingo                           80%"), 
+                         title: new Text("Bingo", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -301,7 +301,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("True_or_False               80%"), 
+                        title: new Text("True_or_False", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -324,7 +324,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Tables                         80%"), 
+                         title: new Text("Tables", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -347,7 +347,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Identify                        80%"), 
+                        title: new Text("Identify", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -370,7 +370,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Connect_the_Dots                80%"), 
+                         title: new Text("Connect_the_Dots", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -393,7 +393,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Quiz                              80%"), 
+                         title: new Text("Quiz", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -416,7 +416,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Fill_Numbers                       80%"), 
+                         title: new Text("Fill_Numbers", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -439,7 +439,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Tap_Home                           80%"), 
+                         title: new Text("Tap_Home", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -462,7 +462,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Tap_Wrong                             80%"), 
+                         title: new Text("Tap_wrong", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -485,7 +485,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Guess                                     80%"), 
+                        title: new Text("Guess", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -508,7 +508,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Clue_Game                                 80%"), 
+                         title: new Text("Clue_Game", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -531,7 +531,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("First_Word                                  80%"), 
+                         title: new Text("First_Word", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -554,7 +554,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Friend_Word                                  80%"), 
+                         title: new Text("Friend_Word", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -577,7 +577,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Word_Fight                                     80%"), 
+                         title: new Text("Word_Fight", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -600,7 +600,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Spin_Wheel                                       80%"), 
+                        title: new Text("Spin_Wheel", textAlign: TextAlign.left,), 
                       ),
                     ),
 
@@ -623,7 +623,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Circle_Words                                       80%"), 
+                         title: new Text("Circle_Words", textAlign: TextAlign.left,),
                       ),
                     ),
 
@@ -646,7 +646,7 @@ class Second extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(12.0), 
                           ),
                          child: new ListTile(
-                         title: new Text("Word_Grid                                           80%"), 
+                         title: new Text("Word_Grid", textAlign: TextAlign.left,),
                       ),
                     ),
                 ]

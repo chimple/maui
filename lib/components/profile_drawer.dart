@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/state/app_state_container.dart';
-import './First.dart' as first;
-import './Second.dart' as second;
+import './score.dart' as score;
+import './graph.dart' as graph;
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -42,8 +42,8 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
             new TabBar(
             controller: controller,
               tabs: <Tab>[
-                  new Tab(icon: new Icon(Icons.arrow_forward)),
-                  new Tab(icon: new Icon(Icons.arrow_downward)),
+                  new Tab( child: new Text("Score",style: new TextStyle( color: Colors.blue , fontSize: 30.0))),
+                  new Tab( child: new Text("Graph",style: new TextStyle( color: Colors.blue , fontSize: 30.0))),
                 ],
               ),
 
@@ -51,8 +51,8 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
                 child: new TabBarView(
                 controller: controller,
                 children: <Widget>[
-                  new first.First(),
-                  new second.Second()
+                  new score.Score(),
+                  new graph.Graph()
                 ],
               ),
             )
