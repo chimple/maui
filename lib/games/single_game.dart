@@ -180,93 +180,150 @@ class _SingleGameState extends State<SingleGame> {
             resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.white,
             body: new Column(children: <Widget>[
-              Material(
-                  elevation: 8.0,
-                  color: widget.gameConfig.gameDisplay ==
-                          GameDisplay.otherHeadToHead
-                      ? colors[2]
-                      : colors[0],
-                  child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.gameConfig.gameDisplay ==
-                              GameDisplay.single
-                          ? <Widget>[
-                              new Expanded(
-                                child: new Row(children: <Widget>[
-                                  new InkWell(
-                                      child: new Icon(Icons.arrow_back),
-                                      onTap: () => Navigator.of(context).pop()),
-                                  _hud(context)
-                                ]),
-                                flex: 1,
-                              ),
-                              new Expanded(
-                                  child: new Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: new Nima(
-                                          name: widget.gameName,
-                                          score: _score)),
-                                  flex: 1),
-                              new Expanded(child: new Text('$_score'), flex: 1)
-                            ]
-                          : <Widget>[_hud(context), new Text('$_score')])),
+              SizedBox(
+                  height: media.size.height / 8.0,
+                  child: Material(
+                      elevation: 8.0,
+                      color: widget.gameConfig.gameDisplay ==
+                              GameDisplay.otherHeadToHead
+                          ? colors[2]
+                          : colors[0],
+                      child: new Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Stack(
+                              alignment: AlignmentDirectional.centerStart,
+                              children: <Widget>[
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: widget.gameConfig.gameDisplay !=
+                                            GameDisplay.otherHeadToHead
+                                        ? <Widget>[
+                                            new Flexible(
+                                                flex: 1,
+                                                child: _hud(
+                                                    context: context,
+                                                    height:
+                                                        media.size.height / 8.0,
+                                                    backgroundColor: colors[2],
+                                                    foregroundColor:
+                                                        colors[1])),
+                                            new Nima(
+                                                name: widget.gameName,
+                                                score: _score),
+                                            new Flexible(
+                                                child: Container(), flex: 1)
+                                          ]
+                                        : <Widget>[
+                                            new Flexible(
+                                                child: Container(), flex: 1),
+                                            new Nima(
+                                                name: widget.gameName,
+                                                score: _score),
+                                            new Flexible(
+                                                flex: 1,
+                                                child: _hud(
+                                                    context: context,
+                                                    height:
+                                                        media.size.height / 8.0,
+                                                    backgroundColor: colors[0],
+                                                    foregroundColor:
+                                                        colors[1])),
+                                          ]),
+                                new InkWell(
+                                    child: new Align(
+                                        alignment:
+                                            AlignmentDirectional.centerStart,
+                                        child: Icon(
+                                          Icons.arrow_back,
+                                          color: Colors.white,
+                                          size: 36.0,
+                                        )),
+                                    onTap: () => Navigator.of(context).pop()),
+                              ])))),
               new Expanded(
+                  flex: 10,
                   child: new Stack(fit: StackFit.expand, children: <Widget>[
-                Image.asset(
-                  'assets/background_tile.png',
-                  repeat: ImageRepeat.repeat,
-                ),
-                game
-              ]))
+                    Image.asset(
+                      'assets/background_tile.png',
+                      repeat: ImageRepeat.repeat,
+                    ),
+                    game
+                  ]))
             ])));
   }
 
-  _hud(BuildContext context) {
-    print(Theme.of(context).primaryColor);
+  _hud(
+      {BuildContext context,
+      double height,
+      Color backgroundColor,
+      Color foregroundColor}) {
+    height = height * 0.7;
+    final fontSize = min(18.0, height / 2.5);
     var user = AppStateContainer.of(context).state.loggedInUser;
 
-    return new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    var headers = <Widget>[
+      new Stack(
+        alignment: AlignmentDirectional.center,
         children: <Widget>[
-          Text(user.name, style: new TextStyle(fontSize: 24.0)),
-          new Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: new Stack(
-                alignment: AlignmentDirectional.center,
-                children: <Widget>[
-                  new Container(
-                      width: 64.0,
-                      height: 64.0,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                              image: new FileImage(new File(user.image)),
-                              fit: BoxFit.fill))),
-                  new SizedBox(
-                      width: 64.0,
-                      height: 64.0,
-                      child: new CircularProgressIndicator(
-                        strokeWidth: 8.0,
-                        value: 1.0,
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(Colors.white),
-                      )),
-                  new SizedBox(
-                      width: 64.0,
-                      height: 64.0,
-                      child: widget.gameMode == GameMode.timed
-                          ? new ProgressCircle(
-                              time: playTime, onEnd: () => _onGameEnd(context))
-                          : new ProgressCircle(progress: _progress)),
-                ],
+          new Container(
+              width: height,
+              height: height,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: new DecorationImage(
+                      image: new FileImage(new File(user.image)),
+                      fit: BoxFit.fill))),
+          new SizedBox(
+              width: height,
+              height: height,
+              child: new CircularProgressIndicator(
+                strokeWidth: height / 8.0,
+                value: 1.0,
+                valueColor: new AlwaysStoppedAnimation<Color>(backgroundColor),
               )),
-          new Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Text(
-                '$_score',
-                style: new TextStyle(fontSize: 24.0),
-              ))
-        ]);
+          new SizedBox(
+              width: height,
+              height: height,
+              child: widget.gameMode == GameMode.timed
+                  ? new ProgressCircle(
+                      time: playTime,
+                      onEnd: () => _onGameEnd(context),
+                      strokeWidth: height / 8.0,
+                    )
+                  : new ProgressCircle(
+                      progress: _progress,
+                      strokeWidth: height / 8.0,
+                    )),
+        ],
+      ),
+      new Column(
+        crossAxisAlignment:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            user.name,
+            style: new TextStyle(fontSize: fontSize, color: foregroundColor),
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            '$_score',
+            style: new TextStyle(fontSize: fontSize, color: foregroundColor),
+          )
+        ],
+      )
+    ];
+
+    return new Row(
+        mainAxisAlignment:
+            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+        children: widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
+            ? headers.reversed.toList(growable: false)
+            : headers);
   }
 
   _onScore(int incrementScore) {
@@ -298,7 +355,7 @@ class _SingleGameState extends State<SingleGame> {
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(

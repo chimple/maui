@@ -196,19 +196,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       );
     }
 
-    if (_isShowingFlashCard) {
-      return new FlashCard(text: _answer.toString(), onChecked: () {
-        setState(() {
-          _isShowingFlashCard = false;
-          this._count = this._count + 1;
-          int temp1 = _tableShuffledData[_count].item1;
-          String temp2 = _tableShuffledData[_count].item2;
-          int temp3 = _tableShuffledData[_count].item3;
-          _question = "$temp1 $temp2 $temp3";
-          _answer = _tableShuffledData[_count].item4;
-        });
-      });
-    }
+
     return new LayoutBuilder(builder: (context, constraints) {
       print("this is  data");
       print(constraints.maxHeight);
@@ -226,20 +214,37 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             .toList();
         rows.add(new TableRow(children: cells));
       }
+
+      if (_isShowingFlashCard) {
+        return  FractionallySizedBox(
+            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            child: new FlashCard(text: _answer.toString(), image: 'assets/apple.png', onChecked: () {
+              setState(() {
+                _isShowingFlashCard = false;
+                this._count = this._count + 1;
+                int temp1 = _tableShuffledData[_count].item1;
+                String temp2 = _tableShuffledData[_count].item2;
+                int temp3 = _tableShuffledData[_count].item3;
+                _question = "$temp1 $temp2 $temp3";
+                _answer = _tableShuffledData[_count].item4;
+              });
+            }));
+      }
       return new Center(
           child: new Container(
             child: new Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Container(
-                      height: _height * 0.35,
+                      height: _height * 0.3,
                       width: _width ,
                       color: new Color(0xFFFF812C),
                       child: new Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       new Container (
-                        margin: new EdgeInsets.only(bottom: _height * 0.05),
+                        margin: new EdgeInsets.only(bottom: _height * 0.03),
                         alignment: Alignment.center,
                         child: new Text(
                           '$_question',
@@ -247,7 +252,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                           style: new TextStyle(
                             fontSize: _height * 0.1,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color:new Color(0xFFA46DBA),
                           ),
                         ),
                       ),
@@ -258,13 +263,12 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                         width: _width,
                       )])),
                   new Container(
-                    height: _height * 0.65,
+                    height: _height * 0.6,
                     width: _width,
                     padding: new EdgeInsets.only(
                         right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
                         left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
-                        bottom: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.03:constraints.maxWidth*0.03,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.04:constraints.maxWidth*0.04),
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.04:constraints.maxWidth*0.08),
                     child: new Table(children: rows),
                   ),
                 ]),
@@ -339,7 +343,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                         width:widget.height * 0.0075),
                     borderRadius:
                     new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
@@ -347,7 +351,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
                           fontSize: _displayText == '✖' || _displayText == '✔'
                               ? widget.height * 0.053
                               : widget.height * 0.06,
@@ -375,19 +379,19 @@ class TextAnimation extends AnimatedWidget {
               width: height / 4.0,
               alignment: Alignment.center,
               margin: new EdgeInsets.only(
-                  left: animation.value ?? 0, bottom: height * 0.05),
+                  left: animation.value ?? 0, bottom: height * 0.03),
               decoration: new BoxDecoration(
                   color:  Colors.white,
                   borderRadius: new BorderRadius.all(
                       new Radius.circular(height * 0.015)),
                   border: new Border.all(
-                    color: Colors.blueAccent,
+                    color: new Color(0xFFA46DBA),
                     width: height * 0.0075,
                   ),
                   shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
-                    color: Colors.black,
+                    color: new Color(0xFFA46DBA),
                     fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
