@@ -6,6 +6,8 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Dice extends StatefulWidget {
   Function onScore;
@@ -98,8 +100,31 @@ class DiceGameState extends State<Dice> {
     setState(() => _isLoading = true);
     _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
     _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+    //  _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
+    // _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
 
 
+  }
+   Widget _plyer1Side(BuildContext context, double buttonPadding) {
+    var j = 0, h = 0, k = 100;
+    return new ResponsiveGridView(
+      rows: 2,
+      cols: 6,
+      children: data.map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItem(j=0, e,_status1[j],_status2[j++]))).toList(growable: false),
+    );
+  }
+
+  Widget _plyer2Side(BuildContext context, double buttonPadding) {
+    var j = 0, h = 0, k = 100;
+    return new ResponsiveGridView(
+      rows: 2,
+      cols: 6,
+      children: data1.map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItem(j=0, e,_status1[j],_status2[j++]))).toList(growable: false),
+    );
   }
 
   Widget _buildItem(int index, String text,Stext1 status,Stext2 status2) {
@@ -130,12 +155,12 @@ class DiceGameState extends State<Dice> {
                     flag2=1;
                   } 
               });
-            //  _status2.forEach((e){
-            //    if(e==Stext2.InActive)
-            //    {
-            //      flag2=0;
-            //    }
-            //  });
+             _status2.forEach((e){
+               if(e==Stext2.InActive)
+               {
+                 flag2=0;
+               }
+             });
 
               if(flag2==0) {
                 if (status == Stext1.Active) {
@@ -148,15 +173,6 @@ class DiceGameState extends State<Dice> {
                     _counter3 = " ";
                     sum = 0;
                     sub = 0;
-                    // new Future.delayed(const Duration(milliseconds: 200), () {
-                    //   setState(() {
-                    //     //   _statusList.removeAt(index);
-                    //     _status1[index] = Stext1.Visible;
-                    //     print({"index is": index});
-
-
-                    //   });
-                    // });
 
                    setState(() {
                      _status1[index] = Stext1.Visible;
@@ -170,7 +186,7 @@ class DiceGameState extends State<Dice> {
                   }
 
                   else if (sub == btnVal) {
-                    flag = 1;
+                    // flag = 1;
                     count = 0;
                     dice_tries.removeRange(0, dice_tries.length);
                     _counter = " ";
@@ -186,12 +202,12 @@ class DiceGameState extends State<Dice> {
                       flag = 0;
                     }
                   }
-                  else {
-                    sum = 0;
-                  }
+                  // else {
+                  //   sum = 0;
+                  // }
                 }
               }
-              else{
+              else {
                 print("mannu is data is");
                 if (status == Stext1.Active) {
                   if (btnVal == sum) {
@@ -235,9 +251,9 @@ class DiceGameState extends State<Dice> {
                       flag = 0;
                     }
                   }
-                  else {
-                    sum = 0;
-                  }
+                  // else {
+                  //   sum = 0;
+                  // }
 
                   _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
                   _status1 = data1.map((a)=>Stext1.Active).toList(growable: false);
@@ -286,28 +302,37 @@ class DiceGameState extends State<Dice> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
-    var j = 0, h = 0, k = 100;
+    
+     final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 6;
+      double maxHeight =(constraints.maxHeight - vPadding * 4) / 6;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 4);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      AppState state = AppStateContainer.of(context).state;
+
     return new Container(
-        color: Colors.blue[300],
+      padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+        color: Colors.white,
         child: new Column(
-          // portrait mode
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Flexible(
-              flex: 3,
-              child: new ResponsiveGridView(
-                rows: 2,
-                cols: 6,
-                maxAspectRatio: 1.0,
-                children:
-                    data1.map((e) => _buildItem(j, e,_status1[j],_status2[j++])).toList(growable: false),
-              ),
+            new Expanded(
+               child: _plyer1Side(context, buttonPadding),
             ),
-       new Row(
+            new Row(
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            new Container(
-             height: 50.0,width: 100.0,
+              height: media.size.height > media.size.width ?constraints.maxHeight*.08 : constraints.maxHeight*.1 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.1 : constraints.maxWidth*.2 ,
              color: Colors.red,
                margin: EdgeInsets.only(right: 20.0),
                child: new Center(
@@ -337,7 +362,8 @@ class DiceGameState extends State<Dice> {
               //style: new TextStyle(fontSize: 50.0))
             ))),
            new Container(
-             height: 50.0, width: 100.0,
+           height: media.size.height > media.size.width ?constraints.maxHeight*.08 : constraints.maxHeight*.1 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.1 : constraints.maxWidth*.2 ,
              color: Colors.blue,
                margin: EdgeInsets.only(left: 20.0),
                child: new Center(
@@ -347,15 +373,8 @@ class DiceGameState extends State<Dice> {
 
            ),
             ]),
-            new Flexible(
-              flex: 3,
-              child: new ResponsiveGridView(
-                rows: 2,
-                cols: 6,
-                maxAspectRatio: 1.0,
-                children:
-                    data.map((e) => _buildItem(j=0, e,_status1[j],_status2[j++])).toList(growable: false),
-              ),
+            new Expanded(
+               child: _plyer2Side(context, buttonPadding),
             ),
           ],
         ));
