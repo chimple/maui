@@ -5,6 +5,9 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;
@@ -306,97 +309,67 @@ class CrosswordState extends State<Crossword> {
       }
       print('rightr len  ${_rightwords.length}');
       print(rheight);
+
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      final isPortait = rwidth < rheight * 1.2;
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) /
+          (isPortait ? _cols : _cols + _rows + _rightlen > _cols ? 2 : 1);
+      double maxHeight = (constraints.maxHeight - vPadding * 2) /
+          (isPortait ? _rows + (_rightlen > _cols ? 2 : 1) : _cols);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+      j = 0;
+
       return new Container(
-          padding: media.orientation == Orientation.portrait
-              ? new EdgeInsets.symmetric(
-                  vertical: rheight * .04, horizontal: rwidth * .12)
-              : new EdgeInsets.symmetric(vertical: rheight * .03),
-          color: new Color(0xffffE0DEE1),
-          child: media.orientation == Orientation.portrait
+          padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+          child: rwidth < rheight * 1.2
               ? new Column(
                   // portrait mode
                   children: <Widget>[
-                    new Flexible(
-                        flex: 4,
-                        child:
-                            new LayoutBuilder(builder: (context, constraints) {
-                          j = 0;
-                          _gridsize = [];
-                          _gridsize
-                              .add((constraints.maxHeight / (_rows * 2)) * .75);
-                          _gridsize.add((constraints.maxWidth / _cols) * .9);
-                          print('zzzz ${constraints.maxHeight/_rows}');
-                          return new ResponsiveGridView(
-                            rows: _rows,
-                            cols: _cols,
-                            // maxAspectRatio: rwidth / (rheight * 0.65),
-                            children: _letters
-                                .map((e) => _buildItem(j, e, _flag[j++]))
-                                .toList(growable: false),
-                          );
-                        })),
-                    new Flexible(
-                      // flex:1,
-                      //   widthFactor: _cols>_finalcols?0.75:null,
-                      //  alignment: Alignment.center,
-                      child: new ResponsiveGridView(
+                      new Expanded(
+                          child: ResponsiveGridView(
+                        rows: _rows,
+                        cols: _cols,
+                        children: _letters
+                            .map((e) => _buildItem(j, e, _flag[j++]))
+                            .toList(growable: false),
+                      )),
+                      new ResponsiveGridView(
                         rows: _rightlen > _cols ? 2 : 1,
                         cols: _cols,
-                        // padding: rheight < 300.0
-                        //     ? _rightlen > _cols
-                        //         ? 2.0
-                        //         : 4.0
-                        //     : 4.0,
-                        // maxAspectRatio: rheight < 300.0
-                        //     ? _rightlen > _cols
-                        //         ? rwidth / (rheight * 0.38)
-                        //         : rwidth / (rheight * 0.58)
-                        //     : rwidth / (rheight * 0.58),
                         children: _rightwords
                             .map((e) => _buildItem(k++, e, _flag[j++]))
                             .toList(growable: false),
                       ),
-                    ),
-                  ],
-                )
+                    ])
               : new Row(
                   // landsape mode
                   children: <Widget>[
-                    new Flexible(
-                        flex: 3,
-                        child:
-                            new LayoutBuilder(builder: (context, constraints) {
-                          j = 0;
-                          _gridsize = [];
-                          _gridsize
-                              .add((constraints.maxHeight / (_rows * 2)) * .8);
-                          _gridsize.add((constraints.maxWidth / _cols) * .8);
-                          print('zzzz ${constraints.maxHeight/_rows}');
-                          return new ResponsiveGridView(
-                            rows: _rows,
-                            cols: _cols,
-                            //  maxAspectRatio: rwidth / (rheight * 1.1),
-                            children: _letters
-                                .map((e) => _buildItem(j, e, _flag[j++]))
-                                .toList(growable: false),
-                          );
-                        })),
-                    new Padding(padding: new EdgeInsets.all(rwidth * .03)),
-                    new Flexible(
-                      // child:new FractionallySizedBox(
-                      //     heightFactor: _rightlen<6?0.5:null,
-                      //     alignment: Alignment.center,
-                      child: new ResponsiveGridView(
-                        rows: _rows,
-                        cols: 2,
-                        //  maxAspectRatio: rwidth / (rheight * 1.3),
+                      new ResponsiveGridView(
+                        rows: _cols,
+                        cols: _rightlen > _cols ? 2 : 1,
                         children: _rightwords
                             .map((e) => _buildItem(k++, e, _flag[j++]))
                             .toList(growable: false),
                       ),
-                    ),
-                  ],
-                ));
+                      new Expanded(
+                          child: ResponsiveGridView(
+                        rows: _rows,
+                        cols: _cols,
+                        children: _letters
+                            .map((e) => _buildItem(j, e, _flag[j++]))
+                            .toList(growable: false),
+                      )),
+                    ]));
     });
   }
 }
@@ -473,6 +446,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    AppState state = AppStateContainer.of(context).state;
+
     if (widget.grid.length < 2) {
       print('enterdd condition');
       widget.grid.add(30.0);
@@ -488,7 +463,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 scale: animation,
                 child: new Container(
                   decoration: new BoxDecoration(
-                    color: new Color(0xffff37A061),
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(8.0)),
                   ),
@@ -499,28 +473,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       List<dynamic> accepted,
                       List<dynamic> rejected,
                     ) {
-                      return new Container(
-                        decoration: new BoxDecoration(
-                          color: widget.flag == 1
-                              ? Colors.redAccent
-                              : new Color(0xffff37A061),
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(8.0)),
-                          image: widget.img != null
-                              ? new DecorationImage(
-                                  image: new AssetImage(widget.img),
-                                  fit: BoxFit.contain)
-                              : null,
-                        ),
-                        child: new Center(
-                          child: new Text(widget.text,
-                              overflow: TextOverflow.clip,
-                              key: new Key('A${widget.keys}'),
-                              style: new TextStyle(
-                                  color: Colors.black,
-                                  fontSize: widget.textsize,
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                      return new UnitButton(
+                        key: new Key('A${widget.keys}'),
+                        text: widget.text,
+                        bgImage: widget.img,
+                        showHelp: false,
                       );
                     },
                   ),
@@ -535,87 +492,35 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       }
       return new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: widget.text == ''
-                  ? new Color(0xffffE0DEE1)
-                  : Color(0xffffEAE8E4),
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new Center(
-              child: new Text(newtext,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      color: Colors.black,
-                      fontSize: widget.textsize,
-                      fontWeight: FontWeight.bold)),
-            ),
+          child: new UnitButton(
+            key: new Key('A${widget.keys}'),
+            text: widget.text,
+            showHelp: false,
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
         data: '${widget.index}' + '_' + '${widget.code}',
         child: new ScaleTransition(
             scale: animation,
-            child: new Container(
-              decoration: new BoxDecoration(
-                color: widget.color1 == 1
-                    ? Color(0xffff37A061)
-                    : Color(0xffffE0DEE1),
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              ),
-              child: new Center(
-                child: new Text(_displayText,
-                    overflow: TextOverflow.clip,
-                    key: new Key('B${widget.keys}'),
-                    style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: widget.textsize,
-                        fontWeight: FontWeight.bold)),
-              ),
+            child: new UnitButton(
+              key: new Key('A${widget.keys}'),
+              text: widget.text,
+              showHelp: false,
             )),
         //  childWhenDragging: new Container(),
-        feedback: new Container(
-          height: widget.grid[0],
-          width: widget.grid[1],
-          decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              color: Color(0xffff37A061)),
-          child: new Center(
-            child: new Transform.rotate(
-              angle: widget.isRotated == true
-                  ? media.orientation == Orientation.portrait ? 3.14 : 0.0
-                  : 0.0,
-              alignment: Alignment.center,
-              child: new Text(
-                widget.text,
-                overflow: TextOverflow.clip,
-                style: new TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    fontSize: widget.textsize,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+        feedback: UnitButton(
+          text: widget.text,
+          highlighted: false,
         ),
       );
     } else {
       return new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: Colors.grey,
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new Center(
-              child: new Text(_displayText,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      color: Colors.black,
-                      fontSize: widget.textsize,
-                      fontWeight: FontWeight.bold)),
-            ),
+          child: new UnitButton(
+            key: new Key('A${widget.keys}'),
+            text: widget.text,
+            disabled: true,
+            showHelp: false,
           ));
     }
   }
