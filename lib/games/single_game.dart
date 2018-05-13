@@ -140,8 +140,7 @@ class SingleGame extends StatefulWidget {
   }
 }
 
-class _SingleGameState extends State<SingleGame>
-    with SingleTickerProviderStateMixin {
+class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   int _score = 0;
   double _progress = 0.0;
   int _iteration = 0;
@@ -155,13 +154,13 @@ class _SingleGameState extends State<SingleGame>
     super.initState();
 //    SystemChrome.setEnabledSystemUIOverlays([]);
     _controller = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 1000));
+        vsync: this, duration: new Duration(milliseconds: 500));
     final CurvedAnimation curve =
-        new CurvedAnimation(parent: _controller, curve: Curves.elasticInOut);
+        new CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
     _animation =
-        new Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0))
+        new Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset(0.0, 0.0))
             .animate(curve);
-    new Future.delayed(const Duration(milliseconds: 1000), () {
+    new Future.delayed(const Duration(milliseconds: 250), () {
       _controller.forward();
     });
   }
@@ -203,86 +202,95 @@ class _SingleGameState extends State<SingleGame>
                     repeat: ImageRepeat.repeat,
                   ),
                   Positioned(
-                      top: 0.0,
-                      child: SizedBox(
-                          height: media.size.height / 8.0,
-                          width: media.size.width,
-                          child: Material(
-                              elevation: 8.0,
-                              color: widget.gameConfig.gameDisplay ==
-                                      GameDisplay.otherHeadToHead
-                                  ? colors[2]
-                                  : colors[0],
-                              child: new Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Stack(
-                                      alignment:
-                                          AlignmentDirectional.centerStart,
-                                      children: <Widget>[
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: widget.gameConfig
-                                                        .gameDisplay !=
-                                                    GameDisplay.otherHeadToHead
-                                                ? <Widget>[
-                                                    new Flexible(
-                                                        flex: 1,
-                                                        child: _hud(
-                                                            context: context,
-                                                            height: media.size
-                                                                    .height /
-                                                                8.0,
-                                                            backgroundColor:
-                                                                colors[2],
-                                                            foregroundColor:
-                                                                colors[1])),
-                                                    new Nima(
-                                                        name: widget.gameName,
-                                                        score: _score),
-                                                    new Flexible(
-                                                        child: Container(),
-                                                        flex: 1)
-                                                  ]
-                                                : <Widget>[
-                                                    new Flexible(
-                                                        child: Container(),
-                                                        flex: 1),
-                                                    new Nima(
-                                                        name: widget.gameName,
-                                                        score: _score),
-                                                    new Flexible(
-                                                        flex: 1,
-                                                        child: _hud(
-                                                            context: context,
-                                                            height: media.size
-                                                                    .height /
-                                                                8.0,
-                                                            backgroundColor:
-                                                                colors[0],
-                                                            foregroundColor:
-                                                                colors[1])),
-                                                  ]),
-                                        new InkWell(
-                                            child: new Align(
-                                                alignment: AlignmentDirectional
-                                                    .centerStart,
-                                                child: Icon(
-                                                  Icons.arrow_back,
-                                                  color: Colors.white,
-                                                  size: 36.0,
-                                                )),
-                                            onTap: () =>
-                                                Navigator.of(context).pop()),
-                                      ]))))),
-                  Positioned(
                       bottom: 0.0,
+                      child: SizedBox(
+                          height: media.size.height * 7.0 / 8.0,
+                          width: media.size.width,
+                          child: game)),
+                  Positioned(
+                      top: 0.0,
                       child: SlideTransition(
                           position: _animation,
                           child: SizedBox(
-                              height: media.size.height * 7.0 / 8.0,
+                              height: media.size.height / 8.0,
                               width: media.size.width,
-                              child: game)))
+                              child: Material(
+                                  elevation: 8.0,
+                                  color: widget.gameConfig.gameDisplay ==
+                                          GameDisplay.otherHeadToHead
+                                      ? colors[2]
+                                      : colors[0],
+                                  child: new Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Stack(
+                                          alignment:
+                                              AlignmentDirectional.centerStart,
+                                          children: <Widget>[
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: widget.gameConfig
+                                                            .gameDisplay !=
+                                                        GameDisplay
+                                                            .otherHeadToHead
+                                                    ? <Widget>[
+                                                        new Flexible(
+                                                            flex: 1,
+                                                            child: _hud(
+                                                                context:
+                                                                    context,
+                                                                height: media
+                                                                        .size
+                                                                        .height /
+                                                                    8.0,
+                                                                backgroundColor:
+                                                                    colors[2],
+                                                                foregroundColor:
+                                                                    colors[1])),
+                                                        new Nima(
+                                                            name:
+                                                                widget.gameName,
+                                                            score: _score),
+                                                        new Flexible(
+                                                            child: Container(),
+                                                            flex: 1)
+                                                      ]
+                                                    : <Widget>[
+                                                        new Flexible(
+                                                            child: Container(),
+                                                            flex: 1),
+                                                        new Nima(
+                                                            name:
+                                                                widget.gameName,
+                                                            score: _score),
+                                                        new Flexible(
+                                                            flex: 1,
+                                                            child: _hud(
+                                                                context:
+                                                                    context,
+                                                                height: media
+                                                                        .size
+                                                                        .height /
+                                                                    8.0,
+                                                                backgroundColor:
+                                                                    colors[0],
+                                                                foregroundColor:
+                                                                    colors[1])),
+                                                      ]),
+                                            new InkWell(
+                                                child: new Align(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .centerStart,
+                                                    child: Icon(
+                                                      Icons.arrow_back,
+                                                      color: Colors.white,
+                                                      size: 36.0,
+                                                    )),
+                                                onTap: () => Navigator
+                                                    .of(context)
+                                                    .pop()),
+                                          ])))))),
                 ]))));
   }
 
