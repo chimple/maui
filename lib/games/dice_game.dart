@@ -313,6 +313,7 @@ class DiceGameState extends State<Dice> {
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 2, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
     return new Container(
