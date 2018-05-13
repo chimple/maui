@@ -161,12 +161,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     // FocusScope.of(context).requestFocus(_focusnode);
     // ThemeData themeData = Theme.of(context);
     Size media = MediaQuery.of(context).size;
@@ -199,39 +193,41 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                           child: new Shake(
                             animation: (_flag == 0) ? noanimation : animation,
                             child: new TextField(
-                                // focusNode: _focusnode,
-                                // textAlign: TextAlign.center,
-                                autofocus: false,
-                                controller: _controller,
-                                obscureText: false,
-                                style: new TextStyle(
-                                    color: Colors.black, fontSize: 25.0),
-                                decoration: new InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: "name what you see and press check",
-                                  hintStyle: new TextStyle(color: Colors.blueGrey, fontSize: 15.0),
-                                  border: InputBorder.none,
-                                ),
-                                onChanged: (String str) {
-                                  _guess = str.toLowerCase();
-                                  print(_guess);
-                                  // setState((){
-                                  //   _guess = str;
-                                  // });
-                                  // _controller.text = '';
-                                },
+                              // focusNode: _focusnode,
+                              // textAlign: TextAlign.center,
+                              autofocus: false,
+                              controller: _controller,
+                              obscureText: false,
+                              style: new TextStyle(
+                                  color: Colors.black, fontSize: 25.0),
+                              decoration: new InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: "name what you see and press check",
+                                hintStyle: new TextStyle(
+                                    color: Colors.blueGrey, fontSize: 15.0),
+                                border: InputBorder.none,
                               ),
+                              onChanged: (String str) {
+                                _guess = str.toLowerCase();
+                                print(_guess);
+                                // setState((){
+                                //   _guess = str;
+                                // });
+                                // _controller.text = '';
+                              },
+                            ),
                           ),
                         ),
                         new Expanded(
-                          flex: 2,
+                            flex: 2,
                             child: new RaisedButton(
-                          key: new Key("checking"),
-                          padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
-                          child: new Text("Check"),
-                          onPressed: () => _validate(),
-                        ))
+                              key: new Key("checking"),
+                              padding:
+                                  new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
+                              child: new Text("Check"),
+                              onPressed: () => _validate(),
+                            ))
                       ],
                     ),
                   ),
