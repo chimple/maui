@@ -450,7 +450,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'identify':
         return new IdentifyGame(
