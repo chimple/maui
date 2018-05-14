@@ -192,6 +192,27 @@ class ScoreScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: new Border.all(
+                            color: Colors.black,
+                            width: 2.5,
+                          ),
+                          color: Colors.orange),
+                      child: IconButton(
+                        iconSize: 100.0,
+                        icon: new Icon(Icons.arrow_forward),
+                        onPressed: (){
+                            // Navigator.of(context).pushNamed('/tab'),
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            }
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
