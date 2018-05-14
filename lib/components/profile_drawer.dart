@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:maui/state/app_state_container.dart';
 import './score.dart' as score;
 import './graph.dart' as graph;
-import 'package:maui/screens/login_screen.dart';
-import 'package:maui/state/app_state_container.dart';
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -32,24 +30,13 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
     return new Drawer(
-      child: new Column( 
+      child: new Column(
         children: <Widget>[
+
           new UserAccountsDrawerHeader(
-                   otherAccountsPictures: <Widget>[
-                      new IconButton(
-                        iconSize: 40.0,
-                        color: Colors.white,
-                        icon: new Icon(Icons.person_outline),
-                        onPressed: (){
-                          //Navigate here
-                          AppStateContainer.of(context).setLoggedInUser(null);
-                          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new LoginScreen()) );
-                        },
-                      ),
-                   ],
-                  currentAccountPicture: new Image.file(new File(user.image)),
                   accountName: new Text('test'),
-                  accountEmail: new Text('test@chimple.org'),     
+                  accountEmail: new Text('test@chimple.org'),
+                  currentAccountPicture: new Image.file(new File(user.image)),
             ),
           
             new TabBar(

@@ -462,8 +462,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: _iteration);
         break;
       case 'abacus':
-        playTime = 15000;
-        maxIterations = 1;
         return new Abacus(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -628,8 +626,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'tap_wrong':
-        playTime = 15000;
-        maxIterations = 4;
         return new TapWrong(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
