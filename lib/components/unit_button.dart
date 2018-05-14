@@ -18,6 +18,9 @@ class UnitButton extends StatefulWidget {
   final bool primary;
   final bool showHelp;
   final String bgImage;
+  final double maxWidth;
+  final double maxHeight;
+  final double fontSize;
 
   UnitButton(
       {Key key,
@@ -28,6 +31,9 @@ class UnitButton extends StatefulWidget {
       this.highlighted = false,
       this.primary = true,
       this.bgImage,
+      this.maxHeight,
+      this.maxWidth,
+      this.fontSize,
       this.unitMode = UnitMode.text})
       : super(key: key);
 
@@ -39,7 +45,8 @@ class UnitButton extends StatefulWidget {
   static void saveButtonSize(
       BuildContext context, int maxChars, double maxWidth, double maxHeight) {
     AppState state = AppStateContainer.of(context).state;
-    final fontSizeByWidth = maxWidth / (maxChars * maxChars == 1 ? 1.1 : 0.7);
+    final fontWidthFactor = maxChars == 1 ? 1.1 : 0.7;
+    final fontSizeByWidth = maxWidth / (maxChars * fontWidthFactor);
     final fontSizeByHeight = maxHeight / 1.8;
     state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
     state.buttonRadius = min(maxWidth, maxHeight) / 8.0;
@@ -99,7 +106,8 @@ class _UnitButtonState extends State<UnitButton> {
     AppState state = AppStateContainer.of(context).state;
     return Container(
         constraints: BoxConstraints.tightFor(
-            height: state.buttonHeight, width: state.buttonWidth),
+            height: widget.maxHeight ?? state.buttonHeight,
+            width: widget.maxWidth ?? state.buttonWidth),
         decoration: new BoxDecoration(
             image: widget.bgImage != null
                 ? new DecorationImage(
@@ -129,7 +137,7 @@ class _UnitButtonState extends State<UnitButton> {
                     width: 4.0),
                 borderRadius:
                     BorderRadius.all(Radius.circular(state.buttonRadius))),
-            child: _buildUnit(state.buttonFontSize)));
+            child: _buildUnit(widget.fontSize ?? state.buttonFontSize)));
   }
 
   Widget _buildUnit(double fontSize) {

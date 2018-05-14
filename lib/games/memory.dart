@@ -10,6 +10,8 @@ import '../components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
+ bool initialVisibility = false;
+
 class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -75,6 +77,9 @@ class MemoryState extends State<Memory> {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
     _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
+    if(_data.length == 2 || _data.length == 3 || _data.length == 4 || _data.length == 5 || _data.length == 6 || _data.length == 7) {
+      _maxSize = 2;
+    }
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
@@ -125,6 +130,8 @@ class MemoryState extends State<Memory> {
           print("Pressed Text: ${text}");
           print("Pressed Statuses before checking: ${_statuses}");
 
+          if(initialVisibility == true) return;
+      
           if (_statuses[index] == Status.Disappear) return;
 
           int numOfVisible = _statuses.fold(0,
@@ -313,8 +320,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
+
     controller.forward().then((f) {
-      flipController.reverse();
+        flipController.forward();
+        initialVisibility = true;
+       new Future.delayed(const Duration(milliseconds: 2000), () { 
+         initialVisibility = false;
+        flipController.reverse();
+       });
     });
 
     shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
