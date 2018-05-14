@@ -188,14 +188,18 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         accentColor: colors[1]);
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
+    final width = widget.gameConfig.gameDisplay == GameDisplay.single
+        ? media.size.width
+        : media.size.width / 2;
+
     return new Theme(
         data: theme,
         child: Scaffold(
             resizeToAvoidBottomPadding: false,
             backgroundColor: colors[1],
             body: new SizedBox(
-//                width: media.size.width,
                 height: media.size.height,
+                width: width,
                 child: Stack(fit: StackFit.expand, children: <Widget>[
                   Image.asset(
                     'assets/background_tile.png',
@@ -205,7 +209,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                       bottom: 0.0,
                       child: SizedBox(
                           height: media.size.height * 7.0 / 8.0,
-                          width: media.size.width,
+                          width: width,
                           child: game)),
                   Positioned(
                       top: 0.0,
@@ -213,7 +217,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           position: _animation,
                           child: SizedBox(
                               height: media.size.height / 8.0,
-                              width: media.size.width,
+                              width: width,
                               child: Material(
                                   elevation: 8.0,
                                   color: widget.gameConfig.gameDisplay ==
