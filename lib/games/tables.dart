@@ -196,19 +196,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       );
     }
 
-    if (_isShowingFlashCard) {
-      return new FlashCard(text: _answer.toString(), onChecked: () {
-        setState(() {
-          _isShowingFlashCard = false;
-          this._count = this._count + 1;
-          int temp1 = _tableShuffledData[_count].item1;
-          String temp2 = _tableShuffledData[_count].item2;
-          int temp3 = _tableShuffledData[_count].item3;
-          _question = "$temp1 $temp2 $temp3";
-          _answer = _tableShuffledData[_count].item4;
-        });
-      });
-    }
+
     return new LayoutBuilder(builder: (context, constraints) {
       print("this is  data");
       print(constraints.maxHeight);
@@ -226,37 +214,63 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             .toList();
         rows.add(new TableRow(children: cells));
       }
+
+      if (_isShowingFlashCard) {
+        return  FractionallySizedBox(
+            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            child: new FlashCard(text: _answer.toString(), image: 'assets/apple.png', onChecked: () {
+              setState(() {
+                _isShowingFlashCard = false;
+                this._count = this._count + 1;
+                int temp1 = _tableShuffledData[_count].item1;
+                String temp2 = _tableShuffledData[_count].item2;
+                int temp3 = _tableShuffledData[_count].item3;
+                _question = "$temp1 $temp2 $temp3";
+                _answer = _tableShuffledData[_count].item4;
+              });
+            }));
+      }
       return new Center(
           child: new Container(
-            color: new Color(0XFFF39B6D),
             child: new Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  new Container (
-                    margin: new EdgeInsets.only(bottom: _height * 0.1),
-                    alignment: Alignment.center,
-                    color: new Color(0X00000000),
-                    child: new Text(
-                      '$_question',
-                      key: new Key('question'),
-                      style: new TextStyle(
-                        fontSize: _height * 0.1,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  new TextAnimation(
-                    animation: animation,
-                    text: _result,
-                    height: _height,
-                    width: _width,
-                  ),
                   new Container(
-                    child: new Center(
-                      child: new Table(children: rows),
-                    ),
-                  )
+                      height: _height * 0.3,
+                      width: _width ,
+                      color: new Color(0xFFFF812C),
+                      child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      new Container (
+                        margin: new EdgeInsets.only(bottom: _height * 0.03),
+                        alignment: Alignment.center,
+                        child: new Text(
+                          '$_question',
+                          key: new Key('question'),
+                          style: new TextStyle(
+                            fontSize: _height * 0.1,
+                            fontWeight: FontWeight.bold,
+                            color:new Color(0xFFA46DBA),
+                          ),
+                        ),
+                      ),
+                      new TextAnimation(
+                        animation: animation,
+                        text: _result,
+                        height: _height,
+                        width: _width,
+                      )])),
+                  new Container(
+                    height: _height * 0.6,
+                    width: _width,
+                    padding: new EdgeInsets.only(
+                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
+                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.04:constraints.maxWidth*0.08),
+                    child: new Table(children: rows),
+                  ),
                 ]),
           ));
     });
@@ -284,7 +298,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  int __count = 0;
 
   initState() {
     super.initState();
@@ -317,30 +330,35 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
-
   @override
   Widget build(BuildContext context) {
     return new TableCell(
         child: new Padding(
-            padding: new EdgeInsets.all(widget.height * 0.005),
+            padding:new EdgeInsets.all( widget.height * 0.008 ),
             child: new RaisedButton(
-                elevation: 12.0,
-                splashColor: Colors.white,
-                highlightColor: Colors.grey,
+                splashColor: Theme.of(context).primaryColor,
+                highlightColor: Theme.of(context).primaryColor,
                 onPressed: () => widget.onPress(),
-                padding: new EdgeInsets.all(widget.height * 0.02),
-                color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0XFFFED2B7),
+                padding: new EdgeInsets.all(widget.height * 0.028),
+                color: Colors.white,
                 shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.all(
-                        new Radius.circular(widget.height * 0.0095))),
-                child: new Text(_displayText,
-                    key: new Key('keyPad'),
-                    style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: _displayText == '✖' || _displayText == '✔'
-                            ? widget.height * 0.05
-                            : widget.height * 0.05,
-                        fontWeight: FontWeight.bold)))));
+                    side: new BorderSide(
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
+                        width:widget.height * 0.0075),
+                    borderRadius:
+                    new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
+                child: new Center(
+                  child: new Text(_displayText,
+                      key: new Key('keyPad'),
+                      style: new TextStyle(
+                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
+                          fontSize: _displayText == '✖' || _displayText == '✔'
+                              ? widget.height * 0.053
+                              : widget.height * 0.06,
+                          fontWeight: FontWeight.bold)),
+                )))
+      // )
+    );
   }
 
 }
@@ -358,19 +376,23 @@ class TextAnimation extends AnimatedWidget {
       return new Center(
           child: new Container(
               height: height * 0.12,
-              width: width / 3.0,
+              width: height / 4.0,
               alignment: Alignment.center,
               margin: new EdgeInsets.only(
-                  left: animation.value ?? 0, bottom: height * 0.09),
+                  left: animation.value ?? 0, bottom: height * 0.03),
               decoration: new BoxDecoration(
-                  color:  new Color(0XFF734052),
+                  color:  Colors.white,
                   borderRadius: new BorderRadius.all(
-                      new Radius.circular(height * 0.0095)),
+                      new Radius.circular(height * 0.015)),
+                  border: new Border.all(
+                    color: new Color(0xFFA46DBA),
+                    width: height * 0.0075,
+                  ),
                   shape: BoxShape.rectangle),
               child: new Text(text,
                   style: new TextStyle(
-                    color: Colors.black,
-                    fontSize: height * 0.1,
+                    color: new Color(0xFFA46DBA),
+                    fontSize: height * 0.09,
                     fontWeight: FontWeight.bold,))));
   }
 }
