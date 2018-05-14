@@ -60,8 +60,8 @@ class ScoreScreen extends StatelessWidget {
     //       ]));
     // }
     return new Scaffold(
-        // backgroundColor: themeData.primaryColor,
-        backgroundColor: Colors.black,
+        backgroundColor: themeData.primaryColor,
+        // backgroundColor: Colors.black,
         body: new Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,18 +149,18 @@ class ScoreScreen extends StatelessWidget {
               flex: 1,
               child: new Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  new Expanded(
-                    flex: 1,
-                    child: new Container(
+                  new Container(
                         decoration: new BoxDecoration(
                             shape: BoxShape.circle,
                             border: new Border.all(
                               color: Colors.black,
                               width: 2.5,
+                              style: BorderStyle.solid
                             ),
-                            color: Colors.orange),
+                            // color: Colors.orange
+                            ),
                         child: IconButton(
                           iconSize: 100.0,
                           icon: new Icon(Icons.home),
@@ -171,17 +171,16 @@ class ScoreScreen extends StatelessWidget {
                               Navigator.pop(context);
                               }
                         )),
-                  ),
-                  new Expanded(
-                    flex: 1,
-                    child: new Container(
+                  new Container(
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           border: new Border.all(
                             color: Colors.black,
                             width: 2.5,
+                            style: BorderStyle.solid
                           ),
-                          color: Colors.orange),
+                          // color: Colors.orange
+                          ),
                       child: IconButton(
                         iconSize: 100.0,
                         icon: new Icon(Icons.refresh),
@@ -191,7 +190,26 @@ class ScoreScreen extends StatelessWidget {
                             }
                       ),
                     ),
-                  ),
+                  new Container(
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: new Border.all(
+                            color: Colors.black,
+                            width: 2.5,
+                            style: BorderStyle.solid
+                          ),
+                          // color: Colors.orange
+                          ),
+                      child: IconButton(
+                        iconSize: 100.0,
+                        icon: new Icon(Icons.arrow_forward),
+                        onPressed: (){
+                            // Navigator.of(context).pushNamed('/tab'),
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            }
+                      ),
+                    ),
                 ],
               ),
             )
