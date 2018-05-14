@@ -11,13 +11,14 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/games/single_game.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Casino(
@@ -26,7 +27,7 @@ class Casino extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -59,7 +60,7 @@ class _CasinoState extends State<Casino> {
   }
 
   void _initLetters() async {
-    data = await fetchRollingData(widget.gameCategoryId, 6);
+    data = await fetchRollingData(widget.gameConfig.gameCategoryId, 6);
     print("Fetched Data $data");
     i = 0;
     j = 0;
@@ -236,14 +237,25 @@ class _CasinoState extends State<Casino> {
           children: <Widget>[
             new Expanded(
                 child: ResponsiveGridView(
-              rows: 1,
-              cols: data.length,
-              children: givenWordList
-                  .map((e) => Padding(
-                      padding: EdgeInsets.all(buttonPadding),
-                      child: UnitButton(text: e)))
-                  .toList(growable: false),
-            )),
+                    rows: 1,
+                    cols: data.length,
+                    children:
+                        widget.gameConfig.questionUnitMode == UnitMode.text
+                            ? givenWordList
+                                .map((e) => Padding(
+                                    padding: EdgeInsets.all(buttonPadding),
+                                    child: UnitButton(
+                                      text: e,
+                                    )))
+                                .toList(growable: false)
+                            : <Widget>[
+                                UnitButton(
+                                  maxWidth: maxHeight,
+                                  maxHeight: maxHeight,
+                                  text: givenWord.trim(),
+                                  unitMode: widget.gameConfig.questionUnitMode,
+                                )
+                              ])),
             new Expanded(
               child: new ResponsiveGridView(
                 cols: data.length,
