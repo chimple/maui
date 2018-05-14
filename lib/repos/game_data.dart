@@ -77,7 +77,7 @@ Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
           : e.subjectUnitId);
 }
 
-Future<Tuple2<String, bool>> fetchTrueOrFalse(int lessonId) async {
+Future<Tuple3<String, String, bool>> fetchTrueOrFalse(int lessonId) async {
   Lesson lesson = await new LessonRepo().getLesson(lessonId);
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -96,7 +96,7 @@ Future<Tuple2<String, bool>> fetchTrueOrFalse(int lessonId) async {
     question = lu.subjectUnitId;
     answer = boolAnswer ? lu.subjectUnitId : lessonUnits[1].subjectUnitId;
   }
-  return new Tuple2('$question $answer', boolAnswer);
+  return new Tuple3(question, answer, boolAnswer);
 }
 
 Future<List<List<String>>> fetchRollingData(

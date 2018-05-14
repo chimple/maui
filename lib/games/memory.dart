@@ -52,10 +52,10 @@ class MemoryState extends State<Memory> {
   var _pressedTile;
   var _pressedTileIndex;
   var _clickCnt = 0;
-  int _firstClickedId,
-      _secondClickedId,
-      _allLettersUpperCaseTriggred = 0,
-      _allLettersLowerCaseTriggred = 0;
+  int _firstClickedId;
+  int _secondClickedId;
+  int _allLettersUpperCaseTriggred = 0;
+  int _allLettersLowerCaseTriggred = 0;
 
   @override
   void initState() {
@@ -74,7 +74,10 @@ class MemoryState extends State<Memory> {
   void _initBoard() async {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
-    _data = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
+    if(_data.length == 2 || _data.length == 3 || _data.length == 4 || _data.length == 5 || _data.length == 6 || _data.length == 7) {
+      _maxSize = 2;
+    }
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
@@ -114,7 +117,7 @@ class MemoryState extends State<Memory> {
     }
   }
 
-  Widget _buildItem(int index, String text, Status status, ShakeCell shaker) {
+  Widget _buildItem(int index, String text, int maxChars, double maxWidth, double maxHeight, Status status, ShakeCell shaker) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -256,13 +259,18 @@ class MemoryState extends State<Memory> {
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
-      return new ResponsiveGridView(
-        rows: _size,
-        cols: _size,
-        children: _letters
-            .map((e) => _buildItem(j, e, _statuses[j], _shaker[j++]))
-            .toList(growable: false),
-      );
+      return new Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+                  child: ResponsiveGridView(
+                    rows: _size,
+                    cols: _size,
+                    children: _letters
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(j, e, maxChars,  maxWidth, maxHeight, _statuses[j], _shaker[j++])))
+                        .toList(growable: false),
+                  ));
     });
   }
 }
@@ -378,6 +386,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     onPress: widget.onPress,
                     text: _displayText,
                     unitMode: UnitMode.text,
+                    disabled: widget.status == Status.Disappear ? true : false,
                   )),
               back: new UnitButton(
                 onPress: widget.onPress,

@@ -243,7 +243,7 @@ class TextAnimation extends AnimatedWidget {
             text,
             key: new Key('question'),
             style:
-            new TextStyle(color: new Color(0xFFDD5E5E), fontSize: height * 0.18, fontWeight: FontWeight.bold,)));
+            new TextStyle(color: new Color(0xFF42AD56E), fontSize: height * 0.18, fontWeight: FontWeight.bold,)));
   }
 }
 
@@ -268,14 +268,14 @@ class Countdown extends AnimatedWidget {
         alignment: Alignment.center,
         margin: new EdgeInsets.only(top: height * 0.52),
         decoration: new BoxDecoration(
-            border: new Border.all(color:new Color(0xFFDD5E5E), width: height * 0.01),
+            border: new Border.all(color:new Color(0xFF42AD56), width: height * 0.01),
             shape: BoxShape.circle),
         child: new Text(option[animation.value].toString(),
             key: new Key('answer'),
             style: new TextStyle(
                 fontSize: height * 0.15,
                 fontWeight: FontWeight.w500,
-                color: new Color(0xFFDD5E5E))));
+                color: new Color(0xFF42AD56))));
   }
 }
 

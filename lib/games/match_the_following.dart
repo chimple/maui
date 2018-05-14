@@ -85,7 +85,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth =
-          (constraints.maxWidth - hPadding * 2) / 2 - middle_spacing;
+          (constraints.maxWidth - hPadding * 2) / 2; //- middle_spacing;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / _numButtons;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -99,14 +99,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
           child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               new Expanded(
                 child: _buildLeftSide(context, buttonPadding),
               ),
-              new Padding(
-                  padding:
-                      new EdgeInsets.symmetric(horizontal: middle_spacing)),
+              // new Padding(
+              //     padding:
+              //         new EdgeInsets.symmetric(horizontal: middle_spacing)),
               new Expanded(child: _buildRightSide(context, buttonPadding)),
             ],
           ));
