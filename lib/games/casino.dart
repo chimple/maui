@@ -128,9 +128,7 @@ class _CasinoState extends State<Casino> {
             backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
-              // setState(() {
-              //   _selectedItemIndex = index;
-              // });
+              
               print("buttonNumber  $buttonNumber is triggered");
 
               for (int i = 0; i < givenWordList.length; i++) {
@@ -216,40 +214,6 @@ class _CasinoState extends State<Casino> {
           });
     }
 
-<<<<<<< HEAD
-    return new Container(
-      color: new Color(0xfffff7ebcb),
-      child: new Flex(
-        direction: Axis.vertical,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          new Expanded(
-            flex: 2,
-            child: new Container(
-                height: 200.0,
-                width: 200.0,
-                color: new Color(0xffff52c5ce),
-                child: new Center(
-                    child: new Text(
-                  givenWord,
-                  key: new Key("fruit"),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 100.0,
-                      letterSpacing: 5.0,
-                      color: Colors.white),
-                ))),
-          ),
-          new Expanded(
-            flex: 1,
-            child: new Container(
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius:
-                      new BorderRadius.all(const Radius.circular(16.0))),
-=======
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -291,7 +255,6 @@ class _CasinoState extends State<Casino> {
                                 )
                               ])),
             new Expanded(
->>>>>>> refs/remotes/origin/master
               child: new ResponsiveGridView(
                 cols: data.length,
                 rows: 1,
