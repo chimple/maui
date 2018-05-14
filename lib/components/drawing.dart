@@ -121,6 +121,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   child: new RepaintBoundary(
                     child: new CustomPaint(
                       painter: _currentPainter,
+                      size: Size.infinite,
                       isComplex: true,
                       willChange: false,
 

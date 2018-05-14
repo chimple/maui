@@ -3,6 +3,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 
@@ -10,25 +11,50 @@ import 'flash_card.dart';
 
 class UnitButton extends StatefulWidget {
   final String text;
-  final int maxChars;
   final VoidCallback onPress;
   final UnitMode unitMode;
   final bool disabled;
+  final bool highlighted;
+  final bool primary;
   final bool showHelp;
+  final String bgImage;
 
   UnitButton(
       {Key key,
       @required this.text,
       this.onPress,
-      this.maxChars = 24,
       this.disabled = false,
       this.showHelp = true,
+      this.highlighted = false,
+      this.primary = true,
+      this.bgImage,
       this.unitMode = UnitMode.text})
       : super(key: key);
 
   @override
   _UnitButtonState createState() {
     return new _UnitButtonState();
+  }
+
+  static void saveButtonSize(
+      BuildContext context, int maxChars, double maxWidth, double maxHeight) {
+    AppState state = AppStateContainer.of(context).state;
+    final fontWidthFactor = maxChars == 1 ? 1.1 : 0.7;
+    final fontSizeByWidth = maxWidth / (maxChars * fontWidthFactor);
+    final fontSizeByHeight = maxHeight / 1.8;
+    state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
+    state.buttonRadius = min(maxWidth, maxHeight) / 8.0;
+
+    state.buttonWidth = (maxChars == 1)
+        ? min(maxWidth, maxHeight)
+        : state.buttonFontSize * maxChars * 0.7;
+    state.buttonHeight = (maxChars == 1)
+        ? min(maxWidth, maxHeight)
+        : min(maxHeight, maxWidth * 0.75);
+    print(
+        'width: ${state.buttonWidth} height: ${state.buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
+    print(
+        'fontsize: ${state.buttonFontSize} fontSizeByWidth: ${fontSizeByWidth} fontSizeByHeight ${fontSizeByHeight}');
   }
 }
 
@@ -66,38 +92,62 @@ class _UnitButtonState extends State<UnitButton> {
                         child: new FlashCard(text: widget.text)));
               }
             },
-            child: _buildButton())
-        : _buildButton();
+            child: _buildButton(context))
+        : _buildButton(context);
   }
 
-  Widget _buildButton() {
-    return new FlatButton(
-        splashColor: Theme.of(context).accentColor,
-        highlightColor: Theme.of(context).accentColor,
-        disabledColor: Color(0xFFDDDDDD),
-        onPressed: widget.disabled ? null : widget.onPress,
-        shape: new RoundedRectangleBorder(
-            side: new BorderSide(
-                color: widget.disabled
-                    ? Color(0xFFDDDDDD)
-                    : Theme.of(context).primaryColor,
-                width: 4.0),
-            borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-        child: _buildUnit());
+  Widget _buildButton(BuildContext context) {
+    AppState state = AppStateContainer.of(context).state;
+    return Container(
+        constraints: BoxConstraints.tightFor(
+            height: state.buttonHeight, width: state.buttonWidth),
+        decoration: new BoxDecoration(
+            image: widget.bgImage != null
+                ? new DecorationImage(
+                    image: new AssetImage(widget.bgImage), fit: BoxFit.contain)
+                : null),
+        child: FlatButton(
+            color: widget.highlighted
+                ? Theme.of(context).primaryColor
+                : Colors.transparent,
+            splashColor: Theme.of(context).accentColor,
+            highlightColor: Theme.of(context).accentColor,
+            disabledColor: Color(0xFFDDDDDD),
+            onPressed: widget.disabled
+                ? null
+                : () {
+                    AppStateContainer.of(context).play(widget.text);
+                    widget.onPress();
+                  },
+            padding: EdgeInsets.all(0.0),
+            shape: new RoundedRectangleBorder(
+                side: new BorderSide(
+                    color: widget.disabled
+                        ? Color(0xFFDDDDDD)
+                        : widget.primary
+                            ? Theme.of(context).primaryColor
+                            : Colors.white,
+                    width: 4.0),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(state.buttonRadius))),
+            child: _buildUnit(state.buttonFontSize)));
   }
 
-  Widget _buildUnit() {
+  Widget _buildUnit(double fontSize) {
     if (widget.unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (widget.unitMode == UnitMode.image) {
       return _isLoading
           ? new Text(widget.text)
-          : new Image.asset('assets/apple.png');
+          : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png');
     }
-    return new Text(widget.text,
-        style: new TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: max(12.0, min(36.0, 96.0 - 2.9 * widget.maxChars))));
+    return Center(
+        child: Text(widget.text,
+            style: new TextStyle(
+                color: widget.highlighted || !widget.primary
+                    ? Colors.white
+                    : Theme.of(context).primaryColor,
+                fontSize: fontSize)));
   }
 
   @override
