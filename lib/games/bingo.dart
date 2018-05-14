@@ -82,7 +82,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     super.initState();
     print("the data level erererererere ${widget.gameConfig.level}");
     if (widget.gameConfig.level < 4) {
-      _maxSize = 4;
+      _maxSize = 2;
     } else if (widget.gameConfig.level < 7) {
       _maxSize = 3;
     } else {
@@ -194,40 +194,14 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 ///horizontall  data showing part
                 if (-1 != matchRow) {
                   print("this is BINGORow");
-                  if (matchRow == 0) {
+                  if (matchRow == 0 ||matchRow == 1 || matchRow == 2||matchRow == 3 ||matchRow == 4 || matchRow == 5 ) {
+                    matchRow=_maxSize*matchRow;
                     for (i = matchRow; i < _maxSize + matchRow; i++) {
                       setState(() {
                         _RowCells[i] = RowCell.CurveRow;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              countData = 0;
-                              widget.onEnd();
-                            });
-                      });
-                    }
-                  } else if (matchRow == 1) {
-                    matchRow = matchRow + _maxSize - 1;
-                    for (i = matchRow; i < _maxSize + matchRow; i++) {
-                      setState(() {
-                        _RowCells[i] = RowCell.CurveRow;
-                        widget.onProgress(2 / 1);
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              countData = 0;
-                              widget.onEnd();
-                            });
-                      });
-                    }
-                  } else {
-                    matchRow = matchRow + _maxSize + 1;
-                    for (i = matchRow; i < _maxSize + matchRow; i++) {
-                      setState(() {
-                        _RowCells[i] = RowCell.CurveRow;
-                        widget.onProgress(2 / 1);
-
-                        new Future.delayed(const Duration(milliseconds: 8000),
+                        new Future.delayed(const Duration(milliseconds: 2000),
                                 () {
                               countData = 0;
                               widget.onEnd();
@@ -242,17 +216,17 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 print({"the bingo checker response column: ": matchColumn});
                 if (-1 != matchColumn) {
                   //horizontall animation and Bingo
-                  if (matchColumn == 0) {
+                  if (matchColumn == 0 || matchColumn == 1 || matchColumn == 2 || matchColumn == 3 || matchColumn == 4 || matchColumn == 5) {
                     print("this is 000first column of kiran $matchColumn ");
-                    for (i = matchColumn; i <= _maxSize + _maxSize; i++) {
+                    for (i = matchColumn; i < _maxSize * _maxSize; i++) {
                       print("print iiiiiiiiiiii is iiiiiiii is $i");
                       setState(() {
                         print("this is great");
                         _ColmunCells[i] = ColmunCell.CurveColumn;
-                        i = i + 2;
+                        i = i + _maxSize - 1;
                         widget.onProgress(2 / 1);
 
-                        new Future.delayed(const Duration(milliseconds: 8000),
+                        new Future.delayed(const Duration(milliseconds: 2000) ,
                                 () {
                               countData = 0;
                               widget.onEnd();
@@ -260,47 +234,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         print({"this is 1": _ColmunCells});
                       });
                     }
-                  } else if (matchColumn == 1) {
-                    print("this is 1111second column of kiran $matchColumn ");
-                    for (i = matchColumn;
-                    i <= _maxSize + matchColumn + _maxSize;
-                    i++) {
-                      print("print iiiiiiiiiiii is iiiiiiii is $i");
-                      setState(() {
-                        print({"this is 2": _ColmunCells});
-                        _ColmunCells[i] = ColmunCell.CurveColumn;
-                        i = i + 2;
-                        widget.onProgress(2 / 1);
-
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              countData = 0;
-                              widget.onEnd();
-                            });
-                      });
-                    }
-                  } else {
-                    print("this is 2222third column of kiran $matchColumn ");
-                    for (i = matchColumn;
-                    i <= _maxSize + matchColumn + _maxSize;
-                    i++) {
-                      print("print iiiiiiiiiiii is iiiiiiii is $i");
-
-                      setState(() {
-                        _ColmunCells[i] = ColmunCell.CurveColumn;
-                        i = i + 2;
-                        widget.onProgress(2 / 1);
-
-                        new Future.delayed(const Duration(milliseconds: 8000),
-                                () {
-                              countData = 0;
-                              widget.onEnd();
-                            });
-                        print({"this is 3": _ColmunCells});
-                      });
-                    }
                   }
-
                   print(
                       "thius is bngo animation  Colmun curved in it $_ColmunCells");
                 }
@@ -331,10 +265,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       _copyQuestion[_random.nextInt(_copyQuestion.length)];
                       ques = element;
                     }
-//                    else if(matchColumn==1||matchRow==1){
-//
-//                       _copyQuestion.removeRange(0, _copyQuestion.length);
-//                       print("this removing all element$_copyQuestion");
 //                    }
                   });
                 });
@@ -377,14 +307,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       return new Container(
         child: new Column(
           children: <Widget>[
-//            new Container(
-//                color: Colors.orange,
-//                height: maxHeight,
-//                child: new Center(
-//                    child: new Text("$ques",
-//                        key: new Key('question'),
-//                        style: new TextStyle(
-//                            color: Colors.black, fontSize: 30.0)))),
             new LimitedBox(
                 maxHeight: maxHeight,
                 maxWidth: maxWidth,
@@ -531,7 +453,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             parent: controller2,
             curve: new Interval(0.650, 0.700,
                 curve: new Cubic(400.0, 400.0, 400.0, 400.0))));
-    //    new CurvedAnimation(parent: controller2, curve: Curves.easeInOut);
     _myAnim();
     _myZoom();
   }
@@ -577,7 +498,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   var _colmunMethod;
   @override
   Widget build(BuildContext context) {
-    print({"this is 123 kiran data": widget.tile});
+    print({"this is 123 kiran data": widget.Rtile});
+    print({"this is 123 kiran column":widget.Ctile});
     return new ScaleTransition(
         scale:
         widget.Ctile ==  ColmunCell.CurveColumn || widget.Rtile == RowCell.CurveRow
