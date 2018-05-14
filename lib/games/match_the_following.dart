@@ -10,7 +10,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
 import '../components/shaker.dart';
-
+ 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
   Function onProgress;
