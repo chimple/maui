@@ -7,6 +7,9 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Abacus extends StatefulWidget {
   Function onScore;
@@ -296,6 +299,7 @@ class AbacusState extends State<Abacus> {
     print("letters1 $_letters1");
     print("letters $_letters");
     print('flagsss      $flags');
+
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -303,47 +307,58 @@ class AbacusState extends State<Abacus> {
         child: new CircularProgressIndicator(),
       );
     }
-    int k = 100;
-    int j = 0;
-    return new Column(
-      children: <Widget>[
-        //  new Container(
-        //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
-        //  ),
-        new Container(
-          height: 80.0,
-          width: size.width,
-          child: new ResponsiveGridView(
-            padding: 0.0,
-            rows: 1,
-            cols: 5,
-            children: _letters1
-                .map((e) => _buildItem(k, e, status[k++ - 100], flags[1]))
-                .toList(growable: false),
+
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+//      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - size.height / 8.0) / (14);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      int k = 100;
+      int j = 0;
+      return new Column(
+        children: <Widget>[
+          //  new Container(
+          //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+          //  ),
+          new Container(
+            height: size.height / 8.0,
+            width: size.width,
+            child: new ResponsiveGridView(
+              padding: 0.0,
+              rows: 1,
+              cols: 5,
+              children: _letters1
+                  .map((e) => _buildItem(k, e, status[k++ - 100], flags[1]))
+                  .toList(growable: false),
+            ),
           ),
-        ),
-        new Container(
-          height: 4.0,
-          color: Colors.pink,
-        ),
-        new Expanded(
-          child: new ResponsiveGridView(
+          new Expanded(
+              child: new ResponsiveGridView(
             padding: 0.0,
             // mainAxisSpacing: 0.0,
             // crossAxisSpacing: 0.0,
             rows: 14,
             cols: _size,
             children: _letters
-                .map((e) => _buildItem(j, e, status[1], flags[j++]))
+                .map((e) => SizedBox(
+                      width: state.buttonWidth,
+                      height: state.buttonHeight,
+                      child: _buildItem(j, e, status[1], flags[j++]),
+                    ))
                 .toList(growable: false),
-          ),
-        ),
-        new Container(
-          height: 4.0,
-          color: Colors.pink,
-        ),
-      ],
-    );
+          )),
+        ],
+      );
+    });
   }
 }
 

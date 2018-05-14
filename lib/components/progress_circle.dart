@@ -4,8 +4,10 @@ class ProgressCircle extends StatefulWidget {
   double progress;
   int time;
   Function onEnd;
+  double strokeWidth;
 
-  ProgressCircle({this.progress, this.time, this.onEnd});
+  ProgressCircle(
+      {this.progress, this.time, this.onEnd, this.strokeWidth = 8.0});
 
   @override
   _ProgressCircleState createState() {
@@ -44,8 +46,8 @@ class _ProgressCircleState extends State<ProgressCircle>
   Widget build(BuildContext context) {
     return new CircularProgressIndicator(
       valueColor:
-          new AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
-      strokeWidth: 8.0,
+          new AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+      strokeWidth: widget.strokeWidth,
       value: _animation != null ? _animation.value : widget.progress,
     );
   }

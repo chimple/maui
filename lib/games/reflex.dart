@@ -3,9 +3,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -29,7 +31,7 @@ class Reflex extends StatefulWidget {
   State<StatefulWidget> createState() => new ReflexState();
 }
 
-class ReflexState extends State<Reflex> {
+class ReflexState extends State<Reflex> with TickerProviderStateMixin {
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -38,10 +40,13 @@ class ReflexState extends State<Reflex> {
   List<String> _shuffledLetters = [];
   List<String> _letters;
   bool _isLoading = true;
+  AnimationController _controller;
+  Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
+    print('reflex: initState()');
     if (widget.gameConfig.level < 4) {
       _maxSize = 2;
     } else if (widget.gameConfig.level < 7) {
@@ -49,6 +54,17 @@ class ReflexState extends State<Reflex> {
     } else {
       _maxSize = 4;
     }
+    _controller = new AnimationController(
+        vsync: this, duration: new Duration(milliseconds: 500));
+    final CurvedAnimation curve =
+        new CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
+    _animation =
+        new Tween<Offset>(begin: Offset(0.0, -2.0), end: Offset(0.0, 0.0))
+            .animate(curve);
+    new Future.delayed(Duration(milliseconds: 750 + _maxSize * 300), () {
+      _controller.forward();
+    });
+
 //    print('ReflexState:initState');
     _initBoard();
   }
@@ -79,11 +95,15 @@ class ReflexState extends State<Reflex> {
     }
   }
 
-  Widget _buildItem(int index, String text, int maxChars) {
+  Widget _buildItem(
+      int index, String text, int maxChars, double maxWidth, double maxHeight) {
     return new MyButton(
         key: new ValueKey<int>(index),
+        order: index,
         text: text,
         maxChars: maxChars,
+        maxHeight: maxHeight,
+        maxWidth: maxWidth,
         onPress: () {
           print('_buildItem.onPress');
           if (text == _allLetters[_currentIndex]) {
@@ -124,55 +144,86 @@ class ReflexState extends State<Reflex> {
       ));
     }
     int j = 0;
-    var maxChars = _size *
-        (_allLetters != null
-            ? _allLetters.fold(
-                1,
-                (prev, element) =>
-                    element.length > prev ? element.length : prev)
-            : 1);
+    final maxChars = (_allLetters != null
+        ? _allLetters.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
 
-    return new Column(
-      children: <Widget>[
-        new LimitedBox(
-            maxHeight: media.size.height / 10,
-            child: new Material(
-                color: Theme.of(context).accentColor,
-                elevation: 4.0,
-                textStyle: new TextStyle(
-                    color: Colors.white,
-                    fontSize: max(12.0, min(36.0, 96.0 - 2.9 * maxChars))),
-                child: new ListView(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    children: _solvedLetters
-                        .map((l) => new Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: Text(l)))
-                        .toList(growable: false)))),
-        new Expanded(
-            child: ResponsiveGridView(
-          rows: _size,
-          cols: _size,
-          maxAspectRatio: 1.3,
-          padding: 4.0,
-          maxChars: maxChars,
-          children: _letters
-              .map((e) => _buildItem(j++, e, maxChars))
-              .toList(growable: false),
-        ))
-      ],
-    );
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Column(
+        children: <Widget>[
+          new SlideTransition(
+              position: _animation,
+              child: Material(
+                  color: Theme.of(context).accentColor,
+                  elevation: 8.0,
+                  child: new LimitedBox(
+                      maxHeight: maxHeight,
+                      child: ListView(
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.all(buttonPadding),
+                          itemExtent: state.buttonWidth,
+                          children: _solvedLetters
+                              .map((l) => Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(buttonPadding),
+                                      child: UnitButton(
+                                        text: l,
+                                        primary: false,
+                                        onPress: () {},
+                                      ))))
+                              .toList(growable: false))))),
+          new Expanded(
+              child: new Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+                  child: ResponsiveGridView(
+                    rows: _size,
+                    cols: _size,
+                    children: _letters
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(
+                                j++, e, maxChars, maxWidth, maxHeight)))
+                        .toList(growable: false),
+                  )))
+        ],
+      );
+    });
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.onPress, this.maxChars}) : super(key: key);
+  MyButton(
+      {Key key,
+      this.order,
+      this.text,
+      this.onPress,
+      this.maxChars,
+      this.maxWidth,
+      this.maxHeight})
+      : super(key: key);
 
+  final int order;
   final String text;
   final VoidCallback onPress;
   final int maxChars;
+  final double maxWidth;
+  final double maxHeight;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -185,22 +236,25 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-//    print("_MyButtonState.initState: ${widget.text}");
+    print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
+    animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
+          ..addStatusListener((state) {
 //        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
-    controller.forward();
+            if (state == AnimationStatus.dismissed) {
+              print('dismissed');
+              if (widget.text != null) {
+                setState(() => _displayText = widget.text);
+                controller.forward();
+              }
+            }
+          });
+    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
+      controller.forward();
+    });
   }
 
   @override
@@ -223,7 +277,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new UnitButton(
           onPress: widget.onPress,
           text: _displayText,
-          maxChars: widget.maxChars,
           unitMode: UnitMode.text,
         ));
   }

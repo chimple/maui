@@ -60,20 +60,24 @@ Future<Tuple2<String, List<String>>> fetchSequenceDataForCategory(
 }
 
 Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
+  Lesson lesson = await new LessonRepo().getLesson(lessonId);
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
+  print(lessonUnits);
   //TODO: get only unique objects and subjects
   //TODO: cut across areaId to get concept->word
   return new Map<String, String>.fromIterable(
       lessonUnits.sublist(0, min(maxData, lessonUnits.length)),
-      key: (e) => e.subjectUnitId,
+      key: (e) => (lesson.conceptId == 3 || lesson.conceptId == 5)
+          ? e.objectUnitId
+          : e.subjectUnitId,
       value: (e) => (e.objectUnitId != null && e.objectUnitId.isNotEmpty)
           ? e.objectUnitId
           : e.subjectUnitId);
 }
 
-Future<Tuple2<String, bool>> fetchTrueOrFalse(int lessonId) async {
+Future<Tuple3<String, String, bool>> fetchTrueOrFalse(int lessonId) async {
   Lesson lesson = await new LessonRepo().getLesson(lessonId);
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -92,7 +96,7 @@ Future<Tuple2<String, bool>> fetchTrueOrFalse(int lessonId) async {
     question = lu.subjectUnitId;
     answer = boolAnswer ? lu.subjectUnitId : lessonUnits[1].subjectUnitId;
   }
-  return new Tuple2('$question $answer', boolAnswer);
+  return new Tuple3(question, answer, boolAnswer);
 }
 
 Future<List<List<String>>> fetchRollingData(
@@ -531,30 +535,20 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
   return null;
 }
 
-Future<Tuple2<List<String >, String >>
-    fetchFirstWordData(int categoryId) async {
+Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   var rand = new Random();
-      var startNum = rand.nextInt(max(0, 3));
+  var startNum = rand.nextInt(max(0, 3));
   switch (startNum) {
     case 0:
-      return new Tuple2(['cricket','tennis','golf','hockey','football'
-        
-       
-      ], 'SPORTS');
+      return new Tuple2(
+          ['cricket', 'tennis', 'golf', 'hockey', 'football'], 'SPORTS');
       break;
-      case 1:
-      return new Tuple2(['cat','dog','elephant','horse'
-    
-  
-  ],'ANIMALS');
-  break;
-  case 2:
-   return new Tuple2(['car','bus','train'
-   
-  
-  ],'VEHICLES');
-  break;
- 
+    case 1:
+      return new Tuple2(['cat', 'dog', 'elephant', 'horse'], 'ANIMALS');
+      break;
+    case 2:
+      return new Tuple2(['car', 'bus', 'train'], 'VEHICLES');
+      break;
   }
   return null;
 }
