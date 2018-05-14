@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -139,23 +140,36 @@ class SingleGame extends StatefulWidget {
   }
 }
 
-class _SingleGameState extends State<SingleGame> {
+class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   int _score = 0;
   double _progress = 0.0;
   int _iteration = 0;
   int maxIterations = 2;
   int playTime = 10000;
+  AnimationController _controller;
+  Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([]);
+//    SystemChrome.setEnabledSystemUIOverlays([]);
+    _controller = new AnimationController(
+        vsync: this, duration: new Duration(milliseconds: 500));
+    final CurvedAnimation curve =
+        new CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
+    _animation =
+        new Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset(0.0, 0.0))
+            .animate(curve);
+    new Future.delayed(const Duration(milliseconds: 250), () {
+      _controller.forward();
+    });
   }
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+//    SystemChrome.setEnabledSystemUIOverlays(
+//        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -174,82 +188,114 @@ class _SingleGameState extends State<SingleGame> {
         accentColor: colors[1]);
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
+    final width = widget.gameConfig.gameDisplay == GameDisplay.single
+        ? media.size.width
+        : media.size.width / 2;
+
     return new Theme(
         data: theme,
         child: Scaffold(
             resizeToAvoidBottomPadding: false,
-            backgroundColor: Colors.white,
-            body: new Column(children: <Widget>[
-              SizedBox(
-                  height: media.size.height / 8.0,
-                  child: Material(
-                      elevation: 8.0,
-                      color: widget.gameConfig.gameDisplay ==
-                              GameDisplay.otherHeadToHead
-                          ? colors[2]
-                          : colors[0],
-                      child: new Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Stack(
-                              alignment: AlignmentDirectional.centerStart,
-                              children: <Widget>[
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: widget.gameConfig.gameDisplay !=
-                                            GameDisplay.otherHeadToHead
-                                        ? <Widget>[
-                                            new Flexible(
-                                                flex: 1,
-                                                child: _hud(
-                                                    context: context,
-                                                    height:
-                                                        media.size.height / 8.0,
-                                                    backgroundColor: colors[2],
-                                                    foregroundColor:
-                                                        colors[1])),
-                                            new Nima(
-                                                name: widget.gameName,
-                                                score: _score),
-                                            new Flexible(
-                                                child: Container(), flex: 1)
-                                          ]
-                                        : <Widget>[
-                                            new Flexible(
-                                                child: Container(), flex: 1),
-                                            new Nima(
-                                                name: widget.gameName,
-                                                score: _score),
-                                            new Flexible(
-                                                flex: 1,
-                                                child: _hud(
-                                                    context: context,
-                                                    height:
-                                                        media.size.height / 8.0,
-                                                    backgroundColor: colors[0],
-                                                    foregroundColor:
-                                                        colors[1])),
-                                          ]),
-                                new InkWell(
-                                    child: new Align(
-                                        alignment:
-                                            AlignmentDirectional.centerStart,
-                                        child: Icon(
-                                          Icons.arrow_back,
-                                          color: Colors.white,
-                                          size: 36.0,
-                                        )),
-                                    onTap: () => Navigator.of(context).pop()),
-                              ])))),
-              new Expanded(
-                  flex: 10,
-                  child: new Stack(fit: StackFit.expand, children: <Widget>[
-                    Image.asset(
-                      'assets/background_tile.png',
-                      repeat: ImageRepeat.repeat,
-                    ),
-                    game
-                  ]))
-            ])));
+            backgroundColor: colors[1],
+            body: new SizedBox(
+                height: media.size.height,
+                width: width,
+                child: Stack(fit: StackFit.expand, children: <Widget>[
+                  Image.asset(
+                    'assets/background_tile.png',
+                    repeat: ImageRepeat.repeat,
+                  ),
+                  Positioned(
+                      bottom: 0.0,
+                      child: SizedBox(
+                          height: media.size.height * 7.0 / 8.0,
+                          width: width,
+                          child: game)),
+                  Positioned(
+                      top: 0.0,
+                      child: SlideTransition(
+                          position: _animation,
+                          child: SizedBox(
+                              height: media.size.height / 8.0,
+                              width: width,
+                              child: Material(
+                                  elevation: 8.0,
+                                  color: widget.gameConfig.gameDisplay ==
+                                          GameDisplay.otherHeadToHead
+                                      ? colors[2]
+                                      : colors[0],
+                                  child: new Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Stack(
+                                          alignment:
+                                              AlignmentDirectional.centerStart,
+                                          children: <Widget>[
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: widget.gameConfig
+                                                            .gameDisplay !=
+                                                        GameDisplay
+                                                            .otherHeadToHead
+                                                    ? <Widget>[
+                                                        new Flexible(
+                                                            flex: 1,
+                                                            child: _hud(
+                                                                context:
+                                                                    context,
+                                                                height: media
+                                                                        .size
+                                                                        .height /
+                                                                    8.0,
+                                                                backgroundColor:
+                                                                    colors[2],
+                                                                foregroundColor:
+                                                                    colors[1])),
+                                                        new Nima(
+                                                            name:
+                                                                widget.gameName,
+                                                            score: _score),
+                                                        new Flexible(
+                                                            child: Container(),
+                                                            flex: 1)
+                                                      ]
+                                                    : <Widget>[
+                                                        new Flexible(
+                                                            child: Container(),
+                                                            flex: 1),
+                                                        new Nima(
+                                                            name:
+                                                                widget.gameName,
+                                                            score: _score),
+                                                        new Flexible(
+                                                            flex: 1,
+                                                            child: _hud(
+                                                                context:
+                                                                    context,
+                                                                height: media
+                                                                        .size
+                                                                        .height /
+                                                                    8.0,
+                                                                backgroundColor:
+                                                                    colors[0],
+                                                                foregroundColor:
+                                                                    colors[1])),
+                                                      ]),
+                                            new InkWell(
+                                                child: new Align(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .centerStart,
+                                                    child: Icon(
+                                                      Icons.arrow_back,
+                                                      color: Colors.white,
+                                                      size: 36.0,
+                                                    )),
+                                                onTap: () => Navigator
+                                                    .of(context)
+                                                    .pop()),
+                                          ])))))),
+                ]))));
   }
 
   _hud(
@@ -480,7 +526,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'crossword':
         return new Crossword(
@@ -556,7 +602,7 @@ class _SingleGameState extends State<SingleGame> {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'connect_the_dots':
         return new Connectdots(
