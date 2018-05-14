@@ -165,7 +165,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
               new Text(
                 "${data.value}",
                 style: new TextStyle(
-                    fontSize: itemSize.height * 0.6, color: Color(0xffe66796)),
+                    fontSize: itemSize.height * 0.569, color: Color(0xffe66796)),
               )
           ])),
     ),

@@ -39,7 +39,8 @@ class UnitButton extends StatefulWidget {
   static void saveButtonSize(
       BuildContext context, int maxChars, double maxWidth, double maxHeight) {
     AppState state = AppStateContainer.of(context).state;
-    final fontSizeByWidth = maxWidth / (maxChars * maxChars == 1 ? 1.1 : 0.7);
+    final fontWidthFactor = maxChars == 1 ? 1.1 : 0.7;
+    final fontSizeByWidth = maxWidth / (maxChars * fontWidthFactor);
     final fontSizeByHeight = maxHeight / 1.8;
     state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
     state.buttonRadius = min(maxWidth, maxHeight) / 8.0;

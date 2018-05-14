@@ -8,6 +8,9 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/casino_scroll_view.dart';
 import 'package:maui/components/casino_picker.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -83,7 +86,8 @@ class _CasinoState extends State<Casino> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildScrollButton(List<String> scrollingData, int buttonNumber) {
+  Widget _buildScrollButton(
+      BuildContext context, List<String> scrollingData, int buttonNumber) {
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
     List<String> scrollingLetterList = new List<String>.from(scrollingLetter);
     scrollingLetterList.sort();
@@ -106,11 +110,11 @@ class _CasinoState extends State<Casino> {
       j++;
     }
 
+    AppState state = AppStateContainer.of(context).state;
     return new Container(
-      // height: 100.0,
-      // width: 50.0,
-
-      padding: const EdgeInsets.all(8.0),
+      height: state.buttonHeight * 2,
+      width: state.buttonWidth,
+//      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
             color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
@@ -211,45 +215,48 @@ class _CasinoState extends State<Casino> {
           });
     }
 
-    return new Container(
-      color: new Color(0xfffff7ebcb),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          new Container(
-              height: 200.0,
-              width: 200.0,
-              color: new Color(0xffff52c5ce),
-              child: new Center(
-                  child: new Text(
-                givenWord,
-                key: new Key("fruit"),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.clip,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 100.0,
-                    letterSpacing: 5.0,
-                    color: Colors.white),
-              ))),
-          new Expanded(
-            child: new Container(
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius:
-                      new BorderRadius.all(const Radius.circular(16.0))),
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / data.length;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Padding(
+        padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            new Expanded(
+                child: ResponsiveGridView(
+              rows: 1,
+              cols: data.length,
+              children: givenWordList
+                  .map((e) => Padding(
+                      padding: EdgeInsets.all(buttonPadding),
+                      child: UnitButton(text: e)))
+                  .toList(growable: false),
+            )),
+            new Expanded(
               child: new ResponsiveGridView(
                 cols: data.length,
                 rows: 1,
                 maxAspectRatio: 0.7,
                 children: data.map((s) {
-                  return _buildScrollButton(s, scrollbuttonNumber++);
+                  return _buildScrollButton(context, s, scrollbuttonNumber++);
                 }).toList(growable: false),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }

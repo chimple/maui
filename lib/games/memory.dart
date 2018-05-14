@@ -75,6 +75,9 @@ class MemoryState extends State<Memory> {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
     _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
+    if(_data.length == 2 || _data.length == 3 || _data.length == 4 || _data.length == 5 || _data.length == 6 || _data.length == 7) {
+      _maxSize = 2;
+    }
     print("Rajesh-Data-initBoardCall: ${_data}");
 
     _allLetters = [];
