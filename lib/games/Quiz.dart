@@ -9,23 +9,25 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:tuple/tuple.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Quiz extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Quiz(
       {key,
-        this.onScore,
-        this.onProgress,
-        this.onEnd,
-        this.iteration,
-        this.gameCategoryId,
-        this.isRotated})
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameConfig,
+      this.isRotated})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ enum Status { Active, Right, Wrong }
 
 class QuizState extends State<Quiz> {
   bool _isLoading = true;
-  var keys=0;
+  var keys = 0;
   Tuple3<String, String, List<String>> _allques;
   int _size = 2;
   String questionText;
@@ -56,7 +58,8 @@ class QuizState extends State<Quiz> {
   void _initBoard() async {
     setState(() => _isLoading = true);
     choice = [];
-    _allques = await fetchMultipleChoiceData(widget.gameCategoryId, 3);
+    _allques =
+        await fetchMultipleChoiceData(widget.gameConfig.gameCategoryId, 3);
     print("this is my data  $_allques");
     print(_allques.item1);
     questionText = _allques.item1;
@@ -78,12 +81,13 @@ class QuizState extends State<Quiz> {
     print("My shuffled Choices - $choice");
     print("My states - $_statuses");
 
-    setState(()=>_isLoading=false);
+    setState(() => _isLoading = false);
   }
 
   Widget _buildItem(Status status, int index, String text) {
     return new MyButton(
         key: new ValueKey<int>(index),
+        unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
         ans: this.ans,
@@ -99,12 +103,12 @@ class QuizState extends State<Quiz> {
             setState(() {
               _statuses[index] = Status.Wrong;
             });
-            new Future.delayed(const Duration(milliseconds: 300), (){
+            new Future.delayed(const Duration(milliseconds: 300), () {
               setState(() {
                 _statuses[index] = Status.Active;
               });
             });
-            if(scoretrack > 0) {
+            if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
             } else {
@@ -126,7 +130,7 @@ class QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
-    keys=0;
+    keys = 0;
     print("Question text here $questionText");
     print("Answer here $ans");
 
@@ -138,55 +142,58 @@ class QuizState extends State<Quiz> {
       );
     }
 
-    int j=0;
-    return new LayoutBuilder(builder: (context, constraints)
-    {
-      double ht=constraints.maxHeight;
+    int j = 0;
+    final maxChars = (choice != null
+        ? choice.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      double ht = constraints.maxHeight;
       double wd = constraints.maxWidth;
       print("My Height - $ht");
       print("My Width - $wd");
-      return new Material(
-          child: new Column(
-            children: <Widget>[
-
-              
-
-              new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    new Expanded(
-                      child: new QuestionText(questionText, keys, ht, wd)
-                    )]
-              ),
-
-               ht > wd ? new Padding(
-                padding: new EdgeInsets.all(ht * 0.1),
-              ) : new Padding(
-                padding: new EdgeInsets.only(top: ht * 0.08),
-              ),
-
-              new Row(
-                children: <Widget>[
-                 new Padding(
-                padding: new EdgeInsets.only(left: 50.0),
-              ),
-
-               new Expanded(
-                 child: new ResponsiveGridView(
-                    rows: _size,
-                    cols: _size,
-                    children: choice.map((e) => _buildItem(_statuses[j], j++, e)).toList(growable: false),
-                  )),
-
-                  new Padding(
-                padding: new EdgeInsets.only(right: 50.0),
-              ),
-                ]
-              )
-               
-            ],
-          ) ); });
+      return new Column(
+        children: <Widget>[
+          new Material(
+              color: Theme.of(context).accentColor,
+              elevation: 4.0,
+//              child: new QuestionText(questionText, keys, ht, wd)),
+              child: new LimitedBox(
+                  maxHeight: maxHeight,
+                  child: new Center(
+                    child: new Text(questionText,
+                        style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: state.buttonFontSize)),
+                  ))),
+          new Expanded(
+              child: new ResponsiveGridView(
+            rows: _size,
+            cols: _size,
+            children: choice
+                .map((e) => new Padding(
+                      padding: EdgeInsets.all(buttonPadding),
+                      child: _buildItem(_statuses[j], j++, e),
+                    ))
+                .toList(growable: false),
+          ))
+        ],
+      );
+    });
   }
 }
 
@@ -194,14 +201,14 @@ class QuestionText extends StatefulWidget {
   final String _question;
   int keys;
   double ht, wd;
-  QuestionText(this._question,this.keys, this.ht, this.wd);
+  QuestionText(this._question, this.keys, this.ht, this.wd);
 
   @override
   State createState() => new QuestionTextState();
 }
 
-class QuestionTextState extends State<QuestionText> with SingleTickerProviderStateMixin {
-
+class QuestionTextState extends State<QuestionText>
+    with SingleTickerProviderStateMixin {
   Animation<double> _fontSizeAnimation;
   AnimationController _fontSizeAnimationController;
 
@@ -213,8 +220,8 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
     _fontSizeAnimation = new CurvedAnimation(
         parent: _fontSizeAnimationController, curve: Curves.decelerate);
     _fontSizeAnimation.addListener(() => this.setState(() {
-      print(2);
-    }));
+          print(2);
+        }));
     _fontSizeAnimationController.forward();
   }
 
@@ -271,7 +278,15 @@ class QuestionTextState extends State<QuestionText> with SingleTickerProviderSta
 class MyButton extends StatefulWidget {
   String ans;
   Status status;
-  MyButton({Key key, this.status, this.text, this.ans, this.keys, this.onPress})
+  UnitMode unitMode;
+  MyButton(
+      {Key key,
+      this.status,
+      this.text,
+      this.ans,
+      this.keys,
+      this.unitMode,
+      this.onPress})
       : super(key: key);
   final String text;
   final VoidCallback onPress;
@@ -292,7 +307,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 600), vsync: this);
-    wrongController = new AnimationController(duration: new Duration(milliseconds: 100), vsync: this);
+    wrongController = new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
 
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
@@ -321,14 +337,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     wrongController.forward();
   }
 
-
   @override
   void dispose() {
     wrongController.dispose();
     controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -339,18 +353,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new ScaleTransition(
             scale: animation,
             child: new GestureDetector(
-                onLongPress: () {
-                  showDialog(
-                      context: context,
-                      child: new FractionallySizedBox(
-                          heightFactor: 0.5,
-                          widthFactor: 0.8,
-                          child: new FlashCard(text: widget.text)));
-                },
-                 child: new UnitButton(
-                   onPress: () => widget.onPress(),
-                   text: _displayText,
-                   unitMode: UnitMode.text,
+              onLongPress: () {
+                showDialog(
+                    context: context,
+                    child: new FractionallySizedBox(
+                        heightFactor: 0.5,
+                        widthFactor: 0.8,
+                        child: new FlashCard(text: widget.text)));
+              },
+              child: new UnitButton(
+                onPress: () => widget.onPress(),
+                text: _displayText,
+                unitMode: widget.unitMode,
 //                child: new RaisedButton(
 //                    onPressed: () => widget.onPress(),
 //                    color: const Color(0xFFffffff),
@@ -361,7 +375,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //                        key: new Key("${widget.keys}"),
 //                        style:
 //                        new TextStyle(color: Colors.black, fontSize: 24.0))
-                ),
+              ),
             )));
   }
 }
