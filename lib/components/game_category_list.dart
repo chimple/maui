@@ -127,11 +127,9 @@ class _GameCategoryList extends State<GameCategoryList> {
     0XFFA1EF6F,
     0XFF48AECC,
   ];
-  List<int> _expand = [];
   @override
   void initState() {
     int categoriesLength = widget.gameCategories.length;
-    for (int i = 1; i <= 100; i++) _expand.add(0);
     super.initState();
   }
 
