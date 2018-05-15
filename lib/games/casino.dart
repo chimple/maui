@@ -61,7 +61,7 @@ class _CasinoState extends State<Casino> {
   }
 
   void _initLetters() async {
-    data = await fetchRollingData(widget.gameConfig.gameCategoryId, 5);
+    data = await fetchRollingData(widget.gameConfig.gameCategoryId, 6);
     print("Fetched Data $data");
     i = 0;
     j = 0;
@@ -125,7 +125,8 @@ class _CasinoState extends State<Casino> {
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            // backgroundColor: Colors.white,
+            // backgroundColor: new Color(0xFF734052),
+            backgroundColor: Colors.white,
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               print("buttonNumber  $buttonNumber is triggered");
