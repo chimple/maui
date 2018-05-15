@@ -28,7 +28,7 @@ class ResponsiveGridView extends StatefulWidget {
 class ResponsiveGridViewState extends State<ResponsiveGridView>
     with TickerProviderStateMixin {
   List<AnimationController> _controllers = new List<AnimationController>();
-  List<Animation<Offset>> _animations = new List<Animation<Offset>>();
+  List<Animation<double>> _animations = new List<Animation<double>>();
 
   @override
   void initState() {
@@ -37,13 +37,9 @@ class ResponsiveGridViewState extends State<ResponsiveGridView>
       final _controller = new AnimationController(
           vsync: this, duration: new Duration(milliseconds: 500));
       _controllers.add(_controller);
-      final CurvedAnimation curve =
-          new CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
-      _animations.add(new Tween<Offset>(
-              begin: Offset(0.0, -2.0 * widget.rows), end: Offset(0.0, 0.0))
-          .animate(curve));
-      new Future.delayed(Duration(milliseconds: 500 + (widget.rows - i) * 300),
-          () {
+      _animations.add(
+          new CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
+      new Future.delayed(Duration(milliseconds: 500 + (i) * 300), () {
         _controller.forward();
       });
     }
@@ -58,8 +54,8 @@ class ResponsiveGridViewState extends State<ResponsiveGridView>
           .skip(i * widget.cols)
           .take(widget.cols)
           .toList(growable: false);
-      tableRows.add(new SlideTransition(
-          position: _animations[i],
+      tableRows.add(new ScaleTransition(
+          scale: _animations[i],
           child: Row(
             children: cells,
             mainAxisAlignment: MainAxisAlignment.center,

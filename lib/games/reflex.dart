@@ -165,28 +165,26 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
 
       return new Column(
         children: <Widget>[
-          new SlideTransition(
-              position: _animation,
-              child: Material(
-                  color: Theme.of(context).accentColor,
-                  elevation: 8.0,
-                  child: new LimitedBox(
-                      maxHeight: maxHeight,
-                      child: ListView(
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.all(buttonPadding),
-                          itemExtent: state.buttonWidth,
-                          children: _solvedLetters
-                              .map((l) => Center(
-                                  child: Padding(
-                                      padding: EdgeInsets.all(buttonPadding),
-                                      child: UnitButton(
-                                        text: l,
-                                        primary: false,
-                                        onPress: () {},
-                                      ))))
-                              .toList(growable: false))))),
+          Material(
+              color: Theme.of(context).accentColor,
+              elevation: 8.0,
+              child: new LimitedBox(
+                  maxHeight: maxHeight,
+                  child: ListView(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.all(buttonPadding),
+                      itemExtent: state.buttonWidth,
+                      children: _solvedLetters
+                          .map((l) => Center(
+                              child: Padding(
+                                  padding: EdgeInsets.all(buttonPadding),
+                                  child: UnitButton(
+                                    text: l,
+                                    primary: false,
+                                    onPress: () {},
+                                  ))))
+                          .toList(growable: false)))),
           new Expanded(
               child: new Padding(
                   padding: EdgeInsets.symmetric(
@@ -252,9 +250,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               }
             }
           });
-    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
-      controller.forward();
-    });
+//    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
+    controller.forward(from: 1.0);
+//    });
   }
 
   @override
