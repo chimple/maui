@@ -127,26 +127,15 @@ class _GameCategoryList extends State<GameCategoryList> {
     0XFFA1EF6F,
     0XFF48AECC,
   ];
-  _buldTile1(int id, String gameCategories, String game) {
-    // print("all id of aca $id");
-    // print("game name afjkf $game");
-    // print("a skj fsalj lj $gameCategories");
-  }
-  List<int> _expand = [];
   @override
   void initState() {
     int categoriesLength = widget.gameCategories.length;
-    for (int i = 1; i <= 100; i++) _expand.add(0);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     int j = 1;
-    widget.gameCategories
-        .map((gameCategory) =>
-            _buldTile1(gameCategory.item1, gameCategory.item2, widget.game))
-        .toList(growable: false);
     Size media = MediaQuery.of(context).size;
     final colors = SingleGame.gameColors[widget.game];
     final color = colors != null ? colors[0] : Colors.amber;
@@ -168,23 +157,24 @@ class _GameCategoryList extends State<GameCategoryList> {
         new Expanded(
           flex: 2,
           child: new ListView(
-              children: widget.gameCategories
-                  .map((gameCategory) =>
-                      _buldTile(context, j++, gameCategory.item2, widget.game))
-                  .toList(growable: false),),
+            children: widget.gameCategories
+                .map((gameCategory) => _buildTiles(context, j++,
+                    gameCategory.item1, gameCategory.item2, widget.game))
+                .toList(growable: false),
+          ),
         )
       ],
     );
   }
 
-  Widget _buldTile(
-      BuildContext context, int index, String _cateGory, String gameName) {
+  Widget _buildTiles(BuildContext context, int index, int categoryId,
+      String categories, String gameName) {
     return new Container(
       color: new Color(colors[index]),
       child: new ExpansionTiles(
         title: new Center(
             child: new Text(
-          _cateGory,
+          categories,
           style: TextStyle(color: Colors.white),
         )),
         trailing: new Text(''),
@@ -196,15 +186,15 @@ class _GameCategoryList extends State<GameCategoryList> {
                 color: Colors.white,
                 key: new Key('single'),
                 icon: new Icon(Icons.accessibility),
-                onPressed: () =>
-                    showModes(context, gameName, 'single_iterations', index),
+                onPressed: () => showModes(
+                    context, gameName, 'single_iterations', categoryId),
               ),
               new IconButton(
                 color: Colors.white,
                 key: new Key('h2h'),
                 icon: new Icon(Icons.people),
                 onPressed: () =>
-                    showModes(context, gameName, 'h2h_iterations', index),
+                    showModes(context, gameName, 'h2h_iterations', categoryId),
               ),
             ],
           )
