@@ -236,7 +236,7 @@ class _CasinoState extends State<Casino> {
               flex: 1,
               child: new Material(
                 color: Theme.of(context).accentColor,
-                elevation: 8.0,
+               
                 child: ResponsiveGridView(
                     rows: 1,
                     cols: data.length,
@@ -260,16 +260,13 @@ class _CasinoState extends State<Casino> {
               )),
           new Expanded(
             flex: 2,
-            child: new Material(
-              color: Theme.of(context).primaryColor,
-              child: new ResponsiveGridView(
-                cols: data.length,
-                rows: 1,
-                maxAspectRatio: 0.7,
-                children: data.map((s) {
-                  return _buildScrollButton(context, s, scrollbuttonNumber++);
-                }).toList(growable: false),
-              ),
+            child: new ResponsiveGridView(
+              cols: data.length,
+              rows: 1,
+              maxAspectRatio: 0.7,
+              children: data.map((s) {
+                return _buildScrollButton(context, s, scrollbuttonNumber++);
+              }).toList(growable: false),
             ),
           ),
         ],
