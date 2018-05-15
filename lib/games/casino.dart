@@ -105,13 +105,13 @@ class _CasinoState extends State<Casino> {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
       if (givenWordList[j] == scrollingLetterList[random]) {
-        _selectedItemIndex = givenWordList.length - 1;
+        _selectedItemIndex = scrollingLetterList.length - 1;
         if (scrollingLetterList[random] == 'a' ||
             scrollingLetterList[random] == 'A') {
               print("The letter is A");
-              var temp = scrollingLetterList[givenWordList.length - 1];
-              scrollingLetterList[givenWordList.length - 1] = scrollingLetterList[random];
-              scrollingLetterList[0] == temp;
+              // var temp = scrollingLetterList[givenWordList.length - 1];
+              scrollingLetterList[scrollingLetterList.length - 1] = scrollingLetterList[random];
+              scrollingLetterList[0] == givenWordList[2];
             }
 
         print("Hey data shuffled");
