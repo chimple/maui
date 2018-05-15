@@ -56,7 +56,7 @@ class _CasinoState extends State<Casino> {
   @override
   void initState() {
     super.initState();
-    new Future.delayed(Duration(milliseconds: 1000), () {});
+    
     _initLetters();
   }
 
@@ -114,6 +114,7 @@ class _CasinoState extends State<Casino> {
 
     AppState state = AppStateContainer.of(context).state;
     return new Container(
+      
       height: state.buttonHeight * 2,
       width: state.buttonWidth,
 //      padding: const EdgeInsets.all(8.0),
@@ -125,8 +126,8 @@ class _CasinoState extends State<Casino> {
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            // backgroundColor: new Color(0xFF734052),
-            backgroundColor: Colors.white,
+            backgroundColor: new Color(0xFF734052),
+            // backgroundColor: Colors.white,
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               print("buttonNumber  $buttonNumber is triggered");
