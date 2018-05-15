@@ -56,6 +56,7 @@ class _CasinoState extends State<Casino> {
   @override
   void initState() {
     super.initState();
+    new Future.delayed(Duration(milliseconds: 1000), () {});
     _initLetters();
   }
 
@@ -104,7 +105,7 @@ class _CasinoState extends State<Casino> {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
       if (scrollingLetterList[random] == givenWordList[j]) {
-        _selectedItemIndex = 0;
+        _selectedItemIndex = givenWordList.length - 1;
         print("Hey data shuffled");
         print("scrollingLetterList = $scrollingLetterList");
       }
@@ -117,20 +118,17 @@ class _CasinoState extends State<Casino> {
       width: state.buttonWidth,
 //      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
-        style: const TextStyle(
-            color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
+        style: const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
             key: new ValueKey(j),
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            backgroundColor: new Color(0xfffff8c43c),
+            // backgroundColor: new Color(0xFF734052),
+            backgroundColor: Colors.white,
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
-              // setState(() {
-              //   _selectedItemIndex = index;
-              // });
               print("buttonNumber  $buttonNumber is triggered");
 
               for (int i = 0; i < givenWordList.length; i++) {
@@ -144,9 +142,9 @@ class _CasinoState extends State<Casino> {
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
                       lst.isNotEmpty) {
                     print("Letters are not equal");
-                    if (lst.contains(givenWordList[i])) {
+                    if (lst.contains(givenWordList[i]) && buttonNumber == i) {
                       print("Letter removed");
-                      lst.removeAt(i);
+                      lst.remove(givenWordList[i]);
                     }
                   }
                 }
@@ -185,10 +183,11 @@ class _CasinoState extends State<Casino> {
               return new Center(
                 child: new Text(scrollingLetterList[index],
                     style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 45.0,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
+                      color: new Color(0xFFD64C60),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 45.0,
+                      letterSpacing: 5.0,
+                    )),
               );
             }),
           ),
@@ -221,7 +220,7 @@ class _CasinoState extends State<Casino> {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / data.length;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -230,44 +229,48 @@ class _CasinoState extends State<Casino> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
-      return new Padding(
-        padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            new Expanded(
+      return new Column(
+        // direction: Axis.vertical,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          new Expanded(
+              flex: 1,
+              child: new Material(
+                color: Theme.of(context).accentColor,
+               
                 child: ResponsiveGridView(
                     rows: 1,
                     cols: data.length,
-                    children:
-                        widget.gameConfig.questionUnitMode == UnitMode.text
-                            ? givenWordList
-                                .map((e) => Padding(
-                                    padding: EdgeInsets.all(buttonPadding),
-                                    child: UnitButton(
-                                      text: e,
-                                    )))
-                                .toList(growable: false)
-                            : <Widget>[
-                                UnitButton(
-                                  maxWidth: maxHeight,
-                                  maxHeight: maxHeight,
-                                  text: givenWord.trim(),
-                                  unitMode: widget.gameConfig.questionUnitMode,
-                                )
-                              ])),
-            new Expanded(
-              child: new ResponsiveGridView(
-                cols: data.length,
-                rows: 1,
-                maxAspectRatio: 0.7,
-                children: data.map((s) {
-                  return _buildScrollButton(context, s, scrollbuttonNumber++);
-                }).toList(growable: false),
-              ),
+                    children: widget.gameConfig.questionUnitMode ==
+                            UnitMode.text
+                        ? givenWordList
+                            .map((e) => Padding(
+                                padding: EdgeInsets.all(buttonPadding),
+                                child: UnitButton(
+                                  text: e,
+                                )))
+                            .toList(growable: false)
+                        : <Widget>[
+                            UnitButton(
+                              maxWidth: maxHeight,
+                              maxHeight: maxHeight,
+                              text: givenWord.trim(),
+                              unitMode: widget.gameConfig.questionUnitMode,
+                            )
+                          ]),
+              )),
+          new Expanded(
+            flex: 2,
+            child: new ResponsiveGridView(
+              cols: data.length,
+              rows: 1,
+              maxAspectRatio: 0.7,
+              children: data.map((s) {
+                return _buildScrollButton(context, s, scrollbuttonNumber++);
+              }).toList(growable: false),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
   }

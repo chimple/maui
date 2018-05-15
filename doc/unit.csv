@@ -1,0 +1,813 @@
+id,name,type,image,sound,phonemeSound
+A,A,7,,eng/audio/a.ogg,eng/audio/a.ogg
+B,B,7,,eng/audio/b.ogg,eng/audio/b.ogg
+C,C,7,,eng/audio/c.ogg,eng/audio/c.ogg
+D,D,7,,eng/audio/d.ogg,eng/audio/d.ogg
+E,E,7,,eng/audio/e.ogg,eng/audio/e.ogg
+F,F,7,,eng/audio/f.ogg,eng/audio/f.ogg
+G,G,7,,eng/audio/g.ogg,eng/audio/g.ogg
+H,H,7,,eng/audio/h.ogg,eng/audio/h.ogg
+I,I,7,,eng/audio/i.ogg,eng/audio/i.ogg
+J,J,7,,eng/audio/j.ogg,eng/audio/j.ogg
+K,K,7,,eng/audio/k.ogg,eng/audio/k.ogg
+L,L,7,,eng/audio/l.ogg,eng/audio/l.ogg
+M,M,7,,eng/audio/m.ogg,eng/audio/m.ogg
+N,N,7,,eng/audio/n.ogg,eng/audio/n.ogg
+O,O,7,,eng/audio/o.ogg,eng/audio/o.ogg
+P,P,7,,eng/audio/p.ogg,eng/audio/p.ogg
+Q,Q,7,,eng/audio/q.ogg,eng/audio/q.ogg
+R,R,7,,eng/audio/r.ogg,eng/audio/r.ogg
+S,S,7,,eng/audio/s.ogg,eng/audio/s.ogg
+T,T,7,,eng/audio/t.ogg,eng/audio/t.ogg
+U,U,7,,eng/audio/u.ogg,eng/audio/u.ogg
+V,V,7,,eng/audio/v.ogg,eng/audio/v.ogg
+W,W,7,,eng/audio/w.ogg,eng/audio/w.ogg
+X,X,7,,eng/audio/x.ogg,eng/audio/x.ogg
+Y,Y,7,,eng/audio/y.ogg,eng/audio/y.ogg
+Z,Z,7,,eng/audio/z.ogg,eng/audio/z.ogg
+a,a,6,,eng/audio/a.ogg,eng/audio/a.ogg
+b,b,6,,eng/audio/b.ogg,eng/audio/b.ogg
+c,c,6,,eng/audio/c.ogg,eng/audio/c.ogg
+d,d,6,,eng/audio/d.ogg,eng/audio/d.ogg
+e,e,6,,eng/audio/e.ogg,eng/audio/e.ogg
+f,f,6,,eng/audio/f.ogg,eng/audio/f.ogg
+g,g,6,,eng/audio/g.ogg,eng/audio/g.ogg
+h,h,6,,eng/audio/h.ogg,eng/audio/h.ogg
+i,i,6,,eng/audio/i.ogg,eng/audio/i.ogg
+j,j,6,,eng/audio/j.ogg,eng/audio/j.ogg
+k,k,6,,eng/audio/k.ogg,eng/audio/k.ogg
+l,l,6,,eng/audio/l.ogg,eng/audio/l.ogg
+m,m,6,,eng/audio/m.ogg,eng/audio/m.ogg
+n,n,6,,eng/audio/n.ogg,eng/audio/n.ogg
+o,o,6,,eng/audio/o.ogg,eng/audio/o.ogg
+p,p,6,,eng/audio/p.ogg,eng/audio/p.ogg
+q,q,6,,eng/audio/q.ogg,eng/audio/q.ogg
+r,r,6,,eng/audio/r.ogg,eng/audio/r.ogg
+s,s,6,,eng/audio/s.ogg,eng/audio/s.ogg
+t,t,6,,eng/audio/t.ogg,eng/audio/t.ogg
+u,u,6,,eng/audio/u.ogg,eng/audio/u.ogg
+v,v,6,,eng/audio/v.ogg,eng/audio/v.ogg
+w,w,6,,eng/audio/w.ogg,eng/audio/w.ogg
+x,x,6,,eng/audio/x.ogg,eng/audio/x.ogg
+y,y,6,,eng/audio/y.ogg,eng/audio/y.ogg
+z,z,6,,eng/audio/z.ogg,eng/audio/z.ogg
+wall,wall,4,eng/image/wall.png,eng/audio/wall.ogg,eng/audio/wall.ogg
+skirt,skirt,4,eng/image/skirt.png,eng/audio/skirt.ogg,eng/audio/skirt.ogg
+fence,fence,4,eng/image/fence.png,eng/audio/fence.ogg,eng/audio/fence.ogg
+grand children,grand children,4,eng/image/grand children.png,eng/audio/grand children.ogg,eng/audio/grand children.ogg
+quartz,quartz,4,eng/image/quartz.png,eng/audio/quartz.ogg,eng/audio/quartz.ogg
+garden,garden,4,eng/image/garden.png,eng/audio/garden.ogg,eng/audio/garden.ogg
+vegetable,vegetable,4,eng/image/vegetable.png,eng/audio/vegetable.ogg,eng/audio/vegetable.ogg
+earthworm,earthworm,4,eng/image/earthworm .png,eng/audio/earthworm .ogg,eng/audio/earthworm .ogg
+blue,blue,4,eng/image/blue.png,eng/audio/blue.ogg,eng/audio/blue.ogg
+milk shake,milk shake,4,eng/image/milk shake.png,eng/audio/milk shake.ogg,eng/audio/milk shake.ogg
+lizard,lizard,4,eng/image/lizard.png,eng/audio/lizard.ogg,eng/audio/lizard.ogg
+eyes,eyes,4,eng/image/eyes.png,eng/audio/eyes.ogg,eng/audio/eyes.ogg
+strainer,strainer,4,eng/image/strainer.png,eng/audio/strainer.ogg,eng/audio/strainer.ogg
+kiwifruit,kiwifruit,4,eng/image/kiwifruit.png,eng/audio/kiwifruit.ogg,eng/audio/kiwifruit.ogg
+onion,onion,4,eng/image/onion.png,eng/audio/onion.ogg,eng/audio/onion.ogg
+crop,crop,4,eng/image/crop.png,eng/audio/crop.ogg,eng/audio/crop.ogg
+bee,bee,4,eng/image/bee.png,eng/audio/bee.ogg,eng/audio/bee.ogg
+centigrade,centigrade,4,eng/image/centigrade.png,eng/audio/centigrade.ogg,eng/audio/centigrade.ogg
+drumstick,drumstick,4,eng/image/drumstick.png,eng/audio/drumstick.ogg,eng/audio/drumstick.ogg
+paint,paint,4,eng/image/paint.png,eng/audio/paint.ogg,eng/audio/paint.ogg
+dvd player,dvd player,4,eng/image/dvd player.png,eng/audio/dvd player.ogg,eng/audio/dvd player.ogg
+brush,brush,4,eng/image/brush.png,eng/audio/brush.ogg,eng/audio/brush.ogg
+miserable,miserable,4,eng/image/miserable.png,eng/audio/miserable.ogg,eng/audio/miserable.ogg
+violet,violet,4,eng/image/violet.png,eng/audio/violet.ogg,eng/audio/violet.ogg
+saturn,saturn,4,eng/image/saturn.png,eng/audio/saturn.ogg,eng/audio/saturn.ogg
+yesterday,yesterday,4,eng/image/yesterday .png,eng/audio/yesterday .ogg,eng/audio/yesterday .ogg
+oatmeal,oatmeal,4,eng/image/oatmeal.png,eng/audio/oatmeal.ogg,eng/audio/oatmeal.ogg
+ladder,ladder,4,eng/image/ladder.png,eng/audio/ladder.ogg,eng/audio/ladder.ogg
+sideburn,sideburn,4,eng/image/sideburn.png,eng/audio/sideburn.ogg,eng/audio/sideburn.ogg
+earrings,earrings,4,eng/image/earrings.png,eng/audio/earrings.ogg,eng/audio/earrings.ogg
+you,you,4,eng/image/you.png,eng/audio/you.ogg,eng/audio/you.ogg
+hungry,hungry,4,eng/image/hungry.png,eng/audio/hungry.ogg,eng/audio/hungry.ogg
+termite,termite,4,eng/image/termite.png,eng/audio/termite.ogg,eng/audio/termite.ogg
+twice a week,twice a week,4,eng/image/twice a week.png,eng/audio/twice a week.ogg,eng/audio/twice a week.ogg
+finger,finger,4,eng/image/finger.png,eng/audio/finger.ogg,eng/audio/finger.ogg
+mixer,mixer,4,eng/image/mixer.png,eng/audio/mixer.ogg,eng/audio/mixer.ogg
+well,well,4,eng/image/well.png,eng/audio/well.ogg,eng/audio/well.ogg
+kohlrabi,kohlrabi,4,eng/image/kohlrabi.png,eng/audio/kohlrabi.ogg,eng/audio/kohlrabi.ogg
+cuckoo,cuckoo,4,eng/image/cuckoo.png,eng/audio/cuckoo.ogg,eng/audio/cuckoo.ogg
+yard,yard,4,eng/image/yard.png,eng/audio/yard.ogg,eng/audio/yard.ogg
+fly,fly,4,eng/image/fly.png,eng/audio/fly.ogg,eng/audio/fly.ogg
+cook,cook,4,eng/image/cook.png,eng/audio/cook.ogg,eng/audio/cook.ogg
+dog,dog,4,eng/image/dog.png,eng/audio/dog.ogg,eng/audio/dog.ogg
+watercress,watercress,4,eng/image/watercress.png,eng/audio/watercress.ogg,eng/audio/watercress.ogg
+turkey,turkey,4,eng/image/turkey.png,eng/audio/turkey.ogg,eng/audio/turkey.ogg
+may,may,4,eng/image/may.png,eng/audio/may.ogg,eng/audio/may.ogg
+chop,chop,4,eng/image/chop.png,eng/audio/chop.ogg,eng/audio/chop.ogg
+light bulb,light bulb,4,eng/image/light bulb.png,eng/audio/light bulb.ogg,eng/audio/light bulb.ogg
+police,police,4,eng/image/police.png,eng/audio/police.ogg,eng/audio/police.ogg
+vest,vest,4,eng/image/vest.png,eng/audio/vest.ogg,eng/audio/vest.ogg
+duck,duck,4,eng/image/duck.png,eng/audio/duck.ogg,eng/audio/duck.ogg
+heart,heart,4,eng/image/heart.png,eng/audio/heart.ogg,eng/audio/heart.ogg
+window,window,4,eng/image/window.png,eng/audio/window.ogg,eng/audio/window.ogg
+clear,clear,4,eng/image/clear.png,eng/audio/clear.ogg,eng/audio/clear.ogg
+tie,tie,4,eng/image/tie.png,eng/audio/tie.ogg,eng/audio/tie.ogg
+coconut,coconut,4,eng/image/coconut.png,eng/audio/coconut.ogg,eng/audio/coconut.ogg
+radish,radish,4,eng/image/radish.png,eng/audio/radish.ogg,eng/audio/radish.ogg
+waranda,waranda,4,eng/image/waranda.png,eng/audio/waranda.ogg,eng/audio/waranda.ogg
+magic,magic,4,eng/image/magic.png,eng/audio/magic.ogg,eng/audio/magic.ogg
+flea,flea,4,eng/image/flea.png,eng/audio/flea.ogg,eng/audio/flea.ogg
+deer,deer,4,eng/image/deer.png,eng/audio/deer.ogg,eng/audio/deer.ogg
+blue whale,blue whale,4,eng/image/blue whale.png,eng/audio/blue whale.ogg,eng/audio/blue whale.ogg
+owl,owl,4,eng/image/owl.png,eng/audio/owl.ogg,eng/audio/owl.ogg
+celery,celery,4,eng/image/celery.png,eng/audio/celery.ogg,eng/audio/celery.ogg
+apple,apple,4,eng/image/apple.png,eng/audio/apple.ogg,eng/audio/apple.ogg
+papaya,papaya,4,eng/image/papaya.png,eng/audio/papaya.ogg,eng/audio/papaya.ogg
+frog,frog,4,eng/image/frog.png,eng/audio/frog.ogg,eng/audio/frog.ogg
+jam,jam,4,eng/image/jam.png,eng/audio/jam.ogg,eng/audio/jam.ogg
+brake,brake,4,eng/image/brake.png,eng/audio/brake.ogg,eng/audio/brake.ogg
+this evening,this evening,4,eng/image/this evening.png,eng/audio/this evening.ogg,eng/audio/this evening.ogg
+valley,valley,4,eng/image/valley.png,eng/audio/valley.ogg,eng/audio/valley.ogg
+summer,summer,4,eng/image/summer.png,eng/audio/summer.ogg,eng/audio/summer.ogg
+fennel,fennel,4,eng/image/fennel.png,eng/audio/fennel.ogg,eng/audio/fennel.ogg
+yesterday evening,yesterday evening,4,eng/image/yesterday evening.png,eng/audio/yesterday evening.ogg,eng/audio/yesterday evening.ogg
+three times a week,three times a week,4,eng/image/three times a week.png,eng/audio/three times a week.ogg,eng/audio/three times a week.ogg
+midddle finger,midddle finger,4,eng/image/midddle finger.png,eng/audio/midddle finger.ogg,eng/audio/midddle finger.ogg
+last week,last week,4,eng/image/last week.png,eng/audio/last week.ogg,eng/audio/last week.ogg
+foggy,foggy,4,eng/image/foggy.png,eng/audio/foggy.ogg,eng/audio/foggy.ogg
+under,under,4,eng/image/under.png,eng/audio/under.ogg,eng/audio/under.ogg
+knife,knife,4,eng/image/knife.png,eng/audio/knife.ogg,eng/audio/knife.ogg
+ball,ball,4,eng/image/ball.png,eng/audio/ball.ogg,eng/audio/ball.ogg
+tv stand,tv stand,4,eng/image/tv stand.png,eng/audio/tv stand.ogg,eng/audio/tv stand.ogg
+lake,lake,4,eng/image/lake.png,eng/audio/lake.ogg,eng/audio/lake.ogg
+herebal tea,herebal tea,4,eng/image/herebal tea.png,eng/audio/herebal tea.ogg,eng/audio/herebal tea.ogg
+bull,bull,4,eng/image/bull .png,eng/audio/bull .ogg,eng/audio/bull .ogg
+necklace,necklace,4,eng/image/necklace.png,eng/audio/necklace.ogg,eng/audio/necklace.ogg
+octagon,octagon,4,eng/image/octagon.png,eng/audio/octagon.ogg,eng/audio/octagon.ogg
+maina,maina,4,eng/image/maina.png,eng/audio/maina.ogg,eng/audio/maina.ogg
+hanger,hanger,4,eng/image/hanger.png,eng/audio/hanger.ogg,eng/audio/hanger.ogg
+muscles,muscles,4,eng/image/muscles.png,eng/audio/muscles.ogg,eng/audio/muscles.ogg
+earlobe,earlobe,4,eng/image/earlobe.png,eng/audio/earlobe.ogg,eng/audio/earlobe.ogg
+peaocock,peaocock,4,eng/image/peaocock.png,eng/audio/peaocock.ogg,eng/audio/peaocock.ogg
+january,january,4,eng/image/january.png,eng/audio/january.ogg,eng/audio/january.ogg
+socks,socks,4,eng/image/socks.png,eng/audio/socks.ogg,eng/audio/socks.ogg
+stick,stick,4,eng/image/stick.png,eng/audio/stick.ogg,eng/audio/stick.ogg
+dining table,dining table,4,eng/image/dining table.png,eng/audio/dining table.ogg,eng/audio/dining table.ogg
+cup,cup,4,eng/image/cup.png,eng/audio/cup.ogg,eng/audio/cup.ogg
+butternut squash,butternut squash,4,eng/image/butternut squash.png,eng/audio/butternut squash.ogg,eng/audio/butternut squash.ogg
+tamarind,tamarind,4,eng/image/tamarind.png,eng/audio/tamarind.ogg,eng/audio/tamarind.ogg
+lettuce,lettuce,4,eng/image/lettuce.png,eng/audio/lettuce.ogg,eng/audio/lettuce.ogg
+kale,kale,4,eng/image/kale.png,eng/audio/kale.ogg,eng/audio/kale.ogg
+plate,plate,4,eng/image/plate.png,eng/audio/plate.ogg,eng/audio/plate.ogg
+pant,pant,4,eng/image/pant.png,eng/audio/pant.ogg,eng/audio/pant.ogg
+honey eater,honey eater,4,eng/image/honey eater.png,eng/audio/honey eater.ogg,eng/audio/honey eater.ogg
+juice,juice,4,eng/image/juice.png,eng/audio/juice.ogg,eng/audio/juice.ogg
+young,young,4,eng/image/young.png,eng/audio/young.ogg,eng/audio/young.ogg
+tongue,tongue,4,eng/image/tongue.png,eng/audio/tongue.ogg,eng/audio/tongue.ogg
+dark blue,dark blue,4,eng/image/dark blue.png,eng/audio/dark blue.ogg,eng/audio/dark blue.ogg
+globe,globe,4,eng/image/globe.png,eng/audio/globe.ogg,eng/audio/globe.ogg
+black beans,black beans,4,eng/image/black beans.png,eng/audio/black beans.ogg,eng/audio/black beans.ogg
+beetle,beetle,4,eng/image/beetle.png,eng/audio/beetle.ogg,eng/audio/beetle.ogg
+iris,iris,4,eng/image/iris.png,eng/audio/iris.ogg,eng/audio/iris.ogg
+eel,eel,4,eng/image/eel.png,eng/audio/eel.ogg,eng/audio/eel.ogg
+teenager,teenager,4,eng/image/teenager.png,eng/audio/teenager.ogg,eng/audio/teenager.ogg
+buttocks,buttocks,4,eng/image/buttocks.png,eng/audio/buttocks.ogg,eng/audio/buttocks.ogg
+zoo,zoo,4,eng/image/zoo.png,eng/audio/zoo.ogg,eng/audio/zoo.ogg
+sailfish,sailfish,4,eng/image/sailfish.png,eng/audio/sailfish.ogg,eng/audio/sailfish.ogg
+wolf,wolf,4,eng/image/wolf.png,eng/audio/wolf.ogg,eng/audio/wolf.ogg
+candel,candel,4,eng/image/candel.png,eng/audio/candel.ogg,eng/audio/candel.ogg
+hand,hand,4,eng/image/hand.png,eng/audio/hand.ogg,eng/audio/hand.ogg
+umpire,umpire,4,eng/image/umpire.png,eng/audio/umpire.ogg,eng/audio/umpire.ogg
+temperature,temperature,4,eng/image/temperature.png,eng/audio/temperature.ogg,eng/audio/temperature.ogg
+hate,hate,4,eng/image/hate.png,eng/audio/hate.ogg,eng/audio/hate.ogg
+foot,foot,4,eng/image/foot.png,eng/audio/foot.ogg,eng/audio/foot.ogg
+baby,baby,4,eng/image/baby.png,eng/audio/baby.ogg,eng/audio/baby.ogg
+garlic,garlic,4,eng/image/garlic.png,eng/audio/garlic.ogg,eng/audio/garlic.ogg
+boil,boil,4,eng/image/boil.png,eng/audio/boil.ogg,eng/audio/boil.ogg
+picture,picture,4,eng/image/picture.png,eng/audio/picture.ogg,eng/audio/picture.ogg
+waterfall,waterfall,4,eng/image/waterfall.png,eng/audio/waterfall.ogg,eng/audio/waterfall.ogg
+hut,hut,4,eng/image/hut.png,eng/audio/hut.ogg,eng/audio/hut.ogg
+carton,carton,4,eng/image/carton.png,eng/audio/carton.ogg,eng/audio/carton.ogg
+cocoon,cocoon,4,eng/image/cocoon.png,eng/audio/cocoon.ogg,eng/audio/cocoon.ogg
+baby corn,baby corn,4,eng/image/baby corn.png,eng/audio/baby corn.ogg,eng/audio/baby corn.ogg
+grapefruit,grapefruit,4,eng/image/grapefruit.png,eng/audio/grapefruit.ogg,eng/audio/grapefruit.ogg
+saturday,saturday,4,eng/image/saturday.png,eng/audio/saturday.ogg,eng/audio/saturday.ogg
+red,red,4,eng/image/red.png,eng/audio/red.ogg,eng/audio/red.ogg
+sick/ill,sick/ill,4,eng/image/sick/ill.png,eng/audio/sick/ill.ogg,eng/audio/sick/ill.ogg
+crab,crab,4,eng/image/crab.png,eng/audio/crab.ogg,eng/audio/crab.ogg
+sheep,sheep,4,eng/image/sheep.png,eng/audio/sheep.ogg,eng/audio/sheep.ogg
+ocean,ocean,4,eng/image/ocean.png,eng/audio/ocean.ogg,eng/audio/ocean.ogg
+butterfly,butterfly,4,eng/image/butterfly.png,eng/audio/butterfly.ogg,eng/audio/butterfly.ogg
+books,books,4,eng/image/books.png,eng/audio/books.ogg,eng/audio/books.ogg
+talk,talk,4,eng/image/talk.png,eng/audio/talk.ogg,eng/audio/talk.ogg
+bench,bench,4,eng/image/bench.png,eng/audio/bench.ogg,eng/audio/bench.ogg
+fox,fox,4,eng/image/fox .png,eng/audio/fox .ogg,eng/audio/fox .ogg
+storm,storm,4,eng/image/storm.png,eng/audio/storm.ogg,eng/audio/storm.ogg
+eggs,eggs,4,eng/image/eggs.png,eng/audio/eggs.ogg,eng/audio/eggs.ogg
+peacock,peacock,4,eng/image/peacock.png,eng/audio/peacock.ogg,eng/audio/peacock.ogg
+earring,earring,4,eng/image/earring.png,eng/audio/earring.ogg,eng/audio/earring.ogg
+forehead,forehead,4,eng/image/forehead.png,eng/audio/forehead.ogg,eng/audio/forehead.ogg
+door mat,door mat,4,eng/image/door mat.png,eng/audio/door mat.ogg,eng/audio/door mat.ogg
+lightning,lightning,4,eng/image/lightning.png,eng/audio/lightning.ogg,eng/audio/lightning.ogg
+pomogranate,pomogranate,4,eng/image/pomogranate.png,eng/audio/pomogranate.ogg,eng/audio/pomogranate.ogg
+leopard,leopard,4,eng/image/leopard.png,eng/audio/leopard.ogg,eng/audio/leopard.ogg
+van,van,4,eng/image/van.png,eng/audio/van.ogg,eng/audio/van.ogg
+eye,eye,4,eng/image/eye.png,eng/audio/eye.ogg,eng/audio/eye.ogg
+quiver,quiver,4,eng/image/quiver.png,eng/audio/quiver.ogg,eng/audio/quiver.ogg
+game,game,4,eng/image/game.png,eng/audio/game.ogg,eng/audio/game.ogg
+lady,lady,4,eng/image/lady.png,eng/audio/lady.ogg,eng/audio/lady.ogg
+many,many,4,eng/image/many.png,eng/audio/many.ogg,eng/audio/many.ogg
+yolk,yolk,4,eng/image/yolk.png,eng/audio/yolk.ogg,eng/audio/yolk.ogg
+sponge mop,sponge mop,4,eng/image/sponge mop.png,eng/audio/sponge mop.ogg,eng/audio/sponge mop.ogg
+sweater,sweater,4,eng/image/sweater.png,eng/audio/sweater.ogg,eng/audio/sweater.ogg
+naughty,naughty,4,eng/image/naughty.png,eng/audio/naughty.ogg,eng/audio/naughty.ogg
+ostrich,ostrich,4,eng/image/ostrich.png,eng/audio/ostrich.ogg,eng/audio/ostrich.ogg
+map,map,4,eng/image/map.png,eng/audio/map.ogg,eng/audio/map.ogg
+fish,fish,4,eng/image/fish.png,eng/audio/fish.ogg,eng/audio/fish.ogg
+question,question,4,eng/image/question.png,eng/audio/question.ogg,eng/audio/question.ogg
+dam,dam,4,eng/image/dam.png,eng/audio/dam.ogg,eng/audio/dam.ogg
+cat,cat,4,eng/image/cat.png,eng/audio/cat.ogg,eng/audio/cat.ogg
+plant,plant,4,eng/image/plant.png,eng/audio/plant.ogg,eng/audio/plant.ogg
+sink,sink,4,eng/image/sink.png,eng/audio/sink.ogg,eng/audio/sink.ogg
+fig,fig,4,eng/image/fig.png,eng/audio/fig.ogg,eng/audio/fig.ogg
+anchor,anchor,4,eng/image/anchor.png,eng/audio/anchor.ogg,eng/audio/anchor.ogg
+armpit,armpit,4,eng/image/armpit.png,eng/audio/armpit.ogg,eng/audio/armpit.ogg
+eyelashes,eyelashes,4,eng/image/eyelashes.png,eng/audio/eyelashes.ogg,eng/audio/eyelashes.ogg
+brown,brown,4,eng/image/brown.png,eng/audio/brown.ogg,eng/audio/brown.ogg
+buffalo,buffalo,4,eng/image/buffalo.png,eng/audio/buffalo.ogg,eng/audio/buffalo.ogg
+zodiac,zodiac,4,eng/image/zodiac.png,eng/audio/zodiac.ogg,eng/audio/zodiac.ogg
+bottle,bottle,4,eng/image/bottle.png,eng/audio/bottle.ogg,eng/audio/bottle.ogg
+pigeon,pigeon,4,eng/image/pigeon.png,eng/audio/pigeon.ogg,eng/audio/pigeon.ogg
+green,green,4,eng/image/green.png,eng/audio/green.ogg,eng/audio/green.ogg
+prawn,prawn,4,eng/image/prawn.png,eng/audio/prawn.ogg,eng/audio/prawn.ogg
+tiered,tiered,4,eng/image/tiered.png,eng/audio/tiered.ogg,eng/audio/tiered.ogg
+pig,pig,4,eng/image/pig.png,eng/audio/pig.ogg,eng/audio/pig.ogg
+potato,potato,4,eng/image/potato.png,eng/audio/potato.ogg,eng/audio/potato.ogg
+vulture,vulture,4,eng/image/vulture.png,eng/audio/vulture.ogg,eng/audio/vulture.ogg
+cow,cow,4,eng/image/cow .png,eng/audio/cow .ogg,eng/audio/cow .ogg
+sand,sand,4,eng/image/sand.png,eng/audio/sand.ogg,eng/audio/sand.ogg
+neck,neck,4,eng/image/neck.png,eng/audio/neck.ogg,eng/audio/neck.ogg
+evening,evening,4,eng/image/evening.png,eng/audio/evening.ogg,eng/audio/evening.ogg
+humble,humble,4,eng/image/humble.png,eng/audio/humble.ogg,eng/audio/humble.ogg
+coffee maker,coffee maker,4,eng/image/coffee maker.png,eng/audio/coffee maker.ogg,eng/audio/coffee maker.ogg
+oven,oven,4,eng/image/oven.png,eng/audio/oven.ogg,eng/audio/oven.ogg
+spring,spring,4,eng/image/spring.png,eng/audio/spring.ogg,eng/audio/spring.ogg
+door bell,door bell,4,eng/image/door bell.png,eng/audio/door bell.ogg,eng/audio/door bell.ogg
+sofa,sofa,4,eng/image/sofa.png,eng/audio/sofa.ogg,eng/audio/sofa.ogg
+starfish,starfish,4,eng/image/starfish.png,eng/audio/starfish.ogg,eng/audio/starfish.ogg
+gown,gown,4,eng/image/gown.png,eng/audio/gown.ogg,eng/audio/gown.ogg
+swift,swift,4,eng/image/swift.png,eng/audio/swift.ogg,eng/audio/swift.ogg
+picture frame,picture frame,4,eng/image/picture frame.png,eng/audio/picture frame.ogg,eng/audio/picture frame.ogg
+dustpan,dustpan,4,eng/image/dustpan.png,eng/audio/dustpan.ogg,eng/audio/dustpan.ogg
+zone,zone,4,eng/image/zone.png,eng/audio/zone.ogg,eng/audio/zone.ogg
+hat,hat,4,eng/image/hat.png,eng/audio/hat.ogg,eng/audio/hat.ogg
+east,east,4,eng/image/east.png,eng/audio/east.ogg,eng/audio/east.ogg
+radio,radio,4,eng/image/radio.png,eng/audio/radio.ogg,eng/audio/radio.ogg
+dish rack,dish rack,4,eng/image/dish rack.png,eng/audio/dish rack.ogg,eng/audio/dish rack.ogg
+mouse,mouse,4,eng/image/mouse .png,eng/audio/mouse .ogg,eng/audio/mouse .ogg
+tea kettle,tea kettle,4,eng/image/tea kettle.png,eng/audio/tea kettle.ogg,eng/audio/tea kettle.ogg
+quarter,quarter,4,eng/image/quarter.png,eng/audio/quarter.ogg,eng/audio/quarter.ogg
+friday,friday,4,eng/image/friday.png,eng/audio/friday.ogg,eng/audio/friday.ogg
+mustard apple,mustard apple,4,eng/image/mustard apple.png,eng/audio/mustard apple.ogg,eng/audio/mustard apple.ogg
+this afternoon,this afternoon,4,eng/image/this afternoon.png,eng/audio/this afternoon.ogg,eng/audio/this afternoon.ogg
+middle aged person,middle aged person,4,eng/image/middle aged person.png,eng/audio/middle aged person.ogg,eng/audio/middle aged person.ogg
+lychee,lychee,4,eng/image/lychee.png,eng/audio/lychee.ogg,eng/audio/lychee.ogg
+gloves,gloves,4,eng/image/gloves.png,eng/audio/gloves.ogg,eng/audio/gloves.ogg
+chocolate milk,chocolate milk,4,eng/image/chocolate milk.png,eng/audio/chocolate milk.ogg,eng/audio/chocolate milk.ogg
+mustache,mustache,4,eng/image/mustache.png,eng/audio/mustache.ogg,eng/audio/mustache.ogg
+asparagus,asparagus,4,eng/image/asparagus.png,eng/audio/asparagus.ogg,eng/audio/asparagus.ogg
+freezing,freezing,4,eng/image/freezing.png,eng/audio/freezing.ogg,eng/audio/freezing.ogg
+bake,bake,4,eng/image/bake.png,eng/audio/bake.ogg,eng/audio/bake.ogg
+tortise,tortise,4,eng/image/tortise.png,eng/audio/tortise.ogg,eng/audio/tortise.ogg
+jacket,jacket,4,eng/image/jacket.png,eng/audio/jacket.ogg,eng/audio/jacket.ogg
+kid,kid,4,eng/image/kid.png,eng/audio/kid.ogg,eng/audio/kid.ogg
+dragonfly,dragonfly,4,eng/image/dragonfly.png,eng/audio/dragonfly.ogg,eng/audio/dragonfly.ogg
+drum,drum,4,eng/image/drum.png,eng/audio/drum.ogg,eng/audio/drum.ogg
+pour,pour,4,eng/image/pour.png,eng/audio/pour.ogg,eng/audio/pour.ogg
+crane,crane,4,eng/image/crane.png,eng/audio/crane.ogg,eng/audio/crane.ogg
+pack,pack,4,eng/image/pack.png,eng/audio/pack.ogg,eng/audio/pack.ogg
+adult,adult,4,eng/image/adult.png,eng/audio/adult.ogg,eng/audio/adult.ogg
+dish towel,dish towel,4,eng/image/dish towel.png,eng/audio/dish towel.ogg,eng/audio/dish towel.ogg
+ring,ring,4,eng/image/ring.png,eng/audio/ring.ogg,eng/audio/ring.ogg
+kiwi,kiwi,4,eng/image/kiwi.png,eng/audio/kiwi.ogg,eng/audio/kiwi.ogg
+boy,boy,4,eng/image/boy.png,eng/audio/boy.ogg,eng/audio/boy.ogg
+bat,bat,4,eng/image/bat.png,eng/audio/bat.ogg,eng/audio/bat.ogg
+quart,quart,4,eng/image/quart.png,eng/audio/quart.ogg,eng/audio/quart.ogg
+turnip,turnip,4,eng/image/turnip.png,eng/audio/turnip.ogg,eng/audio/turnip.ogg
+kitchen,kitchen,4,eng/image/kitchen.png,eng/audio/kitchen.ogg,eng/audio/kitchen.ogg
+king,king,4,eng/image/king.png,eng/audio/king.ogg,eng/audio/king.ogg
+palace,palace,4,eng/image/palace.png,eng/audio/palace.ogg,eng/audio/palace.ogg
+runner beans,runner beans,4,eng/image/runner beans.png,eng/audio/runner beans.ogg,eng/audio/runner beans.ogg
+heel,heel,4,eng/image/heel.png,eng/audio/heel.ogg,eng/audio/heel.ogg
+sweet potato,sweet potato,4,eng/image/sweet potato.png,eng/audio/sweet potato.ogg,eng/audio/sweet potato.ogg
+celsius,celsius,4,eng/image/celsius.png,eng/audio/celsius.ogg,eng/audio/celsius.ogg
+humid,humid,4,eng/image/humid.png,eng/audio/humid.ogg,eng/audio/humid.ogg
+banana,banana,4,eng/image/banana.png,eng/audio/banana.ogg,eng/audio/banana.ogg
+moth,moth,4,eng/image/moth.png,eng/audio/moth.ogg,eng/audio/moth.ogg
+tuesday,tuesday,4,eng/image/tuesday.png,eng/audio/tuesday.ogg,eng/audio/tuesday.ogg
+moringa,moringa,4,eng/image/moringa.png,eng/audio/moringa.ogg,eng/audio/moringa.ogg
+cluster beans,cluster beans,4,eng/image/cluster beans.png,eng/audio/cluster beans.ogg,eng/audio/cluster beans.ogg
+kangaroo,kangaroo,4,eng/image/kangaroo.png,eng/audio/kangaroo.ogg,eng/audio/kangaroo.ogg
+jeans,jeans,4,eng/image/jeans.png,eng/audio/jeans.ogg,eng/audio/jeans.ogg
+bottled water,bottled water,4,eng/image/bottled water.png,eng/audio/bottled water.ogg,eng/audio/bottled water.ogg
+teeth,teeth,4,eng/image/teeth.png,eng/audio/teeth.ogg,eng/audio/teeth.ogg
+ink,ink,4,eng/image/ink.png,eng/audio/ink.ogg,eng/audio/ink.ogg
+fenugreek leaves,fenugreek leaves,4,eng/image/fenugreek leaves.png,eng/audio/fenugreek leaves.ogg,eng/audio/fenugreek leaves.ogg
+abdomen,abdomen,4,eng/image/abdomen.png,eng/audio/abdomen.ogg,eng/audio/abdomen.ogg
+lock,lock,4,eng/image/lock.png,eng/audio/lock.ogg,eng/audio/lock.ogg
+boxers,boxers,4,eng/image/boxers.png,eng/audio/boxers.ogg,eng/audio/boxers.ogg
+honey bee,honey bee,4,eng/image/honey bee.png,eng/audio/honey bee.ogg,eng/audio/honey bee.ogg
+sunny,sunny,4,eng/image/sunny.png,eng/audio/sunny.ogg,eng/audio/sunny.ogg
+nut,nut,4,eng/image/nut.png,eng/audio/nut.ogg,eng/audio/nut.ogg
+okra,okra,4,eng/image/okra.png,eng/audio/okra.ogg,eng/audio/okra.ogg
+raining,raining,4,eng/image/raining.png,eng/audio/raining.ogg,eng/audio/raining.ogg
+olive,olive,4,eng/image/olive.png,eng/audio/olive.ogg,eng/audio/olive.ogg
+spider,spider,4,eng/image/spider.png,eng/audio/spider.ogg,eng/audio/spider.ogg
+collard greens,collard greens,4,eng/image/collard greens.png,eng/audio/collard greens.ogg,eng/audio/collard greens.ogg
+sunday,sunday,4,eng/image/sunday.png,eng/audio/sunday.ogg,eng/audio/sunday.ogg
+cream cheese,cream cheese,4,eng/image/cream cheese.png,eng/audio/cream cheese.ogg,eng/audio/cream cheese.ogg
+this morning,this morning,4,eng/image/this morning.png,eng/audio/this morning.ogg,eng/audio/this morning.ogg
+peach,peach,4,eng/image/peach.png,eng/audio/peach.ogg,eng/audio/peach.ogg
+parsnip,parsnip,4,eng/image/parsnip.png,eng/audio/parsnip.ogg,eng/audio/parsnip.ogg
+brother in law,brother in law,4,eng/image/brother in law.png,eng/audio/brother in law.ogg,eng/audio/brother in law.ogg
+goose,goose,4,eng/image/goose.png,eng/audio/goose.ogg,eng/audio/goose.ogg
+hard,hard,4,eng/image/hard.png,eng/audio/hard.ogg,eng/audio/hard.ogg
+jaw,jaw,4,eng/image/jaw.png,eng/audio/jaw.ogg,eng/audio/jaw.ogg
+elephant,elephant,4,eng/image/elephant.png,eng/audio/elephant.ogg,eng/audio/elephant.ogg
+march,march,4,eng/image/march.png,eng/audio/march.ogg,eng/audio/march.ogg
+knuckle,knuckle,4,eng/image/knuckle.png,eng/audio/knuckle.ogg,eng/audio/knuckle.ogg
+refrigerator,refrigerator,4,eng/image/refrigerator.png,eng/audio/refrigerator.ogg,eng/audio/refrigerator.ogg
+leaf,leaf,4,eng/image/leaf.png,eng/audio/leaf.ogg,eng/audio/leaf.ogg
+avocado,avocado,4,eng/image/avocado.png,eng/audio/avocado.ogg,eng/audio/avocado.ogg
+eyelid,eyelid,4,eng/image/eyelid.png,eng/audio/eyelid.ogg,eng/audio/eyelid.ogg
+can,can,4,eng/image/can.png,eng/audio/can.ogg,eng/audio/can.ogg
+bow,bow,4,eng/image/bow .png,eng/audio/bow .ogg,eng/audio/bow .ogg
+cool,cool,4,eng/image/cool.png,eng/audio/cool.ogg,eng/audio/cool.ogg
+crying,crying,4,eng/image/crying.png,eng/audio/crying.ogg,eng/audio/crying.ogg
+peas,peas,4,eng/image/peas.png,eng/audio/peas.ogg,eng/audio/peas.ogg
+november,november,4,eng/image/november.png,eng/audio/november.ogg,eng/audio/november.ogg
+windows,windows,4,eng/image/windows.png,eng/audio/windows.ogg,eng/audio/windows.ogg
+brother,brother,4,eng/image/brother.png,eng/audio/brother.ogg,eng/audio/brother.ogg
+proud,proud,4,eng/image/proud.png,eng/audio/proud.ogg,eng/audio/proud.ogg
+horse,horse,4,eng/image/horse.png,eng/audio/horse.ogg,eng/audio/horse.ogg
+curtains,curtains,4,eng/image/curtains.png,eng/audio/curtains.ogg,eng/audio/curtains.ogg
+man,man,4,eng/image/man.png,eng/audio/man.ogg,eng/audio/man.ogg
+diet soda,diet soda,4,eng/image/diet soda.png,eng/audio/diet soda.ogg,eng/audio/diet soda.ogg
+thumb,thumb,4,eng/image/thumb.png,eng/audio/thumb.ogg,eng/audio/thumb.ogg
+ladybug,ladybug,4,eng/image/ladybug.png,eng/audio/ladybug.ogg,eng/audio/ladybug.ogg
+parents,parents,4,eng/image/parents.png,eng/audio/parents.ogg,eng/audio/parents.ogg
+heat wave,heat wave,4,eng/image/heat wave.png,eng/audio/heat wave.ogg,eng/audio/heat wave.ogg
+siblings,siblings,4,eng/image/siblings.png,eng/audio/siblings.ogg,eng/audio/siblings.ogg
+yesterday afternoon,yesterday afternoon,4,eng/image/yesterday afternoon.png,eng/audio/yesterday afternoon.ogg,eng/audio/yesterday afternoon.ogg
+finch,finch,4,eng/image/finch.png,eng/audio/finch.ogg,eng/audio/finch.ogg
+boat,boat,4,eng/image/boat.png,eng/audio/boat.ogg,eng/audio/boat.ogg
+letter,letter,4,eng/image/letter.png,eng/audio/letter.ogg,eng/audio/letter.ogg
+fun,fun,4,eng/image/fun.png,eng/audio/fun.ogg,eng/audio/fun.ogg
+week,week,4,eng/image/week.png,eng/audio/week.ogg,eng/audio/week.ogg
+cloudy,cloudy,4,eng/image/cloudy.png,eng/audio/cloudy.ogg,eng/audio/cloudy.ogg
+chin,chin,4,eng/image/chin.png,eng/audio/chin.ogg,eng/audio/chin.ogg
+care,care,4,eng/image/care.png,eng/audio/care.ogg,eng/audio/care.ogg
+bag,bag,4,eng/image/bag.png,eng/audio/bag.ogg,eng/audio/bag.ogg
+corridor,corridor,4,eng/image/corridor.png,eng/audio/corridor.ogg,eng/audio/corridor.ogg
+clothesline,clothesline,4,eng/image/clothesline.png,eng/audio/clothesline.ogg,eng/audio/clothesline.ogg
+pot holder,pot holder,4,eng/image/pot holder.png,eng/audio/pot holder.ogg,eng/audio/pot holder.ogg
+head,head,4,eng/image/head.png,eng/audio/head.ogg,eng/audio/head.ogg
+stir,stir,4,eng/image/stir.png,eng/audio/stir.ogg,eng/audio/stir.ogg
+air,air,4,eng/image/air.png,eng/audio/air.ogg,eng/audio/air.ogg
+pupil,pupil,4,eng/image/pupil.png,eng/audio/pupil.ogg,eng/audio/pupil.ogg
+grand daughter,grand daughter,4,eng/image/grand daughter.png,eng/audio/grand daughter.ogg,eng/audio/grand daughter.ogg
+butter,butter,4,eng/image/butter.png,eng/audio/butter.ogg,eng/audio/butter.ogg
+stove,stove,4,eng/image/stove.png,eng/audio/stove.ogg,eng/audio/stove.ogg
+night gown,night gown,4,eng/image/night gown.png,eng/audio/night gown.ogg,eng/audio/night gown.ogg
+photograph,photograph,4,eng/image/photograph.png,eng/audio/photograph.ogg,eng/audio/photograph.ogg
+todller,todller,4,eng/image/todller.png,eng/audio/todller.ogg,eng/audio/todller.ogg
+stereo system,stereo system,4,eng/image/stereo system.png,eng/audio/stereo system.ogg,eng/audio/stereo system.ogg
+angry,angry,4,eng/image/angry.png,eng/audio/angry.ogg,eng/audio/angry.ogg
+axe,axe,4,eng/image/axe.png,eng/audio/axe.ogg,eng/audio/axe.ogg
+wasp,wasp,4,eng/image/wasp.png,eng/audio/wasp.ogg,eng/audio/wasp.ogg
+insect,insect,4,eng/image/insect.png,eng/audio/insect.ogg,eng/audio/insect.ogg
+lungs,lungs,4,eng/image/lungs.png,eng/audio/lungs.ogg,eng/audio/lungs.ogg
+hip,hip,4,eng/image/hip.png,eng/audio/hip.ogg,eng/audio/hip.ogg
+mad,mad,4,eng/image/mad.png,eng/audio/mad.ogg,eng/audio/mad.ogg
+dragon fly,dragon fly,4,eng/image/dragon fly.png,eng/audio/dragon fly.ogg,eng/audio/dragon fly.ogg
+tonight,tonight,4,eng/image/tonight.png,eng/audio/tonight.ogg,eng/audio/tonight.ogg
+mustard greens,mustard greens,4,eng/image/mustard greens.png,eng/audio/mustard greens.ogg,eng/audio/mustard greens.ogg
+chair,chair,4,eng/image/chair.png,eng/audio/chair.ogg,eng/audio/chair.ogg
+lava,lava,4,eng/image/lava.png,eng/audio/lava.ogg,eng/audio/lava.ogg
+cousin,cousin,4,eng/image/cousin.png,eng/audio/cousin.ogg,eng/audio/cousin.ogg
+fahrenheit,fahrenheit,4,eng/image/fahrenheit.png,eng/audio/fahrenheit.ogg,eng/audio/fahrenheit.ogg
+paper towels,paper towels,4,eng/image/paper towels.png,eng/audio/paper towels.ogg,eng/audio/paper towels.ogg
+custard apple,custard apple,4,eng/image/custard apple.png,eng/audio/custard apple.ogg,eng/audio/custard apple.ogg
+feet,feet,4,eng/image/feet.png,eng/audio/feet.ogg,eng/audio/feet.ogg
+bottle opener,bottle opener,4,eng/image/bottle opener.png,eng/audio/bottle opener.ogg,eng/audio/bottle opener.ogg
+girl,girl,4,eng/image/girl.png,eng/audio/girl.ogg,eng/audio/girl.ogg
+gold,gold,4,eng/image/gold.png,eng/audio/gold.ogg,eng/audio/gold.ogg
+humming bird,humming bird,4,eng/image/humming bird.png,eng/audio/humming bird.ogg,eng/audio/humming bird.ogg
+leap year,leap year,4,eng/image/leap year.png,eng/audio/leap year.ogg,eng/audio/leap year.ogg
+dozen,dozen,4,eng/image/dozen.png,eng/audio/dozen.ogg,eng/audio/dozen.ogg
+ironing board,ironing board,4,eng/image/ironing board.png,eng/audio/ironing board.ogg,eng/audio/ironing board.ogg
+spring onion,spring onion,4,eng/image/spring onion.png,eng/audio/spring onion.ogg,eng/audio/spring onion.ogg
+skeleton,skeleton,4,eng/image/skeleton.png,eng/audio/skeleton.ogg,eng/audio/skeleton.ogg
+name,name,4,eng/image/name.png,eng/audio/name.ogg,eng/audio/name.ogg
+puma,puma,4,eng/image/puma.png,eng/audio/puma.ogg,eng/audio/puma.ogg
+women,women,4,eng/image/women.png,eng/audio/women.ogg,eng/audio/women.ogg
+blazer,blazer,4,eng/image/blazer.png,eng/audio/blazer.ogg,eng/audio/blazer.ogg
+white,white,4,eng/image/white.png,eng/audio/white.ogg,eng/audio/white.ogg
+zucchini,zucchini,4,eng/image/zucchini.png,eng/audio/zucchini.ogg,eng/audio/zucchini.ogg
+jealous,jealous,4,eng/image/jealous.png,eng/audio/jealous.ogg,eng/audio/jealous.ogg
+brave,brave,4,eng/image/brave.png,eng/audio/brave.ogg,eng/audio/brave.ogg
+lightining bug,lightining bug,4,eng/image/lightining bug.png,eng/audio/lightining bug.ogg,eng/audio/lightining bug.ogg
+liver,liver,4,eng/image/liver.png,eng/audio/liver.ogg,eng/audio/liver.ogg
+spatula,spatula,4,eng/image/spatula.png,eng/audio/spatula.ogg,eng/audio/spatula.ogg
+leg,leg,4,eng/image/leg.png,eng/audio/leg.ogg,eng/audio/leg.ogg
+son,son,4,eng/image/son.png,eng/audio/son.ogg,eng/audio/son.ogg
+dove,dove,4,eng/image/dove.png,eng/audio/dove.ogg,eng/audio/dove.ogg
+urn,urn,4,eng/image/urn.png,eng/audio/urn.ogg,eng/audio/urn.ogg
+light blue,light blue,4,eng/image/light blue.png,eng/audio/light blue.ogg,eng/audio/light blue.ogg
+senior citizen,senior citizen,4,eng/image/senior citizen.png,eng/audio/senior citizen.ogg,eng/audio/senior citizen.ogg
+artichoke,artichoke,4,eng/image/artichoke.png,eng/audio/artichoke.ogg,eng/audio/artichoke.ogg
+eggplant,eggplant,4,eng/image/eggplant.png,eng/audio/eggplant.ogg,eng/audio/eggplant.ogg
+peel,peel,4,eng/image/peel.png,eng/audio/peel.ogg,eng/audio/peel.ogg
+guava,guava,4,eng/image/guava.png,eng/audio/guava.ogg,eng/audio/guava.ogg
+wrist,wrist,4,eng/image/wrist.png,eng/audio/wrist.ogg,eng/audio/wrist.ogg
+tea,tea,4,eng/image/tea.png,eng/audio/tea.ogg,eng/audio/tea.ogg
+idea,idea,4,eng/image/idea.png,eng/audio/idea.ogg,eng/audio/idea.ogg
+snowing,snowing,4,eng/image/snowing.png,eng/audio/snowing.ogg,eng/audio/snowing.ogg
+slice,slice,4,eng/image/slice.png,eng/audio/slice.ogg,eng/audio/slice.ogg
+watermelon,watermelon,4,eng/image/watermelon.png,eng/audio/watermelon.ogg,eng/audio/watermelon.ogg
+little finger,little finger,4,eng/image/little finger.png,eng/audio/little finger.ogg,eng/audio/little finger.ogg
+needle,needle,4,eng/image/needle.png,eng/audio/needle.ogg,eng/audio/needle.ogg
+august,august,4,eng/image/august.png,eng/audio/august.ogg,eng/audio/august.ogg
+queen,queen,4,eng/image/queen.png,eng/audio/queen.ogg,eng/audio/queen.ogg
+steamer,steamer,4,eng/image/steamer.png,eng/audio/steamer.ogg,eng/audio/steamer.ogg
+beetroot,beetroot,4,eng/image/beetroot.png,eng/audio/beetroot.ogg,eng/audio/beetroot.ogg
+brinjal,brinjal,4,eng/image/brinjal.png,eng/audio/brinjal.ogg,eng/audio/brinjal.ogg
+adam's apple,adam's apple,4,eng/image/adam's apple.png,eng/audio/adam's apple.ogg,eng/audio/adam's apple.ogg
+thermometer,thermometer,4,eng/image/thermometer.png,eng/audio/thermometer.ogg,eng/audio/thermometer.ogg
+dress,dress,4,eng/image/dress.png,eng/audio/dress.ogg,eng/audio/dress.ogg
+pineapple,pineapple,4,eng/image/pineapple.png,eng/audio/pineapple.ogg,eng/audio/pineapple.ogg
+afternoon,afternoon,4,eng/image/afternoon.png,eng/audio/afternoon.ogg,eng/audio/afternoon.ogg
+earth,earth,4,eng/image/earth.png,eng/audio/earth.ogg,eng/audio/earth.ogg
+large intestine,large intestine,4,eng/image/large intestine.png,eng/audio/large intestine.ogg,eng/audio/large intestine.ogg
+marble,marble,4,eng/image/marble.png,eng/audio/marble.ogg,eng/audio/marble.ogg
+cold,cold,4,eng/image/cold.png,eng/audio/cold.ogg,eng/audio/cold.ogg
+penguine,penguine,4,eng/image/penguine.png,eng/audio/penguine.ogg,eng/audio/penguine.ogg
+once a week,once a week,4,eng/image/once a week.png,eng/audio/once a week.ogg,eng/audio/once a week.ogg
+thirsty,thirsty,4,eng/image/thirsty.png,eng/audio/thirsty.ogg,eng/audio/thirsty.ogg
+teapoy,teapoy,4,eng/image/teapoy.png,eng/audio/teapoy.ogg,eng/audio/teapoy.ogg
+single,single,4,eng/image/single.png,eng/audio/single.ogg,eng/audio/single.ogg
+temple,temple,4,eng/image/temple.png,eng/audio/temple.ogg,eng/audio/temple.ogg
+hen,hen,4,eng/image/hen.png,eng/audio/hen.ogg,eng/audio/hen.ogg
+rectangle,rectangle,4,eng/image/rectangle.png,eng/audio/rectangle.ogg,eng/audio/rectangle.ogg
+mongoose,mongoose,4,eng/image/mongoose.png,eng/audio/mongoose.ogg,eng/audio/mongoose.ogg
+squirrel,squirrel,4,eng/image/squirrel.png,eng/audio/squirrel.ogg,eng/audio/squirrel.ogg
+lamp,lamp,4,eng/image/lamp.png,eng/audio/lamp.ogg,eng/audio/lamp.ogg
+chives,chives,4,eng/image/chives.png,eng/audio/chives.ogg,eng/audio/chives.ogg
+add,add,4,eng/image/add.png,eng/audio/add.ogg,eng/audio/add.ogg
+tomorrow evening,tomorrow evening,4,eng/image/tomorrow evening.png,eng/audio/tomorrow evening.ogg,eng/audio/tomorrow evening.ogg
+yellow,yellow,4,eng/image/yellow.png,eng/audio/yellow.ogg,eng/audio/yellow.ogg
+nostril,nostril,4,eng/image/nostril.png,eng/audio/nostril.ogg,eng/audio/nostril.ogg
+panda,panda,4,eng/image/panda.png,eng/audio/panda.ogg,eng/audio/panda.ogg
+purple,purple,4,eng/image/purple.png,eng/audio/purple.ogg,eng/audio/purple.ogg
+jackek,jackek,4,eng/image/jackek.png,eng/audio/jackek.ogg,eng/audio/jackek.ogg
+tomorrow afternoon,tomorrow afternoon,4,eng/image/tomorrow afternoon.png,eng/audio/tomorrow afternoon.ogg,eng/audio/tomorrow afternoon.ogg
+father,father,4,eng/image/father.png,eng/audio/father.ogg,eng/audio/father.ogg
+snake,snake,4,eng/image/snake.png,eng/audio/snake.ogg,eng/audio/snake.ogg
+container,container,4,eng/image/container.png,eng/audio/container.ogg,eng/audio/container.ogg
+measuring cup,measuring cup,4,eng/image/measuring cup.png,eng/audio/measuring cup.ogg,eng/audio/measuring cup.ogg
+bioiler,bioiler,4,eng/image/bioiler.png,eng/audio/bioiler.ogg,eng/audio/bioiler.ogg
+tomato,tomato,4,eng/image/tomato.png,eng/audio/tomato.ogg,eng/audio/tomato.ogg
+uniform,uniform,4,eng/image/uniform.png,eng/audio/uniform.ogg,eng/audio/uniform.ogg
+upper arm,upper arm,4,eng/image/upper arm.png,eng/audio/upper arm.ogg,eng/audio/upper arm.ogg
+ice,ice,4,eng/image/ice.png,eng/audio/ice.ogg,eng/audio/ice.ogg
+industry,industry,4,eng/image/industry.png,eng/audio/industry.ogg,eng/audio/industry.ogg
+house sparrow,house sparrow,4,eng/image/house sparrow.png,eng/audio/house sparrow.ogg,eng/audio/house sparrow.ogg
+glass,glass,4,eng/image/glass.png,eng/audio/glass.ogg,eng/audio/glass.ogg
+husband,husband,4,eng/image/husband.png,eng/audio/husband.ogg,eng/audio/husband.ogg
+pound,pound,4,eng/image/pound.png,eng/audio/pound.ogg,eng/audio/pound.ogg
+winter,winter,4,eng/image/winter.png,eng/audio/winter.ogg,eng/audio/winter.ogg
+freezer,freezer,4,eng/image/freezer.png,eng/audio/freezer.ogg,eng/audio/freezer.ogg
+sandals,sandals,4,eng/image/sandals.png,eng/audio/sandals.ogg,eng/audio/sandals.ogg
+pancreas,pancreas,4,eng/image/pancreas.png,eng/audio/pancreas.ogg,eng/audio/pancreas.ogg
+ant,ant,4,eng/image/ant.png,eng/audio/ant.ogg,eng/audio/ant.ogg
+zebra,zebra,4,eng/image/zebra.png,eng/audio/zebra.ogg,eng/audio/zebra.ogg
+cherry,cherry,4,eng/image/cherry.png,eng/audio/cherry.ogg,eng/audio/cherry.ogg
+key,key,4,eng/image/key.png,eng/audio/key.ogg,eng/audio/key.ogg
+ginger,ginger,4,eng/image/ginger.png,eng/audio/ginger.ogg,eng/audio/ginger.ogg
+exhausted,exhausted,4,eng/image/exhausted.png,eng/audio/exhausted.ogg,eng/audio/exhausted.ogg
+lace,lace,4,eng/image/lace.png,eng/audio/lace.ogg,eng/audio/lace.ogg
+yams,yams,4,eng/image/yams.png,eng/audio/yams.ogg,eng/audio/yams.ogg
+eagle,eagle,4,eng/image/eagle.png,eng/audio/eagle.ogg,eng/audio/eagle.ogg
+university,university,4,eng/image/university.png,eng/audio/university.ogg,eng/audio/university.ogg
+table,table,4,eng/image/table.png,eng/audio/table.ogg,eng/audio/table.ogg
+silver,silver,4,eng/image/silver.png,eng/audio/silver.ogg,eng/audio/silver.ogg
+walk,walk,4,eng/image/walk.png,eng/audio/walk.ogg,eng/audio/walk.ogg
+sister in law,sister in law,4,eng/image/sister in law.png,eng/audio/sister in law.ogg,eng/audio/sister in law.ogg
+jeep,jeep,4,eng/image/jeep.png,eng/audio/jeep.ogg,eng/audio/jeep.ogg
+salt,salt,4,eng/image/salt.png,eng/audio/salt.ogg,eng/audio/salt.ogg
+cream,cream,4,eng/image/cream.png,eng/audio/cream.ogg,eng/audio/cream.ogg
+hail storm,hail storm,4,eng/image/hail storm.png,eng/audio/hail storm.ogg,eng/audio/hail storm.ogg
+tanker,tanker,4,eng/image/tanker.png,eng/audio/tanker.ogg,eng/audio/tanker.ogg
+upset,upset,4,eng/image/upset.png,eng/audio/upset.ogg,eng/audio/upset.ogg
+fist,fist,4,eng/image/fist.png,eng/audio/fist.ogg,eng/audio/fist.ogg
+slippers,slippers,4,eng/image/slippers.png,eng/audio/slippers.ogg,eng/audio/slippers.ogg
+jupiter,jupiter,4,eng/image/jupiter.png,eng/audio/jupiter.ogg,eng/audio/jupiter.ogg
+cut,cut,4,eng/image/cut.png,eng/audio/cut.ogg,eng/audio/cut.ogg
+chili pepper,chili pepper,4,eng/image/chili pepper.png,eng/audio/chili pepper.ogg,eng/audio/chili pepper.ogg
+measure,measure,4,eng/image/measure.png,eng/audio/measure.ogg,eng/audio/measure.ogg
+dust,dust,4,eng/image/dust.png,eng/audio/dust.ogg,eng/audio/dust.ogg
+thursday,thursday,4,eng/image/thursday.png,eng/audio/thursday.ogg,eng/audio/thursday.ogg
+pipe,pipe,4,eng/image/pipe.png,eng/audio/pipe.ogg,eng/audio/pipe.ogg
+coffee,coffee,4,eng/image/coffee.png,eng/audio/coffee.ogg,eng/audio/coffee.ogg
+ear,ear,4,eng/image/ear.png,eng/audio/ear.ogg,eng/audio/ear.ogg
+ape,ape,4,eng/image/ape.png,eng/audio/ape.ogg,eng/audio/ape.ogg
+grand parents,grand parents,4,eng/image/grand parents.png,eng/audio/grand parents.ogg,eng/audio/grand parents.ogg
+xylophone,xylophone,4,eng/image/xylophone.png,eng/audio/xylophone.ogg,eng/audio/xylophone.ogg
+fry,fry,4,eng/image/fry.png,eng/audio/fry.ogg,eng/audio/fry.ogg
+rat,rat,4,eng/image/rat.png,eng/audio/rat.ogg,eng/audio/rat.ogg
+nephew,nephew,4,eng/image/nephew.png,eng/audio/nephew.ogg,eng/audio/nephew.ogg
+scorpion,scorpion,4,eng/image/scorpion.png,eng/audio/scorpion.ogg,eng/audio/scorpion.ogg
+donkey,donkey,4,eng/image/donkey.png,eng/audio/donkey.ogg,eng/audio/donkey.ogg
+forearm,forearm,4,eng/image/forearm.png,eng/audio/forearm.ogg,eng/audio/forearm.ogg
+door,door,4,eng/image/door.png,eng/audio/door.ogg,eng/audio/door.ogg
+hawk,hawk,4,eng/image/hawk.png,eng/audio/hawk.ogg,eng/audio/hawk.ogg
+vase,vase,4,eng/image/vase.png,eng/audio/vase.ogg,eng/audio/vase.ogg
+nose,nose,4,eng/image/nose.png,eng/audio/nose.ogg,eng/audio/nose.ogg
+last night,last night,4,eng/image/last night.png,eng/audio/last night.ogg,eng/audio/last night.ogg
+mosquito,mosquito,4,eng/image/mosquito.png,eng/audio/mosquito.ogg,eng/audio/mosquito.ogg
+chico fruit,chico fruit,4,eng/image/chico fruit.png,eng/audio/chico fruit.ogg,eng/audio/chico fruit.ogg
+quiz,quiz,4,eng/image/quiz.png,eng/audio/quiz.ogg,eng/audio/quiz.ogg
+fan,fan,4,eng/image/fan.png,eng/audio/fan.ogg,eng/audio/fan.ogg
+december,december,4,eng/image/december.png,eng/audio/december.ogg,eng/audio/december.ogg
+jewel,jewel,4,eng/image/jewel.png,eng/audio/jewel.ogg,eng/audio/jewel.ogg
+oil,oil,4,eng/image/oil.png,eng/audio/oil.ogg,eng/audio/oil.ogg
+caterpillar,caterpillar,4,eng/image/caterpillar.png,eng/audio/caterpillar.ogg,eng/audio/caterpillar.ogg
+jelly,jelly,4,eng/image/jelly.png,eng/audio/jelly.ogg,eng/audio/jelly.ogg
+wife,wife,4,eng/image/wife.png,eng/audio/wife.ogg,eng/audio/wife.ogg
+calf,calf,4,eng/image/calf.png,eng/audio/calf.ogg,eng/audio/calf.ogg
+rhubarb,rhubarb,4,eng/image/rhubarb.png,eng/audio/rhubarb.ogg,eng/audio/rhubarb.ogg
+aubergine,aubergine,4,eng/image/aubergine.png,eng/audio/aubergine.ogg,eng/audio/aubergine.ogg
+spinach,spinach,4,eng/image/spinach.png,eng/audio/spinach.ogg,eng/audio/spinach.ogg
+mother in law,mother in law,4,eng/image/mother in law.png,eng/audio/mother in law.ogg,eng/audio/mother in law.ogg
+day,day,4,eng/image/day.png,eng/audio/day.ogg,eng/audio/day.ogg
+cheetah,cheetah,4,eng/image/cheetah.png,eng/audio/cheetah.ogg,eng/audio/cheetah.ogg
+shallot,shallot,4,eng/image/shallot.png,eng/audio/shallot.ogg,eng/audio/shallot.ogg
+dust storm,dust storm,4,eng/image/dust storm.png,eng/audio/dust storm.ogg,eng/audio/dust storm.ogg
+tomorrow morning,tomorrow morning,4,eng/image/tomorrow morning.png,eng/audio/tomorrow morning.ogg,eng/audio/tomorrow morning.ogg
+cucumber,cucumber,4,eng/image/cucumber.png,eng/audio/cucumber.ogg,eng/audio/cucumber.ogg
+chilli,chilli,4,eng/image/chilli.png,eng/audio/chilli.ogg,eng/audio/chilli.ogg
+knee,knee,4,eng/image/knee.png,eng/audio/knee.ogg,eng/audio/knee.ogg
+pink,pink,4,eng/image/pink.png,eng/audio/pink.ogg,eng/audio/pink.ogg
+back,back,4,eng/image/back.png,eng/audio/back.ogg,eng/audio/back.ogg
+detergent,detergent,4,eng/image/detergent.png,eng/audio/detergent.ogg,eng/audio/detergent.ogg
+area,area,4,eng/image/area.png,eng/audio/area.ogg,eng/audio/area.ogg
+book case,book case,4,eng/image/book case.png,eng/audio/book case.ogg,eng/audio/book case.ogg
+crow,crow,4,eng/image/crow.png,eng/audio/crow.ogg,eng/audio/crow.ogg
+cabinet,cabinet,4,eng/image/cabinet.png,eng/audio/cabinet.ogg,eng/audio/cabinet.ogg
+car,car,4,eng/image/car.png,eng/audio/car.ogg,eng/audio/car.ogg
+xerox,xerox,4,eng/image/xerox.png,eng/audio/xerox.ogg,eng/audio/xerox.ogg
+courgette,courgette,4,eng/image/courgette.png,eng/audio/courgette.ogg,eng/audio/courgette.ogg
+liter,liter,4,eng/image/liter.png,eng/audio/liter.ogg,eng/audio/liter.ogg
+tomorrow night,tomorrow night,4,eng/image/tomorrow night.png,eng/audio/tomorrow night.ogg,eng/audio/tomorrow night.ogg
+octopus,octopus,4,eng/image/octopus.png,eng/audio/octopus.ogg,eng/audio/octopus.ogg
+speaker,speaker,4,eng/image/speaker.png,eng/audio/speaker.ogg,eng/audio/speaker.ogg
+face,face,4,eng/image/face.png,eng/audio/face.ogg,eng/audio/face.ogg
+night,night,4,eng/image/night.png,eng/audio/night.ogg,eng/audio/night.ogg
+month,month,4,eng/image/month.png,eng/audio/month.ogg,eng/audio/month.ogg
+toad,toad,4,eng/image/toad.png,eng/audio/toad.ogg,eng/audio/toad.ogg
+pear,pear,4,eng/image/pear.png,eng/audio/pear.ogg,eng/audio/pear.ogg
+centipede,centipede,4,eng/image/centipede.png,eng/audio/centipede.ogg,eng/audio/centipede.ogg
+iron,iron,4,eng/image/iron.png,eng/audio/iron.ogg,eng/audio/iron.ogg
+turtle,turtle,4,eng/image/turtle.png,eng/audio/turtle.ogg,eng/audio/turtle.ogg
+black,black,4,eng/image/black.png,eng/audio/black.ogg,eng/audio/black.ogg
+cake pan,cake pan,4,eng/image/cake pan.png,eng/audio/cake pan.ogg,eng/audio/cake pan.ogg
+mother,mother,4,eng/image/mother.png,eng/audio/mother.ogg,eng/audio/mother.ogg
+snail,snail,4,eng/image/snail.png,eng/audio/snail.ogg,eng/audio/snail.ogg
+celeriac,celeriac,4,eng/image/celeriac.png,eng/audio/celeriac.ogg,eng/audio/celeriac.ogg
+monday,monday,4,eng/image/monday.png,eng/audio/monday.ogg,eng/audio/monday.ogg
+leek,leek,4,eng/image/leek.png,eng/audio/leek.ogg,eng/audio/leek.ogg
+aunt,aunt,4,eng/image/aunt.png,eng/audio/aunt.ogg,eng/audio/aunt.ogg
+bucket,bucket,4,eng/image/bucket.png,eng/audio/bucket.ogg,eng/audio/bucket.ogg
+forgive,forgive,4,eng/image/forgive.png,eng/audio/forgive.ogg,eng/audio/forgive.ogg
+lips,lips,4,eng/image/lips.png,eng/audio/lips.ogg,eng/audio/lips.ogg
+rain coat,rain coat,4,eng/image/rain coat.png,eng/audio/rain coat.ogg,eng/audio/rain coat.ogg
+plum,plum,4,eng/image/plum.png,eng/audio/plum.ogg,eng/audio/plum.ogg
+clothespins,clothespins,4,eng/image/clothespins.png,eng/audio/clothespins.ogg,eng/audio/clothespins.ogg
+june,june,4,eng/image/june.png,eng/audio/june.ogg,eng/audio/june.ogg
+bunch,bunch,4,eng/image/bunch.png,eng/audio/bunch.ogg,eng/audio/bunch.ogg
+orange,orange,4,eng/image/orange.png,eng/audio/orange.ogg,eng/audio/orange.ogg
+small intestine,small intestine,4,eng/image/small intestine.png,eng/audio/small intestine.ogg,eng/audio/small intestine.ogg
+cutting board,cutting board,4,eng/image/cutting board.png,eng/audio/cutting board.ogg,eng/audio/cutting board.ogg
+uncle,uncle,4,eng/image/uncle.png,eng/audio/uncle.ogg,eng/audio/uncle.ogg
+strawberry,strawberry,4,eng/image/strawberry.png,eng/audio/strawberry.ogg,eng/audio/strawberry.ogg
+next week,next week,4,eng/image/next week.png,eng/audio/next week.ogg,eng/audio/next week.ogg
+wallet,wallet,4,eng/image/wallet.png,eng/audio/wallet.ogg,eng/audio/wallet.ogg
+salad,salad,4,eng/image/salad.png,eng/audio/salad.ogg,eng/audio/salad.ogg
+confused,confused,4,eng/image/confused.png,eng/audio/confused.ogg,eng/audio/confused.ogg
+zip,zip,4,eng/image/zip.png,eng/audio/zip.ogg,eng/audio/zip.ogg
+cheese,cheese,4,eng/image/cheese.png,eng/audio/cheese.ogg,eng/audio/cheese.ogg
+kettle,kettle,4,eng/image/kettle.png,eng/audio/kettle.ogg,eng/audio/kettle.ogg
+bed room,bed room,4,eng/image/bed room.png,eng/audio/bed room.ogg,eng/audio/bed room.ogg
+broom,broom,4,eng/image/broom.png,eng/audio/broom.ogg,eng/audio/broom.ogg
+team,team,4,eng/image/team.png,eng/audio/team.ogg,eng/audio/team.ogg
+dryer,dryer,4,eng/image/dryer.png,eng/audio/dryer.ogg,eng/audio/dryer.ogg
+yak,yak,4,eng/image/yak.png,eng/audio/yak.ogg,eng/audio/yak.ogg
+elbow,elbow,4,eng/image/elbow.png,eng/audio/elbow.ogg,eng/audio/elbow.ogg
+nails,nails,4,eng/image/nails.png,eng/audio/nails.ogg,eng/audio/nails.ogg
+baby carrot,baby carrot,4,eng/image/baby carrot.png,eng/audio/baby carrot.ogg,eng/audio/baby carrot.ogg
+swede,swede,4,eng/image/swede.png,eng/audio/swede.ogg,eng/audio/swede.ogg
+paternal grandmother,paternal grandmother,4,eng/image/paternal grandmother.png,eng/audio/paternal grandmother.ogg,eng/audio/paternal grandmother.ogg
+february,february,4,eng/image/february.png,eng/audio/february.ogg,eng/audio/february.ogg
+egg,egg,4,eng/image/egg.png,eng/audio/egg.ogg,eng/audio/egg.ogg
+roast,roast,4,eng/image/roast.png,eng/audio/roast.ogg,eng/audio/roast.ogg
+rabbit,rabbit,4,eng/image/rabbit.png,eng/audio/rabbit.ogg,eng/audio/rabbit.ogg
+eyelash,eyelash,4,eng/image/eyelash.png,eng/audio/eyelash.ogg,eng/audio/eyelash.ogg
+pelican,pelican,4,eng/image/pelican.png,eng/audio/pelican.ogg,eng/audio/pelican.ogg
+happy,happy,4,eng/image/happy.png,eng/audio/happy.ogg,eng/audio/happy.ogg
+wash,wash,4,eng/image/wash.png,eng/audio/wash.ogg,eng/audio/wash.ogg
+television,television,4,eng/image/television.png,eng/audio/television.ogg,eng/audio/television.ogg
+october,october,4,eng/image/october.png,eng/audio/october.ogg,eng/audio/october.ogg
+year,year,4,eng/image/year.png,eng/audio/year.ogg,eng/audio/year.ogg
+mushroom,mushroom,4,eng/image/mushroom.png,eng/audio/mushroom.ogg,eng/audio/mushroom.ogg
+mouse trap,mouse trap,4,eng/image/mouse trap.png,eng/audio/mouse trap.ogg,eng/audio/mouse trap.ogg
+up,up,4,eng/image/up.png,eng/audio/up.ogg,eng/audio/up.ogg
+zero,zero,4,eng/image/zero.png,eng/audio/zero.ogg,eng/audio/zero.ogg
+gorilla,gorilla,4,eng/image/gorilla.png,eng/audio/gorilla.ogg,eng/audio/gorilla.ogg
+broccolli,broccolli,4,eng/image/broccolli.png,eng/audio/broccolli.ogg,eng/audio/broccolli.ogg
+t shirt,t shirt,4,eng/image/t shirt.png,eng/audio/t shirt.ogg,eng/audio/t shirt.ogg
+armchair,armchair,4,eng/image/armchair.png,eng/audio/armchair.ogg,eng/audio/armchair.ogg
+tub,tub,4,eng/image/tub.png,eng/audio/tub.ogg,eng/audio/tub.ogg
+bowl,bowl,4,eng/image/bowl.png,eng/audio/bowl.ogg,eng/audio/bowl.ogg
+pint,pint,4,eng/image/pint.png,eng/audio/pint.ogg,eng/audio/pint.ogg
+waist,waist,4,eng/image/waist.png,eng/audio/waist.ogg,eng/audio/waist.ogg
+cauliflower,cauliflower,4,eng/image/cauliflower.png,eng/audio/cauliflower.ogg,eng/audio/cauliflower.ogg
+ladel,ladel,4,eng/image/ladel.png,eng/audio/ladel.ogg,eng/audio/ladel.ogg
+instant coffee,instant coffee,4,eng/image/instant coffee.png,eng/audio/instant coffee.ogg,eng/audio/instant coffee.ogg
+sleepy,sleepy,4,eng/image/sleepy.png,eng/audio/sleepy.ogg,eng/audio/sleepy.ogg
+shelves,shelves,4,eng/image/shelves.png,eng/audio/shelves.ogg,eng/audio/shelves.ogg
+gem,gem,4,eng/image/gem.png,eng/audio/gem.ogg,eng/audio/gem.ogg
+palm,palm,4,eng/image/palm.png,eng/audio/palm.ogg,eng/audio/palm.ogg
+chard,chard,4,eng/image/chard.png,eng/audio/chard.ogg,eng/audio/chard.ogg
+grand father,grand father,4,eng/image/grand father.png,eng/audio/grand father.ogg,eng/audio/grand father.ogg
+cot,cot,4,eng/image/cot.png,eng/audio/cot.ogg,eng/audio/cot.ogg
+basement,basement,4,eng/image/basement.png,eng/audio/basement.ogg,eng/audio/basement.ogg
+ankle,ankle,4,eng/image/ankle.png,eng/audio/ankle.ogg,eng/audio/ankle.ogg
+morning,morning,4,eng/image/morning.png,eng/audio/morning.ogg,eng/audio/morning.ogg
+yesterday morning,yesterday morning,4,eng/image/yesterday morning.png,eng/audio/yesterday morning.ogg,eng/audio/yesterday morning.ogg
+package,package,4,eng/image/package.png,eng/audio/package.ogg,eng/audio/package.ogg
+arm,arm,4,eng/image/arm.png,eng/audio/arm.ogg,eng/audio/arm.ogg
+father in law,father in law,4,eng/image/father in law.png,eng/audio/father in law.ogg,eng/audio/father in law.ogg
+unhappy,unhappy,4,eng/image/unhappy.png,eng/audio/unhappy.ogg,eng/audio/unhappy.ogg
+box,box,4,eng/image/box.png,eng/audio/box.ogg,eng/audio/box.ogg
+hand parts,hand parts,4,eng/image/hand parts.png,eng/audio/hand parts.ogg,eng/audio/hand parts.ogg
+painting,painting,4,eng/image/painting.png,eng/audio/painting.ogg,eng/audio/painting.ogg
+cap,cap,4,eng/image/cap.png,eng/audio/cap.ogg,eng/audio/cap.ogg
+couch,couch,4,eng/image/couch.png,eng/audio/couch.ogg,eng/audio/couch.ogg
+chicken,chicken,4,eng/image/chicken.png,eng/audio/chicken.ogg,eng/audio/chicken.ogg
+yogurt,yogurt,4,eng/image/yogurt.png,eng/audio/yogurt.ogg,eng/audio/yogurt.ogg
+shorts,shorts,4,eng/image/shorts.png,eng/audio/shorts.ogg,eng/audio/shorts.ogg
+yes,yes,4,eng/image/yes.png,eng/audio/yes.ogg,eng/audio/yes.ogg
+grill,grill,4,eng/image/grill.png,eng/audio/grill.ogg,eng/audio/grill.ogg
+corn,corn,4,eng/image/corn.png,eng/audio/corn.ogg,eng/audio/corn.ogg
+quokka,quokka,4,eng/image/quokka.png,eng/audio/quokka.ogg,eng/audio/quokka.ogg
+cyclone,cyclone,4,eng/image/cyclone.png,eng/audio/cyclone.ogg,eng/audio/cyclone.ogg
+belt,belt,4,eng/image/belt.png,eng/audio/belt.ogg,eng/audio/belt.ogg
+quail,quail,4,eng/image/quail.png,eng/audio/quail.ogg,eng/audio/quail.ogg
+mix,mix,4,eng/image/mix.png,eng/audio/mix.ogg,eng/audio/mix.ogg
+gift,gift,4,eng/image/gift.png,eng/audio/gift.ogg,eng/audio/gift.ogg
+index finger,index finger,4,eng/image/index finger.png,eng/audio/index finger.ogg,eng/audio/index finger.ogg
+afraid,afraid,4,eng/image/afraid.png,eng/audio/afraid.ogg,eng/audio/afraid.ogg
+dolphine,dolphine,4,eng/image/dolphine.png,eng/audio/dolphine.ogg,eng/audio/dolphine.ogg
+vehicle,vehicle,4,eng/image/vehicle.png,eng/audio/vehicle.ogg,eng/audio/vehicle.ogg
+fork,fork,4,eng/image/fork.png,eng/audio/fork.ogg,eng/audio/fork.ogg
+beat,beat,4,eng/image/beat.png,eng/audio/beat.ogg,eng/audio/beat.ogg
+toaster,toaster,4,eng/image/toaster.png,eng/audio/toaster.ogg,eng/audio/toaster.ogg
+tiger,tiger,4,eng/image/tiger.png,eng/audio/tiger.ogg,eng/audio/tiger.ogg
+pea,pea,4,eng/image/pea.png,eng/audio/pea.ogg,eng/audio/pea.ogg
+hammer,hammer,4,eng/image/hammer.png,eng/audio/hammer.ogg,eng/audio/hammer.ogg
+pan,pan,4,eng/image/pan.png,eng/audio/pan.ogg,eng/audio/pan.ogg
+eyebrows,eyebrows,4,eng/image/eyebrows.png,eng/audio/eyebrows.ogg,eng/audio/eyebrows.ogg
+beard,beard,4,eng/image/beard.png,eng/audio/beard.ogg,eng/audio/beard.ogg
+jar,jar,4,eng/image/jar.png,eng/audio/jar.ogg,eng/audio/jar.ogg
+sparrow,sparrow,4,eng/image/sparrow.png,eng/audio/sparrow.ogg,eng/audio/sparrow.ogg
+sweat shirt,sweat shirt,4,eng/image/sweat shirt.png,eng/audio/sweat shirt.ogg,eng/audio/sweat shirt.ogg
+crown,crown,4,eng/image/crown.png,eng/audio/crown.ogg,eng/audio/crown.ogg
+dining hall,dining hall,4,eng/image/dining hall.png,eng/audio/dining hall.ogg,eng/audio/dining hall.ogg
+desk,desk,4,eng/image/desk.png,eng/audio/desk.ogg,eng/audio/desk.ogg
+garbage can,garbage can,4,eng/image/garbage can.png,eng/audio/garbage can.ogg,eng/audio/garbage can.ogg
+autumn,autumn,4,eng/image/autumn.png,eng/audio/autumn.ogg,eng/audio/autumn.ogg
+thigh,thigh,4,eng/image/thigh.png,eng/audio/thigh.ogg,eng/audio/thigh.ogg
+kingfisher,kingfisher,4,eng/image/kingfisher.png,eng/audio/kingfisher.ogg,eng/audio/kingfisher.ogg
+can opner,can opner,4,eng/image/can opner.png,eng/audio/can opner.ogg,eng/audio/can opner.ogg
+lion,lion,4,eng/image/lion .png,eng/audio/lion .ogg,eng/audio/lion .ogg
+lachet,lachet,4,eng/image/lachet.png,eng/audio/lachet.ogg,eng/audio/lachet.ogg
+april,april,4,eng/image/april.png,eng/audio/april.ogg,eng/audio/april.ogg
+tap,tap,4,eng/image/tap.png,eng/audio/tap.ogg,eng/audio/tap.ogg
+wooden spoon,wooden spoon,4,eng/image/wooden spoon.png,eng/audio/wooden spoon.ogg,eng/audio/wooden spoon.ogg
+kind,kind,4,eng/image/kind.png,eng/audio/kind.ogg,eng/audio/kind.ogg
+lime,lime,4,eng/image/lime.png,eng/audio/lime.ogg,eng/audio/lime.ogg
+sister,sister,4,eng/image/sister.png,eng/audio/sister.ogg,eng/audio/sister.ogg
+coat,coat,4,eng/image/coat.png,eng/audio/coat.ogg,eng/audio/coat.ogg
+tear,tear,4,eng/image/tear.png,eng/audio/tear.ogg,eng/audio/tear.ogg
+tomorow,tomorow,4,eng/image/tomorow.png,eng/audio/tomorow.ogg,eng/audio/tomorow.ogg
+ceiling,ceiling,4,eng/image/ceiling.png,eng/audio/ceiling.ogg,eng/audio/ceiling.ogg
+nightingale,nightingale,4,eng/image/nightingale.png,eng/audio/nightingale.ogg,eng/audio/nightingale.ogg
+cock,cock,4,eng/image/cock.png,eng/audio/cock.ogg,eng/audio/cock.ogg
+falcon,falcon,4,eng/image/falcon.png,eng/audio/falcon.ogg,eng/audio/falcon.ogg
+xray,xray,4,eng/image/xray.png,eng/audio/xray.ogg,eng/audio/xray.ogg
+ladyfinger,ladyfinger,4,eng/image/ladyfinger.png,eng/audio/ladyfinger.ogg,eng/audio/ladyfinger.ogg
+shirt,shirt,4,eng/image/shirt.png,eng/audio/shirt.ogg,eng/audio/shirt.ogg
+tail,tail,4,eng/image/tail.png,eng/audio/tail.ogg,eng/audio/tail.ogg
+kite,kite,4,eng/image/kite.png,eng/audio/kite.ogg,eng/audio/kite.ogg
+floor,floor,4,eng/image/floor.png,eng/audio/floor.ogg,eng/audio/floor.ogg
+cockroach,cockroach,4,eng/image/cockroach.png,eng/audio/cockroach.ogg,eng/audio/cockroach.ogg
+this week,this week,4,eng/image/this week.png,eng/audio/this week.ogg,eng/audio/this week.ogg
+jackfruit,jackfruit,4,eng/image/jackfruit.png,eng/audio/jackfruit.ogg,eng/audio/jackfruit.ogg
+pepper,pepper,4,eng/image/pepper.png,eng/audio/pepper.ogg,eng/audio/pepper.ogg
+date,date,4,eng/image/date.png,eng/audio/date.ogg,eng/audio/date.ogg
+toe,toe,4,eng/image/toe.png,eng/audio/toe.ogg,eng/audio/toe.ogg
+wednesday,wednesday,4,eng/image/wednesday.png,eng/audio/wednesday.ogg,eng/audio/wednesday.ogg
+childrens,childrens,4,eng/image/childrens.png,eng/audio/childrens.ogg,eng/audio/childrens.ogg
+september,september,4,eng/image/september.png,eng/audio/september.ogg,eng/audio/september.ogg
+pika,pika,4,eng/image/pika.png,eng/audio/pika.ogg,eng/audio/pika.ogg
+gray,gray,4,eng/image/gray.png,eng/audio/gray.ogg,eng/audio/gray.ogg
+burner,burner,4,eng/image/burner.png,eng/audio/burner.ogg,eng/audio/burner.ogg
+melon,melon,4,eng/image/melon.png,eng/audio/melon.ogg,eng/audio/melon.ogg
+rain,rain,4,eng/image/rain.png,eng/audio/rain.ogg,eng/audio/rain.ogg
+bear,bear,4,eng/image/bear.png,eng/audio/bear.ogg,eng/audio/bear.ogg
+grand mother,grand mother,4,eng/image/grand mother.png,eng/audio/grand mother.ogg,eng/audio/grand mother.ogg
+tube,tube,4,eng/image/tube.png,eng/audio/tube.ogg,eng/audio/tube.ogg
+woodpecker,woodpecker,4,eng/image/woodpecker.png,eng/audio/woodpecker.ogg,eng/audio/woodpecker.ogg
+hot,hot,4,eng/image/hot.png,eng/audio/hot.ogg,eng/audio/hot.ogg
+odd,odd,4,eng/image/odd.png,eng/audio/odd.ogg,eng/audio/odd.ogg
+capsicum,capsicum,4,eng/image/capsicum.png,eng/audio/capsicum.ogg,eng/audio/capsicum.ogg
+mouth,mouth,4,eng/image/mouth.png,eng/audio/mouth.ogg,eng/audio/mouth.ogg
+outside,outside,4,eng/image/outside.png,eng/audio/outside.ogg,eng/audio/outside.ogg
+love,love,4,eng/image/love.png,eng/audio/love.ogg,eng/audio/love.ogg
+pajamas,pajamas,4,eng/image/pajamas.png,eng/audio/pajamas.ogg,eng/audio/pajamas.ogg
+excited,excited,4,eng/image/excited.png,eng/audio/excited.ogg,eng/audio/excited.ogg
+milk,milk,4,eng/image/milk.png,eng/audio/milk.ogg,eng/audio/milk.ogg
+green peas,green peas,4,eng/image/green peas.png,eng/audio/green peas.ogg,eng/audio/green peas.ogg
+drizzling,drizzling,4,eng/image/drizzling.png,eng/audio/drizzling.ogg,eng/audio/drizzling.ogg
+tooth,tooth,4,eng/image/tooth.png,eng/audio/tooth.ogg,eng/audio/tooth.ogg
+giraffe,giraffe,4,eng/image/giraffe.png,eng/audio/giraffe.ogg,eng/audio/giraffe.ogg
+magnet,magnet,4,eng/image/magnet.png,eng/audio/magnet.ogg,eng/audio/magnet.ogg
+kidney,kidney,4,eng/image/kidney.png,eng/audio/kidney.ogg,eng/audio/kidney.ogg
+gallon,gallon,4,eng/image/gallon.png,eng/audio/gallon.ogg,eng/audio/gallon.ogg
+lemon,lemon,4,eng/image/lemon.png,eng/audio/lemon.ogg,eng/audio/lemon.ogg
+cushion,cushion,4,eng/image/cushion.png,eng/audio/cushion.ogg,eng/audio/cushion.ogg
+island,island,4,eng/image/island.png,eng/audio/island.ogg,eng/audio/island.ogg
+squash,squash,4,eng/image/squash.png,eng/audio/squash.ogg,eng/audio/squash.ogg
+drapes,drapes,4,eng/image/drapes.png,eng/audio/drapes.ogg,eng/audio/drapes.ogg
+parrot,parrot,4,eng/image/parrot.png,eng/audio/parrot.ogg,eng/audio/parrot.ogg
+cheek,cheek,4,eng/image/cheek.png,eng/audio/cheek.ogg,eng/audio/cheek.ogg
+grandson,grandson,4,eng/image/grandson.png,eng/audio/grandson.ogg,eng/audio/grandson.ogg
+mango,mango,4,eng/image/mango.png,eng/audio/mango.ogg,eng/audio/mango.ogg
+chest,chest,4,eng/image/chest.png,eng/audio/chest.ogg,eng/audio/chest.ogg
+umbrella,umbrella,4,eng/image/umbrella.png,eng/audio/umbrella.ogg,eng/audio/umbrella.ogg
+polar bear,polar bear,4,eng/image/polar bear.png,eng/audio/polar bear.ogg,eng/audio/polar bear.ogg
+shoulder,shoulder,4,eng/image/shoulder.png,eng/audio/shoulder.ogg,eng/audio/shoulder.ogg
+bruussels sprout,bruussels sprout,4,eng/image/bruussels sprout.png,eng/audio/bruussels sprout.ogg,eng/audio/bruussels sprout.ogg
+sad,sad,4,eng/image/sad.png,eng/audio/sad.ogg,eng/audio/sad.ogg
+air exhaust,air exhaust,4,eng/image/air exhaust.png,eng/audio/air exhaust.ogg,eng/audio/air exhaust.ogg
+shoes,shoes,4,eng/image/shoes.png,eng/audio/shoes.ogg,eng/audio/shoes.ogg
+rack,rack,4,eng/image/rack.png,eng/audio/rack.ogg,eng/audio/rack.ogg
+nest,nest,4,eng/image/nest.png,eng/audio/nest.ogg,eng/audio/nest.ogg
+rainbow,rainbow,4,eng/image/rainbow.png,eng/audio/rainbow.ogg,eng/audio/rainbow.ogg
+beans,beans,4,eng/image/beans.png,eng/audio/beans.ogg,eng/audio/beans.ogg
+stomach,stomach,4,eng/image/stomach.png,eng/audio/stomach.ogg,eng/audio/stomach.ogg
+monkey,monkey,4,eng/image/monkey .png,eng/audio/monkey .ogg,eng/audio/monkey .ogg
+brain,brain,4,eng/image/brain.png,eng/audio/brain.ogg,eng/audio/brain.ogg
+everday,everday,4,eng/image/everday.png,eng/audio/everday.ogg,eng/audio/everday.ogg
+zigzag,zigzag,4,eng/image/zigzag.png,eng/audio/zigzag.ogg,eng/audio/zigzag.ogg
+niece,niece,4,eng/image/niece.png,eng/audio/niece.ogg,eng/audio/niece.ogg
+fireplace,fireplace,4,eng/image/fireplace.png,eng/audio/fireplace.ogg,eng/audio/fireplace.ogg
+hyacinth,hyacinth,4,eng/image/hyacinth.png,eng/audio/hyacinth.ogg,eng/audio/hyacinth.ogg
+gourds,gourds,4,eng/image/gourds.png,eng/audio/gourds.ogg,eng/audio/gourds.ogg
+weigh,weigh,4,eng/image/weigh.png,eng/audio/weigh.ogg,eng/audio/weigh.ogg
+goat,goat,4,eng/image/goat .png,eng/audio/goat .ogg,eng/audio/goat .ogg
+combine,combine,4,eng/image/combine.png,eng/audio/combine.ogg,eng/audio/combine.ogg
+warm,warm,4,eng/image/warm.png,eng/audio/warm.ogg,eng/audio/warm.ogg
+light green,light green,4,eng/image/light green.png,eng/audio/light green.ogg,eng/audio/light green.ogg
+today,today,4,eng/image/today.png,eng/audio/today.ogg,eng/audio/today.ogg
+grasshopper,grasshopper,4,eng/image/grasshopper.png,eng/audio/grasshopper.ogg,eng/audio/grasshopper.ogg
+roll,roll,4,eng/image/roll.png,eng/audio/roll.ogg,eng/audio/roll.ogg
+bored,bored,4,eng/image/bored.png,eng/audio/bored.ogg,eng/audio/bored.ogg
+dragonfruit,dragonfruit,4,eng/image/dragonfruit.png,eng/audio/dragonfruit.ogg,eng/audio/dragonfruit.ogg
+paternal grandfather,paternal grandfather,4,eng/image/paternal grandfather.png,eng/audio/paternal grandfather.ogg,eng/audio/paternal grandfather.ogg
+cornea,cornea,4,eng/image/cornea.png,eng/audio/cornea.ogg,eng/audio/cornea.ogg
+carrot,carrot,4,eng/image/carrot.png,eng/audio/carrot.ogg,eng/audio/carrot.ogg
+july,july,4,eng/image/july.png,eng/audio/july.ogg,eng/audio/july.ogg
+spoon,spoon,4,eng/image/spoon.png,eng/audio/spoon.ogg,eng/audio/spoon.ogg
+mangetout,mangetout,4,eng/image/mangetout.png,eng/audio/mangetout.ogg,eng/audio/mangetout.ogg
+cabbage,cabbage,4,eng/image/cabbage.png,eng/audio/cabbage.ogg,eng/audio/cabbage.ogg
+viens,viens,4,eng/image/viens.png,eng/audio/viens.ogg,eng/audio/viens.ogg
+nail,nail,4,eng/image/nail.png,eng/audio/nail.ogg,eng/audio/nail.ogg
+pumpkin,pumpkin,4,eng/image/pumpkin.png,eng/audio/pumpkin.ogg,eng/audio/pumpkin.ogg
+hair,hair,4,eng/image/hair.png,eng/audio/hair.ogg,eng/audio/hair.ogg
+wok,wok,4,eng/image/wok.png,eng/audio/wok.ogg,eng/audio/wok.ogg
+iceberg,iceberg,4,eng/image/iceberg.png,eng/audio/iceberg.ogg,eng/audio/iceberg.ogg
+sail,sail,4,eng/image/sail.png,eng/audio/sail.ogg,eng/audio/sail.ogg
+married,married,4,eng/image/married.png,eng/audio/married.ogg,eng/audio/married.ogg
+young adult,young adult,4,eng/image/young adult.png,eng/audio/young adult.ogg,eng/audio/young adult.ogg
+daughter,daughter,4,eng/image/daughter.png,eng/audio/daughter.ogg,eng/audio/daughter.ogg
+vacation,vacation,4,eng/image/vacation.png,eng/audio/vacation.ogg,eng/audio/vacation.ogg
+swan,swan,4,eng/image/swan.png,eng/audio/swan.ogg,eng/audio/swan.ogg
+steam,steam,4,eng/image/steam.png,eng/audio/steam.ogg,eng/audio/steam.ogg
+edamame,edamame,4,eng/image/edamame.png,eng/audio/edamame.ogg,eng/audio/edamame.ogg
+hairband,hairband,4,eng/image/hairband.png,eng/audio/hairband.ogg,eng/audio/hairband.ogg
+camel,camel,4,eng/image/camel.png,eng/audio/camel.ogg,eng/audio/camel.ogg
