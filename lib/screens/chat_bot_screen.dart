@@ -87,12 +87,12 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                     side: Side.right,
                     animation: animation,
                     imageAsset: botImage,
-                    child: _buildChatMessage(chatItem))
+                    child: _buildChatMessage(context, chatItem))
                 : new ChatMessage(
                     side: Side.left,
                     animation: animation,
                     imageFile: _user.image,
-                    child: _buildChatMessage(chatItem));
+                    child: _buildChatMessage(context, chatItem));
           },
         ),
       )
@@ -112,24 +112,19 @@ class ChatBotScreenState extends State<ChatBotScreen> {
         body: new Column(children: widgets));
   }
 
-  Widget _buildChatMessage(ChatItem chatItem) {
+  Widget _buildChatMessage(BuildContext context, ChatItem chatItem) {
     switch (chatItem.chatItemType) {
       case ChatItemType.card:
-        return new Text(
-          chatItem.content,
-          style: new TextStyle(fontSize: 48.0),
-        );
+        return new Text(chatItem.content,
+            style: Theme.of(context).textTheme.title);
         break;
       case ChatItemType.text:
-        return new Text(
-          chatItem.content,
-          style: new TextStyle(fontSize: 48.0),
-        );
+        return new Text(chatItem.content,
+            style: Theme.of(context).textTheme.title);
         break;
       case ChatItemType.game:
-        return new Text(
-          chatItem.content,
-        );
+        return new Text(chatItem.content,
+            style: Theme.of(context).textTheme.title);
         break;
     }
   }
