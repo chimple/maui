@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'dart:ui' show window;
 import 'dart:math';
+
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Abacus extends StatefulWidget {
   Function onScore;
@@ -121,13 +125,22 @@ class AbacusState extends State<Abacus> {
     setState(() => _isLoading = false);
     //print(' data from database${fetchMathData(1)}');
   }
-
-  Widget _buildItem(int index, String text, int stat, String flag) {
+ @override
+  void didUpdateWidget(Abacus oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
+  }
+  Widget _buildItem(int index, String text, int stat, String flag, double scrnHeight,double scrnWidth ) {
     Size size = MediaQuery.of(context).size;
     final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
+        scrnHeight: scrnHeight,
+        scrnWidth:scrnWidth,
         index: index,
         screenSize: size.width,
         colorflag: stat,
@@ -209,7 +222,7 @@ class AbacusState extends State<Abacus> {
                           '1' &&
                       _letters[_Index[0] + _size] == '') {
                     flags[_Index[0] + (3 * _size)] = '0';
-                    // flags[_Index[0]]='0';
+                     flags[_Index[0]]='0';
                     _letters[_Index[0]] = '';
                     _letters[_Index[0] + (3 * _size)] = '1';
 
@@ -244,8 +257,9 @@ class AbacusState extends State<Abacus> {
                     });
                   } else if (Check[0] == '1' &&
                       _letters[_Index[0] - _size] == '') {
-                    // flags[_Index[0]]='1';
+                     flags[_Index[0]]='1';
                     flags[_Index[0] - (3 * _size)] = '1';
+                     
                     _letters[_Index[0]] = '';
                     _letters[_Index[0] - (3 * _size)] = '1';
                     result = result + pow(10, (_size - 1 - i));
@@ -276,7 +290,7 @@ class AbacusState extends State<Abacus> {
                 _letters1[4] = finalans.toString();
                 status[2] = 1;
                 status[4] = 0;
-                widget.onEnd();
+               
                 new Future.delayed(const Duration(milliseconds: 1500), () {
                   widget.onEnd();
                 });
@@ -296,6 +310,7 @@ class AbacusState extends State<Abacus> {
     print("letters1 $_letters1");
     print("letters $_letters");
     print('flagsss      $flags');
+
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -303,47 +318,71 @@ class AbacusState extends State<Abacus> {
         child: new CircularProgressIndicator(),
       );
     }
-    int k = 100;
-    int j = 0;
-    return new Column(
-      children: <Widget>[
-        //  new Container(
-        //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
-        //  ),
-        new Container(
-          height: 80.0,
-          width: size.width,
-          child: new ResponsiveGridView(
-            padding: 0.0,
-            rows: 1,
-            cols: 5,
-            children: _letters1
-                .map((e) => _buildItem(k, e, status[k++ - 100], flags[1]))
-                .toList(growable: false),
+
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+//      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+        double scrnHeight= constraints.maxHeight;
+        double scrnWidth=constraints.maxWidth;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - size.height / 8.0) / (14);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      int k = 100;
+      int j = 0;
+      return new Column(
+        children: <Widget>[
+          //  new Container(
+          //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
+          //  ),
+          new Container(
+            color: Colors.lime,
+            height: size.height / 8.0,
+            width: size.width,
+            child: new ResponsiveGridView(
+              padding: 0.0,
+              rows: 1,
+              cols: 5,
+              children: _letters1
+                  .map((e) => Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: _buildItem(k, e, status[k++ - 100], flags[1],scrnHeight,scrnWidth)))
+                  .toList(growable: false),
+            ),
           ),
-        ),
-        new Container(
-          height: 4.0,
-          color: Colors.pink,
-        ),
-        new Expanded(
-          child: new ResponsiveGridView(
+         new Expanded(
+              child:new Container(
+                  decoration: const BoxDecoration(
+    border: const Border(
+      top: const BorderSide(width: 3.0, color: Colors.red),
+      left: const BorderSide(width: 3.0, color:  Colors.red),
+      right: const BorderSide(width: 3.0, color:  Colors.red),
+      bottom: const BorderSide(width: 3.0, color:  Colors.red),
+    ),
+  ),
+              child: new ResponsiveGridView(
             padding: 0.0,
             // mainAxisSpacing: 0.0,
             // crossAxisSpacing: 0.0,
             rows: 14,
             cols: _size,
             children: _letters
-                .map((e) => _buildItem(j, e, status[1], flags[j++]))
+                .map((e) => SizedBox(
+                      width: state.buttonWidth,
+                      height: state.buttonHeight,
+                      child: _buildItem(j, e, status[1], flags[j++],scrnHeight,scrnWidth),
+                    ))
                 .toList(growable: false),
-          ),
-        ),
-        new Container(
-          height: 4.0,
-          color: Colors.pink,
-        ),
-      ],
-    );
+          ))),
+        ],
+      );
+    });
   }
 }
 
@@ -381,12 +420,16 @@ class MyButton extends StatefulWidget {
       this.colorflag,
       this.size,
       this.flag,
+      this.scrnHeight,
+      this.scrnWidth,
       this.screenSize})
       : super(key: key);
 
   final String text;
   final DragTargetAccept onac;
   final int colorflag;
+  final double scrnHeight;
+  final double scrnWidth;
   final double screenSize;
   String flag;
   final int size;
@@ -406,9 +449,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String let = '';
   var val = 0;
   var f = 0;
+   var tt = 0.0;
   initState() {
     super.initState();
-
+ if (widget.scrnHeight > widget.scrnWidth )
+      tt = widget.scrnWidth;
+    else
+      tt = widget.scrnHeight;
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
@@ -416,7 +463,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
-    animation1 = new Tween(begin: -widget.screenSize / 10, end: 00.0)
+    animation1 = new Tween(begin: -tt/ 10, end: 00.0)
         .animate(controller1)
           ..addStatusListener((state) {
             print("$state:${animation.value}");
@@ -426,7 +473,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             }
           });
     animation =
-        new Tween(begin: widget.screenSize / 10, end: 00.0).animate(controller)
+        new Tween(begin: tt/ 10, end: 00.0).animate(controller)
           ..addStatusListener((state) {
             print("$state:${animation.value}");
 
@@ -462,47 +509,74 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  var tt = 0.0;
+ 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if (size.height > size.width)
-      tt = size.width;
-    else
-      tt = size.height;
+   
     print("_MyButtonState.build");
 
     if (widget.index >= 100) {
-      return new Center(
-          child: new Container(
-        // height: 50.0,
-        // width: 50.0,
-        decoration: new BoxDecoration(
-            color: widget.colorflag != 0 ? Colors.white30 : Colors.yellowAccent,
-            shape: BoxShape.rectangle),
-        padding: new EdgeInsets.all(10.0),
-        child: new Center(
-            child: new Text(widget.text,
-                key: new Key(widget.index.toString() + "but"),
-                style: new TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0))),
-      ));
-    } else if (widget.index < widget.size) {
-      return new Container(
-        // height: 50.0,
-        // width: 50.0,
-        decoration:
-            new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
-        padding: new EdgeInsets.all(10.0),
-        child: new Text(widget.text,
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-                fontSize: tt / 30)),
+
+      return new UnitButton(
+        text: widget.text,
+        highlighted:widget.colorflag!=0?false:true ,
+        showHelp: false,
       );
+      // return new Center(
+      //     child: new Container(
+      //   // height: 50.0,
+      //   // width: 50.0,
+      //   decoration: new BoxDecoration(
+      //       color: widget.colorflag != 0 ? Colors.white30 : Colors.yellowAccent,
+      //       shape: BoxShape.rectangle),
+      //   padding: new EdgeInsets.all(10.0),
+      //   child: new Center(
+      //       child: new Text(widget.text,
+      //           key: new Key(widget.index.toString() + "but"),
+      //           style: new TextStyle(
+      //               color: Colors.red,
+      //               fontWeight: FontWeight.bold,
+      //               fontSize: 20.0))),
+      // ));
+    } else if (widget.index < widget.size) {
+      return new UnitButton(
+        text: widget.text,
+        highlighted: true,
+        showHelp: false,
+      );
+      // return new Container(
+      //   // height: 50.0,
+      //   // width: 50.0,
+      //   decoration:
+      //       new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
+      //   padding: new EdgeInsets.all(10.0),
+      //   child: new Text(widget.text,
+      //       textAlign: TextAlign.center,
+      //       style: new TextStyle(
+      //           color: Colors.red,
+      //           fontWeight: FontWeight.bold,
+      //           fontSize: tt/35)),
+      // );
+    }else if (widget.index < widget.size) {
+      return new UnitButton(
+        text: widget.text,
+        highlighted: true,
+        showHelp: false,
+      );
+      // return new Container(
+      //   // height: 50.0,
+      //   // width: 50.0,
+      //   decoration:
+      //       new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
+      //   padding: new EdgeInsets.all(10.0),
+      //   child: new Text(widget.text,
+      //       textAlign: TextAlign.center,
+      //       style: new TextStyle(
+      //           color: Colors.red,
+      //           fontWeight: FontWeight.bold,
+      //           fontSize: tt/35)),
+      // );
     } else {
       return new Center(
           child: new Container(
@@ -511,19 +585,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
         child:
             new Stack(alignment: const Alignment(0.0, 0.0), children: <Widget>[
-          new Container(
+        new Container(
             //  height: 4000.0,
             width: tt / 140,
             color: Colors.black,
-          ), //new Column(
+            ), 
+          //new Column(
+           
           new Shake(
               animation: widget.flag == '1' ? animation : animation1,
-              child: new Draggable(
-                affinity: Axis.vertical,
-                onDragStarted: () => widget.onac(widget.index),
+              // child: new Draggable(
+              //   affinity: Axis.vertical,
+            //    onDragStarted: () => widget.onac(widget.index),
                 child: new GestureDetector(
 
-                    //onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
+                    onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
                     child: new Container(
                   margin: new EdgeInsets.only(top: 5.0),
                   // height: 10.0,
@@ -534,15 +610,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           shape: BoxShape.circle,
                         )
                       : new BoxDecoration(),
-                  padding: new EdgeInsets.all(5.0),
+                //  padding: new EdgeInsets.all(5.0),
                   // child:new Text(widget.text,
                   //     style:new
                   //         TextStyle(color: Colors.white, fontSize: 34.0))),
                 )),
-                feedback: new Container(),
+               // feedback: new Container(),
                 //   onDragStarted: ()=>widget.onac(widget.index),
-              ))
-        ]),
+             )
+                    ]),
       ));
     }
   }

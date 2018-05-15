@@ -76,6 +76,12 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
   void _initBoard() async {
     setState(() => _isLoading = true);
     _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
+    if(_allLetters.length == 7) {
+      _maxSize = 7;
+    }
+    if(_allLetters.length == 12) {
+      _maxSize = 12;
+    }
     print("Rajesh Patil Data ${_allLetters}");
     _letters = _allLetters.sublist(0, _maxSize);
     print("Rajesh Patil Sublisted Data ${_letters}");
@@ -114,7 +120,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
                     isRotated: widget.isRotated,
                     items: _letters,
                     itemSize: constraints.maxWidth > 410.0 && constraints.maxHeight > 570.0 
-                      ? new Size(constraints.maxWidth * 0.65, constraints.maxHeight * hgt) 
+                      ? new Size(constraints.maxWidth * 0.6, constraints.maxHeight * hgt) 
                       : new Size(constraints.maxWidth * 0.4, constraints.maxHeight * hgt*0.8),  
                     itemBuilder: itemBuilder,
                     onChange: (List<String> orderedList) =>
@@ -165,7 +171,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin{
               new Text(
                 "${data.value}",
                 style: new TextStyle(
-                    fontSize: itemSize.height * 0.6, color: Color(0xffe66796)),
+                    fontSize: itemSize.height * 0.569, color: Color(0xffe66796)),
               )
           ])),
     ),

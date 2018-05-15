@@ -17,6 +17,10 @@ class UnitButton extends StatefulWidget {
   final bool highlighted;
   final bool primary;
   final bool showHelp;
+  final String bgImage;
+  final double maxWidth;
+  final double maxHeight;
+  final double fontSize;
 
   UnitButton(
       {Key key,
@@ -26,6 +30,10 @@ class UnitButton extends StatefulWidget {
       this.showHelp = true,
       this.highlighted = false,
       this.primary = true,
+      this.bgImage,
+      this.maxHeight,
+      this.maxWidth,
+      this.fontSize,
       this.unitMode = UnitMode.text})
       : super(key: key);
 
@@ -37,7 +45,8 @@ class UnitButton extends StatefulWidget {
   static void saveButtonSize(
       BuildContext context, int maxChars, double maxWidth, double maxHeight) {
     AppState state = AppStateContainer.of(context).state;
-    final fontSizeByWidth = maxWidth / (maxChars * 0.7);
+    final fontWidthFactor = maxChars == 1 ? 1.1 : 0.7;
+    final fontSizeByWidth = maxWidth / (maxChars * fontWidthFactor);
     final fontSizeByHeight = maxHeight / 1.8;
     state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
     state.buttonRadius = min(maxWidth, maxHeight) / 8.0;
@@ -49,7 +58,9 @@ class UnitButton extends StatefulWidget {
         ? min(maxWidth, maxHeight)
         : min(maxHeight, maxWidth * 0.75);
     print(
-        'fontsize: ${state.buttonFontSize} width: ${state.buttonWidth} height: ${state.buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
+        'width: ${state.buttonWidth} height: ${state.buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
+    print(
+        'fontsize: ${state.buttonFontSize} fontSizeByWidth: ${fontSizeByWidth} fontSizeByHeight ${fontSizeByHeight}');
   }
 }
 
@@ -93,9 +104,15 @@ class _UnitButtonState extends State<UnitButton> {
 
   Widget _buildButton(BuildContext context) {
     AppState state = AppStateContainer.of(context).state;
-    return SizedBox(
-        height: state.buttonHeight,
-        width: state.buttonWidth,
+    return Container(
+        constraints: BoxConstraints.tightFor(
+            height: widget.maxHeight ?? state.buttonHeight,
+            width: widget.maxWidth ?? state.buttonWidth),
+        decoration: new BoxDecoration(
+            image: widget.bgImage != null
+                ? new DecorationImage(
+                    image: new AssetImage(widget.bgImage), fit: BoxFit.contain)
+                : null),
         child: FlatButton(
             color: widget.highlighted
                 ? Theme.of(context).primaryColor
@@ -120,7 +137,7 @@ class _UnitButtonState extends State<UnitButton> {
                     width: 4.0),
                 borderRadius:
                     BorderRadius.all(Radius.circular(state.buttonRadius))),
-            child: _buildUnit(state.buttonFontSize)));
+            child: _buildUnit(widget.fontSize ?? state.buttonFontSize)));
   }
 
   Widget _buildUnit(double fontSize) {
