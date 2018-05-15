@@ -135,7 +135,7 @@ class _GameCategoryList extends State<GameCategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    int j = 1;
+    int j = 0;
     Size media = MediaQuery.of(context).size;
     final _colors = SingleGame.gameColors[widget.game];
     final color = _colors != null ? _colors[0] : Colors.amber;
