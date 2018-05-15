@@ -16,7 +16,7 @@ class GameCategoryList extends StatefulWidget {
 }
 
 class _GameCategoryList extends State<GameCategoryList> {
-  List<int> tilesColors = [
+  List<int> colors = [
     0XFF48AECC,
     0XFFE66796,
     0XFFFF7676,
@@ -170,7 +170,7 @@ class _GameCategoryList extends State<GameCategoryList> {
   Widget _buildTiles(BuildContext context, int index, int categoryId,
       String categories, String gameName) {
     return new Container(
-      color: new Color(tilesColors[index]),
+      color: new Color(colors[index]),
       child: new ExpansionTiles(
         title: new Center(
             child: new Text(
