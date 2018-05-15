@@ -148,6 +148,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       ShakeCell tile,
       ColmunCell Ctile,
       RowCell Rtile,
+
       int maxChars,
       double maxWidth,
       double maxHeight) {
@@ -158,6 +159,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         tile: tile,
         Ctile: Ctile,
         Rtile: Rtile,
+        unitMode: widget.gameConfig.answerUnitMode,//question unit mode
         onPress: () {
           print({"reference max size ": _referenceMatrix});
           print("this is index of prssted text ");
@@ -311,7 +313,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 maxHeight: maxHeight,
                 maxWidth: maxWidth,
                 child: new Material(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     elevation: 4.0,
                     textStyle: new TextStyle(
                         color: Colors.orangeAccent,
@@ -319,7 +321,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     child: new Container(
                         padding: EdgeInsets.all(buttonPadding),
                         child: new Center(
-                          child: new UnitButton(text:"$ques",primary: false,),
+                          child: new UnitButton(text:"$ques",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
                         )))),
             new Expanded(
                 child: Padding(
@@ -383,6 +385,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 }
 
 class MyButton extends StatefulWidget {
+
+
   MyButton(
       {Key key,
         this.text,
@@ -391,6 +395,7 @@ class MyButton extends StatefulWidget {
         this.tile,
         this.Ctile,
         this.Rtile,
+        this.unitMode,//question unit mode
         this.maxChars,
         this.maxWidth,
         this.maxHeight})
@@ -402,6 +407,7 @@ class MyButton extends StatefulWidget {
   ShakeCell tile;
   ColmunCell Ctile;
   RowCell Rtile;
+  UnitMode unitMode;//question unit mode
   final int maxChars;
   final double maxWidth;
   final double maxHeight;
@@ -527,6 +533,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     text: _displayText,
                     highlighted: widget.status == Status.Visible ? true : false,
                     disabled:  widget.Ctile ==  ColmunCell.CurveColumn || widget.Rtile == RowCell.CurveRow ? true :false ,
-                    unitMode: UnitMode.text))));
+                    unitMode:  widget.unitMode)))); //question unit mode
   }
 }
