@@ -80,11 +80,17 @@ class ProfileDrawerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return new FlatButton(
-        child: new CircleAvatar(
-          backgroundImage: new FileImage(new File(user.image)),
-          backgroundColor: Colors.white,
-        ),
-        onPressed: () => Scaffold.of(context).openDrawer());
+
+    return new Container(
+      child: new GestureDetector(
+          child: new CircleAvatar(
+             backgroundColor: Colors.white,
+            backgroundImage: new FileImage(new File(user.image)),
+          ),
+         onTap: () {
+           Scaffold.of(context).openDrawer();
+         },
+      )
+    );
   }
 }
