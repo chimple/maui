@@ -104,7 +104,7 @@ class _CasinoState extends State<Casino> {
     if (j < givenWordList.length) {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
-      if (scrollingLetterList[random] == givenWordList[j]) {
+      if (givenWordList[j] == scrollingLetterList[random]) {
         _selectedItemIndex = givenWordList.length - 1;
         print("Hey data shuffled");
         print("scrollingLetterList = $scrollingLetterList");
