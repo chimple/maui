@@ -62,8 +62,7 @@ class AbacusState extends State<Abacus> {
   final List<String> _allLetters1 = ['', '', '', '', '', ''];
   List flags = [];
   var u = 1;
-  var n = 0;
-  var m = 0;
+ 
   var finalans = 0;
   int count = 0;
   var maxcount = 0;
@@ -286,7 +285,9 @@ class AbacusState extends State<Abacus> {
               status[2] = 0;
               status[0] = 1;
               widget.onScore(5);
+              widget.onProgress(u++/2);
               if (result == finalans) {
+                
                 _letters1[4] = finalans.toString();
                 status[2] = 1;
                 status[4] = 0;
@@ -321,7 +322,7 @@ class AbacusState extends State<Abacus> {
 
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
-//      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+     final vPadding = pow(constraints.maxHeight / 150.0, 2);
         double scrnHeight= constraints.maxHeight;
         double scrnWidth=constraints.maxWidth;
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
@@ -342,7 +343,7 @@ class AbacusState extends State<Abacus> {
           //    child: new Text('result==$result',style: new TextStyle(color: Colors.red),),
           //  ),
           new Container(
-            color: Colors.lime,
+            color: Theme.of(context).accentColor,
             height: size.height / 8.0,
             width: size.width,
             child: new ResponsiveGridView(
@@ -351,7 +352,7 @@ class AbacusState extends State<Abacus> {
               cols: 5,
               children: _letters1
                   .map((e) => Padding(
-                        padding: EdgeInsets.all(buttonPadding),
+                        padding:  EdgeInsets.symmetric( horizontal: hPadding),
                         child: _buildItem(k, e, status[k++ - 100], flags[1],scrnHeight,scrnWidth)))
                   .toList(growable: false),
             ),
@@ -373,11 +374,13 @@ class AbacusState extends State<Abacus> {
             rows: 14,
             cols: _size,
             children: _letters
-                .map((e) => SizedBox(
+                .map((e) =>Padding(
+                        padding:  EdgeInsets.symmetric( horizontal: hPadding),
+                        child: SizedBox(
                       width: state.buttonWidth,
                       height: state.buttonHeight,
                       child: _buildItem(j, e, status[1], flags[j++],scrnHeight,scrnWidth),
-                    ))
+                    )))
                 .toList(growable: false),
           ))),
         ],
@@ -523,60 +526,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         highlighted:widget.colorflag!=0?false:true ,
         showHelp: false,
       );
-      // return new Center(
-      //     child: new Container(
-      //   // height: 50.0,
-      //   // width: 50.0,
-      //   decoration: new BoxDecoration(
-      //       color: widget.colorflag != 0 ? Colors.white30 : Colors.yellowAccent,
-      //       shape: BoxShape.rectangle),
-      //   padding: new EdgeInsets.all(10.0),
-      //   child: new Center(
-      //       child: new Text(widget.text,
-      //           key: new Key(widget.index.toString() + "but"),
-      //           style: new TextStyle(
-      //               color: Colors.red,
-      //               fontWeight: FontWeight.bold,
-      //               fontSize: 20.0))),
-      // ));
-    } else if (widget.index < widget.size) {
-      return new UnitButton(
-        text: widget.text,
-        highlighted: true,
-        showHelp: false,
-      );
-      // return new Container(
-      //   // height: 50.0,
-      //   // width: 50.0,
-      //   decoration:
-      //       new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
-      //   padding: new EdgeInsets.all(10.0),
-      //   child: new Text(widget.text,
-      //       textAlign: TextAlign.center,
-      //       style: new TextStyle(
-      //           color: Colors.red,
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: tt/35)),
-      // );
+     
     }else if (widget.index < widget.size) {
       return new UnitButton(
         text: widget.text,
-        highlighted: true,
+        
         showHelp: false,
       );
-      // return new Container(
-      //   // height: 50.0,
-      //   // width: 50.0,
-      //   decoration:
-      //       new BoxDecoration(color: Colors.blue, shape: BoxShape.rectangle),
-      //   padding: new EdgeInsets.all(10.0),
-      //   child: new Text(widget.text,
-      //       textAlign: TextAlign.center,
-      //       style: new TextStyle(
-      //           color: Colors.red,
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: tt/35)),
-      // );
+     
     } else {
       return new Center(
           child: new Container(
@@ -588,10 +545,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         new Container(
             //  height: 4000.0,
             width: tt / 140,
-            color: Colors.black,
+            color: Colors.red[400],
             ), 
           //new Column(
-           
+         
           new Shake(
               animation: widget.flag == '1' ? animation : animation1,
               // child: new Draggable(
@@ -610,14 +567,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           shape: BoxShape.circle,
                         )
                       : new BoxDecoration(),
-                //  padding: new EdgeInsets.all(5.0),
-                  // child:new Text(widget.text,
-                  //     style:new
-                  //         TextStyle(color: Colors.white, fontSize: 34.0))),
+
                 )),
                // feedback: new Container(),
                 //   onDragStarted: ()=>widget.onac(widget.index),
-             )
+             ),
+            
                     ]),
       ));
     }

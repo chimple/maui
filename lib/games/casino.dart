@@ -56,7 +56,7 @@ class _CasinoState extends State<Casino> {
   @override
   void initState() {
     super.initState();
-    new Future.delayed(Duration(milliseconds: 1000), () {});
+
     _initLetters();
   }
 
@@ -125,8 +125,8 @@ class _CasinoState extends State<Casino> {
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            // backgroundColor: new Color(0xFF734052),
-            backgroundColor: Colors.white,
+            backgroundColor: new Color(0xFF734052),
+            // backgroundColor: Colors.white,
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
               print("buttonNumber  $buttonNumber is triggered");
@@ -162,8 +162,10 @@ class _CasinoState extends State<Casino> {
               if (const IterableEquality()
                       .equals(finalList, finalGivenWordList) &&
                   count >= givenWordList.length) {
-                widget.onScore(5);
-                widget.onProgress(1.0);
+                new Future.delayed(const Duration(milliseconds: 1000), () {
+                  widget.onScore(5);
+                  widget.onProgress(1.0);
+                });
 
                 new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
@@ -237,27 +239,26 @@ class _CasinoState extends State<Casino> {
               flex: 1,
               child: new Material(
                 color: Theme.of(context).accentColor,
-               
                 child: ResponsiveGridView(
                     rows: 1,
                     cols: data.length,
-                    children: widget.gameConfig.questionUnitMode ==
-                            UnitMode.text
-                        ? givenWordList
-                            .map((e) => Padding(
-                                padding: EdgeInsets.all(buttonPadding),
-                                child: UnitButton(
-                                  text: e,
-                                )))
-                            .toList(growable: false)
-                        : <Widget>[
-                            UnitButton(
-                              maxWidth: maxHeight,
-                              maxHeight: maxHeight,
-                              text: givenWord.trim(),
-                              unitMode: widget.gameConfig.questionUnitMode,
-                            )
-                          ]),
+                    children:
+                        widget.gameConfig.questionUnitMode == UnitMode.text
+                            ? givenWordList
+                                .map((e) => Padding(
+                                    padding: EdgeInsets.all(buttonPadding),
+                                    child: UnitButton(
+                                      text: e,
+                                    )))
+                                .toList(growable: false)
+                            : <Widget>[
+                                UnitButton(
+                                  maxWidth: maxHeight,
+                                  maxHeight: maxHeight,
+                                  text: givenWord.trim(),
+                                  unitMode: widget.gameConfig.questionUnitMode,
+                                )
+                              ]),
               )),
           new Expanded(
             flex: 2,
