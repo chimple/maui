@@ -111,7 +111,7 @@ class _CasinoState extends State<Casino> {
               print("The letter is A");
               // var temp = scrollingLetterList[givenWordList.length - 1];
               scrollingLetterList[scrollingLetterList.length - 1] = scrollingLetterList[random];
-              scrollingLetterList[0] == givenWordList[2];
+              scrollingLetterList.removeAt(0);
             }
 
         print("Hey data shuffled");
