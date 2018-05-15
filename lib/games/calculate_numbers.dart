@@ -865,16 +865,19 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     padding: new EdgeInsets.only(
                         right: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
+                            : constraints.maxWidth * 0.15,
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
-                            : constraints.maxWidth * 0.2,
-                        bottom: constraints.maxWidth > constraints.maxHeight
-                            ? constraints.maxHeight * 0.06
-                            : constraints.maxWidth * 0.06,
-                        top: constraints.maxHeight * 0.01),
+                            : constraints.maxWidth * 0.15,
+//                        bottom: constraints.maxWidth > constraints.maxHeight
+//                            ? constraints.maxHeight * 0.06
+//                            : constraints.maxWidth * 0.06,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05
+)
+,
                     child: new Container(
-                        child: displayTable(constraints.maxHeight,
+                        child:
+                        displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'singleDigit')),
                   ),
                 ),
@@ -1230,10 +1233,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
                             : constraints.maxWidth * 0.1,
-                        bottom: constraints.maxWidth > constraints.maxHeight
-                            ? constraints.maxHeight * 0.06
-                            : constraints.maxWidth * 0.07,
-                        top: constraints.maxHeight * 0.01),
+//                        bottom: constraints.maxWidth > constraints.maxHeight
+//                            ? constraints.maxHeight * 0.06
+//                            : constraints.maxWidth * 0.07,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'doubleDigit')),
@@ -1746,10 +1749,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
                             : constraints.maxWidth * 0.1,
-                        bottom: constraints.maxWidth > constraints.maxHeight
-                            ? constraints.maxHeight * 0.06
-                            : constraints.maxWidth * 0.07,
-                        top: constraints.maxHeight * 0.01),
+//                        bottom: constraints.maxWidth > constraints.maxHeight
+//                            ? constraints.maxHeight * 0.06
+//                            : constraints.maxWidth * 0.07,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'tripleDigit')),
