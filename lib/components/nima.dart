@@ -42,7 +42,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 500),
         vsync: this);
     scaleAnimation =
-        new CurvedAnimation(parent: scaleController, curve: Curves.bounceIn)
+        new CurvedAnimation(parent: scaleController, curve: Curves.elasticOut)
           ..addStatusListener((state) {
             print(state);
             if (state == AnimationStatus.completed) {
