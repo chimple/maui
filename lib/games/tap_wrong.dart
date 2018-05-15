@@ -234,7 +234,23 @@ class TapWrongState extends State<TapWrong> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Container()),
+              new Expanded(
+              //  maxHeight: maxHeight,
+              //  maxWidth: maxWidth,
+                child: new Material(
+                    color: Theme.of(context).accentColor,
+                  //  elevation: 4.0,
+                    textStyle: new TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: state.buttonFontSize),
+                    child: new Container(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: new Center(
+                          child: new UnitButton(text:_dispText,
+                          primary: false,
+                          unitMode: UnitMode.image,
+                          ),
+                        )))),
               Expanded(
                   child: ResponsiveGridView(
                 rows: 1,

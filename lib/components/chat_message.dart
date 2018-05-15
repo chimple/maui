@@ -42,8 +42,11 @@ class ChatMessage extends StatelessWidget {
                   ),
                   new Flexible(
                       child: new Card(
-                    color: Colors.lightBlue,
-                    child: child,
+                    color: Colors.white,
+                    child: new Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: child,
+                    ),
                   )),
                 ],
               )
@@ -52,8 +55,11 @@ class ChatMessage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Card(
-                    color: Colors.lightBlue,
-                    child: child,
+                    color: Colors.white,
+                    child: new Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: child,
+                    ),
                   ),
                   new Container(
                     margin: const EdgeInsets.only(left: 16.0),
