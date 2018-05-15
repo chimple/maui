@@ -137,8 +137,8 @@ class _GameCategoryList extends State<GameCategoryList> {
   Widget build(BuildContext context) {
     int j = 1;
     Size media = MediaQuery.of(context).size;
-    final colors = SingleGame.gameColors[widget.game];
-    final color = colors != null ? colors[0] : Colors.amber;
+    final _colors = SingleGame.gameColors[widget.game];
+    final color = _colors != null ? _colors[0] : Colors.amber;
     return new Flex(
       direction: Axis.vertical,
       children: <Widget>[
