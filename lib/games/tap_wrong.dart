@@ -47,10 +47,19 @@ class TapWrongState extends State<TapWrong> {
   List<Statuses> _statusList;
   Tuple2<List<String>, List<String>> data;
   bool _isShowingFlashCard = false;
-
+ int _maxSize=3;
+ int _maxSize1=0;
   @override
   void initState() {
     super.initState();
+     if (widget.gameConfig.level < 4) {
+      _maxSize = 3;
+    } else if (widget.gameConfig.level < 7) {
+      _maxSize = 4;
+    } else {
+      _maxSize = 5;
+    }
+    _maxSize1=(_maxSize/2).ceil();
     _initBoard();
   }
 
@@ -63,7 +72,7 @@ class TapWrongState extends State<TapWrong> {
     numOFWrongElem = 0;
     _dispText = '';
     setState(() => _isLoading = true);
-    data = await fetchWordData(widget.gameConfig.gameCategoryId, 8, 2);
+   data=await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_maxSize1);
     print('datat  ${data.item1}');
     data.item1.forEach((d) {
       word.add(d);
