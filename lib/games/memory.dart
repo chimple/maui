@@ -125,6 +125,7 @@ class MemoryState extends State<Memory> {
         text: text,
         status: status,
         shaker: shaker,
+        unitMode: widget.gameConfig.questionUnitMode,
         onPress: () {
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
@@ -280,13 +281,14 @@ class MemoryState extends State<Memory> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status, this.shaker, this.onPress})
+  MyButton({Key key, this.text, this.status, this.shaker, this.unitMode, this.onPress})
       : super(key: key);
 
   final String text;
   Status status;
   ShakeCell shaker;
   final VoidCallback onPress;
+  UnitMode unitMode;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -395,13 +397,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new UnitButton(
                     onPress: widget.onPress,
                     text: _displayText,
-                    unitMode: UnitMode.text,
+                    unitMode: widget.unitMode,
                     disabled: widget.status == Status.Disappear ? true : false,
                   )),
               back: new UnitButton(
                 onPress: widget.onPress,
                 text: ' ',
-                unitMode: UnitMode.text,
+                unitMode: null,
               ))),
     );
   }
