@@ -11,6 +11,7 @@ import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+
 class Wordgrid extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -36,40 +37,27 @@ enum Status { Active, Visible, Disappear }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class WordgridState extends State<Wordgrid> {
-  var i = 0;
-  var count = 0;
-  var _size;
-  var size,T,B,j,n,m;
-  var k = 0;
-  var R = 1;
-  var L = 1;
-  var count1 = 0;
-  var count2 = 0;
-  var count3 = 0;
-  var count6 = 0;
-  var count4 = 0;
-  var count5 = 0;
-  var count0 = 0;
-  var r;
-  var center = 0;
-  var rand;
-  var flag = 0;
+  int _maxSize;
+  int _otherSize;
+  var size, _size;
   String words = '';
-  int _maxSize = 4;
-  int _otherSize = 1;
   bool _isShowingFlashCard = false;
-  List<String> numbers = [];
-  List<String> _shuffledLetters = [];
-  List _copyAns = [];
-  List<String> _letters;
-  List<String> _todnumber = [];
   List<Status> _statuses;
-  List<String> _letterex = [];
   bool _isLoading = true;
-  var z = 0;
+  List<double> cdlist = [];
+  List<int> cdletters = [];
+  List<String> newletters = [];
+  List<String> newothers = [];
   Tuple2<List<String>, List<String>> data;
-
+  int currentindex = 0;
+  int cdindex = 1;
+  var progress = 0;
+  var completeflag = 0;
+  List<int> tempcd = [];
+  List<String> disp = [];
+  List<Widget> temp = [];
   List<ShakeCell> _ShakeCells = [];
+  List<int> clicks = [];
   @override
   void initState() {
     super.initState();
@@ -91,135 +79,154 @@ class WordgridState extends State<Wordgrid> {
     // _copyAns=[];
     data = await fetchWordData(
         widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
-        print('original data $data');
+    print('original data $data');
     print("this data 1 ${data.item1}");
     print('data 2 ${data.item2}');
-   _size= sqrt(data.item1.length+data.item2.length).toInt();
-   T = _size;
-   B = _size;
-   j = _size;
-   n = _size;
-   m = _size;
-  size=_size;
+
+    var f = 4;
+    while (data.item1.length != _maxSize || data.item2.length != _otherSize) {
+      print('hi');
+      data = await fetchWordData(
+          widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
+      f--;
+      if (f == 0) {
+        print('hi22');
+        _maxSize = 4;
+        _otherSize = 5;
+        f = 10;
+      }
+      if (f == 7) {
+        _maxSize = 3;
+        _otherSize = 1;
+      }
+      if (f == 5) {
+        break;
+      }
+    }
+    _size = sqrt(data.item1.length + data.item2.length).toInt();
+    size = _size;
+    print('original2 data  $data');
+    print("this2 data 1 ${data.item1}");
+    print('data2 2 ${data.item2}');
+    // _statuses = numbers.map((a) => Status.Active).toList(growable: false);
     data.item1.forEach((e) {
-      _copyAns.add(e);
+      words = words + e;
     });
-    var rnge = new Random();
-    for (var i = 0; i < 1; i++) {
-      rand = rnge.nextInt(2);
-    }
-    if (rand == 1) {
-      data.item1.forEach((e) {
-        numbers.add(e);
-      });
-      data.item2.forEach((v) {
-        numbers.add(v);
-      });
-    } else {
-      data.item2.forEach((e) {
-        numbers.add(e);
-      });
-      data.item1.forEach((v) {
-        numbers.add(v);
-      });
-    }
-    print("suffle data is in my numbers is $numbers");
-    print("sorted numbers are $numbers ");
-    for (var i = 0; i < numbers.length; i += _size * _size) {
-      _shuffledLetters
-          .addAll(numbers.skip(i).take(_size * _size).toList(growable: true));
-    }
-    _statuses = numbers.map((a) => Status.Active).toList(growable: false);
-    _ShakeCells =
-        numbers.map((a) => ShakeCell.InActive).toList(growable: false);
-
-    print(_shuffledLetters);
-
-    var todnumbers = new List.generate(m, (_) => new List(n));
-    for (var i = 0; i < size; i++) {
-      for (var j = 0; j < size; j++) {
-        count3 = count2 + j + 1 + count1;
-        _shuffledLetters.sublist(count1, count3).forEach((e) {
-          todnumbers[i][j] = e;
-        });
-      }
-      count1 = count3;
-    }
-    for (var i = 1; i < size; i++) {
-      if (i % 2 != 0) {
-        Iterable letdo = todnumbers[i].reversed;
-        var fReverse = letdo.toList();
-        todnumbers[i].setRange(0, size, fReverse.map((e) => e));
-      }
-    }
-
-    todnumbers.forEach((e) {
-      e.forEach((v) {
-        _todnumber.add(v);
-      });
-    });
-    var todcolnumbers = new List.generate(m, (_) => new List(n));
-    for (var i = 0; i < size; i++) {
-      if (i % 2 != 0) {
-        for (var j = size - 1; j >= 0; j--) {
-          count6 = 1 + count4;
-          _shuffledLetters.sublist(count4, count6).forEach((e) {
-            todcolnumbers[j][i] = e;
-          });
-          count4 = count6;
-        }
-      } else {
-        for (var j = 0; j < size; j++) {
-          count6 = count2 + j + 1 + count4;
-          _shuffledLetters.sublist(count4, count6).forEach((e) {
-            todcolnumbers[j][i] = e;
-          });
-        }
-      }
-      count4 = count6;
-    }
-
-    todcolnumbers.forEach((e) {
-      e.forEach((v) {
-        _letterex.add(v);
-      });
-    });
-
     var rng = new Random();
-    for (var i = 0; i < 1; i++) {
-      r = rng.nextInt(4);
+    cdlist = [];
+    for (var i = 0; i < _size; i++) {
+      for (var j = 0; j < _size; j++) {
+        cdlist.add(i + j / 10);
+      }
     }
-    if (r == 4) {
-      r = r - 1;
+    var cflag = 1;
+    while (cflag == 1) {
+      var start = 0;
+      if (_size < 3) {
+        if (rng.nextInt(3) == 1)
+          start = 0;
+        else
+          start = 1;
+      } else if (_size == 3) {
+        start = rng.nextInt(cdlist.length - _size - (2 * (_size - 2)));
+      } else {
+        while (start < 1) {
+          start = rng.nextInt(cdlist.length - _size - (2 * (_size - 3)));
+        }
+      }
+      var cdstart = cdlist[start];
+      int eflag = 1;
+      while (eflag == 1) {
+        eflag = 0;
+        var p = cdstart.toInt();
+        var q = ((cdstart - p) * 10).toInt();
+        var len = 0;
+        cdletters = [];
+        //   print('rng   ${rng.nextInt(2)  }');
+        while (len < data.item1.length) {
+          cflag = 0;
+          if (q + 1 < _size && rng.nextInt(2) == 0) {
+            var f = 0;
+            for (var i = 0; i < cdletters.length; i++) {
+              if (p * _size + (q + 1) == cdletters[i]) {
+                f = 1;
+              }
+            }
+            if (f == 0) {
+              cdletters.add(p * _size + (q + 1));
+              q++;
+            }
+          } else if (p + 1 < _size && rng.nextInt(2) == 0) {
+            var f = 0;
+            for (var i = 0; i < cdletters.length; i++) {
+              if ((p + 1) * _size + q == cdletters[i]) {
+                f = 1;
+              }
+            }
+            if (f == 0) {
+              cdletters.add((p + 1) * _size + q);
+              p++;
+            }
+          } else if (q - 1 >= 0) {
+            var f = 0;
+            for (var i = 0; i < cdletters.length; i++) {
+              if (p * _size + (q - 1) == cdletters[i]) {
+                f = 1;
+              }
+            }
+            if (f == 0) {
+              cdletters.add(p * _size + (q - 1));
+              q--;
+            }
+          } else if (p - 1 >= 0) {
+            var f = 0;
+            for (var i = 0; i < cdletters.length; i++) {
+              if ((p - 1) * _size + q == cdletters[i]) {
+                f = 1;
+              }
+            }
+            if (f == 0) {
+              cdletters.add((p - 1) * _size + q);
+              p--;
+            }
+          } else {
+            print('exit 2 breakkkkk');
+            cflag = 1;
+            break;
+          }
+          len++;
+        }
+        if (cdletters.length != data.item1.length) {
+          eflag = 1;
+        }
+      }
+      print('nik new $cdletters  $start ${cdlist[start]}');
     }
-    switch (r) {
-      case 0:
-        {
-          _letters = _todnumber;
-        }
-        break;
-      case 1:
-        {
-          Iterable _number4 = _todnumber.reversed;
-          var fruitsInReverset = _number4.toList();
-          _letters = fruitsInReverset;
-        }
-        break;
-
-      case 2:
-        {
-          _letters = _letterex;
-        }
-        break;
-      case 3:
-        {
-          Iterable _number4 = _letterex.reversed;
-          var fruitsInReverset = _number4.toList();
-          _letters = fruitsInReverset;
-        }
-        break;
+    tempcd = [];
+    for (var i = 0; i < cdletters.length; i++) {
+      tempcd.add(cdletters[i]);
     }
-
+    for (var i = 0; i < data.item1.length; i++) {
+      disp.add(data.item1[i]);
+    }
+    newletters = [];
+    newletters.length = data.item1.length + data.item2.length;
+    for (var i = 0; i < cdletters.length; i++) {
+      newletters[cdletters[i]] = data.item1[i];
+    }
+    for (var i = 0, j = 0; i < newletters.length; i++) {
+      if (newletters[i] == null) {
+        newletters[i] = data.item2[j];
+        j++;
+      }
+    }
+    _statuses = [];
+    _statuses = newletters.map((a) => Status.Active).toList(growable: false);
+    _ShakeCells =
+        newletters.map((a) => ShakeCell.InActive).toList(growable: false);
+    currentindex = 1;
+    cdindex = 1;
+    _statuses[cdletters[0]] = Status.Visible;
     setState(() => _isLoading = false);
   }
 
@@ -239,68 +246,95 @@ class WordgridState extends State<Wordgrid> {
         status: status,
         tile: tile,
         onPress: () {
-          if (status == Status.Active) {
-            if ((text == _copyAns[i]) &&
-                (index == center + R ||
-                    index == center - L ||
-                    index == center - T ||
-                    index == center + B ||
-                    (center == 0 && flag == 0))) {
-              center = index;
-              flag = 1;
-              setState(() {
-                _statuses[index] = Status.Visible;
-                widget.onScore(1);
-                widget.onProgress((i + 1) / (_copyAns.length));
-                count0++;
-              });
-              i++;
-              if (i == _copyAns.length) {
+          if (index != cdletters[0]) {
+            clicks.add(index);
+
+            print('qw $clicks');
+            if (_statuses[index] == Status.Visible) {
+              clicks.removeLast();
+              if (clicks.last == index) {
+                print('kkk  ${clicks.last}  index $index');
+                if (cdletters[cdindex - 1] == index) {
+                  setState(() {
+                    widget.onScore(-1);
+                    widget.onProgress(--cdindex / cdletters.length);
+                  });
+                }
                 setState(() {
-                  _copyAns.forEach((e) {
-                    words = "$words" + "$e";
-                  });
+                  currentindex--;
+                  _statuses[index] = Status.Active;
                 });
-
-                _copyAns.removeRange(0, _copyAns.length);
-                i = 0;
-                new Future.delayed(const Duration(milliseconds: 500), () {
-                  k = 0;
-                  center = 0;
-                  flag = 0;
-                  count0 = 0;
-                  count1 = 0;
-                  count2 = 0;
-                  count3 = 0;
-                  count6 = 0;
-                  count4 = 0;
-                  count5 = 0;
-                  
-                  _todnumber.removeRange(0, _todnumber.length);
-                  _letters.removeRange(0, _letters.length);
-
-                  _letterex.removeRange(0, _letterex.length);
-                  numbers.removeRange(0, numbers.length);
-
-                  _shuffledLetters.removeRange(0, _shuffledLetters.length);
-                  //  _copyAns.removeRange(0, _copyAns.length);
-                  new Future.delayed(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      _isShowingFlashCard = true; // widget.onEnd();
-                    });
-                  });
-                  //
-                });
+                clicks.removeLast();
               }
             } else {
-              setState(() {
-                _ShakeCells[index] = ShakeCell.Right;
-                new Future.delayed(const Duration(milliseconds: 400), () {
-                  setState(() {
-                    _ShakeCells[index] = ShakeCell.InActive;
-                  });
-                });
+              print('hi  $cdindex');
+               setState(() {  
+                _statuses[index] = Status.Visible;  
               });
+               currentindex++;
+               print('got');
+               if(cdindex+1<cdletters.length){
+              if (cdletters[cdindex + 1] == index) {
+                setState(() {
+                  widget.onScore(2);
+                  widget.onProgress(++cdindex / cdletters.length);
+                });
+              } 
+               }           
+            }
+            print('current $currentindex  ${cdletters.length}');
+            if (currentindex == cdletters.length) {
+
+              var flag = 0;
+              var c = 0;
+              for (var j = 0; j < _statuses.length; j++) {
+                if (_statuses[j] == Status.Visible) {
+                  for (var k = 0; k < cdletters.length; k++) {
+                    if (j == cdletters[k]) {
+                      c++;
+                      break;
+                    } 
+                  }
+                }
+
+                setState(() {
+                  if (flag == 0 && c == cdletters.length) {
+                    print('hi 56789');
+                    completeflag = 1;
+                    widget.onScore(2);
+                    widget.onProgress(1.0);
+                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                      setState(() {
+                        _isShowingFlashCard = true; // widget.onEnd();
+                      });
+                    });
+                  }
+                });
+              }
+              // var pflag = 0;
+              // for (var c = 0; c < cdletters.length; c++) {
+              //   if (index == tempcd[c]) {
+              //     progress++;
+              //     tempcd[c] = -1;
+              //     setState(() {
+              //       widget.onScore(2);
+              //       print('scxore   2');
+              //       //  widget.onProgress(progress/cdletters.length);
+              //     });
+              //     break;
+              //   } else {
+              //     if (c == cdletters.length - 1) {
+              //       pflag = 1;
+              //     }
+              //   }
+              // }
+              // if (pflag == 1 && _statuses[index] == Status.Visible) {
+              //   setState(() {
+              //     widget.onScore(-1);
+              //     print('scxore   -1');
+              //   });
+              // }
+
             }
           }
         });
@@ -317,20 +351,21 @@ class WordgridState extends State<Wordgrid> {
     }
     if (_isShowingFlashCard) {
       return new FlashCard(
-          text:words,
+          text: words,
           onChecked: () {
             widget.onEnd(); // _initBoard();
 
             setState(() {
               _isShowingFlashCard = false;
               words = '';
+              disp = [];
+              completeflag = 0;
             });
           });
     }
     var j = 0;
     return new LayoutBuilder(builder: (context, constraints) {
-
-    final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
@@ -343,38 +378,50 @@ class WordgridState extends State<Wordgrid> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
-    return new Column(
-      children: [
-        new LimitedBox(
+      return new Column(
+        children: [
+          new LimitedBox(
               maxHeight: maxHeight,
               child: new Material(
                   color: Colors.orange,
                   elevation: 4.0,
                   textStyle: new TextStyle(
-                      color: Colors.white, fontSize: state.buttonFontSize,letterSpacing: 8.0),
-                  child: new Container(
-                  padding: EdgeInsets.all(buttonPadding),
-                  child: new Center(
-                    child: new Text(words),
-                  ),
-                ))),
+                      color: Colors.white, fontSize: state.buttonFontSize),
+                  child: new ListView(
+                      // reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.all(buttonPadding),
+                      itemExtent: state.buttonWidth,
+                      children: completeflag == 1
+                          ? disp
+                              .map((l) => Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(buttonPadding),
+                                      child: UnitButton(
+                                        text: l,
+                                        primary: false,
+                                        onPress: () {},
+                                      ))))
+                              .toList(growable: false)
+                          : temp))),
           new Expanded(
-           child: Padding(
+              child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: vPadding, horizontal: hPadding),
-          
-                child: new ResponsiveGridView(
-                  rows: _size,
-                  cols: _size,
-              //    maxAspectRatio: 1.0,
-                  children: _letters
-                      .map((e) =>Padding(
+                  child: new ResponsiveGridView(
+                    rows: _size,
+                    cols: _size,
+                    //    maxAspectRatio: 1.0,
+                    children: newletters
+                        .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                          child:_buildItem(j, e, _statuses[j], _ShakeCells[j++])))
-                      .toList(growable: false),
-                )))
-      ],
-    );});
+                            child: _buildItem(
+                                j, e, _statuses[j], _ShakeCells[j++])))
+                        .toList(growable: false),
+                  )))
+        ],
+      );
+    });
   }
 }
 
@@ -468,10 +515,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             child: new ScaleTransition(
                 scale: animationRight,
                 child: new UnitButton(
-                  disabled:widget.status==Status.Visible?true:false,
+                  highlighted: widget.status == Status.Visible ? true : false,
                   text: _displayText,
                   onPress: () => widget.onPress(),
                   unitMode: UnitMode.text,
+                  showHelp: false,
                 ))));
   }
 }
