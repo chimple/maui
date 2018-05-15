@@ -168,17 +168,18 @@ class _GameCategoryList extends State<GameCategoryList> {
         new Expanded(
           flex: 2,
           child: new ListView(
-              children: widget.gameCategories
-                  .map((gameCategory) =>
-                      _buldTile(context, j++, gameCategory.item2, widget.game))
-                  .toList(growable: false),),
+            children: widget.gameCategories
+                .map((gameCategory) => _buldTile(context, j++,
+                    gameCategory.item1, gameCategory.item2, widget.game))
+                .toList(growable: false),
+          ),
         )
       ],
     );
   }
 
-  Widget _buldTile(
-      BuildContext context, int index, String _cateGory, String gameName) {
+  Widget _buldTile(BuildContext context, int index, int categoryId,
+      String _cateGory, String gameName) {
     return new Container(
       color: new Color(colors[index]),
       child: new ExpansionTiles(
@@ -196,15 +197,15 @@ class _GameCategoryList extends State<GameCategoryList> {
                 color: Colors.white,
                 key: new Key('single'),
                 icon: new Icon(Icons.accessibility),
-                onPressed: () =>
-                    showModes(context, gameName, 'single_iterations', index),
+                onPressed: () => showModes(
+                    context, gameName, 'single_iterations', categoryId),
               ),
               new IconButton(
                 color: Colors.white,
                 key: new Key('h2h'),
                 icon: new Icon(Icons.people),
                 onPressed: () =>
-                    showModes(context, gameName, 'h2h_iterations', index),
+                    showModes(context, gameName, 'h2h_iterations', categoryId),
               ),
             ],
           )
