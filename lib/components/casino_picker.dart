@@ -123,6 +123,7 @@ class _CasinoPickerState extends State<CasinoPicker> {
       child: new IgnorePointer(
         child: new Container(
           decoration: const BoxDecoration(
+            shape: BoxShape.circle,
             gradient: const LinearGradient(
               colors: const <Color>[
                 const Color(0xFFFFFFFF),
