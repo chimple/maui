@@ -11,13 +11,14 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/games/single_game.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   Casino(
@@ -26,7 +27,7 @@ class Casino extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -59,7 +60,7 @@ class _CasinoState extends State<Casino> {
   }
 
   void _initLetters() async {
-    data = await fetchRollingData(widget.gameCategoryId, 6);
+    data = await fetchRollingData(widget.gameConfig.gameCategoryId, 5);
     print("Fetched Data $data");
     i = 0;
     j = 0;
@@ -103,7 +104,7 @@ class _CasinoState extends State<Casino> {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
       if (scrollingLetterList[random] == givenWordList[j]) {
-        _selectedItemIndex = 0;
+        _selectedItemIndex = givenWordList.length - 1;
         print("Hey data shuffled");
         print("scrollingLetterList = $scrollingLetterList");
       }
@@ -117,19 +118,19 @@ class _CasinoState extends State<Casino> {
 //      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
         style: const TextStyle(
-            color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
+             fontSize: 30.0,
+             fontWeight: FontWeight.w900
+             ),
         child: new SafeArea(
           child: new CasinoPicker(
             key: new ValueKey(j),
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            backgroundColor: new Color(0xfffff8c43c),
+            // backgroundColor: new Color(0xfffff8c43c),
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
-              // setState(() {
-              //   _selectedItemIndex = index;
-              // });
+              
               print("buttonNumber  $buttonNumber is triggered");
 
               for (int i = 0; i < givenWordList.length; i++) {
@@ -187,7 +188,7 @@ class _CasinoState extends State<Casino> {
                         fontWeight: FontWeight.bold,
                         fontSize: 45.0,
                         letterSpacing: 5.0,
-                        color: Colors.black)),
+                        )),
               );
             }),
           ),
@@ -220,7 +221,7 @@ class _CasinoState extends State<Casino> {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / data.length;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -236,19 +237,30 @@ class _CasinoState extends State<Casino> {
           children: <Widget>[
             new Expanded(
                 child: ResponsiveGridView(
-              rows: 1,
-              cols: data.length,
-              children: givenWordList
-                  .map((e) => Padding(
-                      padding: EdgeInsets.all(buttonPadding),
-                      child: UnitButton(text: e)))
-                  .toList(growable: false),
-            )),
+                    rows: 1,
+                    cols: data.length,
+                    children:
+                        widget.gameConfig.questionUnitMode == UnitMode.text
+                            ? givenWordList
+                                .map((e) => Padding(
+                                    padding: EdgeInsets.all(buttonPadding),
+                                    child: UnitButton(
+                                      text: e,
+                                    )))
+                                .toList(growable: false)
+                            : <Widget>[
+                                UnitButton(
+                                  maxWidth: maxHeight,
+                                  maxHeight: maxHeight,
+                                  text: givenWord.trim(),
+                                  unitMode: widget.gameConfig.questionUnitMode,
+                                )
+                              ])),
             new Expanded(
               child: new ResponsiveGridView(
                 cols: data.length,
                 rows: 1,
-                maxAspectRatio: 0.7,
+                maxAspectRatio: 1.0,
                 children: data.map((s) {
                   return _buildScrollButton(context, s, scrollbuttonNumber++);
                 }).toList(growable: false),

@@ -42,7 +42,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   onGameEnd(BuildContext context) {
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
     Navigator.push(context,
         new MaterialPageRoute<void>(builder: (BuildContext context) {
       return new ScoreScreen(
