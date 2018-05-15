@@ -108,6 +108,7 @@ class _CasinoState extends State<Casino> {
         _selectedItemIndex = givenWordList.length - 1;
         if (scrollingLetterList[random] == 'a' ||
             scrollingLetterList[random] == 'A') {
+              print("The letter is A");
               var temp = scrollingLetterList[givenWordList.length - 1];
               scrollingLetterList[givenWordList.length - 1] = scrollingLetterList[random];
               scrollingLetterList[0] == temp;
@@ -118,6 +119,7 @@ class _CasinoState extends State<Casino> {
         print("scrollingLetterList = $scrollingLetterList");
       }
       j++;
+      print("j = $j");
     }
 
     AppState state = AppStateContainer.of(context).state;
@@ -173,6 +175,7 @@ class _CasinoState extends State<Casino> {
                 new Future.delayed(const Duration(milliseconds: 1000), () {
                   widget.onScore(5);
                   widget.onProgress(1.0);
+                  j=0;
                 });
 
                 new Future.delayed(const Duration(milliseconds: 800), () {
