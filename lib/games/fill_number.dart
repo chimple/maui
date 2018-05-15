@@ -122,7 +122,7 @@ class MyFillnumberState extends State<Fillnumber> {
     print("some of old widget is $widget.iteration");
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print("Rajesh-Data-didUpdateWidget${_allLetters}");
+      // print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
   }
 
@@ -134,24 +134,13 @@ class MyFillnumberState extends State<Fillnumber> {
         status: status,
         bgstatus: bgstatus,
         onPress: () {
-          if(ssum==null)
-          {
-             setState(() {
-                          ssum = nul1;
-                        });
-          }
-          num1 = text;
+        //first i'm checking text should not null thats the reason checking here
           if(text!=null) {
           if (status == Status.Active) {
             if (sum == 0) {
               setState(() {
                 ssum = '$text';
-                  if(ssum==null)
-          {
-          
-                          ssum ='\0';
-                 
-          }
+       
                 print('qwer shanttttthuuu $ssum');
                 _center.add(index);
               });
@@ -263,9 +252,15 @@ class MyFillnumberState extends State<Fillnumber> {
               print('helo this is num on clicked value of sum $sum');
               print('helo this is num on clicked index value $index');
             }
+
+            //here in my game the flow is adjecent you to go .... for that i did this one 
             _center.forEach((e) {
               center = e;
-              if (center == _size ||
+              //both if and else if condition checking because of..
+              //  in some situation if your going left and right should not be go ther.. 
+              // that is adjecent to that tile
+          
+           if (center == _size ||
                   center == _size + _size ||
                   center == _size + _size + _size) {
                 x = center;
@@ -275,7 +270,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 y = center;
                 print("hello this iiis yyyy$y");
               }
-
+          //this if condtion because of you have to top, bottom , left and right for that purpose
               if (((index == center + R && y != center) ||
                   index == center + B ||
                   (index == center - L && x != center) ||
@@ -308,8 +303,8 @@ class MyFillnumberState extends State<Fillnumber> {
 
                       new Future.delayed(const Duration(milliseconds: 250), () {
                         widget.onScore(1);
-                         count1=count1+z;
-                        widget.onProgress((count1) /(_letters.length + _letters.length));
+                         count1=count1+1;
+                        widget.onProgress((count1) /(7));
                        
                         for (var i = 0; i < _Index.length; i++) {
                           _letters[_Index[i]] = null;
@@ -327,6 +322,7 @@ class MyFillnumberState extends State<Fillnumber> {
                             count = count + 1;
                           }
                         });
+                        //this is you want to clear the ans value in it after some time it will disappear
                         setState(() {
                           ssum = '';
                         });
@@ -370,16 +366,15 @@ class MyFillnumberState extends State<Fillnumber> {
                       k = _letters[4];
                       print("helllo this letters$k");
                       if (_letters[z] == null) {
-                         setState(() { ssum = "";});
+
+                      //here setting every variable data using within the functionality making as initial set 
                         setState(() {
+                        // here you want to get  another level of data in widget.onend it will call another set of datra
                           print("its reload time ");
                           k = 0;
                           // count1=count1-z;
                           Ansr = 0;
-                          if(ssum==null){
-                              setState(() { ssum = "";});
-                          }
-                 
+                           ssum = "";
                           sum = 0;
                           _Index.removeRange(0, _Index.length);
                           _letters.removeRange(0, _letters.length);
@@ -387,8 +382,9 @@ class MyFillnumberState extends State<Fillnumber> {
                         });
                         new Future.delayed(const Duration(milliseconds: 250),
                             () {
-                          print("Rajesh Game-End");
+                         
                           widget.onEnd();
+                            count1=count1;
                         });
                       }
 
@@ -439,7 +435,7 @@ class MyFillnumberState extends State<Fillnumber> {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1)- 10.0;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 2);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -449,44 +445,18 @@ class MyFillnumberState extends State<Fillnumber> {
       AppState state = AppStateContainer.of(context).state;
       return new Container(
         child: new Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+     
           children: <Widget>[
-           
-          // new   Container(
-          //       color: new Color(0xFFFFF8F3),
-          //       height: 30.0,
-              
-          //       // padding: const EdgeInsets.all(10.0),
-          //       child: new Center(
-          //           child: new Text("$Ansr",
-          //               style: new TextStyle(
-          //                  color: new Color(0xFFd83242), fontSize: 25.0)))),
-          //   new Container(
-          //     // margin: new EdgeInsets.only(top: 5.0),
-          //    color: new Color(0xFFFFF8F3),
-          //       height: 80.0,
-          //       child: new Center(
-          //           child: new Text("$ssum",
-          //               style: new TextStyle(
-          //                   color: new Color(0xFFd83242), fontSize: 30.0)))),
+         
        new Container(
         
             child: new Column( 
               children: <Widget>[
-                //     new   Container(
-                // color: new Color(0xFFFFF8F3),
-                // // height: 30.0,
-              
-                // // padding: const EdgeInsets.all(10.0),
-                // child: new Center(
-                //     child: new Text("$Ansr",
-                //         style: new TextStyle(
-                //            color: new Color(0xFFd83242), fontSize: 25.0)))),
+             
                  new LimitedBox(
               maxHeight: maxHeight,
               child: new Material(
-                  color:Theme.of(context).primaryColor,
+                  color:Theme.of(context).accentColor,
                   elevation: 4.0,
                   textStyle: new TextStyle(
                       color: Colors.white, fontSize: state.buttonFontSize,letterSpacing: 8.0),
@@ -495,25 +465,18 @@ class MyFillnumberState extends State<Fillnumber> {
                   child: new Center(
                     child: new UnitButton(
                       text: "$Ansr",
-                      primary: false,
+                      primary: true,
                     )
                   ),
                 ))),
-            // new Container(
-            //   // margin: new EdgeInsets.only(top: 5.0),
-            //  color: new Color(0xFFFFF8F3),
-            //     // height: 80.0,
-            //     child: new Center(
-            //         child: new Text("$ssum",
-            //             style: new TextStyle(
-            //                 color: new Color(0xFFd83242), fontSize: 30.0)))),
+         
               new LimitedBox(
               maxHeight: maxHeight,
               child: new Material(
-                  color: Theme.of(context).primaryColor,
+                   color:Theme.of(context).accentColor,
                   elevation: 4.0,
                   textStyle: new TextStyle(
-                      color: Colors.white, fontSize: state.buttonFontSize,letterSpacing: 8.0),
+                    color: Theme.of(context).primaryColor, fontSize: state.buttonFontSize,letterSpacing: 8.0),
                   child: new Container(
                   padding: EdgeInsets.all(buttonPadding),
                   child: new Center(
@@ -610,43 +573,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
 
     return new Container(
-        // decoration: new BoxDecoration(
-        //   color: Colors.white,
-        //   borderRadius: new BorderRadius.circular(.0),
-        // ),
+       
         child: new ScaleTransition(
           scale: animation,
           child: new GestureDetector(
                        child: new Container(
-                        //  margin: new EdgeInsets.all(3.0),
-              // child: new RaisedButton(
-              
-              //     onPressed: () => widget.onPress(),
-       
-              //     color: widget.status == Status.Visible
-              //         ? new Color(0xFFffffff)
-              //         : Colors.teal,
-              //     shape: new RoundedRectangleBorder(
-              //         borderRadius:
-              //             new BorderRadius.all(new Radius.circular(8.0))),
-              //     child: new Text("$_displayText",
-              //     key: new Key(widget.index.toString()+"but"),
-              //         style:
-              //             new TextStyle(color: Colors.black, fontSize: 24.0)))
+               
                child: new UnitButton(
-                  // onPressed: () => widget.onPress(),
-       
-                  // color: widget.status == Status.Visible
-                  //     ? new Color(0xFFffffff)
-                  //     : new Color(_color),
-                  // shape: new RoundedRectangleBorder(
-                  //     borderRadius:
-                  //         new BorderRadius.all(new Radius.circular(8.0))),
-                  // child: new Text("$_displayText",
-                  // key: new Key(widget.index.toString()+"but"),
-                  //     style:
-                  //         new TextStyle(color: Colors.black, fontSize: 24.0)
-                  //         )
+                 
                   onPress:() => widget.onPress(),
                   text:_displayText.toString(),
                   highlighted: widget.status == Status.Visible? true :false,
