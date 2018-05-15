@@ -171,7 +171,7 @@ class ScoreScreen extends StatelessWidget {
                               Navigator.pop(context);
                               }
                         )),
-                  new Container(
+                  gameDisplay == GameDisplay.myHeadToHead ? new Container() : new Container(
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           border: new Border.all(

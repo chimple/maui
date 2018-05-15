@@ -106,22 +106,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
         });
   }
 
-  void handleAnswer(bool answer) {
-    isCorrect = (tf == answer);
-    if (isCorrect) {
-      scoretrack = scoretrack + 4;
-      widget.onScore(4);
-      widget.onProgress(1.0);
-    } else {
-      if (scoretrack > 0) {
-        scoretrack = scoretrack - 1;
-        widget.onScore(-1);
-      } else {
-        widget.onScore(0);
-      }
-    }
-    
-  }
+  
 
   @override
   void didUpdateWidget(TrueFalseGame oldWidget) {
@@ -179,19 +164,23 @@ class TrueFalseGameState extends State<TrueFalseGame> {
               child: new LimitedBox(
                   maxHeight: maxHeight,
                   child: new Center(
-                    child: new Column(
-                    children: <Widget>[
-                       new Text(questionText,
+                    child: new Text(questionText,
+                     style: new TextStyle(
+                         color: Theme.of(context).primaryColor,
+                         fontSize: state.buttonFontSize))))),
+                new Material(
+                  color: Theme.of(context).accentColor,
+                  elevation: 8.0,
+                  child: new LimitedBox(
+                    maxHeight: maxHeight,
+                    child: new Center(
+                      child: new Text(answerText,
                         style: new TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                             fontSize: state.buttonFontSize)),
-
-                        new Text(answerText,
-                        style: new TextStyle(
-                            color: Colors.white,
-                            fontSize: state.buttonFontSize)),
-                    ]
-                  )))),
+                    )
+                  )
+                ),
                 new Expanded(
                   child: new ResponsiveGridView(
                   rows: 1,
@@ -300,20 +289,27 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               //   onPress: () => widget.onPress(),
               //   text: _displayText,
               //   unitMode: widget.unitMode,
-               child: new RaisedButton(
+               child: new Container(
+                 decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(20.0),
+                  border: new Border.all(
+                    width: 6.0,
+                    color: _displayText == 'true' ? Colors.green : Colors.red,
+                  ),
+                ),
+               child: new FlatButton(
                    onPressed: () => widget.onPress(),
-                   color: const Color(0xFFffffff),
+                   color: Colors.transparent,
                    shape: new RoundedRectangleBorder(
-                       borderRadius:
-                       const BorderRadius.all(const Radius.circular(8.0))),
+                       borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
                    child: new Icon(
                   _displayText == 'true' ? Icons.check : Icons.close,
                   key: new Key("${widget.keys}"),
                   size: 100.0,
-                  color: Colors.black,
+                  color: _displayText == 'true' ? Colors.green : Colors.red,
                    )
                    
-              ),
+              ),)
             )));
   }
 }
