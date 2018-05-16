@@ -63,7 +63,7 @@ class MyFillnumberState extends State<Fillnumber> {
   List<List<int>> _allLetters;
   List<int> _shuffledLetters = [];
   List<int> _copyVal = [];
-
+List<int> clicks = [];
   List _Index = [];
   List _num2 = [];
   List _center = [];
@@ -72,7 +72,7 @@ class MyFillnumberState extends State<Fillnumber> {
   String nul1='';
   List<Status> _statuses;
   List<Bgstatus> _Bgstatus;
-
+List<String> Ssum=[];
   bool _isLoading = true;
 
   List _val2 = [];
@@ -134,10 +134,14 @@ class MyFillnumberState extends State<Fillnumber> {
         status: status,
         bgstatus: bgstatus,
         onPress: () {
+
         //first i'm checking text should not null thats the reason checking here
           if(text!=null) {
+            
           if (status == Status.Active) {
+            
             if (sum == 0) {
+               clicks.add(index);
               setState(() {
                 ssum = '$text';
        
@@ -276,6 +280,7 @@ class MyFillnumberState extends State<Fillnumber> {
                   (index == center - L && x != center) ||
                   index == center - T)) {
                 setState(() {
+                    clicks.add(index);
                   ssum = '$ssum' + '+' + '$text';
                   _statuses[index] = Status.Visible;
                   _Bgstatus[index] = Bgstatus.BgVisible;
@@ -376,6 +381,7 @@ class MyFillnumberState extends State<Fillnumber> {
                           Ansr = 0;
                            ssum = "";
                           sum = 0;
+                          clicks.removeRange(0, clicks.length);
                           _Index.removeRange(0, _Index.length);
                           _letters.removeRange(0, _letters.length);
                           _center.removeRange(0, _center.length);
@@ -395,19 +401,62 @@ class MyFillnumberState extends State<Fillnumber> {
               }
             });
           } else {
+            if(clicks.last == index)
+            {
+             clicks.add(index);
             setState(() {
-              sum = 0;
-              _statuses =
-                  _copyVal.map((a) => Status.Active).toList(growable: false);
-              _Bgstatus = _copyVal
-                  .map((a) => Bgstatus.BgActive)
-                  .toList(growable: false);
-              _Index.removeRange(0, _Index.length);
-              _num2.removeRange(0, _num2.length);
-              _center.removeRange(0, _center.length);
+                clicks.removeLast();
+                 if (clicks.last == index) {
+                print('kkk  ${clicks.last}  index $index');
+                // if (cdletters[cdindex - 1] == index) {
+                  setState(() {
+                    widget.onScore(-1);
+          
+                  });
+                // }
+                setState(() {
+            sum=sum-text;
 
-              center = 0;
+           // List Sum =[];
+          // Ssum=ssum.split('');
+          // for(var k=0; k<Ssum.length-2;k++){
+          //      Sum.add(Ssum[k]);
+              
+          // }
+          //   print(" hello this is to cahracter is $Sum");
+          
+     
+          
+           if(ssum.length>=2){
+          ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
+          _center.removeLast();
+           }
+           else{
+              ssum=ssum.replaceRange(ssum.length-1, ssum.length,'');
+              ssum='';
+               _center.removeRange(0, _center.length);
+                _Index.removeRange(0, _Index.length);
+           }
+                // print(" hello this is to cahracter is $Ssum");
+                              _statuses[index] = Status.Active;
+                });
+                clicks.removeLast();
+              }
+               print(" hello this is to cahracter is $sum");
+               print("hellooo thsssss is deleting string last $ssum");
+              // sum = 0;
+              // _statuses =
+              //     _copyVal.map((a) => Status.Active).toList(growable: false);
+              // _Bgstatus = _copyVal
+              //     .map((a) => Bgstatus.BgActive)
+              //     .toList(growable: false);
+              // _Index.removeRange(0, _Index.length);
+              // _num2.removeRange(0, _num2.length);
+              // _center.removeRange(0, _center.length);
+
+              // center = 0;
             });
+          }
           }
           }
         });
