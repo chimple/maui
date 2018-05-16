@@ -8,7 +8,7 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
-
+.history/
 local.properties
 
 pubspec.lock

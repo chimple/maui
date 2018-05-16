@@ -159,7 +159,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _status2.clear();
       _status3.clear();
       _status4.clear();
-
+       leftIsTapped = 0;
       _initBoard();
     }
   }
@@ -322,7 +322,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
             });
           });
         } catch (exception, e) {}
-        //leftIsTapped = 0;
+        // leftIsTapped = 0;
         _wrongAttem++;
       }
     }

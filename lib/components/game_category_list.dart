@@ -145,14 +145,13 @@ class _GameCategoryList extends State<GameCategoryList> {
         new Expanded(
           flex: 1,
           child: new Container(
-            width: media.width,
-            color: color,
-            child: new Image(
-              image: AssetImage(
+              width: media.width,
+              color: color,
+              child: FittedBox(
+                  child: new Image.asset(
                 'assets/hoodie/${widget.game}.png',
-              ),
-            ),
-          ),
+                scale: .85,
+              ))),
         ),
         new Expanded(
           flex: 2,
@@ -168,19 +167,23 @@ class _GameCategoryList extends State<GameCategoryList> {
   }
 
   Widget _buildTiles(BuildContext context, int index, int categoryId,
+  
       String categories, String gameName) {
+         Size media = MediaQuery.of(context).size;
+    double _fontSize;
+    _fontSize = (media.height * .58 * .162) / 3.9;
     return new Container(
       color: new Color(colors[index]),
       child: new ExpansionTiles(
         title: new Center(
             child: new Text(
           categories,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white,fontSize: _fontSize),
         )),
         trailing: new Text(''),
         children: <Widget>[
           new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new IconButton(
                 color: Colors.white,
