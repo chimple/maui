@@ -1,4 +1,5 @@
 import 'dart:async' show Future;
+import 'dart:math';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
@@ -29,7 +30,11 @@ class IdentifyGame extends StatefulWidget {
   State<StatefulWidget> createState() => new _IdentifyGameState();
 }
 
-class _IdentifyGameState extends State<IdentifyGame> {
+class _IdentifyGameState extends State<IdentifyGame> with SingleTickerProviderStateMixin{
+  AnimationController _imgController;
+
+  Animation<double> animateImage;
+
   Future<String> _loadGameAsset() async {
     return await rootBundle.loadString("assets/imageCoordinatesInfo2.json");
   }
@@ -40,10 +45,11 @@ class _IdentifyGameState extends State<IdentifyGame> {
     this.setState(() {
       _decoded = json.decode(jsonGameInfo);
     });
-    print(_decoded["id"]);
-    print(_decoded["height"]);
-    print(_decoded["width"]);
-    print(_decoded["parts"][0]["name"]);
+    print((_decoded["parts"] as List));
+    // print(_decoded["id"]);
+    // print(_decoded["height"]);
+    // print(_decoded["width"]);
+    // print(_decoded["parts"][0]["name"]);
     // _parserJsonForGame(jsonGameInfo);
   }
 
@@ -60,17 +66,26 @@ class _IdentifyGameState extends State<IdentifyGame> {
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
     this._loadGameInfo();
+    _imgController = new AnimationController(
+        duration: new Duration(
+          milliseconds: 800,
+        ),
+        vsync: this);
+    animateImage =
+        new CurvedAnimation(parent: _imgController, curve: Curves.bounceInOut);
+    _imgController.forward();
   }
 
   // List<String> list=['square','circle','hexagon','triangle','trapezium','rectangle','rhombus','paralleogram','rightangled'];
   Widget _builtButton(BuildContext context) {
-    print(_decoded["parts"].length);
+    print((_decoded["parts"] as List).length);
     // print(list);
     int j = 0;
-    int r = (_decoded["parts"].length / 5 +
-            (((_decoded["parts"].length % 5) == 0) ? 0 : 1))
+    int r = ((_decoded["parts"] as List).length / 5 +
+            ((((_decoded["parts"] as List).length % 5) == 0) ? 0 : 1))
         .toInt();
     print(r);
     return new ResponsiveGridView(
@@ -81,6 +96,14 @@ class _IdentifyGameState extends State<IdentifyGame> {
           .map((e) => _buildItems(j++, e))
           .toList(growable: false),
     );
+  }
+
+  List<String> _buildPartsList() {
+    List<String> partsName = [];
+    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+      partsName.add((_decoded["parts"] as List)[i]["name"]);
+    }
+    return partsName;
   }
 
   Widget _buildItems(int i, var part) {
@@ -109,75 +132,84 @@ class _IdentifyGameState extends State<IdentifyGame> {
 
   @override
   Widget build(BuildContext context) {
+    print("kjbgiqjbqgobgqoub............. ga gieh bibeqfi...");
+    print(_buildPartsList());
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
-    print("height is $_height ");
-    print("width is $_width");
+    print("height of screen from media is $_height ");
+    print("width of screen from media is $_width");
     var x = _decoded["parts"][0]["data"]["height"];
     print("this is $x height in pixels");
-    return new Flex(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      direction: Axis.vertical,
-      children: <Widget>[
-        new Expanded(
-          child: new GestureDetector(
-            onHorizontalDragStart: (DragStartDetails start) =>
-            _onDragStart(context, start),
-        onHorizontalDragUpdate: (DragUpdateDetails update) =>
-            _onDragUpdate(context, update),
-        onVerticalDragStart: (DragStartDetails start) =>
-            _onDragStart(context, start),
-        onVerticalDragUpdate: (DragUpdateDetails update) =>
-            _onDragUpdate(context, update),
-                      child: new Stack(
-              fit: StackFit.passthrough,
-              children: <Widget>[
-                new Scaffold(
-                  body: new Column(
-                    children: <Widget>[
-                      new Expanded(
-                        flex: 2,
-                        child: new Image(
-                          image: AssetImage('assets/' + _decoded["id"]),
-                          fit: BoxFit.contain,
+    return new LayoutBuilder(builder: (context, constraint) {
+      print("Height from layout builder.....${constraint.maxHeight}");
+      print("Width from layout builder.....${constraint.maxWidth}");
+      return new Flex(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        direction: Axis.vertical,
+        children: <Widget>[
+          new Expanded(
+            child: new GestureDetector(
+              onHorizontalDragStart: (DragStartDetails start) =>
+                  _onDragStart(context, start),
+              onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                  _onDragUpdate(context, update),
+              onVerticalDragStart: (DragStartDetails start) =>
+                  _onDragStart(context, start),
+              onVerticalDragUpdate: (DragUpdateDetails update) =>
+                  _onDragUpdate(context, update),
+              child: new Stack(
+                fit: StackFit.passthrough,
+                children: <Widget>[
+                  new Scaffold(
+                    body: new Column(
+                      children: <Widget>[
+                        new Expanded(
+                          flex: 2,
+                          child: new ScaleTransition(
+                            scale: animateImage,
+                            child: new Image(
+                                image: AssetImage('assets/' + _decoded["id"]),
+                                fit: BoxFit.contain,
+                              ),
+                          ),
                         ),
-                      ),
-                      new Expanded(flex: 1, child: _builtButton(context))
+                        new Expanded(flex: 1, child: _builtButton(context))
 
-                      // new Expanded(
-                      //   flex: 1,
-                      //   child: new Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: <Widget>[
-                      //       new DragBox(_decoded["parts"][0]),
-                      //       new DragBox( _decoded["parts"][1]),
-                      //       new DragBox(_decoded["parts"][2]),
-                      //       new DragBox(_decoded["parts"][3]),
-                      //     ],
-                      //   ),
-                      // )
-                    ],
+                        // new Expanded(
+                        //   flex: 1,
+                        //   child: new Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     children: <Widget>[
+                        //       new DragBox(_decoded["parts"][0]),
+                        //       new DragBox( _decoded["parts"][1]),
+                        //       new DragBox(_decoded["parts"][2]),
+                        //       new DragBox(_decoded["parts"][3]),
+                        //     ],
+                        //   ),
+                        // )
+                      ],
+                    ),
                   ),
-                ),
-                // new RepaintBoundary(
-                //   child: new CustomPaint(
-                //     painter: new Stickers(
-                //       text: paste,
-                //       x: x,
-                //       y: y,
-                //     ),
-                //     isComplex: false,
-                //     willChange: false,
-                //   ),
-                // )
-              ],
+                  // new RepaintBoundary(
+                  //   child: new CustomPaint(
+                  //     painter: new Stickers(
+                  //       text: paste,
+                  //       x: x,
+                  //       y: y,
+                  //     ),
+                  //     isComplex: false,
+                  //     willChange: false,
+                  //   ),
+                  // )
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }
 
@@ -272,54 +304,54 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     return new ScaleTransition(
       scale: shakeAnimation,
       child: new Draggable(
-            data: part["name"],
-            child: new AnimatedDrag(
-                animation: (_flag == 0) ? noanimation : animation,
-                draggableColor: Colors.red,
-                draggableText: part["name"]),
-            feedback: new AnimatedFeedback(
-                animation: animation,
-                draggableColor: Colors.black,
-                draggableText: part["name"]),
-            onDraggableCanceled: (velocity, offset) {
-              setState(() {
-                if ((part["name"] == _decoded["parts"][0]["name"]) &&
-                    (offset.dx > 0.0 && offset.dx < 100.0) &&
-                    (offset.dy > 0.0 && offset.dy < 100.0)) {
-                  // position = offset;
-                  print(offset.dx);
-                  print(offset.dy);
-                } else if (part["name"] == _decoded["parts"][1]["name"] &&
-                    (offset.dx > (_width - 130) && offset.dx < 370.0) &&
-                    (offset.dy > 0.0 && offset.dy < 120.0)) {
-                  // position = offset;
-                  print(offset.dx);
-                  print(offset.dy);
-                } else if (part["name"] == _decoded["parts"][3]["name"] &&
-                    (offset.dx > 0.0 && offset.dx < 130.0) &&
-                    (offset.dy > 160.0 && offset.dy < 290.0)) {
-                  // position = offset;
-                  print(offset.dx);
-                  print(offset.dy);
-                } else if (part["name"] == _decoded["parts"][2]["name"] &&
-                    (offset.dx > (_width - 110) && offset.dx < 370.0) &&
-                    (offset.dy > 170 && offset.dy < 290.0)) {
-                  // position = offset;
-                  print(offset.dx);
-                  print(offset.dy);
-                } else {
-                  _flag = 1;
-                  toAnimateFunction();
-                  new Future.delayed(const Duration(milliseconds: 1000), () {
-                    setState(() {
-                      _flag = 0;
-                    });
-                    controller.stop();
-                  });
-                }
+        data: part["name"],
+        child: new AnimatedDrag(
+            animation: (_flag == 0) ? noanimation : animation,
+            draggableColor: Colors.red,
+            draggableText: part["name"]),
+        feedback: new AnimatedFeedback(
+            animation: animation,
+            draggableColor: Colors.black,
+            draggableText: part["name"]),
+        onDraggableCanceled: (velocity, offset) {
+          setState(() {
+            if ((part["name"] == _decoded["parts"][0]["name"]) &&
+                (offset.dx > 0.0 && offset.dx < 100.0) &&
+                (offset.dy > 0.0 && offset.dy < 100.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part["name"] == _decoded["parts"][1]["name"] &&
+                (offset.dx > (_width - 130) && offset.dx < 370.0) &&
+                (offset.dy > 0.0 && offset.dy < 120.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part["name"] == _decoded["parts"][3]["name"] &&
+                (offset.dx > 0.0 && offset.dx < 130.0) &&
+                (offset.dy > 160.0 && offset.dy < 290.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else if (part["name"] == _decoded["parts"][2]["name"] &&
+                (offset.dx > (_width - 110) && offset.dx < 370.0) &&
+                (offset.dy > 170 && offset.dy < 290.0)) {
+              // position = offset;
+              print(offset.dx);
+              print(offset.dy);
+            } else {
+              _flag = 1;
+              toAnimateFunction();
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                setState(() {
+                  _flag = 0;
+                });
+                controller.stop();
               });
-            },
-          ),
+            }
+          });
+        },
+      ),
     );
   }
 }
