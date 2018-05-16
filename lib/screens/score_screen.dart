@@ -489,8 +489,6 @@ class _ScoreScreenState extends State<ScoreScreen>
   }
 }
 
-<<<<<<< HEAD
-=======
 // class ScoreScreen extends StatelessWidget {
 //   // final String gameName;
 //   // final GameDisplay gameDisplay;
@@ -808,4 +806,3 @@ class _ScoreScreenState extends State<ScoreScreen>
 //   //       ));
 //   // }
 // }
->>>>>>> master
