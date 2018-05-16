@@ -137,9 +137,11 @@ List<String> Ssum=[];
 
         //first i'm checking text should not null thats the reason checking here
           if(text!=null) {
-             clicks.add(index);
+            
           if (status == Status.Active) {
+            
             if (sum == 0) {
+               clicks.add(index);
               setState(() {
                 ssum = '$text';
        
@@ -278,6 +280,7 @@ List<String> Ssum=[];
                   (index == center - L && x != center) ||
                   index == center - T)) {
                 setState(() {
+                    clicks.add(index);
                   ssum = '$ssum' + '+' + '$text';
                   _statuses[index] = Status.Visible;
                   _Bgstatus[index] = Bgstatus.BgVisible;
@@ -378,6 +381,7 @@ List<String> Ssum=[];
                           Ansr = 0;
                            ssum = "";
                           sum = 0;
+                          clicks.removeRange(0, clicks.length);
                           _Index.removeRange(0, _Index.length);
                           _letters.removeRange(0, _letters.length);
                           _center.removeRange(0, _center.length);
@@ -397,6 +401,9 @@ List<String> Ssum=[];
               }
             });
           } else {
+            if(clicks.last == index)
+            {
+             clicks.add(index);
             setState(() {
                 clicks.removeLast();
                  if (clicks.last == index) {
@@ -449,6 +456,7 @@ List<String> Ssum=[];
 
               // center = 0;
             });
+          }
           }
           }
         });
