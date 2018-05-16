@@ -1,0 +1,107 @@
+{
+    "id": "Body.png",
+    "height": 1536.0,
+    "width": 552.0,
+    "parts": [
+        {
+            "name": "face",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 223,
+                "width": 176,
+                "x": 279,
+                "y": 111
+            }
+        },
+        {
+            "name": "uppper body",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 416,
+                "width": 306,
+                "x": 279,
+                "y": 496
+            }
+        },
+        {
+            "name": "right hand",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 502,
+                "width": 113,
+                "x": 69,
+                "y": 556
+            }
+        },
+        {
+            "name": "left hand",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 516,
+                "width": 100,
+                "x": 483,
+                "y": 510
+            }
+        },
+        {
+            "name": "right palm",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 122,
+                "width": 113,
+                "x": 69,
+                "y": 809
+            }
+        },
+        {
+            "name": "left palm",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 161,
+                "width": 100,
+                "x": 483,
+                "y": 849
+            }
+        },
+        {
+            "name": "right leg",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 760,
+                "width": 148,
+                "x": 200,
+                "y": 1020
+            }
+        },
+        {
+            "name": "left leg",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 773,
+                "width": 158,
+                "x": 353,
+                "y": 1027
+            }
+        },
+        {
+            "name": "right foot",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 120,
+                "width": 164,
+                "x": 192,
+                "y": 1460
+            }
+        },
+        {
+            "name": "left foot",
+            "color": "0XFFFFCDD2",
+            "data": {
+                "height": 122,
+                "width": 134,
+                "x": 353,
+                "y": 1475
+            }
+        }
+    ]
+}

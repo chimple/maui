@@ -28,9 +28,21 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .getGameCategoriesByGame(widget.game)
         .then((gameCategories) {
       if (gameCategories.isEmpty) {
-        gameCategories = <Tuple2<int, String>>[
+        if (widget.game == "identify") {
+          gameCategories = <Tuple2<int, String>>[
+          new Tuple2<int, String>(1, 'Body'),
+          new Tuple2<int, String>(1, 'Shapes'),
+          new Tuple2<int, String>(1, 'Boy')
+        ];         
+        } 
+        else {
+          gameCategories = <Tuple2<int, String>>[
           new Tuple2<int, String>(1, 'Todo Placeholder')
         ];
+        }
+        //   gameCategories = <Tuple2<int, String>>[
+        //   new Tuple2<int, String>(1, 'Todo Placeholder')
+        // ];
       }
 
       setState(() {
