@@ -327,7 +327,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (_wrongAttem >= correct - _constant &&
         _wrongAttem == _numButtons - _constant1) {
       widget.onScore(-correct);
-       new Future.delayed(const Duration(milliseconds: 1000), () {
+       new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
@@ -346,7 +346,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
     if (correct == _numButtons) {
       widget.onScore(-_wrongAttem);
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+      new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
