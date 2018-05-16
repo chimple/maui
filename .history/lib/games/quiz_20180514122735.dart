@@ -243,6 +243,13 @@ class QuestionTextState extends State<QuestionText>
   Widget build(BuildContext context) {
     widget.keys++;
     return new Material(
+<<<<<<< HEAD
+      child: new Container(
+        height: widget.ht * 0.35,
+        width: widget.wd * 0.6,
+        color: const Color(0xFF8ecd4e),
+        
+=======
       color: const Color(0xFFed4a79),
       child: new Container(
         height: widget.ht * 0.6,
@@ -253,6 +260,7 @@ class QuestionTextState extends State<QuestionText>
             color: const Color(0xFFed4a79),
           ),
         ),
+>>>>>>> refs/remotes/origin/master
         child: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -9,6 +9,8 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 
 import '../components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Connectdots extends StatefulWidget {
   Function onScore;
@@ -333,15 +335,35 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
     }
 
     var j = 0;
-   
-     return new ResponsiveGridView(
-      rows: _size,
-      cols: _size,
-    maxAspectRatio: 1.0,
-      children: _letters.map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++])).toList(growable: false),
-    );
-  
+       return new LayoutBuilder(builder: (context, constraints) {
 
+    final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+    return new Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+          
+                child: new ResponsiveGridView(
+                  rows: _size,
+                  cols: _size,
+              //    maxAspectRatio: 1.0,
+                  children: _letters
+                      .map((e) =>new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                          child:_buildItem(j, e, _statuses[j], _ShakeCells[j++])))
+                      .toList(growable: false),
+                ));
+  });
   }
 }
 
@@ -459,6 +481,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   //         )
                   onPress:() => widget.onPress(),
                   text:_displayText,
+                  highlighted: widget.status == Status.Visible? true :false,
                   unitMode: UnitMode.text,
                           )      ),
        ) );

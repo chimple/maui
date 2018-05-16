@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/state/app_state_container.dart';
-import './First.dart' as first;
-import './Second.dart' as second;
+import './score.dart' as score;
+import './graph.dart' as graph;
+import 'package:maui/screens/login_screen.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -30,20 +32,31 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
     return new Drawer(
-      child: new Column(
+      child: new Column( 
         children: <Widget>[
-
           new UserAccountsDrawerHeader(
-                  accountName: new Text('test'),
-                  accountEmail: new Text('test@chimple.org'),
+                   otherAccountsPictures: <Widget>[
+                      new IconButton(
+                        iconSize: 40.0,
+                        color: Colors.white,
+                        icon: new Icon(Icons.person_outline),
+                        onPressed: (){
+                          //Navigate here
+                          AppStateContainer.of(context).setLoggedInUser(null);
+                          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context)=>new LoginScreen()) );
+                        },
+                      ),
+                   ],
                   currentAccountPicture: new Image.file(new File(user.image)),
+                  accountName: new Text('test'),
+                  accountEmail: new Text('test@chimple.org'),     
             ),
           
             new TabBar(
             controller: controller,
               tabs: <Tab>[
-                  new Tab(icon: new Icon(Icons.arrow_forward)),
-                  new Tab(icon: new Icon(Icons.arrow_downward)),
+                  new Tab( child: new Text("Score",style: new TextStyle( color: Colors.blue , fontSize: 30.0))),
+                  new Tab( child: new Text("Graph",style: new TextStyle( color: Colors.blue , fontSize: 30.0))),
                 ],
               ),
 
@@ -51,8 +64,8 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
                 child: new TabBarView(
                 controller: controller,
                 children: <Widget>[
-                  new first.First(),
-                  new second.Second()
+                  new score.Score(),
+                  new graph.Graph()
                 ],
               ),
             )
@@ -67,11 +80,17 @@ class ProfileDrawerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return new FlatButton(
-        child: new CircleAvatar(
-          backgroundImage: new FileImage(new File(user.image)),
-          backgroundColor: Colors.white,
-        ),
-        onPressed: () => Scaffold.of(context).openDrawer());
+
+    return new Container(
+      child: new GestureDetector(
+          child: new CircleAvatar(
+             backgroundColor: Colors.white,
+            backgroundImage: new FileImage(new File(user.image)),
+          ),
+         onTap: () {
+           Scaffold.of(context).openDrawer();
+         },
+      )
+    );
   }
 }

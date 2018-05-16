@@ -266,9 +266,9 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                     height: _height * 0.6,
                     width: _width,
                     padding: new EdgeInsets.only(
-                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
-                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.2,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.04:constraints.maxWidth*0.08),
+                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
+                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.05:constraints.maxWidth*0.08),
                     child: new Table(children: rows),
                   ),
                 ]),
