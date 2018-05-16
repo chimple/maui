@@ -105,12 +105,13 @@ class _CasinoState extends State<Casino> {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
       if (givenWordList[j] == scrollingLetterList[random]) {
-        _selectedItemIndex = givenWordList.length - 1;
+        _selectedItemIndex = scrollingLetterList.length - 1;
         if (scrollingLetterList[random] == 'a' ||
             scrollingLetterList[random] == 'A') {
-              var temp = scrollingLetterList[givenWordList.length - 1];
-              scrollingLetterList[givenWordList.length - 1] = scrollingLetterList[random];
-              scrollingLetterList[0] == temp;
+              print("The letter is A");
+              // var temp = scrollingLetterList[givenWordList.length - 1];
+              scrollingLetterList[scrollingLetterList.length - 1] = scrollingLetterList[random];
+              scrollingLetterList.removeAt(0);
             }
 
         print("Hey data shuffled");
@@ -118,6 +119,7 @@ class _CasinoState extends State<Casino> {
         print("scrollingLetterList = $scrollingLetterList");
       }
       j++;
+      print("j = $j");
     }
 
     AppState state = AppStateContainer.of(context).state;
@@ -173,6 +175,7 @@ class _CasinoState extends State<Casino> {
                 new Future.delayed(const Duration(milliseconds: 1000), () {
                   widget.onScore(5);
                   widget.onProgress(1.0);
+                  j=0;
                 });
 
                 new Future.delayed(const Duration(milliseconds: 800), () {
