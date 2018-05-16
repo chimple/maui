@@ -351,6 +351,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void dispose() {
     shakeController.dispose();
     controller.dispose();
+    flipController.dispose();
     super.dispose();
   }
 
