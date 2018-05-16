@@ -37,7 +37,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   Animation<double> animateImage;
 
   Future<String> _loadGameAsset() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfo2.json");
+    return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
   }
 
   Future _loadGameInfo() async {
@@ -168,19 +168,19 @@ class _IdentifyGameState extends State<IdentifyGame>
                         new ScaleTransition(
                           scale: animateImage,
                           child: new Container(
-                            height: (constraint.maxHeight - 48) * 2 / 3,
+                            height: (constraint.maxHeight ) * 3 / 4,
                             width: constraint.maxWidth,
                             decoration: new BoxDecoration(
                               color: Colors.black,
                             ),
                             child: new Image(
                               image: AssetImage('assets/' + _decoded["id"]),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
                         new Container(
-                            height: (constraint.maxHeight - 48) / 3,
+                            height: (constraint.maxHeight) / 4,
                             width: constraint.maxWidth,
                             decoration: new BoxDecoration(color: Colors.amber),
                             child: _builtButton(context))
@@ -384,7 +384,7 @@ class AnimatedFeedback extends AnimatedWidget {
     return new Container(
       // width: _width * 0.15,
       // height: _height * 0.06,
-      padding: new EdgeInsets.all(10.0),
+      padding: new EdgeInsets.all((_width > _height) ? _width * 0.01 : _width * 0.015),
       color: draggableColor.withOpacity(0.5),
       child: new Center(
         child: new Text(
@@ -423,6 +423,7 @@ class AnimatedDrag extends AnimatedWidget {
       child: new Container(
         // width: _width * 0.15,
         // height: _height * 0.06,
+        padding: new EdgeInsets.all((_width > _height) ? _width * 0.01 : _width * 0.015),
         color: draggableColor,
         child: new Center(
           child: new Text(
