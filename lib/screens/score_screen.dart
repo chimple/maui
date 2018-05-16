@@ -132,13 +132,14 @@ class _ScoreScreenState extends State<ScoreScreen>
     return new Scaffold(
         backgroundColor: themeData.primaryColor,
         // backgroundColor: Colors.black,
-        body: new Flex(
+        body: new SafeArea(
+          child: new Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Expanded(
-              flex: 1,
+            new Flexible(
+              flex: 2,
               child: new ScaleTransition(
                 scale: _characterAnimation,
                 child: new Container(
@@ -148,81 +149,159 @@ class _ScoreScreenState extends State<ScoreScreen>
                 ),
               ),
             ),
-            new Expanded(
-                flex: 1,
-                child: gameDisplay != GameDisplay.single
-                    ? new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Expanded(
-                              flex: 1,
-                              child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new UserItem(user: myUser),
-                                    new Padding(
-                                      padding: new EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                    ),
-                                    new Text(
-                                      '$myScore',
-                                      style: new TextStyle(
-                                          fontSize: 25.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    )
-                                  ])),
-                          new Expanded(
-                              flex: 1,
-                              child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new UserItem(user: myUser),
-                                    new Padding(
-                                      padding: new EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                    ),
-                                    new Text(
-                                      '$myScore',
-                                      style: new TextStyle(
-                                          fontSize: 25.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    )
-                                  ]))
-                        ],
-                      )
-                    : new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Expanded(
-                              flex: 1,
-                              child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new UserItem(user: myUser),
-                                    new Padding(
-                                      padding: new EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                    ),
-                                    new Text(
-                                      '$myScore',
-                                      style: new TextStyle(
-                                          fontSize: 25.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    )
-                                  ]))
-                        ],
-                      )),
-            new Expanded(
+            
+            //Stars Being Displayed according to the score
+            new Flexible(
               flex: 1,
-              child: new Row(
+              child: 
+            myScore <= 10 ? new Container(
+                child: new Column(
+                children: <Widget>[
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(Icons.star),
+                      new Icon(Icons.star_border),
+                      new Icon(Icons.star_border),
+                      new Icon(Icons.star_border),
+                    ]),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                          ]
+                        )])) : (myScore>10 && myScore<=20) ? new Container(
+                      child: new Column(
+                      children: <Widget>[
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          new Icon(Icons.star),
+                          new Icon(Icons.star),
+                          new Icon(Icons.star_border),
+                          new Icon(Icons.star_border)
+                        ]),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Text("Good", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                          ]
+                        )])) :  (myScore>20 && myScore<=30) ? new Container(
+                          child: new Column(
+                          children: <Widget>[
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star_border),
+                        ]),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                          ]
+                        )]))  : new Container(
+                          child: new Column(
+                          children: <Widget>[
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star),
+                                  new Icon(Icons.star),
+                        ]),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                          ]
+                        )
+                        ]))),
+
+            //Users Image and score
+             gameDisplay != GameDisplay.single ? 
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Expanded(
+                      flex: 1,
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new UserItem(user: myUser),
+                            new Padding(
+                              padding: new EdgeInsets.symmetric(vertical: 10.0),
+                            ),
+                            new Text(
+                              '$myScore',
+                              style: new TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          ])),
+                  new Expanded(
+                      flex: 1,
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new UserItem(user: myUser),
+                            new Padding(
+                              padding: new EdgeInsets.symmetric(vertical: 10.0),
+                            ),
+                            new Text(
+                              '$myScore',
+                              style: new TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          ]))
+                ],
+              ) : new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Expanded(
+                      flex: 1,
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new UserItem(user: myUser),
+                            new Padding(
+                              padding: new EdgeInsets.symmetric(vertical: 10.0),
+                            ),
+                            new Text(
+                              '$myScore',
+                              style: new TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          ]))
+                ],
+              ),
+            
+            // Icons which redirect to home, refresh and fast-forward
+            new Flexible(
+              flex: 1,
+            child: 
+             new Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -238,7 +317,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                           // color: Colors.orange
                         ),
                         child: IconButton(
-                            iconSize: 100.0,
                             icon: new Icon(Icons.home),
                             onPressed: () {
                               // Navigator.of(context).pushNamed('/tab');
@@ -249,26 +327,26 @@ class _ScoreScreenState extends State<ScoreScreen>
                   ),
                   new ScaleTransition(
                     scale: _buttonAnimation,
-                    child: gameDisplay == GameDisplay.myHeadToHead
-                        ? new Container()
-                        : new Container(
-                            decoration: new BoxDecoration(
+                    child: gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
+                    scale: _buttonAnimation,
+                                      child: new Container(
+                          decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               border: new Border.all(
-                                  color: Colors.black,
-                                  width: 2.5,
-                                  style: BorderStyle.solid),
+                                color: Colors.black,
+                                width: 2.5,
+                                style: BorderStyle.solid
+                              ),
                               // color: Colors.orange
-                            ),
-                            child: IconButton(
-                                iconSize: 100.0,
-                                icon: new Icon(Icons.refresh),
-                                onPressed: () {
-                                  // Navigator.of(context).pushNamed('/tab'),
-                                  Navigator.pop(context);
-                                }),
+                              ),
+                          child: IconButton(
+                            icon: new Icon(Icons.refresh),
+                            onPressed: (){
+                                // Navigator.of(context).pushNamed('/tab'),
+                                Navigator.pop(context);
+                                }
                           ),
-                  ),
+                  ))),
                   new ScaleTransition(
                     scale: _buttonAnimation,
                     child: new Container(
@@ -281,7 +359,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                         // color: Colors.orange
                       ),
                       child: IconButton(
-                          iconSize: 100.0,
                           icon: new Icon(Icons.arrow_forward),
                           onPressed: () {
                             // Navigator.of(context).pushNamed('/tab'),
@@ -292,7 +369,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                   ),
                 ],
               ),
-            )
+            
             // new Expanded(
             //   flex: 1,
             //   child: new Row(
@@ -407,8 +484,8 @@ class _ScoreScreenState extends State<ScoreScreen>
             //       onPressed: () => Navigator.of(context).pushNamed('/tab'),
             //     ),
             //     ),
-          ],
-        ));
+            )],
+        )));
   }
 }
 

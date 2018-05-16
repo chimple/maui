@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+// import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
@@ -79,7 +78,7 @@ class DiceGameState extends State<Dice> {
   int code, dindex, dcode;
   List<String> arr = new List<String>();
   String _counter = "";
-  String _counter1 = "";
+  String _counter1 = "1";
   String _counter2 = "";
   String _counter3 = "";
  int count=0;
@@ -307,9 +306,12 @@ class DiceGameState extends State<Dice> {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / 6;
-      double maxHeight =(constraints.maxHeight - vPadding * 4) / 6;
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 4);
+      double maxHeight =(constraints.maxHeight - vPadding * 8) / 6;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
@@ -344,8 +346,9 @@ class DiceGameState extends State<Dice> {
        new InkWell(
           onTap: _randomVal,
            child: new Container(
-              height: media.size.height > media.size.width ?constraints.maxHeight*.2 : constraints.maxHeight*.3 ,
-               width: media.size.height < media.size.width? constraints.maxWidth*.2 : constraints.maxWidth*.3 ,
+              height: media.size.height > media.size.width ?constraints.maxHeight*.15 : constraints.maxHeight*.2 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.15 : constraints.maxWidth*.2 ,
+
               // decoration: new BoxDecoration(
               //   color: const Color(0xFFF1F8E9),
               //   boxShadow: [new BoxShadow(
@@ -359,7 +362,10 @@ class DiceGameState extends State<Dice> {
               //   ),
               // ),
               child: new Image(
-              image:new AssetImage('assets/dice5.gif')
+
+              image:new AssetImage('assets/$_counter1.png')
+
+
               //style: new TextStyle(fontSize: 50.0))
             ))),
            new Container(

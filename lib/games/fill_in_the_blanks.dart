@@ -6,6 +6,9 @@ import 'dart:math';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -248,46 +251,62 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                     element.length > prev ? element.length : prev)
             : 1);
     MediaQueryData media = MediaQuery.of(context);
-    return new Container(
-      child: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // new Padding(padding: new EdgeInsets.all(10.0)),
-            new Expanded(
-              flex: 1,
-              child: new Container(
-                color: new Color(0xffffa3bc8b),
-                child: new ResponsiveGridView(
-                  rows: 1,
-                  padding: media.orientation == Orientation.portrait
-                      ? dropTargetData.length < 5 ? 80.0 : 20.0
-                      : dropTargetData.length < dropTargetData.length * 2
-                          ? 0.0
-                          : 80.0,
-                  cols: dropTargetData.length,
-                  maxAspectRatio: 1.0,
-                  children: dropTargetData
-                      .map((e) => droptarget(j++, e, _flag[h++]))
-                      .toList(growable: false),
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Container(
+        padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+        child: new Center(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // new Padding(padding: new EdgeInsets.all(10.0)),
+              new Expanded(
+                flex: 1,
+                child: new Container(
+                  color: new Color(0xffffa3bc8b),
+                  child: new ResponsiveGridView(
+                    rows: 1,
+                    cols: dropTargetData.length,
+                    maxAspectRatio: 1.0,
+                    children: dropTargetData
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: droptarget(j++, e, _flag[h++])))
+                        .toList(growable: false),
+                  ),
                 ),
               ),
-            ),
-            new Expanded(
-              flex: 2,
-              child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: dragBoxData.length,
-                  maxAspectRatio: 1.0,
-                  padding: 10.0,
-                  children: dragBoxData
-                      .map((e) => dragbox(k++, e, _flag[a++]))
-                      .toList(growable: false)),
-            ),
-          ],
+              //    new Padding(padding:new EdgeInsets.all(buttonPadding)),
+              new Expanded(
+                flex: 2,
+                child: new ResponsiveGridView(
+                    rows: 1,
+                    cols: dragBoxData.length,
+                    maxAspectRatio: 1.0,
+                    padding: 10.0,
+                    children: dragBoxData
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: dragbox(k++, e, _flag[a++])))
+                        .toList(growable: false)),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -383,12 +402,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               List<dynamic> accepted,
               List<dynamic> rejected,
             ) {
-              return new Center(
-                child: new Text(widget.text,
-                    key: new Key('${widget.keys}'),
-                    style: new TextStyle(
-                        color: new Color(0xffDD6154),
-                        fontSize: media.size.height * 0.06)),
+              return new UnitButton(
+                key: new Key('A${widget.keys}'),
+                text: widget.text,
+                showHelp: false,
+                highlighted: widget.flag == 1 ? true : false,
               );
             },
           ),
@@ -397,53 +415,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (widget.index >= 100) {
       return new ScaleTransition(
         scale: animation,
-        child: new Container(
-          decoration: new BoxDecoration(
-            //  color: new Color(0xffffffffff),
-            border: new Border.all(width: 3.0, color: new Color(0xffDD6154)),
-            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-          ),
-          child: new Center(
-              child: new Draggable(
-                  onDragStarted: widget.onDrag,
-                  maxSimultaneousDrags: 1,
-                  data: '${widget.index}' + '_' + '${widget.code}',
-                  child: new Center(
-                    child: new Container(
-                      height: media.orientation == Orientation.portrait
-                          ? widget.length > 10
-                              ? media.size.height * 0.01
-                              : media.size.height * 0.06
-                          : media.size.height * 0.13,
-                      width: media.orientation == Orientation.portrait
-                          ? widget.length > 10
-                              ? media.size.width * 0.1
-                              : media.size.width * 0.06
-                          : media.size.width * 0.07,
-                      child: new Center(
-                        child: new Text(widget.text,
-                            key: new Key("A${widget.keys}"),
-                            style: new TextStyle(
-                                color: new Color(0xffDD6154),
-                                fontSize: media.size.height * 0.04)),
-                      ),
-                    ),
-                  ),
-                  feedback: new Transform.rotate(
-                    angle: widget.isRotated == true
-                        ? portf == 0 ? 3.14 : 0.0
-                        : 0.3,
-                    child: new Text(
-                      widget.text,
-                      style: new TextStyle(
-                        color: new Color(0xffDD6154),
-                        decoration: TextDecoration.none,
-                        fontSize: media.size.height * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ))),
-        ),
+        child: new Draggable(
+            onDragStarted: widget.onDrag,
+            maxSimultaneousDrags: 1,
+            data: '${widget.index}' + '_' + '${widget.code}',
+            child: new UnitButton(
+              key: new Key('A${widget.keys}'),
+              text: widget.text,
+              showHelp: false,
+            ),
+            feedback: new Transform.rotate(
+              angle: 0.2,
+              child: new UnitButton(
+                text: widget.text,
+              ),
+            )),
       );
     }
   }
