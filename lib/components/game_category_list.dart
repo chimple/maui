@@ -15,7 +15,131 @@ class GameCategoryList extends StatefulWidget {
   final String game;
 }
 
+// List<int> _initiallyExpand = [];
+
 class _GameCategoryList extends State<GameCategoryList> {
+  @override
+  void initState() {
+    // _initiallyExpand.clear();
+    super.initState();
+    print(widget.game);
+    int categoriesLength = widget.gameCategories.length;
+    print("Length of categories::$categoriesLength");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int j = 0;
+    Size media = MediaQuery.of(context).size;
+    final _colors = SingleGame.gameColors[widget.game];
+    final color = _colors != null ? _colors[0] : Colors.amber;
+    return new CustomScrollView(
+      primary: true,
+      shrinkWrap: false,
+      slivers: <Widget>[
+        new SliverAppBar(
+            backgroundColor: color,
+            pinned: true,
+            expandedHeight: media.height * .37,
+            flexibleSpace: new FlexibleSpaceBar(
+              background: new Image.asset(
+                'assets/hoodie/${widget.game}.png',
+                scale: .85,
+              ),
+              centerTitle: true,
+              title: new Text(widget.game),
+            )),
+        new SliverList(
+          delegate: new SliverChildListDelegate(new List<Widget>.generate(
+            1,
+            (int index) {
+              return new Container(
+                  alignment: Alignment.center,
+                  child: new Flex(
+                    direction: Axis.vertical,
+                    children: widget.gameCategories
+                        .map((gameCategory) => _buildTiles(
+                              context,
+                              j++,
+                              gameCategory.item1,
+                              gameCategory.item2,
+                              widget.game,
+                            ))
+                        .toList(growable: false),
+                  ));
+            },
+          )),
+        ),
+        new SliverToBoxAdapter(
+          child: new Container(height: 2.0, color: Colors.white),
+        ),
+      ],
+    );
+  }
+
+  bool _isLoading = false;
+  Widget _buildTiles(
+    BuildContext context,
+    int index,
+    int id,
+    String gameCategory,
+    String game,
+  ) {
+    if (_isLoading) {
+      return new Center(
+        child: new Text(
+          'Loading..',
+          style: new TextStyle(fontSize: 40.0, color: Colors.green),
+        ),
+      );
+    }
+    return new BuildExpansionTiles(
+      context: context,
+      categoryId: id,
+      index: index,
+      gameCategory: gameCategory,
+      gameName: game,
+      onClick: (dynamic) {
+        print("print index of tile $index");
+        // if (_initiallyExpand[index] != 1) {
+        //   setState(() {
+        //     _initiallyExpand[index] = 1;
+        //   });
+        //   flag = 1;
+        // }
+        // if (_oldIndex != index && flag == 1) {
+        //   setState(() {
+        //     _initiallyExpand[_oldIndex] = 0;
+        //     flag = 0;
+        //   });
+        // }
+        // _oldIndex = index;
+      },
+    );
+  }
+}
+
+class BuildExpansionTiles extends StatefulWidget {
+  BuildExpansionTiles(
+      {Key key,
+      this.context,
+      this.onClick,
+      @required this.categoryId,
+      @required this.gameName,
+      @required this.index,
+      @required this.gameCategory})
+      : super(key: key);
+  final BuildContext context;
+  int index;
+  int categoryId;
+  String gameCategory;
+  String gameName;
+  ValueChanged onClick;
+  @override
+  State<StatefulWidget> createState() => new _BuildExpansionTiles();
+}
+
+class _BuildExpansionTiles extends State<BuildExpansionTiles> {
   List<int> colors = [
     0XFF48AECC,
     0XFFE66796,
@@ -129,56 +253,27 @@ class _GameCategoryList extends State<GameCategoryList> {
   ];
   @override
   void initState() {
-    int categoriesLength = widget.gameCategories.length;
     super.initState();
+  }
+
+  callMe() {
+    print("count callll::");
   }
 
   @override
   Widget build(BuildContext context) {
-    int j = 0;
     Size media = MediaQuery.of(context).size;
-    final _colors = SingleGame.gameColors[widget.game];
-    final color = _colors != null ? _colors[0] : Colors.amber;
-    return new Flex(
-      direction: Axis.vertical,
-      children: <Widget>[
-        new Expanded(
-          flex: 1,
-          child: new Container(
-              width: media.width,
-              color: color,
-              child: FittedBox(
-                  child: new Image.asset(
-                'assets/hoodie/${widget.game}.png',
-                scale: .85,
-              ))),
-        ),
-        new Expanded(
-          flex: 2,
-          child: new ListView(
-            children: widget.gameCategories
-                .map((gameCategory) => _buildTiles(context, j++,
-                    gameCategory.item1, gameCategory.item2, widget.game))
-                .toList(growable: false),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildTiles(BuildContext context, int index, int categoryId,
-  
-      String categories, String gameName) {
-         Size media = MediaQuery.of(context).size;
     double _fontSize;
     _fontSize = (media.height * .58 * .162) / 3.9;
     return new Container(
-      color: new Color(colors[index]),
+      color: new Color(colors[widget.index]),
       child: new ExpansionTiles(
+        // onExpansionChanged: showModes(context, widget.gameName,
+        //             'push', widget.categoryId),
         title: new Center(
             child: new Text(
-          categories,
-          style: TextStyle(color: Colors.white,fontSize: _fontSize),
+          widget.gameCategory,
+          style: TextStyle(color: Colors.white, fontSize: _fontSize),
         )),
         trailing: new Text(''),
         children: <Widget>[
@@ -189,15 +284,15 @@ class _GameCategoryList extends State<GameCategoryList> {
                 color: Colors.white,
                 key: new Key('single'),
                 icon: new Icon(Icons.accessibility),
-                onPressed: () => showModes(
-                    context, gameName, 'single_iterations', categoryId),
+                onPressed: () => showModes(context, widget.gameName,
+                    'single_iterations', widget.categoryId),
               ),
               new IconButton(
                 color: Colors.white,
                 key: new Key('h2h'),
                 icon: new Icon(Icons.people),
-                onPressed: () =>
-                    showModes(context, gameName, 'h2h_iterations', categoryId),
+                onPressed: () => showModes(context, widget.gameName,
+                    'h2h_iterations', widget.categoryId),
               ),
             ],
           )
@@ -227,7 +322,7 @@ class _GameCategoryList extends State<GameCategoryList> {
   }
 }
 
-// older cod
+//older cod
 
 // class GameCategoryList extends StatelessWidget {
 //   final List<Tuple2<int, String>> gameCategories;
@@ -252,6 +347,7 @@ class _GameCategoryList extends State<GameCategoryList> {
 //   }
 
 //   showModes(BuildContext context, String game, int id) async {
+//     print("count calling state:: $context, $game, $id");
 //     String selected = await showModalBottomSheet<String>(
 //         context: context,
 //         builder: (BuildContext context) {
