@@ -171,7 +171,7 @@ class _IdentifyGameState extends State<IdentifyGame>
                             height: (constraint.maxHeight ) * 3 / 4,
                             width: constraint.maxWidth,
                             decoration: new BoxDecoration(
-                              color: Colors.black,
+                              color: Theme.of(context).backgroundColor,
                             ),
                             child: new Image(
                               image: AssetImage('assets/' + _decoded["id"]),
@@ -182,7 +182,7 @@ class _IdentifyGameState extends State<IdentifyGame>
                         new Container(
                             height: (constraint.maxHeight) / 4,
                             width: constraint.maxWidth,
-                            decoration: new BoxDecoration(color: Colors.amber),
+                            decoration: new BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
                             child: _builtButton(context))
 
                         // new Expanded(
@@ -316,11 +316,11 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
         data: part["name"],
         child: new AnimatedDrag(
             animation: (_flag == 0) ? noanimation : animation,
-            draggableColor: Colors.green,
+            draggableColor: Theme.of(context).buttonColor,
             draggableText: part["name"]),
         feedback: new AnimatedFeedback(
             animation: animation,
-            draggableColor: Colors.black,
+            draggableColor: Theme.of(context).disabledColor,
             draggableText: part["name"]),
         onDraggableCanceled: (velocity, offset) {
           setState(() {
@@ -390,9 +390,9 @@ class AnimatedFeedback extends AnimatedWidget {
         child: new Text(
           draggableText,
           style: new TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).highlightColor,
             decoration: TextDecoration.none,
-            fontSize: (_width > _height) ? _width * 0.02 : _width * 0.03,
+            fontSize: (_width > _height) ? _width * 0.015 : _width * 0.03,
           ),
         ),
       ),
@@ -424,14 +424,15 @@ class AnimatedDrag extends AnimatedWidget {
         // width: _width * 0.15,
         // height: _height * 0.06,
         padding: new EdgeInsets.all((_width > _height) ? _width * 0.01 : _width * 0.015),
+        margin: new EdgeInsets.symmetric(vertical: (_width > _height) ? _width * 0.005 : _width * 0.005, horizontal: (_width > _height) ? _width * 0.005 : _width * 0.005,),
         color: draggableColor,
         child: new Center(
           child: new Text(
             draggableText,
             style: new TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).hintColor,
               decoration: TextDecoration.none,
-              fontSize: (_width > _height) ? _width * 0.02 : _width * 0.03,
+              fontSize: (_width > _height) ? _width * 0.015 : _width * 0.03,
             ),
           ),
         ),
