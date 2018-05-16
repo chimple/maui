@@ -139,7 +139,7 @@ class _ScoreScreenState extends State<ScoreScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             new Flexible(
-              flex: 1,
+              flex: 2,
               child: new ScaleTransition(
                 scale: _characterAnimation,
                 child: new Container(
@@ -230,7 +230,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                         ]))),
 
             //Users Image and score
-            
              gameDisplay != GameDisplay.single ? 
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -318,7 +317,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                           // color: Colors.orange
                         ),
                         child: IconButton(
-                            iconSize: 100.0,
                             icon: new Icon(Icons.home),
                             onPressed: () {
                               // Navigator.of(context).pushNamed('/tab');
@@ -329,28 +327,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                   ),
                   new ScaleTransition(
                     scale: _buttonAnimation,
-                    child: gameDisplay == GameDisplay.myHeadToHead
-                        ? new Container()
-                        : new Container(
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: new Border.all(
-                                  color: Colors.black,
-                                  width: 2.5,
-                                  style: BorderStyle.solid),
-                              // color: Colors.orange
-                            ),
-                            child: IconButton(
-                                iconSize: 100.0,
-                                icon: new Icon(Icons.refresh),
-                                onPressed: () {
-                                  // Navigator.of(context).pushNamed('/tab'),
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  }
-                            )),
-                  ),
-                  gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
+                    child: gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
                     scale: _buttonAnimation,
                                       child: new Container(
                           decoration: new BoxDecoration(
@@ -363,14 +340,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                               // color: Colors.orange
                               ),
                           child: IconButton(
-                            iconSize: 100.0,
                             icon: new Icon(Icons.refresh),
                             onPressed: (){
                                 // Navigator.of(context).pushNamed('/tab'),
                                 Navigator.pop(context);
                                 }
                           ),
-                  )),
+                  ))),
                   new ScaleTransition(
                     scale: _buttonAnimation,
                     child: new Container(
@@ -383,7 +359,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                         // color: Colors.orange
                       ),
                       child: IconButton(
-                          iconSize: 100.0,
                           icon: new Icon(Icons.arrow_forward),
                           onPressed: () {
                             // Navigator.of(context).pushNamed('/tab'),
