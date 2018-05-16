@@ -152,8 +152,19 @@ class QuizState extends State<Quiz> {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
+<<<<<<< HEAD
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    new Expanded(
+                      child: new QuestionText(questionText, keys, ht, wd)
+                    )]
+              ),
+=======
       double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+>>>>>>> refs/remotes/origin/master
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -243,6 +254,13 @@ class QuestionTextState extends State<QuestionText>
   Widget build(BuildContext context) {
     widget.keys++;
     return new Material(
+<<<<<<< HEAD
+      child: new Container(
+        height: widget.ht * 0.35,
+        width: widget.wd * 0.6,
+        color: const Color(0xFF8ecd4e),
+        
+=======
       color: const Color(0xFFed4a79),
       child: new Container(
         height: widget.ht * 0.6,
@@ -253,6 +271,7 @@ class QuestionTextState extends State<QuestionText>
             color: const Color(0xFFed4a79),
           ),
         ),
+>>>>>>> refs/remotes/origin/master
         child: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -3,11 +3,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -31,7 +31,7 @@ class Reflex extends StatefulWidget {
   State<StatefulWidget> createState() => new ReflexState();
 }
 
-class ReflexState extends State<Reflex> {
+class ReflexState extends State<Reflex> with TickerProviderStateMixin {
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -40,10 +40,13 @@ class ReflexState extends State<Reflex> {
   List<String> _shuffledLetters = [];
   List<String> _letters;
   bool _isLoading = true;
+  AnimationController _controller;
+  Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
+    print('reflex: initState()');
     if (widget.gameConfig.level < 4) {
       _maxSize = 2;
     } else if (widget.gameConfig.level < 7) {
@@ -51,6 +54,17 @@ class ReflexState extends State<Reflex> {
     } else {
       _maxSize = 4;
     }
+    _controller = new AnimationController(
+        vsync: this, duration: new Duration(milliseconds: 500));
+    final CurvedAnimation curve =
+        new CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
+    _animation =
+        new Tween<Offset>(begin: Offset(0.0, -2.0), end: Offset(0.0, 0.0))
+            .animate(curve);
+    new Future.delayed(Duration(milliseconds: 750 + _maxSize * 300), () {
+      _controller.forward();
+    });
+
 //    print('ReflexState:initState');
     _initBoard();
   }
@@ -85,6 +99,7 @@ class ReflexState extends State<Reflex> {
       int index, String text, int maxChars, double maxWidth, double maxHeight) {
     return new MyButton(
         key: new ValueKey<int>(index),
+        order: index,
         text: text,
         maxChars: maxChars,
         maxHeight: maxHeight,
@@ -150,14 +165,12 @@ class ReflexState extends State<Reflex> {
 
       return new Column(
         children: <Widget>[
-          new LimitedBox(
-              maxHeight: maxHeight,
-              child: new Material(
-                  color: Theme.of(context).accentColor,
-                  elevation: 4.0,
-                  textStyle: new TextStyle(
-                      color: Colors.white, fontSize: state.buttonFontSize),
-                  child: new ListView(
+          Material(
+              color: Theme.of(context).accentColor,
+              elevation: 8.0,
+              child: new LimitedBox(
+                  maxHeight: maxHeight,
+                  child: ListView(
                       reverse: true,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.all(buttonPadding),
@@ -173,7 +186,7 @@ class ReflexState extends State<Reflex> {
                                   ))))
                           .toList(growable: false)))),
           new Expanded(
-              child: Padding(
+              child: new Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: vPadding, horizontal: hPadding),
                   child: ResponsiveGridView(
@@ -195,6 +208,7 @@ class ReflexState extends State<Reflex> {
 class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
+      this.order,
       this.text,
       this.onPress,
       this.maxChars,
@@ -202,6 +216,7 @@ class MyButton extends StatefulWidget {
       this.maxHeight})
       : super(key: key);
 
+  final int order;
   final String text;
   final VoidCallback onPress;
   final int maxChars;
@@ -219,22 +234,25 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-//    print("_MyButtonState.initState: ${widget.text}");
+    print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
+    animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
+          ..addStatusListener((state) {
 //        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
-    controller.forward();
+            if (state == AnimationStatus.dismissed) {
+              print('dismissed');
+              if (widget.text != null) {
+                setState(() => _displayText = widget.text);
+                controller.forward();
+              }
+            }
+          });
+//    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
+    controller.forward(from: 1.0);
+//    });
   }
 
   @override

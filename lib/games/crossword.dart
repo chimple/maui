@@ -78,69 +78,11 @@ class CrosswordState extends State<Crossword> {
       _data3.add(data.item2[i].item2 * _rows + data.item2[i].item3);
     }
     _letters = _data1;
-    switch (_data2.length) {
-      case 3:
-        {
-          len = 4;
-          break;
-        }
-      case 4:
-        {
-          len = 5;
-          break;
-        }
-      case 5:
-        {
-          len = 6;
-          break;
-        }
-      case 6:
-        {
-          len = 7;
-          break;
-        }
-      case 7:
-        {
-          len = 8;
-          break;
-        }
-      case 8:
-        {
-          len = 9;
-          break;
-        }
-      case 9:
-        {
-          len = 10;
-          break;
-        }
-      case 10:
-        {
-          len = 11;
-          break;
-        }
-      case 11:
-        {
-          len = 12;
-          break;
-        }
-      case 12:
-        {
-          len = 13;
-          break;
-        }
-      case 13:
-        {
-          len = 14;
-          break;
-        }
-      default:
-        {
-          len = 14;
-        }
+    len=_data2.length+1;
+    if(len>14){
+      len=14;
     }
     var rng = new Random();
-
     var i = 0, f = 0;
     for (; i < _letters.length; i++) {
       f = 0;
@@ -169,13 +111,6 @@ class CrosswordState extends State<Crossword> {
     }
     _rightlen = _rightwords.length;
     _rightwords.shuffle();
-    // if(_rightlen>6){
-    //   _rightcols=(_rightlen/2).floor()!=_rightlen/2?
-    //   ((_rightlen/2).floor()+1)*2:(_rightlen/2).floor()*2;
-    //    while(_rightwords.length<=_rightcols){
-    //     _rightwords.add('');
-    //   }
-    // }
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
@@ -235,7 +170,7 @@ class CrosswordState extends State<Crossword> {
                     flagtemp = 1;
                   }
 
-                  new Future.delayed(const Duration(milliseconds: 500), () {
+                  new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
                       _flag[index] = 0;
                       if (flagtemp == 1) {
@@ -301,15 +236,10 @@ class CrosswordState extends State<Crossword> {
       keys = 0;
       j = 0;
       k = 100;
+      var l=(_rows*_cols)-1;
       var rwidth, rheight;
       rwidth = constraints.maxWidth;
       rheight = constraints.maxHeight;
-      if (rheight < 300) {
-        textsize = 11.0;
-      }
-      print('rightr len  ${_rightwords.length}');
-      print(rheight);
-
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
@@ -318,16 +248,12 @@ class CrosswordState extends State<Crossword> {
       double maxWidth = (constraints.maxWidth - hPadding * 2) /
           (isPortait ? _cols : _cols + _rows + _rightlen > _cols ? 2 : 1);
       double maxHeight = (constraints.maxHeight - vPadding * 2) /
-          (isPortait ? _rows + (_rightlen > _cols ? 2 : 1) : _cols);
-
+          (isPortait ? _rows + 1+(_rightlen > _cols ? 2 : 1) : _cols);
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
-      j = 0;
-
       return new Container(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -336,39 +262,55 @@ class CrosswordState extends State<Crossword> {
                   // portrait mode
                   children: <Widget>[
                       new Expanded(
+                        child:new Container(
+                          color:Color(0xFFD32F2F),
                           child: ResponsiveGridView(
                         rows: _rows,
                         cols: _cols,
                         children: _letters
-                            .map((e) => _buildItem(j, e, _flag[j++]))
-                            .toList(growable: false),
-                      )),
-                      new ResponsiveGridView(
+                            .map((e) =>Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child:_buildItem(j, e, _flag[j++]))
+                      ).toList(growable: false)))),
+                      new Padding(padding:new EdgeInsets.all(buttonPadding)),
+                     new Container(
+                          color:Colors.white,
+                       child:new ResponsiveGridView(
                         rows: _rightlen > _cols ? 2 : 1,
                         cols: _cols,
                         children: _rightwords
-                            .map((e) => _buildItem(k++, e, _flag[j++]))
-                            .toList(growable: false),
-                      ),
+                            .map((e) =>Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(k++, e, _flag[j++]))
+                      ).toList(growable: false)))
                     ])
               : new Row(
                   // landsape mode
                   children: <Widget>[
+                    new Expanded(
+                      child:new Container(
+                          color:Colors.white,
+                       child:
                       new ResponsiveGridView(
                         rows: _cols,
                         cols: _rightlen > _cols ? 2 : 1,
                         children: _rightwords
-                            .map((e) => _buildItem(k++, e, _flag[j++]))
-                            .toList(growable: false),
-                      ),
-                      new Expanded(
-                          child: ResponsiveGridView(
+                            .map((e) =>Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(k++, e, _flag[l++]))
+                      ).toList(growable: false)))),
+                       new Expanded(
+                         flex: 4,
+                           child:new Container(
+                          color:Color(0xFFD32F2F),
+                         child: new ResponsiveGridView(
                         rows: _rows,
                         cols: _cols,
                         children: _letters
-                            .map((e) => _buildItem(j, e, _flag[j++]))
-                            .toList(growable: false),
-                      )),
+                            .map((e) =>Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(j, e, _flag[j++]))
+                      ).toList(growable: false))))
                     ]));
     });
   }
@@ -407,13 +349,11 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animation, animation1;
-  String _displayText;
   String newtext = '';
   var f = 0;
   var i = 0;
   initState() {
     super.initState();
-    _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     controller1 = new AnimationController(
@@ -446,14 +386,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    AppState state = AppStateContainer.of(context).state;
-
-    if (widget.grid.length < 2) {
-      print('enterdd condition');
-      widget.grid.add(30.0);
-      widget.grid.add(40.0);
-    }
-    MediaQueryData media = MediaQuery.of(context);
     if (widget.index < 100 && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -478,6 +410,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         text: widget.text,
                         bgImage: widget.img,
                         showHelp: false,
+                        highlighted: widget.flag==1?true:false,
                       );
                     },
                   ),
@@ -494,8 +427,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale: animation,
           child: new UnitButton(
             key: new Key('A${widget.keys}'),
-            text: widget.text,
+            text: newtext,
             showHelp: false,
+            disabled: true,
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
@@ -510,7 +444,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         //  childWhenDragging: new Container(),
         feedback: UnitButton(
           text: widget.text,
-          highlighted: false,
+
         ),
       );
     } else {
