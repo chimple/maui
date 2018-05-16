@@ -62,7 +62,7 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
                 child: new CircularProgressIndicator(),
               )
             : new Scaffold(
-                appBar: new AppBar(title: new Text('Categories')),
+                //appBar: new AppBar(title: new Text('Categories')),
                 body: new GameCategoryList(
                     game: widget.game, gameCategories: _gameCategories),
               ));
