@@ -122,6 +122,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   int _constant, _constant1;
   void initState() {
     super.initState();
+    leftIsTapped = 0;
     print("initState called::");
     if (widget.gameConfig.level < 4) {
       print("level <4");
@@ -141,9 +142,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
 
     _initBoard();
-    new Future.delayed(
-      const Duration(milliseconds: 1000),
-    );
   }
 
   @override
