@@ -30,7 +30,8 @@ class IdentifyGame extends StatefulWidget {
   State<StatefulWidget> createState() => new _IdentifyGameState();
 }
 
-class _IdentifyGameState extends State<IdentifyGame> with SingleTickerProviderStateMixin{
+class _IdentifyGameState extends State<IdentifyGame>
+    with SingleTickerProviderStateMixin {
   AnimationController _imgController;
 
   Animation<double> animateImage;
@@ -164,17 +165,25 @@ class _IdentifyGameState extends State<IdentifyGame> with SingleTickerProviderSt
                   new Scaffold(
                     body: new Column(
                       children: <Widget>[
-                        new Expanded(
-                          flex: 2,
-                          child: new ScaleTransition(
-                            scale: animateImage,
+                        new ScaleTransition(
+                          scale: animateImage,
+                          child: new Container(
+                            height: (constraint.maxHeight - 48) * 2 / 3,
+                            width: constraint.maxWidth,
+                            decoration: new BoxDecoration(
+                              color: Colors.black,
+                            ),
                             child: new Image(
-                                image: AssetImage('assets/' + _decoded["id"]),
-                                fit: BoxFit.contain,
-                              ),
+                              image: AssetImage('assets/' + _decoded["id"]),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
-                        new Expanded(flex: 1, child: _builtButton(context))
+                        new Container(
+                            height: (constraint.maxHeight - 48) / 3,
+                            width: constraint.maxWidth,
+                            decoration: new BoxDecoration(color: Colors.amber),
+                            child: _builtButton(context))
 
                         // new Expanded(
                         //   flex: 1,
@@ -307,7 +316,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
         data: part["name"],
         child: new AnimatedDrag(
             animation: (_flag == 0) ? noanimation : animation,
-            draggableColor: Colors.red,
+            draggableColor: Colors.green,
             draggableText: part["name"]),
         feedback: new AnimatedFeedback(
             animation: animation,
