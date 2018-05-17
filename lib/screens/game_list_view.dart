@@ -8,27 +8,43 @@ class GameListView extends StatelessWidget {
 
   Widget _buildButton(
       BuildContext context, String gameName, String displayName) {
+    MediaQueryData media = MediaQuery.of(context);
     final colors = SingleGame.gameColors[gameName];
     final color = colors != null ? colors[0] : Colors.amber;
-    return new RaisedButton(
-      key: new Key(gameName),
-      color: color,
-      shape: new RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      onPressed: () => showModes(context, gameName),
-      child: new Column(
-        children: <Widget>[
-          new Expanded(
-              child: Align(
-                  child: new Image.asset(
-            'assets/hoodie/$gameName.png',
-            scale: 0.3,
-          ))),
-          new Text(
-            displayName,
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
+    var size = media.size;
+    return new Container(
+      decoration: new BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
+      ),
+      margin: EdgeInsets.all(size.width * .02),
+      child: new InkWell(
+        onTap: () => showModes(context, gameName),
+        key: new Key(gameName),
+        child: new Column(
+          children: <Widget>[
+            new Expanded(
+                child: Align(
+                    child: new Hero(
+              tag: 'assets/hoodie/$gameName.png',
+              child: Image.asset('assets/hoodie/$gameName.png', scale: 0.3),
+            ))),
+            new Container(
+                padding: EdgeInsets.all(size.width * .01),
+                decoration: new BoxDecoration(
+                  color: Colors.black38,
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: const Radius.circular(16.0),
+                      bottomRight: const Radius.circular(16.0)),
+                ),
+                child: new Center(
+                    child: new Text(
+                  displayName,
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
+                ))),
+          ],
+        ),
       ),
     );
   }

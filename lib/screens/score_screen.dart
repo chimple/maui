@@ -39,7 +39,7 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
-  AnimationController controller;
+  AnimationController controller, _buttonController, _textController;
   // AnimationController _buttonController,_textController,_userController,_characterController;
 
   Animation<double> _buttonAnimation,
@@ -61,8 +61,8 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    // _buttonController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-    // _textController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+     _buttonController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+     _textController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
     // _userController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
     // _characterController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
 
@@ -70,8 +70,8 @@ class _ScoreScreenState extends State<ScoreScreen>
         new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-    // _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.100, 0.400, curve: Curves.elasticOut) ));
-    // _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
+     _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.100, 0.400, curve: Curves.elasticOut) ));
+     _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
     // _userAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
     // _characterAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
 
@@ -107,6 +107,8 @@ class _ScoreScreenState extends State<ScoreScreen>
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     Size media = MediaQuery.of(context).size;
+    double ht = media.height;
+    double wd = media.width;
     print(
         "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
     // List<Widget> scores = [
@@ -130,7 +132,7 @@ class _ScoreScreenState extends State<ScoreScreen>
     //       ]));
     // }
     return new Scaffold(
-        backgroundColor: themeData.primaryColor,
+        backgroundColor: Theme.of(context).accentColor,
         // backgroundColor: Colors.black,
         body: new SafeArea(
           child: new Flex(
@@ -138,22 +140,17 @@ class _ScoreScreenState extends State<ScoreScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Flexible(
-              flex: 1,
-              child: new ScaleTransition(
-                scale: _characterAnimation,
-                child: new Container(
-                  child: new Image(
-                    image: new AssetImage("assets/hoodie/$gameName.png"),
-                  ),
+            new ScaleTransition(
+              scale: _characterAnimation,
+              child: new Container(
+                height: ht > wd ? ht * 0.15 : wd * 0.15,
+                child: new Image(
+                  image: new AssetImage("assets/hoodie/$gameName.png"),
                 ),
               ),
             ),
             
             //Stars Being Displayed according to the score
-            new Flexible(
-              flex: 1,
-              child: 
             myScore <= 10 ? new Container(
                 child: new Column(
                 children: <Widget>[
@@ -161,16 +158,16 @@ class _ScoreScreenState extends State<ScoreScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(Icons.star),
-                      new Icon(Icons.star_border),
-                      new Icon(Icons.star_border),
-                      new Icon(Icons.star_border),
+                      new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
                     ]),
                         new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                            new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
                           ]
                         )])) : (myScore>10 && myScore<=20) ? new Container(
                       child: new Column(
@@ -179,16 +176,16 @@ class _ScoreScreenState extends State<ScoreScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          new Icon(Icons.star),
-                          new Icon(Icons.star),
-                          new Icon(Icons.star_border),
-                          new Icon(Icons.star_border)
+                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,)
                         ]),
                         new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            new Text("Good", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                            new Text("Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
                           ]
                         )])) :  (myScore>20 && myScore<=30) ? new Container(
                           child: new Column(
@@ -197,40 +194,41 @@ class _ScoreScreenState extends State<ScoreScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star_border),
+                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                  new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
                         ]),
                         new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
+                            new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
                           ]
-                        )]))  : new Container(
-                          child: new Column(
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star),
-                                  new Icon(Icons.star),
-                        ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: 24.0),)
-                          ]
-                        )
-                        ]))),
+                        )]))  :  new ScaleTransition(
+                        scale: _characterAnimation,
+                        child: new Container(
+                                    child: new Column(
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                  ]),
+                                  new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]
+                                  )
+                                  ]))),
 
             //Users Image and score
-            
              gameDisplay != GameDisplay.single ? 
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -299,217 +297,73 @@ class _ScoreScreenState extends State<ScoreScreen>
               ),
             
             // Icons which redirect to home, refresh and fast-forward
-            new Flexible(
-              flex: 1,
-            child: 
              new Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  new ScaleTransition(
-                    scale: _buttonAnimation,
-                    child: new Container(
-                        decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: new Border.all(
-                              color: Colors.black,
-                              width: 2.5,
-                              style: BorderStyle.solid),
-                          // color: Colors.orange
-                        ),
-                        child: IconButton(
-                            iconSize: 100.0,
-                            icon: new Icon(Icons.home),
-                            onPressed: () {
-                              // Navigator.of(context).pushNamed('/tab');
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            })),
-                  ),
-                  new ScaleTransition(
-                    scale: _buttonAnimation,
-                    child: gameDisplay == GameDisplay.myHeadToHead
-                        ? new Container()
-                        : new Container(
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: new Border.all(
-                                  color: Colors.black,
-                                  width: 2.5,
-                                  style: BorderStyle.solid),
-                              // color: Colors.orange
-                            ),
-                            child: IconButton(
-                                iconSize: 100.0,
-                                icon: new Icon(Icons.refresh),
-                                onPressed: () {
-                                  // Navigator.of(context).pushNamed('/tab'),
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  }
-                            )),
-                  ),
-                  gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
-                    scale: _buttonAnimation,
-                                      child: new Container(
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: new Border.all(
-                                color: Colors.black,
-                                width: 2.5,
-                                style: BorderStyle.solid
-                              ),
-                              // color: Colors.orange
-                              ),
-                          child: IconButton(
-                            iconSize: 100.0,
-                            icon: new Icon(Icons.refresh),
-                            onPressed: (){
-                                // Navigator.of(context).pushNamed('/tab'),
-                                Navigator.pop(context);
-                                }
-                          ),
-                  )),
-                  new ScaleTransition(
-                    scale: _buttonAnimation,
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: new Border.all(
-                            color: Colors.black,
-                            width: 2.5,
-                            style: BorderStyle.solid),
-                        // color: Colors.orange
-                      ),
-                      child: IconButton(
-                          iconSize: 100.0,
-                          icon: new Icon(Icons.arrow_forward),
-                          onPressed: () {
-                            // Navigator.of(context).pushNamed('/tab'),
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          }),
-                    ),
-                  ),
-                ],
-              ),
-            
-            // new Expanded(
-            //   flex: 1,
-            //   child: new Row(
-            //    mainAxisSize: MainAxisSize.max,
-            //    mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //    crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: <Widget>[
-
-            //     //First user's score
-            //   new Container(
-            //     child: new Column(
-            //     mainAxisAlignment: MainAxisAlignment.start,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: scores),
-            //   ),
-
-            //   //Stars Being Displayed according to the score
-            //   myScore <= 10 ? new Container(
-            //     child: new Column(
-            //     children: <Widget>[
-            //       new Row(
-            //         children: <Widget>[
-            //           new Icon(Icons.star),
-            //           new Icon(Icons.star_border),
-            //           new Icon(Icons.star_border),
-            //           new Icon(Icons.star_border),
-            //         ])])) : (myScore>10 && myScore<=20) ? new Container(
-            //           child: new Column(
-            //           children: <Widget>[
-            //           new Row(
-            //             children: <Widget>[
-            //               new Icon(Icons.star),
-            //               new Icon(Icons.star),
-            //               new Icon(Icons.star_border),
-            //               new Icon(Icons.star_border)
-            //             ])])) :  (myScore>20 && myScore<=30) ? new Container(
-            //               child: new Column(
-            //               children: <Widget>[
-            //                 new Row(
-            //                   children: <Widget>[
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star_border),
-            //             ])]))  : new Container(
-            //               child: new Column(
-            //               children: <Widget>[
-            //                 new Row(
-            //                   children: <Widget>[
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star),
-            //                       new Icon(Icons.star),
-            //             ])])),
-
-            //   //OtherUser's Score
-            //   otherUser != null ? new Column(
-            //     mainAxisSize: MainAxisSize.max,
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: otherscore) : new Column(),
-
-            //   ],
-            // ),
-            // ),
-
-            // new Row(
-            //   mainAxisSize: MainAxisSize.max,
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: <Widget>[
-            //     new Container(
-            //       decoration: new BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         border: new Border.all(
-            //           color: Colors.white,
-            //           width: 2.5,
-            //         ),
-            //         color: Colors.white
-            //       ),
-            //       child: IconButton(
-            //       icon: new Icon(Icons.home),
-            //       onPressed: () => Navigator.of(context).pushNamed('/tab'),
-            //     )
-            //     ),
-            //     new Container(
-            //       decoration: new BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         border: new Border.all(
-            //           color: Colors.white,
-            //           width: 2.5,
-            //         ),
-            //         color: Colors.white
-            //       ),
-            //       child: IconButton(
-            //       icon: new Icon(Icons.fast_forward),
-            //       onPressed: () => Navigator.of(context).pushNamed('/tab'),
-            //     ),
-            //     ),
-
-            //     new Container(
-            //       decoration: new BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         border: new Border.all(
-            //           color: Colors.white,
-            //           width: 2.5,
-            //         ),
-            //         color: Colors.white
-            //       ),
-            //       child: IconButton(
-            //       icon: new Icon(Icons.refresh),
-            //       onPressed: () => Navigator.of(context).pushNamed('/tab'),
-            //     ),
-            //     ),
-            )],
+               crossAxisAlignment: CrossAxisAlignment.center,
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+               children: <Widget>[
+                 new Container(
+                     decoration: new BoxDecoration(
+                       shape: BoxShape.circle,
+                       border: new Border.all(
+                           color: Colors.black,
+                           width: 2.5,
+                           style: BorderStyle.solid),
+                       // color: Colors.orange
+                     ),
+                     child: IconButton(
+                         icon: new Icon(Icons.home),
+                         
+                         onPressed: () {
+                           // Navigator.of(context).pushNamed('/tab');
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                         })),
+                 gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
+                   scale: _textAnimation,
+                                     child: new Container(
+                         decoration: new BoxDecoration(
+                             shape: BoxShape.circle,
+                             border: new Border.all(
+                               color: Colors.black,
+                               width: 2.5,
+                               style: BorderStyle.solid
+                             ),
+                             // color: Colors.orange
+                             ),
+                         child: IconButton(
+                           icon: new Icon(Icons.refresh),
+                           iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                           onPressed: (){
+                               // Navigator.of(context).pushNamed('/tab'),
+                               Navigator.pop(context);
+                               }
+                         ),
+                 )),
+                  new Container(
+                     decoration: new BoxDecoration(
+                       shape: BoxShape.circle,
+                       border: new Border.all(
+                           color: Colors.black,
+                           width: 2.5,
+                           style: BorderStyle.solid),
+                       // color: Colors.orange
+                     ),
+                     child: IconButton(
+                         icon: new Icon(Icons.arrow_forward),
+                         iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                         onPressed: () {
+                           // Navigator.of(context).pushNamed('/tab'),
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                         }),
+                   ),
+               ],
+             ),
+             new Padding(
+               padding: new EdgeInsets.all(5.0),
+             )
+            ],
         )));
   }
 }
