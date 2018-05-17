@@ -153,79 +153,174 @@ class _ScoreScreenState extends State<ScoreScreen>
             //Stars Being Displayed according to the score
             myScore <= 10 ? new Container(
                 child: new Column(
-                children: <Widget>[
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                    ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )])) : (myScore>10 && myScore<=20) ? new Container(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Row(
+                                            mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                            crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]),
+                                            gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: <Widget>[
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]) : new Row(),
+                                  ]),
+                                  new Row(
+                                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                        crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                      new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]),
+                                    gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                      new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]) : new Row(),
+                                    ]),
+                                  ])) : (myScore>10 && myScore<=20) ? new Container(
                       child: new Column(
-                      children: <Widget>[
-                      new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,)
-                        ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )])) :  (myScore>20 && myScore<=30) ? new Container(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Row(
+                                            mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                            crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]),
+                                            gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]) : new Row(),
+                                  ]),
+                                  new Row(
+                                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                        crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                      new Text("Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]),
+                                    gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                      new Text("Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]) : new Row(),
+                                    ]),
+                                  ])) :  (myScore>20 && myScore<=30) ? new Container(
                           child: new Column(
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                        ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )]))  :  new ScaleTransition(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Row(
+                                            mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                            crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]),
+                                            gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: <Widget>[
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]) : new Row(),
+                                  ]),
+                                  new Row(
+                                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                        crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                      new Text("very Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]),
+                                    gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                      new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]) : new Row(),
+                                    ]),
+                                  ]))  :  new ScaleTransition(
                         scale: _characterAnimation,
                         child: new Container(
                                     child: new Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       new Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
+                                          new Row(
+                                            mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                            crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                            children: <Widget>[
                                             new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
                                             new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
                                             new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),]),
+                                            gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: <Widget>[
                                             new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
+                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),]) : new Row(),
                                   ]),
                                   new Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
+                                      new Row(
+                                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
+                                        crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                        children: <Widget>[
                                       new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                                    ]
-                                  )
+                                    ]),
+                                    gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                      new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                                    ]) : new Row(),
+                                    ]),
                                   ]))),
 
             //Users Image and score
@@ -299,7 +394,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             // Icons which redirect to home, refresh and fast-forward
              new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
                  new Container(
                      decoration: new BoxDecoration(
@@ -312,34 +407,14 @@ class _ScoreScreenState extends State<ScoreScreen>
                      ),
                      child: IconButton(
                          icon: new Icon(Icons.home),
-                         
+                         iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
                          onPressed: () {
                            // Navigator.of(context).pushNamed('/tab');
                            Navigator.pop(context);
                            Navigator.pop(context);
                            Navigator.pop(context);
                          })),
-                 gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
-                   scale: _textAnimation,
-                                     child: new Container(
-                         decoration: new BoxDecoration(
-                             shape: BoxShape.circle,
-                             border: new Border.all(
-                               color: Colors.black,
-                               width: 2.5,
-                               style: BorderStyle.solid
-                             ),
-                             // color: Colors.orange
-                             ),
-                         child: IconButton(
-                           icon: new Icon(Icons.refresh),
-                           iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
-                           onPressed: (){
-                               // Navigator.of(context).pushNamed('/tab'),
-                               Navigator.pop(context);
-                               }
-                         ),
-                 )),
+                 
                   new Container(
                      decoration: new BoxDecoration(
                        shape: BoxShape.circle,
