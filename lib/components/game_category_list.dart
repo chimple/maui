@@ -18,13 +18,55 @@ class GameCategoryList extends StatefulWidget {
 // List<int> _initiallyExpand = [];
 
 class _GameCategoryList extends State<GameCategoryList> {
+  static final List<Color> colorsCodes = [
+    Color(0XFF48AECC),
+    Color(0XFFE66796),
+    Color(0XFFFF7676),
+    Color(0XFFEDC23B),
+    Color(0XFFAD85F9),
+    Color(0XFF77DB65),
+    Color(0XFF66488C),
+    Color(0XFFDD6154),
+    Color(0XFFFFCE73),
+    Color(0XFFD64C60),
+    Color(0XFFDD4785),
+    Color(0XFF52C5CE),
+    Color(0XFFF97658),
+    Color(0XFFA46DBA),
+    Color(0XFFA292FF),
+    Color(0XFFFF8481),
+    Color(0XFF35C9C1),
+    Color(0XFFEDC23B),
+    Color(0XFF42AD56),
+    Color(0XFFF47C5D),
+    Color(0XFF77DB65),
+    Color(0XFF57DBFF),
+    Color(0XFFEB706F),
+    Color(0XFF48AECC),
+    Color(0XFFFFC729),
+    Color(0XFF30C9E2),
+    Color(0XFFA1EF6F),
+  ];
+  static final List<Color> tileColors = [];
+  List<int> _status = [];
+  int count = 0;
   @override
   void initState() {
-    // _initiallyExpand.clear();
     super.initState();
-    print(widget.game);
+    tileColors.clear();
+    _status.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
+    for (int i = 0; i < categoriesLength; i++) {
+      _status.add(0);
+    }
+    for (int i = 0; i < categoriesLength; i++) {
+      if (count == 26) count = 0;
+      tileColors.add(colorsCodes[count]);
+      count++;
+    }
+    print(colorsCodes.length);
+    print(tileColors.length);
   }
 
   @override
@@ -60,6 +102,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                     children: widget.gameCategories
                         .map((gameCategory) => _buildTiles(
                               context,
+                              tileColors[j],
                               j++,
                               gameCategory.item1,
                               gameCategory.item2,
@@ -80,6 +123,7 @@ class _GameCategoryList extends State<GameCategoryList> {
   bool _isLoading = false;
   Widget _buildTiles(
     BuildContext context,
+    Color _color,
     int index,
     int id,
     String gameCategory,
@@ -94,9 +138,11 @@ class _GameCategoryList extends State<GameCategoryList> {
       );
     }
     return new BuildExpansionTiles(
+      key: ValueKey<int>(index),
       context: context,
       categoryId: id,
       index: index,
+      tilesColor: _color,
       gameCategory: gameCategory,
       gameName: game,
       onClick: (dynamic) {
@@ -124,6 +170,7 @@ class BuildExpansionTiles extends StatefulWidget {
       {Key key,
       this.context,
       this.onClick,
+      this.tilesColor,
       @required this.categoryId,
       @required this.gameName,
       @required this.index,
@@ -134,130 +181,16 @@ class BuildExpansionTiles extends StatefulWidget {
   int categoryId;
   String gameCategory;
   String gameName;
+  Color tilesColor;
   ValueChanged onClick;
   @override
   State<StatefulWidget> createState() => new _BuildExpansionTiles();
 }
 
 class _BuildExpansionTiles extends State<BuildExpansionTiles> {
-  List<int> colors = [
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-  ];
   @override
   void initState() {
     super.initState();
-  }
-
-  callMe() {
-    print("count callll::");
   }
 
   @override
@@ -266,7 +199,7 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
     double _fontSize;
     _fontSize = (media.height * .58 * .162) / 3.9;
     return new Container(
-      color: new Color(colors[widget.index]),
+      color: widget.tilesColor,
       child: new ExpansionTiles(
         // onExpansionChanged: showModes(context, widget.gameName,
         //             'push', widget.categoryId),
