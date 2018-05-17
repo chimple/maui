@@ -47,7 +47,11 @@ class ProfileDrawerState extends State<ProfileDrawer> with SingleTickerProviderS
                         },
                       ),
                    ],
-                  currentAccountPicture: new Image.file(new File(user.image)),
+                  currentAccountPicture: new CircleAvatar(
+                    radius: 1000.0,
+                    backgroundColor: Colors.white,
+                    child: new Image.file(new File(user.image))
+                    ),
                   accountName: new Text('test'),
                   accountEmail: new Text('test@chimple.org'),     
             ),
@@ -85,7 +89,7 @@ class ProfileDrawerIcon extends StatelessWidget {
       child: new GestureDetector(
           child: new CircleAvatar(
              backgroundColor: Colors.white,
-            backgroundImage: new FileImage(new File(user.image)),
+             backgroundImage: new FileImage(new File(user.image)),
           ),
          onTap: () {
            Scaffold.of(context).openDrawer();
