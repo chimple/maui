@@ -55,7 +55,7 @@ class _GameCategoryList extends State<GameCategoryList> {
     tileColors.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
-    for (int i = 0; i < categoriesLength+10; i++) {
+    for (int i = 0; i < categoriesLength+1; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
       count++;
@@ -91,7 +91,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         new SliverList(
           delegate: new SliverChildListDelegate(new List<Widget>.generate(
             1,
-            (int index) {
+            (int index1) {
               return new Container(
                   alignment: Alignment.center,
                   child: new Flex(
