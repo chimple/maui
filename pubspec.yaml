@@ -48,8 +48,10 @@ flutter:
     - assets/chimple_logo.png
     - assets/apple.png
     - assets/Boy.png
-    - assets/imageCoordinatesInfo.json
-    - assets/imageCoordinatesInfo2.json
+    - assets/Body.png
+    - assets/imageCoordinatesInfoShapes.json
+    - assets/imageCoordinatesInfoBoy.json
+    - assets/imageCoordinatesInfoBody.json
     - assets/apple.ogg
     - assets/1.png
     - assets/2.png

@@ -56,7 +56,7 @@ class ExpansionTiles extends StatefulWidget {
   /// When the tile starts expanding, this function is called with the value
   /// true. When the tile starts collapsing, this function is called with
   /// the value false.
-  final VoidCallback onExpansionChanged;
+  final ValueChanged<bool> onExpansionChanged;
 
   /// The widgets that are displayed when the tile expands.
   ///
@@ -126,7 +126,7 @@ class _ExpansionTileState extends State<ExpansionTiles> with SingleTickerProvide
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
     if (widget.onExpansionChanged != null)
-    widget.onExpansionChanged();
+    widget.onExpansionChanged(_isExpanded);
   }
 
   Widget _buildChildren(BuildContext context, Widget child) {
