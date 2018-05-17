@@ -18,6 +18,8 @@ class TabHome extends StatefulWidget {
 class TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    var _size = media.size;
     return new DefaultTabController(
         length: 3,
         child: new Scaffold(
@@ -32,7 +34,7 @@ class TabHomeState extends State<TabHome> {
                 new SliverAppBar(
                   backgroundColor: Colors.red,
                   pinned: true,
-                  expandedHeight: 300.0,
+                  expandedHeight: _size.height*.3,
                   // title: const Text('Maui App Testing'),
                   // centerTitle: true,
                   forceElevated: innerBoxIsScrolled,
@@ -40,7 +42,7 @@ class TabHomeState extends State<TabHome> {
                   flexibleSpace: new FlexibleSpaceBar(
                     background: new Image.asset(
                       'assets/hoodie/drawing.png',
-                      scale: .85,
+                      scale: .8,
                     ),
                     centerTitle: true,
                   ),
