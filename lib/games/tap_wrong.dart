@@ -49,6 +49,7 @@ class TapWrongState extends State<TapWrong> {
   bool _isShowingFlashCard = false;
  int _maxSize=3;
  int _maxSize1=0;
+ int arrayLength=0;
   @override
   void initState() {
     super.initState();
@@ -115,6 +116,7 @@ class TapWrongState extends State<TapWrong> {
     _statusList = arr1.map((a) => Statuses.right).toList(growable: false);
     print('status array      $_statusList');
     setState(() => _isLoading = false);
+    arrayLength=arr1.length;
   }
 
   @override
@@ -193,31 +195,11 @@ class TapWrongState extends State<TapWrong> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: _dispText,
-          onChecked: () {
-            widget.onEnd(); // _initBoard();
-
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
-    int j = 0;
-
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / arr1.length;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / arrayLength;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (2);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -227,6 +209,31 @@ class TapWrongState extends State<TapWrong> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxWidth);
       AppState state = AppStateContainer.of(context).state;
 
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    if (_isShowingFlashCard) {
+      return FractionallySizedBox(
+            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            child: new FlashCard(
+              image: 'assets/dict/${_dispText.toLowerCase()}.png',
+          text: _dispText,
+          onChecked: () {
+            widget.onEnd(); // _initBoard();
+
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          }));
+    }
+    int j = 0;
+
+    
       return Padding(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -234,7 +241,28 @@ class TapWrongState extends State<TapWrong> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Container()),
+             Expanded(child: 
+              //  maxHeight: maxHeight,
+              //  maxWidth: maxWidth,
+                new Material(
+                    color: Theme.of(context).accentColor,
+                  //  elevation: 4.0,
+                    textStyle: new TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: state.buttonFontSize),
+                    child: new Container(
+                     // width: 100.0,
+                    //  height: 200.0,
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: new Center(
+                          child: new UnitButton(
+                            maxHeight: constraints.maxHeight/2,
+                            maxWidth: constraints.maxWidth/2,
+                            text:_dispText,
+                          primary: false,
+                          unitMode: UnitMode.image,
+                          ),
+               )  ))),
               Expanded(
                   child: ResponsiveGridView(
                 rows: 1,
