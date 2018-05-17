@@ -11,8 +11,6 @@ import 'package:maui/components/responsive_grid_view.dart';
 Map _decoded;
 
 
-final key = new GlobalKey<_IdentifyGameState>();
-
 class IdentifyGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -395,7 +393,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
               print("j fbifiugiqibh76r498y1985..here is the off set on the screen");
               print(offset.dx);
               print(offset.dy);
-              if (false) {
+              if (true) {
               // position = offset;
               render(part["name"], offset.dx, offset.dy-150.0);
             } else {
