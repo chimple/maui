@@ -49,11 +49,11 @@ class WordgridState extends State<Wordgrid> {
   List<String> newletters = [];
   List<String> newothers = [];
   Tuple2<List<String>, List<String>> data;
-  int currentindex = 0;
+  int visible = 0;
   int cdindex = 1;
   var progress = 0;
   var completeflag = 0;
-  List<int> tempcd = [];
+  int endflag=0;
   List<String> disp = [];
   List<Widget> temp = [];
   List<ShakeCell> _ShakeCells = [];
@@ -105,10 +105,6 @@ class WordgridState extends State<Wordgrid> {
     }
     _size = sqrt(data.item1.length + data.item2.length).toInt();
     size = _size;
-    print('original2 data  $data');
-    print("this2 data 1 ${data.item1}");
-    print('data2 2 ${data.item2}');
-    // _statuses = numbers.map((a) => Status.Active).toList(growable: false);
     data.item1.forEach((e) {
       words = words + e;
     });
@@ -127,12 +123,10 @@ class WordgridState extends State<Wordgrid> {
           start = 0;
         else
           start = 1;
-      } else if (_size == 3) {
-        start = rng.nextInt(cdlist.length - _size - (2 * (_size - 2)));
+      } else if (rng.nextInt(2) == 0) {
+        start = rng.nextInt(2 * _size - 2);
       } else {
-        while (start < 1) {
-          start = rng.nextInt(cdlist.length - _size - (2 * (_size - 3)));
-        }
+        start = rng.nextInt(_size * _size - _size);
       }
       var cdstart = cdlist[start];
       int eflag = 1;
@@ -142,7 +136,6 @@ class WordgridState extends State<Wordgrid> {
         var q = ((cdstart - p) * 10).toInt();
         var len = 0;
         cdletters = [];
-        //   print('rng   ${rng.nextInt(2)  }');
         while (len < data.item1.length) {
           cflag = 0;
           if (q + 1 < _size && rng.nextInt(2) == 0) {
@@ -156,7 +149,7 @@ class WordgridState extends State<Wordgrid> {
               cdletters.add(p * _size + (q + 1));
               q++;
             }
-          } else if (p + 1 < _size && rng.nextInt(2) == 0) {
+          } else if (p + 1 < _size) {
             var f = 0;
             for (var i = 0; i < cdletters.length; i++) {
               if ((p + 1) * _size + q == cdletters[i]) {
@@ -200,18 +193,14 @@ class WordgridState extends State<Wordgrid> {
           eflag = 1;
         }
       }
-      print('nik new $cdletters  $start ${cdlist[start]}');
     }
-    tempcd = [];
-    for (var i = 0; i < cdletters.length; i++) {
-      tempcd.add(cdletters[i]);
-    }
+    cdletters.add(cdletters.last);
     for (var i = 0; i < data.item1.length; i++) {
       disp.add(data.item1[i]);
     }
     newletters = [];
     newletters.length = data.item1.length + data.item2.length;
-    for (var i = 0; i < cdletters.length; i++) {
+    for (var i = 0; i < cdletters.length-1; i++) {
       newletters[cdletters[i]] = data.item1[i];
     }
     for (var i = 0, j = 0; i < newletters.length; i++) {
@@ -224,8 +213,9 @@ class WordgridState extends State<Wordgrid> {
     _statuses = newletters.map((a) => Status.Active).toList(growable: false);
     _ShakeCells =
         newletters.map((a) => ShakeCell.InActive).toList(growable: false);
-    currentindex = 1;
+    visible = 1;
     cdindex = 1;
+    clicks.add(cdletters[0]);
     _statuses[cdletters[0]] = Status.Visible;
     setState(() => _isLoading = false);
   }
@@ -246,63 +236,98 @@ class WordgridState extends State<Wordgrid> {
         status: status,
         tile: tile,
         onPress: () {
-          if (index != cdletters[0]) {
+          if (index != cdletters[0] && endflag==0) {
             clicks.add(index);
-
-            print('qw $clicks');
+            print('clicks    $clicks    indexx  $index');
             if (_statuses[index] == Status.Visible) {
               clicks.removeLast();
               if (clicks.last == index) {
-                print('kkk  ${clicks.last}  index $index');
                 if (cdletters[cdindex - 1] == index) {
                   setState(() {
                     widget.onScore(-1);
-                    widget.onProgress(--cdindex / cdletters.length);
+                    widget.onProgress(--cdindex / (cdletters.length-1));
                   });
                 }
                 setState(() {
-                  currentindex--;
+                  visible--;
                   _statuses[index] = Status.Active;
                 });
                 clicks.removeLast();
               }
             } else {
-              print('hi  $cdindex');
-               setState(() {  
-                _statuses[index] = Status.Visible;  
-              });
-               currentindex++;
-               print('got');
-               if(cdindex+1<cdletters.length){
-              if (cdletters[cdindex + 1] == index) {
+              print('ff $clicks   ${clicks.length}   ');
+              setState(() {
+                if(index==clicks[clicks.length-2]+1){
+                  if(index%_size!=0){
+                   _statuses[index] = Status.Visible;
+                   visible++;
+                  }
+                  else{
+                    clicks.removeLast();
+                    _ShakeCells[index] = ShakeCell.Right;
+                     new Future.delayed(const Duration(milliseconds: 500), () {
                 setState(() {
-                  widget.onScore(2);
-                  widget.onProgress(++cdindex / cdletters.length);
-                });
-              } 
-               }           
+                  _ShakeCells[index] = ShakeCell.InActive;
+                });});}
+                }
+                else if(index==clicks[clicks.length-2]-1){
+                   if((index+1)%_size!=0){
+                   _statuses[index] = Status.Visible;
+                   visible++;
+                  }
+                  else{
+                    clicks.removeLast();
+                    _ShakeCells[index] = ShakeCell.Right;
+                    new Future.delayed(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _ShakeCells[index] = ShakeCell.InActive;
+                });});
+                  }
+                }
+                else if(index==clicks[clicks.length-2]-_size){
+                    _statuses[index] = Status.Visible;
+                    visible++;
+                }
+                else if(index==clicks[clicks.length-2]+_size){
+                    _statuses[index] = Status.Visible;
+                    visible++;
+                  }
+                else{
+                  clicks.removeLast();
+                  _ShakeCells[index] = ShakeCell.Right;
+                  new Future.delayed(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _ShakeCells[index] = ShakeCell.InActive;
+                });});
+                }
+              });
+              if (cdindex  < cdletters.length) {
+                if (cdletters[cdindex + 1] == index) {
+                  setState(() {
+                    widget.onScore(2);
+                    widget.onProgress(++cdindex / (cdletters.length-1));
+                  });
+                }
+              }
             }
-            print('current $currentindex  ${cdletters.length}');
-            if (currentindex == cdletters.length) {
-
+            if (visible == cdletters.length-1) {
               var flag = 0;
               var c = 0;
               for (var j = 0; j < _statuses.length; j++) {
                 if (_statuses[j] == Status.Visible) {
-                  for (var k = 0; k < cdletters.length; k++) {
+                  for (var k = 0; k < cdletters.length-1; k++) {
                     if (j == cdletters[k]) {
                       c++;
                       break;
-                    } 
+                    }
                   }
                 }
-
                 setState(() {
-                  if (flag == 0 && c == cdletters.length) {
-                    print('hi 56789');
+                  if (flag == 0 && c == cdletters.length-1) {
                     completeflag = 1;
                     widget.onScore(2);
                     widget.onProgress(1.0);
+                    endflag=1;
                     new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _isShowingFlashCard = true; // widget.onEnd();
@@ -311,30 +336,6 @@ class WordgridState extends State<Wordgrid> {
                   }
                 });
               }
-              // var pflag = 0;
-              // for (var c = 0; c < cdletters.length; c++) {
-              //   if (index == tempcd[c]) {
-              //     progress++;
-              //     tempcd[c] = -1;
-              //     setState(() {
-              //       widget.onScore(2);
-              //       print('scxore   2');
-              //       //  widget.onProgress(progress/cdletters.length);
-              //     });
-              //     break;
-              //   } else {
-              //     if (c == cdletters.length - 1) {
-              //       pflag = 1;
-              //     }
-              //   }
-              // }
-              // if (pflag == 1 && _statuses[index] == Status.Visible) {
-              //   setState(() {
-              //     widget.onScore(-1);
-              //     print('scxore   -1');
-              //   });
-              // }
-
             }
           }
         });
@@ -342,29 +343,14 @@ class WordgridState extends State<Wordgrid> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
+      if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: words,
-          onChecked: () {
-            widget.onEnd(); // _initBoard();
-
-            setState(() {
-              _isShowingFlashCard = false;
-              words = '';
-              disp = [];
-              completeflag = 0;
-            });
-          });
-    }
-    var j = 0;
-    return new LayoutBuilder(builder: (context, constraints) {
+        return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
@@ -378,6 +364,26 @@ class WordgridState extends State<Wordgrid> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
+  
+    if (_isShowingFlashCard) {
+      return  FractionallySizedBox(
+      widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.65,
+      heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.9,
+      child: new FlashCard(
+          text: words,
+          onChecked: () {
+            widget.onEnd(); // _initBoard();
+
+            setState(() {
+              _isShowingFlashCard = false;
+              words = '';
+              disp = [];
+              completeflag = 0;
+              endflag=0;
+            });
+          }));
+    }
+    var j = 0;
       return new Column(
         children: [
           new LimitedBox(
@@ -386,18 +392,20 @@ class WordgridState extends State<Wordgrid> {
                   color: Colors.orange,
                   elevation: 4.0,
                   textStyle: new TextStyle(
-                      color: Colors.white, fontSize: state.buttonFontSize),
+                      color: Colors.white,fontSize: state.buttonFontSize/1.3),
                   child: new ListView(
                       // reverse: true,
                       scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.all(buttonPadding),
-                      itemExtent: state.buttonWidth,
+                    //  padding: EdgeInsets.all(buttonPadding),
+                    //  itemExtent: state.buttonWidth,
                       children: completeflag == 1
                           ? disp
                               .map((l) => Center(
                                   child: Padding(
-                                      padding: EdgeInsets.all(buttonPadding),
+                                      padding: EdgeInsets.all(buttonPadding/2.0),
                                       child: UnitButton(
+                                        maxHeight: state.buttonHeight/1.2,
+                                        maxWidth: state.buttonWidth/1.3,
                                         text: l,
                                         primary: false,
                                         onPress: () {},
@@ -463,7 +471,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       });
     controller.forward();
-    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
+    animationWrong = new Tween(begin: -4.0, end: 4.0).animate(controller1);
     _myAnim();
   }
 
