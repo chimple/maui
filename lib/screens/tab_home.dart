@@ -4,11 +4,18 @@ import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/story/story_list_view.dart';
 
-class TabHome extends StatelessWidget {
+class TabHome extends StatefulWidget {
   final String title;
 
   TabHome({Key key, this.title}) : super(key: key);
 
+  @override
+  TabHomeState createState() {
+    return new TabHomeState();
+  }
+}
+
+class TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
     return new DefaultTabController(
@@ -20,7 +27,7 @@ class TabHome extends StatelessWidget {
           child: new Image.asset('assets/koala_neutral.png'),
         ),
         appBar: new AppBar(
-          title: new Text(title),
+          title: new Text(widget.title),
           leading: new ProfileDrawerIcon(),
           bottom: new TabBar(
             tabs: <Widget>[
