@@ -51,7 +51,8 @@ class _AppStateContainerControllerState
 
   void _play(String fileName) async {
     try {
-      await platform.invokeMethod('speak', <String, dynamic>{'text': fileName});
+      await platform.invokeMethod(
+          'speak', <String, dynamic>{'text': fileName.toLowerCase()});
     } on PlatformException catch (e) {}
 
 //    if (!_isPlaying) {
