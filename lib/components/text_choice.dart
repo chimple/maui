@@ -2,47 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 
-class TextChoice extends StatefulWidget {
+class TextChoice extends StatelessWidget {
   Function onSubmit;
-  TextChoice({this.onSubmit});
+  List<String> texts;
+  TextChoice({this.onSubmit, this.texts});
 
-  @override
-  TextChoiceState createState() {
-    return new TextChoiceState();
-  }
-}
-
-class TextChoiceState extends State<TextChoice> {
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return new Row(
-      children: <Widget>[
-        new FlatButton(
-            onPressed: () => widget.onSubmit(new ChatItem(
-                sender: user.id,
-                chatItemType: ChatItemType.text,
-                content: ('👍'))),
-            child: new Text('👍')),
-        new FlatButton(
-            onPressed: () => widget.onSubmit(new ChatItem(
-                sender: user.id,
-                chatItemType: ChatItemType.text,
-                content: ('👏'))),
-            child: new Text('👏')),
-        new FlatButton(
-            onPressed: () => widget.onSubmit(new ChatItem(
-                sender: user.id,
-                chatItemType: ChatItemType.text,
-                content: ('👌'))),
-            child: new Text('👌')),
-        new FlatButton(
-            onPressed: () => widget.onSubmit(new ChatItem(
-                sender: user.id,
-                chatItemType: ChatItemType.text,
-                content: ('👋'))),
-            child: new Text('👋')),
-      ],
+    return new Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: texts
+              .map((t) => new RaisedButton(
+                  onPressed: () => onSubmit(new ChatItem(
+                      sender: user.id,
+                      chatItemType: ChatItemType.text,
+                      content: (t))),
+                  child: new Text(t)))
+              .toList(growable: false)),
     );
   }
 }
