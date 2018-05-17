@@ -105,7 +105,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
           }
         });
   }
-
   
 
   @override
@@ -158,29 +157,46 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       print("My Width - $wd");
       return new Column(
           children: <Widget>[
-            new Material(
-              color: Theme.of(context).accentColor,
-              elevation: 4.0,
-              child: new LimitedBox(
-                  maxHeight: maxHeight,
-                  child: new Center(
-                    child: new Text(questionText,
-                     style: new TextStyle(
-                         color: Theme.of(context).primaryColor,
-                         fontSize: state.buttonFontSize))))),
+            
+            new Column(
+              verticalDirection: VerticalDirection.up,
+              children: <Widget>[
                 new Material(
                   color: Theme.of(context).accentColor,
-                  elevation: 8.0,
+                  elevation: 4.0,
                   child: new LimitedBox(
                     maxHeight: maxHeight,
-                    child: new Center(
-                      child: new Text(answerText,
-                        style: new TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: state.buttonFontSize)),
-                    )
-                  )
-                ),
+                    maxWidth: maxWidth,
+                    child: new Material(
+                        color: Theme.of(context).accentColor,
+                        elevation: 4.0,
+                        textStyle: new TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: state.buttonFontSize),
+                        child: new Container(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: new Center(
+                              child: new UnitButton(text:"$questionText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
+                            ))))),
+                    new Material(
+                      color: Theme.of(context).accentColor,
+                      elevation: 8.0,
+                      child: new LimitedBox(
+                      maxHeight: maxHeight,
+                      maxWidth: maxWidth,
+                      child: new Material(
+                          color: Theme.of(context).accentColor,
+                          elevation: 4.0,
+                          textStyle: new TextStyle(
+                              color: Colors.orangeAccent,
+                              fontSize: state.buttonFontSize),
+                          child: new Container(
+                              padding: EdgeInsets.all(buttonPadding),
+                              child: new Center(
+                                child: new UnitButton(text:"$answerText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
+                              )))),
+                    )]),
+                    
                 new Expanded(
                   child: new ResponsiveGridView(
                   rows: 1,
@@ -270,6 +286,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
+    double ht = media.height;
+    double wd = media.width;
     widget.keys++;
     print("_MyButtonState.build");
     return new Shake(
@@ -305,7 +324,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                    child: new Icon(
                   _displayText == 'true' ? Icons.check : Icons.close,
                   key: new Key("${widget.keys}"),
-                  size: 100.0,
+                  size: ht > wd ? ht * 0.2 : wd * 0.2,
                   color: _displayText == 'true' ? Colors.green : Colors.red,
                    )
                    

@@ -25,9 +25,9 @@ class GameListView extends StatelessWidget {
           children: <Widget>[
             new Expanded(
                 child: Align(
-                    child: new Image.asset(
-              'assets/hoodie/$gameName.png',
-              scale: 0.3,
+                    child: new Hero(
+              tag: 'assets/hoodie/$gameName.png',
+              child: Image.asset('assets/hoodie/$gameName.png', scale: 0.3),
             ))),
             new Container(
                 padding: EdgeInsets.all(size.width * .01),
