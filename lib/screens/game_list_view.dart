@@ -58,7 +58,7 @@ class GameListView extends StatelessWidget {
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return new GridView.count(
         key: new Key('Game_page'),
-        primary: false,
+        primary: true,
         padding: const EdgeInsets.all(12.0),
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
