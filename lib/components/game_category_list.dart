@@ -48,18 +48,13 @@ class _GameCategoryList extends State<GameCategoryList> {
     Color(0XFFA1EF6F),
   ];
   static final List<Color> tileColors = [];
-  List<int> _status = [];
   int count = 0;
   @override
   void initState() {
     super.initState();
     tileColors.clear();
-    _status.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
-    for (int i = 0; i < categoriesLength; i++) {
-      _status.add(0);
-    }
     for (int i = 0; i < categoriesLength; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
@@ -84,9 +79,11 @@ class _GameCategoryList extends State<GameCategoryList> {
             pinned: true,
             expandedHeight: media.height * .37,
             flexibleSpace: new FlexibleSpaceBar(
-              background: new Image.asset(
-                'assets/hoodie/${widget.game}.png',
-                scale: .85,
+              background: new FittedBox(
+                child: new Image.asset(
+                  'assets/hoodie/${widget.game}.png',
+                  scale: .85,
+                ),
               ),
               centerTitle: true,
               title: new Text(widget.game),

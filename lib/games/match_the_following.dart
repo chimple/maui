@@ -423,14 +423,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controllerstatus2 = new AnimationController(
-        duration: new Duration(milliseconds: 30), vsync: this);
+        duration: new Duration(milliseconds: 50), vsync: this);
     animationInvisible = new CurvedAnimation(
         parent: controller,
         curve: new Interval(0.0, 1.0, curve: Curves.easeInOut));
     buttonPress = new Tween(begin: .98, end: 0.94).animate(controllerPress);
     animationstatus2 = new Tween(
-      begin: 1.0,
-      end: -2.0,
+      begin: 3.0,
+      end: -3.0,
     ).animate(controllerstatus2);
     noAimation = new Tween(
       begin: 0.0,
