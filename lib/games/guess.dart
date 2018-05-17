@@ -52,7 +52,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   }
 
   Future<String> _loadGameAsset() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfo.json");
+    return await rootBundle.loadString("assets/imageCoordinatesInfoShapes.json");
   }
 
   Future _loadGameInfo() async {

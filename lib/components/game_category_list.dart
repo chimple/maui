@@ -15,122 +15,53 @@ class GameCategoryList extends StatefulWidget {
   final String game;
 }
 
+// List<int> _initiallyExpand = [];
+
 class _GameCategoryList extends State<GameCategoryList> {
-  List<int> colors = [
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF52C5CE,
-    0XFFF97658,
-    0XFFA46DBA,
-    0XFFA292FF,
-    0XFFFF8481,
-    0XFF35C9C1,
-    0XFFEDC23B,
-    0XFF42AD56,
-    0XFFF47C5D,
-    0XFF77DB65,
-    0XFF57DBFF,
-    0XFFEB706F,
-    0XFF48AECC,
-    0XFFFFC729,
-    0XFF30C9E2,
-    0XFFA1EF6F,
-    0XFF48AECC,
+  static final List<Color> colorsCodes = [
+    Color(0XFF48AECC),
+    Color(0XFFE66796),
+    Color(0XFFFF7676),
+    Color(0XFFEDC23B),
+    Color(0XFFAD85F9),
+    Color(0XFF77DB65),
+    Color(0XFF66488C),
+    Color(0XFFDD6154),
+    Color(0XFFFFCE73),
+    Color(0XFFD64C60),
+    Color(0XFFDD4785),
+    Color(0XFF52C5CE),
+    Color(0XFFF97658),
+    Color(0XFFA46DBA),
+    Color(0XFFA292FF),
+    Color(0XFFFF8481),
+    Color(0XFF35C9C1),
+    Color(0XFFEDC23B),
+    Color(0XFF42AD56),
+    Color(0XFFF47C5D),
+    Color(0XFF77DB65),
+    Color(0XFF57DBFF),
+    Color(0XFFEB706F),
+    Color(0XFF48AECC),
+    Color(0XFFFFC729),
+    Color(0XFF30C9E2),
+    Color(0XFFA1EF6F),
   ];
+  static final List<Color> tileColors = [];
+  int count = 0;
   @override
   void initState() {
-    int categoriesLength = widget.gameCategories.length;
     super.initState();
+    tileColors.clear();
+    int categoriesLength = widget.gameCategories.length;
+    print("Length of categories::$categoriesLength");
+    for (int i = 0; i < categoriesLength; i++) {
+      if (count == 26) count = 0;
+      tileColors.add(colorsCodes[count]);
+      count++;
+    }
+    print(colorsCodes.length);
+    print(tileColors.length);
   }
 
   @override
@@ -139,46 +70,140 @@ class _GameCategoryList extends State<GameCategoryList> {
     Size media = MediaQuery.of(context).size;
     final _colors = SingleGame.gameColors[widget.game];
     final color = _colors != null ? _colors[0] : Colors.amber;
-    return new Flex(
-      direction: Axis.vertical,
-      children: <Widget>[
-        new Expanded(
-          flex: 1,
-          child: new Container(
-              width: media.width,
-              color: color,
-              child: FittedBox(
-                  child: new Image.asset(
-                'assets/hoodie/${widget.game}.png',
-                scale: .85,
-              ))),
+    return new CustomScrollView(
+      primary: true,
+      shrinkWrap: false,
+      slivers: <Widget>[
+        new SliverAppBar(
+            backgroundColor: color,
+            pinned: true,
+            expandedHeight: media.height * .37,
+            flexibleSpace: new FlexibleSpaceBar(
+              background: new FittedBox(
+                child: new Image.asset(
+                  'assets/hoodie/${widget.game}.png',
+                  scale: .85,
+                ),
+              ),
+              centerTitle: true,
+              title: new Text(widget.game),
+            )),
+        new SliverList(
+          delegate: new SliverChildListDelegate(new List<Widget>.generate(
+            1,
+            (int index) {
+              return new Container(
+                  alignment: Alignment.center,
+                  child: new Flex(
+                    direction: Axis.vertical,
+                    children: widget.gameCategories
+                        .map((gameCategory) => _buildTiles(
+                              context,
+                              tileColors[j],
+                              j++,
+                              gameCategory.item1,
+                              gameCategory.item2,
+                              widget.game,
+                            ))
+                        .toList(growable: false),
+                  ));
+            },
+          )),
         ),
-        new Expanded(
-          flex: 2,
-          child: new ListView(
-            children: widget.gameCategories
-                .map((gameCategory) => _buildTiles(context, j++,
-                    gameCategory.item1, gameCategory.item2, widget.game))
-                .toList(growable: false),
-          ),
-        )
+        new SliverToBoxAdapter(
+          child: new Container(height: 2.0, color: Colors.white),
+        ),
       ],
     );
   }
 
-  Widget _buildTiles(BuildContext context, int index, int categoryId,
-  
-      String categories, String gameName) {
-         Size media = MediaQuery.of(context).size;
+  bool _isLoading = false;
+  Widget _buildTiles(
+    BuildContext context,
+    Color _color,
+    int index,
+    int id,
+    String gameCategory,
+    String game,
+  ) {
+    if (_isLoading) {
+      return new Center(
+        child: new Text(
+          'Loading..',
+          style: new TextStyle(fontSize: 40.0, color: Colors.green),
+        ),
+      );
+    }
+    return new BuildExpansionTiles(
+      key: ValueKey<int>(index),
+      context: context,
+      categoryId: id,
+      index: index,
+      tilesColor: _color,
+      gameCategory: gameCategory,
+      gameName: game,
+      onClick: (dynamic) {
+        print("print index of tile $index");
+        // if (_initiallyExpand[index] != 1) {
+        //   setState(() {
+        //     _initiallyExpand[index] = 1;
+        //   });
+        //   flag = 1;
+        // }
+        // if (_oldIndex != index && flag == 1) {
+        //   setState(() {
+        //     _initiallyExpand[_oldIndex] = 0;
+        //     flag = 0;
+        //   });
+        // }
+        // _oldIndex = index;
+      },
+    );
+  }
+}
+
+class BuildExpansionTiles extends StatefulWidget {
+  BuildExpansionTiles(
+      {Key key,
+      this.context,
+      this.onClick,
+      this.tilesColor,
+      @required this.categoryId,
+      @required this.gameName,
+      @required this.index,
+      @required this.gameCategory})
+      : super(key: key);
+  final BuildContext context;
+  int index;
+  int categoryId;
+  String gameCategory;
+  String gameName;
+  Color tilesColor;
+  ValueChanged onClick;
+  @override
+  State<StatefulWidget> createState() => new _BuildExpansionTiles();
+}
+
+class _BuildExpansionTiles extends State<BuildExpansionTiles> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
     double _fontSize;
     _fontSize = (media.height * .58 * .162) / 3.9;
     return new Container(
-      color: new Color(colors[index]),
+      color: widget.tilesColor,
       child: new ExpansionTiles(
+        // onExpansionChanged: showModes(context, widget.gameName,
+        //             'push', widget.categoryId),
         title: new Center(
             child: new Text(
-          categories,
-          style: TextStyle(color: Colors.white,fontSize: _fontSize),
+          widget.gameCategory,
+          style: TextStyle(color: Colors.white, fontSize: _fontSize),
         )),
         trailing: new Text(''),
         children: <Widget>[
@@ -189,15 +214,15 @@ class _GameCategoryList extends State<GameCategoryList> {
                 color: Colors.white,
                 key: new Key('single'),
                 icon: new Icon(Icons.accessibility),
-                onPressed: () => showModes(
-                    context, gameName, 'single_iterations', categoryId),
+                onPressed: () => showModes(context, widget.gameName,
+                    'single_iterations', widget.categoryId),
               ),
               new IconButton(
                 color: Colors.white,
                 key: new Key('h2h'),
                 icon: new Icon(Icons.people),
-                onPressed: () =>
-                    showModes(context, gameName, 'h2h_iterations', categoryId),
+                onPressed: () => showModes(context, widget.gameName,
+                    'h2h_iterations', widget.categoryId),
               ),
             ],
           )
@@ -227,7 +252,7 @@ class _GameCategoryList extends State<GameCategoryList> {
   }
 }
 
-// older cod
+//older cod
 
 // class GameCategoryList extends StatelessWidget {
 //   final List<Tuple2<int, String>> gameCategories;
@@ -252,6 +277,7 @@ class _GameCategoryList extends State<GameCategoryList> {
 //   }
 
 //   showModes(BuildContext context, String game, int id) async {
+//     print("count calling state:: $context, $game, $id");
 //     String selected = await showModalBottomSheet<String>(
 //         context: context,
 //         builder: (BuildContext context) {
