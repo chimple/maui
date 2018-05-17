@@ -55,7 +55,7 @@ class _GameCategoryList extends State<GameCategoryList> {
     tileColors.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
-    for (int i = 0; i < categoriesLength; i++) {
+    for (int i = 0; i < categoriesLength+10; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
       count++;
