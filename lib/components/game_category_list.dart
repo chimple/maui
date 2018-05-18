@@ -81,7 +81,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                     tag: 'assets/hoodie/${widget.game}.png',
                     child: new Image.asset(
                       'assets/hoodie/${widget.game}.png',
-                      scale: .85,
+                      scale: .8,
                     )),
               ),
               centerTitle: true,
