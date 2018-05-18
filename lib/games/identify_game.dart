@@ -635,7 +635,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render1(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -662,7 +662,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render2(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -690,7 +690,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render3(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -718,7 +718,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render4(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -746,7 +746,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render5(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -774,7 +774,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render6(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -802,7 +802,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render7(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -830,7 +830,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render8(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -858,7 +858,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render9(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
@@ -886,7 +886,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                         i+=1;
                         render10(part["name"], offset.dx, offset.dy - 150.0);
                         widget.onScore(1);
-                        if(i==9){
+                        if(i==10){
                           widget.onEnd();
                         }
                       }
