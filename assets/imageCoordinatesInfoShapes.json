@@ -5,7 +5,6 @@
     "parts": [
         {
             "name": "square",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 100.0,
                 "width": 100.0,
@@ -15,7 +14,6 @@
         },
         {
             "name": "circle",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 120.0,
                 "width": 120.0,
@@ -25,16 +23,15 @@
         },
         {
             "name": "hexagon",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 116.264,
                 "width": 100.687,
                 "x": 311.208,
-                "y": 235.0            }
+                "y": 235.0
+            }
         },
         {
             "name": "triangle",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 130.0,
                 "width": 130.0,
