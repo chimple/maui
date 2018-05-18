@@ -5,7 +5,6 @@
     "parts": [
         {
             "name": "face",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 223,
                 "width": 176,
@@ -14,8 +13,7 @@
             }
         },
         {
-            "name": "uppper body",
-            "color": "0XFFFFCDD2",
+            "name": "upper body",
             "data": {
                 "height": 416,
                 "width": 306,
@@ -25,7 +23,6 @@
         },
         {
             "name": "right hand",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 502,
                 "width": 113,
@@ -35,7 +32,6 @@
         },
         {
             "name": "left hand",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 516,
                 "width": 100,
@@ -45,7 +41,6 @@
         },
         {
             "name": "right palm",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 122,
                 "width": 113,
@@ -55,7 +50,6 @@
         },
         {
             "name": "left palm",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 161,
                 "width": 100,
@@ -65,7 +59,6 @@
         },
         {
             "name": "right leg",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 760,
                 "width": 148,
@@ -75,7 +68,6 @@
         },
         {
             "name": "left leg",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 773,
                 "width": 158,
@@ -85,7 +77,6 @@
         },
         {
             "name": "right foot",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 120,
                 "width": 164,
@@ -95,7 +86,6 @@
         },
         {
             "name": "left foot",
-            "color": "0XFFFFCDD2",
             "data": {
                 "height": 122,
                 "width": 134,
