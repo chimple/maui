@@ -14,6 +14,7 @@ class TabHome extends StatefulWidget {
     return new TabHomeState();
   }
 }
+
 class TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class TabHomeState extends State<TabHome> {
           drawer: new ProfileDrawer(),
           floatingActionButton: new FloatingActionButton(
               onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-              child: new Image.asset('assets/koala_neutral.png')),
+              child: new Image.asset('assets/hoodie_fb.png')),
           body: new NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
@@ -35,14 +36,14 @@ class TabHomeState extends State<TabHome> {
                   pinned: true,
                   leading: new ProfileDrawerIcon(),
                   title: new Text("Maui"),
-                  expandedHeight: _size.height*.3,
+                  expandedHeight: _size.height * .3,
                   // title: const Text('Maui App Testing'),
                   // centerTitle: true,
                   forceElevated: innerBoxIsScrolled,
                   // floating: true,
                   flexibleSpace: new FlexibleSpaceBar(
                     background: new FittedBox(
-                                          child: new Image.asset(
+                      child: new Image.asset(
                         'assets/chat.png',
                         scale: .8,
                       ),
@@ -51,7 +52,6 @@ class TabHomeState extends State<TabHome> {
                   ),
                   bottom: new TabBar(
                     unselectedLabelColor: Colors.black,
-                    
                     tabs: <Widget>[
                       new Tab(text: 'Chat', icon: new Icon(Icons.chat)),
                       new Tab(text: 'Game', icon: new Icon(Icons.games)),
