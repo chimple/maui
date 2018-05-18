@@ -90,6 +90,7 @@ class _UnitButtonState extends State<UnitButton> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return widget.showHelp
         ? new GestureDetector(
@@ -99,8 +100,8 @@ class _UnitButtonState extends State<UnitButton> {
                 showDialog(
                     context: context,
                     child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
+                        widthFactor:  0.5,
+                        heightFactor:  0.9,
                         child: new FlashCard(text: widget.text)));
               }
             },
