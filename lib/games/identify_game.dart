@@ -347,20 +347,20 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             print(offset.dx);
             print(offset.dy);
             if (part["name"] == "face" &&
-                (offset.dx + 40.0 > 407.0 && offset.dx + 40.0 < 526.0) &&
-                (offset.dy + 50.0 > 190.0 && offset.dy + 50.0 < 300.0)) {
+                (offset.dx  > 360.0 && offset.dx < 480.0) &&
+                (offset.dy  > 140.0 && offset.dy  < 250.0)) {
               render(part["name"], offset.dx, offset.dy - 150.0);
             } else if (part["name"] == "upper body" &&
-                (offset.dx + 40.0 > 376.0 && offset.dx + 40.0 < 520.0) &&
-                (offset.dy + 50.0  > 300.0 && offset.dy + 50.0  < 540.0)) {
+                (offset.dx > 336.0 && offset.dx < 480.0) &&
+                (offset.dy  > 250.0 && offset.dy  < 480.0)) {
               render(part["name"], offset.dx, offset.dy - 150.0);
             } else if (part["name"] == "right hand" &&
-                (offset.dx  > 280.0 && offset.dx  < 320.0) &&
-                (offset.dy  > 316.0 && offset.dy  < 503.0)) {
+                (offset.dx  > 260.0 && offset.dx  < 310.0) &&
+                (offset.dy  > 300.0 && offset.dy  < 540.0)) {
               render(part["name"], offset.dx, offset.dy - 150.0);
             } else if (part["name"] == "left hand" &&
-                (offset.dx > 440.0 && offset.dx  < 520.0) &&
-                (offset.dy > 490.0 && offset.dy < 511.0)) {
+                (offset.dx > 430.0 && offset.dx  < 530.0) &&
+                (offset.dy > 300.0 && offset.dy < 540.0)) {
               render(part["name"], offset.dx, offset.dy - 150.0);
             } else if (part["name"] == "left leg" &&
                 (offset.dx > 392.0 && offset.dx < 520.0) &&
