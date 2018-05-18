@@ -15,8 +15,6 @@ class GameCategoryList extends StatefulWidget {
   final String game;
 }
 
-// List<int> _initiallyExpand = [];
-
 class _GameCategoryList extends State<GameCategoryList> {
   static final List<Color> colorsCodes = [
     Color(0XFF48AECC),
@@ -216,8 +214,6 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
                 ]
               : <Widget>[
                   new Center(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //children: <Widget>[
                     child: new IconButton(
                       color: Colors.white,
                       key: new Key('single'),
@@ -225,7 +221,6 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
                       onPressed: () => showModes(context, widget.gameName,
                           'single_iterations', widget.categoryId),
                     ),
-                    //],
                   )
                 ]),
     );
