@@ -60,6 +60,9 @@ flutter:
     - assets/5.png
     - assets/6.png
     - assets/dice5.gif
+    - assets/games.png
+    - assets/chat.png
+    - assets/story.png
     - assets/Shapes.png
     - assets/koala_neutral.png
     - assets/koala_happy.png
