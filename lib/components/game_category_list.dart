@@ -55,7 +55,7 @@ class _GameCategoryList extends State<GameCategoryList> {
     tileColors.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
-    for (int i = 0; i < categoriesLength; i++) {
+    for (int i = 0; i < categoriesLength + 1; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
       count++;
@@ -80,10 +80,12 @@ class _GameCategoryList extends State<GameCategoryList> {
             expandedHeight: media.height * .37,
             flexibleSpace: new FlexibleSpaceBar(
               background: new FittedBox(
-                child: new Image.asset(
-                  'assets/hoodie/${widget.game}.png',
-                  scale: .85,
-                ),
+                child: new Hero(
+                    tag: 'assets/hoodie/${widget.game}.png',
+                    child: new Image.asset(
+                      'assets/hoodie/${widget.game}.png',
+                      scale: .85,
+                    )),
               ),
               centerTitle: true,
               title: new Text(widget.game),
@@ -91,7 +93,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         new SliverList(
           delegate: new SliverChildListDelegate(new List<Widget>.generate(
             1,
-            (int index) {
+            (int index1) {
               return new Container(
                   alignment: Alignment.center,
                   child: new Flex(
@@ -198,36 +200,50 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
     return new Container(
       color: widget.tilesColor,
       child: new ExpansionTiles(
-        // onExpansionChanged: showModes(context, widget.gameName,
-        //             'push', widget.categoryId),
-        title: new Center(
-            child: new Text(
-          widget.gameCategory,
-          style: TextStyle(color: Colors.white, fontSize: _fontSize),
-        )),
-        trailing: new Text(''),
-        children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              new IconButton(
-                color: Colors.white,
-                key: new Key('single'),
-                icon: new Icon(Icons.accessibility),
-                onPressed: () => showModes(context, widget.gameName,
-                    'single_iterations', widget.categoryId),
-              ),
-              new IconButton(
-                color: Colors.white,
-                key: new Key('h2h'),
-                icon: new Icon(Icons.people),
-                onPressed: () => showModes(context, widget.gameName,
-                    'h2h_iterations', widget.categoryId),
-              ),
-            ],
-          )
-        ],
-      ),
+          // onExpansionChanged: showModes(context, widget.gameName,
+          //             'push', widget.categoryId),
+          title: new Center(
+              child: new Text(
+            widget.gameCategory,
+            style: TextStyle(color: Colors.white, fontSize: _fontSize),
+          )),
+          trailing: new Text(''),
+          children: widget.gameName != 'identify'
+              ? <Widget>[
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      new IconButton(
+                        color: Colors.white,
+                        key: new Key('single'),
+                        icon: new Icon(Icons.accessibility),
+                        onPressed: () => showModes(context, widget.gameName,
+                            'single_iterations', widget.categoryId),
+                      ),
+                      new IconButton(
+                        color: Colors.white,
+                        key: new Key('h2h'),
+                        icon: new Icon(Icons.people),
+                        onPressed: () => showModes(context, widget.gameName,
+                            'h2h_iterations', widget.categoryId),
+                      ),
+                    ],
+                  )
+                ]
+              : <Widget>[
+                  new Center(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //children: <Widget>[
+                    child: new IconButton(
+                      color: Colors.white,
+                      key: new Key('single'),
+                      icon: new Icon(Icons.accessibility),
+                      onPressed: () => showModes(context, widget.gameName,
+                          'single_iterations', widget.categoryId),
+                    ),
+                    //],
+                  )
+                ]),
     );
   }
 
