@@ -59,6 +59,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   int dragcount = 0;
   int progres = 0;
   int space = 0;
+  
+  @override
+  void didUpdateWidget(FillInTheBlanks oldWidget) {
+         super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+             _initFillBlanks();
+    }
+  }
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
@@ -209,12 +217,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         });
   }
 
-  @override
-  void didUpdateWidget(FillInTheBlanks oldWidget) {
-    if (widget.iteration != oldWidget.iteration) {
-      _initFillBlanks();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -243,35 +245,33 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       });
     }
     var j = 0, k = 100, h = 0, a = 0;
-    var maxChars = _size *
-        (_holdDataOfDragBox != null
-            ? _holdDataOfDragBox.fold(
-                1,
-                (prev, element) =>
-                    element.length > prev ? element.length : prev)
-            : 1);
+    // var maxChars = _size *
+    //     (_holdDataOfDragBox != null
+    //         ? _holdDataOfDragBox.fold(
+    //             1,
+    //             (prev, element) =>
+    //                 element.length > prev ? element.length : prev)
+    //         : 1);
     MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
       return new Container(
-        padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
         child: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // new Padding(padding: new EdgeInsets.all(10.0)),
               new Expanded(
                 flex: 1,
                 child: new Container(
