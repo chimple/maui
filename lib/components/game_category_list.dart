@@ -52,7 +52,6 @@ class _GameCategoryList extends State<GameCategoryList> {
   @override
   void initState() {
     super.initState();
-    tileColors.clear();
     int categoriesLength = widget.gameCategories.length;
     print("Length of categories::$categoriesLength");
     for (int i = 0; i < categoriesLength + 1; i++) {
