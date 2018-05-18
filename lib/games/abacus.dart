@@ -332,7 +332,7 @@ class AbacusState extends State<Abacus> {
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, 4, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
       int k = 100;
