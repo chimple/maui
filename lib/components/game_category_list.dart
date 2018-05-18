@@ -145,19 +145,6 @@ class _GameCategoryList extends State<GameCategoryList> {
       gameName: game,
       onClick: (dynamic) {
         print("print index of tile $index");
-        // if (_initiallyExpand[index] != 1) {
-        //   setState(() {
-        //     _initiallyExpand[index] = 1;
-        //   });
-        //   flag = 1;
-        // }
-        // if (_oldIndex != index && flag == 1) {
-        //   setState(() {
-        //     _initiallyExpand[_oldIndex] = 0;
-        //     flag = 0;
-        //   });
-        // }
-        // _oldIndex = index;
       },
     );
   }
@@ -199,8 +186,6 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
     return new Container(
       color: widget.tilesColor,
       child: new ExpansionTiles(
-          // onExpansionChanged: showModes(context, widget.gameName,
-          //             'push', widget.categoryId),
           title: new Center(
               child: new Text(
             widget.gameCategory,
