@@ -14,7 +14,6 @@ class TabHome extends StatefulWidget {
     return new TabHomeState();
   }
 }
-
 class TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
@@ -32,22 +31,27 @@ class TabHomeState extends State<TabHome> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 new SliverAppBar(
-                  backgroundColor: Colors.red,
+                  backgroundColor: new Color(0xff4dd0e1),
                   pinned: true,
+                  leading: new ProfileDrawerIcon(),
+                  title: new Text("Maui"),
                   expandedHeight: _size.height*.3,
                   // title: const Text('Maui App Testing'),
                   // centerTitle: true,
                   forceElevated: innerBoxIsScrolled,
                   // floating: true,
                   flexibleSpace: new FlexibleSpaceBar(
-                    background: new Image.asset(
-                      'assets/hoodie/drawing.png',
-                      scale: .8,
+                    background: new FittedBox(
+                                          child: new Image.asset(
+                        'assets/chat.png',
+                        scale: .8,
+                      ),
                     ),
                     centerTitle: true,
                   ),
                   bottom: new TabBar(
                     unselectedLabelColor: Colors.black,
+                    
                     tabs: <Widget>[
                       new Tab(text: 'Chat', icon: new Icon(Icons.chat)),
                       new Tab(text: 'Game', icon: new Icon(Icons.games)),
