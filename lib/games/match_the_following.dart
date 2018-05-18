@@ -122,6 +122,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
   int _constant, _constant1;
   void initState() {
     super.initState();
+    leftIsTapped = 0;
     print("initState called::");
     if (widget.gameConfig.level < 4) {
       print("level <4");
@@ -141,9 +142,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
 
     _initBoard();
-    new Future.delayed(
-      const Duration(milliseconds: 1000),
-    );
   }
 
   @override
@@ -159,7 +157,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _status2.clear();
       _status3.clear();
       _status4.clear();
-
+       leftIsTapped = 0;
       _initBoard();
     }
   }
@@ -322,14 +320,14 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
             });
           });
         } catch (exception, e) {}
-        //leftIsTapped = 0;
+        // leftIsTapped = 0;
         _wrongAttem++;
       }
     }
     if (_wrongAttem >= correct - _constant &&
         _wrongAttem == _numButtons - _constant1) {
       widget.onScore(-correct);
-       new Future.delayed(const Duration(milliseconds: 1000), () {
+       new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
@@ -348,7 +346,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
 
     if (correct == _numButtons) {
       widget.onScore(-_wrongAttem);
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+      new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
@@ -425,14 +423,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controllerstatus2 = new AnimationController(
-        duration: new Duration(milliseconds: 30), vsync: this);
+        duration: new Duration(milliseconds: 50), vsync: this);
     animationInvisible = new CurvedAnimation(
         parent: controller,
         curve: new Interval(0.0, 1.0, curve: Curves.easeInOut));
     buttonPress = new Tween(begin: .98, end: 0.94).animate(controllerPress);
     animationstatus2 = new Tween(
-      begin: 1.0,
-      end: -2.0,
+      begin: 3.0,
+      end: -3.0,
     ).animate(controllerstatus2);
     noAimation = new Tween(
       begin: 0.0,
