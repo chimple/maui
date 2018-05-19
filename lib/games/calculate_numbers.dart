@@ -687,25 +687,25 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       );
     }
 
-
-//    if (_isShowingFlashCard) {
-//      return new FlashCard(
-//          text: _result.toString(),
-//          onChecked: () {
-//            setState(() {
-//              _isShowingFlashCard = false;
-//              _initBoard();
-//            });
-//          });
-//    }
     switch (_options) {
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
+              String temp;
+              if(_operator=='+')
+              {
+                temp=_num1.toString()+" + " +_num2.toString()+" = "+_result.toString();
+              }
+              else if(_operator=='-'){
+                temp=_num1.toString()+" - " +_num2.toString()+" = "+_result.toString();
+              }
+              else{
+                temp=_num1.toString()+" * " +_num2.toString()+" = "+_result.toString();
+              }
             return  FractionallySizedBox(
                 widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
                 heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
+                child: new FlashCard(text: temp, onChecked: () {
                   setState(() {
                     _isShowingFlashCard = false;
                     _initBoard();
@@ -889,10 +889,28 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'doubleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
+              String temp,temp1;
+                 if(_operator=='+')
+              {
+                temp=_num1digit1.toString()+" + " +_num2digit1.toString()+" = "+(_num1digit1+_num2digit1).toString();
+                if(cf[1]==1){
+                  temp1='1'+' + '+_num1digit2.toString()+" + " +_num2digit2.toString()+" = "+(1+_num1digit2+_num2digit2).toString();
+                }
+                else
+               { temp1=_num1digit2.toString()+" + " +_num2digit2.toString()+" = "+(_num1digit2+_num2digit2).toString();}
+              }
+              else if(_operator=='-'){
+                if(_num1digit1<_num2digit1){
+                temp=(10+_num1digit1).toString()+" - " +_num2digit1.toString()+" = "+(10+_num1digit1-_num2digit1).toString();
+                temp1=_num1digit2.toString()+" - " +_num2digit2.toString()+' - '+'1'+" = "+(_num1digit2-_num2digit2-1).toString();
+                }else{
+                temp=_num1digit1.toString()+" - " +_num2digit1.toString()+" = "+(_num1digit1-_num2digit1).toString();
+                temp1=_num1digit2.toString()+" - " +_num2digit2.toString()+" = "+(_num1digit2-_num2digit2).toString();  }   
+                         }
             return  FractionallySizedBox(
                 widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
                 heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
+                child: new FlashCard(text:_i==0?temp:temp1, onChecked: () {
                   setState(() {
                     _isShowingFlashCard = false;
                     _initBoard();
@@ -1253,10 +1271,40 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'tripleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
+             String temp,temp1,temp2;
+                 if(_operator=='+')
+              {
+                temp=_num1digit1.toString()+" + " +_num2digit1.toString()+" = "+(_num1digit1+_num2digit1).toString();
+                if(cf[1]==1){
+                  temp1='1'+' + '+_num1digit2.toString()+" + " +_num2digit2.toString()+" = "+(1+_num1digit2+_num2digit2).toString();
+                }
+               if(cf[2]==1){
+                    temp2='1'+' + '+_num1digit3.toString()+" + " +_num2digit3.toString()+" = "+(1+_num1digit3+_num2digit3).toString();
+                }
+                else
+               { temp1=_num1digit2.toString()+" + " +_num2digit2.toString()+" = "+(_num1digit2+_num2digit2).toString();
+               temp2=_num1digit3.toString()+" + " +_num2digit3.toString()+" = "+(_num1digit3+_num2digit3).toString();}
+              }
+              else if(_operator=='-'){
+                if(_num1digit1<_num2digit1){
+                temp=(10+_num1digit1).toString()+" - " +_num2digit1.toString()+" = "+(10+_num1digit1-_num2digit1).toString();
+                temp1=_num1digit2.toString()+" - " +_num2digit2.toString()+' - '+'1'+" = "+(_num1digit2-_num2digit2-1).toString();
+                }
+                if(_num1digit2<_num2digit2){
+                   temp1=(10+_num1digit2).toString()+" - " +_num2digit2.toString()+" = "+(10+_num1digit2-_num2digit2).toString();
+                  temp2=_num1digit3.toString()+" - " +_num2digit3.toString()+' - '+'1'+" = "+(_num1digit3-_num2digit3-1).toString();
+                if(cf[1]==-1){
+                  temp1=(10+_num1digit2).toString()+" - " +_num2digit2.toString()+' - '+'1'+" = "+(10+_num1digit2-_num2digit2-1).toString();
+                }
+                }
+                else{
+                temp=_num1digit1.toString()+" - " +_num2digit1.toString()+" = "+(_num1digit1-_num2digit1).toString();
+                temp1=_num1digit2.toString()+" - " +_num2digit2.toString()+" = "+(_num1digit2-_num2digit2).toString(); 
+                temp2=_num1digit3.toString()+" - " +_num2digit3.toString()+" = "+(_num1digit3-_num2digit3).toString();}  }
             return  FractionallySizedBox(
                 widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
                 heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
+                child: new FlashCard(text: _i==0?temp:_i==1?temp1:temp2, onChecked: () {
                   setState(() {
                     _isShowingFlashCard = false;
                     _initBoard();
@@ -1843,7 +1891,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
+                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green:  new Color(0xFF6D3A6A),
                         width:widget.height * 0.0075),
                     borderRadius:
                     new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
