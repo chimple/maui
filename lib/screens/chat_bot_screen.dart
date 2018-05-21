@@ -82,7 +82,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   Widget build(BuildContext context) {
     print('build ${_chatItems.length}');
     print(_isComposing);
-    final botImage = 'assets/koala_neutral.png';
+    final botImage = 'assets/hoodie_bear.png';
 
     var widgets = <Widget>[
       new Flexible(
