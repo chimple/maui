@@ -5,6 +5,8 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.FileOutputStream
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import java.util.Locale
 
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
@@ -13,12 +15,14 @@ import com.rivescript.Config
 import com.rivescript.RiveScript
 
 
-class MainActivity(): FlutterActivity() {
+class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   private val CHANNEL = "org.sutara.maui/rivescript"
+  private var tts: TextToSpeech? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GeneratedPluginRegistrant.registerWith(this)
+    tts = TextToSpeech(this, this)
     println("RiveScript")
     val bot = RiveScript()
     var rsFile = File(filesDir.toString()+"/testsuite.rs")
@@ -46,11 +50,42 @@ class MainActivity(): FlutterActivity() {
     MethodChannel(flutterView, CHANNEL).setMethodCallHandler { call, result ->
       if (call.method == "getReply") {
         val reply = bot.reply("user", call.argument("query"))
-        println("RiveScript: "+reply)
+        println("RiveScript: " + reply)
         result.success(reply)
+      } else if(call.method == "speak") {
+        tts!!.speak(call.argument("text"), TextToSpeech.QUEUE_FLUSH, null,"")
       } else {
         result.notImplemented()
       }
     }
+
+
+
   }
+
+  override fun onInit(status: Int) {
+
+    if (status == TextToSpeech.SUCCESS) {
+      // set US English as language for tts
+      val result = tts!!.setLanguage(Locale.US)
+
+      if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+        println("TTS The Language specified is not supported!")
+      }
+
+    } else {
+      println("TTS Initilization Failed!")
+    }
+
+  }
+
+  public override fun onDestroy() {
+    // Shutdown TTS
+    if (tts != null) {
+      tts!!.stop()
+      tts!!.shutdown()
+    }
+    super.onDestroy()
+  }
+
 }

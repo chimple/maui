@@ -42,7 +42,9 @@ class ChatMessage extends StatelessWidget {
                   ),
                   new Flexible(
                       child: new Card(
-                    color: Colors.lightBlue,
+                    color: Theme.of(context).accentColor,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
                     child: child,
                   )),
                 ],
@@ -52,7 +54,9 @@ class ChatMessage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Card(
-                    color: Colors.lightBlue,
+                    color: Colors.white,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
                     child: child,
                   ),
                   new Container(

@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
-import 'package:tuple/tuple.dart';
+// import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/Shaker.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class Dice extends StatefulWidget {
   Function onScore;
@@ -30,11 +31,28 @@ class Dice extends StatefulWidget {
 }
 enum Stext1 {Active, Visible}
 enum Stext2 { Right, InActive }
+enum Statuses {right,wrong}
+
 class DiceGameState extends State<Dice> {
   var flag1 = 0;
   var correct = 0;
+
   var keys = 0;
-  List<String> data = [
+ static List<String> data = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12'
+  ];
+  static List<String> data1 = [
     '1',
     '2',
     '3',
@@ -49,14 +67,18 @@ class DiceGameState extends State<Dice> {
     '12'
   ];
   List<String> _rightwords = [];
+  List<Stext1> _status1=[];
+  List<Stext2> _status2=[];
+  List<Statuses> _statusList ;
+
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
   List _sortletters = [];
   bool _isLoading = true;
-  List<int> X = [];
+  List<int> dice_tries = [];
   int code, dindex, dcode;
   List<String> arr = new List<String>();
   String _counter = "";
-  String _counter1 = "";
+  String _counter1 = "1";
   String _counter2 = "";
   String _counter3 = "";
  int count=0;
@@ -64,71 +86,178 @@ class DiceGameState extends State<Dice> {
  int sum=0;
  int sub=0;
  int flag=0;
+ var flag2=0;
 
   @override
   void initState() {
     super.initState();
     _initBoard();
+    _statusList=[];
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
+    _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
+    _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+    //  _status1 = data.map((a)=>Stext1.Active).toList(growable: false);
+    // _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+
+
+  }
+   Widget _plyer1Side(BuildContext context, double buttonPadding) {
+    var j = 0, h = 0, k = 100;
+    return new ResponsiveGridView(
+      rows: 2,
+      cols: 6,
+      children: data.map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItem(j=0, e,_status1[j],_status2[j++]))).toList(growable: false),
+    );
   }
 
-  Widget _buildItem(int index, String text) {
+  Widget _plyer2Side(BuildContext context, double buttonPadding) {
+    var j = 0, h = 0, k = 100;
+    return new ResponsiveGridView(
+      rows: 2,
+      cols: 6,
+      children: data1.map((e) => Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItem(j=0, e,_status1[j],_status2[j++]))).toList(growable: false),
+    );
+  }
+
+  Widget _buildItem(int index, String text,Stext1 status,Stext2 status2) {
     return new MyButton(
         key: new ValueKey<int>(index),
         index: index,
         text: text,
+      status: status,
+      status2: status2,
         color1: 1,
         onPress: () {
           count1=count1+1;
-
             setState(() {
-              var Z = int.parse(text);
-              for (var i = 0; i < X.length; i++) {
-                sum = sum + X[i];
-                sub = X[i] - sub;
+              var btnVal = int.parse(text);
+              for (var i = 0; i < dice_tries.length; i++) {
+
+                sum = sum + dice_tries[i];
+                sub = dice_tries[i] - (sub);
                 print({"manu sum": sum});
                 print({"manu sub": sub});
               }
-              if (Z == sum) {
-                count = 0;
-                X.removeRange(0, X.length);
-                _counter = " ";
-                _counter1 = " ";
-                _counter2 = " ";
-                _counter3 = " ";
-                sum = 0;
-                sub = 0;
-                if(flag == 0)
-                  {
-                    flag = 1;
-                  }
-                else {
-                  flag = 0;
-                }
+              if(sub < 0) {
+                sub = -sub;
               }
-              else if (sub == Z) {
-                flag = 1;
-                count = 0;
-                X.removeRange(0, X.length);
-                _counter = " ";
-                _counter1 = " ";
-                _counter2 = " ";
-                _counter3 = " ";
-                sub = 0;
-                sum = 0;
-                if(flag == 0)
-                {
-                  flag = 1;
-                }
-                else {
-                  flag = 0;
+              _status1.forEach((e){
+                if(e==Stext1.Visible)
+                  {
+                    flag2=1;
+                  } 
+              });
+             _status2.forEach((e){
+               if(e==Stext2.InActive)
+               {
+                 flag2=0;
+               }
+             });
+
+              if(flag2==0) {
+                if (status == Stext1.Active) {
+                  if (btnVal == sum) {
+                    count = 0;
+                    dice_tries.removeRange(0, dice_tries.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sum = 0;
+                    sub = 0;
+
+                   setState(() {
+                     _status1[index] = Stext1.Visible;
+                   });
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+
+                  else if (sub == btnVal) {
+                    // flag = 1;
+                    count = 0;
+                    dice_tries.removeRange(0, dice_tries.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sub = 0;
+                    sum = 0;
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+                  // else {
+                  //   sum = 0;
+                  // }
                 }
               }
               else {
-                sum=0;
+                print("mannu is data is");
+                if (status == Stext1.Active) {
+                  if (btnVal == sum) {
+                    count = 0;
+                    dice_tries.removeRange(0, dice_tries.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sum = 0;
+                    sub = 0;
+                    setState(() {
+                      _status1[index] = Stext1.Visible;
+                      _status2[index]=Stext2.Right;
+                    });
+//                setState(() {
+//                  text[i] = null;
+//                });
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+
+                  else if (sub == btnVal) {
+                    flag = 1;
+                    count = 0;
+                    dice_tries.removeRange(0, dice_tries.length);
+                    _counter = " ";
+                    _counter1 = " ";
+                    _counter2 = " ";
+                    _counter3 = " ";
+                    sub = 0;
+                    sum = 0;
+                    if (flag == 0) {
+                      flag = 1;
+                    }
+                    else {
+                      flag = 0;
+                    }
+                  }
+                  // else {
+                  //   sum = 0;
+                  // }
+
+                  _status2 = data.map((a)=>Stext2.InActive).toList(growable: false);
+                  _status1 = data1.map((a)=>Stext1.Active).toList(growable: false);
+                }
+                flag2=0;
               }
               print("hellow manuuuu $text");
             });
@@ -145,8 +274,8 @@ class DiceGameState extends State<Dice> {
           final _random = new Random();
           var dElement = diceData[_random.nextInt(diceData.length)];
 
-          var f = int.parse(dElement);
-          X.add(f);
+          var randval = int.parse(dElement);
+          dice_tries.add(randval);
           _counter1 = dElement;
           _counter = "$_counter" + "$dElement" + ",";
           print("dice data $_counter ");
@@ -158,9 +287,9 @@ class DiceGameState extends State<Dice> {
           final _random = new Random();
           var dElement = diceData[_random.nextInt(diceData.length)];
 
-          var f = int.parse(dElement);
-          X.add(f);
-          _counter2 = dElement;
+          var randval = int.parse(dElement);
+          dice_tries.add(randval);
+          _counter1 = dElement;
           _counter3 = "$_counter3" + "$dElement" + ",";
           print("dice data $_counter3 ");
         }
@@ -172,28 +301,41 @@ class DiceGameState extends State<Dice> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
-    var j = 0, h = 0, k = 100;
+    
+     final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 6;
+
+      double maxHeight =(constraints.maxHeight - vPadding * 8) / 6;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 2, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
     return new Container(
-        color: Colors.blue[300],
+      padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+        color: Colors.white,
         child: new Column(
-          // portrait mode
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Flexible(
-              flex: 3,
-              child: new ResponsiveGridView(
-                rows: 2,
-                cols: 6,
-                maxAspectRatio: 1.0,
-                children:
-                    data.map((e) => _buildItem(j++, e)).toList(growable: false),
-              ),
+            new Expanded(
+               child: _plyer1Side(context, buttonPadding),
             ),
-       new Row(
+            new Row(
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            new Container(
-             height: 50.0,width: 100.0,
+              height: media.size.height > media.size.width ?constraints.maxHeight*.08 : constraints.maxHeight*.1 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.1 : constraints.maxWidth*.2 ,
              color: Colors.red,
                margin: EdgeInsets.only(right: 20.0),
                child: new Center(
@@ -201,29 +343,34 @@ class DiceGameState extends State<Dice> {
                        style: new TextStyle(
                            color: Colors.black, fontSize: 25.0)))
            ),
-       new GestureDetector(
+       new InkWell(
           onTap: _randomVal,
            child: new Container(
-              height: media.size.height > media.size.width ?constraints.maxHeight*.2 : constraints.maxHeight*.3 ,
-               width: media.size.height < media.size.width? constraints.maxWidth*.2 : constraints.maxWidth*.3 ,
-               decoration: new BoxDecoration(
-                 color: const Color(0xFFF1F8E9),
-                 boxShadow: [new BoxShadow(
-                   color: Colors.green,
-                   blurRadius: 5.0,
-                 ),
-                 ],
-                 border: new Border.all(
-                   color: Colors.black,
-                   width: 5.0,
-                 ),
-               ),
-              child: new Center(
-              child: new Text('$_counter1',
-              style: new TextStyle(fontSize: 100.0))
+              height: media.size.height > media.size.width ?constraints.maxHeight*.15 : constraints.maxHeight*.2 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.15 : constraints.maxWidth*.2 ,
+
+              // decoration: new BoxDecoration(
+              //   color: const Color(0xFFF1F8E9),
+              //   boxShadow: [new BoxShadow(
+              //     color: Colors.green,
+              //     blurRadius: 5.0,
+              //   ),
+              //   ],
+              //   border: new Border.all(
+              //     color: Colors.black,
+              //     width: 5.0,
+              //   ),
+              // ),
+              child: new Image(
+
+              image:new AssetImage('assets/$_counter1.png')
+
+
+              //style: new TextStyle(fontSize: 50.0))
             ))),
            new Container(
-             height: 50.0, width: 100.0,
+           height: media.size.height > media.size.width ?constraints.maxHeight*.08 : constraints.maxHeight*.1 ,
+               width: media.size.height < media.size.width? constraints.maxWidth*.1 : constraints.maxWidth*.2 ,
              color: Colors.blue,
                margin: EdgeInsets.only(left: 20.0),
                child: new Center(
@@ -233,15 +380,8 @@ class DiceGameState extends State<Dice> {
 
            ),
             ]),
-            new Flexible(
-              flex: 3,
-              child: new ResponsiveGridView(
-                rows: 2,
-                cols: 6,
-                maxAspectRatio: 1.0,
-                children:
-                    data.map((e) => _buildItem(j++, e)).toList(growable: false),
-              ),
+            new Expanded(
+               child: _plyer2Side(context, buttonPadding),
             ),
           ],
         ));
@@ -260,6 +400,8 @@ class MyButton extends StatefulWidget {
       this.code,
       this.isRotated,
       this.img,
+        this.status,
+        this.status2,
         this.onPress,
       this.keys})
       : super(key: key);
@@ -267,6 +409,8 @@ class MyButton extends StatefulWidget {
   final int color1;
   final int flag;
   final int code;
+  Stext1 status;
+  Stext2 status2;
   final bool isRotated;
   final String text;
   final String img;
@@ -325,10 +469,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new ScaleTransition(
         scale: animation,
         child:new Container(
-        child: new RaisedButton(
-          onPressed: widget.onPress,
-          child: new Text("$_displayText",
-          style:new TextStyle( fontSize: 20.0),),
+          // color: Colors.white,
+        child: new UnitButton(
+          onPress: widget.onPress,
+          text: widget.text,
+          unitMode: UnitMode.text,
         )));
   }
 }

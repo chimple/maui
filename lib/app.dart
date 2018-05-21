@@ -60,6 +60,7 @@ class MauiApp extends StatelessWidget {
 
       switch (path[5]) {
         case 'single_iterations':
+          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
@@ -69,6 +70,7 @@ class MauiApp extends StatelessWidget {
                 ),
           );
         case 'single_timed':
+          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new SingleGame(
