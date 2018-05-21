@@ -61,8 +61,10 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-     _buttonController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-     _textController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    _buttonController = new AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+    _textController = new AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     // _userController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
     // _characterController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
 
@@ -70,8 +72,14 @@ class _ScoreScreenState extends State<ScoreScreen>
         new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-     _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.100, 0.400, curve: Curves.elasticOut) ));
-     _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
+    _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
+    _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
     // _userAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
     // _characterAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
 
@@ -135,7 +143,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         backgroundColor: Theme.of(context).accentColor,
         // backgroundColor: Colors.black,
         body: new SafeArea(
-          child: new Flex(
+            child: new Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,221 +157,298 @@ class _ScoreScreenState extends State<ScoreScreen>
                 ),
               ),
             ),
-            
+
             //Stars Being Displayed according to the score
-            myScore <= 10 ? new Container(
-                child: new Column(
-                children: <Widget>[
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                      new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                    ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Poor", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )])) : (myScore>10 && myScore<=20) ? new Container(
-                      child: new Column(
-                      children: <Widget>[
-                      new Row(
+            myScore <= 10
+                ? new Container(
+                    child: new Column(children: <Widget>[
+                    new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,)
+                          new Icon(
+                            Icons.star,
+                            size: ht > wd ? ht * 0.05 : wd * 0.05,
+                          ),
+                          new Icon(
+                            Icons.star_border,
+                            size: ht > wd ? ht * 0.05 : wd * 0.05,
+                          ),
+                          new Icon(
+                            Icons.star_border,
+                            size: ht > wd ? ht * 0.05 : wd * 0.05,
+                          ),
+                          new Icon(
+                            Icons.star_border,
+                            size: ht > wd ? ht * 0.05 : wd * 0.05,
+                          ),
                         ]),
+                    new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          new Text(
+                            "Excellent",
+                            style: new TextStyle(
+                              color: Colors.black,
+                              fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                            ),
+                          )
+                        ])
+                  ]))
+                : (myScore > 10 && myScore <= 20)
+                    ? new Container(
+                        child: new Column(children: <Widget>[
                         new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )])) :  (myScore>20 && myScore<=30) ? new Container(
-                          child: new Column(
-                          children: <Widget>[
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Icon(
+                                Icons.star,
+                                size: ht > wd ? ht * 0.05 : wd * 0.05,
+                              ),
+                              new Icon(
+                                Icons.star,
+                                size: ht > wd ? ht * 0.05 : wd * 0.05,
+                              ),
+                              new Icon(
+                                Icons.star_border,
+                                size: ht > wd ? ht * 0.05 : wd * 0.05,
+                              ),
+                              new Icon(
+                                Icons.star_border,
+                                size: ht > wd ? ht * 0.05 : wd * 0.05,
+                              )
+                            ]),
+                        new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "Good",
+                                style: new TextStyle(
+                                  color: Colors.black,
+                                  fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                                ),
+                              )
+                            ])
+                      ]))
+                    : (myScore > 20 && myScore <= 30)
+                        ? new Container(
+                            child: new Column(children: <Widget>[
                             new Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new Icon(
+                                    Icons.star,
+                                    size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                  ),
+                                  new Icon(
+                                    Icons.star,
+                                    size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                  ),
+                                  new Icon(
+                                    Icons.star,
+                                    size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                  ),
+                                  new Icon(
+                                    Icons.star_border,
+                                    size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                  ),
+                                ]),
+                            new Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new Text(
+                                    "Very Good",
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    ),
+                                  )
+                                ])
+                          ]))
+                        : new ScaleTransition(
+                            scale: _characterAnimation,
+                            child: new Container(
+                                child: new Column(children: <Widget>[
+                              new Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Icon(
+                                      Icons.star,
+                                      size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    ),
+                                    new Icon(
+                                      Icons.star,
+                                      size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    ),
+                                    new Icon(
+                                      Icons.star,
+                                      size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    ),
+                                    new Icon(
+                                      Icons.star,
+                                      size: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    ),
+                                  ]),
+                              new Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Text(
+                                      "Excellent",
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            ht > wd ? ht * 0.05 : wd * 0.05,
+                                      ),
+                                    )
+                                  ])
+                            ]))),
+
+            //Users Image and score
+            gameDisplay != GameDisplay.single
+                ? new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Expanded(
+                          flex: 1,
+                          child: new Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                        ]),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Text("Very Good", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                          ]
-                        )]))  :  new ScaleTransition(
-                        scale: _characterAnimation,
-                        child: new Container(
-                                    child: new Column(
-                                    children: <Widget>[
-                                      new Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                            new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                                  ]),
-                                  new Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      new Text("Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
-                                    ]
-                                  )
-                                  ]))),
+                                new UserItem(user: myUser),
+                                new Padding(
+                                  padding:
+                                      new EdgeInsets.symmetric(vertical: 10.0),
+                                ),
+                                new Text(
+                                  '$myScore',
+                                  style: new TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ])),
+                      new Expanded(
+                          flex: 1,
+                          child: new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                new UserItem(user: myUser),
+                                new Padding(
+                                  padding:
+                                      new EdgeInsets.symmetric(vertical: 10.0),
+                                ),
+                                new Text(
+                                  '$myScore',
+                                  style: new TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ]))
+                    ],
+                  )
+                : new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Expanded(
+                          flex: 1,
+                          child: new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                new UserItem(user: myUser),
+                                new Padding(
+                                  padding:
+                                      new EdgeInsets.symmetric(vertical: 10.0),
+                                ),
+                                new Text(
+                                  '$myScore',
+                                  style: new TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ]))
+                    ],
+                  ),
 
-            //Users Image and score
-             gameDisplay != GameDisplay.single ? 
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])),
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ]))
-                ],
-              ) : new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ]))
-                ],
-              ),
-            
             // Icons which redirect to home, refresh and fast-forward
-             new Row(
-               crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: <Widget>[
-                 new Container(
-                     decoration: new BoxDecoration(
-                       shape: BoxShape.circle,
-                       border: new Border.all(
-                           color: Colors.black,
-                           width: 2.5,
-                           style: BorderStyle.solid),
-                       // color: Colors.orange
-                     ),
-                     child: IconButton(
-                         icon: new Icon(Icons.home),
-                         
-                         onPressed: () {
-                           // Navigator.of(context).pushNamed('/tab');
-                           Navigator.pop(context);
-                           Navigator.pop(context);
-                           Navigator.pop(context);
-                         })),
-                 gameDisplay == GameDisplay.myHeadToHead ? new Container() : new ScaleTransition(
-                   scale: _textAnimation,
-                                     child: new Container(
-                         decoration: new BoxDecoration(
-                             shape: BoxShape.circle,
-                             border: new Border.all(
-                               color: Colors.black,
-                               width: 2.5,
-                               style: BorderStyle.solid
-                             ),
-                             // color: Colors.orange
-                             ),
-                         child: IconButton(
-                           icon: new Icon(Icons.refresh),
-                           iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
-                           onPressed: (){
-                               // Navigator.of(context).pushNamed('/tab'),
-                               Navigator.pop(context);
-                               }
-                         ),
-                 )),
-                  new Container(
-                     decoration: new BoxDecoration(
-                       shape: BoxShape.circle,
-                       border: new Border.all(
-                           color: Colors.black,
-                           width: 2.5,
-                           style: BorderStyle.solid),
-                       // color: Colors.orange
-                     ),
-                     child: IconButton(
-                         icon: new Icon(Icons.arrow_forward),
-                         iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
-                         onPressed: () {
-                           // Navigator.of(context).pushNamed('/tab'),
-                           Navigator.pop(context);
-                           Navigator.pop(context);
-                         }),
-                   ),
-               ],
-             ),
-             new Padding(
-               padding: new EdgeInsets.all(5.0),
-             )
-            ],
+            new Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                new Container(
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: new Border.all(
+                          color: Colors.black,
+                          width: 2.5,
+                          style: BorderStyle.solid),
+                      // color: Colors.orange
+                    ),
+                    child: IconButton(
+                        icon: new Icon(Icons.home),
+                        onPressed: () {
+                          // Navigator.of(context).pushNamed('/tab');
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        })),
+                gameDisplay == GameDisplay.myHeadToHead
+                    ? new Container()
+                    : new ScaleTransition(
+                        scale: _textAnimation,
+                        child: new Container(
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: new Border.all(
+                                color: Colors.black,
+                                width: 2.5,
+                                style: BorderStyle.solid),
+                            // color: Colors.orange
+                          ),
+                          child: IconButton(
+                              icon: new Icon(Icons.refresh),
+                              iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                              onPressed: () {
+                                // Navigator.of(context).pushNamed('/tab'),
+                                Navigator.pop(context);
+                              }),
+                        )),
+                new Container(
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: new Border.all(
+                        color: Colors.black,
+                        width: 2.5,
+                        style: BorderStyle.solid),
+                    // color: Colors.orange
+                  ),
+                  child: IconButton(
+                      icon: new Icon(Icons.arrow_forward),
+                      iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                      onPressed: () {
+                        // Navigator.of(context).pushNamed('/tab'),
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }),
+                ),
+              ],
+            ),
+            new Padding(
+              padding: new EdgeInsets.all(5.0),
+            )
+          ],
         )));
   }
 }

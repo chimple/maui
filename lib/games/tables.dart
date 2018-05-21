@@ -216,10 +216,11 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       }
 
       if (_isShowingFlashCard) {
+        String temp  = _question + " = " +  _answer.toString();
         return  FractionallySizedBox(
             widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
             heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-            child: new FlashCard(text: _answer.toString(), image: 'assets/apple.png', onChecked: () {
+            child: new FlashCard(text: temp, onChecked: () {
               setState(() {
                 _isShowingFlashCard = false;
                 this._count = this._count + 1;
@@ -237,7 +238,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Container(
-                      height: _height * 0.3,
+                      height: _height * 0.35,
                       width: _width ,
                       color: new Color(0xFFFF812C),
                       child: new Column(
@@ -268,7 +269,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                     padding: new EdgeInsets.only(
                         right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
                         left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.05:constraints.maxWidth*0.08),
+                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.05:constraints.maxWidth*0.07),
                     child: new Table(children: rows),
                   ),
                 ]),
