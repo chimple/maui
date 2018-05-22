@@ -61,8 +61,10 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-     _buttonController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-     _textController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    _buttonController = new AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+    _textController = new AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     // _userController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
     // _characterController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
 
@@ -70,8 +72,14 @@ class _ScoreScreenState extends State<ScoreScreen>
         new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-     _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.100, 0.400, curve: Curves.elasticOut) ));
-     _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
+    _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
+    _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
     // _userAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
     // _characterAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
 
@@ -135,7 +143,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         backgroundColor: Theme.of(context).accentColor,
         // backgroundColor: Colors.black,
         body: new SafeArea(
-          child: new Flex(
+            child: new Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,74 +208,6 @@ class _ScoreScreenState extends State<ScoreScreen>
             
             
 
-            //Users Image and score
-             gameDisplay != GameDisplay.single ? 
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])),
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ]))
-                ],
-              ) : new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 10.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ]))
-                ],
-              ),
-            
             // Icons which redirect to home, refresh and fast-forward
              new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
