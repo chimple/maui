@@ -214,17 +214,17 @@ class _ScoreScreenState extends State<ScoreScreen>
                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
                  new Container(
-                     decoration: new BoxDecoration(
-                       shape: BoxShape.circle,
-                       border: new Border.all(
-                           color: Colors.black,
-                           width: 2.5,
-                           style: BorderStyle.solid),
-                       // color: Colors.orange
-                     ),
+                    //  decoration: new BoxDecoration(
+                    //    shape: BoxShape.circle,
+                    //    border: new Border.all(
+                    //        color: Colors.black,
+                    //        width: 2.5,
+                    //        style: BorderStyle.solid),
+                    //    // color: Colors.orange
+                    //  ),
                      child: IconButton(
-                         icon: new Icon(Icons.home),
-                         iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                         icon: new Image.asset("assets/home_button.png"),
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
                            // Navigator.of(context).pushNamed('/tab');
                            Navigator.pop(context);
@@ -233,17 +233,17 @@ class _ScoreScreenState extends State<ScoreScreen>
                          })),
                  
                   new Container(
-                     decoration: new BoxDecoration(
-                       shape: BoxShape.circle,
-                       border: new Border.all(
-                           color: Colors.black,
-                           width: 2.5,
-                           style: BorderStyle.solid),
-                       // color: Colors.orange
-                     ),
+                    //  decoration: new BoxDecoration(
+                    //    shape: BoxShape.circle,
+                    //    border: new Border.all(
+                    //        color: Colors.black,
+                    //        width: 2.5,
+                    //        style: BorderStyle.solid),
+                    //    // color: Colors.orange
+                    //  ),
                      child: IconButton(
-                         icon: new Icon(Icons.arrow_forward),
-                         iconSize: ht > wd ? ht * 0.08 : wd * 0.08,
+                         icon: new Image.asset("assets/forward_button.png"),
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
                            // Navigator.of(context).pushNamed('/tab'),
                            Navigator.pop(context);
