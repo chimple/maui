@@ -39,7 +39,7 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
-  AnimationController controller, _buttonController, _textController;
+  AnimationController controller;
   // AnimationController _buttonController,_textController,_userController,_characterController;
 
   Animation<double> _buttonAnimation,
@@ -61,10 +61,10 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    _buttonController = new AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
-    _textController = new AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
+    // _buttonController = new AnimationController(
+    //     duration: const Duration(milliseconds: 500), vsync: this);
+    // _textController = new AnimationController(
+    //     duration: const Duration(milliseconds: 500), vsync: this);
     // _userController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
     // _characterController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
 
@@ -122,26 +122,27 @@ class _ScoreScreenState extends State<ScoreScreen>
     final color = _colors != null ? _colors[0] : Colors.amber;
     print(
         "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
-    // List<Widget> scores = [
-    //   new Expanded(
-    //       flex: 1,
-    //       child: new Column(
-    //           mainAxisAlignment: MainAxisAlignment.start,
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           children: <Widget>[
-    //             new UserItem(user: myUser),
-    //             new Text('$myScore')
-    //           ]))
-    // ];
-    // if (otherUser != null) {
-    //   scores.add(new Column(
-    //       mainAxisAlignment: MainAxisAlignment.end,
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       children: <Widget>[
-    //         new UserItem(user: otherUser),
-    //         new Text('$otherScore')
-    //       ]));
-    // }
+    List<Widget> scores = [
+      new Expanded(
+          flex: 1,
+          child: new Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new UserItem(user: myUser),
+                new Text('$myScore')
+              ]))
+    ];
+    if (otherUser != null) {
+      scores.add(new Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new UserItem(user: otherUser),
+            new Text('$otherScore')
+          ]));
+    }
+
     return new Scaffold(
         backgroundColor: color,
         // backgroundColor: Colors.black,
@@ -161,7 +162,54 @@ class _ScoreScreenState extends State<ScoreScreen>
               ),
             ),
 
+            new Row(
+                mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Expanded(
+                      flex: 1,
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new UserItem(user: myUser),
+                            new Padding(
+                              padding: new EdgeInsets.symmetric(vertical: 20.0),
+                            ),
+                            new Text(
+                              '$myScore',
+                              style: new TextStyle(
+                                  fontSize: 50.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          ])),
+                   gameDisplay == GameDisplay.myHeadToHead ? new Expanded(
+                      flex: 1,
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new UserItem(user: myUser),
+                            new Padding(
+                              padding: new EdgeInsets.symmetric(vertical: 20.0),
+                            ),
+                            new Text(
+                              '$myScore',
+                              style: new TextStyle(
+                                  fontSize: 50.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          ])) : new Row()
+                ],
+              ),
+
             //Stars Being Displayed according to the score
+            new ScaleTransition(
+              scale: _characterAnimation,
+              child: 
+            
             new Container(
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -208,7 +256,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                 ], 
               ),
             ),
-            
+            ),
             
 
             // Icons which redirect to home, refresh and fast-forward
