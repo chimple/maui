@@ -117,6 +117,9 @@ class _ScoreScreenState extends State<ScoreScreen>
     Size media = MediaQuery.of(context).size;
     double ht = media.height;
     double wd = media.width;
+
+    final _colors = SingleGame.gameColors[widget.gameName];
+    final color = _colors != null ? _colors[0] : Colors.amber;
     print(
         "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
     // List<Widget> scores = [
@@ -140,7 +143,7 @@ class _ScoreScreenState extends State<ScoreScreen>
     //       ]));
     // }
     return new Scaffold(
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: color,
         // backgroundColor: Colors.black,
         body: new SafeArea(
             child: new Flex(
