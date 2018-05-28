@@ -59,6 +59,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   User _user;
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
+  bool _isKeyboard = false;
 
   @override
   void initState() {
@@ -72,9 +73,10 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
   void _initState() async {
     _user = AppStateContainer.of(context).state.loggedInUser;
-    _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(4);
-//    .getLessonUnitsByLessonId(_user.currentLessonId);
-    _lesson = await new LessonRepo().getLesson(4);
+    _lessonUnits = await new LessonUnitRepo()
+// .getLessonUnitsByLessonId(4);
+        .getLessonUnitsByLessonId(_user.currentLessonId);
+    _lesson = await new LessonRepo().getLesson(_user.currentLessonId);
     _displayNextChat(null);
   }
 
@@ -117,7 +119,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Chatbot'),
+          title: new Text('Hoodie'),
         ),
         body: new Column(children: widgets));
   }
@@ -127,28 +129,55 @@ class ChatBotScreenState extends State<ChatBotScreen> {
     if (_currentMode == ChatMode.conversation) {
       return new IconTheme(
         data: IconThemeData(color: Theme.of(context).accentColor),
-        child: Row(
+        child: new Column(
           children: <Widget>[
-            Flexible(
-                child: TextField(
-              maxLength: null,
-              keyboardType: TextInputType.multiline,
-              autofocus: true,
-              controller: _textController,
-              onChanged: (String text) {
-                setState(() {
-                  _isComposing = text.length > 0;
-                });
-              },
-            )),
-            new Container(
-                margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                child: new IconButton(
-                  icon: new Icon(Icons.send),
-                  onPressed: _isComposing
-                      ? () => _handleTextInput(_textController.text)
-                      : null,
-                ))
+            Row(
+              children: <Widget>[
+                new Container(
+                    margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                    child: new IconButton(
+                        icon: _isKeyboard
+                            ? new Icon(Icons.face)
+                            : Icon(Icons.keyboard),
+                        onPressed: () => setState(() {
+                              _isKeyboard = !_isKeyboard;
+                            }))),
+                Flexible(
+                    child: _isKeyboard
+                        ? TextField(
+                            maxLength: null,
+                            keyboardType: TextInputType.multiline,
+                            autofocus: true,
+                            controller: _textController,
+                            onChanged: (String text) {
+                              setState(() {
+                                _isComposing = text.length > 0;
+                              });
+                            },
+                          )
+                        : Container()),
+                new Container(
+                    margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                    child: new IconButton(
+                      icon: new Icon(Icons.send),
+                      onPressed: _isComposing
+                          ? () => _handleTextInput(_textController.text)
+                          : null,
+                    ))
+              ],
+            ),
+            _isKeyboard
+                ? Container()
+                : TextChoice(
+                    onSubmit: _handleSubmitted,
+                    texts: [
+                      'Hello',
+                      'What is your name?',
+                      'Where do you live?',
+                      'What is your favorite book?',
+                      'What is your favorite color?'
+                    ],
+                  )
           ],
         ),
       );
@@ -183,7 +212,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
               height: size,
               child: InstructionCard(text: chatItem.content))
         ];
-        if (chatItem.additionalContent != null &&
+        if ((chatItem.additionalContent?.length ?? 0) > 0 &&
             chatItem.content != chatItem.additionalContent) {
           cards.add(new SizedBox(
               width: size,
@@ -264,18 +293,28 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   _displayNextChat(ChatItem currentChatItem) async {
+    if (_currentMode == ChatMode.conversation &&
+        currentChatItem?.chatItemType == ChatItemType.text) {
+      try {
+        final reply = await platform.invokeMethod(
+            'getReply', <String, dynamic>{'query': currentChatItem.content});
+        _addChatItem(ChatMode.conversation, ChatItemType.text, reply);
+      } on PlatformException catch (e) {}
+    }
     if ((_toTeach == null || _toTeach.isEmpty) &&
-        (_currentMode != ChatMode.conversation ||
-            (_currentMode == ChatMode.conversation &&
-                _chatHistory[ChatMode.conversation].item2 < 2))) {
+        _currentMode != ChatMode.conversation) {
+      _addChatItem(ChatMode.conversation, ChatItemType.text, 'Let us chat');
+    } else if ((_toTeach == null || _toTeach.isEmpty) &&
+        _currentMode == ChatMode.conversation &&
+        _chatHistory[ChatMode.conversation].item2 < 4) {
       String reply = 'hello';
-      if (currentChatItem?.chatItemType == ChatItemType.text) {
-        try {
-          reply = await platform.invokeMethod(
-              'getReply', <String, dynamic>{'query': currentChatItem.content});
-        } on PlatformException catch (e) {}
-      }
-      _addChatItem(ChatMode.conversation, ChatItemType.text, reply);
+//      if (currentChatItem?.chatItemType == ChatItemType.text) {
+//        try {
+//          reply = await platform.invokeMethod(
+//              'getReply', <String, dynamic>{'query': currentChatItem.content});
+//        } on PlatformException catch (e) {}
+//      }
+//      _addChatItem(ChatMode.conversation, ChatItemType.text, reply);
     } else {
       if ((_currentMode == ChatMode.teach &&
               _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
@@ -303,15 +342,18 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 .map((l) => l.objectUnitId)
                 .toList(growable: false);
           } else {
-            question = _currentQuizLesson.objectUnitId ??
-                _currentQuizLesson.subjectUnitId;
+            question = _currentQuizLesson.objectUnitId?.length > 0
+                ? _currentQuizLesson.objectUnitId
+                : _currentQuizLesson.subjectUnitId;
             _expectedAnswer = _currentQuizLesson.subjectUnitId;
             List<LessonUnit> lessonUnits =
                 List.from(_lessonUnits, growable: false)..shuffle();
             _choices = lessonUnits
                 .where((l) => l.subjectUnitId != _expectedAnswer)
                 .take(3)
-                .map((l) => l.objectUnitId ?? l.subjectUnitId)
+                .map((l) => l.objectUnitId?.length > 0
+                    ? l.objectUnitId
+                    : l.subjectUnitId)
                 .toList(growable: false);
           }
           final chatItemType = <ChatItemType>[
