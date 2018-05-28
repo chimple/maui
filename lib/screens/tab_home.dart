@@ -20,7 +20,7 @@ class TabHome extends StatelessWidget {
           child: new Image.asset('assets/hoodie_fb.png'),
         ),
         appBar: new AppBar(
-          title: new Text(title),
+//          title: new Text(title),
           leading: new ProfileDrawerIcon(),
           bottom: new TabBar(
             tabs: <Widget>[
