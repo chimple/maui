@@ -148,6 +148,8 @@ class _CasinoState extends State<Casino> {
                       "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
                   if (givenWordList[i] == scrollingLetterList[index]) {
                     print("Letters matched");
+                    // new Future.delayed(
+                    //     const Duration(milliseconds: 250), () {});
                     lst.add(scrollingLetterList[index]);
                     count++;
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
