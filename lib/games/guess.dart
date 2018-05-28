@@ -34,8 +34,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   double x, y = 0.0;
   String paste = '';
 
-  AnimationController controller;
-  Animation<double> animation, noanimation;
+  AnimationController controller, _imgController;
+  Animation<double> animation, noanimation, animateImage;
 
   // final FocusNode _focusnode = new FocusNode();
 
@@ -52,7 +52,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   }
 
   Future<String> _loadGameAsset() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfoShapes.json");
+    return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
   }
 
   Future _loadGameInfo() async {
@@ -149,6 +149,28 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     });
     noanimation = new Tween(begin: 0.0, end: 0.0).animate(controller);
     this._loadGameInfo();
+    _imgController = new AnimationController(
+        duration: new Duration(
+          milliseconds: 800,
+        ),
+        vsync: this);
+    animateImage =
+        new CurvedAnimation(parent: _imgController, curve: Curves.bounceInOut);
+    _imgController.forward();
+  }
+
+  _onDragStart(BuildContext context, DragStartDetails start) {
+    print(start.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(start.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
+  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
+    print(update.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(update.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
   }
 
   @override
@@ -166,71 +188,32 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
-    return new Flex(direction: Axis.vertical, children: <Widget>[
-      new Expanded(
-        child: new Stack(
-          fit: StackFit.passthrough,
-          children: <Widget>[
-            new Scaffold(
-              // backgroundColor: Colors.red[100],
-              body: new Column(
+    return new LayoutBuilder(builder: (context, constraint) {
+      return new Scaffold(
+        body: new Flex(direction: Axis.vertical, children: <Widget>[
+          new GestureDetector(
+            onHorizontalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            onVerticalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onVerticalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            child: new Container(
+              height: (constraint.maxHeight) * 3 / 4,
+              width: constraint.maxWidth,
+              child: new Stack(
+                fit: StackFit.passthrough,
                 children: <Widget>[
-                  new Expanded(
-                    flex: 4,
+                  new ScaleTransition(
+                    scale: animateImage,
                     child: new Image(
                       image: AssetImage('assets/' + _decoded["id"]),
                       fit: BoxFit.contain,
                     ),
                   ),
-                  new Expanded(
-                    flex: 1,
-                    child: new Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        new Expanded(
-                          flex: 8,
-                          child: new Shake(
-                            animation: (_flag == 0) ? noanimation : animation,
-                            child: new TextField(
-                              // focusNode: _focusnode,
-                              // textAlign: TextAlign.center,
-                              autofocus: false,
-                              controller: _controller,
-                              obscureText: false,
-                              style: new TextStyle(
-                                  color: Colors.black, fontSize: 25.0),
-                              decoration: new InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: "name what you see and press check",
-                                hintStyle: new TextStyle(
-                                    color: Colors.blueGrey, fontSize: 15.0),
-                                border: InputBorder.none,
-                              ),
-                              onChanged: (String str) {
-                                _guess = str.toLowerCase();
-                                print(_guess);
-                                // setState((){
-                                //   _guess = str;
-                                // });
-                                // _controller.text = '';
-                              },
-                            ),
-                          ),
-                        ),
-                        new Expanded(
-                            flex: 2,
-                            child: new RaisedButton(
-                              key: new Key("checking"),
-                              padding:
-                                  new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
-                              child: new Text("Check"),
-                              onPressed: () => _validate(),
-                            ))
-                      ],
-                    ),
-                  ),
+
                   // new Expanded(
                   //   flex: 1,
                   //   child: new Row(
@@ -245,35 +228,83 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                   //     ],
                   //   ),
                   // ),
+                  new RepaintBoundary(
+                    child: new CustomPaint(
+                      painter: new Stickers(
+                        text: paste,
+                        x: x,
+                        y: y,
+                      ),
+                      isComplex: false,
+                      willChange: false,
+                    ),
+                  )
+                  // new Positioned(
+                  //   left: x,
+                  //   top: y,
+                  //   child: new Text(
+                  //     paste,
+                  //     style: new TextStyle(
+                  //         fontSize: 20.0,
+                  //         fontWeight: FontWeight.bold,
+                  //         fontStyle: FontStyle.italic),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
-            new RepaintBoundary(
-              child: new CustomPaint(
-                painter: new Stickers(
-                  text: paste,
-                  x: x,
-                  y: y,
+          ),
+          new Container(
+            height: (constraint.maxHeight) / 4,
+            width: constraint.maxWidth,
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                new Expanded(
+                  flex: 8,
+                  child: new Shake(
+                    animation: (_flag == 0) ? noanimation : animation,
+                    child: new TextField(
+                      // focusNode: _focusnode,
+                      // textAlign: TextAlign.center,
+                      autofocus: false,
+                      controller: _controller,
+                      obscureText: false,
+                      style: new TextStyle(color: Colors.black, fontSize: 25.0),
+                      decoration: new InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: "name what you see and press check",
+                        hintStyle: new TextStyle(
+                            color: Colors.blueGrey, fontSize: 15.0),
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (String str) {
+                        _guess = str.toLowerCase();
+                        print(_guess);
+                        // setState((){
+                        //   _guess = str;
+                        // });
+                        // _controller.text = '';
+                      },
+                    ),
+                  ),
                 ),
-                isComplex: false,
-                willChange: false,
-              ),
-            )
-            // new Positioned(
-            //   left: x,
-            //   top: y,
-            //   child: new Text(
-            //     paste,
-            //     style: new TextStyle(
-            //         fontSize: 20.0,
-            //         fontWeight: FontWeight.bold,
-            //         fontStyle: FontStyle.italic),
-            //   ),
-            // ),
-          ],
-        ),
-      ),
-    ]);
+                new Expanded(
+                    flex: 2,
+                    child: new RaisedButton(
+                      key: new Key("checking"),
+                      padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
+                      child: new Text("Check"),
+                      onPressed: () => _validate(),
+                    ))
+              ],
+            ),
+          ),
+        ]),
+      );
+    });
   }
 }
 
