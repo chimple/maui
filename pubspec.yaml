@@ -55,13 +55,14 @@ flutter:
     - assets/imageCoordinatesInfoBoy.json
     - assets/imageCoordinatesInfoBody.json
     - assets/apple.ogg
-    - assets/1.png
-    - assets/2.png
-    - assets/3.png
-    - assets/4.png
-    - assets/5.png
-    - assets/6.png
-    - assets/dice5.gif
+    - assets/dice_game/1.png
+    - assets/dice_game/2.png
+    - assets/dice_game/3.png
+    - assets/dice_game/4.png
+    - assets/dice_game/5.png
+    - assets/dice_game/6.png
+    - assets/dice_game/dice.gif
+    - assets/dice_game/dice2.gif
     - assets/games.png
     - assets/chat.png
     - assets/story.png
