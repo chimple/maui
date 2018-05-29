@@ -602,11 +602,12 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: _iteration,
             isRotated: widget.isRotated,
-              gameConfig: new GameConfig(
-                gameCategoryId: widget.gameCategoryId,
-                questionUnitMode: UnitMode.values[random.nextInt(3)],
-                answerUnitMode: UnitMode.values[random.nextInt(3)],
-                level: random.nextInt(10) + 1));
+             gameConfig: widget.gameConfig);
+              // gameConfig: new GameConfig(
+              //   gameCategoryId: widget.gameCategoryId,
+              //   questionUnitMode: UnitMode.values[random.nextInt(3)],
+              //   answerUnitMode: UnitMode.values[random.nextInt(3)],
+              //   level: random.nextInt(10) + 1));
         break;
       case 'wordgrid':
         return new Wordgrid(
