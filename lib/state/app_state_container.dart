@@ -7,6 +7,7 @@ import 'package:maui/state/app_state.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 
 class AppStateContainerController extends StatefulWidget {
   final AppState state;
@@ -21,6 +22,8 @@ class AppStateContainerController extends StatefulWidget {
 
 class _AppStateContainerControllerState
     extends State<AppStateContainerController> {
+  static const platform = const MethodChannel('org.sutara.maui/rivescript');
+
   AppState state;
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
@@ -47,14 +50,19 @@ class _AppStateContainerControllerState
   }
 
   void _play(String fileName) async {
-    if (!_isPlaying) {
-      Directory documentsDirectory = await getApplicationDocumentsDirectory();
-      final result = await _audioPlayer
-          .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
-      if (result == 1) {
-        _isPlaying = true;
-      }
-    }
+    try {
+      await platform.invokeMethod(
+          'speak', <String, dynamic>{'text': fileName.toLowerCase()});
+    } on PlatformException catch (e) {}
+
+//    if (!_isPlaying) {
+//      Directory documentsDirectory = await getApplicationDocumentsDirectory();
+//      final result = await _audioPlayer
+//          .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
+//      if (result == 1) {
+//        _isPlaying = true;
+//      }
+//    }
   }
 
   @override

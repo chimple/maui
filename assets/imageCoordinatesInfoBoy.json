@@ -5,7 +5,6 @@
     "parts": [
         {
             "name": "face",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 96.469,
                 "width": 212.005,
@@ -15,7 +14,6 @@
         },
         {
             "name": "cap",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 228.796,
                 "width": 247.739,
@@ -25,7 +23,6 @@
         },
         {
             "name": "hand",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 110.718,
                 "width": 79.506,
@@ -37,7 +34,6 @@
         },
         {
             "name": "body",
-            "color":"0XFFFFCDD2",
             "data": {
                 "height": 145.532,
                 "width": 112.076,
