@@ -96,6 +96,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 _statuses[index] = Status.Active;
               });
             });
+            
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
