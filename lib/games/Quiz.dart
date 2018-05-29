@@ -350,21 +350,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new Shake(
         animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-        child: new ScaleTransition(
-            scale: animation,
-            child: new GestureDetector(
-              onLongPress: () {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
-              },
-              child: new UnitButton(
-                onPress: () => widget.onPress(),
-                text: _displayText,
-                unitMode: widget.unitMode,
+        child: new GestureDetector(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                child: new FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.8,
+                    child: new FlashCard(text: widget.text)));
+          },
+          child: new UnitButton(
+            onPress: () => widget.onPress(),
+            text: _displayText,
+            unitMode: widget.unitMode,
 //                child: new RaisedButton(
 //                    onPressed: () => widget.onPress(),
 //                    color: const Color(0xFFffffff),
@@ -375,7 +373,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 //                        key: new Key("${widget.keys}"),
 //                        style:
 //                        new TextStyle(color: Colors.black, fontSize: 24.0))
-              ),
-            )));
+          ),
+        ));
   }
 }
