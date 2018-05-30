@@ -96,6 +96,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 _statuses[index] = Status.Active;
               });
             });
+            
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
@@ -324,7 +325,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                    child: new Icon(
                   _displayText == 'true' ? Icons.check : Icons.close,
                   key: new Key("${widget.keys}"),
-                  size: ht > wd ? ht * 0.2 : wd * 0.2,
+                  size: ht > wd ? ht * 0.15 : wd * 0.15,
                   color: _displayText == 'true' ? Colors.green : Colors.red,
                    )
                    

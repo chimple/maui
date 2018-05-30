@@ -110,6 +110,8 @@ flutter:
     - assets/hoodie/tap_home.png
     - assets/hoodie/tap_wrong.png
     - assets/hoodie/true_or_false.png
+    - assets/forward_button.png
+    - assets/home_button.png
 
     #happy
     - assets/hoodie/reflex_happy.png
