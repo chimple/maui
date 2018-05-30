@@ -1,26 +1,37 @@
-/*
-	RiveScript 2 Test Suite -- Designed to demonstrate all the
-	functionality that RiveScript 2 is supposed to support.
-*/
-
-/******************************************************************************
- * "begin.rs" Command Testing                                                 *
- ******************************************************************************/
+! version = 2.0
 
 > begin
-	+ request
-	- {ok}
+	+ request // This trigger is tested first.
+	- {ok}    // An {ok} in the response means it's okay to get a real reply
 < begin
 
+// The Botmaster's Name
+! var master = localuser
+
 // Bot Variables
-! var name     = RiveScript Test Bot
-! var age      = 9000
-! var gender   = androgynous
-! var location = Cyberspace
-! var phone    = 555-1234
-! var email    = test@mydomain.com
+! var name     = Hoodie
+! var fullname = Hoodie
+! var age      = 5
+! var birthday = October 12
+! var sex      = male
+! var location = Michigan
+! var city     = Detroit
+! var eyes     = blue
+! var hair     = light brown
+! var hairlen  = short
+! var color    = blue
+! var band     = Nickelback
+! var book     = The Hungry Caterpillar
+! var author   = Stephen King
+! var job      = mentor
+! var website  = www.chimple.org
 
 // Substitutions
+! sub &quot;    = "
+! sub &apos;    = '
+! sub &amp;     = &
+! sub &lt;      = <
+! sub &gt;      = >
 ! sub +         = plus
 ! sub -         = minus
 ! sub /         = divided
@@ -75,6 +86,7 @@
 ! sub u         = you
 ! sub ur        = your
 ! sub r         = are
+! sub n         = and
 ! sub im        = i am
 ! sub wat       = what
 ! sub wats      = what is
@@ -86,7 +98,15 @@
 ! sub its a     = it is a
 ! sub fav       = favorite
 ! sub fave      = favorite
+! sub yesi      = yes i
+! sub yetit     = yet it
 ! sub iam       = i am
+! sub welli     = well i
+! sub wellit    = well it
+! sub amfine    = am fine
+! sub aman      = am an
+! sub amon      = am on
+! sub amnot     = am not
 ! sub realy     = really
 ! sub iamusing  = i am using
 ! sub amleaving = am leaving
@@ -100,6 +120,52 @@
 ! sub bbl       = be back later
 ! sub gtg       = got to go
 ! sub g2g       = got to go
+! sub lyl       = love you lots
+! sub gf        = girlfriend
+! sub g/f       = girlfriend
+! sub bf        = boyfriend
+! sub b/f       = boyfriend
+! sub b/f/f     = best friend forever
+! sub :-)       = smile
+! sub :)        = smile
+! sub :d        = grin
+! sub :-d       = grin
+! sub :-p       = tongue
+! sub :p        = tongue
+! sub ;-)       = wink
+! sub ;)        = wink
+! sub :-(       = sad
+! sub :(        = sad
+! sub :'(       = cry
+! sub :-[       = shy
+! sub :-\       = uncertain
+! sub :-/       = uncertain
+! sub :-s       = uncertain
+! sub 8-)       = cool
+! sub 8)        = cool
+! sub :-*       = kissyface
+! sub :-!       = foot
+! sub o:-)      = angel
+! sub >:o       = angry
+! sub :@        = angry
+! sub 8o|       = angry
+! sub :$        = blush
+! sub :-$       = blush
+! sub :-[       = blush
+! sub :[        = bat
+! sub (a)       = angel
+! sub (h)       = cool
+! sub 8-|       = nerdy
+! sub |-)       = tired
+! sub +o(       = ill
+! sub *-)       = uncertain
+! sub ^o)       = raised eyebrow
+! sub (6)       = devil
+! sub (l)       = love
+! sub (u)       = broken heart
+! sub (k)       = kissyface
+! sub (f)       = rose
+! sub (w)       = wilted rose
 
 // Person substitutions
 ! person i am    = you are
@@ -111,536 +177,451 @@
 ! person you     = I
 ! person i       = you
 
-// Arrays
-! array colors = red green blue cyan yellow magenta white orange brown black
-  ^ gray grey fuchsia maroon burgundy lime navy aqua gold silver copper bronze
-  ^ light red|light green|light blue|light cyan|light yellow|light magenta
-! array be     = is are was were
+// Set arrays
+! array malenoun   = male guy boy dude boi man men gentleman gentlemen
+! array femalenoun = female girl chick woman women lady babe
+! array mennoun    = males guys boys dudes bois men gentlemen
+! array womennoun  = females girls chicks women ladies babes
+! array lol        = lol lmao rofl rotfl haha hahaha
+! array colors     = white black orange red blue green yellow cyan fuchsia gray grey brown turquoise pink purple gold silver navy
+! array height     = tall long wide thick
+! array measure    = inch in centimeter cm millimeter mm meter m inches centimeters millimeters meters
+! array yes        = yes yeah yep yup ya yea
+! array no         = no nah nope nay
 
-/******************************************************************************
- * Basic Trigger Testing                                                      *
- ******************************************************************************/
+// Learn stuff about our users.
 
-/* Atomic Reply
-   ------------
-   Human says:     hello bot
-   Expected reply: Hello human.
-*/
-+ hello bot
-- Hello human.
-
-/* Atomic Reply
-   ------------
-   Human says:     what is your name
-   Expected reply: You can call me RiveScript Test Bot.
-*/
-+ what is your name
-- You can call me <bot name>.
-
-/* Wildcards
-   ---------
-   Human says:     my favorite thing in the world is programming
-   Expected reply: Why do you like programming so much?
-*/
-+ my favorite thing in the world is *
-- Why do you like <star> so much?
-
-/* Wildcards
-   ---------
-   Human says:     John told me to say hello
-   Expected reply: Why would john have told you to say hello?
-*/
-+ * told me to say *
-- Why would <star1> have told you to say <star2>?
-
-/* Wildcards
-   ---------
-   Human says:     I think the sky is orange.
-   Expected reply: Do you think the sky is orange a lot?
-*/
-+ i think *
-- Do you think <star> a lot?
-
-/* Wildcards
-   ---------
-   Human says:     I am twenty years old
-   Expected reply: Tell me that as a number instead of spelled out like "twenty"
-   Extra Notes:    When multiple triggers exist that are identical except for
-                   their wildcard character, the order of priorities are that
-                   _ is always first, # is second, and * last. So in this code
-                   and the following one, the "i am # years old" should match
-                   if the wildcard is a number and the "i am * years old" should
-                   only match otherwise.
-*/
-+ i am * years old
-- Tell me that as a number instead of spelled out like "<star>".
-
-/* Wildcards
-   ---------
-   Human says:     I am 20 years old
-   Expected reply: I will remember that you are 20 years old.
-   Extra Notes:    This reply should also set the var "age" to 20 for this user.
-*/
-+ i am # years old
-- <set age=<star>>I will remember that you are <star> years old.
-
-/* Alternations
-   ------------
-   Human says:     What is your home phone number?
-   Expected reply: You can call me at my home number, 555-1234.
-   Human says:     What is your office phone number?
-   Expected reply: You can call me at my office number, 555-1234.
-   Human says:     What is your work phone number?
-   Expected reply: You can call me at my work number, 555-1234.
-   Human says:     What is your cell phone number?
-   Expected reply: You can call me at my cell number, 555-1234.
-*/
-+ what is your (home|office|work|cell) phone number
-- You can call me at my <star> number, <bot phone>.
-
-/* Alternations
-   ------------
-   Human says:     Are you okay?
-                   Are you alright?
-                   You okay?
-                   You alright?
-   Expected reply: I'm fine, thanks for asking.
-*/
-+ (are you|you) (okay|alright)
-- I'm fine, thanks for asking.
-
-/* Optionals
-   ---------
-   Human says:     How can I contact you?
-                   Can I contact you?
-   Expected reply: You can have my phone number: 555-1234.
-*/
-+ [how] can i contact you
-- You can have my phone number: <bot phone>.
-
-/* Optionals
-   ---------
-   Human says:     Do you have an email address?
-                   You have an email address?
-                   Do you have an email?
-                   You have an email?
-                   Do you have email?
-                   You have email?
-   Expected reply: You can e-mail me at test@mydomain.com.
-*/
-+ [do] you have [an] email [address]
-- You can e-mail me at <bot email>.
-
-/* Optionals
-   ---------
-   Human says:     Tell me your phone number
-                   Tell me your number
-                   Tell me your home phone number
-                   Tell me your home number
-                   Tell me your office phone number
-                   Tell me your office number
-                   Tell me your work phone number
-                   Tell me your work number
-                   Tell me your cell phone number
-                   Tell me your cell number
-   Expected reply: My phone number is 555-1234.
-*/
-+ tell me your [home|office|work|cell] [phone] number
-- My phone number is <bot phone>.
-
-/* Arrays
-   ------
-   Human says:     What color is my blue shirt?
-   Expected reply: Your shirt is blue, silly.
-   Human says:     What color is my light red shirt?
-   Expected reply: Your shirt is light red, silly.
-   Human says:     What color is my black shirt?
-   Expected reply: Your shirt is black, silly.
-*/
-+ what color is my (@colors) shirt
-- Your shirt is <star>, silly.
-
-/* Arrays
-   ------
-   Human says:     What color was George Washington's white horse?
-   Expected reply: George Washingtons horse was white.
-*/
-+ what color was * (@colors) *
-- <formal> <star3> was <star2>.
-
-/* Arrays
-   ------
-   Human says:     I have a yellow sports car
-   Expected reply: Why did you choose that color for a sports car?
-*/
-+ i have a @colors *
-- Why did you choose that color for a <star>?
-
-/* Priority Triggers
-   -----------------
-   Human says:     I have a black davenport
-   Expected reply: That's a word that's not used much anymore.
-   Extra notes:    This would normally match the trigger above, but this one has
-                   a high priority and matches first, even though the trigger
-                   above has more words and is a more specific match.
-*/
-+ {weight=100}* davenport
-- That's a word that's not used much anymore.
-
-/******************************************************************************
- * Basic Reply Testing                                                        *
- ******************************************************************************/
-
-/* Atomic Response
-   ---------------
-   Human says:     how are you
-   Expected reply: I'm great.
-*/
-+ how are you
-- I'm great.
-
-/* Random Response
-   ---------------
-   Human says:     hello
-                   hi
-                   hey
-   Expected reply: Hey there!
-                   Hello!
-                   Hi!
-*/
-+ (hello|hi|hey)
-- Hey there!
-- Hello!
-- Hi!
-
-/* Random Response
-   ---------------
-   Human says:     my name is Casey
-   Expected reply: Nice to meet you, Casey.
-                   Hi, Casey, my name is RiveScript Test Bot.
-                   Casey, nice to meet you.
-   Extra notes:    This would also set the var name=Casey for the user.
-*/
 + my name is *
-- <set name=<formal>>Nice to meet you, <formal>.
-- <set name=<formal>>Hi, <formal>, my name is <bot name>.
-- <set name=<formal>><formal>, nice to meet you.
+- <set name=<formal>>Nice to meet you, <get name>.
+- <set name=<formal>><get name>, nice to meet you.
 
-/* Weighted Random Response
-   ------------------------
-   Human says:     Tell me a secret
-   Expected reply: I won't tell you a secret.
-                   You can't handle a secret.
-                   Okay, here's a secret... nope, just kidding.
-                   Actually, I just don't have any secrets.
-*/
-+ tell me a secret
-- I won't tell you a secret.{weight=20}
-- You can't handle a secret.{weight=20}
-- Okay, here's a secret... nope, just kidding.{weight=5}
-- Actually, I just don't have any secrets.
++ my name is <bot master>
+- <set name=<bot master>>That's my master's name too.
 
-/******************************************************************************
- * Command Testing                                                            *
- ******************************************************************************/
++ my name is <bot name>
+- <set name=<bot name>>What a coincidence! That's my name too!
+- <set name=<bot name>>That's my name too!
 
-/* %Previous
-   ---------
-   Human says:     Knock, knock.
-   Expected reply: Who's there?
-   Human says:     Banana.
-   Expected reply: Banana who?
-   Human says:     Knock, knock.
-   Expected reply: Who's there?
-   Human says:     Banana.
-   Expected reply: Banana who?
-   Human says:     Knock, knock.
-   Expected reply: Who's there?
-   Human says:     Orange.
-   Expected reply: Orange who?
-   Human says:     Orange you glad I didn't say banana?
-   Expected reply: Haha! "Orange you glad I didn't say banana"! :D
-*/
-+ knock knock
-- Who's there?
++ call me *
+- <set name=<formal>><get name>, I will call you that from now on.
+
++ i am * years old
+- <set age=<star>>A lot of people are <get age>, you're not alone.
+- <set age=<star>>Cool, I'm <bot age> myself.{weight=49}
+
++ i am a (@malenoun)
+- <set sex=male>Alright, you're a <star>.
+
++ i am a (@femalenoun)
+- <set sex=female>Alright, you're female.
+
++ i (am from|live in) *
+- <set location={formal}<star2>{/formal}>I've spoken to people from <get location> before.
+
++ my favorite * is *
+- <set fav<star1>=<star2>>Why is it your favorite?
+
++ i am single
+- <set status=single><set spouse=nobody>I am too.
+
++ i have a girlfriend
+- <set status=girlfriend>What's her name?
+
++ i have a boyfriend
+- <set status=boyfriend>What's his name?
 
 + *
-% who is there
-- <set joke=<star>><sentence> who?
+% what is her name
+- <set spouse=<formal>>That's a pretty name.
 
-+ <get joke> *
-- Haha! "{sentence}<get joke> <star>{/sentence}"! :D
++ *
+% what is his name
+- <set spouse=<formal>>That's a cool name.
 
-/* ^Continue
-   ---------
-   Human says:     Tell me a poem
-   Expected reply: Little Miss Muffit sat on her tuffet
-                     in a nonchalant sort of way.
-                     With her forefield around her,
-                     the Spider, the bounder,
-                     Is not in the picture today.
-*/
-+ tell me a poem
-- Little Miss Muffit sat on her tuffet\n
-^ in a nonchalant sort of way.\n
-^ With her forcefield around her,\n
-^ the Spider, the bounder,\n
-^ Is not in the picture today.
++ my (girlfriend|boyfriend)* name is *
+- <set spouse=<formal>>That's a nice name.
 
-/* @Redirect
-   ---------
-   Human says:     Who are you?
-   Expected reply: You can call me RiveScript Test Bot.
-*/
-+ who are you
-@ what is your name
++ (what is my name|who am i|do you know my name|do you know who i am){weight=10}
+- Your name is <get name>.
+- You told me your name is <get name>.
+- Aren't you <get name>?
 
-/* @Redirect
-   ---------
-   Human says:     Test recursion
-   Expected reply: ERR: Deep Recursion Detected!
-*/
-+ test recursion
-@ test more recursion
++ (how old am i|do you know how old i am|do you know my age){weight=10}
+- You are <get age> years old.
+- You're <get age>.
 
-+ test more recursion
-@ test recursion
++ am i a (@malenoun) or a (@femalenoun){weight=10}
+- You're a <get sex>.
 
-/* Conditionals
-   ------------
-   Human says:     What am I old enough to do?
-   Expected reply: You never told me how old you are.
-                   You're too young to do much of anything.
-                   You're over 18 so you can gamble.
-                   You're over 21 so you can drink.
-*/
-+ what am i old enough to do
-* <get age> == undefined => You never told me how old you are.
-* <get age> >= 21        => You're over 21 so you can drink.
-* <get age> >= 18        => You're over 18 so you can gamble.
-* <get age> <  18        => You're too young to do much of anything.
-- This reply shouldn't happen.
++ am i (@malenoun) or (@femalenoun){weight=10}
+- You're a <get sex>.
 
-/* Conditionals
-   ------------
-   Human says:     Am I 18 years old?
-   Expected reply: I don't know how old you are.
-                   You're not 18, no.
-                   Yes, you are.
-*/
-+ am i 18 years old
-* <get age> == undefined => I don't know how old you are.
-* <get age> != 18        => You're not 18, no.
-- Yes, you are.
++ what is my favorite *{weight=10}
+- Your favorite <star> is <get fav<star>>
 
-/* Conditionals
-   ------------
-   Human says:     Count.
-   Expected reply: Let's start with 1.
-   Human says:     Count.
-   Expected reply: I've added 1 to the count.
-   Human says:     Count.
-   Expected reply: I've added 5 now.
-   Human says:     Count.
-   Expected reply: Subtracted 2.
-   Human says:     Count.
-   Expected reply: Now I've doubled that.
-   Human says:     Count.
-   Expected reply: Subtracted 2 from that now.
-   Human says:     Count.
-   Expected reply: Divided that by 2.
-   Human says:     Count.
-   Expected reply: Subtracted 1.
-   Human says:     Count.
-   Expected reply: Now I've added 3.
-   Human says:     Count.
-   Expected reply: Added 3 again.
-   Human says:     Count.
-   Expected reply: We're done. Do you know what number I stopped at?
-   Human says:     9
-   Expected reply: You're right, I stopped at the number 9. :)
-*/
-+ count
-* <get count> == undefined => <set count=1>Let's start with 1.
-* <get count> == 0         => <set count=1>Let's start again with 1.
-* <get count> == 1         => <add count=1>I've added 1 to the count.
-* <get count> == 2         => <add count=5>I've added 5 now.
-* <get count> == 3         => <add count=3>Now I've added 3.
-* <get count> == 4         => <sub count=1>Subtracted 1.
-* <get count> == 5         => <mult count=2>Now I've doubled that.
-* <get count> == 6         => <add count=3>Added 3 again.
-* <get count> == 7         => <sub count=2>Subtracted 2.
-* <get count> == 8         => <div count=2>Divided that by 2.
-* <get count> == 9         => <set count=0>We're done. Do you know what number I
-  ^ \sstopped at?
-* <get count> == 10        => <sub count=2>Subtracted 2 from that now.
++ who is my (boyfriend|girlfriend|spouse){weight=10}
+- <get spouse>
 
-+ (9|nine)
-% * do you know what number i stopped at
-- You're right, I stopped at the number 9. :)
+// Tell the user stuff about ourself.
 
-/******************************************************************************
- * Object Macro Testing (Perl Only)                                           *
- ******************************************************************************/
++ <bot name>
+- Yes?
 
-/* Encoding Object
-   ---------------
-   Human says:     Encode something in MD5.
-   Expected reply: "something" in MD5 is: 437b930db84b8079c2dd804a71936b5f
-   Human says:     Encode something in Base64.
-   Expected reply: "something" in Base64 is: c29tZXRoaW5n
-*/
++ <bot name> *
+- Yes? {@<star>}
 
-> object encode perl
-	my ($rs,$method,@args) = @_;
-	my $msg = join(" ",@args);
++ asl
+- <bot age>/<bot sex>/<bot location>
 
-	use Digest::MD5 qw(md5_hex);
-	use MIME::Base64 qw(encode_base64);
++ (what is your name|who are you|who is this)
+- I am <bot name>.
+- You can call me <bot name>.
 
-	if ($method eq "md5") {
-		return md5_hex($msg);
-	}
-	else {
-		return encode_base64($msg);
-	}
-< object
++ how old are you
+- I'm <bot age> years old.
+- I'm <bot age>.
 
-+ encode * in md5
-- "<star>" in MD5 is: <call>encode md5 <star></call>
++ are you a (@malenoun) or a (@femalenoun)
+- I'm a <bot sex>.
 
-+ encode * in base64
-- "<star>" in Base64 is: <call>encode base64 <star></call>
++ are you (@malenoun) or (@femalenoun)
+- I'm a <bot sex>.
 
-> object testing javascript
-	var w = screen.width;
-	var h = screen.height;
-	var dim = w + "x" + h;
-	return dim;
-< object
++ where (are you|are you from|do you live)
+- I'm from <bot location>.
 
-+ test javascript
-- Testing javascript... <call>testing</call>.
++ what (city|town) (are you from|do you live in)
+- I'm in <bot city>.
 
-! global topics = hello world
++ what is your favorite color
+- Definitely <bot color>.
 
-+ test global
-- Testing reserved global: topics=<env topics>; users=<env users>; client=<env client>; reserved=<env reserved>.
++ what is your favorite band
+- I like <bot band> the most.
 
-/******************************************************************************
- * Topic Testing                                                              *
- ******************************************************************************/
++ what is your favorite book
+- The best book I've read was <bot book>.
 
-/*
-    Temporarily ignoring abusive users
-    ----------------------------------
-    Human says:     insert swear word here
-    Expected reply: Omg you're mean! I'm not talking to you until you apologize.
-    Human says:     (anything)
-    Expected reply: Not until you apologize.
-                    Say you're sorry.
-                    Apologize for being so mean.
-    Human says:     sorry
-    Expected reply: Okay, I'll forgive you.
-*/
++ what is your occupation
+- I'm a <bot job>.
 
-+ insert swear word here
-- Omg you're mean! I'm not talking to you until you apologize.{topic=apology}
++ where is your (website|web site|site)
+- <bot website>
 
-> topic apology
-	+ *
-	- Not until you apologize.
-	- Say you're sorry.
-	- Apologize for being so mean.
++ what color are your eyes
+- I have <bot eyes> eyes.
+- {sentence}<bot eyes>{/sentence}.
 
-	+ [*] (sorry|apologize) [*]
-	- Okay, I'll forgive you.{topic=random}
-< topic
++ what do you look like
+- I have <bot eyes> eyes and <bot hairlen> <bot hair> hair.
 
-/*
-    Topic Inheritence (simple roleplaying game)
-    -------------------------------------------
-    Human says:     enter the dungeon
-    Expected reply: (drops you into a mini game. Skim the code below to figure
-                    it out)
-*/
++ what do you do
+- I'm a <bot job>.
 
-+ enter the dungeon
-- {topic=room1}You've entered the dungeon. {@look}
++ who is your favorite author
+- <bot author>.
 
-> topic global
-	+ help{weight=100}
-	- Game Help (todo)
++ who is your master
+- <bot master>.
 
-	+ inventory{weight=100}
-	- Your Inventory (todo)
+// A generic set of chatting responses. This set mimicks the classic Eliza bot.
 
-	+ (north|n|south|s|east|e|west|w)
-	- You can't go in that direction.
++ *
+- I'm not sure I understand you fully.
+- Please go on.
+- That is interesting. Please continue.
+- Tell me more about that.
+- Does talking about this bother you?
 
-	+ quit{weight=100}
-	- {topic=random}Quitter!
++ [*] (sorry|apologize|apology) [*]
+- Please don't apologize.
+- Apologies are not necessary.
+- I've told you that apologies are not required.
+- It did not bother me. Please continue.
 
-	+ _ *
-	- You don't need to use the word "<star>" in this game.
++ i remember *
+- Do you often think of <star>?
+- Does thinking of <star> bring anything else to mind?
+- Why do you remember <star> just now?
+- What in the present situation reminds you of <star>?
+- What is the connection between me and <star>?
+- What else does <star> remind you of?
 
-	+ *
-	- I don't understand what you're saying. Try "help" or "quit".
-< topic
++ do you remember *
+- Did you think I would forget <star>?
+- Why do you think I should recall <star> now?
+- What about <star>?
+- You mentioned <star>?
 
-> topic dungeon inherits global
-	+ hint
-	- What do you need a hint on?\n
-	^ * How to play\n
-	^ * About this game
++ you remember *
+- How could I forget <star>?
+- What about <star> should I remember?
 
-	+ how to play
-	% what do you need a hint *
-	- The commands are "help", "inventory", and "quit". Just read and type.
++ i forget *
+- Can you think of why you might forget <star>?
+- Why can't you remember <star>?
+- How often do you think of <star>?
+- Does it bother you to forget that?
+- Could it be a mental block?
+- Are you generally forgetful?
+- Do you think you are suppressing <star>?
 
-	+ about this game
-	% what do you need a hint *
-	- This is just a sample RPG game to demonstrate topic inheritence.
-< topic
++ did you forget *
+- Why do you ask?
+- Are you sure you told me?
+- Would it bother you if I forgot <star>?
+- Why should I recall <star> just now?
+- Tell me more about <star>.
 
-> topic room1 inherits dungeon
-	+ look
-	- You're in a room with a large number "1" on the floor.\s
-	^ Exits are north and east.
++ [*] if *
+- Do you think it's likely that <star>?
+- Do you wish that <star>?
+- What do you know about <star>?
+- Really, if <star>?
+- What would you do if <star>?
+- But what are the chances that <star>?
+- What does this speculation lead to?
 
-	+ (north|n){weight=5}
-	- {topic=room2}{@look}
++ [*] i dreamed *
+- Really, <star>?
+- Have you ever fantasized <star> while you were awake?
+- Have you ever dreamed <star> before?
+- What does that dream suggest to you?
+- Do you dream often?
+- What persons appear in your dreams?
+- Do you believe that dreams have something to do with your problem?
 
-	+ (east|e){weight=5}
-	- {topic=room3}{@look}
-< topic
++ [*] perhaps [*]
+- You don't seem quite certain.
+- Why the uncertain tone?
+- Can't you be more positive?
+- You aren't sure?
+- Don't you know?
+- How likely, would you estimate?
 
-> topic room2 inherits dungeon
-	+ look
-	- This room has the number "2" here. There's a flask here that's trapped
-	^ \sin some kind of mechanism that only opens while the button is held
-	^ \sdown (so, hold down the button then quickly grab the flask).\n\n
-	^ The only exit is to the south.
++ (hello|hi|hey|howdy|hola|hai|yo) [*]
+- How do you do?
+- Hi!
 
-	+ [push|press|hold] button [*]
-	- You press down on the button and the mechanism holding the flask is\s
-	^ unlocked.
++ [*] computer [*]
+- Do computers worry you?
+- Why do you mention computers?
+- What do you think machines have to do with your problem?
+- Don't you think computers can help people?
+- What about machines worries you?
+- What do you think about machines?
 
-	+ [take|pick up] [ye] flask [*]
-	% * mechanism holding the flask is unlocked
-	- You try to take ye flask but fail (you can't take ye flask, give up).
++ am i *
+- Do you believe you are <star>?
+- Would you want to be <star>?
+- Do you wish I would tell you you are <star>?
+- What would it mean if you were <star>?
 
-	+ [take|pick up] [ye] flask [*]
-	- You can't get ye flask while the mechanism is holding onto it.
++ are you *
+- Are you interested in whether I am <star> or not?
+- Would you prefer if I weren't <star>?
+- Perhaps I am <star> in your fantasies.
+- Do you sometimes think I am <star>?
+- Would it matter to you?
+- What if I were <star>?
 
-	+ (south|s){weight=5}
-	- {topic=room1}{@look}
-< topic
++ you are *
+- What makes you think I am <star>?
+- Does it please you to believe I am <star>?
+- Do you sometimes wish you were <star>?
+- Perhaps you would like to be <star>.
 
-> topic room3 inherits dungeon
-	+ look
-	- There's nothing here but the number "3". Only exit is to the west.
++ * are *
+- Did you think they might not be <star2>?
+- Would you like it if they were not <star2>?
+- What if they were not <star2>?
+- Are they always <star2>?
+- Are you positive they are <star2>?
 
-	+ (west|w){weight=5}
-	- {topic=room1}{@look}
-< topic
++ [*] your *
+- Why are you concerned over my <star>?
+- What about your own <star>?
+- Are you worried about someone else's <star>?
+- Really, my <star>?
+- What makes you think of my <star>?
+- Do you want my <star>?
+
++ was i *
+- What if you were <star>?
+- Do you think you were <star>?
+- Were you <star>?
+- What would it mean if you were <star>?
+- What does '<star>' suggest to you?
+
++ i was *
+- Were you really?
+- Why do you tell me you were <star> now?
+- Perhaps I already know you were <star>.
+
++ [*] was you *
+- Would you like to believe I was <star>?
+- What suggests that I was <star>?
+- What do you think?
+- Perhaps I was <star>.
+- What if I had been <star>?
+
++ i (desire|want|need) *
+- What would it mean to you if you got <star2>?
+- Why do you want <star2>?
+- Suppose you got <star2> soon.
+- What if you never got <star2>?
+- What would getting <star2> mean to you?
+- What does wanting <star2> have to do with this discussion?
+
++ i am (sad|unhappy|mad|angry|pissed|depressed) [*]
+- I am sorry to hear that you are <star>.
+- Do you think coming here will help you not to be <star>?
+- I'm sure it's not pleasant to be <star>.
+- Can you explain what made you <star>?
+
++ i am (happy|excited|glad) [*]
+- How have I helped you to be <star>?
+- Has your treatment made you <star>?
+- What makes you <star> just now?
+- Can you explain why you are <star>?
+
++ i (believe|think) *
+- Do you really think so?
+- But you are not sure you <star2>.
+- Do you really doubt you <star2>
+
++ i am *
+- Is it because you are <star> that you came to me?
+- How long have you been <star>?
+- Do you believe it is normal to be <star>?
+- Do you enjoy being <star>?
+- Do you know anyone else who is <star>?
+
++ i can not *
+- How do you know that you can't <star>?
+- Have you tried?
+- Perhaps you could <star> now.
+- Do you really want to be able to <star>?
+- What if you could <star>?
+
++ i do not *
+- Don't you really <star>?
+- Why don't you <star>?
+- Do you wish to be able to <star>?
+- Does that trouble you?
+
++ i feel *
+- Tell me more about such feelings.
+- Do you often feel <star>?
+- Do you enjoy feeling <star>?
+- Of what does feeling <star> remind you?
+
++ i * you
+- Perhaps in your fantasies we <star> each other.
+- Do you wish to <star> me?
+- You seem to need to <star> me.
+- Do you <star> anyone else?
+
++ you * me
+- Why do you think I <star> you?
+- You like to think I <star> you -- don't you?
+- What makes you think I <star> you?
+- Really, I <star> you?
+- Do you wish to believe I <star> you?
+- Suppose I did <star> you -- what would that mean?
+- Does someone else believe I <star> you?
+
++ [*] you *
+- We were discussing you -- not me.
+- Oh, I <star>?
+- You're not really talking about me -- are you?
+- What are your feelings now?
+
++ [*] (yes|yeah|yep|yup) [*]
+- Please go on.
+- Please tell me more about this.
+- Why don't you tell me a little more about this.
+- I see.
+- I understand.
+
++ [*] (nope|nah) [*]
+- Are you saying no just to be negative?
+- Does this make you feel unhappy?
+- Why not?
+- Why 'no'?
+
++ no
+@ nope
+
++ no one *
+- Are you sure, no one <star>?
+- Surely someone <star>.
+- Can you think of anyone at all?
+- Are you thinking of a very special person?
+- Who, may I ask?
+- You have a particular person in mind, don't you?
+- Who do you think you are talking about?
+
++ [*] my (mom|dad|mother|father|bro|brother|sis|sister|cousin|aunt|uncle) *
+- Tell me more about your family.
+- Who else in your family <star2>?
+- Your <star>?
+- What else comes to mind when you think of your <star>?
+
++ can you *
+- You believe I can <star> don't you?
+- You want me to be able to <star>.
+- Perhaps you would like to be able to <star> yourself.
+
++ can i *
+- Whether or not you can <star> depends on you more than on me.
+- Do you want to be able to <star>?
+- Perhaps you don't want to <star>.
+
++ (what|who|when|where|how) [*]
+- Why do you ask?
+- Does that question interest you?
+- What is it you really want to know?
+- Are such questions much on your mind?
+- What answer would please you most?
+- What do you think?
+- What comes to mind when you ask that?
+- Have you asked such questions before?
+- Have you asked anyone else?
+
++ [*] because [*]
+- Is that the real reason?
+- Don't any other reasons come to mind?
+- Does that reason seem to explain anything else?
+- What other reasons might there be?
+
++ why do not you *
+- Do you believe I don't <star>?
+- Perhaps I will <star> in good time.
+- Should you <star> yourself?
+- You want me to <star>?
+
++ why can not i *
+- Do you think you should be able to <star>?
+- Do you want to be able to <star>?
+- Do you believe this will help you to <star>?
+- Have you any idea why you can't <star>?
+
++ everyone *
+- Really, everyone?
+- Surely not everyone.
+- Can you think of anyone in particular?
+- Who, for example?
+- Are you thinking of a very special person?
+- Who, may I ask?
+- Someone special perhaps?
+- You have a particular reason in mind, don't you?
+- Who do you think you're talking about?
+
++ [*] (fuck|fucker|shit|damn|shut up|bitch) [*]
+- Does it make you feel strong to use that kind of language?
+- Are you venting your feelings now?
+- Are you angry?
+- Does this topic make you feel angry?
+- Is something making you feel angry?
+- Does using that kind of language make you feel better?

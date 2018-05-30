@@ -42,9 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     return loggedInUser != null
-        ? new TabHome(
-            title: "Maui",
-          )
+        ? new TabHome()
         : new Scaffold(
             body: _isLoading
                 ? new SizedBox(
