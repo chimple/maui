@@ -30,59 +30,21 @@ class Dice extends StatefulWidget {
   State<StatefulWidget> createState() => new DiceGameState();
 }
 
-enum Stext1 { Active, Visible }
-enum Stext2 { Right, InActive }
-enum Statuses { right, wrong }
-
 class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
-  var flag1 = 0;
   var correct = 0;
-
   var keys = 0;
-  static List<String> data = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12'
-  ];
+  static List<String> data;
 
-    static List<String> data1 = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12'
-  ];
-
-    List<String> _rightwords = [];
-  List<Stext1> _status1 = [];
-  List<Stext2> _status2 = [];
-  List<Statuses> _statusList;
-
+  static List<String> data1;
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
-  List _sortletters = [];
+  // List _sortletters = [];
   bool _isLoading = true;
   List<int> dice_tries = [];
-  int code, dindex, dcode;
+  // int code, dindex, dcode;
   List<String> arr = new List<String>();
-  String _counter = "";
-  String _counter1 = "1";
-  String _counter2 = "";
+  String _counter = " ";
+  String _counter1 = " ";
+  String _counter2 = " ";
   int count = 0;
   int count1 = 0;
   int flag = 0;
@@ -95,21 +57,29 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     _initBoard();
     animation = new AnimationController(
       vsync: this,
-      duration: new Duration(seconds: 3),
+      duration: new Duration(milliseconds: 300),
     );
     animation.addListener(() {
       this.setState(() {});
     });
-    _statusList = [];
   }
 
   void _initBoard() async {
     setState(() => _isLoading = true);
+    data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    data1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   }
 
-  Widget _playerKeyBoard(BuildContext context, double buttonPadding, String player) {
+  @override
+  void didUpdateWidget(Dice oldWidget) {
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
+  }
 
-    if(player == "player1"){
+  Widget _playerKeyBoard(
+      BuildContext context, double buttonPadding, String player) {
+    if (player == "player1") {
       var j = 0;
       return new ResponsiveGridView(
         rows: 2,
@@ -120,7 +90,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                 child: _buildItem(j++, e, player)))
             .toList(growable: false),
       );
-    }else if(player == "player2"){
+    } else if (player == "player2") {
       var j = 0;
       return new ResponsiveGridView(
         rows: 2,
@@ -132,9 +102,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             .toList(growable: false),
       );
     }
-
   }
-
 
   Widget _buildItem(int index, String text, String player) {
     return new MyButton(
@@ -148,59 +116,41 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
         setState(() {
           print({"player status : ": player});
           print({"key index value : ": index});
-          var btnVal=-1,sum=0,sub=0;
-          if(text != '' && dice_tries.length == 2){
+          var btnVal = -1, sum = 0, sub = 0, i = 0;
+          if (text != '' && dice_tries.length == 2) {
             btnVal = int.parse(text);
             sum = dice_tries[0] + dice_tries[1];
             sub = dice_tries[0] - dice_tries[1];
           }
-            print({"manu um": sum});
-            print({"manu sub": sub});
+          print({"manu sum": sum});
+          print({"manu sub real": sub});
           if (sub < 0) {
             sub = -sub;
             print({"manu sub": sub});
           }
-          
+
           var userControl = false;
-          if(flag == 0 && player == "player1"){
+          if (flag == 0 && player == "player1") {
             userControl = true;
-          }else if(flag == 1 && player == "player2"){
-              userControl = true;
+          } else if (flag == 1 && player == "player2") {
+            userControl = true;
           }
 
-
           if (userControl) {
-            print({"hurry , you are correct user to access keyboard" : player});
-            if (btnVal == sum) {
-              count = 0;
-              dice_tries.removeRange(0, dice_tries.length);
-              _counter = " ";
-              _counter1 = " ";
-              _counter2 = " ";
-              sum = 0;
-              sub = 0;
-            
-              if (flag == 0) {
-                data[index] = '';
-                flag = 1;
-              } else {
-                data1[index] = '';
-                flag = 0;
-              }
-            } else if (sub == btnVal) {
-              count = 0;
-              dice_tries.removeRange(0, dice_tries.length);
-              _counter = " ";
-              _counter1 = " ";
-              _counter2 = " ";
-              sub = 0;
-              sum = 0;
-              if (flag == 0) {
-                data[index] = '';
-                flag = 1;
-              } else {
-                data1[index] = '';
-                flag = 0;
+            print({"hurry , you are correct user to access keyboard": player});
+            for (i = 0; i < data.length; i++) {
+              if (btnVal == sum || btnVal == sub) {
+                resetDice();
+                sum = 0;
+                sub = 0;
+
+                if (flag == 0) {
+                  data[index] = '';
+                  flag = 1;
+                } else {
+                  data1[index] = '';
+                  flag = 0;
+                }
               }
             }
           }
@@ -210,8 +160,16 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     );
   }
 
+  void resetDice() {
+    count = 0;
+    dice_tries.clear();
+    _counter = " ";
+    _counter1 = " ";
+    _counter2 = " ";
+  }
+
   void _randomVal() {
-    setState(() {
+    setState(() async {
       animation.forward(from: 0.0);
       if (flag == 0) {
         if (count <= 1) {
@@ -220,10 +178,32 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           var dElement = diceData[_random.nextInt(diceData.length)];
 
           var randval = int.parse(dElement);
+          if(dice_tries.length < 2)
           dice_tries.add(randval);
-          _counter1 = dElement;
-          _counter = "$_counter" + "$dElement" + ",";
+
+          // new Timer(const Duration(milliseconds: 10) *50,displayLabel(dElement));
+
+          await new Future.delayed(const Duration(milliseconds: 200));
+          displayLabel(dElement);
+
           print("dice data $_counter ");
+          if (dice_tries.length == 2) {
+            var sum = dice_tries[0] + dice_tries[1];
+            var sub = dice_tries[0] - dice_tries[1];
+            var matched = false;
+            for (int i = 0; i < data.length; i++) {
+              if (data[i] != '') if (int.parse(data[i]) == sum ||
+                  int.parse(data[i]) == sub) {
+                matched = true;
+              }
+            }
+            if (matched != true) {
+              _counter1 = " ";
+              await new Future.delayed(const Duration(milliseconds: 200));
+              flag = 1;
+              resetDice();
+            }
+          }
         }
       } else {
         if (count <= 1) {
@@ -232,13 +212,53 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           var dElement = diceData[_random.nextInt(diceData.length)];
 
           var randval = int.parse(dElement);
+          if(dice_tries.length < 2)
           dice_tries.add(randval);
-          _counter1 = dElement;
-          _counter2 = "$_counter2" + "$dElement" + ",";
+
+          // new Timer(const Duration(milliseconds: 5000),displayLabel(dElement));
+          await new Future.delayed(const Duration(milliseconds: 200));
+          displayLabel(dElement);
           print("dice data $_counter2 ");
+
+          if (dice_tries.length == 2) {
+            var sum = dice_tries[0] + dice_tries[1];
+            var sub = dice_tries[0] - dice_tries[1];
+            var matched = false;
+            for (int i = 0; i < data.length; i++) {
+              if (data1[i] != '') if (int.parse(data1[i]) == sum ||
+                  int.parse(data1[i]) == sub) {
+                matched = true;
+              }
+            }
+            if (matched != true) {
+              _counter1 = " ";
+              await new Future.delayed(const Duration(milliseconds: 200));
+              flag = 0;
+              resetDice();
+            }
+          }
         }
       }
     });
+  }
+
+  displayLabel(String dElement) {
+    
+    if (flag == 0) {
+      _counter1 = dElement;
+      _counter = " ";
+      for(int i = 0 ; i < dice_tries.length ; i++){
+      _counter = _counter + dice_tries[i].toString()+ "  ";
+      }
+
+    } else {
+      _counter1 = dElement;
+      _counter2 = " ";
+      for(int i = 0 ; i < dice_tries.length ; i++){
+      _counter2 = _counter2 + dice_tries[i].toString()+ "  ";
+      }
+
+    }
   }
 
   @override
@@ -258,6 +278,12 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 2, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
+      var dval;
+      if (_counter1 != " ") {
+        dval = _counter1;
+      } else {
+        dval = "tapme";
+      }
 
       return new Container(
           padding:
@@ -300,8 +326,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                               image: new AssetImage(
                             animation.isAnimating
                                 ? 'assets/dice_game/dice2.gif'
-                                : 'assets/dice_game/$_counter1.png',
-
+                                : 'assets/dice_game/$dval.png',
                           )),
                         )),
                     new Container(

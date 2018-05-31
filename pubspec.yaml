@@ -63,6 +63,7 @@ flutter:
     - assets/dice_game/6.png
     - assets/dice_game/dice.gif
     - assets/dice_game/dice2.gif
+    - assets/dice_game/tapme.png
     - assets/games.png
     - assets/chat.png
     - assets/story.png
