@@ -19,7 +19,7 @@ dependencies:
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
   fluttie: ^0.2.1
-
+  fluttery: "^0.0.6"
 dev_dependencies:
   flutter_test:
     sdk: flutter
