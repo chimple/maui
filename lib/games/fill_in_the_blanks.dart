@@ -96,7 +96,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
-    setState(() => _isLoading = false);
     _size = dragBoxData.length;
     _flag.length = dragBoxData.length + _size + 1;
     for (var i = 0; i < _flag.length; i++) {
@@ -110,6 +109,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     }
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
+    setState(() => _isLoading = false);
   }
 
   String data;
@@ -212,6 +212,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
+          setState(() {
+                    });
           data = text;
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
@@ -244,22 +246,15 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         _initFillBlanks();
       });
     }
-    var j = 0, k = 100, h = 0, a = 0;
-    // var maxChars = _size *
-    //     (_holdDataOfDragBox != null
-    //         ? _holdDataOfDragBox.fold(
-    //             1,
-    //             (prev, element) =>
-    //                 element.length > prev ? element.length : prev)
-    //         : 1);
+
     MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
-
+      double maxWidth =0.0 ,maxHeight =0.0; 
+      maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
+      var j = 0, k = 100, h = 0, a = 0;
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
       maxWidth -= buttonPadding * 2;
@@ -267,44 +262,40 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
-      return new Container(
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Expanded(
-                flex: 1,
-                child: new Container(
-                  color: new Color(0xffffa3bc8b),
-                  child: new ResponsiveGridView(
-                    rows: 1,
-                    cols: dropTargetData.length,
-                    maxAspectRatio: 1.0,
-                    children: dropTargetData
-                        .map((e) => Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: droptarget(j++, e, _flag[h++])))
-                        .toList(growable: false),
-                  ),
+      return new Flex(
+         direction: Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Expanded(
+              flex: 1,
+              child: new Container(
+                color: new Color(0xffffa3bc8b),
+                child: new ResponsiveGridView(
+                  rows: 1,
+                  cols: dropTargetData.length,
+                  maxAspectRatio: 1.0,
+                  children: dropTargetData
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: droptarget(j++, e, _flag[h++])))
+                      .toList(growable: false),
                 ),
               ),
-              //    new Padding(padding:new EdgeInsets.all(buttonPadding)),
-              new Expanded(
-                flex: 2,
-                child: new ResponsiveGridView(
-                    rows: 1,
-                    cols: dragBoxData.length,
-                    maxAspectRatio: 1.0,
-                    padding: 10.0,
-                    children: dragBoxData
-                        .map((e) => Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: dragbox(k++, e, _flag[a++])))
-                        .toList(growable: false)),
-              ),
-            ],
-          ),
-        ),
+            ),
+            new Expanded(
+              flex: 2,
+              child: new ResponsiveGridView(
+                  rows: 1,
+                  cols: dragBoxData.length,
+                  maxAspectRatio: 1.0,
+                  padding: 10.0,
+                  children: dragBoxData
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: dragbox(k++, e, _flag[a++])))
+                      .toList(growable: false)),
+            ),
+          ],
       );
     });
   }
@@ -318,7 +309,6 @@ class MyButton extends StatefulWidget {
       this.color1,
       this.flag,
       this.onAccepted,
-      this.arr,
       this.code,
       this.length,
       this.onDrag,
@@ -331,7 +321,6 @@ class MyButton extends StatefulWidget {
   final int flag;
   final int length;
   final String text;
-  List arr;
   final int code;
   bool isRotated;
   int keys;
@@ -348,7 +337,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
     _displayText = widget.text;
-    //_displayText = widget.text;
     controllerShake = new AnimationController(
         duration: new Duration(milliseconds: 60), vsync: this);
     animationShake = new Tween(end: -5.0, begin: 5.0).animate(controllerShake);
