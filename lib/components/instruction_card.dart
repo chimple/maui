@@ -43,7 +43,7 @@ class _InstructionCardState extends State<InstructionCard> {
         child: new CircularProgressIndicator(),
       );
     }
-    bool noImage = (_unit.image?.length ?? 0) == 0;
+    bool noImage = (_unit?.image?.length ?? 0) == 0;
     Color bgColor = Theme.of(context).accentColor;
     return Container(
         decoration: noImage ? BoxDecoration(color: bgColor) : null,

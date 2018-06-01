@@ -19,7 +19,7 @@ dependencies:
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
   fluttie: ^0.2.1
-
+  fluttery: "^0.0.6"
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,6 +68,8 @@ flutter:
     - assets/chat.png
     - assets/story.png
     - assets/Shapes.png
+    - assets/hoodie_fb.png
+    - assets/hoodie_bear.png
     - assets/koala_neutral.png
     - assets/koala_happy.png
     - assets/koala_sad.png
@@ -110,6 +112,8 @@ flutter:
     - assets/hoodie/tap_home.png
     - assets/hoodie/tap_wrong.png
     - assets/hoodie/true_or_false.png
+    - assets/forward_button.png
+    - assets/home_button.png
 
     #happy
     - assets/hoodie/reflex_happy.png
@@ -951,7 +955,7 @@ flutter:
     - assets/dict/tea.png
     - assets/dict/team.png
     - assets/dict/teapoy.png
-    - assets/dict/tears.png
+    - assets/dict/tear.png
     - assets/dict/teenager.png
     - assets/dict/teeth.png
     - assets/dict/television.png

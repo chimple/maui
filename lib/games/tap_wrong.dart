@@ -75,6 +75,7 @@ class TapWrongState extends State<TapWrong> {
     setState(() => _isLoading = true);
    data=await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_maxSize1);
     print('datat  ${data.item1}');
+    print('datat  ${data.item2}');
     data.item1.forEach((d) {
       word.add(d);
     });
@@ -87,6 +88,11 @@ class TapWrongState extends State<TapWrong> {
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh1 ${word}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2 ${others}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2 ${arr1}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh3 ${_dispText}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh4 ${lenOfArr1}");
     var rand = new Random();
     var randNum = 0;
     String temp = '';
@@ -99,6 +105,7 @@ class TapWrongState extends State<TapWrong> {
       print("random num $randNum");
       print('$arr1');
       temp = arr1[randNum];
+      print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh temp ${temp}");
 
       arr1[randNum] = others[w];
       print('$arr1');
@@ -161,7 +168,7 @@ class TapWrongState extends State<TapWrong> {
               num1++;
               numOFWrongElem++;
               print('array 1           $arr1');
-              new Future.delayed(const Duration(milliseconds: 200), () {
+              new Future.delayed(const Duration(milliseconds: 0), () {
                 setState(() {
                   //   _statusList.removeAt(index);
                   arr1.removeAt(index);
@@ -172,7 +179,7 @@ class TapWrongState extends State<TapWrong> {
               widget.onScore(2);
               widget.onProgress(num1 / others.length);
               if (numOFWrongElem == others.length) {
-                new Future.delayed(const Duration(milliseconds: 500), () {
+                new Future.delayed(const Duration(milliseconds: 0), () {
                   setState(() {
                     _isShowingFlashCard = true; // widget.onEnd();
                   });
@@ -182,7 +189,7 @@ class TapWrongState extends State<TapWrong> {
             } else {
               _statusList[index] = Statuses.wrong;
               print('status array afdter clicking wrong     $_statusList');
-              new Future.delayed(const Duration(milliseconds: 500), () {
+              new Future.delayed(const Duration(milliseconds: 0), () {
                 setState(() {
                   _statusList[index] = Statuses.right;
                 });
