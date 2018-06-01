@@ -6,6 +6,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
 
+
 class ScoreScreen extends StatefulWidget {
   final String gameName;
   final GameDisplay gameDisplay;
@@ -32,12 +33,15 @@ class ScoreScreen extends StatefulWidget {
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
- 
+  
   List<AnimationController> _controllers = new List<AnimationController>();
   List<Animation<double>> _animations = new List<Animation<double>>();
 
 
-  Animation<double> _characterAnimation;
+  Animation<double> _buttonAnimation,
+      _characterAnimation,
+      _userAnimation,
+      _textAnimation;
 
   String gameName;
   GameDisplay gameDisplay;
@@ -47,6 +51,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   int otherScore;
   List<Widget> otherscore;
   List<String> stars = [];
+  
   var keys = 0;
 
   @override
@@ -57,6 +62,18 @@ class _ScoreScreenState extends State<ScoreScreen>
         duration: const Duration(milliseconds: 1000), vsync: this);
     
 
+    _buttonAnimation =
+        new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
+    _characterAnimation =
+        new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+    _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
+    _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+        new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
     
 
     gameName = widget.gameName;
@@ -85,12 +102,15 @@ class _ScoreScreenState extends State<ScoreScreen>
     super.initState();
     controller.forward();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     _controllers.forEach((f) => f.dispose());
     controller.dispose();
     super.dispose();
+    
+    
   }
 
   Widget _buildItem(int index, String text) {
@@ -98,9 +118,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         key: new ValueKey<int>(index),
         text: text,
         keys: keys++,
-        onPress: () {
-
-        }
+        onPress: () {}
         );
   }
   
@@ -290,6 +308,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
                  new Container(
+                   
                      child: IconButton(
                          icon: new Image.asset("assets/home_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
@@ -301,6 +320,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                          })),
                  
                   new Container(
+                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
@@ -324,6 +344,7 @@ class _ScoreScreenState extends State<ScoreScreen>
 
 
 class MyButton extends StatefulWidget {
+  
   
   MyButton(
       {Key key,
@@ -362,6 +383,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
+
+      
   }
 
    @override
@@ -369,6 +392,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       // TODO: implement didUpdateWidget
       super.didUpdateWidget(oldWidget);
     }
+
 
   @override
   void dispose() {
@@ -386,8 +410,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new Shake(
       animation: animation,
       child: new GestureDetector(
-      child: new Container(       
-      child: new FlatButton(
+    
+    
+     child: new Container(
+       
+     child: new FlatButton(
          onPressed: () => widget.onPress(),
          color: Colors.transparent,
          
