@@ -33,7 +33,7 @@ class TapWrong extends StatefulWidget {
   State<StatefulWidget> createState() => new TapWrongState();
 }
 
-enum Statuses { right, wrong, clicked, notClicked }
+enum Statuses { right, wrong, }
 
 class TapWrongState extends State<TapWrong> {
   String _dispText = '';
