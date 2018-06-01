@@ -33,7 +33,7 @@ class TapWrong extends StatefulWidget {
   State<StatefulWidget> createState() => new TapWrongState();
 }
 
-enum Statuses { right, wrong }
+enum Statuses { right, wrong, clicked, notClicked }
 
 class TapWrongState extends State<TapWrong> {
   String _dispText = '';
@@ -50,6 +50,7 @@ class TapWrongState extends State<TapWrong> {
  int _maxSize=3;
  int _maxSize1=0;
  int arrayLength=0;
+ int clickCnt = 0;
   @override
   void initState() {
     super.initState();
@@ -88,11 +89,11 @@ class TapWrongState extends State<TapWrong> {
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh1 ${word}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2 ${others}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2 ${arr1}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh3 ${_dispText}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh4 ${lenOfArr1}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh word ${word}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh others ${others}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh arr1 ${arr1}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh _dispText ${_dispText}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh lenOfArr1${lenOfArr1}");
     var rand = new Random();
     var randNum = 0;
     String temp = '';
@@ -105,8 +106,6 @@ class TapWrongState extends State<TapWrong> {
       print("random num $randNum");
       print('$arr1');
       temp = arr1[randNum];
-      print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh temp ${temp}");
-
       arr1[randNum] = others[w];
       print('$arr1');
       print('${arr1.length}');
@@ -146,8 +145,8 @@ class TapWrongState extends State<TapWrong> {
           int j = 0;
           setState(() {
             proArray.addAll(arr1);
-
             proArray.removeAt(index);
+            print('removed text from array ${arr1[index]}');
             print('removed array       $proArray');
             print('removed array l3en      ${proArray.length}');
             print('word array       $word');
@@ -168,18 +167,21 @@ class TapWrongState extends State<TapWrong> {
               num1++;
               numOFWrongElem++;
               print('array 1           $arr1');
-              new Future.delayed(const Duration(milliseconds: 0), () {
+
+               new Future.delayed(const Duration(milliseconds: 0), () {
                 setState(() {
-                  //   _statusList.removeAt(index);
+                    //  _statusList.removeAt(index);
+                  
                   arr1.removeAt(index);
-                });
-              });
+
+                 });
+               });
 
               print('array 1 after     $arr1');
               widget.onScore(2);
               widget.onProgress(num1 / others.length);
               if (numOFWrongElem == others.length) {
-                new Future.delayed(const Duration(milliseconds: 0), () {
+                new Future.delayed(const Duration(milliseconds: 500), () {
                   setState(() {
                     _isShowingFlashCard = true; // widget.onEnd();
                   });
@@ -189,7 +191,7 @@ class TapWrongState extends State<TapWrong> {
             } else {
               _statusList[index] = Statuses.wrong;
               print('status array afdter clicking wrong     $_statusList');
-              new Future.delayed(const Duration(milliseconds: 0), () {
+              new Future.delayed(const Duration(milliseconds: 500), () {
                 setState(() {
                   _statusList[index] = Statuses.right;
                 });
