@@ -50,6 +50,7 @@ class TapWrongState extends State<TapWrong> {
  int _maxSize=3;
  int _maxSize1=0;
  int arrayLength=0;
+ int clickCnt = 0;
   @override
   void initState() {
     super.initState();
@@ -75,6 +76,7 @@ class TapWrongState extends State<TapWrong> {
     setState(() => _isLoading = true);
    data=await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_maxSize1);
     print('datat  ${data.item1}');
+    print('datat  ${data.item2}');
     data.item1.forEach((d) {
       word.add(d);
     });
@@ -87,6 +89,11 @@ class TapWrongState extends State<TapWrong> {
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh word ${word}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh others ${others}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh arr1 ${arr1}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh _dispText ${_dispText}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh lenOfArr1${lenOfArr1}");
     var rand = new Random();
     var randNum = 0;
     String temp = '';
@@ -99,7 +106,6 @@ class TapWrongState extends State<TapWrong> {
       print("random num $randNum");
       print('$arr1');
       temp = arr1[randNum];
-
       arr1[randNum] = others[w];
       print('$arr1');
       print('${arr1.length}');
@@ -139,8 +145,8 @@ class TapWrongState extends State<TapWrong> {
           int j = 0;
           setState(() {
             proArray.addAll(arr1);
-
             proArray.removeAt(index);
+            print('removed text from array ${arr1[index]}');
             print('removed array       $proArray');
             print('removed array l3en      ${proArray.length}');
             print('word array       $word');
@@ -161,12 +167,15 @@ class TapWrongState extends State<TapWrong> {
               num1++;
               numOFWrongElem++;
               print('array 1           $arr1');
-              new Future.delayed(const Duration(milliseconds: 200), () {
+
+               new Future.delayed(const Duration(milliseconds: 0), () {
                 setState(() {
-                  //   _statusList.removeAt(index);
+                    //  _statusList.removeAt(index);
+                  
                   arr1.removeAt(index);
-                });
-              });
+
+                 });
+               });
 
               print('array 1 after     $arr1');
               widget.onScore(2);

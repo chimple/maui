@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:tuple/tuple.dart';
+import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class ClueGame extends StatefulWidget {
   Function onScore;
@@ -50,7 +53,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> _blackpet;
 
   void _initClueGame() {
-    _words = [    
+    _words = [
       'e',
       'ery',
       'pa',
@@ -93,19 +96,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   var keys = 0;
   String _result = '';
   String word = '';
-  Widget _builtWord(int index, String text, double _height) {
-    return new MyButton(
-      key: new ValueKey<int>(index),
-      text: text,
-      keys: keys++,
-      height: _height,
-      onPress: () {
-        setState(() {
-          _result = _result + text;
-        });
-      },
-    );
-  }
 
   void _validate() {
     // setState(()  {
@@ -181,28 +171,24 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     controller = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     animation = new Tween(begin: -4.0, end: 4.0).animate(controller);
-
     animation.addListener(() {
       setState(() {});
     });
     noanimation = new Tween(begin: 0.0, end: 0.0).animate(controller);
-
     this._initClueGame();
   }
 
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
-  Widget _builtCategory(int index, String text, double _height) {
+  Widget _builtCategory(int index, String text) {
     return new BuildCategory(
       key: new ValueKey<int>(index),
       text: text,
       keys: keys++,
-      height: _height,
     );
   }
 
@@ -273,33 +259,35 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     keys = 0;
     return new LayoutBuilder(builder: (context, constraints) {
-      double _height, _width;
-      _height = constraints.maxHeight;
-      _width = constraints.maxWidth;
-      List<TableRow> rows = new List<TableRow>();
-      List<TableRow> rows1 = new List<TableRow>();
-      var j = 0;
-      for (var i = 0; i < 4; i++) {
-        List<Widget> cells = _words
-            .skip(i * 5)
-            .take(5)
-            .map((e) => _builtWord(j++, e, _height))
-            .toList();
-        rows.add(new TableRow(children: cells));
-      }
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+      double maxWidth = 0.0, maxHeight = 0.0;
+      final maxChars = (_category != null
+          ? _category.fold(1,
+              (prev, element) => element.length > prev ? element.length : prev)
+          : 1);
+
+      maxWidth = (constraints.maxWidth - hPadding * 2) / 2.6;
+      maxHeight = (constraints.maxHeight - vPadding * 2) / 2.6;
+      double buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
       var k = 0;
-      for (var i = 0; i < 2; i++) {
-        List<Widget> cells = _category
-            .skip(i * 2)
-            .take(2)
-            .map((e) => _builtCategory(k++, e, _height))
-            .toList();
-        rows1.add(new TableRow(children: cells));
-      }
+
       return new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Table(children: rows1),
+            new ResponsiveGridView(
+              rows: 2,
+              cols: 2,
+              maxAspectRatio: 1.0,
+              children: _category
+                  .map((e) => new Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: _builtCategory(k++, e),
+                      ))
+                  .toList(growable: false),
+            ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -310,55 +298,104 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                 submit(),
               ],
             ),
-            new Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: new Table(children: rows),
-            ),
+            new Circle(),
           ]);
     });
   }
 }
 
-class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.keys, this.height, this.onPress})
-      : super(key: key);
-
-  final String text;
-  final double height;
-  int keys;
-  final VoidCallback onPress;
-
+class Circle extends StatefulWidget {
   @override
-  _MyButtonState createState() => new _MyButtonState();
+  _CircleState createState() => new _CircleState();
 }
 
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  String _displayText;
+class _CircleState extends State<Circle> {
+  @override
+  Widget build(BuildContext context) {
+    double circleSize = 260.0;
 
-  initState() {
+    List<Widget> widgets = new List();
+    widgets.add(new Container(
+        width: circleSize,
+        height: circleSize,
+        decoration:
+            new BoxDecoration(color: Colors.green, shape: BoxShape.circle)));
+
+    Offset circleCenter = new Offset(circleSize / 2, circleSize / 2);
+
+    List<Offset> offsets = calculateOffsets(100.0, circleCenter, 12);
+    for (int i = 0; i < offsets.length; i++) {
+      widgets.add(new PositionCircle(
+          offsets[i], i.toString(), Colors.orange[300], 23.0));
+    }
+    offsets = calculateOffsets(50.0, circleCenter, 6);
+    for (int i = 0; i < offsets.length; i++) {
+      widgets.add(new PositionCircle(
+          offsets[i], i.toString(), Colors.orange[300], 23.0));
+    }
+
+    offsets = calculateOffsets(0.0, circleCenter, 1);
+    for (int i = 0; i < offsets.length; i++) {
+      widgets.add(new PositionCircle(
+          offsets[i], i.toString(), Colors.orange[300], 23.0));
+    }
+
+    return new Center(child: new Stack(children: widgets));
+  }
+
+  //it calculates points on circle
+  //these points are centers for small circles
+  List<Offset> calculateOffsets(
+      double circleRadii, Offset circleCenter, int amount) {
+    double angle = 2 * pi / amount;
+    double alpha = 300.0;
+    double x0 = circleCenter.dx;
+    double y0 = circleCenter.dy;
+    List<Offset> offsets = new List(amount);
+    for (int i = 0; i < amount; i++) {
+      double x = x0 + circleRadii * cos(alpha);
+      double y = y0 + circleRadii * sin(alpha);
+      offsets[i] = new Offset(x, y);
+      alpha += angle;
+    }
+    return offsets;
+  }
+}
+
+class PositionCircle extends StatefulWidget {
+  final Offset initPos;
+  final String label;
+  final Color itemColor;
+  final double radii;
+
+  PositionCircle(this.initPos, this.label, this.itemColor, this.radii);
+  @override
+  _PositionCircleState createState() => new _PositionCircleState();
+}
+
+class _PositionCircleState extends State<PositionCircle> {
+  Offset position = Offset(0.0, 0.0);
+
+  @override
+  void initState() {
     super.initState();
-    setState(() {
-      _displayText = widget.text;
-    });
+    position = widget.initPos;
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.keys++;
-    return new TableCell(
-      child: new Padding(
-        padding: new EdgeInsets.all(widget.height * 0.001),
-        child: new RaisedButton(
-          onPressed: () => widget.onPress(),
-          padding: new EdgeInsets.all(widget.height * 0.02),
-          splashColor: Colors.green,
-          shape: new RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
-          child: new Text(
-            _displayText,
-            key: new Key("A${widget.keys}"),
-            style: new TextStyle(color: Colors.deepPurple, fontSize: 24.0),
-          ),
+    return new Positioned(
+      left: position.dx - widget.radii,
+      top: position.dy - widget.radii,
+      width: widget.radii * 2,
+      height: widget.radii * 2,
+      child: new RawMaterialButton(
+        shape: const CircleBorder(side: BorderSide.none),
+        onPressed: () {},
+        fillColor: widget.itemColor,
+        splashColor: Colors.yellow,
+        child: new Text(
+          widget.label,
         ),
       ),
     );
@@ -366,9 +403,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 }
 
 class BuildCategory extends StatefulWidget {
-  BuildCategory({Key key, this.height, this.keys, this.text}) : super(key: key);
+  BuildCategory({Key key, this.keys, this.text}) : super(key: key);
   final String text;
-  final double height;
   int keys;
   @override
   _BuildCategoryState createState() => new _BuildCategoryState();
@@ -378,23 +414,10 @@ class _BuildCategoryState extends State<BuildCategory> {
   @override
   Widget build(BuildContext context) {
     widget.keys++;
-    return new Padding(
-      padding: new EdgeInsets.all(5.0),
-      child: new Container(
-        height: widget.height * 0.13,
-        width: widget.height * 0.12,
-        decoration: new BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Colors.green,
-        ),
-        child: new Center(
-          child: new Text(
-            widget.text,
-            key: new Key("A${widget.keys}"),
-            style: new TextStyle(color: Colors.white, fontSize: 24.0),
-          ),
-        ),
-      ),
+    return new UnitButton(
+      text: widget.text,
+      disabled: true,
+      key: new Key("A${widget.keys}"),
     );
   }
 }
