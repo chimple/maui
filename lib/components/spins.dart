@@ -8,7 +8,7 @@ class ArrowPainter extends CustomPainter {
   final double rotationPercent;
 
   ArrowPainter({this.rotationPercent}) : dialArrowPaint = new Paint() {
-    dialArrowPaint.color = Colors.black;
+    dialArrowPaint.color = Colors.orange[200];
     dialArrowPaint.style = PaintingStyle.fill;
   }
 

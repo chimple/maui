@@ -211,8 +211,8 @@ class _SpinWheelState extends State<SpinWheel> {
           ),
           new Center(
               child: new Container(
-                  height: 400.0,
-                  width: 400.0,
+                  height:_size + 50.0,
+                  width: _size + 50.0,
                   child: new RadialDragGestureDetector(
                       onRadialDragStart: _onDragStart,
                       onRadialDragUpdate: _onDragUpdate,
@@ -243,8 +243,8 @@ class _SpinWheelState extends State<SpinWheel> {
                   // margin: isLandscape == true
                   //     ? const EdgeInsets.symmetric(horizontal: 100.0)
                   //     : const EdgeInsets.symmetric(horizontal: 40.0),
-                  height: 250.0,
-                  width: 250.0,
+                  height: _size-100.0,
+                  width: _size-100.0,
                   child: new RadialDragGestureDetector(
                       onRadialDragStart: _onDragStart1,
                       onRadialDragUpdate: _onDragUpdate1,
