@@ -20,6 +20,7 @@ dependencies:
   audioplayer: ^0.4.0
   fluttie: ^0.2.1
   fluttery: "^0.0.6"
+  flutter_circular_chart: "^0.0.3"
 dev_dependencies:
   flutter_test:
     sdk: flutter
