@@ -93,7 +93,7 @@ class _FlashCardState extends State<FlashCard> {
                         new Container(
                             alignment: const Alignment(0.0, 0.0),
                             child: new Text( widget.text,  style: new TextStyle(color: Colors.white, fontSize: constraints.maxHeight * 0.11, fontWeight: FontWeight.bold)))
-                            : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png'))),
+                            : new Image.asset('assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: widget.onChecked,
