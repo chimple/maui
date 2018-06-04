@@ -49,7 +49,7 @@ class OuterCircle extends CustomPainter {
   final tickPaint;
   final textPainter;
   final textStyle;
-  final imagePainter;
+  final image;
   final buttonStyle;
   OuterCircle({
     this.tickCount = 35,
@@ -57,7 +57,7 @@ class OuterCircle extends CustomPainter {
     this.ticksInset = 0.0,
   })  : tickPaint = new Paint(),
         traingle = new Paint(),
-        imagePainter = new Image.asset(
+        image = new Image.asset(
           'assets\indian_child.png',
         ),
         textPainter = new TextPainter(
@@ -76,9 +76,11 @@ class OuterCircle extends CustomPainter {
         )
          {
     tickPaint.color = Colors.black;
-    tickPaint.strokeWidth = 1.5;
+    tickPaint.strokeWidth = 0.5;
     traingle.color = Colors.red[100];
     traingle.style = PaintingStyle.fill;
+    // image.hieght=30.0;
+    // image.width=40.0;
   }
 
   @override
@@ -87,24 +89,25 @@ class OuterCircle extends CustomPainter {
 
     canvas.save();
     canvas.rotate(-ticksPerSection);
-    final radius = size.width / 2;
+    final radius = size.height / 2;
     print("Outer Container:: $size");
-    for (var i = 0; i < 20; ++i) {
+    for (var i = 0; i < 16; ++i) {
       final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 00.0),
-          new Offset(0.0, -radius),
+          new Offset(0.0, -radius + 40.0),
           tickPaint,
         );
       } else {
         canvas.save();
-        canvas.translate(-0.0, -(size.width / 2.5));
+        canvas.translate(-0.0, -(size.width/3.5 ));
 
         textPainter.text = new TextSpan(
           text: '$i',
           style: textStyle,
         );
+       
         // imagePainter.image = new Image.asset(
         //   imagePainter,
         //   fit: BoxFit.cover,
@@ -126,7 +129,7 @@ class OuterCircle extends CustomPainter {
 
         canvas.restore();
       }
-      canvas.rotate(2 * pi / 20);
+      canvas.rotate(2 * pi / 16);
     }
 
     canvas.restore();
@@ -157,14 +160,16 @@ class InnerCircle extends CustomPainter {
         textPainter = new TextPainter(
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
+          
         ),
         textStyle = const TextStyle(
           color: Colors.black,
           fontFamily: 'BebasNeue',
           fontSize: 20.0,
+          
         ) {
     tickPaint.color = Colors.black;
-    tickPaint.strokeWidth = 1.5;
+    tickPaint.strokeWidth = 0.5;
   }
 
   @override
@@ -175,17 +180,17 @@ class InnerCircle extends CustomPainter {
     canvas.rotate(-ticksPerSection1);
     final radius = size.width / 2;
     print("Outer Container:: $size");
-    for (var i = 0; i < 20; ++i) {
+    for (var i = 0; i < 16; ++i) {
       //final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 0.0),
-          new Offset(0.0, -size.height / 2),
+          new Offset(0.0, -size.height / 3),
           tickPaint,
         );
       } else {
         canvas.save();
-        canvas.translate(-0.0, -(size.height / 3.5));
+        canvas.translate(-0.0, -(size.height / 5.9));
 
         textPainter.text = new TextSpan(
           text: '$i',
@@ -204,7 +209,7 @@ class InnerCircle extends CustomPainter {
 
         canvas.restore();
       }
-      canvas.rotate(2 * pi / 20);
+      canvas.rotate(2 * pi / 16);
     }
 
     canvas.restore();
