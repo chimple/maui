@@ -326,6 +326,9 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
   Widget build(BuildContext context) {
     print("MyTableState.build");
     print("MyTableState.build");
+       
+ MediaQueryData media = MediaQuery.of(context);
+
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -339,14 +342,21 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 
     final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
+      
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
+      print("object horizantal padding....:$hPadding.....vpadding : ..$vPadding");
+      print("object button padding ......:$buttonPadding");
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
+      print("object button height ....:$maxHeight.. button width.....:$maxWidth");
+
+      double fullwidthofscreen=_size*(maxWidth+buttonPadding+hPadding);
+      print("object full screen width is ......:$fullwidthofscreen..........=${media.size.width}");
+      double buttonarea=maxWidth*maxHeight;
+      print("object....buttonarea .......:$buttonarea");
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
     return new Padding(
