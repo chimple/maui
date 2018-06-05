@@ -35,8 +35,8 @@ import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
 import 'package:maui/screens/score_screen.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:tuple/tuple.dart';
-
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/components/hud.dart';
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
@@ -47,8 +47,8 @@ enum GameDisplay {
   single,
   myHeadToHead,
   otherHeadToHead,
-  myTurnByTurn,
-  otherTurnByTurn
+  localTurnByTurn,
+  networkTurnByTurn
 }
 
 enum UnitMode { text, image, audio }
@@ -59,13 +59,23 @@ class GameConfig {
   int gameCategoryId;
   int level;
   GameDisplay gameDisplay;
+  User otherUser;
+  int myScore;
+  int otherScore;
+  bool amICurrentPlayer;
+  //board
+  //local or n/w
 
   GameConfig(
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
       this.gameDisplay,
-      this.level});
+      this.level,
+      this.otherUser,
+      this.myScore,
+      this.otherScore,
+      this.amICurrentPlayer});
 }
 
 enum Learning { literacy, maths }
@@ -141,9 +151,10 @@ class SingleGame extends StatefulWidget {
 }
 
 class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
-  int _score = 0;
-  double _progress = 0.0;
-  int _iteration = 0;
+  double _myProgress = 0.0;
+  double _otherProgress = 0.0;
+  int _myIteration = 0;
+  int _otherIteration = 0;
   int maxIterations = 2;
   int playTime = 10000;
   AnimationController _controller;
@@ -188,10 +199,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         accentColor: colors[1]);
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
-    final width = widget.gameConfig.gameDisplay == GameDisplay.single
-        ? media.size.width
-        : media.size.width / 2;
-
+    final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
     return new Theme(
         data: theme,
         child: Scaffold(
@@ -211,156 +219,136 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                     height: media.size.height / 8.0,
                     child: Material(
                         elevation: 8.0,
-                        color: widget.gameConfig.gameDisplay ==
-                                GameDisplay.otherHeadToHead
-                            ? colors[2]
-                            : colors[0],
+                        color: oh2h ? colors[2] : colors[0],
                         child: Stack(
                             alignment: AlignmentDirectional.centerStart,
                             children: <Widget>[
-                              Row(
-                                  mainAxisAlignment:
-                                      widget.gameConfig.gameDisplay !=
-                                              GameDisplay.otherHeadToHead
-                                          ? MainAxisAlignment.start
-                                          : MainAxisAlignment.end,
-                                  children: widget.gameConfig.gameDisplay !=
-                                          GameDisplay.otherHeadToHead
-                                      ? <Widget>[
-                                          new Align(
-                                            alignment: Alignment.topCenter,
-                                            child: IconButton(
-                                              icon: Icon(Icons.arrow_back),
-                                              color: Colors.white,
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                            ),
-                                          ),
-                                          new Flexible(
-                                              flex: 1,
-                                              child: _hud(
-                                                  context: context,
-                                                  height:
-                                                      media.size.height / 8.0,
-                                                  backgroundColor: colors[2],
-                                                  foregroundColor: colors[1])),
-                                        ]
-                                      : <Widget>[
-                                          _hud(
-                                              context: context,
-                                              height: media.size.height / 8.0,
-                                              backgroundColor: colors[2],
-                                              foregroundColor: colors[1]),
-                                        ]),
+                              !oh2h
+                                  ? Positioned(
+                                      left: 0.0,
+                                      top: 0.0,
+                                      child: IconButton(
+                                        icon: Icon(Icons.arrow_back),
+                                        color: Colors.white,
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                      ))
+                                  : Container(),
+                              new Positioned(
+                                  left: !oh2h ? 32.0 : null,
+                                  right: oh2h ? 32.0 : null,
+                                  child: Hud(
+                                      user: AppStateContainer
+                                          .of(context)
+                                          .state
+                                          .loggedInUser,
+                                      height: media.size.height / 8.0,
+                                      gameMode: widget.gameMode,
+                                      playTime: playTime,
+                                      onEnd: widget.onGameEnd,
+                                      progress: _myProgress,
+                                      start: !oh2h,
+                                      score: widget.gameConfig.myScore,
+                                      backgroundColor:
+                                          oh2h ? colors[0] : colors[2],
+                                      foregroundColor: colors[1])),
                               new Center(
                                 child: Nima(
                                     name: widget.gameName,
-                                    score: _score,
-                                    tag: widget.gameConfig.gameDisplay !=
-                                            GameDisplay.otherHeadToHead
+                                    score: widget.gameConfig.myScore,
+                                    tag: !oh2h
                                         ? 'assets/hoodie/${widget.gameName}.png'
                                         : 'other.png'),
                               ),
+                              widget.gameConfig.gameDisplay ==
+                                          GameDisplay.localTurnByTurn ||
+                                      widget.gameConfig.gameDisplay ==
+                                          GameDisplay.networkTurnByTurn
+                                  ? Positioned(
+                                      right: 32.0,
+                                      child: Hud(
+                                          start: false,
+                                          user: widget.gameConfig.otherUser,
+                                          height: media.size.height / 8.0,
+                                          gameMode: widget.gameMode,
+                                          playTime: playTime,
+                                          onEnd: widget.onGameEnd,
+                                          progress: _otherProgress,
+                                          score: widget.gameConfig.otherScore,
+                                          backgroundColor: colors[2],
+                                          foregroundColor: colors[1]))
+                                  : Container(),
+                              widget.gameConfig.gameDisplay ==
+                                          GameDisplay.localTurnByTurn ||
+                                      widget.gameConfig.gameDisplay ==
+                                          GameDisplay.networkTurnByTurn
+                                  ? new AnimatedPositioned(
+                                      key: ValueKey<String>('currentPlayer'),
+                                      left: widget.gameConfig.amICurrentPlayer
+                                          ? 32.0
+                                          : media.size.width -
+                                              32.0 -
+                                              media.size.height / 8.0 * 0.6,
+                                      bottom: 0.0,
+                                      duration: Duration(milliseconds: 1000),
+                                      curve: Curves.elasticOut,
+                                      child: Container(
+                                        color: colors[1],
+                                        width: media.size.height / 8.0 * 0.6,
+                                        height: 8.0,
+                                      ),
+                                    )
+                                  : Container()
                             ])))
               ]),
             ]))));
   }
 
-  _hud(
-      {BuildContext context,
-      double height,
-      Color backgroundColor,
-      Color foregroundColor}) {
-    height = height * 0.6;
-    final fontSize = min(18.0, height / 2);
-    var user = AppStateContainer.of(context).state.loggedInUser;
-
-    var headers = <Widget>[
-      new Stack(
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          new Container(
-              width: height,
-              height: height,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                      image: new FileImage(new File(user.image)),
-                      fit: BoxFit.fill))),
-          new SizedBox(
-              width: height,
-              height: height,
-              child: new CircularProgressIndicator(
-                strokeWidth: height / 8.0,
-                value: 1.0,
-                valueColor: new AlwaysStoppedAnimation<Color>(backgroundColor),
-              )),
-          new SizedBox(
-              width: height,
-              height: height,
-              child: widget.gameMode == GameMode.timed
-                  ? new ProgressCircle(
-                      time: playTime,
-                      onEnd: () => _onGameEnd(context),
-                      strokeWidth: height / 8.0,
-                    )
-                  : new ProgressCircle(
-                      progress: _progress,
-                      strokeWidth: height / 8.0,
-                    )),
-        ],
-      ),
-      new Column(
-        crossAxisAlignment:
-            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '$_score',
-              style: new TextStyle(fontSize: fontSize, color: foregroundColor),
-            ),
-          )
-        ],
-      )
-    ];
-
-    return new Row(
-        mainAxisAlignment:
-            widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-        children: widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead
-            ? headers.reversed.toList(growable: false)
-            : headers);
-  }
-
   _onScore(int incrementScore) {
     setState(() {
-      _score = max(0, _score + incrementScore);
+      if (widget.gameConfig.amICurrentPlayer) {
+        widget.gameConfig.myScore =
+            max(0, widget.gameConfig.myScore + incrementScore);
+      } else {
+        widget.gameConfig.otherScore =
+            max(0, widget.gameConfig.otherScore + incrementScore);
+      }
     });
-    if (widget.onScore != null) widget.onScore(_score);
+    //for now we only pass myscore up to the head to head
+    if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
   }
 
   _onProgress(double progress) {
     if (widget.gameMode == GameMode.iterations) {
       setState(() {
-        _progress = (_iteration + progress) / maxIterations;
+        if (widget.gameConfig.amICurrentPlayer) {
+          _myProgress = (_myIteration + progress) / maxIterations;
+        } else {
+          _otherProgress = (_otherIteration + progress) / maxIterations;
+        }
       });
     }
   }
 
   _onEnd(BuildContext context) {
-    if (_iteration + 1 < maxIterations) {
+    if (widget.gameConfig.amICurrentPlayer) {
       setState(() {
-        _iteration++;
+        _myIteration++;
       });
+      if (_myIteration >= maxIterations &&
+          widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn)
+        _onGameEnd(context);
     } else {
-      _onGameEnd(context);
+      setState(() {
+        _otherIteration++;
+      });
+      if (_otherIteration >= maxIterations) _onGameEnd(context);
     }
+    widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
+  }
+
+  _onTurn(BuildContext context) {
+    widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
   }
 
   _onGameEnd(BuildContext context) {
@@ -372,7 +360,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(
           myUser: AppStateContainer.of(context).state.loggedInUser,
-          myScore: _score,
+          myScore: widget.gameConfig.myScore,
         );
       }));
     }
@@ -388,7 +376,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -400,7 +388,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -412,19 +400,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
       case 'identify':
-      maxIterations = 1;
+        maxIterations = 1;
         return new IdentifyGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
-            iteration: _iteration);
+            iteration: _myIteration);
         break;
       case 'abacus':
         playTime = 15000;
@@ -434,7 +422,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -444,7 +432,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
-            iteration: _iteration);
+            iteration: _myIteration);
         break;
       case 'dice':
         return new Dice(
@@ -452,7 +440,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
-            iteration: _iteration);
+            iteration: _myIteration);
         break;
       case 'bingo':
         return new Bingo(
@@ -460,7 +448,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -472,7 +460,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -481,7 +469,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -491,7 +479,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -501,7 +489,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
-            iteration: _iteration);
+            iteration: _myIteration);
         break;
       case 'tables':
         playTime = 60000;
@@ -510,7 +498,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -522,7 +510,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -533,7 +521,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -545,7 +533,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -555,7 +543,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -567,7 +555,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -577,7 +565,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -588,7 +576,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -600,7 +588,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
              gameConfig: widget.gameConfig);
               // gameConfig: new GameConfig(
@@ -614,24 +602,25 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
       case 'guess':
+      maxIterations = 1;
         return new GuessIt(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
         return new SpinWheel(
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -641,7 +630,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
@@ -653,7 +642,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -664,7 +653,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -674,7 +663,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           onScore: _onScore,
           onProgress: _onProgress,
           onEnd: () => _onEnd(context),
-          iteration: _iteration,
+          iteration: _myIteration,
           isRotated: widget.isRotated,
         );
         break;
@@ -684,7 +673,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
