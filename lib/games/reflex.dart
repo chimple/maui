@@ -13,6 +13,7 @@ class Reflex extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
+  Function onTurn;
   int iteration;
   GameConfig gameConfig;
   bool isRotated;
@@ -22,6 +23,7 @@ class Reflex extends StatefulWidget {
       this.onScore,
       this.onProgress,
       this.onEnd,
+      this.onTurn,
       this.iteration,
       this.gameConfig,
       this.isRotated = false})
@@ -82,6 +84,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
     }
 //    print(_shuffledLetters);
     _letters = _shuffledLetters.sublist(0, _size * _size);
+    _solvedLetters = [];
     setState(() => _isLoading = false);
   }
 

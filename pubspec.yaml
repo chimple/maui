@@ -19,7 +19,8 @@ dependencies:
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
   fluttie: ^0.2.1
-
+  fluttery: "^0.0.6"
+  flutter_circular_chart: "^0.0.3"
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,13 +56,15 @@ flutter:
     - assets/imageCoordinatesInfoBoy.json
     - assets/imageCoordinatesInfoBody.json
     - assets/apple.ogg
-    - assets/1.png
-    - assets/2.png
-    - assets/3.png
-    - assets/4.png
-    - assets/5.png
-    - assets/6.png
-    - assets/dice5.gif
+    - assets/dice_game/1.png
+    - assets/dice_game/2.png
+    - assets/dice_game/3.png
+    - assets/dice_game/4.png
+    - assets/dice_game/5.png
+    - assets/dice_game/6.png
+    - assets/dice_game/dice1.gif
+    - assets/dice_game/tapme.png
+    - assets/dice_game/tapme1.png 
     - assets/games.png
     - assets/chat.png
     - assets/story.png
@@ -111,6 +114,8 @@ flutter:
     - assets/hoodie/tap_wrong.png
     - assets/hoodie/true_or_false.png
     - assets/hoodie/picture_sentence.png
+    - assets/forward_button.png
+    - assets/home_button.png
 
     #happy
     - assets/hoodie/reflex_happy.png
