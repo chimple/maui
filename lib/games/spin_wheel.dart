@@ -86,7 +86,7 @@ class _SpinWheelState extends State<SpinWheel> {
     onDragCordStarted = cord;
     startDragTime = currentTime;
     setState(() {
-      rotationPercent1 = dragEnd;
+      rotationPercent1 = cord.angle + .1;
     });
   }
 
@@ -109,18 +109,18 @@ class _SpinWheelState extends State<SpinWheel> {
 
   double dragEnd1 = 0.0;
   _onDragEnd1() {
+    //rotationPercent
     setState(() {
       dragEnd = rotationPercent1;
     });
   }
-  double _screenSize;
+
   Animation animation;
   AnimationController controller;
   @override
   void initState() {
-    //Size size=MediaQuery.of(context).size;
-   // _screenSize=size.width;
-    //sleep(const Duration(seconds: 1));
+    // TODO: implement initState
+    sleep(const Duration(seconds: 1));
     print('after 1 sec::');
     setState(() {
       rotationPercent = 0.0;
@@ -130,9 +130,38 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   @override
+  void didUpdateWidget(SpinWheel covariant) {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double _sizeOfWheel;
+    double aspectRatio1, aspectRatio2, aspectRatio3, aspectRatio4;
+    double _ht, _wd;
+    double _size;
+    Size media = MediaQuery.of(context).size;
+    _wd = media.width;
+    _ht = media.height;
+    print("Screen size:: $media");
     final Orientation orientation = MediaQuery.of(context).orientation;
+    final bool isLandscape = orientation == Orientation.landscape;
+    if (isLandscape) {
+      _size = media.height;
+      aspectRatio1 = 1.0;
+      aspectRatio2 = 2.50;
+      aspectRatio3 = 9.0;
+      aspectRatio4 = 7.0;
+    } else {
+      _size = media.width;
+      aspectRatio1 = 1.0;
+      aspectRatio2 = 1.50;
+      aspectRatio3 = 6.700;
+      aspectRatio4 = 10.0;
+      _wd = _wd / aspectRatio2;
+      print("width:: $_wd");
+    }
+    final a = 60.0;
+    int i = 0;
     List<CircularStackEntry> data = <CircularStackEntry>[
       new CircularStackEntry(
         <CircularSegmentEntry>[
@@ -165,18 +194,7 @@ class _SpinWheelState extends State<SpinWheel> {
         rankKey: 'Quarterly Profits',
       )
     ];
-    double _constant;
-    return new LayoutBuilder(builder: (context, constraints) {
-      final bool isPortrait = orientation == Orientation.portrait;
-      print(
-          'Screen size:::  .....${constraints},${constraints}');
-      if (isPortrait) {
-        _sizeOfWheel = constraints.maxWidth;
-        _constant = 100.0;
-      } else {
-        _sizeOfWheel = constraints.maxHeight;
-        _constant = 5.0;
-      }
+    if (i == 0)
       return new Stack(
         children: <Widget>[
           new Center(
@@ -185,7 +203,7 @@ class _SpinWheelState extends State<SpinWheel> {
               alignment: Alignment.center,
               child: new Container(
                 child: new AnimatedCircularChart(
-                    size: new Size(_sizeOfWheel, _sizeOfWheel),
+                    size: new Size(_size + 50.0, _size + 50.0),
                     initialChartData: data,
                     chartType: CircularChartType.Pie),
               ),
@@ -193,38 +211,27 @@ class _SpinWheelState extends State<SpinWheel> {
           ),
           new Center(
               child: new Container(
-                decoration: new BoxDecoration(
-                  shape: BoxShape.circle
-                ),
-                height: _sizeOfWheel,
-                width: _sizeOfWheel,
-            child: new RadialDragGestureDetector(
-                onRadialDragStart: _onDragStart,
-                onRadialDragUpdate: _onDragUpdate,
-                onRadialDragEnd: _onDragEnd,
-                child: new Container(
-                  height: _sizeOfWheel-120,
-                width: _sizeOfWheel-120,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle
-                  ),
-                  //margin: const EdgeInsets.all(1.0),
-                  child: new CustomPaint(
-                    
-                    painter: OuterCircle(
-                      ticksPerSection: rotationPercent,
-                      sizePaint: _constant,
-                    ),
-                  ),
-                )),
-          )),
+                  height:_size + 50.0,
+                  width: _size + 50.0,
+                  child: new RadialDragGestureDetector(
+                      onRadialDragStart: _onDragStart,
+                      onRadialDragUpdate: _onDragUpdate,
+                      onRadialDragEnd: _onDragEnd,
+                      child: new Container(
+                        margin: const EdgeInsets.all(1.0),
+                        child: new CustomPaint(
+                          painter: OuterCircle(
+                            ticksPerSection: rotationPercent,
+                          ),
+                        ),
+                      )))),
           new Center(
             child: new Transform(
               transform: new Matrix4.rotationZ(-rotationPercent1),
               alignment: Alignment.center,
               child: new Container(
                 child: new AnimatedCircularChart(
-                    size: new Size((_sizeOfWheel) * .6, (_sizeOfWheel) * .6),
+                    size: new Size(_size-100.0, _size-100.0),
                     initialChartData: data1,
                     chartType: CircularChartType.Pie),
               ),
@@ -232,8 +239,12 @@ class _SpinWheelState extends State<SpinWheel> {
           ),
           new Center(
               child: new Container(
-                  height: (_sizeOfWheel) / 2,
-                  width: (_sizeOfWheel) / 2,
+                  //height: double.infinity,
+                  // margin: isLandscape == true
+                  //     ? const EdgeInsets.symmetric(horizontal: 100.0)
+                  //     : const EdgeInsets.symmetric(horizontal: 40.0),
+                  height: _size-100.0,
+                  width: _size-100.0,
                   child: new RadialDragGestureDetector(
                       onRadialDragStart: _onDragStart1,
                       onRadialDragUpdate: _onDragUpdate1,
@@ -259,9 +270,8 @@ class _SpinWheelState extends State<SpinWheel> {
           ),
         ],
       );
-    });
 
-    // if (i == 2) {}
+    if (i == 2) {}
     // return new Stack(
     //   children: <Widget>[
     //     new Center(
