@@ -57,7 +57,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     _initBoard();
     animation = new AnimationController(
       vsync: this,
-      duration: new Duration(milliseconds: 300),
+      duration: new Duration(milliseconds: 400),
     );
     animation.addListener(() {
       this.setState(() {});
@@ -178,10 +178,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           var dElement = diceData[_random.nextInt(diceData.length)];
 
           var randval = int.parse(dElement);
-          if(dice_tries.length < 2)
-          dice_tries.add(randval);
-
-          // new Timer(const Duration(milliseconds: 10) *50,displayLabel(dElement));
+          if (dice_tries.length < 2) dice_tries.add(randval);
 
           await new Future.delayed(const Duration(milliseconds: 200));
           displayLabel(dElement);
@@ -199,6 +196,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             }
             if (matched != true) {
               _counter1 = " ";
+              popup();
               await new Future.delayed(const Duration(milliseconds: 200));
               flag = 1;
               resetDice();
@@ -212,8 +210,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           var dElement = diceData[_random.nextInt(diceData.length)];
 
           var randval = int.parse(dElement);
-          if(dice_tries.length < 2)
-          dice_tries.add(randval);
+          if (dice_tries.length < 2) dice_tries.add(randval);
 
           // new Timer(const Duration(milliseconds: 5000),displayLabel(dElement));
           await new Future.delayed(const Duration(milliseconds: 200));
@@ -232,6 +229,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             }
             if (matched != true) {
               _counter1 = " ";
+              popup();
               await new Future.delayed(const Duration(milliseconds: 200));
               flag = 0;
               resetDice();
@@ -243,21 +241,18 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   displayLabel(String dElement) {
-    
     if (flag == 0) {
       _counter1 = dElement;
       _counter = " ";
-      for(int i = 0 ; i < dice_tries.length ; i++){
-      _counter = _counter + dice_tries[i].toString()+ "  ";
+      for (int i = 0; i < dice_tries.length; i++) {
+        _counter = _counter + dice_tries[i].toString() + "  ";
       }
-
     } else {
       _counter1 = dElement;
       _counter2 = " ";
-      for(int i = 0 ; i < dice_tries.length ; i++){
-      _counter2 = _counter2 + dice_tries[i].toString()+ "  ";
+      for (int i = 0; i < dice_tries.length; i++) {
+        _counter2 = _counter2 + dice_tries[i].toString() + "  ";
       }
-
     }
   }
 
@@ -270,7 +265,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / 6;
 
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 6;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 2;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -282,70 +277,50 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       if (_counter1 != " ") {
         dval = _counter1;
       } else {
-        dval = "tapme";
+        dval = flag == 0 ? "tapme" : "tapme1";
       }
 
       return new Container(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
-          color: Colors.white,
+          color: Colors.black12,
           child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: _playerKeyBoard(context, buttonPadding, "player1"),
+                child: flag == 0
+                    ? _playerKeyBoard(context, buttonPadding, "player1")
+                    : _playerKeyBoard(context, buttonPadding, "player2"),
               ),
-              new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new Container(
-                        height: media.size.height > media.size.width
-                            ? constraints.maxHeight * .08
-                            : constraints.maxHeight * .1,
-                        width: media.size.height < media.size.width
-                            ? constraints.maxWidth * .1
-                            : constraints.maxWidth * .2,
-                        color: Colors.red,
-                        margin: EdgeInsets.only(right: 20.0),
-                        child: new Center(
-                            child: new Text("$_counter",
-                                style: new TextStyle(
-                                    color: Colors.black, fontSize: 25.0)))),
-                    new InkWell(
-                        onTap: _randomVal,
-                        child: new Container(
-                          height: media.size.height > media.size.width
-                              ? constraints.maxHeight * .15
-                              : constraints.maxHeight * .2,
-                          width: media.size.height < media.size.width
-                              ? constraints.maxWidth * .15
-                              : constraints.maxWidth * .2,
-                          child: new Image(
-                              image: new AssetImage(
-                            animation.isAnimating
-                                ? 'assets/dice_game/dice2.gif'
-                                : 'assets/dice_game/$dval.png',
-                          )),
-                        )),
-                    new Container(
-                        height: media.size.height > media.size.width
-                            ? constraints.maxHeight * .08
-                            : constraints.maxHeight * .1,
-                        width: media.size.height < media.size.width
-                            ? constraints.maxWidth * .1
-                            : constraints.maxWidth * .2,
-                        color: Colors.blue,
-                        margin: EdgeInsets.only(left: 20.0),
-                        child: new Center(
-                            child: new Text("$_counter2",
-                                style: new TextStyle(
-                                    color: Colors.black, fontSize: 25.0)))),
-                  ]),
-              new Expanded(
-                child: _playerKeyBoard(context, buttonPadding, "player2"),
-              ),
+              new Container(
+                  height: media.size.height > media.size.width
+                      ? constraints.maxHeight * .08
+                      : constraints.maxHeight * .08,
+                  width: media.size.height < media.size.width
+                      ? constraints.maxWidth * .1
+                      : constraints.maxWidth * .2,
+                  color: flag == 0 ? Colors.red : Colors.blue,
+                  child: new Center(
+                      child: new Text(flag == 0 ? "$_counter" : "$_counter2",
+                          style: new TextStyle(
+                              color: Colors.black, fontSize: 25.0)))),
+              new InkWell(
+                  onTap: _randomVal,
+                  child: new Container(
+                    height: media.size.height > media.size.width
+                        ? constraints.maxHeight * .3
+                        : constraints.maxHeight * .35,
+                    width: media.size.height < media.size.width
+                        ? constraints.maxWidth * .3
+                        : constraints.maxWidth * .35,
+                    child: new Image(
+                        image: new AssetImage(
+                      animation.isAnimating
+                          ? 'assets/dice_game/dice1.gif'
+                          : 'assets/dice_game/$dval.png',
+                    )),
+                  )),
             ],
           ));
     });
@@ -355,6 +330,18 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   void dispose() {
     animation.dispose();
     super.dispose();
+  }
+
+  popup() {
+    var color = flag==0?Colors.red:Colors.blue;
+    return showDialog<Null>(
+      context: context,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+            // title: new Text('Dicegame'),
+            content: Text("Bad luck", style: TextStyle(color: color,fontWeight: FontWeight.w900),));
+      },
+    );
   }
 }
 

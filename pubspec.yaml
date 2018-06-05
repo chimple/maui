@@ -61,9 +61,9 @@ flutter:
     - assets/dice_game/4.png
     - assets/dice_game/5.png
     - assets/dice_game/6.png
-    - assets/dice_game/dice.gif
-    - assets/dice_game/dice2.gif
+    - assets/dice_game/dice1.gif
     - assets/dice_game/tapme.png
+    - assets/dice_game/tapme1.png 
     - assets/games.png
     - assets/chat.png
     - assets/story.png
