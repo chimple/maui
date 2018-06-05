@@ -1,0 +1,70 @@
+{
+    "id": "Scene.png",
+    "height": 1800.0,
+    "width": 1808.0,
+    "parts": [
+        {
+            "name": "tree",
+            "data": {
+                "height": 1055,
+                "width": 1032,
+                "x": 516,
+                "y": 836
+            }
+        },
+        {
+            "name": "sun",
+            "data": {
+                "height": 348,
+                "width": 348,
+                "x": 1479,
+                "y": 219
+            }
+        },
+        {
+            "name": "pot",
+            "data": {
+                "height": 283,
+                "width": 367,
+                "x": 1505,
+                "y": 1533
+            }
+        },
+        {
+            "name": "bird",
+            "data": {
+                "height": 350,
+                "width": 497,
+                "x": 896,
+                "y": 1209
+            }
+        },
+        {
+            "name": "ant",
+            "data": {
+                "height": 194,
+                "width": 197,
+                "x": 702,
+                "y": 1594
+            }
+        },
+        {
+            "name": "grass",
+            "data": {
+                "height": 373,
+                "width": 525,
+                "x": 254,
+                "y": 1427
+            }
+        },
+        {
+            "name": "leaf",
+            "data": {
+                "height": 187,
+                "width": 202,
+                "x": 1133,
+                "y": 1614
+            }
+        }
+    ]
+}

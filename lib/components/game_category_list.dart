@@ -190,7 +190,8 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
             style: TextStyle(color: Colors.white, fontSize: _fontSize),
           )),
           trailing: new Text(''),
-          children: widget.gameName != 'identify' && widget.gameName != 'drawing' 
+          children: widget.gameName != 'guess'
+
               ? <Widget>[
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
