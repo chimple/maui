@@ -25,9 +25,9 @@ class GameListView extends StatelessWidget {
           children: <Widget>[
             new Expanded(
                 child: Align(
-                    child: new Image.asset(
-              'assets/hoodie/$gameName.png',
-              scale: 0.3,
+                    child: new Hero(
+              tag: 'assets/hoodie/$gameName.png',
+              child: Image.asset('assets/hoodie/$gameName.png', scale: 0.3),
             ))),
             new Container(
                 padding: EdgeInsets.all(size.width * .01),
@@ -58,33 +58,35 @@ class GameListView extends StatelessWidget {
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return new GridView.count(
         key: new Key('Game_page'),
-        primary: false,
+        primary: true,
         padding: const EdgeInsets.all(12.0),
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
         crossAxisCount: media.size.height > media.size.width ? 3 : 4,
         children: <Widget>[
           _buildButton(context, 'reflex', 'Reflex'),
-          _buildButton(context, 'order_it', 'order_it'),
-          _buildButton(context, 'memory', 'memory'),
+          _buildButton(context, 'order_it', 'Order It'),
+          _buildButton(context, 'memory', 'Memory'),
           _buildButton(context, 'draw_challenge', 'draw_challenge'),
-          _buildButton(context, 'abacus', 'abacus'),
-          _buildButton(context, 'crossword', 'crossword'),
-          _buildButton(context, 'drawing', 'drawing'),
-          _buildButton(context, 'fill_in_the_blanks', 'fill_in_the_blanks'),
-          _buildButton(context, 'calculate_numbers', 'calculate_numbers'),
-          _buildButton(context, 'casino', 'casino'),
-          _buildButton(context, 'match_the_following', 'match_the_following'),
-          _buildButton(context, 'bingo', 'bingo'),
-          _buildButton(context, 'true_or_false', 'true_or_false'),
-          _buildButton(context, 'tables', 'tables'),
+          _buildButton(context, 'abacus', 'Abacus'),
+          _buildButton(context, 'crossword', 'Crossword'),
+//          _buildButton(context, 'drawing', 'drawing'),
+          _buildButton(context, 'fill_in_the_blanks', 'Fill In The Blanks'),
+          _buildButton(context, 'calculate_numbers', 'Calculate'),
+          _buildButton(context, 'casino', 'Casino'),
+          _buildButton(context, 'match_the_following', 'Match'),
+          _buildButton(context, 'bingo', 'Bingo'),
+          _buildButton(context, 'true_or_false', 'True Or False'),
+          _buildButton(context, 'tables', 'Tables'),
           _buildButton(context, 'identify', 'identify'),
-          _buildButton(context, 'fill_number', 'fill_number'),
-          _buildButton(context, 'quiz', 'quiz'),
-          _buildButton(context, 'connect_the_dots', 'connect_the_dots'),
-          _buildButton(context, 'tap_home', 'tap_home'),
-          _buildButton(context, 'tap_wrong', 'tap_wrong'),
-          _buildButton(context, 'guess', 'guess'),
+          _buildButton(context, 'fill_number', 'Fill Number'),
+          _buildButton(context, 'quiz', 'Quiz'),
+          _buildButton(context, 'connect_the_dots', 'Connect The Dots'),
+          _buildButton(context, 'tap_home', 'Tap Home'),
+          _buildButton(context, 'tap_wrong', 'Tap Wrong'),
+         _buildButton(context, 'guess', 'guess'),
+//          _buildButton(context, 'clue_game', 'clue_game'),
+//          _buildButton(context, 'guess', 'guess'),
           _buildButton(context, 'clue_game', 'clue_game'),
           _buildButton(context, 'wordgrid', 'wordgrid'),
           _buildButton(context, 'spin_wheel', 'spin_wheel'),
@@ -92,6 +94,7 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'friend_word', 'friend_word'),
           _buildButton(context, 'dice', 'dice'),
            _buildButton(context, 'circle_word', 'circle_word'),
+
         ]);
   }
 

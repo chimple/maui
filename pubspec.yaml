@@ -19,7 +19,8 @@ dependencies:
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
   fluttie: ^0.2.1
-
+  fluttery: "^0.0.6"
+  flutter_circular_chart: "^0.0.3"
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,10 +47,14 @@ flutter:
   assets:
     - assets/database.db
     - assets/chimple_logo.png
+    - assets/african_child.png
+    - assets/indian_child.png
     - assets/apple.png
     - assets/Boy.png
-    - assets/imageCoordinatesInfo.json
-    - assets/imageCoordinatesInfo2.json
+    - assets/Body.png
+    - assets/imageCoordinatesInfoShapes.json
+    - assets/imageCoordinatesInfoBoy.json
+    - assets/imageCoordinatesInfoBody.json
     - assets/apple.ogg
     - assets/1.png
     - assets/2.png
@@ -58,7 +63,12 @@ flutter:
     - assets/5.png
     - assets/6.png
     - assets/dice5.gif
+    - assets/games.png
+    - assets/chat.png
+    - assets/story.png
     - assets/Shapes.png
+    - assets/hoodie_fb.png
+    - assets/hoodie_bear.png
     - assets/koala_neutral.png
     - assets/koala_happy.png
     - assets/koala_sad.png
@@ -101,6 +111,8 @@ flutter:
     - assets/hoodie/tap_home.png
     - assets/hoodie/tap_wrong.png
     - assets/hoodie/true_or_false.png
+    - assets/forward_button.png
+    - assets/home_button.png
 
     #happy
     - assets/hoodie/reflex_happy.png
@@ -161,104 +173,408 @@ flutter:
     - assets/hoodie/true_or_false_sad.png
     - assets/background_tile.png
     # dictionary
+    - assets/dict/aardvark.png
+    - assets/dict/abdomen.png
     - assets/dict/acid.png
     - assets/dict/add.png
     - assets/dict/addition.png
     - assets/dict/adult.png
+    - assets/dict/aerobics.png
+    - assets/dict/aeroplane.png
+    - assets/dict/afraid.png
+    - assets/dict/afternoon.png
     - assets/dict/age.png
+    - assets/dict/air.png
+    - assets/dict/ambulance.png
+    - assets/dict/anchor.png
+    - assets/dict/angelfish.png
     - assets/dict/anger.png
+    - assets/dict/angry.png
     - assets/dict/ankle.png
+    - assets/dict/ant.png
+    - assets/dict/anteater.png
+    - assets/dict/antelope.png
     - assets/dict/ape.png
+    - assets/dict/apple.png
+    - assets/dict/apricot.png
+    - assets/dict/arc.png
+    - assets/dict/archery.png
     - assets/dict/area.png
     - assets/dict/arm.png
+    - assets/dict/armadillo.png
+    - assets/dict/armchair.png
     - assets/dict/art.png
+    - assets/dict/arteries.png
+    - assets/dict/artichoke.png
+    - assets/dict/asparagus.png
+    - assets/dict/aubergine.png
     - assets/dict/aunt.png
+    - assets/dict/autumn.png
+    - assets/dict/avocado.png
     - assets/dict/axe.png
+    - assets/dict/baboon.png
     - assets/dict/baby.png
+    - assets/dict/back.png
+    - assets/dict/badger.png
+    - assets/dict/badminton.png
+    - assets/dict/bag.png
+    - assets/dict/bake.png
     - assets/dict/ball.png
+    - assets/dict/banana.png
+    - assets/dict/bandicoot.png
     - assets/dict/bank.png
     - assets/dict/baseball.png
+    - assets/dict/basketball.png
+    - assets/dict/bass.png
+    - assets/dict/bat.png
+    - assets/dict/beads.png
+    - assets/dict/beans.png
+    - assets/dict/bear.png
+    - assets/dict/beard.png
+    - assets/dict/beat.png
+    - assets/dict/bedroom.png
+    - assets/dict/bee.png
+    - assets/dict/beetle.png
+    - assets/dict/beetroot.png
+    - assets/dict/belt.png
     - assets/dict/bench.png
+    - assets/dict/bike.png
+    - assets/dict/biking.png
+    - assets/dict/bilberry.png
     - assets/dict/birth.png
+    - assets/dict/bison.png
+    - assets/dict/black.png
+    - assets/dict/blackberry.png
+    - assets/dict/blackcurrant.png
+    - assets/dict/blazer.png
+    - assets/dict/blue.png
+    - assets/dict/blueberry.png
     - assets/dict/boat.png
     - assets/dict/body.png
     - assets/dict/boil.png
+    - assets/dict/boiler.png
+    - assets/dict/bolt.png
     - assets/dict/book.png
+    - assets/dict/books.png
+    - assets/dict/bored.png
+    - assets/dict/bottle.png
     - assets/dict/bow.png
+    - assets/dict/bowl.png
+    - assets/dict/bowling.png
     - assets/dict/box.png
+    - assets/dict/boxer.png
+    - assets/dict/boxing.png
+    - assets/dict/boy.png
+    - assets/dict/boysenberry.png
+    - assets/dict/bracelet.png
+    - assets/dict/brain.png
+    - assets/dict/brave.png
+    - assets/dict/briefcase.png
+    - assets/dict/brinjal.png
+    - assets/dict/broccoli.png
+    - assets/dict/broom.png
+    - assets/dict/brother.png
+    - assets/dict/brown.png
     - assets/dict/brush.png
+    - assets/dict/bucket.png
+    - assets/dict/buffalo.png
+    - assets/dict/bull.png
+    - assets/dict/bulldozer.png
+    - assets/dict/bunch.png
+    - assets/dict/burner.png
+    - assets/dict/bus.png
+    - assets/dict/butter.png
+    - assets/dict/butterfly.png
+    - assets/dict/cabbage.png
+    - assets/dict/cabinet.png
+    - assets/dict/cable.png
     - assets/dict/cage.png
     - assets/dict/cake.png
+    - assets/dict/calf.png
+    - assets/dict/camel.png
     - assets/dict/campfire.png
     - assets/dict/can.png
+    - assets/dict/candle.png
+    - assets/dict/cap.png
+    - assets/dict/capybara.png
+    - assets/dict/car.png
+    - assets/dict/care.png
+    - assets/dict/carriage.png
     - assets/dict/carrot.png
+    - assets/dict/carton.png
     - assets/dict/cash.png
+    - assets/dict/cat.png
+    - assets/dict/caterpillar.png
+    - assets/dict/catfish.png
+    - assets/dict/cauliflower.png
+    - assets/dict/ceiling.png
+    - assets/dict/celeriac.png
+    - assets/dict/celery.png
+    - assets/dict/cello.png
+    - assets/dict/centipede.png
+    - assets/dict/chair.png
+    - assets/dict/chameleon.png
+    - assets/dict/chamois.png
+    - assets/dict/chard.png
+    - assets/dict/chariot.png
+    - assets/dict/cheek.png
+    - assets/dict/cheese.png
+    - assets/dict/cheetah.png
+    - assets/dict/cherry.png
+    - assets/dict/chess.png
+    - assets/dict/chest.png
+    - assets/dict/chicken.png
+    - assets/dict/chico.png
+    - assets/dict/chihuahua.png
+    - assets/dict/children.png
+    - assets/dict/chilli.png
+    - assets/dict/chimpanzee.png
+    - assets/dict/chin.png
+    - assets/dict/chinchilla.png
+    - assets/dict/chipmunk.png
+    - assets/dict/chisel.png
+    - assets/dict/chop.png
+    - assets/dict/circle.png
     - assets/dict/city.png
+    - assets/dict/clear.png
+    - assets/dict/clementine.png
+    - assets/dict/clothesline.png
+    - assets/dict/clothespins.png
+    - assets/dict/cloudberry.png
+    - assets/dict/cloudy.png
+    - assets/dict/coach.png
+    - assets/dict/coat.png
+    - assets/dict/cock.png
+    - assets/dict/cockroach.png
+    - assets/dict/coconut.png
+    - assets/dict/cocoon.png
+    - assets/dict/coffee.png
+    - assets/dict/cold.png
+    - assets/dict/cone.png
+    - assets/dict/confused.png
+    - assets/dict/container.png
+    - assets/dict/cook.png
+    - assets/dict/cool.png
+    - assets/dict/coot.png
+    - assets/dict/corn.png
+    - assets/dict/cot.png
+    - assets/dict/couch.png
+    - assets/dict/cougar.png
     - assets/dict/cow.png
+    - assets/dict/crab.png
+    - assets/dict/cranberry.png
+    - assets/dict/crane.png
+    - assets/dict/cream.png
+    - assets/dict/cricket.png
+    - assets/dict/crocodile.png
     - assets/dict/crop.png
     - assets/dict/cross.png
+    - assets/dict/crow.png
+    - assets/dict/crown.png
+    - assets/dict/crying.png
+    - assets/dict/cube.png
+    - assets/dict/cuboid.png
+    - assets/dict/cuckoo.png
+    - assets/dict/cucumber.png
+    - assets/dict/cup.png
+    - assets/dict/cups.png
+    - assets/dict/curlew.png
+    - assets/dict/currant.png
+    - assets/dict/curtains.png
+    - assets/dict/cushion.png
+    - assets/dict/cut.png
+    - assets/dict/cycle.png
+    - assets/dict/cycling.png
+    - assets/dict/cyclone.png
+    - assets/dict/cygnini.png
+    - assets/dict/cylinder.png
     - assets/dict/dad.png
     - assets/dict/dam.png
     - assets/dict/dance.png
+    - assets/dict/dancing.png
     - assets/dict/danger.png
+    - assets/dict/darts.png
     - assets/dict/date.png
+    - assets/dict/daughter.png
+    - assets/dict/decagon.png
+    - assets/dict/deer.png
     - assets/dict/desire.png
+    - assets/dict/desk.png
+    - assets/dict/detergent.png
     - assets/dict/diary.png
     - assets/dict/dinner.png
+    - assets/dict/dodo.png
     - assets/dict/dog.png
+    - assets/dict/dolphin.png
+    - assets/dict/donkey.png
+    - assets/dict/door.png
+    - assets/dict/doorbell.png
+    - assets/dict/dove.png
+    - assets/dict/dozen.png
+    - assets/dict/dragonfruit.png
+    - assets/dict/drapes.png
+    - assets/dict/dress.png
+    - assets/dict/drizzling.png
+    - assets/dict/drum.png
+    - assets/dict/dryer.png
+    - assets/dict/duck.png
+    - assets/dict/durian.png
     - assets/dict/dust.png
     - assets/dict/duster.png
+    - assets/dict/dustpan.png
     - assets/dict/eagle.png
+    - assets/dict/ear.png
+    - assets/dict/earring.png
+    - assets/dict/earrings.png
+    - assets/dict/earth.png
     - assets/dict/earthworm.png
     - assets/dict/east.png
     - assets/dict/eat.png
     - assets/dict/eel.png
+    - assets/dict/egg.png
+    - assets/dict/eggplant.png
+    - assets/dict/eggs.png
     - assets/dict/elbow.png
+    - assets/dict/elderberry.png
+    - assets/dict/elephant.png
+    - assets/dict/ellipse.png
+    - assets/dict/emu.png
     - assets/dict/engine.png
     - assets/dict/eraser.png
     - assets/dict/even.png
     - assets/dict/evening.png
     - assets/dict/exam.png
+    - assets/dict/excited.png
     - assets/dict/exercise.png
+    - assets/dict/exhausted.png
     - assets/dict/eye.png
+    - assets/dict/eyeball.png
+    - assets/dict/eyebrows.png
+    - assets/dict/eyelash.png
+    - assets/dict/eyes.png
     - assets/dict/face.png
+    - assets/dict/falcon.png
+    - assets/dict/family.png
+    - assets/dict/fan.png
     - assets/dict/father.png
     - assets/dict/feet.png
     - assets/dict/fence.png
     - assets/dict/fig.png
+    - assets/dict/file.png
+    - assets/dict/finch.png
     - assets/dict/finger.png
+    - assets/dict/fireplace.png
     - assets/dict/fish.png
+    - assets/dict/fishing.png
     - assets/dict/fist.png
     - assets/dict/flag.png
+    - assets/dict/flamingo.png
+    - assets/dict/flea.png
+    - assets/dict/floor.png
+    - assets/dict/flute.png
+    - assets/dict/fly.png
+    - assets/dict/foggy.png
     - assets/dict/food.png
+    - assets/dict/foot.png
+    - assets/dict/football.png
+    - assets/dict/forearm.png
+    - assets/dict/forehead.png
     - assets/dict/forest.png
+    - assets/dict/forgive.png
+    - assets/dict/fork.png
+    - assets/dict/fox.png
+    - assets/dict/freezer.png
+    - assets/dict/freezing.png
+    - assets/dict/frog.png
+    - assets/dict/fry.png
+    - assets/dict/fun.png
     - assets/dict/furniture.png
     - assets/dict/gain.png
     - assets/dict/galaxy.png
+    - assets/dict/gallon.png
     - assets/dict/game.png
+    - assets/dict/gannet.png
     - assets/dict/garden.png
+    - assets/dict/garlic.png
     - assets/dict/gem.png
     - assets/dict/giant.png
+    - assets/dict/gift.png
+    - assets/dict/ginger.png
+    - assets/dict/giraffe.png
+    - assets/dict/girl.png
     - assets/dict/glass.png
     - assets/dict/globe.png
     - assets/dict/gloves.png
     - assets/dict/goat.png
+    - assets/dict/gold.png
+    - assets/dict/golf.png
+    - assets/dict/goose.png
+    - assets/dict/gooseberry.png
+    - assets/dict/gorilla.png
+    - assets/dict/gourds.png
+    - assets/dict/gown.png
+    - assets/dict/grandchildren.png
+    - assets/dict/granddaughter.png
+    - assets/dict/grandfather.png
+    - assets/dict/grandmother.png
+    - assets/dict/grandparents.png
+    - assets/dict/grandson.png
     - assets/dict/grape.png
+    - assets/dict/grapefruit.png
+    - assets/dict/grasshopper.png
+    - assets/dict/gray.png
+    - assets/dict/green.png
+    - assets/dict/grill.png
+    - assets/dict/guava.png
     - assets/dict/guitar.png
+    - assets/dict/gull.png
     - assets/dict/gun.png
+    - assets/dict/gymnastics.png
+    - assets/dict/hacksaw.png
+    - assets/dict/hair.png
+    - assets/dict/hairband.png
+    - assets/dict/hammer.png
     - assets/dict/hand.png
+    - assets/dict/handball.png
+    - assets/dict/handkerchief.png
     - assets/dict/hanger.png
     - assets/dict/happy.png
     - assets/dict/hare.png
+    - assets/dict/harp.png
+    - assets/dict/hat.png
+    - assets/dict/hawk.png
     - assets/dict/head.png
+    - assets/dict/heart.png
+    - assets/dict/heel.png
     - assets/dict/hen.png
+    - assets/dict/heptagon.png
+    - assets/dict/heron.png
+    - assets/dict/hexagon.png
+    - assets/dict/hip.png
+    - assets/dict/hockey.png
     - assets/dict/honey.png
+    - assets/dict/honeybee.png
+    - assets/dict/honeydew.png
+    - assets/dict/honeyeater.png
+    - assets/dict/hornbill.png
+    - assets/dict/horse.png
     - assets/dict/hot.png
+    - assets/dict/housesparrow.png
+    - assets/dict/humble.png
+    - assets/dict/hummingbird.png
+    - assets/dict/hungry.png
+    - assets/dict/husband.png
     - assets/dict/hut.png
+    - assets/dict/hyacinth.png
+    - assets/dict/hyena.png
+    - assets/dict/ibis.png
+    - assets/dict/ice.png
     - assets/dict/iceberg.png
     - assets/dict/idea.png
     - assets/dict/iguana.png
+    - assets/dict/images.png
     - assets/dict/impala.png
+    - assets/dict/indexfinger.png
     - assets/dict/industry.png
     - assets/dict/infant.png
     - assets/dict/injury.png
@@ -269,16 +585,28 @@ flutter:
     - assets/dict/inventor.png
     - assets/dict/invitation.png
     - assets/dict/iron.png
+    - assets/dict/island.png
+    - assets/dict/jackal.png
+    - assets/dict/jacket.png
+    - assets/dict/jackfruit.png
+    - assets/dict/jaguar.png
+    - assets/dict/jaketi.png
+    - assets/dict/jam.png
     - assets/dict/jar.png
     - assets/dict/jaw.png
+    - assets/dict/jay.png
+    - assets/dict/jeans.png
     - assets/dict/jeep.png
     - assets/dict/jelly.png
+    - assets/dict/jellyfish.png
     - assets/dict/jet.png
     - assets/dict/jewel.png
     - assets/dict/jewelry.png
     - assets/dict/jog.png
+    - assets/dict/jogging.png
     - assets/dict/jug.png
     - assets/dict/juice-01.png
+    - assets/dict/juice.png
     - assets/dict/jump.png
     - assets/dict/jungle.png
     - assets/dict/jupiter.png
@@ -286,55 +614,123 @@ flutter:
     - assets/dict/kettle.png
     - assets/dict/key.png
     - assets/dict/keyboard.png
+    - assets/dict/keychain.png
     - assets/dict/kid.png
     - assets/dict/kidney.png
     - assets/dict/kind.png
     - assets/dict/king.png
+    - assets/dict/kingfisher.png
+    - assets/dict/kitchen.png
     - assets/dict/kite.png
     - assets/dict/kitten.png
     - assets/dict/kiwi.png
+    - assets/dict/kiwifruit.png
     - assets/dict/knee.png
     - assets/dict/kneel.png
+    - assets/dict/knife.png
     - assets/dict/knight.png
     - assets/dict/knowledge.png
+    - assets/dict/knuckle.png
+    - assets/dict/koala.png
+    - assets/dict/kohlrabi.png
     - assets/dict/lace.png
+    - assets/dict/ladder.png
+    - assets/dict/ladle.png
+    - assets/dict/lady.png
+    - assets/dict/ladybug.png
+    - assets/dict/ladyfinger.png
     - assets/dict/lake.png
     - assets/dict/lamb.png
     - assets/dict/lamp.png
     - assets/dict/land.png
+    - assets/dict/larynx.png
     - assets/dict/laugh.png
     - assets/dict/lava.png
+    - assets/dict/leaf.png
+    - assets/dict/leek.png
+    - assets/dict/leg.png
     - assets/dict/lemon.png
+    - assets/dict/lemur.png
+    - assets/dict/leopard.png
     - assets/dict/letter.png
+    - assets/dict/lettuce.png
+    - assets/dict/lightning.png
+    - assets/dict/lightningbug.png
+    - assets/dict/lime.png
     - assets/dict/lion.png
     - assets/dict/lips.png
+    - assets/dict/list.sh
+    - assets/dict/liter.png
+    - assets/dict/littlefinger.png
+    - assets/dict/liver.png
+    - assets/dict/lizard.png
+    - assets/dict/lobster.png
+    - assets/dict/locket.png
     - assets/dict/log.png
+    - assets/dict/lorry.png
     - assets/dict/love.png
+    - assets/dict/lungs.png
+    - assets/dict/lychee.png
     - assets/dict/mad.png
     - assets/dict/magic.png
     - assets/dict/magnet.png
+    - assets/dict/maina.png
+    - assets/dict/mallard.png
+    - assets/dict/mallet.png
     - assets/dict/mammal.png
+    - assets/dict/mammoth.png
     - assets/dict/man.png
+    - assets/dict/mandolin.png
+    - assets/dict/mango.png
     - assets/dict/many.png
     - assets/dict/map.png
     - assets/dict/marble.png
     - assets/dict/march.png
+    - assets/dict/married.png
     - assets/dict/mask.png
+    - assets/dict/measure.png
     - assets/dict/meat.png
+    - assets/dict/meerkat.png
     - assets/dict/metal.png
+    - assets/dict/midddlefinger.png
     - assets/dict/milk.png
+    - assets/dict/millipede.png
+    - assets/dict/mix.png
+    - assets/dict/mixer.png
     - assets/dict/money.png
+    - assets/dict/mongoose.png
+    - assets/dict/monitor.png
+    - assets/dict/monkey.png
+    - assets/dict/morning.png
+    - assets/dict/mosquito.png
+    - assets/dict/moth.png
+    - assets/dict/mother.png
+    - assets/dict/mouse.png
+    - assets/dict/mouth.png
+    - assets/dict/mule.png
+    - assets/dict/muscles.png
+    - assets/dict/mushroom.png
+    - assets/dict/mustache.png
     - assets/dict/nail.png
     - assets/dict/nailpolish.png
+    - assets/dict/nails.png
+    - assets/dict/napkin.png
+    - assets/dict/naughty.png
+    - assets/dict/neck.png
     - assets/dict/necklace.png
     - assets/dict/needle.png
     - assets/dict/neighbour.png
+    - assets/dict/nest.png
+    - assets/dict/net.png
     - assets/dict/newspaper.png
     - assets/dict/night.png
     - assets/dict/nightingale.png
+    - assets/dict/nonagon.png
     - assets/dict/noodles.png
     - assets/dict/noon.png
     - assets/dict/north.png
+    - assets/dict/nose.png
+    - assets/dict/nostril.png
     - assets/dict/nurse.png
     - assets/dict/nut.png
     - assets/dict/oatmeal.png
@@ -343,32 +739,87 @@ flutter:
     - assets/dict/octopus.png
     - assets/dict/odd.png
     - assets/dict/oil.png
+    - assets/dict/okra.png
     - assets/dict/old.png
     - assets/dict/olive.png
     - assets/dict/omelet.png
     - assets/dict/onion.png
     - assets/dict/orange.png
+    - assets/dict/ostrich.png
     - assets/dict/outside.png
     - assets/dict/oval.png
     - assets/dict/oven.png
     - assets/dict/owl.png
+    - assets/dict/pack.png
+    - assets/dict/package.png
     - assets/dict/paint.png
+    - assets/dict/painting.png
     - assets/dict/pajamas.png
+    - assets/dict/palace.png
     - assets/dict/palm.png
     - assets/dict/pan.png
     - assets/dict/panda.png
     - assets/dict/pant.png
+    - assets/dict/panther.png
+    - assets/dict/papaya.png
     - assets/dict/paper.png
+    - assets/dict/parallelogram.png
+    - assets/dict/parents.png
     - assets/dict/parrot.png
+    - assets/dict/parsnip.png
+    - assets/dict/pea.png
+    - assets/dict/peach.png
+    - assets/dict/peacock.png
+    - assets/dict/pear.png
+    - assets/dict/peas.png
+    - assets/dict/peel.png
+    - assets/dict/pelican.png
     - assets/dict/pen.png
+    - assets/dict/penguin.png
+    - assets/dict/pentagon.png
     - assets/dict/people.png
+    - assets/dict/pepper.png
+    - assets/dict/peregrine.png
     - assets/dict/photo.png
+    - assets/dict/piano.png
+    - assets/dict/picture.png
     - assets/dict/pig.png
+    - assets/dict/pigeon.png
+    - assets/dict/pilot.png
+    - assets/dict/pin.png
+    - assets/dict/pineapple.png
+    - assets/dict/pink.png
+    - assets/dict/pint.png
+    - assets/dict/pipe.png
+    - assets/dict/plant.png
+    - assets/dict/plate.png
+    - assets/dict/platypus.png
+    - assets/dict/pliers.png
+    - assets/dict/plum.png
+    - assets/dict/polarbear.png
+    - assets/dict/polo.png
+    - assets/dict/pomegranate.png
+    - assets/dict/potato.png
+    - assets/dict/pound.png
+    - assets/dict/pour.png
+    - assets/dict/prawn.png
+    - assets/dict/printer.png
+    - assets/dict/prism.png
+    - assets/dict/proud.png
+    - assets/dict/puma.png
+    - assets/dict/pumpkin.png
+    - assets/dict/purple.png
+    - assets/dict/purse.png
+    - assets/dict/pyramid.png
     - assets/dict/quail.png
     - assets/dict/qualify.png
     - assets/dict/quality.png
     - assets/dict/quantity.png
+    - assets/dict/quart.png
+    - assets/dict/quarter.png
     - assets/dict/quartz.png
+    - assets/dict/queen.png
+    - assets/dict/question.png
     - assets/dict/quetzal.png
     - assets/dict/quick.png
     - assets/dict/quill.png
@@ -376,45 +827,174 @@ flutter:
     - assets/dict/quiver.png
     - assets/dict/quiz.png
     - assets/dict/quokka.png
+    - assets/dict/quotation.png
     - assets/dict/rabbit.png
     - assets/dict/race.png
+    - assets/dict/rack.png
     - assets/dict/racket.png
     - assets/dict/radio.png
     - assets/dict/radish.png
+    - assets/dict/rain.png
     - assets/dict/rainbow.png
+    - assets/dict/raining.png
+    - assets/dict/raspberry.png
+    - assets/dict/rat.png
+    - assets/dict/rattlesnake.png
+    - assets/dict/raven.png
+    - assets/dict/rays.png
     - assets/dict/read.png
+    - assets/dict/rectangle.png
     - assets/dict/red.png
+    - assets/dict/refrigerator.png
     - assets/dict/remote.png
+    - assets/dict/respect.png
+    - assets/dict/rhinoceros.png
+    - assets/dict/rhombus.png
     - assets/dict/rice.png
+    - assets/dict/ring.png
     - assets/dict/river.png
+    - assets/dict/roast.png
+    - assets/dict/robin.png
     - assets/dict/rock.png
+    - assets/dict/roll.png
+    - assets/dict/roots.png
+    - assets/dict/rope.png
+    - assets/dict/running.png
     - assets/dict/sad-.png
+    - assets/dict/sad.png
     - assets/dict/sail.png
     - assets/dict/sailfish.png
     - assets/dict/salad.png
+    - assets/dict/salt.png
     - assets/dict/sand.png
     - assets/dict/sandal.png
+    - assets/dict/sandals.png
+    - assets/dict/sandpiper.png
     - assets/dict/saturn.png
     - assets/dict/saw.png
+    - assets/dict/saxophone.png
+    - assets/dict/scalene.png
+    - assets/dict/scanner.png
+    - assets/dict/scooter.png
+    - assets/dict/scorpion.png
+    - assets/dict/screw.png
+    - assets/dict/seahorse.png
+    - assets/dict/seal.png
+    - assets/dict/shallot.png
+    - assets/dict/shark.png
+    - assets/dict/sheep.png
+    - assets/dict/shelves.png
     - assets/dict/shirt.png
     - assets/dict/shoes.png
+    - assets/dict/shorts.png
+    - assets/dict/shoulder.png
+    - assets/dict/siblings.png
+    - assets/dict/sick.png
+    - assets/dict/sideburn.png
     - assets/dict/signal.png
+    - assets/dict/silver.png
+    - assets/dict/sink.png
+    - assets/dict/sister.png
+    - assets/dict/skeleton.png
+    - assets/dict/skirt.png
+    - assets/dict/skydiving.png
+    - assets/dict/sleepy.png
+    - assets/dict/slice.png
+    - assets/dict/slippers.png
     - assets/dict/snail.png
     - assets/dict/snake.png
+    - assets/dict/snooker.png
+    - assets/dict/snowing.png
     - assets/dict/soap.png
+    - assets/dict/soccer.png
     - assets/dict/socks.png
+    - assets/dict/sofa.png
+    - assets/dict/softball.png
+    - assets/dict/soksi.png
+    - assets/dict/son.png
+    - assets/dict/sparrow.png
+    - assets/dict/spatula.png
+    - assets/dict/speaker.png
+    - assets/dict/sphere.png
+    - assets/dict/spider.png
+    - assets/dict/spinach.png
+    - assets/dict/spoon.png
+    - assets/dict/spoonbill.png
+    - assets/dict/spring.png
+    - assets/dict/square.png
+    - assets/dict/squash.png
+    - assets/dict/squid.png
+    - assets/dict/starfish.png
+    - assets/dict/starling.png
+    - assets/dict/steam.png
+    - assets/dict/steamer.png
+    - assets/dict/stir.png
+    - assets/dict/stomach.png
+    - assets/dict/storm.png
+    - assets/dict/stove.png
+    - assets/dict/strainer.png
+    - assets/dict/strawberry.png
+    - assets/dict/summer.png
+    - assets/dict/sunny.png
+    - assets/dict/swan.png
+    - assets/dict/sweater.png
+    - assets/dict/swede.png
+    - assets/dict/swift.png
+    - assets/dict/swimming.png
     - assets/dict/table.png
+    - assets/dict/tail.png
     - assets/dict/talk.png
+    - assets/dict/tamarind.png
+    - assets/dict/tank.png
+    - assets/dict/tanker.png
+    - assets/dict/tap.png
     - assets/dict/tape.png
     - assets/dict/target.png
     - assets/dict/taste.png
     - assets/dict/tea.png
     - assets/dict/team.png
+    - assets/dict/teapoy.png
+    - assets/dict/tear.png
+    - assets/dict/teenager.png
+    - assets/dict/teeth.png
+    - assets/dict/television.png
+    - assets/dict/temperature.png
+    - assets/dict/temple.png
     - assets/dict/tent.png
+    - assets/dict/termite.png
     - assets/dict/text.png
+    - assets/dict/thermometer.png
     - assets/dict/thigh.png
     - assets/dict/thin.png
+    - assets/dict/thirsty.png
     - assets/dict/thread.png
+    - assets/dict/thumb.png
+    - assets/dict/tie.png
+    - assets/dict/tiger.png
+    - assets/dict/tired.png
+    - assets/dict/toad.png
+    - assets/dict/toaster.png
+    - assets/dict/today.png
+    - assets/dict/toddler.png
+    - assets/dict/toe.png
+    - assets/dict/tomato.png
+    - assets/dict/tomorrow.png
+    - assets/dict/tongue.png
+    - assets/dict/tooth.png
+    - assets/dict/tortise.png
+    - assets/dict/tractor.png
+    - assets/dict/train.png
+    - assets/dict/trapezium.png
+    - assets/dict/trapezoid.png
+    - assets/dict/truck.png
+    - assets/dict/trumpet.png
+    - assets/dict/tub.png
+    - assets/dict/tuba.png
+    - assets/dict/tube.png
+    - assets/dict/turkey.png
+    - assets/dict/turnip.png
+    - assets/dict/turtle.png
+    - assets/dict/umbrella.png
     - assets/dict/umpire.png
     - assets/dict/under.png
     - assets/dict/undo.png
@@ -423,16 +1003,23 @@ flutter:
     - assets/dict/unicycle.png
     - assets/dict/uniform.png
     - assets/dict/unique.png
+    - assets/dict/university.png
+    - assets/dict/up.png
+    - assets/dict/upperarm.png
     - assets/dict/upset.png
     - assets/dict/urban.png
     - assets/dict/urn.png
     - assets/dict/user.png
     - assets/dict/utensils.png
     - assets/dict/vacation.png
+    - assets/dict/valley.png
     - assets/dict/value.png
     - assets/dict/van.png
     - assets/dict/vase.png
+    - assets/dict/vegetable.png
     - assets/dict/vehicle.png
+    - assets/dict/veins.png
+    - assets/dict/veranda.png
     - assets/dict/vessel.png
     - assets/dict/vest.png
     - assets/dict/victory.png
@@ -441,38 +1028,74 @@ flutter:
     - assets/dict/violet.png
     - assets/dict/violin.png
     - assets/dict/voice.png
+    - assets/dict/volleyball.png
     - assets/dict/volume.png
     - assets/dict/vote.png
+    - assets/dict/vulture.png
+    - assets/dict/wagon.png
+    - assets/dict/waist.png
     - assets/dict/walk.png
+    - assets/dict/walking.png
+    - assets/dict/wall.png
+    - assets/dict/wallaby.png
+    - assets/dict/wallet.png
+    - assets/dict/walrus.png
     - assets/dict/war.png
+    - assets/dict/warm.png
     - assets/dict/wash.png
+    - assets/dict/washer.png
     - assets/dict/wasp.png
     - assets/dict/watch.png
     - assets/dict/water.png
     - assets/dict/waterfall.png
+    - assets/dict/watermelon.png
     - assets/dict/wax.png
     - assets/dict/web.png
+    - assets/dict/well.png
     - assets/dict/whale.png
+    - assets/dict/wheelbarrow.png
     - assets/dict/whistle.png
+    - assets/dict/white.png
+    - assets/dict/wife.png
+    - assets/dict/window.png
+    - assets/dict/windows.png
+    - assets/dict/winner.png
+    - assets/dict/winter.png
+    - assets/dict/wire.png
+    - assets/dict/wok.png
+    - assets/dict/wolf.png
+    - assets/dict/wolverine.png
+    - assets/dict/woman.png
+    - assets/dict/woodpecker.png
+    - assets/dict/workout.png
+    - assets/dict/wrist.png
     - assets/dict/xray.png
     - assets/dict/xylophone.png
     - assets/dict/yacht.png
     - assets/dict/yak.png
     - assets/dict/yam.png
+    - assets/dict/yams.png
+    - assets/dict/yard.png
     - assets/dict/yarn.png
     - assets/dict/yawn.png
+    - assets/dict/year.png
     - assets/dict/yell.png
+    - assets/dict/yellow.png
+    - assets/dict/yes.png
+    - assets/dict/yesterday.png
     - assets/dict/yogurt.png
     - assets/dict/yolk.png
     - assets/dict/you.png
     - assets/dict/young.png
     - assets/dict/youth.png
     - assets/dict/zebra.png
+    - assets/dict/zebu.png
     - assets/dict/zero.png
     - assets/dict/zigzag.png
     - assets/dict/zip.png
     - assets/dict/zodiac.png
     - assets/dict/zoo.png
+    - assets/dict/zucchini.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
