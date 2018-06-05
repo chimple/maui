@@ -191,6 +191,7 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
           )),
           trailing: new Text(''),
           children: widget.gameName != 'guess'
+
               ? <Widget>[
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
