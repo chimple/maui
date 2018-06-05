@@ -792,6 +792,7 @@ class Stickers extends CustomPainter {
     tp.paint(canvas, new Offset(x, y));
     //canvas.restore();
     canvas.save();
+    canvas.restore();
     // canvas.saveLayer(rect, new Paint());
   }
 
