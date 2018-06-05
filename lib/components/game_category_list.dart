@@ -209,6 +209,13 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
                         onPressed: () => showModes(context, widget.gameName,
                             'h2h_iterations', widget.categoryId),
                       ),
+                      new IconButton(
+                        color: Colors.white,
+                        key: new Key('tbtl'),
+                        icon: new Icon(Icons.autorenew),
+                        onPressed: () => showModes(context, widget.gameName,
+                            'tbt_local', widget.categoryId),
+                      ),
                     ],
                   )
                 ]
@@ -240,6 +247,8 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
             Navigator.of(context).pop('single_iterations');
           } else if (_modeName == 'h2h_iterations') {
             Navigator.of(context).pop('h2h_iterations');
+          } else if (_modeName == 'tbt_local') {
+            Navigator.of(context).pop('tbt_local');
           }
         });
     if (selected.isNotEmpty)
