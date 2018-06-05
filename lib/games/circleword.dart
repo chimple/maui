@@ -1,27 +1,25 @@
-
-
 import 'dart:async';
 import 'dart:math';
 import 'package:maui/components/flash_card.dart';
 import 'package:flutter/material.dart';
+
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
-import 'package:maui/repos/lesson_unit_repo.dart';
+import 'package:flutter/rendering.dart';
 
-import '../db/entity/lesson_unit.dart';
-import '../repos/game_data.dart';
-
-
+// final Color GRADIENT_TOP = const Color(0xFFF5F5F5);
+// final Color GRADIENT_BOTTOM = const Color(0xFFE8E8E8);
 
 class Circleword extends StatefulWidget {
- Function onScore;
+  Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
   int gameCategoryId;
   bool isRotated;
+ 
 
   Circleword(
       {key,
@@ -33,656 +31,326 @@ class Circleword extends StatefulWidget {
       this.isRotated = false})
       : super(key: key);
   @override
-@override
-State<StatefulWidget> createState() => new CirclewordState();
+  @override
+  State<StatefulWidget> createState() => new CirclewordState();
 }
-enum Status {Active, Visible, Disappear}
+
+enum Status { Active, Visible, Disappear }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
-class  CirclewordState extends State<Circleword> {
-  int _size =3;
-  String ssum = '';
-  var count=0;
-  int state = 1;
-  List<ShakeCell> _ShakeCells = [];
-  List<Status> _statuses;
-  List<String> _letters= [];
- List<String> _letters4= [];
-  List<String> _letters5= [];
-   List<String> _letters6= [];
-    List<String> _letters7= [];
-     List<String> _letters8= [];
-      List<String> _letters9= [];
- List<String> _letters10= [];
 
-   List<String>  _worddata=[];
-   List<String> _letters2 =[];
-    List<String> _letters3 =[];
-      var flag1=0;
-    // ['acts','cast','cats','cat','scat','act','ta','st','sat','sac','at','tas','as','ats'];
- List<LessonUnit> lessonUnits;
+class CirclewordState extends State<Circleword> {
 
-  Tuple2<List<List<String >>,String> data;
- String dssum = '';
+var score=0;
 
-  get color => null;
-
- @override
+String word='';
+var flag=0;
+String words='';
+ List<Status> _statuses;
+//  List<String> _letters;
+ List<String> _letters1 = ['c', 't', 'a', 's', 'e', 'i', 'n', 'g', 's'];
+//  List<String> _letters1 = ['c', 't', 'a', 's', 'e', ];
+  List<String> wordata=['cats','acts','cast','cat','scat','act','ta',
+  'st','sat','sac','at','tas','as','ats'];
+  List<Widget> widgets = new List();
+  List<Widget> widgets1 = new List();
+  List<String> _letters;
+  double dradius;
+  //  _letters=_letters1;
+    //  _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+    @override
   void initState() {
     super.initState();
+  
     _initBoard();
   }
-  void _initBoard() async {
+   void _initBoard()  {
 
-    data = await  fetchCirclewrdData(widget.gameCategoryId);
- _statuses = _letters.map((a)=>Status.Active).toList(growable: false);
- 
+    //  word='';
+    // _letters=_letters1;
+    // List<Widget> widgets;
+    widgets.removeRange(0, widgets.length);
 
-
- print("the data is coming for cricleword ${data.item1[0]}");
-  data.item1[0].forEach((e){_worddata.add(e); });
-  print("data is coming in worddata2 $_worddata");
-   for(var i=0; i<_worddata.length;i++)
-   {
-     _letters2.add(_worddata[i]);
-  break;
+      // _letters1.forEach((e){_letters.add(e);});
+_letters=_letters1;
+print("hwllo this is data is ....$_letters");
+     _statuses = _letters.map((a) => Status.Active).toList(growable: false);
    }
-   print("the letters data is in it $_letters2");
-   print("the data is ${_letters2}");
-  //  _letters2.forEach((e){ _letters3.add(e);});
-   
-   _letters=_letters2[0].split('') ;
-   _letters4=_letters.sublist(1,2);
-   _letters5=_letters.sublist(2,3);
-   _letters6=_letters.sublist(3,4);
-   _letters7=_letters.sublist(4,5);
-   _letters8=_letters.sublist(5,6);
-   _letters9=_letters.sublist(6,7);
-
-   print(" the data is$_letters4 ");
-   print("data is 222 $_letters");
-  _statuses = _letters.map((a)=>Status.Active).toList(growable: false);
- _ShakeCells=_worddata.map((a)=>ShakeCell.InActive).toList(growable: false);
-  List<TableRow> rows = new List<TableRow>();
-      var j = 0;
-      // for (var i = 0; i < _size; ++i) {
-      //   List<Widget> cells = _letters
-      //       .skip(i)
-      //       .take(1)
-      //       .map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++]))
-      //       .toList();
-      //   rows.add(new TableRow( 
-      //     children: cells));
-      // }
-
-  }
- @override
-  void didUpdateWidget(Circleword  oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-     
-    }
-  }
-
+  
+ 
+  
   @override
   Widget build(BuildContext context) {
+    
+ MediaQueryData media = MediaQuery.of(context);
+
+ print("object....${media.size.height}......${media.size.width}");
+double circleSize = media.size.height/2;
+    
+    
+    // widgets.add(new Container(
+    //     width: circleSize,
+    //     height: circleSize,
+    //     decoration:
+    //         new BoxDecoration(color: Colors.red, shape: BoxShape.circle)));
+
+    Offset circleCenter = new Offset(circleSize / 2, circleSize / 2);
+    
+
+    List<Offset> offsets1 = calculateOffsets(circleSize/3, circleCenter, _letters.length-1);
+    print("object width is..... ${circleSize/8}");
+    if(_letters.length>=9)
+    {
+      dradius=_letters.length-1.0+0.5;
+    }
+    else if(_letters.length<=5)
+    {dradius=_letters.length+1.0+0.5;
+
+    }
+
+    // for (int i = 0; i < offsets.length; i++) {
+    //   widgets.add(
+    //       new PositionCircle(offsets[i], i.toString(), Colors.blue[900], 30.0));
+    // }
+    // offsets = calculateOffsets(1400.0, circleCenter, 7);
+    // for (int i = 0; i < offsets.length; i++) {
+    //   widgets.add(
+    //       new PositionCircle(offsets[i], _letters[i], Colors.teal, 35.0,wordata));
+    // }
+
+   List<Offset> offsets2 = calculateOffsets(0.0, circleCenter, 1);
+
+   print(" ......offstes is.... $offsets2");
+    List<Offset> offsets=offsets1+offsets2;
+    // for (int i = 0; i < offsets.length; i++) {
+    //   widgets.add(
+    //       new PositionCircle(offsets[i], i.toString(), Colors.teal, 35.0,wordata));
+    // }
+
     return new LayoutBuilder(builder: (context, constraints) {
+      print("this is  data");
+      print(constraints.maxHeight);
+      print(constraints.maxWidth);
       double _height, _width;
-    _height = constraints.maxHeight;
+      _height = constraints.maxHeight;
       _width = constraints.maxWidth;
+      // List<TableRow> rows = new List<TableRow>();
      
-       List<TableRow> rows = new List<TableRow>();
       var j = 0;
-      // for (var i = 0; i < _size; ++i) {
-      //   List<Widget> cells = _letters
-      //       .skip(i * _size)
-      //       .take(_size)
-      //       .map((e) => _buildItem(j, e, _statuses[j],_ShakeCells[j++]))
-      //       .toList();
-      //   rows.add(new TableRow( 
-      //     children: cells));
-      //     print("rows is ${rows[0]}");
-      // }
-      
-      Color _myColor = Colors.teal;
-    double constraintss=_height;
-   double  maxHeight=_height;
+      for (var i = 0; i <offsets.length; ++i) {
+         
+            //  Widget l   =
+              widgets.add(_buildItem(offsets[i],j, _letters[i], Colors.teal,circleSize/dradius,_statuses[j++]));
+            //  widgets.add(l);
+           
+          
+      }
+      double potl=180.0;
+      double landl=140.0;
+     double lposition= _height>_width ? potl:landl ;
+    //   _offsetmethod()
+    //   {
+      if(widgets.length>9){
+    if(widgets.length>9)
+    {
+     widgets1= widgets.sublist(9,18);
+      print("widgets data ....is.... $widgets1");
+      // widgets1=widgets.sublist(0, 9);
+      widgets.removeRange(0, widgets.length);
+      // offsets.removeRange(0, offsets.length-9);
+      widgets=widgets1;
+
+      print("hello this is widgsted1sublist is .....$widgets");
+     
+
+    }
+    else{
+      widgets=widgets1;
+     print("object widgtes is......$widgets");
+      // widgets.removeRange(start, end)
+      // widgets.sublist(0,9);
+    }
+      }
+    //   }
+      print("object the widgtes is.......${widgets1.length}");
+       print("object the widgtes is.......${offsets.length}");
+       print("object...$offsets");
+
+      offsets=[];
+      print("offsets is.....${offsets.length}");
+      offsets1=[];
+      print("offsets is.....$offsets1");
+      offsets2=[];
+      print("offsets is.....$offsets2");
       return new Container(
         child: new Column(
-           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-          //  new Container(
-          //           width: 60.0,
-          //           height: 40.0,
-          //           color: Colors.teal,
-          //           child: new Text(" value"),
-          //         ),
-          new Expanded(
-          child:  new ConstrainedBox(
-          //  width: _width+_width,
-            // height: _height,
-           
-           
-            // width: _width,
-             
-            //    alignment: Alignment.center,
-     
-              //  constraints: new BoxDecoration(
-              //     color: Colors.white,
-              //       border: new Border.all(
-              //           ),  
-              //       shape: BoxShape.circle),
-                    constraints: new BoxConstraints(minHeight: constraintss),
-                     
-             child: new Column(
-              
-               children: <Widget>[
-      //            new Container(
-      //              height: _height*0.7,
-      //            width: _width*0.5,
-      //               child: new Center(
-                
-      //         // padding: new  EdgeInsets.all(0.03*_width ),
-      //      child:new  Container(  
-      //       //  child: new Padding(
-      //       //    padding: new  EdgeInsets.all(0.03*_width ),
-      // child: new Table(children: rows),
-      //                 // )
-      //                 ) 
-      //                  ),
-      //            )
-      
-             new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(0.0, 0.0),
-              child: new Container(
-                     width: 100.0,
-          height: 100.0,
-          decoration: new BoxDecoration(
-            shape: BoxShape.circle,),
-             child:  new Card(
-                elevation: 50.0,
-          // shape: const  CircleBorder(
-       
-          //          ),
-               child:new RaisedButton(
-               
-              color:_statuses[0] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[0]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[0],color);
-                    setState(() { _statuses[0] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[0]}")
-                    )
-              )
-              )
-          ),
-              new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(0.35, 0.25),
-              child: new RaisedButton(
-              color:_statuses[1] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[1]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[1],color);
-                    setState(() { _statuses[1] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[1]}")
-                    )
-          ),
-            new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(-0.3, 0.0),
-            child: new RaisedButton(
-              color:_statuses[2] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[2]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[2],color);
-                    setState(() { _statuses[2] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[2]}")
-                    )
-          ),
-            new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(-0.031, 0.28),
-              child: new RaisedButton(
-              color:_statuses[3] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[3]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[3],color);
-                    setState(() { _statuses[3] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[3]}")
-                    )
-          ),
-            new Align(
-            // alignment: Alignment.centerLeft,
-            alignment: const Alignment(1.0, 0.03),
-            child: new RaisedButton(
-              color:_statuses[4] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[4]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[4],color);
-                    setState(() { _statuses[4] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[4]}")
-                    )
-         ),
-            new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(0.25, -0.54),
-            child: new RaisedButton(
-              color:_statuses[5] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[5]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[5],color);
-                    setState(() { _statuses[5] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[5]}")
-                    )
-          ),
-            new Align(
-            // alignment: Alignment.center,
-            alignment: const Alignment(-0.20, -0.515),
-             child: new RaisedButton(
-              color:_statuses[6] == Status.Active ? Colors.teal : Colors.yellow,
-              padding: new  EdgeInsets.all(15.0),
-                 onPressed:() { 
-                   print("dsata osssssssss $_statuses"); 
-                 
-                  print("dsata opppsssssssss $_statuses"); 
-                    if(_statuses[6]==Status.Active){setState(() {
-                     flag1=1;
-                    
-                // if (_myColor  == Colors.teal) {
-                  
-                //  _myColor  = Colors.orange;
-                // }
-                // else {
-                
-                //   _myColor = Colors.teal;
-                // }
-                   
-                 });
-                   method1(_letters[6],color);
-                    setState(() { _statuses[6] = Status.Visible;});
-                 }
-                 },
-                 
-                 
-       
-                 
-                  shape: new CircleBorder(
-                  
-                    
-                  ),
-                          
-                  child: new Text("${_letters[6]}")
-                    )
-          ),
-               ],
-               
-              
-             ) ,  
-           )
-               ),
-               new Container(
-                 margin: new EdgeInsets.only(left: 250.0,bottom: 40.0),
-          child: new RaisedButton(
-              
-                 onPressed:(() => method()),
-       
-                 
-                  shape: new RoundedRectangleBorder(
-                    
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(30.0))),
-                          
-                  child: new Text("submit")
-                    )
-               ),
-                  
-               new Container(
-                 margin: new EdgeInsets.only(bottom: 20.0) ,
-                 height: 40.0,
-                 color: Colors.white,
-                 child: new Text("$dssum",
-                 style:
-                    new TextStyle(color: Colors.black, fontSize: 24.0))),
-               
-          ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+  mainAxisSize: MainAxisSize.min,
+        children:[   
+        new LimitedBox(
+        child: new Container(
+           width: circleSize,
+        height: circleSize,
+        decoration:
+            new BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+          child: new Stack(children: widgets)),
         ),
+        new Container(
+        width: 100.0,
+        height: 40.0,
+         
+         margin: new EdgeInsets.only(left: lposition,top: 5.0),
+        child: new RaisedButton(
+          onPressed:()=> method(),
+          
+          
+         
+          child: new Text("submit"),
+          
+        ),
+        ),
+         new Container(
+               margin: new EdgeInsets.only(bottom: 20.0) ,
+               height: 40.0,
+               color: Colors.white,
+               child: new Text("$words",
+               style:
+                  new TextStyle(color: Colors.black, fontSize: 24.0))), 
+    ]
+    ),
       );
-    });
-  }
-  Widget _buildItem(int index, String text,Status status,ShakeCell tile) {
-    return new MyButton(
-        key: new ValueKey<int>(index) ,
-          status: status,
-        text: text ,
-         tile: tile,
-        onPress: () {
 
-          // print("repository  english is ${_suggestions[0]}");
-                        if (status == Status.Active) {
-                          print("hello if condition is in it");
-                          if(text==text){
-                        setState(() {
-                   ssum='$ssum'+'$text';
-                  _statuses[index] = Status.Visible;
-                
-                });
-                print("hello this sum string is $ssum");
-                  print("this is status is $_statuses");   
-                        }
-                        }
-        }
-    );}
+       
+    
+      
+    });
+
+    
+  }
+
+  //it calculates points on circle
+  //these points are centers for small circles
+  List<Offset> calculateOffsets(
+      double circleRadii, Offset circleCenter, int amount) {
+    double angle = 2 * pi / amount;
+    double alpha = 0.0; 
+    double x0 = circleCenter.dx;
+    double y0 = circleCenter.dy;
+    List<Offset> offsets = new List(amount);
+    for (int i = 0; i < amount; i++) {
+      double x = x0 + circleRadii * cos(alpha);
+      double y = y0 + circleRadii * sin(alpha);
+      offsets[i] = new Offset(x, y);
+      print("object ..x..$x .....y...$y");
+      // print("i:$i  alpha=${(alpha*180/pi).toStringAsFixed(1)}° ${offsets[i]}");
+      alpha += angle;
+    }
+    return offsets;
+  }
 
   method() {
-    print("method of ontab is $ssum");
-    var c=0;
-    c=ssum.length;
-   
-    print("the length of the string is $c");
-     print("worddata is 11111$_worddata");
-    _worddata.forEach((e){
-      if(e.compareTo('$ssum')==0)
+    print("hello ");
+    score=word.length;
 
-      { count=count+1;
-  print("hello data ius shanthu count is $count");
-       print("worddata is $_worddata");
-        _worddata.remove(e);
-         dssum="$dssum"+"$ssum"+" ,";
-         print("hello this is the value is matched $_worddata");
-         widget.onScore(c);
-               
-         c=0;
-         ssum='';
-         _statuses = _letters.map((a)=>Status.Active).toList(growable: false);
-      if(count==2)
-      {count=0;
-      
-                        
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
-                        
-                          widget.onEnd();
-                         
-                        });
-                         
-                      
-      _letters2.removeRange(0, _letters2.length);
-       _worddata.removeRange(0,_worddata.length);
-       _letters.removeRange(0, _letters.length);
-      
 
+    wordata.forEach((e){
+      if(e.compareTo('$word')==0)
+
+      {
+
+setState(() {
+
+
+       words="$words"+"$word"+" , "; 
+         
+        widget.onScore(score);
+        _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+        });
       }
-        
-      }
-    else{
-  setState(() {
-                   
-        
-                  _statuses = _letters.map((a)=>Status.Active).toList(growable: false);
-                });
-    }
-     
     });
-    ssum='';
-   
+    setState(() {
+           _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+        });
+     
+    word='';
 
   }
 
-  method1(String letter, color) {
-    ssum="$ssum"+"$letter";
-    color=new Color(0xFF8b3);
-    print("tthhhhhheee data  isss $ssum");
-  }
+ Widget _buildItem(Offset offset, int i, String text, MaterialColor teal, double d,Status status) {
+   return new PositionCircle(
+     key: new ValueKey<int>(i),
+     offset:offset,
+     text:text,
+     teal:teal,
+     d:d,
+     status: status,
+     onPress: () {
+      if(flag==0){
+        setState(() {
+                   _statuses[i] = Status.Visible;
+                });
+        word=text;
+        flag=1;
+      }
+      else{
+          setState(() {
+                   _statuses[i] = Status.Visible;
+                });
+       print("text inside opress is..... $text");
+       print(" index....... $i");
+       
+       word="$word"+"$text";
+       print("object... word is... $word");
+      }
+     }
+  
+   );
+ }
 
+ 
 }
 
-class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text,this.status,this.tile, this.onPress}) : super(key: key);
-
+class PositionCircle extends StatefulWidget {
+  final Offset offset;
   final String text;
+  final Color teal;
+  final double d;
+   Status status;
   final VoidCallback onPress;
-   ShakeCell tile;
-Status status;
+// final String word;
+  PositionCircle({Key key,this.offset, this.text, this.teal, this.d,this.status,this.onPress}): super(key: key);
   @override
-  _MyButtonState createState() => new _MyButtonState();
+  _PositionCircleState createState() => new _PositionCircleState();
 }
 
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
-  String _displayText;
-
-  initState() {
-    super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 250), vsync: this);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
-//        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
-    controller.forward();
-  }
+class _PositionCircleState extends State<PositionCircle> {
+  Offset position = Offset(0.0, 0.0);
 
   @override
-  void didUpdateWidget(MyButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == null && widget.text != null) {
-      _displayText = widget.text;
-      controller.forward();
-    } else if (oldWidget.text != widget.text) {
-      controller.reverse();
-    }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
+  void initState() {
+    super.initState();
+    position = widget.offset;
+    String word='';
   }
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
-    return new Container(
-        child: new Padding(
-            padding: new EdgeInsets.all(3.0),
-
-
-     child:new ScaleTransition(
-        scale: animation,
-        child: new GestureDetector(
-            // onLongPress: () {
-            //   showDialog(
-            //       context: context,
-            //       child: new FractionallySizedBox(
-            //           heightFactor: 0.5,
-            //           widthFactor: 0.8,
-            //           child: new FlashCard(text: widget.text)));
-            // },
-            child: new RaisedButton(
-              padding: new  EdgeInsets.all(15.0),
-              //  color: new Color(0XFFFED2B7),
-             
-                onPressed: () => widget.onPress(),
-                
-                  color: widget.status == Status.Visible
-                      ? Colors.yellow
-                      : Colors.teal,
-                shape: new CircleBorder(
-                  
-                   ),
-                child: new Text(_displayText,
-                    style:
-                    new TextStyle(color: Colors.black, fontSize: 24.0))))) )) ;
+    return new Positioned(
+      left: position.dx - widget.d,
+      top: position.dy - widget.d,
+      width: widget.d * 2,
+      height: widget.d * 2,
+      child: new RawMaterialButton(
+        shape: const CircleBorder(side: BorderSide.none),
+        onPressed: () => widget.onPress(),
+        fillColor:widget.status == Status.Visible?Colors.yellow: widget.teal,
+        splashColor: Colors.yellow,
+        child: new Text(widget.text,
+        style:
+                    new TextStyle(color: Colors.black, fontSize: 24.0)),
+      ),
+    );
   }
+
+ 
 }
