@@ -79,6 +79,7 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'true_or_false', 'True Or False'),
           _buildButton(context, 'tables', 'Tables'),
           _buildButton(context, 'identify', 'identify'),
+          _buildButton(context, 'picture_sentence', 'Picture Sentence'),
           _buildButton(context, 'fill_number', 'Fill Number'),
           _buildButton(context, 'quiz', 'Quiz'),
           _buildButton(context, 'connect_the_dots', 'Connect The Dots'),
@@ -87,13 +88,13 @@ class GameListView extends StatelessWidget {
          _buildButton(context, 'guess', 'guess'),
 //          _buildButton(context, 'clue_game', 'clue_game'),
 //          _buildButton(context, 'guess', 'guess'),
-          _buildButton(context, 'clue_game', 'clue_game'),
-          _buildButton(context, 'wordgrid', 'wordgrid'),
-          _buildButton(context, 'spin_wheel', 'spin_wheel'),
-          _buildButton(context, 'first_word', 'first_word'),
-          _buildButton(context, 'friend_word', 'friend_word'),
-          _buildButton(context, 'dice', 'dice'),
-           _buildButton(context, 'circle_word', 'circle_word'),
+          _buildButton(context, 'clue_game', 'Clue'),
+          _buildButton(context, 'wordgrid', 'Word Grid'),
+          _buildButton(context, 'spin_wheel', 'Spin The Wheel'),
+          _buildButton(context, 'first_word', 'First Word'),
+          _buildButton(context, 'friend_word', 'Friend Word'),
+          _buildButton(context, 'dice', 'Dice'),
+           _buildButton(context, 'circle_word', 'Circle Word'),
 
         ]);
   }
