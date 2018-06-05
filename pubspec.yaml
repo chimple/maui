@@ -705,6 +705,7 @@ flutter:
     - assets/dict/mosquito.png
     - assets/dict/moth.png
     - assets/dict/mother.png
+    - assets/dict/mountain.png
     - assets/dict/mouse.png
     - assets/dict/mouth.png
     - assets/dict/mule.png
@@ -1068,6 +1069,7 @@ flutter:
     - assets/dict/woman.png
     - assets/dict/woodpecker.png
     - assets/dict/workout.png
+    - assets/dict/world.png
     - assets/dict/wrist.png
     - assets/dict/xray.png
     - assets/dict/xylophone.png

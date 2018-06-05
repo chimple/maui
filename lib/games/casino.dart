@@ -72,7 +72,7 @@ class _CasinoState extends State<Casino> {
     compareWord = " ";
     givenWordList.clear();
     lst.clear();
-    print(" finalList _initLetters = $finalList");
+    print(" finalList inside  _initLetters = $finalList");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
@@ -146,10 +146,12 @@ class _CasinoState extends State<Casino> {
                 if (buttonNumber == i) {
                   print(
                       "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
+
                   if (givenWordList[i] == scrollingLetterList[index]) {
                     print("Letters matched");
-                    // new Future.delayed(
-                    //     const Duration(milliseconds: 250), () {});
+                    //  new Future.delayed(
+                    //     const Duration(milliseconds: 250), () {print("inside delay");});
+                    
                     lst.add(scrollingLetterList[index]);
                     count++;
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
