@@ -81,7 +81,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                     tag: 'assets/hoodie/${widget.game}.png',
                     child: new Image.asset(
                       'assets/hoodie/${widget.game}.png',
-                      scale: .85,
+                      scale: .8,
                     )),
               ),
               centerTitle: true,
@@ -190,7 +190,8 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
             style: TextStyle(color: Colors.white, fontSize: _fontSize),
           )),
           trailing: new Text(''),
-          children: widget.gameName != 'identify'
+          children: widget.gameName != 'guess'
+
               ? <Widget>[
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -256,7 +257,7 @@ class _BuildExpansionTiles extends State<BuildExpansionTiles> {
   }
 }
 
-//older cod
+
 
 // class GameCategoryList extends StatelessWidget {
 //   final List<Tuple2<int, String>> gameCategories;

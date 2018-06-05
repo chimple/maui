@@ -105,7 +105,7 @@ class _FlashCardState extends State<FlashCard> {
                                                 constraints.maxHeight * 0.11,
                                             fontWeight: FontWeight.bold)))
                                 : new Image.asset(
-                                    'assets/dict/${widget.text.toLowerCase()}.png'))),
+                                    'assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: widget.onChecked,
