@@ -59,14 +59,19 @@ class MauiApp extends StatelessWidget {
 
       switch (path[5]) {
         case 'single_iterations':
-          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
-            builder: (BuildContext context) => new SingleGame(
-                  path[2],
-                  gameMode: GameMode.iterations,
-                  gameConfig: gameConfig,
-                ),
+            builder: (BuildContext context) {
+              gameConfig.gameDisplay = GameDisplay.single;
+              gameConfig.amICurrentPlayer = true;
+              gameConfig.myScore = 0;
+              gameConfig.otherScore = 0;
+              return new SingleGame(
+                path[2],
+                gameMode: GameMode.iterations,
+                gameConfig: gameConfig,
+              );
+            },
           );
         case 'single_timed':
           gameConfig.gameDisplay = GameDisplay.single;
@@ -77,6 +82,23 @@ class MauiApp extends StatelessWidget {
                   gameMode: GameMode.timed,
                   gameConfig: gameConfig,
                 ),
+          );
+        case 'tbt_local':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) {
+              gameConfig.gameDisplay = GameDisplay.localTurnByTurn;
+              gameConfig.amICurrentPlayer = true;
+              gameConfig.otherUser =
+                  AppStateContainer.of(context).state.loggedInUser;
+              gameConfig.myScore = 0;
+              gameConfig.otherScore = 0;
+              return new SingleGame(
+                path[2],
+                gameMode: GameMode.iterations,
+                gameConfig: gameConfig,
+              );
+            },
           );
         case 'h2h_iterations':
           return new MaterialPageRoute<Null>(
