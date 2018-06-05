@@ -13,13 +13,12 @@ class MauiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Maui',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new LoginScreen(),
-        '/tab': (BuildContext context) => new TabHome(title: 'Maui'),
+        '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen()
       },
       onGenerateRoute: _getRoute,

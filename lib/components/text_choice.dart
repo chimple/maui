@@ -12,16 +12,17 @@ class TextChoice extends StatelessWidget {
     var user = AppStateContainer.of(context).state.loggedInUser;
     return new Padding(
       padding: const EdgeInsets.all(8.0),
-      child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: new Wrap(
           children: texts
-              .map((t) => new RaisedButton(
-                  onPressed: () => onSubmit(new ChatItem(
-                      sender: user.id,
-                      chatItemType: ChatItemType.text,
-                      content: (t))),
-                  child: new Text(t)))
+              .map((t) => new Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new RaisedButton(
+                        onPressed: () => onSubmit(new ChatItem(
+                            sender: user.id,
+                            chatItemType: ChatItemType.text,
+                            content: (t))),
+                        child: new Text(t)),
+                  ))
               .toList(growable: false)),
     );
   }
