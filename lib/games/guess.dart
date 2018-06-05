@@ -29,36 +29,25 @@ class GuessIt extends StatefulWidget {
 
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
-  double x1 = 0.0,
-      y1 = 0.0,
-      x2 = 0.0,
-      y2 = 0.0,
-      x3 = 0.0,
-      y3 = 0.0,
-      x4 = 0.0,
-      y4 = 0.0,
-      x5 = 0.0,
-      y5 = 0.0,
-      x6 = 0.0,
-      y6 = 0.0,
-      x7 = 0.0,
-      y7 = 0.0,
-      x8 = 0.0,
-      y8 = 0.0,
-      x9 = 0.0,
-      y9 = 0.0,
-      x10 = 0.0,
-      y10 = 0.0;
-  String paste1 = '',
-      paste2 = '',
-      paste3 = '',
-      paste4 = '',
-      paste5 = '',
-      paste6 = '',
-      paste7 = '',
-      paste8 = '',
-      paste9 = '',
-      paste10 = '';
+  List<Widget> _paint = [];
+
+  void _renderChoice(String text, double X, double Y) {
+    setState(() {
+      _paint.add(new Paint(paste: text, x: X, y: Y,));
+    });
+  }
+
+  
+  Widget _buildPaint(int i, Widget w){
+    return new Container(
+      child: w,
+    );
+  }
+
+  List<Widget> _createTextPaint(BuildContext context){
+    int i=0;
+    return _paint.map((f) => _buildPaint(i++,f)).toList(growable: false);
+  }
 
   List<String> _buildPartsList() {
     List<String> partsName = [];
@@ -122,106 +111,114 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   // }
 
   void _validate() {
-    if (_guess == _decoded["parts"][0]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x1 = 50.0;
-        y1 = 100.0;
-        paste1 = _guess;
-      });
-      // drawName(  , _guess, 50.0, 100.0);
-    } else if (_guess == _decoded["parts"][1]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x2 = 250.0;
-        y2 = 100.0;
-        paste2 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][2]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x3 = 150.0;
-        y3 = 100.0;
-        paste3 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][3]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x4 = 200.0;
-        y4 = 100.0;
-        paste4 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][4]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x5 = 250.0;
-        y5 = 100.0;
-        paste5 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][5]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x6 = 250.0;
-        y6 = 100.0;
-        paste6 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][6]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x7 = 250.0;
-        y7 = 100.0;
-        paste7 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][7]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x8 = 250.0;
-        y8 = 100.0;
-        paste8 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][8]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x9 = 250.0;
-        y9 = 100.0;
-        paste9 = _guess;
-      });
-    } else if (_guess == _decoded["parts"][9]["name"]) {
-      print(_guess);
-      _controller.text = '';
-      this.setState(() {
-        x10 = 250.0;
-        y10 = 100.0;
-        paste10 = _guess;
-      });
-    } else {
-      this.setState(() {
-        _flag = 1;
-        toAnimateFunction();
-        new Future.delayed(const Duration(milliseconds: 1000), () {
-          setState(() {
-            // x = 0.0;
-            // y = 0.0;
-            // paste = '';
-            _flag = 0;
-          });
-          print(animation.value);
-          print(noanimation.value);
-          _controller.text = '';
-          controller.stop();
-        });
-      });
-      // paste = '';
-    }
+    _controller.text = '';
+    _renderChoice(_guess, 350.0, 200.0);
+  //   if (_guess == _decoded["parts"][0]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 50.0, 100.0);
+  //     // this.setState(() {
+  //     //   x1 = 50.0;
+  //     //   y1 = 100.0;
+  //     //   paste1 = _guess;
+  //     // });
+  //     // drawName(  , _guess, 50.0, 100.0);
+  //   } else if (_guess == _decoded["parts"][1]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 250.0, 100.0);
+  //     // this.setState(() {
+  //     //   x2 = 250.0;
+  //     //   y2 = 100.0;
+  //     //   paste2 = _guess;
+  //     // });
+  //   } else if (_guess == _decoded["parts"][2]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 150.0, 100.0);
+  //     // this.setState(() {
+  //     //   x3 = 150.0;
+  //     //   y3 = 100.0;
+  //     //   paste3 = _guess;
+  //     // });
+  //   } else if (_guess == _decoded["parts"][3]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 200.0, 100.0);
+  //     // this.setState(() {
+  //     //   x4 = 200.0;
+  //     //   y4 = 100.0;
+  //     //   paste4 = _guess;
+  //     // });
+  //   } else if (_guess == _decoded["parts"][4]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 250.0, 100.0);
+  //     // this.setState(() {
+  //     //   x5 = 250.0;
+  //     //   y5 = 100.0;
+  //     //   paste5 = _guess;
+  //     // });
+  //   } else if (_guess == _decoded["parts"][5]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     _renderChoice(_guess, 250.0, 100.0);
+  //     // this.setState(() {
+  //     //   x6 = 250.0;
+  //     //   y6 = 100.0;
+  //     //   paste6 = _guess;
+  //     // });
+  //   } else if (_guess == _decoded["parts"][6]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     this.setState(() {
+  //       x7 = 250.0;
+  //       y7 = 100.0;
+  //       paste7 = _guess;
+  //     });
+  //   } else if (_guess == _decoded["parts"][7]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     this.setState(() {
+  //       x8 = 250.0;
+  //       y8 = 100.0;
+  //       paste8 = _guess;
+  //     });
+  //   } else if (_guess == _decoded["parts"][8]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     this.setState(() {
+  //       x9 = 250.0;
+  //       y9 = 100.0;
+  //       paste9 = _guess;
+  //     });
+  //   } else if (_guess == _decoded["parts"][9]["name"]) {
+  //     print(_guess);
+  //     _controller.text = '';
+  //     this.setState(() {
+  //       x10 = 250.0;
+  //       y10 = 100.0;
+  //       paste10 = _guess;
+  //     });
+  //   } else {
+  //     this.setState(() {
+  //       _flag = 1;
+  //       toAnimateFunction();
+  //       new Future.delayed(const Duration(milliseconds: 1000), () {
+  //         setState(() {
+  //           // x = 0.0;
+  //           // y = 0.0;
+  //           // paste = '';
+  //           _flag = 0;
+  //         });
+  //         print(animation.value);
+  //         print(noanimation.value);
+  //         _controller.text = '';
+  //         controller.stop();
+  //       });
+  //     });
+  //     // paste = '';
+  //   }
   }
 
   @override
@@ -317,128 +314,9 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                   //     ],
                   //   ),
                   // ),
-                  new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste1,
-                              x: x1,
-                              y: y1,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste2,
-                              x: x2,
-                              y: y2,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste3,
-                              x: x3,
-                              y: y3,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste4,
-                              x: x4,
-                              y: y4,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste5,
-                              x: x5,
-                              y: y5,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste6,
-                              x: x6,
-                              y: y6,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste7,
-                              x: x7,
-                              y: y7,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste8,
-                              x: x8,
-                              y: y8,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste9,
-                              x: x9,
-                              y: y9,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                      new RepaintBoundary(
-                        child: new CustomPaint(
-                          painter: new Stickers(
-                              text: paste10,
-                              x: x10,
-                              y: y10,
-                              height: _height,
-                              width: _width),
-                        ),
-                      ),
-                  // new RepaintBoundary(
-                  //   child: new CustomPaint(
-                  //     painter: new Stickers(
-                  //       text: paste,
-                  //       x: x,
-                  //       y: y,
-                  //     ),
-                  //     isComplex: false,
-                  //     willChange: false,
-                  //   ),
-                  // )
-                  // new Positioned(
-                  //   left: x,
-                  //   top: y,
-                  //   child: new Text(
-                  //     paste,
-                  //     style: new TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontWeight: FontWeight.bold,
-                  //         fontStyle: FontStyle.italic),
-                  //   ),
-                  // ),
+                  new Stack(
+                    children: _createTextPaint(context),
+                  )
                 ],
               ),
             ),
@@ -498,12 +376,10 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 }
 
 class Stickers extends CustomPainter {
-  Stickers({this.text, this.x, this.y, this.height, this.width});
+  Stickers({this.text, this.x, this.y,});
   final String text;
   final double x;
   final double y;
-  final double width;
-  final double height;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -511,7 +387,7 @@ class Stickers extends CustomPainter {
         text: text,
         style: new TextStyle(
             color: Colors.black,
-            fontSize: (width > height) ? width * 0.015 : width * 0.03,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold));
     TextPainter tp = new TextPainter(
         text: span,
@@ -534,5 +410,20 @@ class Stickers extends CustomPainter {
       print(">>>>>>>>>>>>>>${oldDelegate.text}");
       return false;
     }
+  }
+}
+
+class Paint extends StatelessWidget {
+  Paint({this.paste, this.x, this.y});
+  final double x, y;
+  final String paste;
+  @override
+  Widget build(BuildContext context) {
+    return new RepaintBoundary(
+      child: new CustomPaint(
+        painter:
+            new Stickers(text: paste, x: x, y: y,),
+      ),
+    );
   }
 }
