@@ -280,7 +280,7 @@ class MyButton extends StatefulWidget {
   Status status;
   UnitMode unitMode;
   MyButton(
-      {Key key,
+      {key,
       this.status,
       this.text,
       this.ans,
@@ -370,19 +370,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-class PictureAnimation extends AnimatedWidget {
-  PictureAnimation(Key key,Animation animation)
-      : super( key: key ,listenable: animation);
+// class PictureAnimation extends AnimatedWidget {
+//   PictureAnimation(Key key,Animation animation)
+//       : super( key: key ,listenable: animation);
 
-  @override
-  Widget build(BuildContext context) {
-    Animation animation = listenable;
-    return Center(
-      child: Container(
-        height: animation.value,
-        width: animation.value,
-        child: FlutterLogo(),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     Animation animation = listenable;
+//     return Center(
+//       child: Container(
+//         height: animation.value,
+//         width: animation.value,
+//         child: FlutterLogo(),
+//       ),
+//     );
+//   }
+// }
