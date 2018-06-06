@@ -17,6 +17,7 @@ class Drawing extends StatefulWidget {
       this.iteration,
       this.isRotated})
       : super(key: key);
+       
 
   @override
   State<StatefulWidget> createState() => new DrawScreen();
@@ -24,11 +25,19 @@ class Drawing extends StatefulWidget {
 
 class DrawScreen extends State<Drawing> {
   DrawPadController _padController = new DrawPadController();
-//  void initState() {
-//    print({"init State - in drawScreen": "line 22"});
-//    _padController = new DrawPadController();
-//  }
+  bool visibilityColor = false;
+  bool visibilityWidth = false;
 
+void _changed(bool visibility, String field) {
+    setState(() {
+      if (field == "colr"){
+        visibilityColor = visibility;
+      }
+      if (field == "widt"){
+        visibilityWidth = visibility;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -148,7 +157,7 @@ class DrawScreen extends State<Drawing> {
             ),
           ),
 
-          new Expanded(
+          visibilityColor?new Expanded(
             // flex: 1,
             child: new ListView(
               scrollDirection: Axis.horizontal,
@@ -171,8 +180,8 @@ class DrawScreen extends State<Drawing> {
                       ))
                   .toList(growable: false),
             ),
-          ),
-          new Expanded(
+          ): new Container(),
+          visibilityWidth ? new Expanded(
             // flex: 1,
             child: new ListView(
               scrollDirection: Axis.horizontal,
@@ -195,7 +204,63 @@ class DrawScreen extends State<Drawing> {
                       ))
                   .toList(growable: false),
             ),
-          )
+          ): new Container(),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new InkWell(
+                onTap: () {
+                  visibilityColor ? _changed(false, "colr") : _changed(true, "colr");
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 8.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Icon(Icons.comment, color: visibilityColor ? Colors.grey[400] : Colors.grey[600]),
+                      new Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        child: new Text(
+                          "Colors",
+                          style: new TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: visibilityColor ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ),
+              new SizedBox(width: constraints.maxHeight * 0.06,),
+              new InkWell(
+                onTap: () {
+                  visibilityWidth ? _changed(false, "widt") : _changed(true, "widt");
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 8.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Icon(Icons.local_offer, color: visibilityWidth ? Colors.grey[400] : Colors.grey[600]),
+                      new Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        child: new Text(
+                          "Width",
+                          style: new TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: visibilityWidth ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ),
+            ],
+          ) 
+
+
         ]);
       });
       
@@ -282,7 +347,7 @@ class DrawScreen extends State<Drawing> {
               ),
             ),
           // ),
-                new Expanded(
+                visibilityColor ? new Expanded(
             // flex: 1,
             child: new ListView(
               scrollDirection: Axis.horizontal,
@@ -305,8 +370,8 @@ class DrawScreen extends State<Drawing> {
                       ))
                   .toList(growable: false),
             ),
-          ),
-          new Expanded(
+          ):Container(),
+          visibilityWidth ? new Expanded(
             // flex: 1,
             child: new ListView(
               scrollDirection: Axis.horizontal,
@@ -329,6 +394,60 @@ class DrawScreen extends State<Drawing> {
                       ))
                   .toList(growable: false),
             ),
+          ) : Container(),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new InkWell(
+                onTap: () {
+                  visibilityColor ? _changed(false, "colr") : _changed(true, "colr");
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 8.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Icon(Icons.comment, color: visibilityColor ? Colors.grey[400] : Colors.grey[600]),
+                      new Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        child: new Text(
+                          "Colors",
+                          style: new TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: visibilityColor ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ),
+              new SizedBox(width: constraints.maxHeight * 0.06,),
+              new InkWell(
+                onTap: () {
+                  visibilityWidth ? _changed(false, "widt") : _changed(true, "widt");
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 8.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Icon(Icons.local_offer, color: visibilityWidth ? Colors.grey[400] : Colors.grey[600]),
+                      new Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        child: new Text(
+                          "Width",
+                          style: new TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: visibilityWidth ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ),
+            ],
           )
                 ]))
               // ])
@@ -353,11 +472,13 @@ class DrawScreen extends State<Drawing> {
 
   void _multiColor(colorValue) {
     _padController.multiColor(colorValue);
+    _changed(false, "colr");
     print({"this is _multiColor methode": colorValue});
   }
 
   void _multiWidth(widthValue) {
     _padController.multiWidth(widthValue);
+    _changed(false, "widt");
     print({"this is _multiWidth methode": widthValue});
   }
 }
