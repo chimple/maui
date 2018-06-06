@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'dart:math' as math;
 import 'dart:async';
+// import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -11,6 +13,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
@@ -36,7 +39,7 @@ class PictureSentence extends StatefulWidget {
 
 enum Status { Active, Right, Wrong }
 
-class PictureSentenceState extends State<PictureSentence> with SingleTickerProviderStateMixin {
+class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
   Tuple3<String, String, List<String>> _allques;
@@ -48,22 +51,10 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
   List<Status> _statuses = [];
   bool isCorrect;
   int scoretrack = 0;
- Animation animation;
- AnimationController animationController;
+
   @override
   void initState() {
     super.initState();
-    animationController= AnimationController(duration: Duration(milliseconds: 3000),vsync: this);
-    animation.addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        animationController.reverse();
-      }
-      else if (status == AnimationStatus.dismissed){
-        animationController.forward();
-      }
-    });
-    animation = Tween(begin: 0.0, end: 1000.0).animate(animationController);
-    animationController.forward();
     _initBoard();
   }
 
@@ -146,7 +137,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
     print("Question text here $questionText");
     print("Answer here $ans");
 
-
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -165,7 +155,7 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / 3;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -210,17 +200,18 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
                               height: 40.0,
                               width: 100.0,
                             ),
-                            new IconButton(
-                              iconSize: 24.0,
-                              color: Colors.black,
-                              icon: new Icon(Icons.comment),
-                              tooltip: 'check the picture',
-                              onPressed: () {
-                                
-                                // PictureAnimation( ,
-                                //    animation);
-                              },
+                            new FloatingActionButton(
+                              onPressed: (){Navigator.of(context).pushNamed("routeName");},
+                              tooltip: 'increment',
+                              child: new Icon(Icons.comment),
                             ),
+                            // new IconButton(
+                            //   iconSize: 24.0,
+                            //   color: Colors.black,
+                            //   icon: new Icon(Icons.comment),
+                            //   tooltip: 'check the picture',
+                            //   onPressed: () {},
+                            // ),
                           ]),
                         ),
                         new Text(
@@ -267,12 +258,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       );
     });
   }
-@override
-void dispose()
-{
-  animationController.dispose();
-  super.dispose();
-}
 }
 
 class MyButton extends StatefulWidget {
@@ -280,7 +265,7 @@ class MyButton extends StatefulWidget {
   Status status;
   UnitMode unitMode;
   MyButton(
-      {key,
+      {Key key,
       this.status,
       this.text,
       this.ans,
@@ -350,38 +335,178 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new Shake(
         animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-        child: new ScaleTransition(
-            scale: animation,
-            child: new GestureDetector(
-              onLongPress: () {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
-              },
-              child: new UnitButton(
-                onPress: () => widget.onPress(),
-                text: _displayText,
-                unitMode: widget.unitMode,
-              ),
-            )));
+        child: new GestureDetector(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                child: new FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.8,
+                    child: new FlashCard(text: widget.text)));
+          },
+          child: new UnitButton(
+            onPress: () => widget.onPress(),
+            text: _displayText,
+            unitMode: widget.unitMode,
+          ),
+        ));
   }
 }
 
-// class PictureAnimation extends AnimatedWidget {
-//   PictureAnimation(Key key,Animation animation)
-//       : super( key: key ,listenable: animation);
+// class Photo extends StatelessWidget {
+//   Photo({Key key, this.photo, this.color, this.onTap}) : super(key: key);
+
+//   final String photo;
+//   final Color color;
+//   final VoidCallback onTap;
+
+//   Widget build(BuildContext context) {
+//     return new Material(
+//       // Slightly opaque color appears where the image has transparency.
+//       color: Theme.of(context).primaryColor.withOpacity(0.25),
+//       child: new InkWell(
+//         onTap: onTap,
+//         child: new LayoutBuilder(
+//           builder: (BuildContext context, BoxConstraints size) {
+//             return new Image.asset(
+//               photo,
+//               fit: BoxFit.contain,
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class RadialExpansion extends StatelessWidget {
+//   RadialExpansion({
+//     Key key,
+//     this.maxRadius,
+//     this.child,
+//   })  : clipRectSize = 2.0 * (maxRadius / math.sqrt2),
+//         super(key: key);
+
+//   final double maxRadius;
+//   final clipRectSize;
+//   final Widget child;
 
 //   @override
 //   Widget build(BuildContext context) {
-//     Animation animation = listenable;
-//     return Center(
-//       child: Container(
-//         height: animation.value,
-//         width: animation.value,
-//         child: FlutterLogo(),
+//     return new ClipOval(
+//       child: new Center(
+//         child: new SizedBox(
+//           width: clipRectSize,
+//           height: clipRectSize,
+//           child: new ClipRect(
+//             child: child,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class RadialExpansionDemo extends StatelessWidget {
+//   static const double kMinRadius = 32.0;
+//   static const double kMaxRadius = 128.0;
+//   static const opacityCurve =
+//       const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
+
+//   static RectTween _createRectTween(Rect begin, Rect end) {
+//     return new MaterialRectCenterArcTween(begin: begin, end: end);
+//   }
+
+//   static Widget _buildPage(
+//       BuildContext context, String imageName, String description) {
+//     return new Container(
+//       color: Theme.of(context).canvasColor,
+//       child: new Center(
+//         child: new Card(
+//           elevation: 8.0,
+//           child: new Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               new SizedBox(
+//                 width: kMaxRadius * 2.0,
+//                 height: kMaxRadius * 2.0,
+//                 child: new Hero(
+//                   createRectTween: _createRectTween,
+//                   tag: imageName,
+//                   child: new RadialExpansion(
+//                     maxRadius: kMaxRadius,
+//                     child: new Photo(
+//                       photo: imageName,
+//                       onTap: () {
+//                         Navigator.of(context).pop();
+//                       },
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               new Text(
+//                 description,
+//                 style: new TextStyle(fontWeight: FontWeight.bold),
+//                 textScaleFactor: 3.0,
+//               ),
+//               const SizedBox(height: 16.0),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildHero(
+//       BuildContext context, String imageName, String description) {
+//     return new Container(
+//       width: kMinRadius * 2.0,
+//       height: kMinRadius * 2.0,
+//       child: new Hero(
+//         createRectTween: _createRectTween,
+//         tag: imageName,
+//         child: new RadialExpansion(
+//           maxRadius: kMaxRadius,
+//           child: new Photo(
+//             photo: imageName,
+//             onTap: () {
+//               Navigator.of(context).push(
+//                 new PageRouteBuilder<Null>(
+//                   pageBuilder: (BuildContext context,
+//                       Animation<double> animation,
+//                       Animation<double> secondaryAnimation) {
+//                     return new AnimatedBuilder(
+//                         animation: animation,
+//                         builder: (BuildContext context, Widget child) {
+//                           return new Opacity(
+//                             opacity: opacityCurve.transform(animation.value),
+//                             child: _buildPage(context, imageName, description),
+//                           );
+//                         });
+//                   },
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     timeDilation = 5.0; // 1.0 is normal animation speed.
+
+//     return new Container(
+//       padding: const EdgeInsets.all(32.0),
+//       alignment: FractionalOffset.bottomLeft,
+//       child: new Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           _buildHero(context, 'assets/dict/mountain.png', 'Chair'),
+//           _buildHero(context, 'assets/dict/mountain.png', 'Binoculars'),
+//           _buildHero(context, 'assets/dict/mountain.png', 'Beach ball'),
+//         ],
 //       ),
 //     );
 //   }
