@@ -171,7 +171,6 @@ class QuizState extends State<Quiz> {
           new Material(
               color: Theme.of(context).accentColor,
               elevation: 4.0,
-//              child: new QuestionText(questionText, keys, ht, wd)),
               child: new LimitedBox(
                   maxHeight: maxHeight,
                   child: new Center(
@@ -194,84 +193,6 @@ class QuizState extends State<Quiz> {
         ],
       );
     });
-  }
-}
-
-class QuestionText extends StatefulWidget {
-  final String _question;
-  int keys;
-  double ht, wd;
-  QuestionText(this._question, this.keys, this.ht, this.wd);
-
-  @override
-  State createState() => new QuestionTextState();
-}
-
-class QuestionTextState extends State<QuestionText>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _fontSizeAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.decelerate);
-    _fontSizeAnimation.addListener(() => this.setState(() {
-          print(2);
-        }));
-    _fontSizeAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _fontSizeAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(QuestionText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.forward();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    widget.keys++;
-    return new Material(
-      color: const Color(0xFFed4a79),
-      child: new Container(
-        height: widget.ht * 0.6,
-        width: widget.wd * 0.6,
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(25.0),
-          border: new Border.all(
-            color: const Color(0xFFed4a79),
-          ),
-        ),
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              new Text(widget._question,
-                  key: new Key('question'),
-                  style: new TextStyle(
-                      color: const Color(0xFF35C9C1),
-                      fontSize: widget.ht > widget.wd
-                          ? widget.ht * 0.1
-                          : widget.wd * 0.06,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic)),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -310,15 +231,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     wrongController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
 
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticOut)
       ..addStatusListener((state) {
 //        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
+          // print('dismissed');
+          // if (widget.text != null) {
+          //   setState(() => _displayText = widget.text);
+          //   controller.forward();
+          // }
         }
       });
     wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);
