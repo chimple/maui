@@ -201,7 +201,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             new ScaleTransition(
               scale: _characterAnimation,
               child: new Container(
-                height: ht > wd ? ht * 0.15 : wd * 0.15,
+                height: ht > wd ? ht * 0.15 : wd * 0.13,
                 child: new Image(
                   image: new AssetImage("assets/hoodie/$gameName.png"),
                 ),
@@ -213,7 +213,7 @@ class _ScoreScreenState extends State<ScoreScreen>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Container(
-                  height: ht > wd ? ht * 0.15 : wd * 0.15,
+                  height: ht > wd ? ht * 0.19 : wd * 0.15,
                   child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,7 +239,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           new LimitedBox(
-                            maxHeight: ht * 0.13,
+                            maxHeight: ht > wd ? ht * 0.3 : wd * 0.13,
                             child: new UserItem(user: myUser),),
                           // new Padding(
                           //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
@@ -287,7 +287,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
                       crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
-                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
                   gameDisplay != GameDisplay.single ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -409,7 +409,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new Shake(
       animation: animation,
       child: new GestureDetector(
-      child: new Container(  width: wd * 0.09 ,     
+      child: new Container(  
+        height: ht > wd ? ht * 0.3 : ht * 0.15,
+        width: ht > wd ? wd * 0.22 : wd * 0.09 ,     
       child: new FlatButton(
          onPressed: () => widget.onPress(),
          color: Colors.transparent,         
@@ -417,7 +419,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         _displayText == "true" ? Icons.star : Icons.star_border,
         key: new Key("${widget.keys}"),
         size:
-         ht > wd ? ht * 0.05 : wd * 0.05,
+         ht > wd ? ht * 0.1 : wd * 0.05,
         color: Colors.black,
          )         
     ))
