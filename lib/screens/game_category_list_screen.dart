@@ -28,9 +28,24 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .getGameCategoriesByGame(widget.game)
         .then((gameCategories) {
       if (gameCategories.isEmpty) {
-        gameCategories = <Tuple2<int, String>>[
+        if (widget.game == "identify") {
+          gameCategories = <Tuple2<int, String>>[
+          new Tuple2<int, String>(1, 'Male Body'),
+        ];         
+        } 
+       else if (widget.game == "drawing") {
+          gameCategories = <Tuple2<int, String>>[
+          new Tuple2<int, String>(2, 'Draw')
+        ];         
+        } 
+        else {
+          gameCategories = <Tuple2<int, String>>[
           new Tuple2<int, String>(1, 'Todo Placeholder')
         ];
+        }
+        //   gameCategories = <Tuple2<int, String>>[
+        //   new Tuple2<int, String>(1, 'Todo Placeholder')
+        // ];
       }
 
       setState(() {
@@ -50,7 +65,7 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
                 child: new CircularProgressIndicator(),
               )
             : new Scaffold(
-                appBar: new AppBar(title: new Text('Categories')),
+                //appBar: new AppBar(title: new Text('Categories')),
                 body: new GameCategoryList(
                     game: widget.game, gameCategories: _gameCategories),
               ));

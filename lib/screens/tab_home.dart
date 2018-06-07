@@ -17,10 +17,10 @@ class TabHome extends StatelessWidget {
         drawer: new ProfileDrawer(),
         floatingActionButton: new FloatingActionButton(
           onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-          child: new Image.asset('assets/koala_neutral.png'),
+          child: new Image.asset('assets/hoodie_fb.png'),
         ),
         appBar: new AppBar(
-          title: new Text(title),
+//          title: new Text(title),
           leading: new ProfileDrawerIcon(),
           bottom: new TabBar(
             tabs: <Widget>[

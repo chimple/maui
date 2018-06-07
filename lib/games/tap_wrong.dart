@@ -49,6 +49,8 @@ class TapWrongState extends State<TapWrong> {
   bool _isShowingFlashCard = false;
  int _maxSize=3;
  int _maxSize1=0;
+ int arrayLength=0;
+ int clickCnt = 0;
   @override
   void initState() {
     super.initState();
@@ -74,6 +76,7 @@ class TapWrongState extends State<TapWrong> {
     setState(() => _isLoading = true);
    data=await fetchWordData(widget.gameConfig.gameCategoryId,_maxSize,_maxSize1);
     print('datat  ${data.item1}');
+    print('datat  ${data.item2}');
     data.item1.forEach((d) {
       word.add(d);
     });
@@ -86,6 +89,11 @@ class TapWrongState extends State<TapWrong> {
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh word ${word}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh others ${others}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh arr1 ${arr1}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh _dispText ${_dispText}");
+    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh lenOfArr1${lenOfArr1}");
     var rand = new Random();
     var randNum = 0;
     String temp = '';
@@ -98,7 +106,6 @@ class TapWrongState extends State<TapWrong> {
       print("random num $randNum");
       print('$arr1');
       temp = arr1[randNum];
-
       arr1[randNum] = others[w];
       print('$arr1');
       print('${arr1.length}');
@@ -115,6 +122,7 @@ class TapWrongState extends State<TapWrong> {
     _statusList = arr1.map((a) => Statuses.right).toList(growable: false);
     print('status array      $_statusList');
     setState(() => _isLoading = false);
+    arrayLength=arr1.length;
   }
 
   @override
@@ -137,8 +145,8 @@ class TapWrongState extends State<TapWrong> {
           int j = 0;
           setState(() {
             proArray.addAll(arr1);
-
             proArray.removeAt(index);
+            print('removed text from array ${arr1[index]}');
             print('removed array       $proArray');
             print('removed array l3en      ${proArray.length}');
             print('word array       $word');
@@ -159,12 +167,15 @@ class TapWrongState extends State<TapWrong> {
               num1++;
               numOFWrongElem++;
               print('array 1           $arr1');
-              new Future.delayed(const Duration(milliseconds: 200), () {
+
+               new Future.delayed(const Duration(milliseconds: 0), () {
                 setState(() {
-                  //   _statusList.removeAt(index);
+                    //  _statusList.removeAt(index);
+                  
                   arr1.removeAt(index);
-                });
-              });
+
+                 });
+               });
 
               print('array 1 after     $arr1');
               widget.onScore(2);
@@ -193,31 +204,11 @@ class TapWrongState extends State<TapWrong> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: _dispText,
-          onChecked: () {
-            widget.onEnd(); // _initBoard();
-
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
-    int j = 0;
-
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / arr1.length;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / arrayLength;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (2);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -227,6 +218,31 @@ class TapWrongState extends State<TapWrong> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxWidth);
       AppState state = AppStateContainer.of(context).state;
 
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    if (_isShowingFlashCard) {
+      return FractionallySizedBox(
+            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            child: new FlashCard(
+              image: 'assets/dict/${_dispText.toLowerCase()}.png',
+          text: _dispText,
+          onChecked: () {
+            widget.onEnd(); // _initBoard();
+
+            setState(() {
+              _isShowingFlashCard = false;
+            });
+          }));
+    }
+    int j = 0;
+
+    
       return Padding(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -234,23 +250,28 @@ class TapWrongState extends State<TapWrong> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              new Expanded(
+             Expanded(child: 
               //  maxHeight: maxHeight,
               //  maxWidth: maxWidth,
-                child: new Material(
+                new Material(
                     color: Theme.of(context).accentColor,
                   //  elevation: 4.0,
                     textStyle: new TextStyle(
                         color: Colors.orangeAccent,
                         fontSize: state.buttonFontSize),
                     child: new Container(
+                     // width: 100.0,
+                    //  height: 200.0,
                         padding: EdgeInsets.all(buttonPadding),
                         child: new Center(
-                          child: new UnitButton(text:_dispText,
+                          child: new UnitButton(
+                            maxHeight: constraints.maxHeight/2,
+                            maxWidth: constraints.maxWidth/2,
+                            text:_dispText,
                           primary: false,
                           unitMode: UnitMode.image,
                           ),
-                        )))),
+               )  ))),
               Expanded(
                   child: ResponsiveGridView(
                 rows: 1,
