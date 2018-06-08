@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 
 class FriendWord extends StatefulWidget {
   Function onScore;
@@ -30,25 +33,34 @@ class FriendWord extends StatefulWidget {
 
 class FriendWordState extends State<FriendWord> {
   var flag1 = 0;
+  var flag=0;
   var correct = 0;
   var keys = 0;
+  List<int> clicks = [];
   static int  _size = 9;
   List<String> data = ['' , '' , '' , '' , '' , '' , '' , '' , ''];
   List<String> _rightwords = [];
-  List<String> dragData = ['c' , 'a' , 't' , 'r'];
-  List<String> _letters = new List();
-  List<String> _data2 = new List();
+  List<String> dragData = ['c' , 'a' , 't' , 'r','g','r','t','y','u'];
   List<int> _starList = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
   List _sortletters = [];
   bool _isLoading = true;
+  List _center = [];
   String img , dragdata;
   var L ,R;
+  var i = 0, j = 0;
+  var counter = 0;
+  var  row ,col;
   int _rows , _cols , code , dindex , dcode;
-  static double  x = _size/2.ceil();
-  int median=4;
+  var Top = _size,Bot = _size,Lef = 1,Rig = 1, point = 0;
+
+  static var  median1 = (_size - 1)/2;
+  static int k = median1.toInt();
+  int median  = k;
+  int  center  = (k * _size ) + k;
   List<String> arr = new List<String>();
+  var _referenceMatrix = new List.generate(_size, (_) => new List(_size));
   @override
   void initState() {
     super.initState();
@@ -58,17 +70,19 @@ class FriendWordState extends State<FriendWord> {
   void _initBoard() async {
 
     setState(() => _isLoading = true);
+//    _center.removeRange(0, _center.length);
 //    List<String> arr = new List<String>();
-
+    print("this is center $center");
     print("thhiiis kiiirran mean value is $median");
-    for(var i=0;i<99;i++)
+    for(var i=0;i<_size*_size;i++)
     {
-      arr.add(" $i");
+      arr.add(" ");
       print({"this is an array":arr});
     }
+
     _starList.add(median);
 
-    for(var j =0;j <4;j++)
+    for(var j =0;j <k;j++)
       {
          median = median +_size - 1;
          L = median;
@@ -77,12 +91,12 @@ class FriendWordState extends State<FriendWord> {
          print("this is $L");
          print("this is ${_size * median}");
       }
-      median=4;
+      median=k;
       print(" ths value o llllll id $L");
     if(L ==(_size * median))
       { median=L;
         print(" its comming in if");
-        for(var j=0;j<4;j++ ){
+        for(var j=0;j<k;j++ ){
           median = median + _size+1;
 
           _starList.add(median);
@@ -91,30 +105,34 @@ class FriendWordState extends State<FriendWord> {
         }
 
       }
-median =4;
-    for (var j= 0;j<4;j++)
+median =k;
+    for (var j= 0;j<k;j++)
     {
       median = median + _size +1;
       R = median;
       _starList.add(median);
     }
-    median=4;
+    median=k;
     print(" ths value o llllll id $L");
     if(R ==((_size * median)+(_size-1)))
     { median=R;
     print(" its comming in if");
-    for(var j=0;j<4;j++ ){
+    for(var j=0;j<k;j++ ){
       median = median + _size - 1;
 
       _starList.add(median);
       R = median;
 
     }
-
+       center = ((_size *_size)/2).floor();
+      _starList.add(center);
+      print("this is kiran $center");
     }
 
     _starList.forEach((e){
       arr[e]="*";
+
+
     });
 
 
@@ -134,59 +152,169 @@ median =4;
         text: text ,
         color1: 1 ,
         onAccepted: (dcindex) {
-          print('dataa $dcindex');
-          print({"array data index":arr[index]});
+          print("index is .......$dcindex");
           setState(() {
-            arr[index] = dcindex;
-          });
-//          arr[index] = dcindex;
 
-        } ,
-//        flag: flag ,
-        code: code ,
-        isRotated: widget.isRotated ,
-        img: img ,
-        keys: keys++);
+
+            if (center == index) {
+              arr[index] = dcindex;
+              _center.add(index);
+              clicks.add(index);
+              row = index/_size;
+              col = index % _size;
+              _referenceMatrix[row.toInt()][col.toInt()] = dcindex;
+              counter = 1;
+
+              print("this is my _center index $center");
+              print("this is my _center index $_center");
+            }
+          });
+          print('dataa $dcindex');
+          print({"array data index": center});
+          print({"array data index": _center});
+
+            _center.forEach((e) {
+              point = e;
+
+              if ((index == point + Rig) ||
+                  index == point + Bot ||
+                  (index == point - Lef) ||
+                  index == point - Top) {
+                setState(() {
+//                  arr[index] = dcindex;
+                  flag = 1;
+
+//                  clicks.add(index);
+
+//                  print("object of index... is $index");
+//                  print("this is my _center index2 $_center");
+//                  print("this is my _center clicks $clicks");
+                });
+              }
+            });
+            if(flag==1){
+              arr[index] = dcindex;
+              clicks.add(index);
+              _center.add(index);
+               row = index/_size;
+              col = index % _size;
+             print("row is coming here $row");
+              print("Col is coming here $col");
+              _referenceMatrix[row.toInt()][col.toInt()] = dcindex;
+
+              flag=0;
+            }
+//            arr[index] = dcindex;
+//              _center.add(index);
+          var matchRow = bingoHorizontalChecker();
+          print({"the bingo checker response row : ": matchRow});
+            print("object of index... is $index");
+            print("this is my _center index2 $_center");
+            print("this is my _center clicks $clicks");
+          print("this is my reference $_referenceMatrix");
+
+        });
   }
 
 
-  @override
+
+//          arr[index] = dcindex;
+
+//} ,
+//        flag: flag ,
+//code: code ,
+//isRotated: widget.isRotated ,
+//img: img ,
+//keys: keys++);
+//}
+
+  int bingoHorizontalChecker() {
+    print({"the reference matrix value is : ": _referenceMatrix});
+    for (var i = 0; i < _referenceMatrix.length; i++) {
+      for (int j = 0; j <_referenceMatrix.length; j++) {
+        if (_referenceMatrix[i][j] == null) {
+
+          break;
+        }
+      }
+//       return i;
+    print("hello");
+    print("this is row $i");
+      print("this rrjenrnjenjrenrne ${_referenceMatrix[i][j]}");
+    }
+        print("this is $i");
+    return -1;
+  }
+
+  int bingoVerticalChecker() {
+    print({"the reference matrix value is : ": _referenceMatrix});
+    for (int j = 0; j < _referenceMatrix.length; j++) {
+      bool bingo = true;
+      for (int i = 0; i < _referenceMatrix.length; i++) {
+        if (_referenceMatrix[i][j] == null) {
+
+          break;
+        }
+      }
+      if (bingo) return j;
+    }
+
+    return -1;
+  }
+
+
+
+@override
   Widget build(BuildContext context) {
     print("this is my array $arr");
-    var j = 0, h = 0, k = 100;
+    var j = 0, k = 100;
     var rwidth,rheight;
     //  print(constraints.maxHeight);
-    return new Container(
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 2);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context,1,maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Container(
         color: Colors.purple[300],
         child: new Column(
           // portrait mode
           children: <Widget>[
-            new Flexible(
-              flex: 4,
+            new Expanded(
               child: new ResponsiveGridView(
-                rows: 9,
-                cols: 9,
+                rows: _size,
+                cols: _size,
                 maxAspectRatio: 1.0,
                 children: arr
-                    .map((e) => _buildItem(j++, e))
+                    .map((e) => Padding(
+                    padding: EdgeInsets.all(buttonPadding),
+                    child:_buildItem(j++, e)))
                     .toList(growable: false),
               ),
             ),
-            new Flexible(
-              flex: 4,
+            new Container(
               child: new ResponsiveGridView(
-                rows: 2,
-                cols: 2,
-                maxAspectRatio:1.0,
+                rows: 1,
+                cols: 9,
                 children: dragData
-                    .map((e) => _buildItem(k++, e))
+                    .map((e) => Padding(
+      padding: EdgeInsets.all(buttonPadding),child:_buildItem(k++, e)))
                     .toList(growable: false),
               ),
             ),
           ],
         )
     );
-
+    });
   }
 }
 class MyButton extends StatefulWidget {
@@ -254,7 +382,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
     if (widget.index < 100 && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -264,111 +391,67 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 scale: animation,
                 child: new Container(
                   decoration: new BoxDecoration(
-                    color: Colors.yellow[500],
                     borderRadius:
                     new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new DragTarget(
                     onAccept: (String data) => widget.onAccepted(data),
+//                    onWillAccept:(String data) => true,
                     builder: (
                         BuildContext context,
                         List<dynamic> accepted,
                         List<dynamic> rejected,
                         ) {
-                      return new Container(
-                        decoration: new BoxDecoration(
-                          color: widget.flag == 1
-                              ? Colors.redAccent
-                              : Colors.yellow[500],
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                          image:widget.img!=null
-                              ? new DecorationImage(
-                              image: new AssetImage(widget.img),
-                              fit: BoxFit.contain)
-                              : null,
-                        ),
-                        child: new Center(
-                          child: new Text(widget.text,
-                              key: new Key('A ${widget.keys}'),
-                              style: new TextStyle(
-                                  color: Colors.black, fontSize: 24.0)),
-                        ),
+                      return new UnitButton(
+                        key: new Key('A${widget.keys}'),
+                        text: widget.text,
+                        bgImage: widget.img,
+                        showHelp: false,
+                        highlighted: widget.flag==1?true:false,
                       );
                     },
                   ),
                 ))),
       );
-    } else if (widget.index >= 100 && (widget.text==''|| widget.text.length==2)) {
-      if(widget.text==''){newtext='';}
-      else{newtext=widget.text[0];}
+    } else if (widget.index >= 100 &&
+        (widget.text == '' || widget.text.length == 2)) {
+      if (widget.text == '') {
+        newtext = '';
+      } else {
+        newtext = widget.text[0];
+      }
       return new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: widget.text==''?Colors.purple[300]:Colors.grey[300],
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new Center(
-              child: new Text(newtext,
-                  style: new TextStyle(color: Colors.black, fontSize: 24.0)),
-            ),
+          child: new UnitButton(
+            key: new Key('A${widget.keys}'),
+            text: newtext,
+            showHelp: false,
+            disabled: true,
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
-        data: _displayText,
+        data: '${widget.text}',
         child: new ScaleTransition(
             scale: animation,
-            child: new Container(
-              decoration: new BoxDecoration(
-                color: widget.color1 == 1
-                    ? Colors.yellow[500]
-                    : Colors.purple[300],
-                borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              ),
-              child: new Center(
-                child: new Text(_displayText,
-                    key: new Key('B${widget.keys}'),
-                    style: new TextStyle(color: Colors.black, fontSize: 24.0)),
-              ),
+            child: new UnitButton(
+              key: new Key('A${widget.keys}'),
+              text: widget.text,
+              showHelp: false,
             )),
         //  childWhenDragging: new Container(),
-        feedback:new Container(
-          height: media.orientation==Orientation.portrait?media.size.height*.05:media.size.height*.1,
-          width: media.orientation==Orientation.portrait?media.size.width*.14:media.size.width*.08,
-          decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-              color: Colors.yellow[400]),
-          child: new Center(
-            child: new Transform.rotate(
-              angle: widget.isRotated==true?
-              media.orientation==Orientation.portrait?3.14:0.0:0.0,
-              alignment: Alignment.center,
-              child: new Text(
-                widget.text,
-                style: new TextStyle(
-                  color: Colors.black,
-                  decoration: TextDecoration.none,
-                  fontSize: 26.0,
-                ),
-              ),
-            ),
-          ),
+        feedback: UnitButton(
+          text: widget.text,
+
         ),
       );
     } else {
       return new ScaleTransition(
           scale: animation,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: Colors.purple[500],
-              borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-            ),
-            child: new Center(
-              child: new Text(_displayText,
-                  style: new TextStyle(color: Colors.black, fontSize: 24.0)),
-            ),
+          child: new UnitButton(
+            key: new Key('A${widget.keys}'),
+            text: widget.text,
+            disabled: true,
+            showHelp: false,
           ));
     }
   }

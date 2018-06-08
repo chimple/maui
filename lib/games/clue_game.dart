@@ -4,7 +4,6 @@ import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
-import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
@@ -45,7 +44,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   }
 
   List<String> _category;
-  List<String> _words;
+  List<String> _categoryup;
+  List<String> _categorydown;
   List<String> _holdwords;
   List<String> _redfruit;
   List<String> _travel;
@@ -53,44 +53,13 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> _blackpet;
 
   void _initClueGame() {
-    _words = [
-      'e',
-      'ery',
-      'pa',
-      'nd',
-      'a',
-      'co',
-      'w',
-      'pl',
-      'bu',
-      's',
-      'r',
-      'e',
-      'ch',
-      'sta',
-      'war',
-      'rey',
-      'tom',
-      'oto',
-      'do',
-      'g',
-      'ca',
-      'ne',
-      'er',
-      'wi',
-      'be',
-      'ter',
-      'wa',
-      'lk',
-      'mi',
-    ];
-    _holdwords = _words;
-    _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
+   _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
+     _categoryup = ['Red Fruit', 'Travel'];
+    _categorydown = ['Drink', 'Black Pet'];
     _redfruit = ['apple', 'cheery', 'stawarrey', 'tomoto'];
     _travel = ['bus', 'car', 'train', 'aeroplane'];
     _drink = ['milk', 'water', 'beer', 'wine'];
     _blackpet = ['cat', 'dog', 'panda', 'cow'];
-    _words.shuffle();
   }
 
   var keys = 0;
@@ -210,8 +179,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             ? _height * 0.07
             : _height * 0.1,
         width: media.orientation == Orientation.portrait
-            ? _width * 0.6
-            : _width * 0.32,
+            ? _width * 0.5
+            : _width * 0.25,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
           border: new Border.all(width: 1.0),
@@ -238,14 +207,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             ? _height * 0.07
             : _height * 0.1,
         width: media.orientation == Orientation.portrait
-            ? _width * 0.25
-            : _width * 0.14,
+            ? _width * 0.15
+            : _width * 0.1,
         child: new RaisedButton(
           onPressed: () => _validate(),
           shape: new RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
           child: new Text(
-            'submit',
+            '✔',
             style: new TextStyle(
               color: Colors.black,
               fontSize: 22.0,
@@ -257,7 +226,9 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     keys = 0;
+    if (orientation==Orientation.portrait) {
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -267,53 +238,191 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
               (prev, element) => element.length > prev ? element.length : prev)
           : 1);
 
-      maxWidth = (constraints.maxWidth - hPadding * 2) / 2.6;
-      maxHeight = (constraints.maxHeight - vPadding * 2) / 2.6;
-      double buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      maxWidth = (constraints.maxWidth - hPadding * 2) / 3.5;
+      maxHeight = (constraints.maxHeight - vPadding * 2) / 3.5;
+      double buttonPadding = sqrt(min(maxWidth, maxHeight));
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
       var k = 0;
 
-      return new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            new ResponsiveGridView(
-              rows: 2,
-              cols: 2,
-              maxAspectRatio: 1.0,
-              children: _category
-                  .map((e) => new Padding(
-                        padding: EdgeInsets.all(buttonPadding),
-                        child: _builtCategory(k++, e),
-                      ))
+     return new Flex(direction: Axis.vertical, children: <Widget>[
+        new Container(
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              new ResponsiveGridView(
+                rows: 2,
+                cols: 1,
+                maxAspectRatio: 1.0,
+                children: _categorydown
+                    .map((e) => new Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _builtCategory(k++, e),
+                        ))
+                    .toList(growable: false),
+              ),
+              new ResponsiveGridView(
+                rows: 2,
+                cols: 1,
+                maxAspectRatio: 1.0,
+                children: _categoryup
+                    .map((e) => new Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _builtCategory(k++, e),
+                        ))
+                    .toList(growable: false),
+              ),
+            ],
+          ),
+        ),
+        new Expanded(
+          flex: 1,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new Shake(
+                animation: (_flag == 0) ? animation : noanimation,
+                child: answer(_result),
+              ),
+              submit(),
+            ],
+          ),
+        ),
+        new Expanded(
+          flex: 5, 
+          child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: _words
+                  .map((e) => builCircle(context,e, j))
                   .toList(growable: false),
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),),
+      ]);
+    });
+     } else {
+      //landscape mode
+      return new LayoutBuilder(builder: (context, constraints) {
+        final hPadding = pow(constraints.maxWidth / 150.0, 2);
+        final vPadding = pow(constraints.maxHeight / 150.0, 2);
+        double maxWidth = 0.0, maxHeight = 0.0;
+        final maxChars = (_category != null
+            ? _category.fold(
+                1,
+                (prev, element) =>
+                    element.length > prev ? element.length : prev)
+            : 1);
+
+        maxWidth = (constraints.maxWidth - hPadding * 2) / 5;
+        maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+        double buttonPadding = sqrt(min(maxWidth, maxHeight)/2);
+        UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+        AppState state = AppStateContainer.of(context).state;
+        var k = 0;
+        return new Flex(direction: Axis.horizontal, children: <Widget>[
+          new Container(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                new Shake(
-                  animation: (_flag == 0) ? animation : noanimation,
-                  child: answer(_result),
+                new ResponsiveGridView(
+                  rows: 1,
+                  cols: 2,
+                  maxAspectRatio: 1.0,
+                  children: _categorydown
+                      .map((e) => new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _builtCategory(k++, e),
+                          ))
+                      .toList(growable: false),
                 ),
-                submit(),
+                new ResponsiveGridView(
+                  rows: 1,
+                  cols: 2,
+                  maxAspectRatio: 1.0,
+                  children: _categoryup
+                      .map((e) => new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _builtCategory(k++, e),
+                          ))
+                      .toList(growable: false),
+                ),
+                new Padding(
+                  padding: const EdgeInsets.only(bottom:15.0),
+                  child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                  new Shake(
+                    animation: (_flag == 0) ? animation : noanimation,
+                    child: answer(_result),
+                  ),
+                  submit(),
               ],
             ),
-            new Circle(),
-          ]);
+                ),
+              ],
+            ),
+          ),
+          new Expanded( child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: _words
+                  .map((e) => builCircle(context,e, j))
+                  .toList(growable: false),
+            ),),
+        ]);
+      });
+    }
+  }
+  
+  int j = 0;
+  Widget builCircle(BuildContext context, String text, int index) {
+    return new Circle(
+        text: text,
+        key: new ValueKey<int>(index),
+        onPress: () {
+          setData(text);
+          print("asdd");
+        });
+  }
+
+  void setData(String a) {
+    print("call here comming");
+    setState(() {
+      _result = _result+a;
     });
   }
+    List _words = [
+      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
+    
 }
 
 class Circle extends StatefulWidget {
+  String text;
+  Circle({Key key, this.text, this.onPress}) : super();
+  VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
 }
 
 class _CircleState extends State<Circle> {
+   String _text='';
+  int wordsIndex = 0;
+  void initState() {
+     super.initState();
+     setState(() {
+      _text = widget.text;
+    });
+  } 
   @override
   Widget build(BuildContext context) {
-    double circleSize = 260.0;
-
+   Orientation orientation = MediaQuery.of(context).orientation;
+    double circleSize = orientation == Orientation.portrait?
+    MediaQuery.of(context).size.width * 0.7:MediaQuery.of(context).size.height * 0.7;
+      double bigRadius = circleSize / 2;
+    double smallRadius = (bigRadius) * 0.15;
+    MediaQueryData media = MediaQuery.of(context);
+    // List _words = [
+    //   'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
+     int wordsIndex = 0;
     List<Widget> widgets = new List();
     widgets.add(new Container(
         width: circleSize,
@@ -321,23 +430,24 @@ class _CircleState extends State<Circle> {
         decoration:
             new BoxDecoration(color: Colors.green, shape: BoxShape.circle)));
 
-    Offset circleCenter = new Offset(circleSize / 2, circleSize / 2);
+     Offset circleCenter = new Offset(bigRadius, bigRadius);
 
-    List<Offset> offsets = calculateOffsets(100.0, circleCenter, 12);
+    List<Offset> offsets; 
+    offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], i.toString(), Colors.orange[300], 23.0));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
-    offsets = calculateOffsets(50.0, circleCenter, 6);
+    offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], i.toString(), Colors.orange[300], 23.0));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
 
-    offsets = calculateOffsets(0.0, circleCenter, 1);
+    offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], i.toString(), Colors.orange[300], 23.0));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
@@ -367,8 +477,9 @@ class PositionCircle extends StatefulWidget {
   final String label;
   final Color itemColor;
   final double radii;
+  final VoidCallback onPress;
 
-  PositionCircle(this.initPos, this.label, this.itemColor, this.radii);
+  PositionCircle(this.initPos, this.label, this.itemColor, this.radii,this.onPress);
   @override
   _PositionCircleState createState() => new _PositionCircleState();
 }
@@ -391,11 +502,12 @@ class _PositionCircleState extends State<PositionCircle> {
       height: widget.radii * 2,
       child: new RawMaterialButton(
         shape: const CircleBorder(side: BorderSide.none),
-        onPressed: () {},
+        onPressed: () => widget.onPress(),
         fillColor: widget.itemColor,
-        splashColor: Colors.yellow,
+        splashColor: Colors.green[900],
         child: new Text(
           widget.label,
+         style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ),
     );
