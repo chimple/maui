@@ -1,9 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
 import '../components/SecondScreen.dart';
@@ -67,18 +66,23 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   @override
   Widget build(BuildContext context) {
 
-    MediaQueryData media = MediaQuery.of(context);
-    print({"this is mediaaa2:": media.size});
+    // MediaQueryData media = MediaQuery.of(context);
+    // print({"this is mediaaa2:": media.size});
 
-    _currentPainter = new DrawPainting(_drawLineProperty, media.size);
+    
 
     return new LayoutBuilder(builder: (context, constraints) {
-
+       var _height = constraints.maxHeight;
+      var _width = constraints.maxWidth;
+      _currentPainter = new DrawPainting(_drawLineProperty,_height,_width);
+      print({"this is drawing area height :": constraints.maxHeight});
+      print({"this is drawing area width :": constraints.maxWidth});
+     
       print({"this is constraints of drawing component": constraints});
        //, color, width);
 
       return new Container(
-          margin: new EdgeInsets.all(5.0),
+          // margin: new EdgeInsets.all(5.0),
           child: new Card(
             child: new ConstrainedBox(
               constraints: const BoxConstraints.expand(),
@@ -90,7 +94,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                           details.globalPosition);
 
                       Position convertedIntoPercentage = new Position(
-                          localPosition.dx / media.size.width, localPosition.dy / media.size.height);
+                          localPosition.dx / _width, localPosition.dy / _height);
                       print({"convert into percentage is : ": convertedIntoPercentage});
                       double tolerence = 0.06;
                       if(_drawLineProperty.length < 1){
@@ -121,7 +125,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   child: new RepaintBoundary(
                     child: new CustomPaint(
                       painter: _currentPainter,
-                      size: Size.infinite,
+                      // size: Size.infinite,
                       isComplex: true,
                       willChange: false,
 
@@ -158,6 +162,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void send() {
+    this.writeInFile();
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
     print({"the data is : " : drawLinePropertyArray});
 
@@ -220,7 +225,6 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
      print({"I am getting final color here  " : colorValue});
     setState(() {
       color = new Color(colorValue);
-//      width = 20.0;
     });
   }
 
@@ -229,15 +233,37 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       width = widthValue;
     });
   }
+
+  Future<String> get _localPath async{
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async{
+    final path = await _localPath;
+    print({'the local created path is : ': path});
+    return new File('drawpoints.txt');
+  }
+
+  writeInFile () async{
+    final file = await _localFile;
+    int value = 100;
+    // Write the file
+    file.writeAsString('$value');    
+  }
 }
 
 class DrawPainting extends CustomPainter {
   List<DrawLineProperty> drawLineProperty = [];
-  Size sizeMedia = new Size(0.0, 0.0);
+  // Size sizeMedia = new Size(0.0, 0.0);
+  var _height = 0.0;
+  var _width = 0.0;
 
-  DrawPainting(drawLineProperty, sizeMedia) {
+  DrawPainting(drawLineProperty, _height, _width) {
     this.drawLineProperty = drawLineProperty;
-    this.sizeMedia = sizeMedia;
+    this._height = _height;
+    this._width = _width;
+    // this.sizeMedia = sizeMedia;
   }
 
 
@@ -255,34 +281,34 @@ class DrawPainting extends CustomPainter {
 
     Paint paint = new Paint()
       ..strokeCap = StrokeCap.round;
-    print({"sizeMedia of paint is in draw is ": sizeMedia});
+    // print({"sizeMedia of paint is in draw is ": sizeMedia});
     print({"size of paint is in draw is ": size});
     for (int i = 0; i < drawLineProperty.length - 1; i++) {
 
       if (drawLineProperty[i]._position != null &&
           drawLineProperty[i + 1]._position != null &&
-          drawLineProperty[i]._position.x * sizeMedia.width >= 0 &&
-          drawLineProperty[i]._position.y * sizeMedia.height >= 0 &&
-          (drawLineProperty[i]._position.x * sizeMedia.width >= 0 &&
-              drawLineProperty[i]._position.y * sizeMedia.height >= 0 &&
-              drawLineProperty[i]._position.x * sizeMedia.width < size.width &&
-              drawLineProperty[i]._position.y * sizeMedia.height <
+          drawLineProperty[i]._position.x * _width >= 0 &&
+          drawLineProperty[i]._position.y * _height >= 0 &&
+          (drawLineProperty[i]._position.x * _width >= 0 &&
+              drawLineProperty[i]._position.y * _height >= 0 &&
+              drawLineProperty[i]._position.x * _width < size.width &&
+              drawLineProperty[i]._position.y * _height <
                   size.height) &&
-          (drawLineProperty[i + 1]._position.x * sizeMedia.width >= 0 &&
-              drawLineProperty[i + 1]._position.y * sizeMedia.height >= 0 &&
-              drawLineProperty[i + 1]._position.x * sizeMedia.width <
+          (drawLineProperty[i + 1]._position.x * _width >= 0 &&
+              drawLineProperty[i + 1]._position.y * _height >= 0 &&
+              drawLineProperty[i + 1]._position.x * _width <
                   size.width &&
-              drawLineProperty[i + 1]._position.y * sizeMedia.height <
+              drawLineProperty[i + 1]._position.y * _height <
                   size.height)) {
         paint.color = drawLineProperty[i]._color;
         paint.strokeWidth = drawLineProperty[i]._width;
 
         var currentPixel = new Offset(
-            drawLineProperty[i]._position.x * sizeMedia.width,
-            drawLineProperty[i]._position.y * sizeMedia.height);
+            drawLineProperty[i]._position.x * _width,
+            drawLineProperty[i]._position.y * _height);
         var nextPixel = new Offset(
-            drawLineProperty[i + 1]._position.x * sizeMedia.width,
-            drawLineProperty[i + 1]._position.y * sizeMedia.height);
+            drawLineProperty[i + 1]._position.x * _width,
+            drawLineProperty[i + 1]._position.y * _height);
 
         canvas.drawLine(currentPixel, nextPixel, paint);
 //        canvas.drawCircle(currentPixel, 8.0, paint);
@@ -294,7 +320,6 @@ class DrawPainting extends CustomPainter {
   bool shouldRepaint(DrawPainting oldDelegate){
     return true;
   }
-
 }
 
 
