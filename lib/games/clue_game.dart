@@ -288,7 +288,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             ],
           ),
         ),
-        new Expanded(flex: 5, child: new Circle()),
+        new Expanded(
+          flex: 5, 
+          child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: _words
+                  .map((e) => builCircle(context,e, j))
+                  .toList(growable: false),
+            ),),
       ]);
     });
      } else {
@@ -353,19 +361,57 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
               ],
             ),
           ),
-          new Expanded(child: new Circle()),
+          new Expanded( child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: _words
+                  .map((e) => builCircle(context,e, j))
+                  .toList(growable: false),
+            ),),
         ]);
       });
     }
   }
+  
+  int j = 0;
+  Widget builCircle(BuildContext context, String text, int index) {
+    return new Circle(
+        text: text,
+        key: new ValueKey<int>(index),
+        onPress: () {
+          setData(text);
+          print("asdd");
+        });
+  }
+
+  void setData(String a) {
+    print("call here comming");
+    setState(() {
+      _result = _result+a;
+    });
+  }
+    List _words = [
+      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
+    
 }
 
 class Circle extends StatefulWidget {
+  String text;
+  Circle({Key key, this.text, this.onPress}) : super();
+  VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
 }
 
 class _CircleState extends State<Circle> {
+   String _text='';
+  int wordsIndex = 0;
+  void initState() {
+     super.initState();
+     setState(() {
+      _text = widget.text;
+    });
+  } 
   @override
   Widget build(BuildContext context) {
    Orientation orientation = MediaQuery.of(context).orientation;
@@ -374,8 +420,8 @@ class _CircleState extends State<Circle> {
       double bigRadius = circleSize / 2;
     double smallRadius = (bigRadius) * 0.15;
     MediaQueryData media = MediaQuery.of(context);
-    List _words = [
-      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
+    // List _words = [
+    //   'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
      int wordsIndex = 0;
     List<Widget> widgets = new List();
     widgets.add(new Container(
@@ -390,18 +436,18 @@ class _CircleState extends State<Circle> {
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
     offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
 
     offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius,widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
@@ -431,8 +477,9 @@ class PositionCircle extends StatefulWidget {
   final String label;
   final Color itemColor;
   final double radii;
+  final VoidCallback onPress;
 
-  PositionCircle(this.initPos, this.label, this.itemColor, this.radii);
+  PositionCircle(this.initPos, this.label, this.itemColor, this.radii,this.onPress);
   @override
   _PositionCircleState createState() => new _PositionCircleState();
 }
@@ -455,7 +502,7 @@ class _PositionCircleState extends State<PositionCircle> {
       height: widget.radii * 2,
       child: new RawMaterialButton(
         shape: const CircleBorder(side: BorderSide.none),
-        onPressed: () {},
+        onPressed: () => widget.onPress(),
         fillColor: widget.itemColor,
         splashColor: Colors.green[900],
         child: new Text(
