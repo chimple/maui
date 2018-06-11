@@ -1,5 +1,7 @@
 import 'dart:math';
+// import 'dart:math' as math;
 import 'dart:async';
+// import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -11,6 +13,13 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
+// import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:maui/db/entity/unit.dart';
+import 'package:maui/repos/unit_repo.dart';
+import 'package:meta/meta.dart';
+
+String sentence1 = "Which is the highest";
+String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
@@ -36,7 +45,7 @@ class PictureSentence extends StatefulWidget {
 
 enum Status { Active, Right, Wrong }
 
-class PictureSentenceState extends State<PictureSentence> with SingleTickerProviderStateMixin {
+class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
   Tuple3<String, String, List<String>> _allques;
@@ -48,22 +57,10 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
   List<Status> _statuses = [];
   bool isCorrect;
   int scoretrack = 0;
- Animation animation;
- AnimationController animationController;
+
   @override
   void initState() {
     super.initState();
-    animationController= AnimationController(duration: Duration(milliseconds: 3000),vsync: this);
-    animation.addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        animationController.reverse();
-      }
-      else if (status == AnimationStatus.dismissed){
-        animationController.forward();
-      }
-    });
-    animation = Tween(begin: 0.0, end: 1000.0).animate(animationController);
-    animationController.forward();
     _initBoard();
   }
 
@@ -146,7 +143,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
     print("Question text here $questionText");
     print("Answer here $ans");
 
-
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -165,7 +161,7 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / 3;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -196,7 +192,7 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       textBaseline: TextBaseline.ideographic,
                       children: <Widget>[
-                        new Text("Which is the highest",
+                        new Text(sentence1,
                             overflow: TextOverflow.ellipsis,
                             style: new TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -210,21 +206,29 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
                               height: 40.0,
                               width: 100.0,
                             ),
-                            new IconButton(
-                              iconSize: 24.0,
-                              color: Colors.black,
-                              icon: new Icon(Icons.comment),
-                              tooltip: 'check the picture',
+                            new FloatingActionButton(
                               onPressed: () {
-                                
-                                // PictureAnimation( ,
-                                //    animation);
+                                showDialog(
+                                    context: context,
+                                    child: new FractionallySizedBox(
+                                        heightFactor: 0.5,
+                                        widthFactor: 0.8,
+                                        child: new FlashCard(text: "widget.text")));
                               },
+                              tooltip: 'Check the picture',
+                              child: new Icon(Icons.comment),
                             ),
+                            // new IconButton(
+                            //   iconSize: 24.0,
+                            //   color: Colors.black,
+                            //   icon: new Icon(Icons.comment),
+                            //   tooltip: 'check the picture',
+                            //   onPressed: () {},
+                            // ),
                           ]),
                         ),
                         new Text(
-                          "in the  ",
+                          sentence2,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.clip,
                           style: new TextStyle(
@@ -239,17 +243,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
                         ),
                       ],
                     ))),
-          ),
-          new Expanded(
-            flex: 1,
-            child: new Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage('assets/dict/mountain.png')))),
           ),
           new Expanded(
               flex: 2,
@@ -267,12 +260,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       );
     });
   }
-@override
-void dispose()
-{
-  animationController.dispose();
-  super.dispose();
-}
 }
 
 class MyButton extends StatefulWidget {
@@ -350,39 +337,110 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new Shake(
         animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-        child: new ScaleTransition(
-            scale: animation,
-            child: new GestureDetector(
-              onLongPress: () {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
-              },
-              child: new UnitButton(
-                onPress: () => widget.onPress(),
-                text: _displayText,
-                unitMode: widget.unitMode,
-              ),
-            )));
+        child: new GestureDetector(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                child: new FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.8,
+                    child: new FlashCard(text: widget.text)));
+          },
+          child: new UnitButton(
+            onPress: () => widget.onPress(),
+            text: _displayText,
+            unitMode: widget.unitMode,
+          ),
+        ));
   }
 }
 
-class PictureAnimation extends AnimatedWidget {
-  PictureAnimation(Key key,Animation animation)
-      : super( key: key ,listenable: animation);
+class PictureCard extends StatefulWidget {
+  final String text;
+  final String image;
+  final VoidCallback onChecked;
+
+  PictureCard({Key key, @required this.text, this.image, this.onChecked})
+      : super(key: key);
+
+  @override
+  _PictureCardState createState() {
+    return new _PictureCardState();
+  }
+}
+
+class _PictureCardState extends State<PictureCard> {
+  Unit _unit;
+  bool _isLoading = true;
+  bool _containsNum = false;
+  int i;
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+    _getNumberStatus();
+  }
+
+  void _getData() async {
+    _unit = await new UnitRepo().getUnit(widget.text);
+    setState(() => _isLoading = false);
+  }
+
+  void _getNumberStatus() async {
+    for (i = 0; i < 10; i++) {
+      if (widget.text.indexOf('$i') != -1) {
+        setState(() => _containsNum = true);
+        print("$_containsNum");
+        break;
+      }
+      print("coming");
+      print("$_containsNum");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Animation animation = listenable;
-    return Center(
-      child: Container(
-        height: animation.value,
-        width: animation.value,
-        child: FlutterLogo(),
-      ),
-    );
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    return new LayoutBuilder(builder: (context, constraints) {
+      Color bgColor = Theme.of(context).accentColor;
+
+      return new FractionallySizedBox(
+        heightFactor: 0.5,
+        widthFactor: 0.8,
+        child: new Card(
+          color: bgColor,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.all(
+                  Radius.circular(constraints.maxHeight * 0.02))),
+          child: new Expanded(
+              child: new SizedBox(
+                  height: constraints.maxHeight > constraints.maxWidth
+                      ? constraints.maxHeight * 0.4
+                      : constraints.maxWidth * 0.3,
+                  width: constraints.maxHeight > constraints.maxWidth
+                      ? constraints.maxWidth * 0.9
+                      : constraints.maxHeight * 0.5,
+                  child: _containsNum
+                      ? new Container(
+                          alignment: const Alignment(0.0, 0.0),
+                          child: new Text(widget.text,
+                              style: new TextStyle(
+                                  color: Colors.white,
+                                  fontSize: constraints.maxHeight * 0.11,
+                                  fontWeight: FontWeight.bold)))
+                      : new Image.asset(
+                          'assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
+        ),
+      );
+    });
   }
 }
+
+
