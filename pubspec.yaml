@@ -116,6 +116,9 @@ flutter:
     - assets/hoodie/picture_sentence.png
     - assets/forward_button.png
     - assets/home_button.png
+    - assets/dice.png
+    - assets/wordgrid.png
+    - assets/picture_sentence.png
 
     #happy
     - assets/hoodie/reflex_happy.png
@@ -146,6 +149,9 @@ flutter:
     - assets/hoodie/tap_wrong_happy.png
     - assets/hoodie/true_or_false_happy.png
     - assets/hoodie/picture_sentence_happy.png
+    - assets/dice_happy.png
+    - assets/wordgrid_happy.png
+    - assets/picture_sentence_happy.png
 
     #sad
     - assets/hoodie/reflex_sad.png
@@ -177,6 +183,9 @@ flutter:
     - assets/hoodie/true_or_false_sad.png
     - assets/background_tile.png
     - assets/hoodie/picture_sentence_sad.png
+    - assets/dice_sad.png
+    - assets/wordgrid_sad.png
+    - assets/picture_sentence_sad.png
     # dictionary
     - assets/dict/aardvark.png
     - assets/dict/abdomen.png
