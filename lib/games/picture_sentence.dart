@@ -206,25 +206,33 @@ class PictureSentenceState extends State<PictureSentence> {
                               height: 40.0,
                               width: 100.0,
                             ),
-                            new FloatingActionButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    child: new FractionallySizedBox(
-                                        heightFactor: 0.5,
-                                        widthFactor: 0.8,
-                                        child: new FlashCard(text: "widget.text")));
-                              },
-                              tooltip: 'Check the picture',
-                              child: new Icon(Icons.comment),
-                            ),
-                            // new IconButton(
-                            //   iconSize: 24.0,
-                            //   color: Colors.black,
-                            //   icon: new Icon(Icons.comment),
-                            //   tooltip: 'check the picture',
-                            //   onPressed: () {},
+                            // new FloatingActionButton(
+                            //   onPressed: () {
+                            //     showDialog(
+                            //         context: context,
+                            //         child: new FractionallySizedBox(
+                            //             heightFactor: 0.5,
+                            //             widthFactor: 0.8,
+                            //             child: new PictureCard(
+                            //                 text: "widget.text")));
+                            //   },
+                            //   tooltip: 'Check the picture',
+                            //   child: new Icon(Icons.comment),
                             // ),
+                            new IconButton(
+                                iconSize: 24.0,
+                                color: Colors.black,
+                                icon: new Icon(Icons.comment),
+                                tooltip: 'check the picture',
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      child: new FractionallySizedBox(
+                                          heightFactor: 0.5,
+                                          widthFactor: 0.8,
+                                          child: new PictureCard(
+                                              text: "widget.text")));
+                                }),
                           ]),
                         ),
                         new Text(
@@ -299,7 +307,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-//        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
           if (widget.text != null) {
@@ -358,10 +365,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 class PictureCard extends StatefulWidget {
   final String text;
   final String image;
-  final VoidCallback onChecked;
 
-  PictureCard({Key key, @required this.text, this.image, this.onChecked})
-      : super(key: key);
+  PictureCard({Key key, @required this.text, this.image}) : super(key: key);
 
   @override
   _PictureCardState createState() {
@@ -372,31 +377,18 @@ class PictureCard extends StatefulWidget {
 class _PictureCardState extends State<PictureCard> {
   Unit _unit;
   bool _isLoading = true;
-  bool _containsNum = false;
+
   int i;
 
   @override
   void initState() {
     super.initState();
     _getData();
-    _getNumberStatus();
   }
 
   void _getData() async {
     _unit = await new UnitRepo().getUnit(widget.text);
     setState(() => _isLoading = false);
-  }
-
-  void _getNumberStatus() async {
-    for (i = 0; i < 10; i++) {
-      if (widget.text.indexOf('$i') != -1) {
-        setState(() => _containsNum = true);
-        print("$_containsNum");
-        break;
-      }
-      print("coming");
-      print("$_containsNum");
-    }
   }
 
   @override
@@ -409,38 +401,19 @@ class _PictureCardState extends State<PictureCard> {
       );
     }
     return new LayoutBuilder(builder: (context, constraints) {
-      Color bgColor = Theme.of(context).accentColor;
-
-      return new FractionallySizedBox(
-        heightFactor: 0.5,
-        widthFactor: 0.8,
-        child: new Card(
-          color: bgColor,
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.all(
-                  Radius.circular(constraints.maxHeight * 0.02))),
-          child: new Expanded(
-              child: new SizedBox(
-                  height: constraints.maxHeight > constraints.maxWidth
-                      ? constraints.maxHeight * 0.4
-                      : constraints.maxWidth * 0.3,
-                  width: constraints.maxHeight > constraints.maxWidth
-                      ? constraints.maxWidth * 0.9
-                      : constraints.maxHeight * 0.5,
-                  child: _containsNum
-                      ? new Container(
-                          alignment: const Alignment(0.0, 0.0),
-                          child: new Text(widget.text,
-                              style: new TextStyle(
-                                  color: Colors.white,
-                                  fontSize: constraints.maxHeight * 0.11,
-                                  fontWeight: FontWeight.bold)))
-                      : new Image.asset(
-                          'assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
-        ),
+      return new Card(
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.all(
+                Radius.circular(constraints.maxHeight * 0.02))),
+        child: new Container(
+            width: 200.0,
+            height: 200.0,
+            decoration: new BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage('assets/dict/mountain.png')))),
       );
     });
   }
 }
-
-
