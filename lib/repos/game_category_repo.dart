@@ -24,6 +24,7 @@ class GameCategoryRepo {
     'draw_challenge',
     'friend_word',
     'crossword',
+    'picture_sentence',
     'clue_game',
     'drawing',
     'identify'

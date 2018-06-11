@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:async';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -11,8 +10,9 @@ import 'package:maui/components/unit_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:flutter/animation.dart';
 
-class Quiz extends StatefulWidget {
+class PictureSentence extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -20,7 +20,7 @@ class Quiz extends StatefulWidget {
   GameConfig gameConfig;
   bool isRotated;
 
-  Quiz(
+  PictureSentence(
       {key,
       this.onScore,
       this.onProgress,
@@ -31,12 +31,12 @@ class Quiz extends StatefulWidget {
       : super(key: key);
 
   @override
-  State createState() => new QuizState();
+  State createState() => new PictureSentenceState();
 }
 
 enum Status { Active, Right, Wrong }
 
-class QuizState extends State<Quiz> {
+class PictureSentenceState extends State<PictureSentence> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
   var keys = 0;
   Tuple3<String, String, List<String>> _allques;
@@ -48,10 +48,22 @@ class QuizState extends State<Quiz> {
   List<Status> _statuses = [];
   bool isCorrect;
   int scoretrack = 0;
-
+ Animation animation;
+ AnimationController animationController;
   @override
   void initState() {
     super.initState();
+    animationController= AnimationController(duration: Duration(milliseconds: 3000),vsync: this);
+    animation.addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        animationController.reverse();
+      }
+      else if (status == AnimationStatus.dismissed){
+        animationController.forward();
+      }
+    });
+    animation = Tween(begin: 0.0, end: 1000.0).animate(animationController);
+    animationController.forward();
     _initBoard();
   }
 
@@ -119,7 +131,7 @@ class QuizState extends State<Quiz> {
   }
 
   @override
-  void didUpdateWidget(Quiz oldWidget) {
+  void didUpdateWidget(PictureSentence oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -133,6 +145,7 @@ class QuizState extends State<Quiz> {
     keys = 0;
     print("Question text here $questionText");
     print("Answer here $ans");
+
 
     if (_isLoading) {
       return new SizedBox(
@@ -152,8 +165,8 @@ class QuizState extends State<Quiz> {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 3;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -166,34 +179,100 @@ class QuizState extends State<Quiz> {
       double wd = constraints.maxWidth;
       print("My Height - $ht");
       print("My Width - $wd");
-      return new Column(
+      return new Flex(
+        direction: Axis.vertical,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          new Material(
-              color: Theme.of(context).accentColor,
-              elevation: 4.0,
-              child: new LimitedBox(
-                  maxHeight: maxHeight,
-                  child: new Center(
-                    child: new Text(questionText,
-                        style: new TextStyle(
-                            color: Colors.white,
-                            fontSize: state.buttonFontSize)),
-                  ))),
           new Expanded(
+            flex: 1,
+            child: new Material(
+                color: Theme.of(context).accentColor,
+                elevation: 4.0,
+                child: new LimitedBox(
+                    maxHeight: maxHeight,
+                    maxWidth: double.infinity,
+                    child: new Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      textBaseline: TextBaseline.ideographic,
+                      children: <Widget>[
+                        new Text("Which is the highest",
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 40.0)),
+                        new Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Stack(children: [
+                            new Container(
+                              color: Colors.grey,
+                              height: 40.0,
+                              width: 100.0,
+                            ),
+                            new IconButton(
+                              iconSize: 24.0,
+                              color: Colors.black,
+                              icon: new Icon(Icons.comment),
+                              tooltip: 'check the picture',
+                              onPressed: () {
+                                
+                                // PictureAnimation( ,
+                                //    animation);
+                              },
+                            ),
+                          ]),
+                        ),
+                        new Text(
+                          "in the  ",
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                          style: new TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40.0,
+                              color: Colors.black),
+                        ),
+                        new Container(
+                          color: Colors.grey,
+                          height: 40.0,
+                          width: 100.0,
+                        ),
+                      ],
+                    ))),
+          ),
+          new Expanded(
+            flex: 1,
+            child: new Container(
+                width: 200.0,
+                height: 200.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage('assets/dict/mountain.png')))),
+          ),
+          new Expanded(
+              flex: 2,
               child: new ResponsiveGridView(
-            rows: _size,
-            cols: _size,
-            children: choice
-                .map((e) => new Padding(
-                      padding: EdgeInsets.all(buttonPadding),
-                      child: _buildItem(_statuses[j], j++, e),
-                    ))
-                .toList(growable: false),
-          ))
+                rows: _size,
+                cols: _size,
+                children: choice
+                    .map((e) => new Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _buildItem(_statuses[j], j++, e),
+                        ))
+                    .toList(growable: false),
+              ))
         ],
       );
     });
   }
+@override
+void dispose()
+{
+  animationController.dispose();
+  super.dispose();
+}
 }
 
 class MyButton extends StatefulWidget {
@@ -231,15 +310,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     wrongController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
 
-    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticOut)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
 //        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-          // print('dismissed');
-          // if (widget.text != null) {
-          //   setState(() => _displayText = widget.text);
-          //   controller.forward();
-          // }
+          print('dismissed');
+          if (widget.text != null) {
+            setState(() => _displayText = widget.text);
+            controller.forward();
+          }
         }
       });
     wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);
@@ -271,30 +350,39 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new Shake(
         animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-        child: new GestureDetector(
-          onLongPress: () {
-            showDialog(
-                context: context,
-                child: new FractionallySizedBox(
-                    heightFactor: 0.5,
-                    widthFactor: 0.8,
-                    child: new FlashCard(text: widget.text)));
-          },
-          child: new UnitButton(
-            onPress: () => widget.onPress(),
-            text: _displayText,
-            unitMode: widget.unitMode,
-//                child: new RaisedButton(
-//                    onPressed: () => widget.onPress(),
-//                    color: const Color(0xFFffffff),
-//                    shape: new RoundedRectangleBorder(
-//                        borderRadius:
-//                        const BorderRadius.all(const Radius.circular(8.0))),
-//                    child: new Text(_displayText,
-//                        key: new Key("${widget.keys}"),
-//                        style:
-//                        new TextStyle(color: Colors.black, fontSize: 24.0))
-          ),
-        ));
+        child: new ScaleTransition(
+            scale: animation,
+            child: new GestureDetector(
+              onLongPress: () {
+                showDialog(
+                    context: context,
+                    child: new FractionallySizedBox(
+                        heightFactor: 0.5,
+                        widthFactor: 0.8,
+                        child: new FlashCard(text: widget.text)));
+              },
+              child: new UnitButton(
+                onPress: () => widget.onPress(),
+                text: _displayText,
+                unitMode: widget.unitMode,
+              ),
+            )));
+  }
+}
+
+class PictureAnimation extends AnimatedWidget {
+  PictureAnimation(Key key,Animation animation)
+      : super( key: key ,listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    Animation animation = listenable;
+    return Center(
+      child: Container(
+        height: animation.value,
+        width: animation.value,
+        child: FlutterLogo(),
+      ),
+    );
   }
 }

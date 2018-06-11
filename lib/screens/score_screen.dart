@@ -1,15 +1,11 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/components/responsive_grid_view.dart';
 
-
-// enum Status { Neutral, Active }
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -37,7 +33,10 @@ class ScoreScreen extends StatefulWidget {
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
-  // AnimationController _buttonController,_textController,_userController,_characterController;
+  
+  List<AnimationController> _controllers = new List<AnimationController>();
+  List<Animation<double>> _animations = new List<Animation<double>>();
+
 
   Animation<double> _buttonAnimation,
       _characterAnimation,
@@ -52,7 +51,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   int otherScore;
   List<Widget> otherscore;
   List<String> stars = [];
-  // List<Status> _statuses = [];
+  
   var keys = 0;
 
   @override
@@ -61,12 +60,7 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    // _buttonController = new AnimationController(
-    //     duration: const Duration(milliseconds: 500), vsync: this);
-    // _textController = new AnimationController(
-    //     duration: const Duration(milliseconds: 500), vsync: this);
-    // _userController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-    // _characterController = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    
 
     _buttonAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
@@ -80,8 +74,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         new CurvedAnimation(
             parent: controller,
             curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
-    // _userAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
-    // _characterAnimation = new Tween(begin: 0.0, end: 0.0).animate(new CurvedAnimation(parent: controller, curve: new Interval(0.0, 0.5, curve: Curves.easeIn) ));
+    
 
     gameName = widget.gameName;
     gameDisplay = widget.gameDisplay;
@@ -95,27 +88,29 @@ class _ScoreScreenState extends State<ScoreScreen>
       myScore > (10*i) ? stars.add("true") : stars.add("false");      
     }
 
-    
-    // _statuses = [ Status.Neutral, Status.Neutral, Status.Neutral, Status.Neutral];
+    for (var i = 0; i < 4; i++) {
+      final _controller = new AnimationController(
+          vsync: this, duration: new Duration(milliseconds: 500));
+      _controllers.add(_controller);
+      _animations.add(
+          new CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
+      new Future.delayed(Duration(milliseconds: 2000 + (i) * 300), () {
+        _controller.forward();
+      });
+    }
 
     super.initState();
     controller.forward();
   }
 
-  void _Animatebutton() {}
-  void _AnimateUser() {}
-  void _AnimateText() {}
-  void _AnimateCharacter() {}
-
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
+    _controllers.forEach((f) => f.dispose());
     controller.dispose();
-    // _buttonController.dispose();
-    // _characterController.dispose();
-    // _userController.dispose();
-    // _textController.dispose();
+    super.dispose();
+    
+    
   }
 
   Widget _buildItem(int index, String text) {
@@ -123,9 +118,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         key: new ValueKey<int>(index),
         text: text,
         keys: keys++,
-        onPress: () {
-
-        }
+        onPress: () {}
         );
   }
   
@@ -137,9 +130,12 @@ class _ScoreScreenState extends State<ScoreScreen>
     Size media = MediaQuery.of(context).size;
     double ht = media.height;
     double wd = media.width;
+    
     int j=0;
     int k = 0;
 
+    List<Widget> tablestars1 = new List<Widget>();
+    List<Widget> tablestars2 = new List<Widget>();
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
     
@@ -166,16 +162,35 @@ class _ScoreScreenState extends State<ScoreScreen>
           ]));
     }
 
+
     return new LayoutBuilder(builder: (context, constraints) {
     final hPadding = pow(constraints.maxWidth / 150.0, 2);
     final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-    double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
-    double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+    double maxWidth = (constraints.maxWidth - hPadding) / 2;
+    double maxHeight = (constraints.maxHeight - vPadding) / 3;
 
-    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 10000);
+    List <Widget> starsMap1 =  stars
+                              .map((e) => _buildItem(j++, e),)
+                              .toList(growable: false);
+
+
+    List <Widget> starsMap2 =  stars
+                              .map((e) => _buildItem(k++, e),)
+                              .toList(growable: false);
+    for(var i=0; i < 4; i++){
+    tablestars1.add(new ScaleTransition(
+                           scale: _animations[i],
+                           child: starsMap1[i]));}                       
+
+    for(var l=0; l < 4; l++){
+    tablestars2.add(new ScaleTransition(
+                           scale: _animations[l],
+                           child: starsMap2[l]));}  
 
     return new Scaffold(
+      
         backgroundColor: color,
         body: new SafeArea(
             child: new Flex(
@@ -186,7 +201,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             new ScaleTransition(
               scale: _characterAnimation,
               child: new Container(
-                height: ht > wd ? ht * 0.15 : wd * 0.15,
+                height: ht > wd ? ht * 0.15 : wd * 0.13,
                 child: new Image(
                   image: new AssetImage("assets/hoodie/$gameName.png"),
                 ),
@@ -194,101 +209,76 @@ class _ScoreScreenState extends State<ScoreScreen>
             ),
 
             new Row(
-                mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 20.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])),
-                   gameDisplay == GameDisplay.myHeadToHead ? new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 20.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])) : new Row()
-                ],
-              ),
+              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new Container(
+                  height: ht > wd ? ht * 0.19 : wd * 0.15,
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new LimitedBox(
+                          maxHeight: ht * 0.13,
+                          child: new UserItem(user: myUser),),
+                        // new Padding(
+                        //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
+                        // ),
+                        new Text(
+                          '$myScore',
+                          style: new TextStyle(
+                              fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      ])),
+                 gameDisplay == GameDisplay.myHeadToHead ? new Container(
+                    height: ht > wd ? ht * 0.15 : wd * 0.15,
+                    child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          new LimitedBox(
+                            maxHeight: ht > wd ? ht * 0.3 : wd * 0.13,
+                            child: new UserItem(user: myUser),),
+                          // new Padding(
+                          //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
+                          // ),
+                          new Text(
+                            '$myScore',
+                            style: new TextStyle(
+                                fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        ])) : new Row()
+              ],
+            ),
 
             //Stars Being Displayed according to the score
             new ScaleTransition(
               scale: _characterAnimation,
-              child: 
-            
-            new Container(
               child: new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new Row(
-                          mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
-                          crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-                          children: <Widget>[
-                          // new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 10 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 20 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 30 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]),
+                  new  Row(
+                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Row(
+                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: tablestars1),
 
-                          new ResponsiveGridView(
-                          rows: 1,
-                          cols: 4,
-                          children: stars
-                              .map((e) => new Padding(
-                                    padding: EdgeInsets.all(buttonPadding),
-                                    child: _buildItem(j++, e),
-                                  ))
-                              .toList(growable: false),
-                          )]),
+                        new Padding(
+                          padding: new EdgeInsets.all(10.0),
+                        ),
 
-                          gameDisplay == GameDisplay.myHeadToHead ? new Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            
-                          // new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 10 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 20 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),
-                          // myScore >= 30 ? new Icon(Icons.star, size: ht > wd ? ht * 0.05 : wd * 0.05,) : new Icon(Icons.star_border, size: ht > wd ? ht * 0.05 : wd * 0.05,),]) : new Row(),]),
-                          new ResponsiveGridView(
-                          rows: 1,
-                          cols: 4,
-                          children: stars
-                              .map((e) => new Padding(
-                                    padding: EdgeInsets.all(buttonPadding),
-                                    child: _buildItem(k++, e),
-                                  ))
-                              .toList(growable: false),
-                          )]) : new Row(),
-                          ]),
+                        gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: tablestars2) : new Row(),
+                        ]),
                 new Row(
                   mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -297,7 +287,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
                       crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
-                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
                   gameDisplay != GameDisplay.single ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -309,7 +299,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                 ], 
               ),
             ),
-            ),
             
 
             // Icons which redirect to home, refresh and fast-forward
@@ -318,14 +307,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
                  new Container(
-                    //  decoration: new BoxDecoration(
-                    //    shape: BoxShape.circle,
-                    //    border: new Border.all(
-                    //        color: Colors.black,
-                    //        width: 2.5,
-                    //        style: BorderStyle.solid),
-                    //    // color: Colors.orange
-                    //  ),
+                   
                      child: IconButton(
                          icon: new Image.asset("assets/home_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
@@ -337,14 +319,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                          })),
                  
                   new Container(
-                    //  decoration: new BoxDecoration(
-                    //    shape: BoxShape.circle,
-                    //    border: new Border.all(
-                    //        color: Colors.black,
-                    //        width: 2.5,
-                    //        style: BorderStyle.solid),
-                    //    // color: Colors.orange
-                    //  ),
+                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
@@ -359,6 +334,7 @@ class _ScoreScreenState extends State<ScoreScreen>
              new Padding(
                padding: new EdgeInsets.all(5.0),
              )
+             
             ],
         )));
     });
@@ -367,7 +343,7 @@ class _ScoreScreenState extends State<ScoreScreen>
 
 
 class MyButton extends StatefulWidget {
-  // Status status;
+  
   
   MyButton(
       {Key key,
@@ -407,22 +383,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       });
 
-      // _displayText == "true" ? widget.status = Status.Active : Status.Neutral;
-    
-    controller.forward();
-    // _myAnim();
+      
   }
 
-  // void _myAnim() {
-  //   animation.addStatusListener((status) {
-  //     if (status == AnimationStatus.completed) {
-  //       controller.reverse();
-  //     } else if (status == AnimationStatus.dismissed) {
-  //       controller.forward();
-  //     }
-  //   });
-  //   controller.forward();
-  // }
+   @override
+    void didUpdateWidget(MyButton oldWidget) {
+      // TODO: implement didUpdateWidget
+      super.didUpdateWidget(oldWidget);
+    }
+
 
   @override
   void dispose() {
@@ -436,29 +405,24 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     double ht = media.height;
     double wd = media.width;
     widget.keys++;
-    print("_MyButtonState.build");
+    print("_MyButtonState.build");    
     return new Shake(
       animation: animation,
       child: new GestureDetector(
-    
-    // child: new UnitButton(
-    //   onPress: () => widget.onPress(),
-    //   text: _displayText,
-    //   unitMode: widget.unitMode,
-     child: new Container(
-       
-     child: new FlatButton(
+      child: new Container(  
+        height: ht > wd ? ht * 0.3 : ht * 0.15,
+        width: ht > wd ? wd * 0.22 : wd * 0.09 ,     
+      child: new FlatButton(
          onPressed: () => widget.onPress(),
-         color: Colors.transparent,
-         
+         color: Colors.transparent,         
          child: new Icon(
         _displayText == "true" ? Icons.star : Icons.star_border,
         key: new Key("${widget.keys}"),
-        size: ht > wd ? ht * 0.05 : wd * 0.05,
+        size:
+         ht > wd ? ht * 0.1 : wd * 0.05,
         color: Colors.black,
-         )
-         
-    ),)
-    ) );
+         )         
+    ))
+    ));
   }
 }
