@@ -159,7 +159,7 @@ class CrosswordState extends State<Crossword> {
                   _rightwords[dindex - 100] += '.';
                   _letters[index] = _sortletters[--i];
                   correct++;
-                  widget.onScore(4);
+                  widget.onScore(((1/_rightlen)*40).toInt());
                   widget.onProgress(correct / _rightlen);
                   if (correct == _rightlen) {
                     widget.onEnd();
@@ -170,7 +170,7 @@ class CrosswordState extends State<Crossword> {
                     flagtemp = 1;
                   new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
-                       widget.onScore(-1);
+                       widget.onScore(-((1/_rightlen)*20).toInt());
                       _flag[index] = 0;
                       if (flagtemp == 1) {
                         _letters[index] = '';
@@ -220,21 +220,21 @@ class CrosswordState extends State<Crossword> {
         child: new CircularProgressIndicator(),
       );
     }
-    if (media.orientation == Orientation.portrait) {
-      if (_rightlen > _cols) {
-        while (_rightwords.length <= _cols * 2) {
-          _rightwords.add(null);
-        }
-      } else {
-        while (_rightwords.length <= _cols) {
-          _rightwords.add(null);
-        }
-      }
-    } else {
-      while (_rightwords.length <= _rows * 2) {
-        _rightwords.add(null);
-      }
-    }
+    // if (media.orientation == Orientation.portrait) {
+    //   if (_rightlen > _cols) {
+    //     while (_rightwords.length <= _cols * 2) {
+    //       _rightwords.add(null);
+    //     }
+    //   } else {
+    //     while (_rightwords.length <= _cols) {
+    //       _rightwords.add(null);
+    //     }
+    //   }
+    // } else {
+    //   while (_rightwords.length <= _rows * 2) {
+    //     _rightwords.add(null);
+    //   }
+    // }
     return new LayoutBuilder(builder: (context, constraints) {
       keys = 0;
       j = 0;
