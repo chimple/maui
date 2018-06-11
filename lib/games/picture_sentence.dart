@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:math' as math;
+// import 'dart:math' as math;
 import 'dart:async';
 // import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,13 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
+// import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:maui/db/entity/unit.dart';
+import 'package:maui/repos/unit_repo.dart';
+import 'package:meta/meta.dart';
+
+String sentence1 = "Which is the highest";
+String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
@@ -186,7 +192,7 @@ class PictureSentenceState extends State<PictureSentence> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       textBaseline: TextBaseline.ideographic,
                       children: <Widget>[
-                        new Text("Which is the highest",
+                        new Text(sentence1,
                             overflow: TextOverflow.ellipsis,
                             style: new TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -201,8 +207,15 @@ class PictureSentenceState extends State<PictureSentence> {
                               width: 100.0,
                             ),
                             new FloatingActionButton(
-                              onPressed: (){Navigator.of(context).pushNamed("routeName");},
-                              tooltip: 'increment',
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    child: new FractionallySizedBox(
+                                        heightFactor: 0.5,
+                                        widthFactor: 0.8,
+                                        child: new FlashCard(text: "widget.text")));
+                              },
+                              tooltip: 'Check the picture',
                               child: new Icon(Icons.comment),
                             ),
                             // new IconButton(
@@ -215,7 +228,7 @@ class PictureSentenceState extends State<PictureSentence> {
                           ]),
                         ),
                         new Text(
-                          "in the  ",
+                          sentence2,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.clip,
                           style: new TextStyle(
@@ -230,17 +243,6 @@ class PictureSentenceState extends State<PictureSentence> {
                         ),
                       ],
                     ))),
-          ),
-          new Expanded(
-            flex: 1,
-            child: new Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage('assets/dict/mountain.png')))),
           ),
           new Expanded(
               flex: 2,
@@ -353,161 +355,92 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-// class Photo extends StatelessWidget {
-//   Photo({Key key, this.photo, this.color, this.onTap}) : super(key: key);
+class PictureCard extends StatefulWidget {
+  final String text;
+  final String image;
+  final VoidCallback onChecked;
 
-//   final String photo;
-//   final Color color;
-//   final VoidCallback onTap;
+  PictureCard({Key key, @required this.text, this.image, this.onChecked})
+      : super(key: key);
 
-//   Widget build(BuildContext context) {
-//     return new Material(
-//       // Slightly opaque color appears where the image has transparency.
-//       color: Theme.of(context).primaryColor.withOpacity(0.25),
-//       child: new InkWell(
-//         onTap: onTap,
-//         child: new LayoutBuilder(
-//           builder: (BuildContext context, BoxConstraints size) {
-//             return new Image.asset(
-//               photo,
-//               fit: BoxFit.contain,
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  _PictureCardState createState() {
+    return new _PictureCardState();
+  }
+}
 
-// class RadialExpansion extends StatelessWidget {
-//   RadialExpansion({
-//     Key key,
-//     this.maxRadius,
-//     this.child,
-//   })  : clipRectSize = 2.0 * (maxRadius / math.sqrt2),
-//         super(key: key);
+class _PictureCardState extends State<PictureCard> {
+  Unit _unit;
+  bool _isLoading = true;
+  bool _containsNum = false;
+  int i;
 
-//   final double maxRadius;
-//   final clipRectSize;
-//   final Widget child;
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+    _getNumberStatus();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return new ClipOval(
-//       child: new Center(
-//         child: new SizedBox(
-//           width: clipRectSize,
-//           height: clipRectSize,
-//           child: new ClipRect(
-//             child: child,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  void _getData() async {
+    _unit = await new UnitRepo().getUnit(widget.text);
+    setState(() => _isLoading = false);
+  }
 
-// class RadialExpansionDemo extends StatelessWidget {
-//   static const double kMinRadius = 32.0;
-//   static const double kMaxRadius = 128.0;
-//   static const opacityCurve =
-//       const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
+  void _getNumberStatus() async {
+    for (i = 0; i < 10; i++) {
+      if (widget.text.indexOf('$i') != -1) {
+        setState(() => _containsNum = true);
+        print("$_containsNum");
+        break;
+      }
+      print("coming");
+      print("$_containsNum");
+    }
+  }
 
-//   static RectTween _createRectTween(Rect begin, Rect end) {
-//     return new MaterialRectCenterArcTween(begin: begin, end: end);
-//   }
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    return new LayoutBuilder(builder: (context, constraints) {
+      Color bgColor = Theme.of(context).accentColor;
 
-//   static Widget _buildPage(
-//       BuildContext context, String imageName, String description) {
-//     return new Container(
-//       color: Theme.of(context).canvasColor,
-//       child: new Center(
-//         child: new Card(
-//           elevation: 8.0,
-//           child: new Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               new SizedBox(
-//                 width: kMaxRadius * 2.0,
-//                 height: kMaxRadius * 2.0,
-//                 child: new Hero(
-//                   createRectTween: _createRectTween,
-//                   tag: imageName,
-//                   child: new RadialExpansion(
-//                     maxRadius: kMaxRadius,
-//                     child: new Photo(
-//                       photo: imageName,
-//                       onTap: () {
-//                         Navigator.of(context).pop();
-//                       },
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               new Text(
-//                 description,
-//                 style: new TextStyle(fontWeight: FontWeight.bold),
-//                 textScaleFactor: 3.0,
-//               ),
-//               const SizedBox(height: 16.0),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
+      return new FractionallySizedBox(
+        heightFactor: 0.5,
+        widthFactor: 0.8,
+        child: new Card(
+          color: bgColor,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.all(
+                  Radius.circular(constraints.maxHeight * 0.02))),
+          child: new Expanded(
+              child: new SizedBox(
+                  height: constraints.maxHeight > constraints.maxWidth
+                      ? constraints.maxHeight * 0.4
+                      : constraints.maxWidth * 0.3,
+                  width: constraints.maxHeight > constraints.maxWidth
+                      ? constraints.maxWidth * 0.9
+                      : constraints.maxHeight * 0.5,
+                  child: _containsNum
+                      ? new Container(
+                          alignment: const Alignment(0.0, 0.0),
+                          child: new Text(widget.text,
+                              style: new TextStyle(
+                                  color: Colors.white,
+                                  fontSize: constraints.maxHeight * 0.11,
+                                  fontWeight: FontWeight.bold)))
+                      : new Image.asset(
+                          'assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
+        ),
+      );
+    });
+  }
+}
 
-//   Widget _buildHero(
-//       BuildContext context, String imageName, String description) {
-//     return new Container(
-//       width: kMinRadius * 2.0,
-//       height: kMinRadius * 2.0,
-//       child: new Hero(
-//         createRectTween: _createRectTween,
-//         tag: imageName,
-//         child: new RadialExpansion(
-//           maxRadius: kMaxRadius,
-//           child: new Photo(
-//             photo: imageName,
-//             onTap: () {
-//               Navigator.of(context).push(
-//                 new PageRouteBuilder<Null>(
-//                   pageBuilder: (BuildContext context,
-//                       Animation<double> animation,
-//                       Animation<double> secondaryAnimation) {
-//                     return new AnimatedBuilder(
-//                         animation: animation,
-//                         builder: (BuildContext context, Widget child) {
-//                           return new Opacity(
-//                             opacity: opacityCurve.transform(animation.value),
-//                             child: _buildPage(context, imageName, description),
-//                           );
-//                         });
-//                   },
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     timeDilation = 5.0; // 1.0 is normal animation speed.
-
-//     return new Container(
-//       padding: const EdgeInsets.all(32.0),
-//       alignment: FractionalOffset.bottomLeft,
-//       child: new Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           _buildHero(context, 'assets/dict/mountain.png', 'Chair'),
-//           _buildHero(context, 'assets/dict/mountain.png', 'Binoculars'),
-//           _buildHero(context, 'assets/dict/mountain.png', 'Beach ball'),
-//         ],
-//       ),
-//     );
-//   }
-// }
