@@ -501,6 +501,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: _myIteration,
             isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'tables':
         playTime = 60000;
