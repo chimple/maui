@@ -492,12 +492,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'crossword':
+         playTime = 15000;
+        maxIterations = 1;
         return new Crossword(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            iteration: _myIteration,
             isRotated: widget.isRotated,
-            iteration: _myIteration);
+            gameConfig: widget.gameConfig);
         break;
       case 'tables':
         playTime = 60000;
@@ -611,6 +615,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'wordgrid':
+        playTime = 15000;
+        maxIterations = 2;
         return new Wordgrid(
             onScore: _onScore,
             onProgress: _onProgress,

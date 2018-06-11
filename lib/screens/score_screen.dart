@@ -167,23 +167,17 @@ class _ScoreScreenState extends State<ScoreScreen>
     final hPadding = pow(constraints.maxWidth / 150.0, 2);
     final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-    double maxWidth = (constraints.maxWidth - hPadding * 2) / 4;
-    double maxHeight = (constraints.maxHeight - vPadding * 2) / 4;
+    double maxWidth = (constraints.maxWidth - hPadding) / 2;
+    double maxHeight = (constraints.maxHeight - vPadding) / 3;
 
-    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 8);
+    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 10000);
     List <Widget> starsMap1 =  stars
-                              .map((e) => new Padding(
-                                    padding: EdgeInsets.all(buttonPadding),
-                                    child: _buildItem(j++, e),
-                                  ))
+                              .map((e) => _buildItem(j++, e),)
                               .toList(growable: false);
 
 
     List <Widget> starsMap2 =  stars
-                              .map((e) => new Padding(
-                                    padding: EdgeInsets.all(buttonPadding),
-                                    child: _buildItem(k++, e),
-                                  ))
+                              .map((e) => _buildItem(k++, e),)
                               .toList(growable: false);
     for(var i=0; i < 4; i++){
     tablestars1.add(new ScaleTransition(
@@ -196,6 +190,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                            child: starsMap2[l]));}  
 
     return new Scaffold(
+      
         backgroundColor: color,
         body: new SafeArea(
             child: new Flex(
@@ -206,7 +201,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             new ScaleTransition(
               scale: _characterAnimation,
               child: new Container(
-                height: ht > wd ? ht * 0.15 : wd * 0.15,
+                height: ht > wd ? ht * 0.15 : wd * 0.13,
                 child: new Image(
                   image: new AssetImage("assets/hoodie/$gameName.png"),
                 ),
@@ -214,71 +209,76 @@ class _ScoreScreenState extends State<ScoreScreen>
             ),
 
             new Row(
-                mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 20.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])),
-                   gameDisplay == GameDisplay.myHeadToHead ? new Expanded(
-                      flex: 1,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new UserItem(user: myUser),
-                            new Padding(
-                              padding: new EdgeInsets.symmetric(vertical: 20.0),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])) : new Row()
-                ],
-              ),
+              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new Container(
+                  height: ht > wd ? ht * 0.19 : wd * 0.15,
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new LimitedBox(
+                          maxHeight: ht * 0.13,
+                          child: new UserItem(user: myUser),),
+                        // new Padding(
+                        //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
+                        // ),
+                        new Text(
+                          '$myScore',
+                          style: new TextStyle(
+                              fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      ])),
+                 gameDisplay == GameDisplay.myHeadToHead ? new Container(
+                    height: ht > wd ? ht * 0.15 : wd * 0.15,
+                    child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          new LimitedBox(
+                            maxHeight: ht > wd ? ht * 0.3 : wd * 0.13,
+                            child: new UserItem(user: myUser),),
+                          // new Padding(
+                          //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
+                          // ),
+                          new Text(
+                            '$myScore',
+                            style: new TextStyle(
+                                fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        ])) : new Row()
+              ],
+            ),
 
             //Stars Being Displayed according to the score
             new ScaleTransition(
               scale: _characterAnimation,
-              child: 
-            
-            new Container(
               child: new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new Row(
-                          mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
-                          crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-                          children: tablestars1),
+                  new  Row(
+                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Row(
+                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: tablestars1),
 
-                          gameDisplay == GameDisplay.myHeadToHead ? new Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: tablestars2) : new Row(),
-                          ]),
+                        new Padding(
+                          padding: new EdgeInsets.all(10.0),
+                        ),
+
+                        gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: tablestars2) : new Row(),
+                        ]),
                 new Row(
                   mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -287,7 +287,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
                       crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
-                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
                   gameDisplay != GameDisplay.single ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -298,7 +298,6 @@ class _ScoreScreenState extends State<ScoreScreen>
                   ]),
                 ], 
               ),
-            ),
             ),
             
 
@@ -410,22 +409,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new Shake(
       animation: animation,
       child: new GestureDetector(
-    
-    
-     child: new Container(
-       
-     child: new FlatButton(
+      child: new Container(  
+        height: ht > wd ? ht * 0.3 : ht * 0.15,
+        width: ht > wd ? wd * 0.22 : wd * 0.09 ,     
+      child: new FlatButton(
          onPressed: () => widget.onPress(),
-         color: Colors.transparent,
-         
+         color: Colors.transparent,         
          child: new Icon(
         _displayText == "true" ? Icons.star : Icons.star_border,
         key: new Key("${widget.keys}"),
-        size: ht > wd ? ht * 0.05 : wd * 0.05,
+        size:
+         ht > wd ? ht * 0.1 : wd * 0.05,
         color: Colors.black,
-         )
-         
-    ),)
-    ) );
+         )         
+    ))
+    ));
   }
 }
