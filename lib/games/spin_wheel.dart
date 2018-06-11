@@ -43,7 +43,28 @@ class _SpinWheelState extends State<SpinWheel> {
   final maxTime = const Duration(minutes: 10);
   final currentTime = new Duration(minutes: 0);
   double _percentRotate;
-
+  List<int> _smallerCircleData = [
+    1,
+    3,
+    7,
+    19,
+    12,
+    45,
+    53,
+    11,
+  ];
+  List<int> _bigerCircleData = [
+    1,
+    3,
+    7,
+    19,
+    12,
+    45,
+    53,
+    11,
+  ];
+  Map<String, int> _index;
+  //List<int> _index;
   _onDragStart(PolarCoord cord) {
     print("Drag Start here:: $cord");
     onDragCordStarted = cord;
@@ -122,6 +143,7 @@ class _SpinWheelState extends State<SpinWheel> {
       rotationPercent = 0.0;
       rotationPercent1 = 0.0;
     });
+    _smallerCircleData.shuffle();
     super.initState();
   }
 
