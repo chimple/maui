@@ -28,7 +28,7 @@ class ArrowPainter extends CustomPainter {
     //path.arcTo(myRect, 0.0, 30.0, true);
     path.close();
     canvas.drawPath(path, dialArrowPaint);
-  
+
     for (var i = 0; i < 16; ++i) {
       if (i % 2 == 0) {
         // canvas.drawLine(
@@ -147,18 +147,18 @@ class OuterCircle extends CustomPainter {
     //path.addArc(myRect, 0.0, 2*pi*16);
 
     path.close();
-   // canvas.drawPath(path, tickPaint);
+    // canvas.drawPath(path, tickPaint);
     for (var i = 0; i < 16; ++i) {
       final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
-        // canvas.drawLine(
-        //   new Offset(0.0, 0.0),
-        //   new Offset(0.0,radius-sizePaint+70),
-        //   tickPaint,
-        // );
+        canvas.drawLine(
+          new Offset(0.0, 0.0),
+          new Offset(0.0, radius),
+          tickPaint,
+        );
 
         // path.close();
-        canvas.drawCircle(new Offset(0.0, 0.0), 2*pi/16/i, tickPaint);
+        // canvas.drawCircle(new Offset(0.0, 0.0), 2*pi/16/i, tickPaint);
         //canvas.drawPath(path, tickPaint);
       } else {
         canvas.save();

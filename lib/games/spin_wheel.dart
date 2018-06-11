@@ -43,6 +43,7 @@ class _SpinWheelState extends State<SpinWheel> {
   final maxTime = const Duration(minutes: 10);
   final currentTime = new Duration(minutes: 0);
   double _percentRotate;
+
   _onDragStart(PolarCoord cord) {
     print("Drag Start here:: $cord");
     onDragCordStarted = cord;
@@ -195,7 +196,6 @@ class _SpinWheelState extends State<SpinWheel> {
       //print("real sie afkjf f$_size");
       return new Stack(
         children: <Widget>[
-         
           new Center(
             child: new Transform(
               // transformHitTests: ,
@@ -213,10 +213,10 @@ class _SpinWheelState extends State<SpinWheel> {
               child: new Container(
             decoration: new BoxDecoration(
               shape: BoxShape.circle,
-             //color: Colors.red
+              //color: Colors.red
             ),
-            height: size1.width*.8 ,
-            width: size1.width*.8,
+            height: size1.width * .8,
+            width: size1.width * .8,
             child: new RadialDragGestureDetector(
                 onRadialDragStart: _onDragStart,
                 onRadialDragUpdate: _onDragUpdate,
@@ -231,8 +231,7 @@ class _SpinWheelState extends State<SpinWheel> {
                       //sizeOfWheel:
                     ),
                   ),
-                )
-                ),
+                )),
           )),
           new Center(
             child: new Transform(
@@ -240,15 +239,25 @@ class _SpinWheelState extends State<SpinWheel> {
               alignment: Alignment.center,
               child: new Container(
                 child: new AnimatedCircularChart(
-                    size: size1*.5,
+                    size: size1 * .5,
                     initialChartData: data1,
                     chartType: CircularChartType.Pie),
               ),
             ),
           ),
+          // new Center(
+          //   child: new FittedBox(
+          //     child: new Image.asset(
+          //       'assets/arrow.png',
+          //     //  scale: .4,
+          //       color:  Colors.blue,
+          //       height: _size.width/2
+          //     ),
+          //   ),
+          // ),
           new Center(
               child: new Container(
-                  height: size1.width * .80* .50,
+                  height: size1.width * .80 * .50,
                   width: size1.width * .80 * .50,
                   child: new RadialDragGestureDetector(
                       onRadialDragStart: _onDragStart1,
@@ -264,11 +273,12 @@ class _SpinWheelState extends State<SpinWheel> {
                         ),
                       )))),
           // new Center(
-          //   child: new Container(
-          //     height: 100.0,
-          //     width: 100.0,
-          //     child: new CustomPaint(
-          //       painter: ArrowPainter(),
+          //   child: new FittedBox(
+          //     child: new Image.asset(
+          //       'assets/arrow.png',
+          //       scale: .2,
+          //       color:  Colors.blue,
+          //       height: _size.width/2
           //     ),
           //   ),
           // ),
