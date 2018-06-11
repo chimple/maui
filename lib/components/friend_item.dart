@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:meta/meta.dart';
@@ -5,7 +6,9 @@ import 'package:meta/meta.dart';
 class FriendItem extends StatelessWidget {
   String id;
   String imageUrl;
-  FriendItem({Key key, @required this.id, @required this.imageUrl})
+  bool isFile;
+  FriendItem(
+      {Key key, @required this.id, @required this.imageUrl, this.isFile = true})
       : super(key: key);
 
   @override
@@ -28,7 +31,9 @@ class FriendItem extends StatelessWidget {
                       image: new DecorationImage(
                           image: user.id == id
                               ? new AssetImage('assets/koala_neutral.png')
-                              : new NetworkImage(imageUrl),
+                              : isFile
+                                  ? NetworkImage(imageUrl)
+                                  : MemoryImage(base64.decode(imageUrl)),
                           fit: BoxFit.fill))))),
     );
   }

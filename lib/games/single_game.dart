@@ -573,7 +573,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
-            iteration: _iteration,
+            iteration: _myIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
@@ -620,7 +620,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'guess':
-      maxIterations = 1;
+        maxIterations = 1;
         return new GuessIt(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
