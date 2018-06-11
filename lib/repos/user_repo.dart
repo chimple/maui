@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:convert';
 import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
+import 'package:flores/flores.dart';
 
 class UserRepo {
   static final UserDao userDao = new UserDao();
@@ -13,7 +15,7 @@ class UserRepo {
   const UserRepo();
 
   Future<User> getUser(String id) async {
-      return await userDao.getUser(id);
+    return await userDao.getUser(id);
   }
 
   Future<List<User>> getUsers() async {
@@ -21,18 +23,22 @@ class UserRepo {
   }
 
   Future<User> insert(User user) async {
-    StorageReference ref = FirebaseStorage.instance
-        .ref()
-        .child("user_${user.id}.jpg");
-    StorageUploadTask uploadTask = ref.put(new File(user.image));
-    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-
-    final reference = FirebaseDatabase.instance.reference().child('users');
-    reference.push().set({
-      'id': user.id,
-      'name': user.name,
-      'image': downloadUrl.toString()
-    });
+//    StorageReference ref = FirebaseStorage.instance
+//        .ref()
+//        .child("user_${user.id}.jpg");
+//    StorageUploadTask uploadTask = ref.put(new File(user.image));
+//    Uri downloadUrl = (await uploadTask.future).downloadUrl;
+//
+//    final reference = FirebaseDatabase.instance.reference().child('users');
+//    reference.push().set({
+//      'id': user.id,
+//      'name': user.name,
+//      'image': downloadUrl.toString()
+//    });
+    var config = File(user.image);
+    var contents = await config.readAsBytes();
+    var enc = base64.encode(contents);
+    Flores().addUser(user.id, 'a', enc);
     return await userDao.insert(user);
   }
 
