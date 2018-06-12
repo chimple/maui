@@ -68,6 +68,7 @@ class ArrowPainter extends CustomPainter {
 class OuterCircle extends CustomPainter {
   final LONG_TICK = 50.0;
   final SHORT_TICK = 4.0;
+  List<String> data;
   double sizePaint;
   final Paint traingle;
   final double rotationPercent;
@@ -81,6 +82,7 @@ class OuterCircle extends CustomPainter {
   final image;
   final buttonStyle;
   OuterCircle({
+    this.data,
     this.sizePaint: 0.0,
     this.tickCount = 35,
     this.ticksPerSection = 0.0,
@@ -147,6 +149,7 @@ class OuterCircle extends CustomPainter {
     //path.addArc(myRect, 0.0, 2*pi*16);
 
     path.close();
+    int c=0;
     // canvas.drawPath(path, tickPaint);
     for (var i = 0; i < 16; ++i) {
       final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
@@ -163,12 +166,12 @@ class OuterCircle extends CustomPainter {
       } else {
         canvas.save();
         canvas.translate(-0.0, -((size.width) / 3));
-
+       String s=data[c];
         textPainter.text = new TextSpan(
-          text: '$i',
+          text: s,
           style: textStyle,
         );
-
+        c++;
         // imagePainter.image = new Image.asset(
         //   imagePainter,
         //   fit: BoxFit.cover,
