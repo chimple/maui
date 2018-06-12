@@ -200,12 +200,7 @@ class PictureSentenceState extends State<PictureSentence> {
                                 fontSize: 40.0)),
                         new Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: new Stack(children: [
-                            new Container(
-                              color: Colors.grey,
-                              height: 40.0,
-                              width: 100.0,
-                            ),
+                          child: new Row(children: [
                             // new FloatingActionButton(
                             //   onPressed: () {
                             //     showDialog(
@@ -219,11 +214,23 @@ class PictureSentenceState extends State<PictureSentence> {
                             //   tooltip: 'Check the picture',
                             //   child: new Icon(Icons.comment),
                             // ),
-                            new IconButton(
-                                iconSize: 24.0,
-                                color: Colors.black,
-                                icon: new Icon(Icons.comment),
-                                tooltip: 'check the picture',
+                            // new IconButton(
+                            //     iconSize: 24.0,
+                            //     color: Colors.black,
+                            //     icon: new Icon(Icons.comment),
+                            //     tooltip: 'check the picture',
+                            //     onPressed: () {
+                            //       showDialog(
+                            //           context: context,
+                            //           child: new FractionallySizedBox(
+                            //               heightFactor: 0.5,
+                            //               widthFactor: 0.8,
+                            //               child: new PictureCard(
+                            //                   text: "widget.text")));
+                            //     }),
+                            new Container(
+                              child: new FlatButton(
+                                child: const Text(""),
                                 onPressed: () {
                                   showDialog(
                                       context: context,
@@ -232,7 +239,12 @@ class PictureSentenceState extends State<PictureSentence> {
                                           widthFactor: 0.8,
                                           child: new PictureCard(
                                               text: "widget.text")));
-                                }),
+                                },
+                              ),
+                              color: Colors.grey,
+                              height: 40.0,
+                              width: 100.0,
+                            ),
                           ]),
                         ),
                         new Text(
@@ -245,6 +257,18 @@ class PictureSentenceState extends State<PictureSentence> {
                               color: Colors.black),
                         ),
                         new Container(
+                          child: new FlatButton(
+                            child: const Text(""),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  child: new FractionallySizedBox(
+                                      heightFactor: 0.5,
+                                      widthFactor: 0.8,
+                                      child: new PictureCard(
+                                          text: "widget.text")));
+                            },
+                          ),
                           color: Colors.grey,
                           height: 40.0,
                           width: 100.0,
