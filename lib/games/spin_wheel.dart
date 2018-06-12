@@ -64,7 +64,7 @@ class _SpinWheelState extends State<SpinWheel> {
   //   53,
   //   11,
   // ];
-  List<double> _dataAngle;
+  
   var _angle;
   //List<int> _index;
   _onDragStart(PolarCoord cord) {
@@ -156,6 +156,7 @@ class _SpinWheelState extends State<SpinWheel> {
   Animation animation;
   AnimationController controller;
   double _constAngle=45.0;
+  List<double> _dataAngle,_dataAngle1;
   @override
   void initState() {
     //Size size=MediaQuery.of(context).size;
@@ -167,11 +168,18 @@ class _SpinWheelState extends State<SpinWheel> {
       rotationPercent1 = 0.0;
     });
     _smallerCircleData.shuffle();
-    for (int i = 0; i < _smallerCircleData.length; i++) {
+    for (int i = 0; i < _smallerCircleData.length/2; i++) {
       if (i == 0)
         _dataAngle[i] = 22.5;
       else
         _dataAngle[i] = 22.5 + _constAngle;
+        _constAngle=_constAngle*2;
+    }
+    for (int i = 0; i < _smallerCircleData.length/2; i++) {
+      if (i == 0)
+        _dataAngle1[i] = -22.5;
+      else
+        _dataAngle[i] = -22.5 - _constAngle;
         _constAngle=_constAngle*2;
     }
     super.initState();
