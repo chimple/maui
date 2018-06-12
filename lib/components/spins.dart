@@ -139,9 +139,9 @@ class OuterCircle extends CustomPainter {
     final radius = size.height / 2;
     //const var radiud=size.height / 2;
     Rect myRect = const Offset(0.0, 0.0) & Size(size.width / 2, size.width / 2);
-    print("Outer Container:: $size");
-    print("Outer Container width:: ${size.width}");
-    print("Outer Container hieght:: ${size.height}");
+    // print("Outer Container:: $size");
+    // print("Outer Container width:: ${size.width}");
+    // print("Outer Container hieght:: ${size.height}");
     Path path = new Path();
     path.moveTo(0.0, 0.0);
     path.lineTo(2 * pi * size.width / 2 / 16, size.width / 2 - 20);
