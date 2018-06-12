@@ -238,6 +238,8 @@ class _SpinWheelState extends State<SpinWheel> {
                 transform: new Matrix4.rotationZ(-rotationPercent),
                 alignment: Alignment.center,
                 child: new AnimatedCircularChart(
+                 startAngle: 90.0,
+                    holeLabel: "sas",
                     edgeStyle: SegmentEdgeStyle.flat,
                     size: size1,
                     initialChartData: data,
@@ -269,18 +271,18 @@ class _SpinWheelState extends State<SpinWheel> {
                     ),
                   )),
             )),
-            new Center(
-              child: new Transform(
-                transform: new Matrix4.rotationZ(-rotationPercent1),
-                alignment: Alignment.center,
-                child: new Container(
-                  child: new AnimatedCircularChart(
-                      size: size1 * .5,
-                      initialChartData: data1,
-                      chartType: CircularChartType.Pie),
-                ),
-              ),
-            ),
+            // new Center(
+            //   child: new Transform(
+            //     transform: new Matrix4.rotationZ(-rotationPercent1),
+            //     alignment: Alignment.center,
+            //     child: new Container(
+            //       child: new AnimatedCircularChart(
+            //           size: size1 * .5,
+            //           initialChartData: data1,
+            //           chartType: CircularChartType.Pie),
+            //     ),
+            //   ),
+            // ),
             // new Center(
             //   child: new FittedBox(
             //     child: new Image.asset(
@@ -291,23 +293,23 @@ class _SpinWheelState extends State<SpinWheel> {
             //     ),
             //   ),
             // ),
-            new Center(
-                child: new Container(
-                    height: size1.width * .80 * .50,
-                    width: size1.width * .80 * .50,
-                    child: new RadialDragGestureDetector(
-                        onRadialDragStart: _onDragStart1,
-                        onRadialDragUpdate: _onDragUpdate1,
-                        onRadialDragEnd: _onDragEnd1,
-                        child: new Container(
-                          //height: size1.width,
-                          //width: size1.width,
-                          child: new CustomPaint(
-                            painter: InnerCircle(
-                              ticksPerSection1: rotationPercent1,
-                            ),
-                          ),
-                        )))),
+            // new Center(
+            //     child: new Container(
+            //         height: size1.width * .80 * .50,
+            //         width: size1.width * .80 * .50,
+            //         child: new RadialDragGestureDetector(
+            //             onRadialDragStart: _onDragStart1,
+            //             onRadialDragUpdate: _onDragUpdate1,
+            //             onRadialDragEnd: _onDragEnd1,
+            //             child: new Container(
+            //               //height: size1.width,
+            //               //width: size1.width,
+            //               child: new CustomPaint(
+            //                 painter: InnerCircle(
+            //                   ticksPerSection1: rotationPercent1,
+            //                 ),
+            //               ),
+            //             )))),
             // new Center(
             //   child: new FittedBox(
             //     child: new Image.asset(
