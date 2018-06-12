@@ -8,6 +8,7 @@ import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'components/camera.dart';
 
 class MauiApp extends StatelessWidget {
   @override
@@ -19,7 +20,8 @@ class MauiApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new LoginScreen(),
         '/tab': (BuildContext context) => new TabHome(),
-        '/chatbot': (BuildContext context) => new ChatBotScreen()
+        '/chatbot': (BuildContext context) => new ChatBotScreen(),
+        '/camera': (BuildContext context) => CameraScreen()
       },
       onGenerateRoute: _getRoute,
     );
