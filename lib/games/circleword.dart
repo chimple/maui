@@ -1,11 +1,14 @@
-import 'dart:async';
+
+
 import 'dart:math';
 import 'package:maui/components/flash_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:maui/components/responsive_grid_view.dart';
+
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
+import 'dart:async';
 import 'package:maui/components/Shaker.dart';
 import 'package:flutter/rendering.dart';
 
@@ -48,14 +51,17 @@ var flag=0;
 String words='';
  List<Status> _statuses;
 //  List<String> _letters;
- List<String> _letters1 = ['c', 't', 'a', 's', 'e', 'i', 'n', 'g', 's'];
+ List<String> _letters1;
+  // = ['c', 't', 'a', 's', 'e', 'i', 'n', 'g', 's'];
 //  List<String> _letters1 = ['c', 't', 'a', 's', 'e', ];
-  List<String> wordata=['cats','acts','cast','cat','scat','act','ta',
-  'st','sat','sac','at','tas','as','ats'];
+  List<String> wordata;
+  // ['cats','acts','cast','cat','scat','act','ta',
+  // 'st','sat','sac','at','tas','as','ats'];
   List<Widget> widgets = new List();
   List<Widget> widgets1 = new List();
   List<String> _letters;
   double dradius;
+  Tuple2<List<String>, String> data;
   //  _letters=_letters1;
     //  _statuses = _letters.map((a) => Status.Active).toList(growable: false);
     @override
@@ -64,15 +70,23 @@ String words='';
   
     _initBoard();
   }
-   void _initBoard()  {
+    void _initBoard()async{
 
-    //  word='';
-    // _letters=_letters1;
-    // List<Widget> widgets;
+    data=await fetchCirclewrdData(widget.gameCategoryId);
+
+ print("the data is coming for cricleword ${data}");
+ 
+ 
+//  print("hello data is ......:...:$wordata");
+//    for(var i=0; i<wordata.length;i++)
+//    {
+//      _letters=wordata[i].split('');
+//   break;
+//    }
+   wordata=data.item1;
+  _letters=data.item2.split('');
     widgets.removeRange(0, widgets.length);
 
-      // _letters1.forEach((e){_letters.add(e);});
-_letters=_letters1;
 print("hwllo this is data is ....$_letters");
      _statuses = _letters.map((a) => Status.Active).toList(growable: false);
    }
@@ -134,8 +148,10 @@ double circleSize = media.size.height/2;
       double _height, _width;
       _height = constraints.maxHeight;
       _width = constraints.maxWidth;
+      // widgets.removeRange(0, widgets.length);
       // List<TableRow> rows = new List<TableRow>();
-     
+     print("widgets length is.....:....:${widgets.length}");
+     widgets=[];
       var j = 0;
       for (var i = 0; i <offsets.length; ++i) {
          
@@ -150,29 +166,29 @@ double circleSize = media.size.height/2;
      double lposition= _height>_width ? potl:landl ;
     //   _offsetmethod()
     //   {
-      if(widgets.length>9){
-    if(widgets.length>9)
-    {
-     widgets1= widgets.sublist(9,18);
-      print("widgets data ....is.... $widgets1");
-      // widgets1=widgets.sublist(0, 9);
-      widgets.removeRange(0, widgets.length);
-      // offsets.removeRange(0, offsets.length-9);
-      widgets=widgets1;
+    //   if(widgets.length>9){
+    // if(widgets.length>9)
+    // {
+    //  widgets1= widgets.sublist(9,18);
+    //   print("widgets data ....is.... $widgets1");
+    //   // widgets1=widgets.sublist(0, 9);
+    //   widgets.removeRange(0, widgets.length);
+    //   // offsets.removeRange(0, offsets.length-9);
+    //   widgets=widgets1;
 
-      print("hello this is widgsted1sublist is .....$widgets");
+    //   print("hello this is widgsted1sublist is .....$widgets");
      
 
-    }
-    else{
-      widgets=widgets1;
-     print("object widgtes is......$widgets");
-      // widgets.removeRange(start, end)
-      // widgets.sublist(0,9);
-    }
-      }
+    // }
+    // else{
+    //   widgets=widgets1;
+    //  print("object widgtes is......$widgets");
+    //   // widgets.removeRange(start, end)
+    //   // widgets.sublist(0,9);
+    // }
     //   }
-      print("object the widgtes is.......${widgets1.length}");
+    //   }
+      print("object the widgtes is.......${widgets}");
        print("object the widgtes is.......${offsets.length}");
        print("object...$offsets");
 
@@ -285,6 +301,7 @@ setState(() {
      d:d,
      status: status,
      onPress: () {
+       print("object..offsets is...:$offset");
       if(flag==0){
         setState(() {
                    _statuses[i] = Status.Visible;
@@ -333,6 +350,12 @@ class _PositionCircleState extends State<PositionCircle> {
     String word='';
   }
 
+   @override
+  void dispose() {
+    
+    
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return new Positioned(
