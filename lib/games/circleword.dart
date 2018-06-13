@@ -72,7 +72,7 @@ String words='';
   }
     void _initBoard()async{
 
-    data=await fetchCirclewrdData(widget.gameCategoryId);
+    //data=await fetchCirclewrdData(widget.gameCategoryId);
 
  print("the data is coming for cricleword ${data}");
  
