@@ -72,10 +72,10 @@ class _SpinWheelState extends State<SpinWheel> {
     onDragCordStarted = cord;
     _angle = cord.angle;
     startDragTime = currentTime;
-
     setState(() {
       rotationPercent = dragEnd;
     });
+    //dragEnd=0.0;
   }
 
   var angleDiff;
@@ -83,7 +83,7 @@ class _SpinWheelState extends State<SpinWheel> {
   PolarCoord dragUpdate;
 
   _onDragUpdate(PolarCoord dragCord) {
-    _endAngle = dragCord.angle;
+    _endAngle = dragCord;
     print("On Drag Updated:: ${angleDiff}");
 
     onDragCordUpdated = dragCord;
@@ -94,7 +94,6 @@ class _SpinWheelState extends State<SpinWheel> {
       //  final timeDiffInSec = (anglePercent * maxTime.inSeconds).round();
       // selectedTime =
       // new Duration(seconds: startDragTime.inSeconds + timeDiffInSec);
-
       setState(() {
         rotationPercent = angleDiff + dragEnd; //angleDiff + dragEnd;
       });
@@ -110,22 +109,17 @@ class _SpinWheelState extends State<SpinWheel> {
     //});
     //compareTheangle(angleDiff);
     print("started ${(_angle / (2 * pi) * 360)}");
-   // print("end ${(_endAngle.angle / (2 * pi) * 360)}");
-
-    ///_endAngle.angle
-   // print('drag end here:: ${(angleDiff/ (2 * pi) * 360)}'); //angleDiff
+    print("end ${(_endAngle.angle / (2 * pi) * 360)}"); ///_endAngle.angle
+    print('drag end here:: ${(angleDiff/ (2 * pi) * 360)}'); //angleDiff
     // var s = onDragCordStarted - onDragCordUpdated;
-    // print("sassssssssssjjks $onDragCordStarted");
-    // .3,1.2, 2.0, 2.9, 3.5, 4.3 , 5.1, 5. 9
-    print("Drag end::");
-    setState(() {
-      rotationPercent = .3;
-    });
+   // print("sassssssssssjjks $onDragCordStarted");
+   if(true){
+   }
   }
 
   void compareTheangle(PolarCoord dragEnd) {
-    if (angleDiff >= 22.0 || angleDiff <= 45.5) {
-      print("");
+    if (angleDiff == 22.0) {
+      print('saaaaaaaaaaaa');
     }
   }
 
