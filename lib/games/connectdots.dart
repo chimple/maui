@@ -70,6 +70,7 @@ List<bool> _visibleflag = [];
   List<String> _todnumber=[];
   List<Status> _statuses;
 List<String> _letterex=[];
+ List<int> tempindex=[];
 bool _isLoading = true;
 var z=0;
  int lastclick;
@@ -276,6 +277,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            print('nikkkkkkkkkkkkkk');
            temp=index;
            forAns.add(text);
+            tempindex.add(index);
            _pointssend.add(offset);
            lastclick = index;
            _visibleflag[index]=true;
@@ -311,6 +313,8 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
           setState(() {
              lastclick = index;
             forAns.add(text);
+             tempindex.add(index);
+              _statuses[tempindex[0]]=Status.Dragtarget;
             _pointssend.add(offset);
               _visibleflag[index]=true;      
                   });
@@ -319,6 +323,19 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
          else
                 return false;
          }
+          else if(data == code && _visibleflag[index]==true){
+            if(index==tempindex[tempindex.length-2]){
+            setState(() {
+                  _visibleflag[tempindex.last] =false;
+                  tempindex.removeLast();
+                  forAns.removeLast();
+                    tempindex.removeLast();
+                      //  temp.removeLast();
+                  lastclick=tempindex.last;
+                });
+                return true;}
+                else return false;
+          }
          else
          return true;
          },
