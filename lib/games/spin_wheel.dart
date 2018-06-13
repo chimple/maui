@@ -36,13 +36,6 @@ class SpinWheel extends StatefulWidget {
 }
 
 class _SpinWheelState extends State<SpinWheel> {
-  var onDragCordStarted, onDragCordUpdated;
-  double rotationPercent = 0.0;
-  double rotationPercent1 = 0.0;
-  Duration selectedTime, startDragTime;
-  final maxTime = const Duration(minutes: 10);
-  final currentTime = new Duration(minutes: 0);
-  double _percentRotate;
   List<String> _smallerCircleData = [
     ' 1',
     '3',
@@ -64,8 +57,15 @@ class _SpinWheelState extends State<SpinWheel> {
   //   53,
   //   11,
   // ];
-  
+
   var _angle;
+  var onDragCordStarted, onDragCordUpdated;
+  double rotationPercent = 0.0;
+  double rotationPercent1 = 0.0;
+  Duration selectedTime, startDragTime;
+  final maxTime = const Duration(minutes: 10);
+  final currentTime = new Duration(minutes: 0);
+  double _percentRotate;
   //List<int> _index;
   _onDragStart(PolarCoord cord) {
     print("Drag Start here:: $cord");
@@ -79,10 +79,11 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   var angleDiff;
+  var _endAngle;
   PolarCoord dragUpdate;
 
   _onDragUpdate(PolarCoord dragCord) {
-    angleDiff = dragCord;
+    _endAngle = dragCord;
     print("On Drag Updated:: ${angleDiff}");
 
     onDragCordUpdated = dragCord;
@@ -108,14 +109,16 @@ class _SpinWheelState extends State<SpinWheel> {
     //});
     //compareTheangle(angleDiff);
     print("started ${(_angle / (2 * pi) * 360)}");
-    print("end ${dragUpdate.angle}");
-    print('drag end here:: ${angleDiff}');
+    print("end ${(_endAngle.angle / (2 * pi) * 360)}"); ///_endAngle.angle
+    print('drag end here:: ${(angleDiff/ (2 * pi) * 360)}'); //angleDiff
     // var s = onDragCordStarted - onDragCordUpdated;
-    print("sassssssssssjjks $onDragCordStarted");
+   // print("sassssssssssjjks $onDragCordStarted");
+   if(true){
+   }
   }
 
   void compareTheangle(PolarCoord dragEnd) {
-    if (angleDiff.angle == 22.0) {
+    if (angleDiff == 22.0) {
       print('saaaaaaaaaaaa');
     }
   }
@@ -155,8 +158,8 @@ class _SpinWheelState extends State<SpinWheel> {
   double _screenSize;
   Animation animation;
   AnimationController controller;
-  double _constAngle=45.0;
-  List<double> _dataAngle,_dataAngle1;
+  double _constAngle = 45.0;
+  List<double> _dataAngle = [], _dataAngle1 = [];
   @override
   void initState() {
     //Size size=MediaQuery.of(context).size;
@@ -168,20 +171,21 @@ class _SpinWheelState extends State<SpinWheel> {
       rotationPercent1 = 0.0;
     });
     _smallerCircleData.shuffle();
-    for (int i = 0; i < _smallerCircleData.length/2; i++) {
-      if (i == 0)
-        _dataAngle[i] = 22.5;
-      else
-        _dataAngle[i] = 22.5 + _constAngle;
-        _constAngle=_constAngle*2;
+    for (int i = 0; i < _smallerCircleData.length; i++) {
+      if (i == 0) {
+      } // _dataAngle[i]=22.5;
+      else {
+        // _dataAngle[i] = 22.5 + _constAngle;
+        // _constAngle=_constAngle*2;
+      }
     }
-    for (int i = 0; i < _smallerCircleData.length/2; i++) {
-      if (i == 0)
-        _dataAngle1[i] = -22.5;
-      else
-        _dataAngle[i] = -22.5 - _constAngle;
-        _constAngle=_constAngle*2;
-    }
+    // for (int i = 0; i < _smallerCircleData.length/2; i++) {
+    //   if (i == 0)
+    //     _dataAngle1[i] = -22.5;
+    //   else
+    //     _dataAngle[i] = -22.5 - _constAngle;
+    //     _constAngle=_constAngle*2;
+    // }
     super.initState();
   }
 
