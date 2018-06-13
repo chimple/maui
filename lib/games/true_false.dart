@@ -255,11 +255,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       ..addStatusListener((state) {
 //        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
+          // print('dismissed');
+          // if (widget.text != null) {
+          //   setState(() => _displayText = widget.text);
+          //   controller.forward();
+          // }
         }
       });
     wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);

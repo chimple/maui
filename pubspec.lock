@@ -78,6 +78,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.5.1"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   charcode:
     dependency: transitive
     description:
@@ -183,6 +190,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.7"
+  flores:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: af52347eb2c6b0d673b2cb35adcd2bcabf4ea76d
+      url: "https://github.com/chimple/flores.git"
+    source: git
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -429,6 +445,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.2"
   shelf:
     dependency: transitive
     description:
@@ -496,7 +519,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.9"
+    version: "0.9.0"
   stack_trace:
     dependency: transitive
     description:
@@ -517,7 +540,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.12"
+    version: "0.0.13"
   string_scanner:
     dependency: transitive
     description:
@@ -531,7 +554,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0-dev.2"
   term_glyph:
     dependency: transitive
     description:

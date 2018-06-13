@@ -31,11 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   getImage(BuildContext context) async {
-    var _fileName = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
-    var user = await new UserRepo()
-        .insert(new User(image: _fileName.path, currentLessonId: 1));
-    AppStateContainer.of(context).setLoggedInUser(user);
+//    var _fileName = await ImagePicker.pickImage(
+//        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
+//    var user = await new UserRepo()
+//        .insert(new User(image: _fileName.path, currentLessonId: 1));
+//    AppStateContainer.of(context).setLoggedInUser(user);
+    Navigator.of(context).pushNamed('/camera');
   }
 
   @override

@@ -46,15 +46,9 @@ class _SpinWheelState extends State<SpinWheel> {
   _onDragStart(PolarCoord cord) {
     print("Drag Start here:: $cord");
     onDragCordStarted = cord;
-    // var start = cord.angle;
-    var angleDiff = onDragCordStarted.angle - cord.angle;
-    angleDiff = angleDiff >= 0 ? angleDiff : angleDiff + (2 * pi);
-    final anglePercent = angleDiff / (2 * pi);
-    //  final timeDiffInSec = (anglePercent * maxTime.inSeconds).round();
-    // selectedTime =
-    // new Duration(seconds: startDragTime.inSeconds + timeDiffInSec);
+    startDragTime = currentTime;
     setState(() {
-      rotationPercent = dragEnd;
+      //rotationPercent = ;
     });
   }
 
@@ -75,6 +69,7 @@ class _SpinWheelState extends State<SpinWheel> {
 
   var dragStart = 0.0;
   var dragEnd = 0.0;
+  var dragEnd1 = 0.0;
   _onDragEnd() {
     setState(() {
       dragEnd = rotationPercent;
@@ -86,7 +81,7 @@ class _SpinWheelState extends State<SpinWheel> {
     onDragCordStarted = cord;
     startDragTime = currentTime;
     setState(() {
-      rotationPercent1 = cord.angle + .1;
+      rotationPercent1 = dragEnd1;
     });
   }
 
@@ -107,20 +102,20 @@ class _SpinWheelState extends State<SpinWheel> {
     }
   }
 
-  double dragEnd1 = 0.0;
   _onDragEnd1() {
-    //rotationPercent
     setState(() {
-      dragEnd = rotationPercent1;
+      dragEnd1 = rotationPercent1;
     });
   }
 
+  double _screenSize;
   Animation animation;
   AnimationController controller;
   @override
   void initState() {
-    // TODO: implement initState
-    sleep(const Duration(seconds: 1));
+    //Size size=MediaQuery.of(context).size;
+    // _screenSize=size.width;
+    //sleep(const Duration(seconds: 1));
     print('after 1 sec::');
     setState(() {
       rotationPercent = 0.0;
@@ -130,49 +125,26 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   @override
-  void didUpdateWidget(SpinWheel covariant) {
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    double aspectRatio1, aspectRatio2, aspectRatio3, aspectRatio4;
-    double _ht, _wd;
-    double _size;
-    Size media = MediaQuery.of(context).size;
-    _wd = media.width;
-    _ht = media.height;
-    print("Screen size:: $media");
+    double _sizeOfWheel;
+    Size size1 = MediaQuery.of(context).size;
+
     final Orientation orientation = MediaQuery.of(context).orientation;
-    final bool isLandscape = orientation == Orientation.landscape;
-    if (isLandscape) {
-      _size = media.height;
-      aspectRatio1 = 1.0;
-      aspectRatio2 = 2.50;
-      aspectRatio3 = 9.0;
-      aspectRatio4 = 7.0;
-    } else {
-      _size = media.width;
-      aspectRatio1 = 1.0;
-      aspectRatio2 = 1.50;
-      aspectRatio3 = 6.700;
-      aspectRatio4 = 10.0;
-      _wd = _wd / aspectRatio2;
-      print("width:: $_wd");
+    final bool isLanscape = orientation == Orientation.landscape;
+    if (isLanscape) {
+      size1 = new Size(size1.height, size1.height);
     }
-    final a = 60.0;
-    int i = 0;
     List<CircularStackEntry> data = <CircularStackEntry>[
       new CircularStackEntry(
         <CircularSegmentEntry>[
-          new CircularSegmentEntry(1000.0, Colors.red[200], rankKey: 'Q1'),
-          new CircularSegmentEntry(1000.0, Colors.green[200], rankKey: 'Q2'),
-          new CircularSegmentEntry(1000.0, Colors.blue[200], rankKey: 'Q3'),
-          new CircularSegmentEntry(1000.0, Colors.yellow[200], rankKey: 'Q4'),
-          new CircularSegmentEntry(1000.0, Colors.red[200], rankKey: 'Q1'),
-          new CircularSegmentEntry(1000.0, Colors.green[200], rankKey: 'Q2'),
-          new CircularSegmentEntry(1000.0, Colors.blue[200], rankKey: 'Q3'),
-          new CircularSegmentEntry(1000.0, Colors.yellow[200], rankKey: 'Q4'),
+          new CircularSegmentEntry(500.0, Colors.red[200], rankKey: 'Q1'),
+          new CircularSegmentEntry(500.0, Colors.green[200], rankKey: 'Q2'),
+          new CircularSegmentEntry(500.0, Colors.blue[200], rankKey: 'Q3'),
+          new CircularSegmentEntry(500.0, Colors.yellow[200], rankKey: 'Q4'),
+          new CircularSegmentEntry(500.0, Colors.red[200], rankKey: 'Q5'),
+          new CircularSegmentEntry(500.0, Colors.green[200], rankKey: 'Q6'),
+          new CircularSegmentEntry(500.0, Colors.blue[200], rankKey: 'Q7'),
+          new CircularSegmentEntry(500.0, Colors.yellow[200], rankKey: 'Q8'),
         ],
         rankKey: 'Quarterly Profits',
       )
@@ -180,58 +152,95 @@ class _SpinWheelState extends State<SpinWheel> {
     List<CircularStackEntry> data1 = <CircularStackEntry>[
       new CircularStackEntry(
         <CircularSegmentEntry>[
-          new CircularSegmentEntry(1000.0, Colors.lightGreenAccent[100],
+          new CircularSegmentEntry(500.0, Colors.lightGreenAccent[100],
               rankKey: 'Q1'),
-          new CircularSegmentEntry(1000.0, Colors.blue[100], rankKey: 'Q2'),
-          new CircularSegmentEntry(1000.0, Colors.blue[400], rankKey: 'Q3'),
-          new CircularSegmentEntry(1000.0, Colors.pinkAccent[100],
+          new CircularSegmentEntry(500.0, Colors.blue[100], rankKey: 'Q2'),
+          new CircularSegmentEntry(500.0, Colors.blue[400], rankKey: 'Q3'),
+          new CircularSegmentEntry(500.0, Colors.pinkAccent[100],
               rankKey: 'Q4'),
-          new CircularSegmentEntry(1000.0, Colors.red[100], rankKey: 'Q1'),
-          new CircularSegmentEntry(1000.0, Colors.pink[100], rankKey: 'Q2'),
-          new CircularSegmentEntry(1000.0, Colors.blue[100], rankKey: 'Q3'),
-          new CircularSegmentEntry(1000.0, Colors.yellow[100], rankKey: 'Q4'),
+          new CircularSegmentEntry(500.0, Colors.red[100], rankKey: 'Q5'),
+          new CircularSegmentEntry(500.0, Colors.pink[100], rankKey: 'Q6'),
+          new CircularSegmentEntry(500.0, Colors.blue[100], rankKey: 'Q7'),
+          new CircularSegmentEntry(500.0, Colors.yellow[100], rankKey: 'Q8'),
         ],
         rankKey: 'Quarterly Profits',
       )
     ];
-    if (i == 0)
+    double _constant;
+    return new LayoutBuilder(builder: (context, constraints) {
+      final bool isPortrait = orientation == Orientation.portrait;
+      print('Screen size:::  .....${constraints},${constraints}');
+      if (isPortrait) {
+        // _sizeOfWheel = constraints.maxWidth + 50;
+        _constant = 100.0;
+      } else {
+        // if(constraints.maxWidth>constraints.maxHeight )
+        // _sizeOfWheel = constraints.maxHeight + 50;
+        // else
+        // _sizeOfWheel=constraints.maxWidth+50;
+
+        _constant = 5.0;
+      }
+      Size _size;
+
+      if (constraints.maxHeight > constraints.maxWidth) {
+        _sizeOfWheel = constraints.maxWidth;
+        _size = new Size(_sizeOfWheel + .20 * _sizeOfWheel,
+            _sizeOfWheel + _sizeOfWheel * .20);
+      } else {
+        _sizeOfWheel = constraints.maxHeight;
+        _size = new Size(
+            _sizeOfWheel - _sizeOfWheel * .2, _sizeOfWheel - _sizeOfWheel * .2);
+      }
+      //print("real sie afkjf f$_size");
       return new Stack(
         children: <Widget>[
+         
           new Center(
             child: new Transform(
+              // transformHitTests: ,
+              origin: new Offset(0.0, 0.0),
               transform: new Matrix4.rotationZ(-rotationPercent),
               alignment: Alignment.center,
-              child: new Container(
-                child: new AnimatedCircularChart(
-                    size: new Size(_size + 50.0, _size + 50.0),
-                    initialChartData: data,
-                    chartType: CircularChartType.Pie),
-              ),
+              child: new AnimatedCircularChart(
+                  edgeStyle: SegmentEdgeStyle.flat,
+                  size: size1,
+                  initialChartData: data,
+                  chartType: CircularChartType.Pie),
             ),
           ),
           new Center(
               child: new Container(
-                  height:_size + 50.0,
-                  width: _size + 50.0,
-                  child: new RadialDragGestureDetector(
-                      onRadialDragStart: _onDragStart,
-                      onRadialDragUpdate: _onDragUpdate,
-                      onRadialDragEnd: _onDragEnd,
-                      child: new Container(
-                        margin: const EdgeInsets.all(1.0),
-                        child: new CustomPaint(
-                          painter: OuterCircle(
-                            ticksPerSection: rotationPercent,
-                          ),
-                        ),
-                      )))),
+            decoration: new BoxDecoration(
+              shape: BoxShape.circle,
+             //color: Colors.red
+            ),
+            height: size1.width*.8 ,
+            width: size1.width*.8,
+            child: new RadialDragGestureDetector(
+                onRadialDragStart: _onDragStart,
+                onRadialDragUpdate: _onDragUpdate,
+                onRadialDragEnd: _onDragEnd,
+                child: new Container(
+                  // height: size1.width*.80,
+                  // width: size1.width*.80,
+                  child: new CustomPaint(
+                    painter: OuterCircle(
+                      ticksPerSection: rotationPercent,
+                      sizePaint: _constant,
+                      //sizeOfWheel:
+                    ),
+                  ),
+                )
+                ),
+          )),
           new Center(
             child: new Transform(
               transform: new Matrix4.rotationZ(-rotationPercent1),
               alignment: Alignment.center,
               child: new Container(
                 child: new AnimatedCircularChart(
-                    size: new Size(_size-100.0, _size-100.0),
+                    size: size1*.5,
                     initialChartData: data1,
                     chartType: CircularChartType.Pie),
               ),
@@ -239,39 +248,35 @@ class _SpinWheelState extends State<SpinWheel> {
           ),
           new Center(
               child: new Container(
-                  //height: double.infinity,
-                  // margin: isLandscape == true
-                  //     ? const EdgeInsets.symmetric(horizontal: 100.0)
-                  //     : const EdgeInsets.symmetric(horizontal: 40.0),
-                  height: _size-100.0,
-                  width: _size-100.0,
+                  height: size1.width * .80* .50,
+                  width: size1.width * .80 * .50,
                   child: new RadialDragGestureDetector(
                       onRadialDragStart: _onDragStart1,
                       onRadialDragUpdate: _onDragUpdate1,
                       onRadialDragEnd: _onDragEnd1,
                       child: new Container(
-                        margin: const EdgeInsets.all(1.0),
+                        //height: size1.width,
+                        //width: size1.width,
                         child: new CustomPaint(
                           painter: InnerCircle(
                             ticksPerSection1: rotationPercent1,
                           ),
                         ),
                       )))),
-          new Center(
-            child: new Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: new Center(
-                child: new CustomPaint(
-                  painter: ArrowPainter(),
-                ),
-              ),
-            ),
-          ),
+          // new Center(
+          //   child: new Container(
+          //     height: 100.0,
+          //     width: 100.0,
+          //     child: new CustomPaint(
+          //       painter: ArrowPainter(),
+          //     ),
+          //   ),
+          // ),
         ],
       );
+    });
 
-    if (i == 2) {}
+    // if (i == 2) {}
     // return new Stack(
     //   children: <Widget>[
     //     new Center(
@@ -381,20 +386,20 @@ class _SpinWheelState extends State<SpinWheel> {
     //             ]),
     //       ),
     //     ),
-    //     // new Center(
-    //     //   child: new AspectRatio(
-    //     //     aspectRatio: aspectRatio4,
-    //     //     child: new Container(
-    //     //       height: double.infinity,
-    //     //       width: double.infinity,
-    //     //       child: new Center(
-    //     //         child: new CustomPaint(
-    //     //           painter: ArrowPainter(),
-    //     //         ),
-    //     //       ),
-    //     //     ),
-    //     //   ),
-    //     // ),
+    // new Center(
+    //   child: new AspectRatio(
+    //     aspectRatio: aspectRatio4,
+    //     child: new Container(
+    //       height: double.infinity,
+    //       width: double.infinity,
+    //       child: new Center(
+    //         child: new CustomPaint(
+    //           painter: ArrowPainter(),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // ),
     //   ],
     // );
   }

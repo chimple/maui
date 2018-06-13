@@ -33,6 +33,7 @@ import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
+import 'package:maui/games/picture_sentence.dart';
 import 'package:maui/screens/score_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/db/entity/user.dart';
@@ -132,7 +133,12 @@ class SingleGame extends StatefulWidget {
     'tap_home': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'tap_wrong': [Color(0xFFF47C5D), Color(0xFF30d858), Color(0xFFA367F9)],
     'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
-    'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)]
+    'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'picture_sentence': [
+      Color(0xFF7A8948),
+      Color(0xFFC79690),
+      Color(0xFF7592BC)
+    ]
   };
 
   SingleGame(this.gameName,
@@ -486,12 +492,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'crossword':
+         playTime = 15000;
+        maxIterations = 1;
         return new Crossword(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            iteration: _myIteration,
             isRotated: widget.isRotated,
-            iteration: _myIteration);
+            gameConfig: widget.gameConfig);
         break;
       case 'tables':
         playTime = 60000;
@@ -561,6 +571,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+      case 'picture_sentence':
+        return new PictureSentence(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: _myIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
       case 'connect_the_dots':
         return new Connectdots(
             key: new GlobalObjectKey(keyName),
@@ -595,6 +615,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'wordgrid':
+        playTime = 15000;
+        maxIterations = 2;
         return new Wordgrid(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -604,7 +626,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'guess':
-      maxIterations = 1;
+        maxIterations = 1;
         return new GuessIt(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
