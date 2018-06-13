@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+// import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
+import 'package:maui/repos/game_data.dart';
 // import '../components/Sticker.dart';
 
 Map _decoded;
@@ -28,25 +29,32 @@ class GuessIt extends StatefulWidget {
 }
 
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
-
+  bool _isLoading = true;
   List<Widget> _paint = [];
 
   void _renderChoice(String text, double X, double Y) {
     setState(() {
-      _paint.add(new Paint(paste: text, x: X, y: Y,));
+      _paint.add(
+        new CustomPaint(
+          painter: new Stickers(
+            text: text,
+            x: X,
+            y: Y,
+          ),
+        ),
+      );
     });
   }
 
-  
-  Widget _buildPaint(int i, Widget w){
-    return new Container(
+  Widget _buildPaint(int i, Widget w) {
+    return new RepaintBoundary(
       child: w,
     );
   }
 
-  List<Widget> _createTextPaint(BuildContext context){
-    int i=0;
-    return _paint.map((f) => _buildPaint(i++,f)).toList(growable: false);
+  List<Widget> _createTextPaint(BuildContext context) {
+    int i = 0;
+    return _paint.map((f) => _buildPaint(i++, f)).toList(growable: false);
   }
 
   List<String> _buildPartsList() {
@@ -80,22 +88,22 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  Future<String> _loadGameAsset() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
-  }
+  // Future<String> _loadGameAsset() async {
+  //   return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
+  // }
 
-  Future _loadGameInfo() async {
-    String jsonGameInfo = await _loadGameAsset();
-    print(jsonGameInfo);
-    this.setState(() {
-      _decoded = json.decode(jsonGameInfo);
-    });
-    print(_decoded["id"]);
-    print(_decoded["height"]);
-    print(_decoded["width"]);
-    print(_decoded["parts"][0]["name"]);
-    // _parserJsonForGame(jsonGameInfo);
-  }
+  // Future _loadGameInfo() async {
+  //   String jsonGameInfo = await _loadGameAsset();
+  //   print(jsonGameInfo);
+  //   this.setState(() {
+  //     _decoded = json.decode(jsonGameInfo);
+  //   });
+  //   print(_decoded["id"]);
+  //   print(_decoded["height"]);
+  //   print(_decoded["width"]);
+  //   print(_decoded["parts"][0]["name"]);
+  //   // _parserJsonForGame(jsonGameInfo);
+  // }
 
   // void drawName(Canvas context, String name, double x, double y) {
   //   TextSpan span = new TextSpan(
@@ -113,118 +121,129 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   void _validate() {
     _controller.text = '';
     _renderChoice(_guess, 350.0, 200.0);
-  //   if (_guess == _decoded["parts"][0]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 50.0, 100.0);
-  //     // this.setState(() {
-  //     //   x1 = 50.0;
-  //     //   y1 = 100.0;
-  //     //   paste1 = _guess;
-  //     // });
-  //     // drawName(  , _guess, 50.0, 100.0);
-  //   } else if (_guess == _decoded["parts"][1]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 250.0, 100.0);
-  //     // this.setState(() {
-  //     //   x2 = 250.0;
-  //     //   y2 = 100.0;
-  //     //   paste2 = _guess;
-  //     // });
-  //   } else if (_guess == _decoded["parts"][2]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 150.0, 100.0);
-  //     // this.setState(() {
-  //     //   x3 = 150.0;
-  //     //   y3 = 100.0;
-  //     //   paste3 = _guess;
-  //     // });
-  //   } else if (_guess == _decoded["parts"][3]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 200.0, 100.0);
-  //     // this.setState(() {
-  //     //   x4 = 200.0;
-  //     //   y4 = 100.0;
-  //     //   paste4 = _guess;
-  //     // });
-  //   } else if (_guess == _decoded["parts"][4]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 250.0, 100.0);
-  //     // this.setState(() {
-  //     //   x5 = 250.0;
-  //     //   y5 = 100.0;
-  //     //   paste5 = _guess;
-  //     // });
-  //   } else if (_guess == _decoded["parts"][5]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     _renderChoice(_guess, 250.0, 100.0);
-  //     // this.setState(() {
-  //     //   x6 = 250.0;
-  //     //   y6 = 100.0;
-  //     //   paste6 = _guess;
-  //     // });
-  //   } else if (_guess == _decoded["parts"][6]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     this.setState(() {
-  //       x7 = 250.0;
-  //       y7 = 100.0;
-  //       paste7 = _guess;
-  //     });
-  //   } else if (_guess == _decoded["parts"][7]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     this.setState(() {
-  //       x8 = 250.0;
-  //       y8 = 100.0;
-  //       paste8 = _guess;
-  //     });
-  //   } else if (_guess == _decoded["parts"][8]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     this.setState(() {
-  //       x9 = 250.0;
-  //       y9 = 100.0;
-  //       paste9 = _guess;
-  //     });
-  //   } else if (_guess == _decoded["parts"][9]["name"]) {
-  //     print(_guess);
-  //     _controller.text = '';
-  //     this.setState(() {
-  //       x10 = 250.0;
-  //       y10 = 100.0;
-  //       paste10 = _guess;
-  //     });
-  //   } else {
-  //     this.setState(() {
-  //       _flag = 1;
-  //       toAnimateFunction();
-  //       new Future.delayed(const Duration(milliseconds: 1000), () {
-  //         setState(() {
-  //           // x = 0.0;
-  //           // y = 0.0;
-  //           // paste = '';
-  //           _flag = 0;
-  //         });
-  //         print(animation.value);
-  //         print(noanimation.value);
-  //         _controller.text = '';
-  //         controller.stop();
-  //       });
-  //     });
-  //     // paste = '';
-  //   }
+    //   if (_guess == _decoded["parts"][0]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 50.0, 100.0);
+    //     // this.setState(() {
+    //     //   x1 = 50.0;
+    //     //   y1 = 100.0;
+    //     //   paste1 = _guess;
+    //     // });
+    //     // drawName(  , _guess, 50.0, 100.0);
+    //   } else if (_guess == _decoded["parts"][1]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 250.0, 100.0);
+    //     // this.setState(() {
+    //     //   x2 = 250.0;
+    //     //   y2 = 100.0;
+    //     //   paste2 = _guess;
+    //     // });
+    //   } else if (_guess == _decoded["parts"][2]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 150.0, 100.0);
+    //     // this.setState(() {
+    //     //   x3 = 150.0;
+    //     //   y3 = 100.0;
+    //     //   paste3 = _guess;
+    //     // });
+    //   } else if (_guess == _decoded["parts"][3]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 200.0, 100.0);
+    //     // this.setState(() {
+    //     //   x4 = 200.0;
+    //     //   y4 = 100.0;
+    //     //   paste4 = _guess;
+    //     // });
+    //   } else if (_guess == _decoded["parts"][4]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 250.0, 100.0);
+    //     // this.setState(() {
+    //     //   x5 = 250.0;
+    //     //   y5 = 100.0;
+    //     //   paste5 = _guess;
+    //     // });
+    //   } else if (_guess == _decoded["parts"][5]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     _renderChoice(_guess, 250.0, 100.0);
+    //     // this.setState(() {
+    //     //   x6 = 250.0;
+    //     //   y6 = 100.0;
+    //     //   paste6 = _guess;
+    //     // });
+    //   } else if (_guess == _decoded["parts"][6]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     this.setState(() {
+    //       x7 = 250.0;
+    //       y7 = 100.0;
+    //       paste7 = _guess;
+    //     });
+    //   } else if (_guess == _decoded["parts"][7]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     this.setState(() {
+    //       x8 = 250.0;
+    //       y8 = 100.0;
+    //       paste8 = _guess;
+    //     });
+    //   } else if (_guess == _decoded["parts"][8]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     this.setState(() {
+    //       x9 = 250.0;
+    //       y9 = 100.0;
+    //       paste9 = _guess;
+    //     });
+    //   } else if (_guess == _decoded["parts"][9]["name"]) {
+    //     print(_guess);
+    //     _controller.text = '';
+    //     this.setState(() {
+    //       x10 = 250.0;
+    //       y10 = 100.0;
+    //       paste10 = _guess;
+    //     });
+    //   } else {
+    //     this.setState(() {
+    //       _flag = 1;
+    //       toAnimateFunction();
+    //       new Future.delayed(const Duration(milliseconds: 1000), () {
+    //         setState(() {
+    //           // x = 0.0;
+    //           // y = 0.0;
+    //           // paste = '';
+    //           _flag = 0;
+    //         });
+    //         print(animation.value);
+    //         print(noanimation.value);
+    //         _controller.text = '';
+    //         controller.stop();
+    //       });
+    //     });
+    //     // paste = '';
+    //   }
+  }
+
+  void _initBoard() async {
+    setState(() => _isLoading = true);
+    String jsonGameInfo = await fetchGuessData();
+
+    _decoded = json.decode(jsonGameInfo);
+    new Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() => _isLoading = false);
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _initBoard();
     controller = new AnimationController(
         duration: new Duration(milliseconds: 80), vsync: this);
     animation = new Tween(begin: -3.0, end: 3.0).animate(controller);
@@ -233,7 +252,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
       setState(() {});
     });
     noanimation = new Tween(begin: 0.0, end: 0.0).animate(controller);
-    this._loadGameInfo();
+    // this._loadGameInfo();
     _imgController = new AnimationController(
         duration: new Duration(
           milliseconds: 800,
@@ -269,8 +288,16 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     // FocusScope.of(context).requestFocus(_focusnode);
     // ThemeData themeData = Theme.of(context);
+    print(_buildPartsList());
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
@@ -376,7 +403,11 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 }
 
 class Stickers extends CustomPainter {
-  Stickers({this.text, this.x, this.y,});
+  Stickers({
+    this.text,
+    this.x,
+    this.y,
+  });
   final String text;
   final double x;
   final double y;
@@ -386,9 +417,7 @@ class Stickers extends CustomPainter {
     TextSpan span = new TextSpan(
         text: text,
         style: new TextStyle(
-            color: Colors.black,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold));
+            color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold));
     TextPainter tp = new TextPainter(
         text: span,
         textAlign: TextAlign.center,
@@ -410,20 +439,5 @@ class Stickers extends CustomPainter {
       print(">>>>>>>>>>>>>>${oldDelegate.text}");
       return false;
     }
-  }
-}
-
-class Paint extends StatelessWidget {
-  Paint({this.paste, this.x, this.y});
-  final double x, y;
-  final String paste;
-  @override
-  Widget build(BuildContext context) {
-    return new RepaintBoundary(
-      child: new CustomPaint(
-        painter:
-            new Stickers(text: paste, x: x, y: y,),
-      ),
-    );
   }
 }

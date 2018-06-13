@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:tuple/tuple.dart';
@@ -551,4 +551,13 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
       break;
   }
   return null;
+}
+
+
+Future<String> fetchIdentifyData() async {
+    return await rootBundle.loadString("assets/imageCoordinatesInfoScene.json");
+}
+
+Future<String> fetchGuessData() async {
+    return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
 }

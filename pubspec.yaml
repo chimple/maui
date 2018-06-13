@@ -52,6 +52,8 @@ flutter:
     - assets/apple.png
     - assets/Boy.png
     - assets/Body.png
+    - assets/Scene.png
+    - assets/imageCoordinatesInfoScene.json
     - assets/imageCoordinatesInfoShapes.json
     - assets/imageCoordinatesInfoBoy.json
     - assets/imageCoordinatesInfoBody.json
