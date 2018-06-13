@@ -80,7 +80,7 @@ class _SpinWheelState extends State<SpinWheel> {
 
   var angleDiff;
   var _endAngle;
-  PolarCoord dragUpdate;
+  var dragUpdate=0.0;
 
   _onDragUpdate(PolarCoord dragCord) {
     _endAngle = dragCord;
@@ -97,15 +97,30 @@ class _SpinWheelState extends State<SpinWheel> {
       setState(() {
         rotationPercent = angleDiff + dragEnd; //angleDiff + dragEnd;
       });
+      dragUpdate=angleDiff;
     }
   }
 
   var dragStart = 0.0;
   var dragEnd = 0.0;
   var dragEnd1 = 0.0;
+  var _oldCoord;
   _onDragEnd() {
+    print("sssssssssssssssssss${angleDiff}");
     //setState(() {
     dragEnd = rotationPercent;
+    if(dragUpdate >=.3 && dragUpdate <=1.2){
+     setState(() {
+             //rotationPercent=.4;
+          });
+          dragUpdate=dragUpdate-.4;
+    }
+    if(angleDiff>=1.2 && angleDiff <=2.0){
+     setState(() {
+            // rotationPercent=1.2;
+          });
+     _oldCoord =dragUpdate;
+    }
     //});
     //compareTheangle(angleDiff);
     print("started ${(_angle / (2 * pi) * 360)}");
