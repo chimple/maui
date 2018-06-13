@@ -353,14 +353,14 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   ]);
 }
 
-Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
+Future<Tuple2<List<String>, String>> fetchCirclewrdData(
     int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
   switch (0) {
     case 0:
       return new Tuple2([
-        [
+        
           'catseings',
           ' actings',
           'casing',
@@ -376,21 +376,21 @@ Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
           'tas',
           'as',
           'ats'
-        ],
-      ], null);
+        
+      ],'catseings');
       break;
     case 1:
-      return new Tuple2([
+      return new Tuple2(
         ['upsc', 'cusp', 'scup', 'cup', 'pus', 'sup', 'ups', 'up', 'us'],
-      ], null);
+       'upsc');
       break;
     case 2:
-      return new Tuple2([
+      return new Tuple2(
         ['ucts', 'scut', 'cut', 'uts', 'st', 'us', 'ut'],
-      ], null);
+      'ucts');
       break;
     case 3:
-      return new Tuple2([
+      return new Tuple2(
         [
           'hate',
           'eath',
@@ -418,9 +418,10 @@ Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
           'ta',
           'te'
         ],
-      ], null);
+       'hate');
       break;
   }
+   return null;
 }
 
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
