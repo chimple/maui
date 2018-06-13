@@ -13,6 +13,7 @@ class FriendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('FriendItem: $id $imageUrl');
     var user = AppStateContainer.of(context).state.loggedInUser;
 
     final encImageUrl = imageUrl.replaceAll(new RegExp(r'/'), '&#x2F;');
@@ -33,7 +34,9 @@ class FriendItem extends StatelessWidget {
                               ? new AssetImage('assets/koala_neutral.png')
                               : isFile
                                   ? NetworkImage(imageUrl)
-                                  : MemoryImage(base64.decode(imageUrl)),
+                                  : imageUrl != null
+                                      ? MemoryImage(base64.decode(imageUrl))
+                                      : AssetImage('assets/hoodie_bear.png'),
                           fit: BoxFit.fill))))),
     );
   }

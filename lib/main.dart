@@ -3,9 +3,15 @@ import 'package:maui/app.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter/services.dart';
 import 'package:flores/flores.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
-void main() {
+void main() async {
   new Flores().start();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  if (prefs.getString('deviceId') == null) {
+    prefs.setString('deviceId', Uuid().v4());
+  }
   runApp(new AppStateContainerController(
     child: new MauiApp(),
   ));
