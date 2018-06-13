@@ -21,25 +21,39 @@ class SecondScreen extends StatelessWidget {
   Widget _build(BuildContext context, BoxConstraints constraints) {
 //    print([constraints.maxWidth, constraints.maxHeight]);
 //    print({"the output is : " : output});
-  var height = constraints.maxHeight;
-  var width = constraints.maxWidth;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    var height = constraints.maxHeight;
+    var width = constraints.maxWidth;
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Drawing'),
-        ),
-        body: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Container(
-                height: height > width ? height * 0.5 : height*.5 ,
-                width:  width >  height ? width * 0.5 : width*.6 ,
-            child: new Drawing(output)),
-            new Expanded(
+      appBar: new AppBar(
+        title: new Text('Drawing'),
+      ),
+      body: orientation == Orientation.portrait
+          ? new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Container(
+                    height: height > width ? height * 0.45 : height * .75,
+                    width: width > height ? width * 0.6 : width * .95,
+                    child: new Drawing(output)),
+                new Expanded(
 //                height: constraints.maxHeight*.3, width: constraints.maxWidth,
-                child: new DrawOptions()
+                    child: new DrawOptions()),
+              ],
+            )
+          : new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Container(
+                    height: height > width ? height * 0.5 : height * .5625,
+                    width: width > height ? width * 0.45 : width,
+                    child: new Drawing(output)),
+                new Expanded(
+//                height: constraints.maxHeight*.3, width: constraints.maxWidth,
+                    child: new DrawOptions()),
+              ],
             ),
-          ],
-        ));
+    );
   }
 }
 
@@ -110,14 +124,13 @@ class MyDrawPageState extends State<MyImagePage> {
 class DrawPainting extends CustomPainter {
   String canvasProperty = null;
 
-
   DrawPainting(this.canvasProperty);
 
   void paint(Canvas canvas, Size size) {
     double _height = size.height;
     double _width = size.width;
-     double _hsize = _height > _width ? _height*2.5 : _height;
-    double _wsize = _width > _height ? _width* 1.5 : _width;
+    double _hsize = _height;
+    double _wsize = _width;
 
     Paint paint = new Paint()..strokeCap = StrokeCap.round;
 
@@ -138,8 +151,8 @@ class DrawPainting extends CustomPainter {
         paint.color = new Color(draw['color']);
 
         if (position[j]['x'] != null && position[j + 1]['x'] != null) {
-          Offset currentPixel = new Offset(((position[j]['x']) * _wsize),
-              ((position[j]['y']) * _hsize));
+          Offset currentPixel = new Offset(
+              ((position[j]['x']) * _wsize), ((position[j]['y']) * _hsize));
 
           Offset nextPixel = new Offset(((position[j + 1]['x']) * _wsize),
               ((position[j + 1]['y']) * _hsize));
@@ -259,16 +272,6 @@ class optionState extends State<DrawOptions> {
     }
 
     int j = 0;
-    // return new Column(
-    //           children: <Widget>[
-
-    // new Row(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   crossAxisAlignment: CrossAxisAlignment.center,
-    //   children: [new QuestionText(questionText)]
-    // ),
-    //new AnswerButton(buttonController: _loginButtonController.view, answerText: choices[0], onTap: () => handleAnswer(choices[0])),
-
     return new ResponsiveGridView(
       rows: _size,
       cols: _size,
@@ -404,6 +407,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
 //    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
@@ -416,14 +420,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       widthFactor: 0.8,
                       child: new FlashCard(text: widget.text)));
             },
-            child: new RaisedButton(
-                onPressed: () => widget.onPress(),
-                color: Colors.blue,
-                shape: new RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(8.0))),
-                child: new Text(_displayText,
-                    style:
-                        new TextStyle(color: Colors.white, fontSize: 24.0)))));
+            child: new Container(
+              height: 80.0,
+              width: orientation == Orientation.portrait ? 200.0 : 150.0,
+              padding: EdgeInsets.all(10.0),
+              child: new RaisedButton(
+                  onPressed: () => widget.onPress(),
+                  color: Colors.blue,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius:
+                          const BorderRadius.all(const Radius.circular(8.0))),
+                  child: new Text(_displayText,
+                      style:
+                          new TextStyle(color: Colors.white, fontSize: 24.0))),
+            )));
   }
 }

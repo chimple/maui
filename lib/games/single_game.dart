@@ -447,11 +447,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'dice':
         return new Dice(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
+            iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated,
-            iteration: _myIteration);
+            gameConfig: widget.gameConfig);
         break;
       case 'bingo':
         return new Bingo(
