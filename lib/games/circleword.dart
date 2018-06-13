@@ -61,7 +61,7 @@ String words='';
   List<Widget> widgets1 = new List();
   List<String> _letters;
   double dradius;
-  Tuple2<List<String>, String> data;
+  Tuple2<List<String >,String> data;
   //  _letters=_letters1;
     //  _statuses = _letters.map((a) => Status.Active).toList(growable: false);
     @override
@@ -83,7 +83,7 @@ String words='';
 //      _letters=wordata[i].split('');
 //   break;
 //    }
-   wordata=data.item1;
+   
   _letters=data.item2.split('');
     widgets.removeRange(0, widgets.length);
 
