@@ -41,19 +41,19 @@ class AppDatabase {
       await new File(path).writeAsBytes(bytes);
       _db = await openDatabase(path, version: 1);
 
-      String imagePath = join(documentsDirectory.path, "african_child.png");
-      ByteData imageData =
-          await rootBundle.load(join("assets", "african_child.png"));
-      List<int> imageBytes = imageData.buffer
-          .asUint8List(imageData.offsetInBytes, imageData.lengthInBytes);
-      await new File(imagePath).writeAsBytes(imageBytes);
-
-      String imagePath1 = join(documentsDirectory.path, "indian_child.png");
-      ByteData imageData1 =
-          await rootBundle.load(join("assets", "indian_child.png"));
-      List<int> imageBytes1 = imageData1.buffer
-          .asUint8List(imageData1.offsetInBytes, imageData1.lengthInBytes);
-      await new File(imagePath1).writeAsBytes(imageBytes1);
+//      String imagePath = join(documentsDirectory.path, "african_child.png");
+//      ByteData imageData =
+//          await rootBundle.load(join("assets", "african_child.png"));
+//      List<int> imageBytes = imageData.buffer
+//          .asUint8List(imageData.offsetInBytes, imageData.lengthInBytes);
+//      await new File(imagePath).writeAsBytes(imageBytes);
+//
+//      String imagePath1 = join(documentsDirectory.path, "indian_child.png");
+//      ByteData imageData1 =
+//          await rootBundle.load(join("assets", "indian_child.png"));
+//      List<int> imageBytes1 = imageData1.buffer
+//          .asUint8List(imageData1.offsetInBytes, imageData1.lengthInBytes);
+//      await new File(imagePath1).writeAsBytes(imageBytes1);
 
       String audioPath = join(documentsDirectory.path, "apple.ogg");
       ByteData audioData = await rootBundle.load(join("assets", "apple.ogg"));
@@ -61,17 +61,17 @@ class AppDatabase {
           .asUint8List(audioData.offsetInBytes, audioData.lengthInBytes);
       await new File(audioPath).writeAsBytes(audioBytes);
 
-      await new UserDao().insert(new User(
-          id: 'dbb24390-20f0-11e8-c6ee-c11cc1dabc53',
-          name: 'Aiysha',
-          image: imagePath,
-          currentLessonId: 56));
-
-      await new UserDao().insert(new User(
-          id: 'ad851669-e0a9-4bf7-a8d0-2a6b0b166013',
-          name: 'Ramu',
-          image: imagePath1,
-          currentLessonId: 1));
+//      await new UserDao().insert(new User(
+//          id: 'dbb24390-20f0-11e8-c6ee-c11cc1dabc53',
+//          name: 'Aiysha',
+//          image: imagePath,
+//          currentLessonId: 56));
+//
+//      await new UserDao().insert(new User(
+//          id: 'ad851669-e0a9-4bf7-a8d0-2a6b0b166013',
+//          name: 'Ramu',
+//          image: imagePath1,
+//          currentLessonId: 1));
 
       await new UserDao().getUsers().then((u) => print(u));
     } else {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -192,7 +193,10 @@ class ChatScreenState extends State<ChatScreen> {
     _sendMessage(text: text);
   }
 
-  void _sendMessage({String text, String imageUrl}) {
+  void _sendMessage({String text, String imageUrl}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+
     Flores().addMessage(widget.myId, widget.friendId, chatMessageType, text);
 //    final index = _messages.length;
     listKey.currentState.insertItem(0);
@@ -201,7 +205,7 @@ class ChatScreenState extends State<ChatScreen> {
       'recipientUserId': widget.friendId,
       'messageType': chatMessageType,
       'message': text,
-      'deviceId': 'todo',
+      'deviceId': deviceId,
       'loggedAt': DateTime.now().millisecondsSinceEpoch.toString()
     });
 //    _reference.push().set({
