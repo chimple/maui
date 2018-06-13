@@ -68,7 +68,8 @@ class _SpinWheelState extends State<SpinWheel> {
   double _percentRotate;
   //List<int> _index;
   _onDragStart(PolarCoord cord) {
-    print("Drag Start here:: $cord");
+    print("Drag Start here:: ${(cord.angle / (2 * pi) * 360)}");
+    //print("on Drag stared radius ::${cord.radius}");
     onDragCordStarted = cord;
     _angle = cord.angle;
     startDragTime = currentTime;
@@ -80,11 +81,10 @@ class _SpinWheelState extends State<SpinWheel> {
 
   var angleDiff;
   var _endAngle;
-  var dragUpdate=0.0;
+  var dragUpdate = 0.0;
 
   _onDragUpdate(PolarCoord dragCord) {
     _endAngle = dragCord;
-    print("On Drag Updated:: ${angleDiff}");
 
     onDragCordUpdated = dragCord;
     if (onDragCordStarted != null) {
@@ -97,7 +97,7 @@ class _SpinWheelState extends State<SpinWheel> {
       setState(() {
         rotationPercent = angleDiff + dragEnd; //angleDiff + dragEnd;
       });
-      dragUpdate=angleDiff;
+      dragUpdate = angleDiff;
     }
   }
 
@@ -106,40 +106,40 @@ class _SpinWheelState extends State<SpinWheel> {
   var dragEnd1 = 0.0;
   var _oldCoord;
   _onDragEnd() {
-    print("sssssssssssssssssss${angleDiff}");
+      print("Drag End here:: ${(onDragCordUpdated.angle / (2 * pi) * 360)}");
+    //print("sssssssssssssssssss${angleDiff}");
     //setState(() {
     dragEnd = rotationPercent;
-    if(dragUpdate >=.3 && dragUpdate <=1.2){
-     setState(() {
-             //rotationPercent=.4;
-          });
-          dragUpdate=dragUpdate-.4;
+    if (dragUpdate >= .3 && dragUpdate <= 1.2) {
+      setState(() {
+        // rotationPercent=.4;
+      });
+      dragUpdate = dragUpdate - angleDiff - .4;
     }
-    if(angleDiff>=1.2 && angleDiff <=2.0){
-     setState(() {
-            // rotationPercent=1.2;
-          });
-     _oldCoord =dragUpdate;
+    if (angleDiff >= 1.2 && angleDiff <= 2.0) {
+      setState(() {
+        // rotationPercent=1.2;
+      });
+      _oldCoord = dragUpdate;
     }
     //});
     //compareTheangle(angleDiff);
-    print("started ${(_angle / (2 * pi) * 360)}");
-    print("end ${(_endAngle.angle / (2 * pi) * 360)}"); ///_endAngle.angle
-    print('drag end here:: ${(angleDiff/ (2 * pi) * 360)}'); //angleDiff
+    // print("started ${(_angle / (2 * pi) * 360)}");
+    // print("end ${(_endAngle.angle / (2 * pi) * 360)}"); ///_endAngle.angle
+    // print('drag end here:: ${(angleDiff/ (2 * pi) * 360)}'); //angleDiff
     // var s = onDragCordStarted - onDragCordUpdated;
-   // print("sassssssssssjjks $onDragCordStarted");
-   if(true){
-   }
+    // print("sassssssssssjjks $onDragCordStarted");
+    if (true) {}
   }
 
   void compareTheangle(PolarCoord dragEnd) {
     if (angleDiff == 22.0) {
-      print('saaaaaaaaaaaa');
+      // print('saaaaaaaaaaaa');
     }
   }
 
   _onDragStart1(PolarCoord cord) {
-    print("Drag Start here:: $cord");
+    //print("Drag Start here:: $cord");
     onDragCordStarted = cord;
     startDragTime = currentTime;
     setState(() {
@@ -148,7 +148,7 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   _onDragUpdate1(PolarCoord dragCord) {
-    print("On Drag Start here:: $dragCord");
+    // print("On Drag Start here:: $dragCord");
     if (onDragCordStarted != null) {
       var angleDiff = onDragCordStarted.angle - dragCord.angle;
       angleDiff = angleDiff >= 0 ? angleDiff : angleDiff + (2 * pi);
@@ -180,7 +180,7 @@ class _SpinWheelState extends State<SpinWheel> {
     //Size size=MediaQuery.of(context).size;
     // _screenSize=size.width;
     //sleep(const Duration(seconds: 1));
-    print('after 1 sec::');
+    // print('after 1 sec::');
     setState(() {
       rotationPercent = 0.0;
       rotationPercent1 = 0.0;
@@ -276,100 +276,100 @@ class _SpinWheelState extends State<SpinWheel> {
       }
       //print("real sie afkjf f$_size");
 
-      if (flag == 0) print("charaf safsafsasaf $_chartKey");
-      return new Stack(
-        children: <Widget>[
-          new Center(
-            child: new Transform(
-              // transformHitTests: ,
-              origin: new Offset(0.0, 0.0),
-              transform: new Matrix4.rotationZ(-rotationPercent),
-              alignment: Alignment.center,
-              child: new AnimatedCircularChart(
-                  key: _chartKey,
-                  //startAngle: 90.0,
-                  edgeStyle: SegmentEdgeStyle.flat,
-                  size: size1,
-                  initialChartData: data,
-                  chartType: CircularChartType.Pie),
+      if (flag == 0)
+        return new Stack(
+          children: <Widget>[
+            new Center(
+              child: new Transform(
+                // transformHitTests: ,
+                origin: new Offset(0.0, 0.0),
+                transform: new Matrix4.rotationZ(-rotationPercent),
+                alignment: Alignment.center,
+                child: new AnimatedCircularChart(
+                    key: _chartKey,
+                    //startAngle: 90.0,
+                    edgeStyle: SegmentEdgeStyle.flat,
+                    size: size1,
+                    initialChartData: data,
+                    chartType: CircularChartType.Pie),
+              ),
             ),
-          ),
-          new Center(
-              child: new Container(
-            decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              //color: Colors.red
-            ),
-            height: size1.width * .8,
-            width: size1.width * .8,
-            child: new RadialDragGestureDetector(
-                onRadialDragStart: _onDragStart,
-                onRadialDragUpdate: _onDragUpdate,
-                onRadialDragEnd: _onDragEnd,
+            new Center(
                 child: new Container(
-                  // height: size1.width*.80,
-                  // width: size1.width*.80,
-                  child: new CustomPaint(
-                    painter: OuterCircle(
-                      ticksPerSection: rotationPercent,
-                      sizePaint: _constant,
-                      data: _smallerCircleData,
-                      //sizeOfWheel:
+              decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                //color: Colors.red
+              ),
+              height: size1.width * .8,
+              width: size1.width * .8,
+              child: new RadialDragGestureDetector(
+                  onRadialDragStart: _onDragStart,
+                  onRadialDragUpdate: _onDragUpdate,
+                  onRadialDragEnd: _onDragEnd,
+                  child: new Container(
+                    // height: size1.width*.80,
+                    // width: size1.width*.80,
+                    child: new CustomPaint(
+                      painter: OuterCircle(
+                        ticksPerSection: rotationPercent,
+                        sizePaint: _constant,
+                        data: _smallerCircleData,
+                        //sizeOfWheel:
+                      ),
                     ),
-                  ),
-                )),
-          )),
-          // new Center(
-          //   child: new Transform(
-          //     transform: new Matrix4.rotationZ(-rotationPercent1),
-          //     alignment: Alignment.center,
-          //     child: new Container(
-          //       child: new AnimatedCircularChart(
-          //           size: size1 * .5,
-          //           initialChartData: data1,
-          //           chartType: CircularChartType.Pie),
-          //     ),
-          //   ),
-          // ),
-          // new Center(
-          //   child: new FittedBox(
-          //     child: new Image.asset(
-          //       'assets/arrow.png',
-          //     //  scale: .4,
-          //       color:  Colors.blue,
-          //       height: _size.width/2
-          //     ),
-          //   ),
-          // ),
-          // new Center(
-          //     child: new Container(
-          //         height: size1.width * .80 * .50,
-          //         width: size1.width * .80 * .50,
-          //         child: new RadialDragGestureDetector(
-          //             onRadialDragStart: _onDragStart1,
-          //             onRadialDragUpdate: _onDragUpdate1,
-          //             onRadialDragEnd: _onDragEnd1,
-          //             child: new Container(
-          //               //height: size1.width,
-          //               //width: size1.width,
-          //               child: new CustomPaint(
-          //                 painter: InnerCircle(
-          //                   ticksPerSection1: rotationPercent1,
-          //                 ),
-          //               ),
-          //             )))),
-          // new Center(
-          //   child: new FittedBox(
-          //     child: new Image.asset(
-          //       'assets/arrow.png',
-          //       scale: .2,
-          //       color:  Colors.blue,
-          //       height: _size.width/2
-          //     ),
-          //   ),
-          // ),
-        ],
-      );
+                  )),
+            )),
+            // new Center(
+            //   child: new Transform(
+            //     transform: new Matrix4.rotationZ(-rotationPercent1),
+            //     alignment: Alignment.center,
+            //     child: new Container(
+            //       child: new AnimatedCircularChart(
+            //           size: size1 * .5,
+            //           initialChartData: data1,
+            //           chartType: CircularChartType.Pie),
+            //     ),
+            //   ),
+            // ),
+            // new Center(
+            //   child: new FittedBox(
+            //     child: new Image.asset(
+            //       'assets/arrow.png',
+            //     //  scale: .4,
+            //       color:  Colors.blue,
+            //       height: _size.width/2
+            //     ),
+            //   ),
+            // ),
+            // new Center(
+            //     child: new Container(
+            //         height: size1.width * .80 * .50,
+            //         width: size1.width * .80 * .50,
+            //         child: new RadialDragGestureDetector(
+            //             onRadialDragStart: _onDragStart1,
+            //             onRadialDragUpdate: _onDragUpdate1,
+            //             onRadialDragEnd: _onDragEnd1,
+            //             child: new Container(
+            //               //height: size1.width,
+            //               //width: size1.width,
+            //               child: new CustomPaint(
+            //                 painter: InnerCircle(
+            //                   ticksPerSection1: rotationPercent1,
+            //                 ),
+            //               ),
+            //             )))),
+            // new Center(
+            //   child: new FittedBox(
+            //     child: new Image.asset(
+            //       'assets/arrow.png',
+            //       scale: .2,
+            //       color:  Colors.blue,
+            //       height: _size.width/2
+            //     ),
+            //   ),
+            // ),
+          ],
+        );
     });
 
     // if (i == 2) {}
