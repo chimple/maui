@@ -8,7 +8,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
-  image_picker: ^0.4.0
+  image_picker: ^0.4.4
   xmlstream: ^0.10.0
   sqflite: any
   uuid: ^0.5.0
@@ -21,6 +21,11 @@ dependencies:
   fluttie: ^0.2.1
   fluttery: "^0.0.6"
   flutter_circular_chart: "^0.0.3"
+  shared_preferences: ^0.4.2
+  camera: 0.2.1
+  flores:
+    git:
+      https://github.com/chimple/flores.git
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -56,13 +61,15 @@ flutter:
     - assets/imageCoordinatesInfoBoy.json
     - assets/imageCoordinatesInfoBody.json
     - assets/apple.ogg
-    - assets/1.png
-    - assets/2.png
-    - assets/3.png
-    - assets/4.png
-    - assets/5.png
-    - assets/6.png
-    - assets/dice5.gif
+    - assets/dice_game/1.png
+    - assets/dice_game/2.png
+    - assets/dice_game/3.png
+    - assets/dice_game/4.png
+    - assets/dice_game/5.png
+    - assets/dice_game/6.png
+    - assets/dice_game/dice1.gif
+    - assets/dice_game/tapme.png
+    - assets/dice_game/tapme1.png 
     - assets/games.png
     - assets/chat.png
     - assets/story.png
@@ -111,8 +118,12 @@ flutter:
     - assets/hoodie/tap_home.png
     - assets/hoodie/tap_wrong.png
     - assets/hoodie/true_or_false.png
+    - assets/hoodie/picture_sentence.png
     - assets/forward_button.png
     - assets/home_button.png
+    - assets/dice.png
+    - assets/wordgrid.png
+    - assets/picture_sentence.png
 
     #happy
     - assets/hoodie/reflex_happy.png
@@ -142,6 +153,10 @@ flutter:
     - assets/hoodie/tap_home_happy.png
     - assets/hoodie/tap_wrong_happy.png
     - assets/hoodie/true_or_false_happy.png
+    - assets/hoodie/picture_sentence_happy.png
+    - assets/dice_happy.png
+    - assets/wordgrid_happy.png
+    - assets/picture_sentence_happy.png
 
     #sad
     - assets/hoodie/reflex_sad.png
@@ -172,6 +187,10 @@ flutter:
     - assets/hoodie/tap_wrong_sad.png
     - assets/hoodie/true_or_false_sad.png
     - assets/background_tile.png
+    - assets/hoodie/picture_sentence_sad.png
+    - assets/dice_sad.png
+    - assets/wordgrid_sad.png
+    - assets/picture_sentence_sad.png
     # dictionary
     - assets/dict/aardvark.png
     - assets/dict/abdomen.png
@@ -705,6 +724,7 @@ flutter:
     - assets/dict/mosquito.png
     - assets/dict/moth.png
     - assets/dict/mother.png
+    - assets/dict/mountain.png
     - assets/dict/mouse.png
     - assets/dict/mouth.png
     - assets/dict/mule.png
@@ -1068,6 +1088,7 @@ flutter:
     - assets/dict/woman.png
     - assets/dict/woodpecker.png
     - assets/dict/workout.png
+    - assets/dict/world.png
     - assets/dict/wrist.png
     - assets/dict/xray.png
     - assets/dict/xylophone.png

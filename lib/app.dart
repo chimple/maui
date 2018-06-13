@@ -8,6 +8,7 @@ import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'components/camera.dart';
 
 class MauiApp extends StatelessWidget {
   @override
@@ -19,7 +20,8 @@ class MauiApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new LoginScreen(),
         '/tab': (BuildContext context) => new TabHome(),
-        '/chatbot': (BuildContext context) => new ChatBotScreen()
+        '/chatbot': (BuildContext context) => new ChatBotScreen(),
+        '/camera': (BuildContext context) => CameraScreen()
       },
       onGenerateRoute: _getRoute,
     );
@@ -59,14 +61,19 @@ class MauiApp extends StatelessWidget {
 
       switch (path[5]) {
         case 'single_iterations':
-          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
-            builder: (BuildContext context) => new SingleGame(
-                  path[2],
-                  gameMode: GameMode.iterations,
-                  gameConfig: gameConfig,
-                ),
+            builder: (BuildContext context) {
+              gameConfig.gameDisplay = GameDisplay.single;
+              gameConfig.amICurrentPlayer = true;
+              gameConfig.myScore = 0;
+              gameConfig.otherScore = 0;
+              return new SingleGame(
+                path[2],
+                gameMode: GameMode.iterations,
+                gameConfig: gameConfig,
+              );
+            },
           );
         case 'single_timed':
           gameConfig.gameDisplay = GameDisplay.single;
@@ -77,6 +84,23 @@ class MauiApp extends StatelessWidget {
                   gameMode: GameMode.timed,
                   gameConfig: gameConfig,
                 ),
+          );
+        case 'tbt_local':
+          return new MaterialPageRoute<Null>(
+            settings: settings,
+            builder: (BuildContext context) {
+              gameConfig.gameDisplay = GameDisplay.localTurnByTurn;
+              gameConfig.amICurrentPlayer = true;
+              gameConfig.otherUser =
+                  AppStateContainer.of(context).state.loggedInUser;
+              gameConfig.myScore = 0;
+              gameConfig.otherScore = 0;
+              return new SingleGame(
+                path[2],
+                gameMode: GameMode.iterations,
+                gameConfig: gameConfig,
+              );
+            },
           );
         case 'h2h_iterations':
           return new MaterialPageRoute<Null>(
