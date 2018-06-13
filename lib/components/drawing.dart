@@ -16,6 +16,7 @@ class DrawPadController {
   multiWidth(widthValue) => _delegate?.multiWidth(widthValue);
   undo() => _delegate?.undo();
 }
+
 abstract class _DrawPadDelegate {
   void clear();
   send();
@@ -47,7 +48,6 @@ class DrawLineProperty {
 }
 
 class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
-
   List<DrawLineProperty> _drawLineProperty = [];
 //  List<Offset> _points = [];
   var color = new Color(0xff000000);
@@ -65,76 +65,78 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   @override
   Widget build(BuildContext context) {
-
     // MediaQueryData media = MediaQuery.of(context);
     // print({"this is mediaaa2:": media.size});
 
-    
-
     return new LayoutBuilder(builder: (context, constraints) {
-       var _height = constraints.maxHeight;
+      var _height = constraints.maxHeight;
       var _width = constraints.maxWidth;
-      _currentPainter = new DrawPainting(_drawLineProperty,_height,_width);
+      _currentPainter = new DrawPainting(_drawLineProperty, _height, _width);
       print({"this is drawing area height :": constraints.maxHeight});
       print({"this is drawing area width :": constraints.maxWidth});
-     
+
       print({"this is constraints of drawing component": constraints});
-       //, color, width);
+      //, color, width);
 
       return new Container(
           // margin: new EdgeInsets.all(5.0),
           child: new Card(
-            child: new ConstrainedBox(
-              constraints: const BoxConstraints.expand(),
-              child: new GestureDetector(
-                  onPanUpdate: (DragUpdateDetails details) {
-                    setState(() {
-                      RenderBox referenceBox = context.findRenderObject();
-                      Offset localPosition = referenceBox.globalToLocal(
-                          details.globalPosition);
+        child: new ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+          child: new GestureDetector(
+              onPanUpdate: (DragUpdateDetails details) {
+                setState(() {
+                  RenderBox referenceBox = context.findRenderObject();
+                  Offset localPosition =
+                      referenceBox.globalToLocal(details.globalPosition);
 
-                      Position convertedIntoPercentage = new Position(
-                          localPosition.dx / _width, localPosition.dy / _height);
-                      print({"convert into percentage is : ": convertedIntoPercentage});
-                      double tolerence = 0.06;
-                      if(_drawLineProperty.length < 1){
+                  Position convertedIntoPercentage = new Position(
+                      localPosition.dx / _width, localPosition.dy / _height);
+                  print({
+                    "convert into percentage is : ": convertedIntoPercentage
+                  });
+                  double tolerence = 0.06;
+                  if (_drawLineProperty.length < 1) {
+                    _drawLineProperty = new List.from(_drawLineProperty)
+                      ..add(new DrawLineProperty(
+                          convertedIntoPercentage, color, width));
+                  } else {
+                    if (_drawLineProperty.last._position != null) {
+                      if (_drawLineProperty.last._position.x + tolerence >
+                              convertedIntoPercentage.x &&
+                          convertedIntoPercentage.x >
+                              _drawLineProperty.last._position.x - tolerence &&
+                          _drawLineProperty.last._position.y + tolerence >
+                              convertedIntoPercentage.y &&
+                          convertedIntoPercentage.y >
+                              _drawLineProperty.last._position.y - tolerence) {
                         _drawLineProperty = new List.from(_drawLineProperty)
                           ..add(new DrawLineProperty(
                               convertedIntoPercentage, color, width));
-                      }else{
-                        if(_drawLineProperty.last._position != null){
-                          if(_drawLineProperty.last._position.x+tolerence >  convertedIntoPercentage.x && convertedIntoPercentage.x >  _drawLineProperty.last._position.x-tolerence
-                              && _drawLineProperty.last._position.y+tolerence >  convertedIntoPercentage.y && convertedIntoPercentage.y >  _drawLineProperty.last._position.y-tolerence){
-                            _drawLineProperty = new List.from(_drawLineProperty)
-                              ..add(new DrawLineProperty(
-                                  convertedIntoPercentage, color, width));
-                            print({"the value is added ...." : "point is tolerable"});
-                          }
-                        }else{
-                          _drawLineProperty = new List.from(_drawLineProperty)
-                            ..add(new DrawLineProperty(
-                                convertedIntoPercentage, color, width));
-                        }
+                        print(
+                            {"the value is added ....": "point is tolerable"});
                       }
-                    });
-                  },
-                  onPanEnd: (DragEndDetails details) {
-                    _drawLineProperty.add(
-                        new DrawLineProperty(null, color, width));
-                  },
-                  child: new RepaintBoundary(
-                    child: new CustomPaint(
-                      painter: _currentPainter,
-                      // size: Size.infinite,
-                      isComplex: true,
-                      willChange: false,
-
-                    ),
-                  )
-              ),
-            ),
-          )
-      );
+                    } else {
+                      _drawLineProperty = new List.from(_drawLineProperty)
+                        ..add(new DrawLineProperty(
+                            convertedIntoPercentage, color, width));
+                    }
+                  }
+                });
+              },
+              onPanEnd: (DragEndDetails details) {
+                _drawLineProperty.add(new DrawLineProperty(null, color, width));
+              },
+              child: new RepaintBoundary(
+                child: new CustomPaint(
+                  painter: _currentPainter,
+                  // size: Size.infinite,
+                  isComplex: true,
+                  willChange: false,
+                ),
+              )),
+        ),
+      ));
     });
   }
 
@@ -146,7 +148,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void undo() {
-    print({"the undo before state" : " callinggg"});
+    print({"the undo before state": " callinggg"});
     setState(() {
       for (int i = _drawLineProperty.length - 2; i >= 0; i--) {
         if (_drawLineProperty[i]._position != null) {
@@ -164,7 +166,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   void send() {
     this.writeInFile();
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
-    print({"the data is : " : drawLinePropertyArray});
+    print({"the data is : ": drawLinePropertyArray});
 
     var colorRef = drawLinePropertyArray[0]._color.value;
     var widthRef = drawLinePropertyArray[0]._width;
@@ -173,17 +175,17 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     var drawTracker = 1;
 
     for (var i = 0; i < drawLinePropertyArray.length; i++) {
-
       DrawLineProperty current = drawLinePropertyArray[i];
       if (current._color.value == colorRef && current._width == widthRef) {
-
-        if (current._position != null)
+        if (current._position != null) {
           position.add(new Position(current._position.x, current._position.y));
+        }
         else
           position.add(new Position(null, null));
-
-      } else if (current._color.value != colorRef || current._width != widthRef) {
-        drawList.add(new Draw(colorRef, widthRef, position:position));
+      } else if (current._color.value != colorRef ||
+          current._width != widthRef) {
+        position.add(new Position(null, null));
+        drawList.add(new Draw(colorRef, widthRef, position: position));
         drawTracker++;
 
         colorRef = current._color.value;
@@ -198,7 +200,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     }
 
     if (drawTracker != drawList.length && drawLinePropertyArray.length > 0) {
-      drawList.add(new Draw(colorRef, widthRef, position:position));
+      drawList.add(new Draw(colorRef, widthRef, position: position));
     }
 
     CanvasProperty canvasProperty = new CanvasProperty(drawList);
@@ -209,8 +211,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 //    var decode = json.decode(drawJson);
 //    print({"the object is : ": decode});
 //    var _output = decode;
-    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SecondScreen(drawJson)));
-
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new SecondScreen(drawJson)));
   }
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
@@ -222,7 +224,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   }
 
   void multiColor(colorValue) {
-     print({"I am getting final color here  " : colorValue});
+    print({"I am getting final color here  ": colorValue});
     setState(() {
       color = new Color(colorValue);
     });
@@ -234,22 +236,22 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     });
   }
 
-  Future<String> get _localPath async{
+  Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
-  Future<File> get _localFile async{
+  Future<File> get _localFile async {
     final path = await _localPath;
     print({'the local created path is : ': path});
     return new File('drawpoints.txt');
   }
 
-  writeInFile () async{
+  writeInFile() async {
     final file = await _localFile;
     int value = 100;
     // Write the file
-    file.writeAsString('$value');    
+    file.writeAsString('$value');
   }
 }
 
@@ -266,7 +268,6 @@ class DrawPainting extends CustomPainter {
     // this.sizeMedia = sizeMedia;
   }
 
-
   void getAllPoints(List<DrawLineProperty> drawLineProperty) {
     List<Position> points = [];
     for (int i = 0; i < drawLineProperty.length; i++) {
@@ -279,35 +280,26 @@ class DrawPainting extends CustomPainter {
 //    print("this is paint ,methodeeee");
 //    print({"the drawLine points are : " : getAllPoints(drawLineProperty)});
 
-    Paint paint = new Paint()
-      ..strokeCap = StrokeCap.round;
+    Paint paint = new Paint()..strokeCap = StrokeCap.round;
     // print({"sizeMedia of paint is in draw is ": sizeMedia});
     print({"size of paint is in draw is ": size});
     for (int i = 0; i < drawLineProperty.length - 1; i++) {
-
       if (drawLineProperty[i]._position != null &&
-          drawLineProperty[i + 1]._position != null &&
-          drawLineProperty[i]._position.x * _width >= 0 &&
-          drawLineProperty[i]._position.y * _height >= 0 &&
+          drawLineProperty[i + 1]._position != null  &&
           (drawLineProperty[i]._position.x * _width >= 0 &&
               drawLineProperty[i]._position.y * _height >= 0 &&
               drawLineProperty[i]._position.x * _width < size.width &&
-              drawLineProperty[i]._position.y * _height <
-                  size.height) &&
+              drawLineProperty[i]._position.y * _height < size.height) &&
           (drawLineProperty[i + 1]._position.x * _width >= 0 &&
               drawLineProperty[i + 1]._position.y * _height >= 0 &&
-              drawLineProperty[i + 1]._position.x * _width <
-                  size.width &&
-              drawLineProperty[i + 1]._position.y * _height <
-                  size.height)) {
+              drawLineProperty[i + 1]._position.x * _width < size.width &&
+              drawLineProperty[i + 1]._position.y * _height < size.height)) {
         paint.color = drawLineProperty[i]._color;
         paint.strokeWidth = drawLineProperty[i]._width;
 
-        var currentPixel = new Offset(
-            drawLineProperty[i]._position.x * _width,
+        var currentPixel = new Offset(drawLineProperty[i]._position.x * _width,
             drawLineProperty[i]._position.y * _height);
-        var nextPixel = new Offset(
-            drawLineProperty[i + 1]._position.x * _width,
+        var nextPixel = new Offset(drawLineProperty[i + 1]._position.x * _width,
             drawLineProperty[i + 1]._position.y * _height);
 
         canvas.drawLine(currentPixel, nextPixel, paint);
@@ -316,12 +308,9 @@ class DrawPainting extends CustomPainter {
       }
     }
   }
+
   @override
-  bool shouldRepaint(DrawPainting oldDelegate){
+  bool shouldRepaint(DrawPainting oldDelegate) {
     return true;
   }
 }
-
-
-
-
