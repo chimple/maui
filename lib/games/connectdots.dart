@@ -82,6 +82,7 @@ var temp=0;
    @override
   void initState() {
     super.initState();
+    print("hello this should come first...");
     _initBoard();
   }
 
@@ -252,6 +253,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
   }
    @override
   void didUpdateWidget(Connectdots oldWidget) {
+    print("object...iterartion in connect dots");
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -323,13 +325,14 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
          else
                 return false;
          }
-          else if(data == code && _visibleflag[index]==true){
+          else if(data == code && _visibleflag[index]==true&&tempindex.length>1){
             if(index==tempindex[tempindex.length-2]){
             setState(() {
                   _visibleflag[tempindex.last] =false;
                   tempindex.removeLast();
                   forAns.removeLast();
-                    tempindex.removeLast();
+                   _pointssend.removeLast();
+                   
                       //  temp.removeLast();
                   lastclick=tempindex.last;
                 });
@@ -500,6 +503,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
     print("MyTableState.build");
        
  MediaQueryData media = MediaQuery.of(context);
+ print("hello data coming or not in widgets is $_letters");
 
     if (_isLoading) {
       return new SizedBox(
