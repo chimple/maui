@@ -47,7 +47,7 @@ class _SpinWheelState extends State<SpinWheel> {
     '11',
   ];
   List<String> _containerData = [
-    ' 1',
+    '1',
     '3',
     '7',
     '19',
@@ -56,16 +56,36 @@ class _SpinWheelState extends State<SpinWheel> {
     '53',
     '11',
   ];
-  // List<String> _bigerCircleData = [
-  //   1,
-  //   3,
-  //   7,
-  //   19,
-  //   12,
-  //   45,
-  //   53,
-  //   11,
-  // ];
+
+  double _screenSize;
+  Animation animation;
+  AnimationController controller;
+  double _constAngle = 45.0;
+  List<double> _dataAngle = [], _dataAngle1 = [];
+  List<int> _wheelColor = [
+    0XFFFF7676,
+    0XFFEDC23B,
+    0XFFAD85F9,
+    0XFF77DB65,
+    0XFF66488C,
+    0XFFDD6154,
+    0XFFFFCE73,
+    0XFFD64C60,
+    0XFFDD4785,
+    0XFF48AECC,
+    0XFFE66796,
+    0XFFFF7676,
+    0XFFEDC23B,
+    0XFFAD85F9,
+    0XFF77DB65,
+    0XFF66488C,
+    0XFFDD6154,
+    0XFFFFCE73,
+    0XFFD64C60,
+    0XFFDD4785,
+  ];
+
+  List<bool> _slice = [false, false, false, false, false, false, false, false];
 
   var _angle;
   var onDragCordStarted, onDragCordUpdated;
@@ -75,22 +95,33 @@ class _SpinWheelState extends State<SpinWheel> {
   final maxTime = const Duration(minutes: 10);
   final currentTime = new Duration(minutes: 0);
   double _percentRotate;
-  //List<int> _index;
+
+  double angleDiff;
+  var _endAngle;
+  var dragUpdate = 0.0;
+  @override
+  void initState() {
+    setState(() {
+      rotationPercent = 0.0;
+      rotationPercent1 = 0.0;
+    });
+    _smallerCircleData.shuffle();
+    _containerData.shuffle();
+    for (int i = 0; i < _smallerCircleData.length; i++) {}
+
+    super.initState();
+    int _index = _smallerCircleData.indexOf(_containerData[0]);
+  }
+
   _onDragStart(PolarCoord cord) {
     print("Drag Start here:: ${(cord.angle / (2 * pi) * 360)}");
-    //print("on Drag stared radius ::${cord.radius}");
     onDragCordStarted = cord;
     _angle = cord.angle;
     startDragTime = currentTime;
     setState(() {
       rotationPercent = dragEnd;
     });
-    //dragEnd=0.0;
   }
-
-  double angleDiff;
-  var _endAngle;
-  var dragUpdate = 0.0;
 
   _onDragUpdate(PolarCoord dragCord) {
     _endAngle = dragCord;
@@ -118,23 +149,16 @@ class _SpinWheelState extends State<SpinWheel> {
   _onDragEnd() {
     print("Drag End here:: ${(onDragCordUpdated.angle / (2 * pi) * 360)}");
     print("Difference End here:: ${(angleDiff / (2 * pi) * 360)}");
-    //print("sssssssssssssssssss${angleDiff}");
-    //setState(() {
+
     dragEnd = rotationPercent;
-    // if (dragUpdate >= .3 && dragUpdate <= 1.2) {
-    //   // setState(() {
-    //   //   // rotationPercent=.4;
-    //   // });
-    //   dragUpdate = dragUpdate - angleDiff - .4;
-    // }
 
     _angleDiff = (angleDiff / (2 * pi) * 360);
     compareTheangle();
   }
 
-  List<bool> _slice = [true, true, true, true, true, true, true, true];
   void compareTheangle() {
     print(true);
+    //0
     if (_angleDiff >= 20.0 && _angleDiff <= 30.0 && _slice[0] == true) {
       print("Slice0::");
       setState(() {
@@ -144,7 +168,8 @@ class _SpinWheelState extends State<SpinWheel> {
         rotationPercent = .35;
       });
       _slice[0] = false;
-    } else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[1] == true) {
+    } //1
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[1] == true) {
       print("Slice1::");
       setState(() {
         _wheelColor[1] = 0XFF8FBC8F;
@@ -153,6 +178,72 @@ class _SpinWheelState extends State<SpinWheel> {
         rotationPercent = 1.2;
       });
       _slice[1] = false;
+    }
+    //2
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[2] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[2] = false;
+    }
+    //3
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[3] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[3] = false;
+    }
+    //4
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[4] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[4] = false;
+    }
+    //5
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[5] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[5] = false;
+    }
+    //6
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[6] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[6] = false;
+    }
+    //7
+    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[7] == true) {
+      print("Slice1::");
+      setState(() {
+        _wheelColor[1] = 0XFF8FBC8F;
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+        rotationPercent = 1.2;
+      });
+      _slice[7] = false;
     }
   }
 
@@ -187,61 +278,11 @@ class _SpinWheelState extends State<SpinWheel> {
   //     dragEnd1 = rotationPercent1;
   //   });
   // }
-
-  double _screenSize;
-  Animation animation;
-  AnimationController controller;
-  double _constAngle = 45.0;
-  List<double> _dataAngle = [], _dataAngle1 = [];
-  List<int> _wheelColor = [
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-  ];
   List<CircularStackEntry> data;
-  @override
-  void initState() {
-    //Size size=MediaQuery.of(context).size;
-    // _screenSize=size.width;
-    //sleep(const Duration(seconds: 1));
-    // print('after 1 sec::');
-
-    setState(() {
-      rotationPercent = 0.0;
-      rotationPercent1 = 0.0;
-    });
-    _smallerCircleData.shuffle();
-    _containerData.shuffle();
-    for (int i = 0; i < _smallerCircleData.length; i++) {
-      if (i == 0) {
-      } // _dataAngle[i]=22.5;
-      else {
-        // _dataAngle[i] = 22.5 + _constAngle;
-        // _constAngle=_constAngle*2;
-      }
-    }
-    // for (int i = 0; i < _smallerCircleData.length/2; i++) {
-    //   if (i == 0)
-    //     _dataAngle1[i] = -22.5;
-    //   else
-    //     _dataAngle[i] = -22.5 - _constAngle;
-    //     _constAngle=_constAngle*2;
-    // }
-
-    super.initState();
-  }
-
   List<CircularStackEntry> _generateChartData(double value) {
     // _wheelColor[0] = 0XFF77DB65;
-    data = <CircularStackEntry>[
+    //for(int i=0;i<8;i++)
+    data = [
       new CircularStackEntry(
         <CircularSegmentEntry>[
           new CircularSegmentEntry(500.0, new Color(_wheelColor[0]),
