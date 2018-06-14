@@ -353,8 +353,7 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   ]);
 }
 
-Future<Tuple2<List<String>, String>> fetchCirclewrdData(
-    int categoryId) async {
+Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
   switch (0) {
