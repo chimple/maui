@@ -33,6 +33,7 @@ class _FriendListViewState extends State<FriendListView> {
     } on PlatformException {
       print('Failed getting friends');
     }
+    print('Friends: $friends');
     if (!mounted) return;
     setState(() {
       _friends = friends;
