@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
 import 'package:flores/flores.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepo {
   static final UserDao userDao = new UserDao();
@@ -35,10 +36,13 @@ class UserRepo {
 //      'name': user.name,
 //      'image': downloadUrl.toString()
 //    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+
     var config = File(user.image);
     var contents = await config.readAsBytes();
     var enc = base64.encode(contents);
-    Flores().addUser(user.id, 'a', enc);
+    Flores().addUser(user.id, deviceId, enc);
     return await userDao.insert(user);
   }
 
