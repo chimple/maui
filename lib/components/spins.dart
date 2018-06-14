@@ -108,10 +108,10 @@ class OuterCircle extends CustomPainter {
           width: 30.0,
           height: 30.0,
         ) {
-    tickPaint.color = Colors.red;
+    //tickPaint.color = Colors.red;
 
-    tickPaint.strokeWidth = 0.5;
-    traingle.color = Colors.red[100];
+    tickPaint.strokeWidth = 2.5;
+    traingle.color = Colors.black;
     traingle.style = PaintingStyle.fill;
 
     // image.hieght=30.0;
@@ -154,11 +154,11 @@ class OuterCircle extends CustomPainter {
     for (var i = 0; i < 16; ++i) {
       final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
-        // canvas.drawLine(
-        //   new Offset(0.0, 0.0),
-        //   new Offset(0.0, radius),
-        //   tickPaint,
-        // );
+        canvas.drawLine(
+          new Offset(0.0, 0.0),
+          new Offset(0.0, radius),
+          tickPaint,
+        );
 
         // path.close();
         // canvas.drawCircle(new Offset(0.0, 0.0), 2*pi/16/i, tickPaint);
