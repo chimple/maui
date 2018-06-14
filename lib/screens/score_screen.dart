@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
@@ -233,13 +234,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                         )
                       ])),
                  gameDisplay == GameDisplay.myHeadToHead ? new Container(
-                    height: ht > wd ? ht * 0.15 : wd * 0.15,
+                    height: ht > wd ? ht * 0.19 : wd * 0.15,
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           new LimitedBox(
-                            maxHeight: ht > wd ? ht * 0.3 : wd * 0.13,
+                            maxHeight: ht * 0.13,
                             child: new UserItem(user: myUser),),
                           // new Padding(
                           //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
@@ -405,7 +406,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     double ht = media.height;
     double wd = media.width;
     widget.keys++;
-    print("_MyButtonState.build");    
+    print("_MyButtonState.build");   
+    SystemSound.play(SystemSoundType.click); 
     return new Shake(
       animation: animation,
       child: new GestureDetector(
