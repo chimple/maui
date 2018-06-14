@@ -209,20 +209,24 @@ List<String> Ssum=[];
          else
                 return false;
          }
-         else if(data == code && _visibleflag[index] == true)
+         else if(data == code && _visibleflag[index] == true && tempindex.length>1)
          {
-
+           print("object....tempindex..lenth..::${tempindex.length}");
+           
             if (index == tempindex[tempindex.length - 2]) {
               setState(() {
                 _visibleflag[tempindex.last] = false;
                 tempindex.removeLast();
                 sum=sum-clickAns.last;
                 clickAns.removeLast();
+               
              print("object on undo part when sub doing..$sum....::$text ");
                 lastclick = tempindex.last;
+
                   if(ssum.length>=2){
           ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
           _pointssend.removeLast();
+           _Index.removeLast();
           _method(Ansr,sum);
          
            }
@@ -238,11 +242,9 @@ List<String> Ssum=[];
               });
               return true;
             }
-            else
-            return true;
+            return false;
          }
-         else
-         return true;
+         return false;
          },
             onCancel: (v, g) {
                print("values of sum is ...::..$sum");
@@ -366,6 +368,7 @@ List<String> Ssum=[];
                     .toList(growable: false);
                 _visibleflag =
                     _copyVal.map((a) => false).toList(growable: false);
+                      _Index.removeRange(0, _Index.length);
                     ssum='';
                     sum=0;
               });
@@ -1249,6 +1252,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             ? {}
                             : widget.onCancel(v, g),
                     data: widget.code,
+                   maxSimultaneousDrags: 1,
                     feedback: new Container(),
                     child: new UnitButton(
                       highlighted: widget.vflag == true ? true : false,
