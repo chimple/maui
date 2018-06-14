@@ -552,3 +552,40 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   }
   return null;
 }
+
+Future<Map<String, Map<String, List<String>>>> fetchClueGame(
+    int categoryId) async {
+  var completer = Completer<Map<String, Map<String, List<String>>>>();
+  Map<String, List<String>> drink = {
+    'water': ['wa', 'ter'],
+    'milk': ['mi', 'lk'],
+    'coke': ['co', 'ke'],
+    'beer': ['be', 'er'],
+  };
+  Map<String, List<String>> travel = {
+    'bus': ['bu', 's'],
+    'car': ['ca', 'r'],
+    'train': ['tr', 'ain'],
+    'aeroplane': ['aero', 'plane'],
+  };
+  Map<String, List<String>> redfruit = {
+    'apple': ['ap', 'ple'],
+    'cheery': ['che', 'ery'],
+    'litchi': ['lit', 'chi'],
+    'tomoto': ['tom', 'oto'],
+  };
+  Map<String, List<String>> blackpet = {
+    'cat': ['ca', 't'],
+    'dog': ['do', 'g'],
+    'panda': ['pa', 'nda'],
+    'cow': ['co', 'w'],
+  };
+  Map<String, Map<String, List<String>>> value = {
+    'drink': drink,
+    'travel': travel,
+    'redfruit': redfruit,
+    'blackpet': blackpet
+  };
+  completer.complete(value);
+  return completer.future;
+}

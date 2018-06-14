@@ -22,8 +22,8 @@ class Dice extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.isRotated = false,
-      this.gameConfig})
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -48,6 +48,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   int count = 0;
   int count1 = 0;
   int flag = 0;
+  var _currentIndex = 0;
 
   AnimationController animation;
 
@@ -65,6 +66,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   void _initBoard() async {
+    _currentIndex = 0;
     setState(() => _isLoading = true);
     data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     data1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
@@ -135,17 +137,21 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           } else if (flag == 1 && player == "player2") {
             userControl = true;
           }
-
           if (userControl) {
             print({"hurry , you are correct user to access keyboard": player});
             for (i = 0; i < data.length; i++) {
               if (btnVal == sum || btnVal == sub) {
+                _currentIndex++;
+                widget.onScore(1);
+                widget.onProgress(_currentIndex / data.length);
+                // widget.onEnd();
                 resetDice();
                 sum = 0;
                 sub = 0;
 
                 if (flag == 0) {
                   data[index] = '';
+
                   flag = 1;
                 } else {
                   data1[index] = '';
@@ -333,13 +339,16 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   popup() {
-    var color = flag==0?Colors.red:Colors.blue;
+    var color = flag == 0 ? Colors.red : Colors.blue;
     return showDialog<Null>(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
             // title: new Text('Dicegame'),
-            content: Text("Bad luck", style: TextStyle(color: color,fontWeight: FontWeight.w900),));
+            content: Text(
+          "Bad luck",
+          style: TextStyle(color: color, fontWeight: FontWeight.w900),
+        ));
       },
     );
   }

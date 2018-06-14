@@ -68,6 +68,7 @@ class MauiApp extends StatelessWidget {
               gameConfig.amICurrentPlayer = true;
               gameConfig.myScore = 0;
               gameConfig.otherScore = 0;
+              gameConfig.orientation = MediaQuery.of(context).orientation;
               return new SingleGame(
                 path[2],
                 gameMode: GameMode.iterations,
@@ -76,14 +77,17 @@ class MauiApp extends StatelessWidget {
             },
           );
         case 'single_timed':
-          gameConfig.gameDisplay = GameDisplay.single;
           return new MaterialPageRoute<Null>(
             settings: settings,
-            builder: (BuildContext context) => new SingleGame(
-                  path[2],
-                  gameMode: GameMode.timed,
-                  gameConfig: gameConfig,
-                ),
+            builder: (BuildContext context) {
+              gameConfig.gameDisplay = GameDisplay.single;
+              gameConfig.orientation = MediaQuery.of(context).orientation;
+              return new SingleGame(
+                path[2],
+                gameMode: GameMode.timed,
+                gameConfig: gameConfig,
+              );
+            },
           );
         case 'tbt_local':
           return new MaterialPageRoute<Null>(
@@ -95,6 +99,7 @@ class MauiApp extends StatelessWidget {
                   AppStateContainer.of(context).state.loggedInUser;
               gameConfig.myScore = 0;
               gameConfig.otherScore = 0;
+              gameConfig.orientation = MediaQuery.of(context).orientation;
               return new SingleGame(
                 path[2],
                 gameMode: GameMode.iterations,
@@ -103,6 +108,7 @@ class MauiApp extends StatelessWidget {
             },
           );
         case 'h2h_iterations':
+          gameConfig.orientation = Orientation.landscape;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new HeadToHeadGame(
@@ -112,6 +118,7 @@ class MauiApp extends StatelessWidget {
                 ),
           );
         case 'h2h_timed':
+          gameConfig.orientation = Orientation.landscape;
           return new MaterialPageRoute<Null>(
             settings: settings,
             builder: (BuildContext context) => new HeadToHeadGame(
