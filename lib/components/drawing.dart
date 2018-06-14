@@ -155,17 +155,18 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
           _drawLineProperty.removeAt(i);
         } else {
           _drawLineProperty.removeLast();
-          if(_drawLineProperty.length == 1)
-            _drawLineProperty.clear();
+          var point = getAllPoints(_drawLineProperty);
+          print("this is Undo");
           break;
         }
       }
-
     });
   }
 
   void send() {
+    this.writeInFile();
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
+    print({"the data is : ": drawLinePropertyArray});
 
     var colorRef = drawLinePropertyArray[0]._color.value;
     var widthRef = drawLinePropertyArray[0]._width;
@@ -197,9 +198,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
           position.add(new Position(null, null));
       }
     }
-    var isSendActive = true;
+
     if (drawTracker != drawList.length && drawLinePropertyArray.length > 0) {
-      isSendActive = position.length != 1 ? true : false;
       drawList.add(new Draw(colorRef, widthRef, position: position));
     }
 
@@ -211,14 +211,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 //    var decode = json.decode(drawJson);
 //    print({"the object is : ": decode});
 //    var _output = decode;
-
-    var getLastPosition = drawList[drawList.length-1].position[drawList[drawList.length-1].position.length-1].x;
-
-    if(getLastPosition == null && isSendActive){
-      Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new SecondScreen(drawJson)));
-
-    }
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new SecondScreen(drawJson)));
   }
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
@@ -242,6 +236,23 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     });
   }
 
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    print({'the local created path is : ': path});
+    return new File('drawpoints.txt');
+  }
+
+  writeInFile() async {
+    final file = await _localFile;
+    int value = 100;
+    // Write the file
+    file.writeAsString('$value');
+  }
 }
 
 class DrawPainting extends CustomPainter {

@@ -209,10 +209,9 @@ List<String> Ssum=[];
          else
                 return false;
          }
-         else if(data == code && _visibleflag[index] == true && tempindex.length>1)
+         else if(data == code && _visibleflag[index] == true)
          {
-           print("object....tempindex..lenth..::${tempindex.length}");
-           
+
             if (index == tempindex[tempindex.length - 2]) {
               setState(() {
                 _visibleflag[tempindex.last] = false;
@@ -221,7 +220,6 @@ List<String> Ssum=[];
                 clickAns.removeLast();
              print("object on undo part when sub doing..$sum....::$text ");
                 lastclick = tempindex.last;
-
                   if(ssum.length>=2){
           ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
           _pointssend.removeLast();
@@ -240,9 +238,11 @@ List<String> Ssum=[];
               });
               return true;
             }
-            return false;
+            else
+            return true;
          }
-         return false;
+         else
+         return true;
          },
             onCancel: (v, g) {
                print("values of sum is ...::..$sum");
