@@ -64,6 +64,7 @@ class GameConfig {
   int myScore;
   int otherScore;
   bool amICurrentPlayer;
+  Orientation orientation;
   //board
   //local or n/w
 
@@ -76,6 +77,7 @@ class GameConfig {
       this.otherUser,
       this.myScore,
       this.otherScore,
+      this.orientation,
       this.amICurrentPlayer});
 }
 
@@ -170,6 +172,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 //    SystemChrome.setEnabledSystemUIOverlays([]);
+    if (widget.gameConfig.gameDisplay != GameDisplay.myHeadToHead ||
+        widget.gameConfig.gameDisplay != GameDisplay.otherHeadToHead) {
+      if (widget.gameConfig.orientation == Orientation.landscape) {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeRight,
+          DeviceOrientation.landscapeLeft,
+        ]);
+      } else {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+      }
+    }
     _controller = new AnimationController(
         vsync: this, duration: new Duration(milliseconds: 500));
     final CurvedAnimation curve =
@@ -186,6 +202,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   void dispose() {
 //    SystemChrome.setEnabledSystemUIOverlays(
 //        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setPreferredOrientations([]);
     _controller?.dispose();
     super.dispose();
   }
