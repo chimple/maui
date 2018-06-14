@@ -219,6 +219,7 @@ List<String> Ssum=[];
                 tempindex.removeLast();
                 sum=sum-clickAns.last;
                 clickAns.removeLast();
+                _Index.removeLast();
              print("object on undo part when sub doing..$sum....::$text ");
                 lastclick = tempindex.last;
 
@@ -1249,6 +1250,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             ? {}
                             : widget.onCancel(v, g),
                     data: widget.code,
+                   maxSimultaneousDrags: 1,
                     feedback: new Container(),
                     child: new UnitButton(
                       highlighted: widget.vflag == true ? true : false,
