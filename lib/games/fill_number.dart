@@ -219,13 +219,14 @@ List<String> Ssum=[];
                 tempindex.removeLast();
                 sum=sum-clickAns.last;
                 clickAns.removeLast();
-                _Index.removeLast();
+               
              print("object on undo part when sub doing..$sum....::$text ");
                 lastclick = tempindex.last;
 
                   if(ssum.length>=2){
           ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
           _pointssend.removeLast();
+           _Index.removeLast();
           _method(Ansr,sum);
          
            }
@@ -367,6 +368,7 @@ List<String> Ssum=[];
                     .toList(growable: false);
                 _visibleflag =
                     _copyVal.map((a) => false).toList(growable: false);
+                      _Index.removeRange(0, _Index.length);
                     ssum='';
                     sum=0;
               });
