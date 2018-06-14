@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/repos/game_data.dart';
 import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -6,7 +7,6 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
-import 'package:maui/repos/game_data.dart';
 
 class ClueGame extends StatefulWidget {
   Function onScore;
@@ -51,30 +51,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> _travel;
   List<String> _drink;
   List<String> _blackpet;
-  List<String> categoryName = [];
-  List<String> listOfThings = [];
-  List<String> listOfSyllables =[];
-   bool _isLoading = true;
-  Map<String, List<String>> data1;
-  Map<String, Map<String, List<String>>> data;
-  
 
-  void _initClueGame() async{
-     setState(() => _isLoading = true);
-      data = await fetchClueGame(widget.gameCategoryId);
-      data.forEach((k, data1) {
-      categoryName.add(k);
-       data1.forEach((a, list) {
-        listOfThings.add(a);
-        list.forEach((c) {
-          listOfSyllables.add(c);
-        });
-      });
-    });
-     print('categoryName is $categoryName');
-    print('listOfThings is $listOfThings');
-    print('listOfSyllables is $listOfSyllables');
-    setState(() => _isLoading = false);
+  void _initClueGame() {
+    _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
+    _categoryup = ['Red Fruit', 'Travel'];
+    _categorydown = ['Drink', 'Black Pet'];
+    _redfruit = ['apple', 'cheery', 'stawarrey', 'tomoto'];
+    _travel = ['bus', 'car', 'train', 'aeroplane'];
+    _drink = ['milk', 'water', 'beer', 'wine'];
+    _blackpet = ['cat', 'dog', 'panda', 'cow'];
   }
 
   var keys = 0;
