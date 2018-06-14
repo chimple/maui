@@ -188,7 +188,7 @@ class _SpinWheelState extends State<SpinWheel> {
   //   });
   // }
 
-  double _screenSize;
+  double _screenSize; 
   Animation animation;
   AnimationController controller;
   double _constAngle = 45.0;
