@@ -1,15 +1,12 @@
 
-
 import 'dart:math';
+import 'dart:async';
+
 import 'package:maui/components/flash_card.dart';
 import 'package:flutter/material.dart';
-
-import 'package:maui/components/responsive_grid_view.dart';
-
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
-import 'dart:async';
-import 'package:maui/components/Shaker.dart';
+
 import 'package:flutter/rendering.dart';
 
 // final Color GRADIENT_TOP = const Color(0xFFF5F5F5);
@@ -39,7 +36,7 @@ class Circleword extends StatefulWidget {
 }
 
 enum Status { Active, Visible, Disappear }
-enum ShakeCell { Right, InActive, Dance, CurveRow }
+// enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 
 class CirclewordState extends State<Circleword> {
@@ -50,69 +47,86 @@ String word='';
 var flag=0;
 String words='';
  List<Status> _statuses;
-//  List<String> _letters;
+
  List<String> _letters1;
-  // = ['c', 't', 'a', 's', 'e', 'i', 'n', 'g', 's'];
-//  List<String> _letters1 = ['c', 't', 'a', 's', 'e', ];
+ bool _isLoading = true;
   List<String> wordata;
-  // ['cats','acts','cast','cat','scat','act','ta',
-  // 'st','sat','sac','at','tas','as','ats'];
-  List<Widget> widgets = new List();
+
+  
   List<Widget> widgets1 = new List();
   List<String> _letters;
-  double dradius;
+
   Tuple2<List<String >,String> data;
-  //  _letters=_letters1;
-    //  _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+  
     @override
   void initState() {
     super.initState();
   
     _initBoard();
   }
-    void _initBoard()async{
-
-    data=await fetchCirclewrdData(widget.gameCategoryId);
+    void _initBoard() async {
+  setState(() => _isLoading = true);
+    data= await fetchCirclewrdData(widget.gameCategoryId);
 
  print("the data is coming for cricleword ${data}");
  
- 
-//  print("hello data is ......:...:$wordata");
-//    for(var i=0; i<wordata.length;i++)
-//    {
-//      _letters=wordata[i].split('');
-//   break;
-//    }
+     wordata=data.item1;
    
   _letters=data.item2.split('');
-    widgets.removeRange(0, widgets.length);
+   
 
 print("hwllo this is data is ....$_letters");
      _statuses = _letters.map((a) => Status.Active).toList(growable: false);
+
+       setState(() => _isLoading = false);
    }
   
- 
+   @override
+  void didUpdateWidget(Circleword oldWidget) {
+    print("hello getter length getting null");
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+     
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
     
  MediaQueryData media = MediaQuery.of(context);
+ if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+ print("object...mmmmmmannnn.${media.size.height}......${media.size.width}");
 
- print("object....${media.size.height}......${media.size.width}");
-double circleSize = media.size.height/2;
-    
-    
+
+ 
+    return new LayoutBuilder(builder: (context, constraints) {
+      double circleSize = constraints.maxHeight/2;
+      double dradius;
+    print("in layout builde hieght would be ...::..${constraints.maxHeight}..........$circleSize");
+     print("width of layout builder is...........${constraints.maxWidth}");
     // widgets.add(new Container(
     //     width: circleSize,
     //     height: circleSize,
     //     decoration:
     //         new BoxDecoration(color: Colors.red, shape: BoxShape.circle)));
+List<Widget> widgets = new List();
+double hi=constraints.maxHeight/4;
+    Offset circleCenter = new Offset(hi, hi);
+    double csize=circleSize/3;
+ print("all data sent to the method is $csize........$circleCenter");
+ 
+    List<Offset> offsets1 = calculateOffsets(csize, circleCenter, _letters.length-1);
+    print("object width is..... ${circleSize}");
 
-    Offset circleCenter = new Offset(circleSize / 2, circleSize / 2);
-    
 
-    List<Offset> offsets1 = calculateOffsets(circleSize/3, circleCenter, _letters.length-1);
-    print("object width is..... ${circleSize/8}");
     if(_letters.length>=9)
     {
       dradius=_letters.length-1.0+0.5;
@@ -121,27 +135,13 @@ double circleSize = media.size.height/2;
     {dradius=_letters.length+1.0+0.5;
 
     }
-
-    // for (int i = 0; i < offsets.length; i++) {
-    //   widgets.add(
-    //       new PositionCircle(offsets[i], i.toString(), Colors.blue[900], 30.0));
-    // }
-    // offsets = calculateOffsets(1400.0, circleCenter, 7);
-    // for (int i = 0; i < offsets.length; i++) {
-    //   widgets.add(
-    //       new PositionCircle(offsets[i], _letters[i], Colors.teal, 35.0,wordata));
-    // }
+     
+ 
 
    List<Offset> offsets2 = calculateOffsets(0.0, circleCenter, 1);
 
    print(" ......offstes is.... $offsets2");
     List<Offset> offsets=offsets1+offsets2;
-    // for (int i = 0; i < offsets.length; i++) {
-    //   widgets.add(
-    //       new PositionCircle(offsets[i], i.toString(), Colors.teal, 35.0,wordata));
-    // }
-
-    return new LayoutBuilder(builder: (context, constraints) {
       print("this is  data");
       print(constraints.maxHeight);
       print(constraints.maxWidth);
@@ -151,43 +151,22 @@ double circleSize = media.size.height/2;
       // widgets.removeRange(0, widgets.length);
       // List<TableRow> rows = new List<TableRow>();
      print("widgets length is.....:....:${widgets.length}");
-     widgets=[];
+    
       var j = 0;
-      for (var i = 0; i <offsets.length; ++i) {
+      // for (var i = 0; i <offsets.length; ++i) {
          
-            //  Widget l   =
-              widgets.add(_buildItem(offsets[i],j, _letters[i], Colors.teal,circleSize/dradius,_statuses[j++]));
-            //  widgets.add(l);
+      //       //  Widget l   =
+      //         widgets.add(_buildItem(offsets[i],j, _letters[i], Colors.teal,circleSize/dradius,_statuses[j++]));
+              
+      //       //  widgets.add(l);
            
           
-      }
+      // }
+      _letters.forEach((e)=>widgets.add(_buildItem(offsets[j],j, e, Colors.teal,circleSize/dradius,_statuses[j++])));
       double potl=180.0;
       double landl=140.0;
      double lposition= _height>_width ? potl:landl ;
-    //   _offsetmethod()
-    //   {
-    //   if(widgets.length>9){
-    // if(widgets.length>9)
-    // {
-    //  widgets1= widgets.sublist(9,18);
-    //   print("widgets data ....is.... $widgets1");
-    //   // widgets1=widgets.sublist(0, 9);
-    //   widgets.removeRange(0, widgets.length);
-    //   // offsets.removeRange(0, offsets.length-9);
-    //   widgets=widgets1;
-
-    //   print("hello this is widgsted1sublist is .....$widgets");
-     
-
-    // }
-    // else{
-    //   widgets=widgets1;
-    //  print("object widgtes is......$widgets");
-    //   // widgets.removeRange(start, end)
-    //   // widgets.sublist(0,9);
-    // }
-    //   }
-    //   }
+  
       print("object the widgtes is.......${widgets}");
        print("object the widgtes is.......${offsets.length}");
        print("object...$offsets");
@@ -248,6 +227,8 @@ double circleSize = media.size.height/2;
   //these points are centers for small circles
   List<Offset> calculateOffsets(
       double circleRadii, Offset circleCenter, int amount) {
+
+        print("value of all sent to here is in method is.......$circleRadii........$circleCenter");
     double angle = 2 * pi / amount;
     double alpha = 0.0; 
     double x0 = circleCenter.dx;
