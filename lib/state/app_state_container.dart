@@ -8,6 +8,8 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flores/flores.dart';
 
 import '../components/flash_card.dart';
 
@@ -93,7 +95,13 @@ class _AppStateContainerControllerState
     );
   }
 
-  _setLoggedInUser(User user) {
+  _setLoggedInUser(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+    if (user != null) {
+      Flores().loggedInUser(user.id, deviceId);
+    }
+    Flores().start();
     setState(() {
       state = new AppState(loggedInUser: user);
     });

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -14,7 +15,7 @@ class Crossword extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
   Crossword(
       {key,
@@ -23,7 +24,7 @@ class Crossword extends StatefulWidget {
       this.onEnd,
       this.iteration,
       this.isRotated = false,
-      this.gameCategoryId})
+      this.gameConfig})
       : super(key: key);
 
   @override
@@ -62,7 +63,7 @@ class CrosswordState extends State<Crossword> {
     _data3 = [];
     _sortletters = [];
     _rightwords = [];
-    data = await fetchCrosswordData(widget.gameCategoryId);
+    data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
 
     data.item1.forEach((e) {
       e.forEach((v) {
@@ -153,25 +154,23 @@ class CrosswordState extends State<Crossword> {
                 }
               }
               setState(() {
+                print('progress $correct $_rightlen ');
                 if (flag1 == 1) {
                   _rightwords[dindex - 100] += '.';
                   _letters[index] = _sortletters[--i];
                   correct++;
-                  widget.onScore(2);
+                  widget.onScore(((1/_rightlen)*40).toInt());
                   widget.onProgress(correct / _rightlen);
                   if (correct == _rightlen) {
-                    widget.onEnd();
                     widget.onEnd();
                   }
                 } else if (flag1 == 0 && _letters[index] == '') {
                   _flag[index] = 1;
-                  if (_letters[index] == '') {
                     _letters[index] = _rightwords[dindex - 100];
                     flagtemp = 1;
-                  }
-
                   new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
+                       widget.onScore(-((1/_rightlen)*20).toInt());
                       _flag[index] = 0;
                       if (flagtemp == 1) {
                         _letters[index] = '';
@@ -187,6 +186,8 @@ class CrosswordState extends State<Crossword> {
           grid: _gridsize,
           textsize: textsize,
           code: code,
+          onDrag: () {
+          setState(() {});},
           isRotated: widget.isRotated,
           img: img,
           keys: keys++);
@@ -203,6 +204,8 @@ class CrosswordState extends State<Crossword> {
           grid: _gridsize,
           isRotated: widget.isRotated,
           img: img,
+          onDrag: () {
+          setState(() {});},
           keys: keys);
     }
   }
@@ -217,21 +220,21 @@ class CrosswordState extends State<Crossword> {
         child: new CircularProgressIndicator(),
       );
     }
-    if (media.orientation == Orientation.portrait) {
-      if (_rightlen > _cols) {
-        while (_rightwords.length <= _cols * 2) {
-          _rightwords.add(null);
-        }
-      } else {
-        while (_rightwords.length <= _cols) {
-          _rightwords.add(null);
-        }
-      }
-    } else {
-      while (_rightwords.length <= _rows * 2) {
-        _rightwords.add(null);
-      }
-    }
+    // if (media.orientation == Orientation.portrait) {
+    //   if (_rightlen > _cols) {
+    //     while (_rightwords.length <= _cols * 2) {
+    //       _rightwords.add(null);
+    //     }
+    //   } else {
+    //     while (_rightwords.length <= _cols) {
+    //       _rightwords.add(null);
+    //     }
+    //   }
+    // } else {
+    //   while (_rightwords.length <= _rows * 2) {
+    //     _rightwords.add(null);
+    //   }
+    // }
     return new LayoutBuilder(builder: (context, constraints) {
       keys = 0;
       j = 0;
@@ -328,6 +331,7 @@ class MyButton extends StatefulWidget {
       this.isRotated,
       this.textsize,
       this.img,
+      this.onDrag,
       this.grid,
       this.keys})
       : super(key: key);
@@ -342,6 +346,7 @@ class MyButton extends StatefulWidget {
   final keys;
   final textsize;
   final List grid;
+  final VoidCallback onDrag;
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
@@ -362,7 +367,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         new CurvedAnimation(parent: controller, curve: Curves.decelerate)
           ..addStatusListener((state) {});
     controller.forward();
-    animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
+    animation1 = new Tween(begin: -3.0, end: 3.0).animate(controller1);
     _myAnim();
   }
 
@@ -433,6 +438,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           ));
     } else if (widget.index >= 100) {
       return new Draggable(
+        onDragStarted: widget.onDrag,
         data: '${widget.index}' + '_' + '${widget.code}',
         child: new ScaleTransition(
             scale: animation,
@@ -444,7 +450,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         //  childWhenDragging: new Container(),
         feedback: UnitButton(
           text: widget.text,
-
         ),
       );
     } else {
