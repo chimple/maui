@@ -77,41 +77,45 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   String _result = '';
   String word = '';
 
-  void _validate() {
-    // setState(()  {
-    if (_result == listOfThings.sublist(0, 3).first) {
+ void _validate() {
+    if (listOfThings.sublist(0, 4).contains(_result)) {
       setState(() {
-        _result = 'you Type Red Fruit';
+        _result = 'you Type Drink';
       });
-
       new Future.delayed(const Duration(milliseconds: 700), () {
         setState(() {
           _flag = 0;
           _result = '';
         });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(4, 8).contains(_result)) {
+      setState(() {
+        _result = 'you Type Travel';
+      });
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          _flag = 0;
+          _result = '';
+        });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(8, 12).contains(_result)) {
+      setState(() {
+        _result = 'you Type Red Fruit';
+      });
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          _flag = 0;
+          _result = '';
+        });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(12, 16).contains(_result)) {
+      setState(() {
+        _result = 'you Type black Pet';
+      });
 
-        controller.stop();
-      });
-    } else if (_result == listOfThings.sublist(0, 3).first) {
-      _result = 'you Type Travel';
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        setState(() {
-          _flag = 0;
-          _result = '';
-        });
-        controller.stop();
-      });
-    } else if (_result == listOfThings.sublist(0, 3).first) {
-      _result = 'you Type Drink';
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        setState(() {
-          _flag = 0;
-          _result = '';
-        });
-        controller.stop();
-      });
-    } else if (_result == listOfThings.sublist(0, 3).first) {
-      _result = 'you Type black Pet';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
@@ -182,13 +186,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             : _width * 0.25,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
-          border: new Border.all(width: 1.0),
+         // border: new Border.all(width: 1.0),
           color: Colors.blue[200],
           shape: BoxShape.rectangle,
-          borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
+          borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
         ),
         child: new Center(
             child: new Text(_result,
+              overflow: TextOverflow.ellipsis,
                 style: new TextStyle(
                   color: Colors.black,
                   fontSize: 25.0,
