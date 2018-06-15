@@ -6,9 +6,14 @@ import 'package:meta/meta.dart';
 class FriendItem extends StatelessWidget {
   String id;
   String imageUrl;
+  List<int> imageMemory;
   bool isFile;
   FriendItem(
-      {Key key, @required this.id, @required this.imageUrl, this.isFile = true})
+      {Key key,
+      @required this.id,
+      this.imageUrl,
+      this.imageMemory,
+      this.isFile = true})
       : super(key: key);
 
   @override
@@ -34,8 +39,8 @@ class FriendItem extends StatelessWidget {
                               ? new AssetImage('assets/koala_neutral.png')
                               : isFile
                                   ? NetworkImage(imageUrl)
-                                  : imageUrl != null
-                                      ? MemoryImage(base64.decode(imageUrl))
+                                  : imageMemory != null
+                                      ? MemoryImage(imageMemory)
                                       : AssetImage('assets/hoodie_bear.png'),
                           fit: BoxFit.fill))))),
     );

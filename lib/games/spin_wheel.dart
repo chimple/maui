@@ -87,7 +87,7 @@ class _SpinWheelState extends State<SpinWheel> {
 
   List<bool> _slice = [false, false, false, false, false, false, false, false];
 
-  var _angle;
+  var _angleOnDragStard=0.0,_angleOnDragEnd=0.0;
   var onDragCordStarted, onDragCordUpdated;
   double rotationPercent = 0.0;
   double rotationPercent1 = 0.0;
@@ -99,6 +99,7 @@ class _SpinWheelState extends State<SpinWheel> {
   double angleDiff;
   var _endAngle;
   var dragUpdate = 0.0;
+  var _angleDiffAntiCockWise = 0.0;
   @override
   void initState() {
     setState(() {
@@ -114,9 +115,8 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   _onDragStart(PolarCoord cord) {
-    print("Drag Start here:: ${(cord.angle / (2 * pi) * 360)}");
     onDragCordStarted = cord;
-    _angle = cord.angle;
+    _angleOnDragStard = (cord.angle / (2 * pi) * 360);
     startDragTime = currentTime;
     setState(() {
       rotationPercent = dragEnd;
@@ -130,15 +130,23 @@ class _SpinWheelState extends State<SpinWheel> {
     if (onDragCordStarted != null) {
       angleDiff = onDragCordStarted.angle - dragCord.angle;
       angleDiff = angleDiff >= 0 ? angleDiff : angleDiff + (2 * pi);
+
+      _angleDiffAntiCockWise = dragCord.angle - onDragCordStarted.angle;
+      _angleDiffAntiCockWise <= 0
+          ? _angleDiffAntiCockWise
+          : _angleDiffAntiCockWise + (2 * pi);
+
+      _angleDiff = angleDiff;
       final anglePercent = angleDiff / (2 * pi);
-      //  final timeDiffInSec = (anglePercent * maxTime.inSeconds).round();
-      // selectedTime =
-      // new Duration(seconds: startDragTime.inSeconds + timeDiffInSec);
+      _angleDiff = onDragCordStarted.angle <= 0
+          ? -onDragCordStarted.angle + angleDiff
+          : onDragCordStarted.angle;
       setState(() {
         rotationPercent = angleDiff + dragEnd; //angleDiff + dragEnd;
       });
       dragUpdate = angleDiff;
     }
+    _angleOnDragEnd=(dragCord.angle / (2 * pi) * 360);
   }
 
   var dragStart = 0.0;
@@ -147,15 +155,19 @@ class _SpinWheelState extends State<SpinWheel> {
   var _oldCoord;
   var _angleDiff;
   _onDragEnd() {
-    print("Drag End here:: ${(onDragCordUpdated.angle / (2 * pi) * 360)}");
-    print("Difference End here:: ${(angleDiff / (2 * pi) * 360)}");
-
+    _rotationDirection();
+    print("Drag Start here:: ${_angleOnDragStard}");
+    print("Drag End here:: ${_angleOnDragEnd}");
+    print("Angle Diff CloclWise:: ${(angleDiff / (2 * pi) * 360)}");
+    print("Angle Diff AntiClockWise:: ${(_angleDiffAntiCockWise / (2 * pi) * 360)}");
     dragEnd = rotationPercent;
-
-    _angleDiff = (angleDiff / (2 * pi) * 360);
+    _angleDiff = (_angleDiff / (2 * pi) * 360);
     compareTheangle();
   }
 
+  void _rotationDirection() {
+  
+  }
   void compareTheangle() {
     print(true);
     //0
@@ -180,7 +192,7 @@ class _SpinWheelState extends State<SpinWheel> {
       _slice[1] = false;
     }
     //2
-    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[2] == true) {
+    else if (_angleDiff >=  100.0 && _angleDiff <=  121.0  && _slice[2] == true) {
       print("Slice1::");
       setState(() {
         _wheelColor[1] = 0XFF8FBC8F;
@@ -191,7 +203,7 @@ class _SpinWheelState extends State<SpinWheel> {
       _slice[2] = false;
     }
     //3
-    else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[3] == true) {
+    else if (_angleDiff >= 145.0 && _angleDiff <= 165.0 && _slice[3] == true) {
       print("Slice1::");
       setState(() {
         _wheelColor[1] = 0XFF8FBC8F;
@@ -317,9 +329,10 @@ class _SpinWheelState extends State<SpinWheel> {
     // print(_wheelColor[0]);
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLanscape = orientation == Orientation.landscape;
-    if (isLanscape) {
-      size1 = new Size(size1.height, size1.height);
-    }
+    size1 = new Size(size1.height * .6, size1.height * .6);
+    // if (isLanscape) {
+    //   size1 = new Size(size1.height*.3, size1.height*.3);
+    // }
     // List<CircularStackEntry> data1 = <CircularStackEntry>[
     //   new CircularStackEntry(
     //     <CircularSegmentEntry>[
@@ -374,16 +387,23 @@ class _SpinWheelState extends State<SpinWheel> {
               child: new Text(''),
             ),
             new Expanded(
-              flex: 1,
+              flex: 2,
               child: new Container(
-                width: 100.0,
-                height: 100.0,
-                color: Colors.green,
+                decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green,
+                ),
+                // width: size1.width*.4,
+                // height:size1.width*.4,
                 child: new Center(child: new Text(_containerData[0])),
               ),
             ),
             new Expanded(
-              flex: 7,
+              flex: 1,
+              child: new Text(''),
+            ),
+            new Expanded(
+              flex: 5,
               child: new Stack(
                 children: <Widget>[
                   new Center(
