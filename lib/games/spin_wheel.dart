@@ -121,6 +121,11 @@ class _SpinWheelState extends State<SpinWheel> {
 
   @override
   void initState() {
+    super.initState();
+    _initBoard();
+  }
+
+  _initBoard() {
     setState(() {
       rotationPercent = 0.0;
       rotationPercent1 = 0.0;
@@ -131,10 +136,17 @@ class _SpinWheelState extends State<SpinWheel> {
       print("");
     }
 
-    super.initState();
     int _index = _smallerCircleData.indexOf(_containerData[0]);
     _slice[_index] = true;
     print("index of sllice active: $_index");
+  }
+
+  @override
+  void didUpdateWidget(SpinWheel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
   }
 
   _onDragStart(PolarCoord cord) {
@@ -286,7 +298,7 @@ class _SpinWheelState extends State<SpinWheel> {
   }
 
   void _changeData() {
-
+   // widget.onEnd();
     setState(() {
       _indexOfContainerData++;
       //_slice[_indexOfContainerData] = true;
