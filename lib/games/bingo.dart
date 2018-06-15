@@ -13,6 +13,7 @@ class Bingo extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
+  Function onTurn;
   int iteration;
   GameConfig gameConfig;
   bool isRotated;
@@ -23,6 +24,7 @@ class Bingo extends StatefulWidget {
         this.onProgress,
         this.onEnd,
         this.iteration,
+        this.onTurn,
         this.gameConfig,
         this.isRotated = false})
       : super(key: key);
@@ -139,6 +141,16 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 //    print({"reference size _ShakeCells.length": _ShakeCells});
 //    print({"reference size _ShakeCells.length": _ColmunCells});
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(Bingo oldWidget) {
+//    print(oldWidget.iteration);
+//    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+//      print(_allLetters);
+    }
   }
 
   Widget _buildItem(
@@ -485,13 +497,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller2.forward();
   }
 
-//  @override
-//  void didUpdateWidget(MyButton oldWidget) {
-//    print({"oldwidget data ": oldWidget.text});
-//    if (oldWidget.text != widget.text) {
-//      controller.reverse();
-//    }
-//  }
+  @override
+  void didUpdateWidget(MyButton oldWidget) {
+    print({"oldwidget data ": oldWidget.text});
+    if (oldWidget.text != widget.text) {
+      controller.reverse();
+    }
+  }
 
   @override
   void dispose() {

@@ -461,15 +461,15 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
              print("object....shanking thing is...:$_visibleflag");
              setState(() {
                forAns=[];
-               _pointssend=[];
+             
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
             });
-           }
-         
-                new Future.delayed(const Duration(milliseconds: 800), () {
+             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
+                 
                 _ShakeCells = _letters
+                
                     .map((a) => ShakeCell.InActive)
                     .toList(growable: false);
                 _statuses = _letters
@@ -477,15 +477,30 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
                     .toList(growable: false);
                 _visibleflag =
                     _letters.map((a) => false).toList(growable: false);
+                     _pointssend=[];
               });
-            }); // _ShakeCells = _letters
+            });
+           }
+         
+            //     new Future.delayed(const Duration(milliseconds: 800), () {
+            //   setState(() {
+            //     _ShakeCells = _letters
+            //         .map((a) => ShakeCell.InActive)
+            //         .toList(growable: false);
+            //     _statuses = _letters
+            //         .map((a) => Status.Draggable)
+            //         .toList(growable: false);
+            //     _visibleflag =
+            //         _letters.map((a) => false).toList(growable: false);
+            //   });
+            // }); // _ShakeCells = _letters
                 //     .map((a) => ShakeCell.InActive)
                 //     .toList(growable: false);
-                _statuses = _letters
-                    .map((a) => Status.Draggable)
-                    .toList(growable: false);
-                _visibleflag =
-                    _letters.map((a) => false).toList(growable: false);
+                // _statuses = _letters
+                //     .map((a) => Status.Draggable)
+                //     .toList(growable: false);
+                // _visibleflag =
+                //     _letters.map((a) => false).toList(growable: false);
               });
 
         
@@ -842,6 +857,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             : widget.onCancel(v, g),
                     data: widget.code,
                     feedback: new Container(),
+                    maxSimultaneousDrags: 1,
                     child: new UnitButton(
                       highlighted: widget.vflag == true ? true : false,
                       text: _displayText,
