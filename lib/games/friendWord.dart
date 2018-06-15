@@ -30,37 +30,46 @@ class FriendWord extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new FriendWordState();
 }
+enum Status { Active, Visible, Disappear }
 
 class FriendWordState extends State<FriendWord> {
   var flag1 = 0;
-  var flag=0;
+  var flag = 0;
   var correct = 0;
   var keys = 0;
   List<int> clicks = [];
-  static int  _size = 9;
+  static int _size = 5;
   List<String> data = ['' , '' , '' , '' , '' , '' , '' , '' , ''];
   List<String> _rightwords = [];
-  List<String> dragData = ['c' , 'a' , 't' , 'r','g','r','t','y','u'];
+  List<String> dragData = ['c' , 'a' , 't' , 'b' , 'g' , 'r' , 't' , 'y' , 'u'];
   List<int> _starList = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
-  List _sortletters = [];
+  var _sortletters = [];
   bool _isLoading = true;
   List _center = [];
-  String img , dragdata;
-  var L ,R;
-  var i = 0, j = 0;
+  String Cword = '';
+  String Rword = '';
+  var L , R;
+  var i = 0 ,
+      j = 0;
   var counter = 0;
-  var  row ,col;
+  var row , col;
   int _rows , _cols , code , dindex , dcode;
-  var Top = _size,Bot = _size,Lef = 1,Rig = 1, point = 0;
-
-  static var  median1 = (_size - 1)/2;
+  var Top = _size ,
+      Bot = _size ,
+      Lef = 1 ,
+      Rig = 1 ,
+      point = 0;
+  List<Status> _statuses;
+  List<Status> _dragStatus;
+  static var median1 = (_size - 1) / 2;
   static int k = median1.toInt();
-  int median  = k;
-  int  center  = (k * _size ) + k;
+  int median = k;
+  int center = (k * _size) + k;
   List<String> arr = new List<String>();
-  var _referenceMatrix = new List.generate(_size, (_) => new List(_size));
+  var _referenceMatrix = new List.generate(_size , (_) => new List(_size));
+
   @override
   void initState() {
     super.initState();
@@ -68,255 +77,325 @@ class FriendWordState extends State<FriendWord> {
   }
 
   void _initBoard() async {
-
     setState(() => _isLoading = true);
 //    _center.removeRange(0, _center.length);
 //    List<String> arr = new List<String>();
     print("this is center $center");
     print("thhiiis kiiirran mean value is $median");
-    for(var i=0;i<_size*_size;i++)
-    {
+    for (var i = 0; i < _size * _size; i++) {
       arr.add(" ");
-      print({"this is an array":arr});
+      print({"this is an array": arr});
     }
 
     _starList.add(median);
 
-    for(var j =0;j <k;j++)
-      {
-         median = median +_size - 1;
-         L = median;
-         _starList.add(median);
-
-         print("this is $L");
-         print("this is ${_size * median}");
-      }
-      median=k;
-      print(" ths value o llllll id $L");
-    if(L ==(_size * median))
-      { median=L;
-        print(" its comming in if");
-        for(var j=0;j<k;j++ ){
-          median = median + _size+1;
-
-          _starList.add(median);
-          L=median;
-
-        }
-
-      }
-median =k;
-    for (var j= 0;j<k;j++)
-    {
-      median = median + _size +1;
-      R = median;
-      _starList.add(median);
-    }
-    median=k;
-    print(" ths value o llllll id $L");
-    if(R ==((_size * median)+(_size-1)))
-    { median=R;
-    print(" its comming in if");
-    for(var j=0;j<k;j++ ){
+    for (var j = 0; j < k; j++) {
       median = median + _size - 1;
-
+      L = median;
       _starList.add(median);
-      R = median;
 
+      print("this is $L");
+      print("this is ${_size * median}");
     }
-       center = ((_size *_size)/2).floor();
+    median = k;
+    print(" ths value o llllll id $L");
+    if (L == (_size * median)) {
+      median = L;
+      print(" its comming in if");
+      for (var j = 0; j < k; j++) {
+        median = median + _size + 1;
+
+        _starList.add(median);
+        L = median;
+      }
+    }
+    median = k;
+    for (var j = 0; j < k; j++) {
+      median = median + _size + 1;
+      R = median;
+      _starList.add(median);
+    }
+    median = k;
+    print(" ths value o llllll id $L");
+    if (R == ((_size * median) + (_size - 1))) {
+      median = R;
+      print(" its comming in if");
+      for (var j = 0; j < k; j++) {
+        median = median + _size - 1;
+
+        _starList.add(median);
+        R = median;
+      }
+      center = ((_size * _size) / 2).floor();
       _starList.add(center);
       print("this is kiran $center");
     }
 
-    _starList.forEach((e){
-      arr[e]="*";
-
-
+    _starList.forEach((e) {
+      arr[e] = "*";
     });
-
-
-
-
-    _flag.length = data.length + dragData.length +1;
-    for (var i = 0; i < _flag.length; i++) {
-      _flag[i] = 0;
-    }
+    _statuses = arr.map((e)=> Status.Visible).toList(growable: false);
+    _dragStatus = dragData.map((e)=> Status.Disappear).toList(growable: false);
+    print("the satus $_statuses");
+    print("this is drag status $_dragStatus"    );
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(int index , String text) {
+  Widget _buildItem(int index , String text,Status status) {
     return new MyButton(
         key: new ValueKey<int>(index) ,
         index: index ,
         text: text ,
         color1: 1 ,
+        status: status,
         onAccepted: (dcindex) {
           print("index is .......$dcindex");
           setState(() {
-
-
             if (center == index) {
               arr[index] = dcindex;
               _center.add(index);
+              Cword = "$dcindex";
+              Rword = "$dcindex";
               clicks.add(index);
-              row = index/_size;
+
+              _statuses[index] = Status.Active;
+              print("status of active $_statuses");
+              print("index is .......$index");
+              row = index / _size;
               col = index % _size;
               _referenceMatrix[row.toInt()][col.toInt()] = dcindex;
               counter = 1;
 
-              print("this is my _center index $center");
-              print("this is my _center index $_center");
+//              print("this is my _center index $center");
+//              print("this is my _center index $_center");
             }
           });
           print('dataa $dcindex');
-          print({"array data index": center});
-          print({"array data index": _center});
+//          print({"array data index": center});
+//          print({"array data index": _center});
 
-            _center.forEach((e) {
-              point = e;
+          _center.forEach((e) {
+            point = e;
 
-              if ((index == point + Rig) ||
-                  index == point + Bot ||
-                  (index == point - Lef) ||
-                  index == point - Top) {
-                setState(() {
+            if ((index == point + Rig) ||
+                index == point + Bot ||
+                (index == point - Lef) ||
+                index == point - Top) {
+              setState(() {
 //                  arr[index] = dcindex;
-                  flag = 1;
+                _statuses[index] = Status.Active;
+                if(_statuses[index] == Status.Active){
+                  arr[index].;
+                }
+                print("status of active after CCCC $_statuses");
+                flag = 1;
+                if (index == point + 1) {
+                  Rword = "$Rword" + "$dcindex";
+                } else if (index == point - 1) {
+                  Rword = "$dcindex" + "$Rword";
+                } else if (index == point - Top) {
+                  Cword = "$dcindex"+"$Cword" ;
+                  print("this is new   Cword $Cword");
+                }else if(index == point+Bot){
+                  Cword = "$Cword" + "$dcindex";
+                }
 
-//                  clicks.add(index);
-
-//                  print("object of index... is $index");
-//                  print("this is my _center index2 $_center");
-//                  print("this is my _center clicks $clicks");
-                });
-              }
-            });
-            if(flag==1){
-              arr[index] = dcindex;
-              clicks.add(index);
-              _center.add(index);
-               row = index/_size;
-              col = index % _size;
-             print("row is coming here $row");
-              print("Col is coming here $col");
-              _referenceMatrix[row.toInt()][col.toInt()] = dcindex;
-
-              flag=0;
+              });
             }
+
+            horizontalChecker(Rword);
+            verticalChecker(Cword);
+//              var Hword = bingoHorizontalChecker(Rword);
+//              print("this is horizontal ${Hword}");
+
+          });
+//            if(index == center +1 ){
+//              word = "$word" + "$dcindex";
+//            }else if(index == point -1 ){
+//              word = "$dcindex" + "$word";
+//
+//            }
+          print("sorted letter $Rword");
+          print("Sorted top $Cword");
+          if (flag == 1) {
+            arr[index] = dcindex;
+            clicks.add(index);
+            _center.add(index);
+            row = index / _size;
+            col = index % _size;
+            print("row is coming here $row");
+            print("Col is coming here $col");
+            _referenceMatrix[row.toInt()][col.toInt()] = dcindex;
+
+            flag = 0;
+          }
 //            arr[index] = dcindex;
 //              _center.add(index);
-          var matchRow = bingoHorizontalChecker();
-          print({"the bingo checker response row : ": matchRow});
-            print("object of index... is $index");
-            print("this is my _center index2 $_center");
-            print("this is my _center clicks $clicks");
-          print("this is my reference $_referenceMatrix");
+//          var matchRow = bingoHorizontalChecker();
+//          print({"the bingo checker response row : ": matchRow});
+//            print("object of index... is $index");
+//            print("this is my _center index2 $_center");
+//            print("this is my _center clicks $clicks");
+//          print("this is my reference $_referenceMatrix");
 
         });
   }
 
-
-
-//          arr[index] = dcindex;
-
-//} ,
-//        flag: flag ,
-//code: code ,
-//isRotated: widget.isRotated ,
-//img: img ,
-//keys: keys++);
-//}
-
-  int bingoHorizontalChecker() {
-    print({"the reference matrix value is : ": _referenceMatrix});
-    for (var i = 0; i < _referenceMatrix.length; i++) {
-      for (int j = 0; j <_referenceMatrix.length; j++) {
-        if (_referenceMatrix[i][j] == null) {
-
-          break;
-        }
-      }
-//       return i;
-    print("hello");
-    print("this is row $i");
-      print("this rrjenrnjenjrenrne ${_referenceMatrix[i][j]}");
-    }
-        print("this is $i");
-    return -1;
-  }
-
-  int bingoVerticalChecker() {
-    print({"the reference matrix value is : ": _referenceMatrix});
-    for (int j = 0; j < _referenceMatrix.length; j++) {
-      bool bingo = true;
-      for (int i = 0; i < _referenceMatrix.length; i++) {
-        if (_referenceMatrix[i][j] == null) {
-
-          break;
-        }
-      }
-      if (bingo) return j;
-    }
-
-    return -1;
+  submit() {
+    print("hello $Rword");
+//    if(Rword != null)
+//    bingoHorizontalChecker(Rword);
+    var Hword = horizontalChecker(Rword);
+    var Vword = horizontalChecker(Cword);
+    print("this is horizontal ${Hword}");
+    print("this is Vertical   ${Vword}");
   }
 
 
 
-@override
+   horizontalChecker(String searchWord) {
+    bool allChar = true;
+    print("this is my search word $searchWord");
+    if (searchWord != null) {
+      String firstWord = searchWord[0];
+      print("print FirstWord $firstWord");
+      print({"the reference matrix value is : ": _referenceMatrix});
+      for (var i = 0; i < _referenceMatrix.length; i++) {
+        for (int j = 0; j < _referenceMatrix[i].length; j++) {
+          if (_referenceMatrix[i][j] == firstWord) {
+            print({"the first word i and j": _referenceMatrix[i][j]});
+            int searchRow = i;
+            int searchColumn = j;
+            for (int charIndex = 0; charIndex < searchWord.length;
+            charIndex++) {
+              if (searchRow >= _referenceMatrix.length ||
+                  searchColumn >= _referenceMatrix[searchRow].length ||
+                  _referenceMatrix[searchRow][searchColumn] !=
+                      searchWord[charIndex]) {
+                allChar = false;
+              }
+              searchColumn++;
+            }
+          }
+          if (allChar)
+            return true;
+          return searchWord;
+//        print("hello");
+//        print("this is row ${i}");
+//        print("this   rrjenrnjenjrenrne ${_referenceMatrix[i][j]}");
+        }
+      }
+      print("this is $i");
+      return false;
+    }
+  }
+
+
+
+  verticalChecker(String searchWord) {
+    bool allChar = true;
+    print("this is my search word $searchWord");
+    if (searchWord != null) {
+      String firstWord = searchWord[0];
+      print("print FirstWord $firstWord");
+      print({"the reference matrix value is : ": _referenceMatrix});
+      for (var i = 0; i < _referenceMatrix.length; i++) {
+        for (int j = 0; j < _referenceMatrix[i].length; j++) {
+          if (_referenceMatrix[i][j] == firstWord) {
+            print({"the first word i and j": _referenceMatrix[i][j]});
+            int searchRow = i;
+            int searchColumn = j;
+            for (int charIndex = 0; charIndex < searchWord.length;
+            charIndex++) {
+              if (searchRow >= _referenceMatrix.length ||
+                  searchColumn >= _referenceMatrix[searchRow].length ||
+                  _referenceMatrix[searchRow][searchColumn] !=
+                      searchWord[charIndex]) {
+                allChar = false;
+              }
+              searchColumn++;
+            }
+          }
+          if (allChar)
+            return true;
+          return searchWord;
+//        print("hello");
+//        print("this is row ${i}");
+//        print("this   rrjenrnjenjrenrne ${_referenceMatrix[i][j]}");
+        }
+      }
+      print("this is $i");
+      return false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     print("this is my array $arr");
-    var j = 0, k = 100;
-    var rwidth,rheight;
+    var j = 0 ,
+        k = 0;
+    var rwidth , rheight;
     //  print(constraints.maxHeight);
-    return new LayoutBuilder(builder: (context, constraints) {
-      final hPadding = pow(constraints.maxWidth / 150.0, 2);
-      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+    return new LayoutBuilder(builder: (context , constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0 , 2);
+      final vPadding = pow(constraints.maxHeight / 150.0 , 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 2);
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      final buttonPadding = sqrt(min(maxWidth , maxHeight) / 5);
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context,1,maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      UnitButton.saveButtonSize(context , 1 , maxWidth , maxHeight);
+      AppState state = AppStateContainer
+          .of(context)
+          .state;
 
       return new Container(
-        color: Colors.purple[300],
-        child: new Column(
-          // portrait mode
-          children: <Widget>[
-            new Expanded(
-              child: new ResponsiveGridView(
-                rows: _size,
-                cols: _size,
-                maxAspectRatio: 1.0,
-                children: arr
-                    .map((e) => Padding(
-                    padding: EdgeInsets.all(buttonPadding),
-                    child:_buildItem(j++, e)))
-                    .toList(growable: false),
-              ),
-            ),
-            new Container(
-              child: new ResponsiveGridView(
-                rows: 1,
-                cols: 9,
-                children: dragData
-                    .map((e) => Padding(
-      padding: EdgeInsets.all(buttonPadding),child:_buildItem(k++, e)))
-                    .toList(growable: false),
-              ),
-            ),
-          ],
-        )
-    );
+          color: Colors.purple[300] ,
+          child: new Column(
+            // portrait mode
+            children: <Widget>[
+              new Expanded(
+                child: new ResponsiveGridView(
+                  rows: _size ,
+                  cols: _size ,
+                  maxAspectRatio: 1.0 ,
+                  children: arr
+                      .map((e) =>
+                      Padding(
+                          padding: EdgeInsets.all(buttonPadding) ,
+                          child: _buildItem(j , e,_statuses[j++])))
+                      .toList(growable: false) ,
+                ) ,
+              ) ,
+              new Container(
+                child: new ResponsiveGridView(
+                  rows: 1 ,
+                  cols: 9 ,
+                  children: dragData
+                      .map((e) =>
+                      Padding(
+                          padding: EdgeInsets.all(buttonPadding) ,
+                          child: _buildItem(k , e,_dragStatus[k++])))
+                      .toList(growable: false) ,
+                ) ,
+              ) ,
+              new Container(
+                child: new RaisedButton(
+                  onPressed:()=> submit(),
+                    child:new Text("SUBMIT"),
+                    splashColor: Colors.orangeAccent,) ,
+
+              )
+            ] ,
+          )
+      );
     });
   }
 }
+
 class MyButton extends StatefulWidget {
   MyButton(
       { Key key,
@@ -328,6 +407,7 @@ class MyButton extends StatefulWidget {
         this.code,
         this.isRotated,
         this.img,
+        this.status,
         this.keys}): super(key: key);
   final index;
   final int color1;
@@ -337,6 +417,7 @@ class MyButton extends StatefulWidget {
   final String text;
   final String img;
   final DragTargetAccept onAccepted;
+  final  Status status;
   final keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -382,7 +463,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    if (widget.index < 100 && widget.color1 != 0) {
+    if (widget.status == Status.Visible && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
         child: new Shake(
@@ -413,7 +494,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   ),
                 ))),
       );
-    } else if (widget.index >= 100 &&
+    } else if (widget.status == Status.Active &&
         (widget.text == '' || widget.text.length == 2)) {
       if (widget.text == '') {
         newtext = '';
@@ -428,7 +509,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             showHelp: false,
             disabled: true,
           ));
-    } else if (widget.index >= 100) {
+    } else if (widget.status == Status.Disappear || widget.status == Status.Active) {
       return new Draggable(
         data: '${widget.text}',
         child: new ScaleTransition(
