@@ -18,7 +18,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
 
-String sentence1 = "Which is the highest";
+String sentence1 = "MOUNT EVEREST is the highest";
 String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
@@ -140,8 +140,6 @@ class PictureSentenceState extends State<PictureSentence> {
   @override
   Widget build(BuildContext context) {
     keys = 0;
-    print("Question text here $questionText");
-    print("Answer here $ans");
 
     if (_isLoading) {
       return new SizedBox(
@@ -184,100 +182,70 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: new LimitedBox(
-                    maxHeight: maxHeight,
-                    maxWidth: double.infinity,
-                    child: new Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      textBaseline: TextBaseline.ideographic,
-                      children: <Widget>[
-                        new Text(sentence1,
-                            overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 40.0)),
-                        new Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Row(children: [
-                            // new FloatingActionButton(
-                            //   onPressed: () {
-                            //     showDialog(
-                            //         context: context,
-                            //         child: new FractionallySizedBox(
-                            //             heightFactor: 0.5,
-                            //             widthFactor: 0.8,
-                            //             child: new PictureCard(
-                            //                 text: "widget.text")));
-                            //   },
-                            //   tooltip: 'Check the picture',
-                            //   child: new Icon(Icons.comment),
-                            // ),
-                            // new IconButton(
-                            //     iconSize: 24.0,
-                            //     color: Colors.black,
-                            //     icon: new Icon(Icons.comment),
-                            //     tooltip: 'check the picture',
-                            //     onPressed: () {
-                            //       showDialog(
-                            //           context: context,
-                            //           child: new FractionallySizedBox(
-                            //               heightFactor: 0.5,
-                            //               widthFactor: 0.8,
-                            //               child: new PictureCard(
-                            //                   text: "widget.text")));
-                            //     }),
-                            new Container(
-                              child: new FlatButton(
-                                child: const Text(""),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      child: new FractionallySizedBox(
-                                          heightFactor: 0.5,
-                                          widthFactor: 0.8,
-                                          child: new PictureCard(
-                                              text: "widget.text")));
-                                },
-                              ),
-                              color: Colors.grey,
-                              height: 40.0,
-                              width: 100.0,
-                            ),
-                          ]),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(sentence1,
+                        softWrap: true,
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 40.0)),
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                        child: new FlatButton(
+                          child: const Text(""),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: new FractionallySizedBox(
+                                    heightFactor: 0.5,
+                                    widthFactor: 0.8,
+                                    child:
+                                        new PictureCard(text: "widget.text")));
+                          },
                         ),
-                        new Text(
-                          sentence2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.clip,
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40.0,
-                              color: Colors.black),
+                        color: Colors.grey,
+                        height: 40.0,
+                        width: 100.0,
+                      ),
+                    ),
+                    new Text(
+                      sentence2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40.0,
+                          color: Colors.black),
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                        child: new FlatButton(
+                          child: const Text(""),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: new FractionallySizedBox(
+                                    heightFactor: 0.5,
+                                    widthFactor: 0.8,
+                                    child:
+                                        new PictureCard(text: "widget.text")));
+                          },
                         ),
-                        new Container(
-                          child: new FlatButton(
-                            child: const Text(""),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  child: new FractionallySizedBox(
-                                      heightFactor: 0.5,
-                                      widthFactor: 0.8,
-                                      child: new PictureCard(
-                                          text: "widget.text")));
-                            },
-                          ),
-                          color: Colors.grey,
-                          height: 40.0,
-                          width: 100.0,
-                        ),
-                      ],
-                    ))),
+                        color: Colors.grey,
+                        height: 40.0,
+                        width: 100.0,
+                      ),
+                    ),
+                  ],
+                )),
           ),
           new Expanded(
-              flex: 2,
+              flex: 1,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,
