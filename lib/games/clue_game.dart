@@ -291,13 +291,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Expanded(
             flex: 5,
-            child: new ResponsiveGridView(
-              rows: 1,
-              cols: 1,
-              children: listOfSyllables
-                  .map((e) =>buildCircle(context, e, j,maxWidth,maxHeight))
-                  .toList(growable: false),
-            ),
+             child: buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
           ),
         ]);
     } else {
@@ -347,13 +341,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Padding(
             padding: const EdgeInsets.only(left: 50.0),
-            child: new ResponsiveGridView(
-              rows: 1,
-              cols: 1,
-              children: listOfSyllables
-                  .map((e) => buildCircle(context, e, j,maxWidth,maxHeight))
-                  .toList(growable: false),
-            ),
+            child:  buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
           ),
         ]);
     }
@@ -362,15 +350,12 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   
 
   //int j = 0;
-  Widget buildCircle(BuildContext context, String text, int index, double maxW,double maxH) {
+  Widget buildCircle(BuildContext context,  List<String> syllables, int index, double maxW,double maxH) {
     return new Circle(
-        text: text,
+        listOfSyllables: syllables,
          maxwidth:maxW,
         maxheight:maxH,
-        onPress: () {
-          setData(text);
-          print("asdd");
-        });
+        onPress: setData); 
   }
 
   void setData(String a) {
@@ -384,11 +369,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   int j = 0;
 }
 
+typedef void VoidCallback(String text);
+
 class Circle extends StatefulWidget {
+  List<String> listOfSyllables;
   String text;
   double maxwidth;
   double maxheight;
-  Circle({Key key, this.text, this.onPress,this.maxheight,this.maxwidth}) : super();
+  Circle({Key key, this.text,this.listOfSyllables, this.onPress,this.maxheight,this.maxwidth}) : super();
   VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
@@ -421,21 +409,22 @@ class _CircleState extends State<Circle> {
     Offset circleCenter = new Offset(bigRadius, bigRadius);
 
     List<Offset> offsets;
+     int syllableIndex = 0;
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
     offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
@@ -488,7 +477,7 @@ class _PositionCircleState extends State<PositionCircle> {
       height: widget.radii * 2,
       child: new RawMaterialButton(
         shape: const CircleBorder(side: BorderSide.none),
-        onPressed: () => widget.onPress(),
+        onPressed: () => widget.onPress(widget.label),
         fillColor: widget.itemColor,
         splashColor: Colors.green[900],
         child: new Text(
