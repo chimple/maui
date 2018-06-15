@@ -13,12 +13,14 @@ class ChatMessage extends StatelessWidget {
       this.side = Side.left,
       this.imageFile,
       this.imageUrl,
+      this.imageMemory,
       this.imageAsset,
       this.isFile = true});
   final Animation animation;
   final Widget child;
   final Side side;
   final String imageUrl;
+  final List<int> imageMemory;
   final String imageFile;
   final String imageAsset;
   final bool isFile;
@@ -28,9 +30,7 @@ class ChatMessage extends StatelessWidget {
         ? new FileImage(new File(imageFile))
         : imageAsset != null
             ? new AssetImage(imageAsset)
-            : isFile
-                ? NetworkImage(imageUrl)
-                : MemoryImage(base64.decode(imageUrl));
+            : isFile ? NetworkImage(imageUrl) : MemoryImage(imageMemory);
     return new SizeTransition(
       sizeFactor: new CurvedAnimation(parent: animation, curve: Curves.easeOut),
       axisAlignment: 0.0,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -38,6 +39,7 @@ class ChatScreenState extends State<ChatScreen> {
   List<dynamic> _messages;
   static final chatMessageType = 'chat';
   bool _isLoading = true;
+  List<int> memoryImage;
 
   @override
   void initState() {
@@ -46,6 +48,11 @@ class ChatScreenState extends State<ChatScreen> {
         ? 'chat_${widget.friendId}_${widget.myId}'
         : 'chat_${widget.myId}_${widget.friendId}';
     print(chatId);
+    try {
+      memoryImage = base64.decode(widget.friendImageUrl);
+    } catch (e) {
+      print(e);
+    }
     _initMessages();
 //    _reference = FirebaseDatabase.instance.reference().child(chatId);
   }
@@ -109,7 +116,7 @@ class ChatScreenState extends State<ChatScreen> {
                         : ChatMessage(
                             animation: animation,
                             side: Side.right,
-                            imageUrl: widget.friendImageUrl,
+                            imageMemory: memoryImage,
                             isFile: false,
                             child: new Padding(
                               padding: const EdgeInsets.all(8.0),

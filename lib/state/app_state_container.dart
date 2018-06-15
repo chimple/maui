@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:audioplayer/audioplayer.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state.dart';
@@ -10,6 +10,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flores/flores.dart';
+
+import '../components/flash_card.dart';
 
 class AppStateContainerController extends StatefulWidget {
   final AppState state;
@@ -29,6 +31,7 @@ class _AppStateContainerControllerState
   AppState state;
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
+  bool isShowingFlashCard = true;
 
   @override
   void initState() {
@@ -67,12 +70,27 @@ class _AppStateContainerControllerState
 //    }
   }
 
+  void _display(BuildContext context, String fileName) {
+      if(isShowingFlashCard) {
+         showDialog(
+          context: context,
+          child:  new FractionallySizedBox(
+              heightFactor: 0.5,
+              widthFactor: 0.8,
+              child: new FlashCard(text: fileName))).whenComplete((){isShowingFlashCard = true;});
+      } else {
+        null;
+      }
+      isShowingFlashCard = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new AppStateContainer(
       state: state,
       setLoggedInUser: _setLoggedInUser,
       play: _play,
+      display: _display,
       child: widget.child,
     );
   }
@@ -100,12 +118,14 @@ class AppStateContainer extends InheritedWidget {
   final AppState state;
   final Function(User user) setLoggedInUser;
   final Function(String string) play;
+  final Function(BuildContext context,String string) display;
 
   const AppStateContainer({
     Key key,
     @required this.state,
     @required this.setLoggedInUser,
     @required this.play,
+    @required this.display,
     @required Widget child,
   })  : assert(state != null),
         super(key: key, child: child);
