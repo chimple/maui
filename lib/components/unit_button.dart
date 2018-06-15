@@ -96,12 +96,7 @@ class _UnitButtonState extends State<UnitButton> {
             onLongPress: () {
               AppStateContainer.of(context).play(widget.text.toLowerCase());
               if (_unitMode != UnitMode.audio) {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
+                AppStateContainer.of(context).display(context, widget.text.toLowerCase());  
               }
             },
             child: _buildButton(context))
@@ -153,7 +148,7 @@ class _UnitButtonState extends State<UnitButton> {
       return new Icon(Icons.volume_up);
     } else if (_unitMode == UnitMode.image) {
       return _isLoading
-          ? new Text(widget.text)
+          ? new Container()
           : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png');
     }
     return Center(

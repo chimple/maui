@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data.dart';
 import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -7,6 +6,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/repos/game_data.dart';
 
 class ClueGame extends StatefulWidget {
   Function onScore;
@@ -43,23 +43,34 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  List<String> _category;
-  List<String> _categoryup;
-  List<String> _categorydown;
-  List<String> _holdwords;
-  List<String> _redfruit;
-  List<String> _travel;
-  List<String> _drink;
-  List<String> _blackpet;
+  List<String> _categoryup=[];
+  List<String> _categorydown=[];
+  List<String> categoryName = [];
+  List<String> listOfThings = [];
+  List<String> listOfSyllables =[];
+   bool _isLoading = true;
+  Map<String, List<String>> data1;
+  Map<String, Map<String, List<String>>> data;
+  
 
-  void _initClueGame() {
-   _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
-     _categoryup = ['Red Fruit', 'Travel'];
-    _categorydown = ['Drink', 'Black Pet'];
-    _redfruit = ['apple', 'cheery', 'stawarrey', 'tomoto'];
-    _travel = ['bus', 'car', 'train', 'aeroplane'];
-    _drink = ['milk', 'water', 'beer', 'wine'];
-    _blackpet = ['cat', 'dog', 'panda', 'cow'];
+  void _initClueGame() async{
+     setState(() => _isLoading = true);
+      data = await fetchClueGame(widget.gameCategoryId);
+      data.forEach((k, data1) {
+      categoryName.add(k);
+       data1.forEach((a, list) {
+        listOfThings.add(a);
+        list.forEach((c) {
+          listOfSyllables.add(c);
+        });
+      });
+    });
+    _categoryup = categoryName.sublist(0, 2);
+    _categorydown = categoryName.sublist(2, 4);
+     print('categoryName is $categoryName');
+    print('listOfThings is $listOfThings');
+    print('listOfSyllables is $listOfSyllables');
+    setState(() => _isLoading = false);
   }
 
   var keys = 0;
@@ -68,10 +79,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
   void _validate() {
     // setState(()  {
-    if (_result == _redfruit[0] ||
-        (_result == _redfruit[1]) ||
-        (_result == _redfruit[2]) ||
-        (_result == _redfruit[3])) {
+    if (_result == listOfThings.sublist(0, 3).first) {
       setState(() {
         _result = 'you Type Red Fruit';
       });
@@ -84,10 +92,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
         controller.stop();
       });
-    } else if (_result == _travel[0] ||
-        (_result == _travel[1]) ||
-        (_result == _travel[2]) ||
-        (_result == _travel[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type Travel';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -96,10 +101,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (_result == _drink[0] ||
-        (_result == _drink[1]) ||
-        (_result == _drink[2]) ||
-        (_result == _drink[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type Drink';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -108,10 +110,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (_result == _blackpet[0] ||
-        (_result == _blackpet[1]) ||
-        (_result == _blackpet[2]) ||
-        (_result == _blackpet[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type black Pet';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -176,8 +175,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       onTap: remove,
       child: new Container(
         height: media.orientation == Orientation.portrait
-            ? _height * 0.07
-            : _height * 0.1,
+            ? _height * 0.06
+            : _height * 0.09,
         width: media.orientation == Orientation.portrait
             ? _width * 0.5
             : _width * 0.25,
@@ -204,8 +203,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     double _width = media.size.width;
     return new Container(
         height: media.orientation == Orientation.portrait
-            ? _height * 0.07
-            : _height * 0.1,
+            ? _height * 0.06
+            : _height * 0.08,
         width: media.orientation == Orientation.portrait
             ? _width * 0.15
             : _width * 0.1,
@@ -226,94 +225,87 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
+  //  Orientation orientation = MediaQuery.of(context).orientation;
     keys = 0;
-    if (orientation==Orientation.portrait) {
-    return new LayoutBuilder(builder: (context, constraints) {
-      final hPadding = pow(constraints.maxWidth / 150.0, 2);
-      final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      double maxWidth = 0.0, maxHeight = 0.0;
-      final maxChars = (_category != null
-          ? _category.fold(1,
-              (prev, element) => element.length > prev ? element.length : prev)
-          : 1);
-
-      maxWidth = (constraints.maxWidth - hPadding * 2) / 3.5;
-      maxHeight = (constraints.maxHeight - vPadding * 2) / 3.5;
-      double buttonPadding = sqrt(min(maxWidth, maxHeight));
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
-      var k = 0;
-
-     return new Flex(direction: Axis.vertical, children: <Widget>[
-        new Container(
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              new ResponsiveGridView(
-                rows: 2,
-                cols: 1,
-                maxAspectRatio: 1.0,
-                children: _categorydown
-                    .map((e) => new Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: _builtCategory(k++, e),
-                        ))
-                    .toList(growable: false),
-              ),
-              new ResponsiveGridView(
-                rows: 2,
-                cols: 1,
-                maxAspectRatio: 1.0,
-                children: _categoryup
-                    .map((e) => new Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: _builtCategory(k++, e),
-                        ))
-                    .toList(growable: false),
-              ),
-            ],
-          ),
-        ),
-        new Expanded(
-          flex: 1,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new Shake(
-                animation: (_flag == 0) ? animation : noanimation,
-                child: answer(_result),
-              ),
-              submit(),
-            ],
-          ),
-        ),
-        new Expanded(flex: 5, child: new Circle()),
-      ]);
-    });
-     } else {
-      //landscape mode
+   // if (orientation == Orientation.portrait) {
       return new LayoutBuilder(builder: (context, constraints) {
         final hPadding = pow(constraints.maxWidth / 150.0, 2);
         final vPadding = pow(constraints.maxHeight / 150.0, 2);
         double maxWidth = 0.0, maxHeight = 0.0;
-        final maxChars = (_category != null
-            ? _category.fold(
+        final maxChars = (categoryName != null
+            ? categoryName.fold(
                 1,
                 (prev, element) =>
                     element.length > prev ? element.length : prev)
             : 1);
 
-        maxWidth = (constraints.maxWidth - hPadding * 2) / 5;
-        maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
-        double buttonPadding = sqrt(min(maxWidth, maxHeight)/2);
+        maxWidth = (constraints.maxWidth - hPadding * 2) / 3.7;
+        maxHeight = (constraints.maxHeight - vPadding * 2) / 3.7;
+        double buttonPadding = sqrt(min(maxWidth, maxHeight));
         UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
         AppState state = AppStateContainer.of(context).state;
         var k = 0;
+          if (maxHeight + maxHeight * 0.1 > maxWidth) {
+        return new Flex(direction: Axis.vertical, children: <Widget>[
+          new Container(
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                new ResponsiveGridView(
+                  rows: 2,
+                  cols: 1,
+                  maxAspectRatio: 1.0,
+                  children: _categorydown
+                      .map((e) => new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _builtCategory(k++, e),
+                          ))
+                      .toList(growable: false),
+                ),
+                new ResponsiveGridView(
+                  rows: 2,
+                  cols: 1,
+                  maxAspectRatio: 1.0,
+                  children: _categoryup
+                      .map((e) => new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _builtCategory(k++, e),
+                          ))
+                      .toList(growable: false),
+                ),
+              ],
+            ),
+          ),
+          new Expanded(
+            flex: 1,
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Shake(
+                  animation: (_flag == 0) ? animation : noanimation,
+                  child: answer(_result),
+                ),
+                submit(),
+              ],
+            ),
+          ),
+          new Expanded(
+            flex: 5,
+            child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: listOfSyllables
+                  .map((e) =>buildCircle(context, e, j,maxWidth,maxHeight))
+                  .toList(growable: false),
+            ),
+          ),
+        ]);
+    } else {
+      //landscape mode
         return new Flex(direction: Axis.horizontal, children: <Widget>[
           new Container(
             child: new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new ResponsiveGridView(
                   rows: 1,
@@ -338,45 +330,87 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                       .toList(growable: false),
                 ),
                 new Padding(
-                  padding: const EdgeInsets.only(bottom:15.0),
+                  padding: const EdgeInsets.only(bottom: 15.0),
                   child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                  new Shake(
-                    animation: (_flag == 0) ? animation : noanimation,
-                    child: answer(_result),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      new Shake(
+                        animation: (_flag == 0) ? animation : noanimation,
+                        child: answer(_result),
+                      ),
+                      submit(),
+                    ],
                   ),
-                  submit(),
-              ],
-            ),
                 ),
               ],
             ),
           ),
-          new Expanded(child: new Circle()),
+          new Padding(
+            padding: const EdgeInsets.only(left: 50.0),
+            child: new ResponsiveGridView(
+              rows: 1,
+              cols: 1,
+              children: listOfSyllables
+                  .map((e) => buildCircle(context, e, j,maxWidth,maxHeight))
+                  .toList(growable: false),
+            ),
+          ),
         ]);
+    }
       });
     }
+  
+
+  //int j = 0;
+  Widget buildCircle(BuildContext context, String text, int index, double maxW,double maxH) {
+    return new Circle(
+        text: text,
+         maxwidth:maxW,
+        maxheight:maxH,
+        onPress: () {
+          setData(text);
+          print("asdd");
+        });
   }
+
+  void setData(String a) {
+    print("call here comming");
+    setState(() {
+      _result = _result + a;
+    });
+  }
+
+  int wordsIndex = 0;
+  int j = 0;
 }
 
 class Circle extends StatefulWidget {
+  String text;
+  double maxwidth;
+  double maxheight;
+  Circle({Key key, this.text, this.onPress,this.maxheight,this.maxwidth}) : super();
+  VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
 }
 
 class _CircleState extends State<Circle> {
+  String _text = '';
+  int wordsIndex = 0;
+  void initState() {
+    super.initState();
+    setState(() {
+      _text = widget.text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-   Orientation orientation = MediaQuery.of(context).orientation;
-    double circleSize = orientation == Orientation.portrait?
-    MediaQuery.of(context).size.width * 0.7:MediaQuery.of(context).size.height * 0.7;
-      double bigRadius = circleSize / 2;
+    double ht =widget.maxheight;
+    double wd = widget.maxwidth;
+    double circleSize = ht+wd;   
+    double bigRadius = circleSize / 2;
     double smallRadius = (bigRadius) * 0.15;
-    MediaQueryData media = MediaQuery.of(context);
-    List _words = [
-      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
-     int wordsIndex = 0;
     List<Widget> widgets = new List();
     widgets.add(new Container(
         width: circleSize,
@@ -384,32 +418,29 @@ class _CircleState extends State<Circle> {
         decoration:
             new BoxDecoration(color: Colors.green, shape: BoxShape.circle)));
 
-     Offset circleCenter = new Offset(bigRadius, bigRadius);
+    Offset circleCenter = new Offset(bigRadius, bigRadius);
 
-    List<Offset> offsets; 
+    List<Offset> offsets;
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
     }
     offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
     }
 
     offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _words[wordsIndex++], Colors.orange[300], smallRadius));
+          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
   }
-
-  //it calculates points on circle
-  //these points are centers for small circles
-  List<Offset> calculateOffsets(
+    List<Offset> calculateOffsets(
       double circleRadii, Offset circleCenter, int amount) {
     double angle = 2 * pi / amount;
     double alpha = 300.0;
@@ -431,8 +462,10 @@ class PositionCircle extends StatefulWidget {
   final String label;
   final Color itemColor;
   final double radii;
+  final VoidCallback onPress;
 
-  PositionCircle(this.initPos, this.label, this.itemColor, this.radii);
+  PositionCircle(
+      this.initPos, this.label, this.itemColor, this.radii, this.onPress);
   @override
   _PositionCircleState createState() => new _PositionCircleState();
 }
@@ -455,12 +488,12 @@ class _PositionCircleState extends State<PositionCircle> {
       height: widget.radii * 2,
       child: new RawMaterialButton(
         shape: const CircleBorder(side: BorderSide.none),
-        onPressed: () {},
+        onPressed: () => widget.onPress(),
         fillColor: widget.itemColor,
         splashColor: Colors.green[900],
         child: new Text(
           widget.label,
-         style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ),
     );
