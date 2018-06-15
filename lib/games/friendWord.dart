@@ -184,9 +184,6 @@ class FriendWordState extends State<FriendWord> {
               setState(() {
 //                  arr[index] = dcindex;
                 _statuses[index] = Status.Active;
-                if(_statuses[index] == Status.Active){
-                  arr[index].;
-                }
                 print("status of active after CCCC $_statuses");
                 flag = 1;
                 if (index == point + 1) {
