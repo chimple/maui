@@ -52,6 +52,7 @@ class WordgridState extends State<Wordgrid> {
   List<String> temp = [];
   List<int> tempindex = [];
   List<bool> _visibleflag = [];
+  bool stopdrag = false;
   var cdtemp;
   var progress = 0;
   int endflag = 0;
@@ -134,13 +135,14 @@ class WordgridState extends State<Wordgrid> {
       var cdstart = cdlist[start];
       int eflag = 1;
       _fun(data) {
-            for (var i = 0; i < cdletters.length; i++) {
-              if (data == cdletters[i]) {
-                return false;
-              }
-            }
-            return true;
+        for (var i = 0; i < cdletters.length; i++) {
+          if (data == cdletters[i]) {
+            return false;
+          }
+        }
+        return true;
       }
+
       while (eflag == 1) {
         eflag = 0;
         var p = cdstart.toInt();
@@ -159,7 +161,10 @@ class WordgridState extends State<Wordgrid> {
             cdletters.add((p + 1) * _size + q);
             p++;
             top = 2;
-          } else if (q + 1 < _size && _fun(p * _size + (q + 1)) && rand && top < 2) {
+          } else if (q + 1 < _size &&
+              _fun(p * _size + (q + 1)) &&
+              rand &&
+              top < 2) {
             cdletters.add(p * _size + (q + 1));
             q++;
             top = 1;
@@ -232,19 +237,22 @@ class WordgridState extends State<Wordgrid> {
         offset: offset,
         vflag: vflag,
         onStart: () {
-          setState(() {
-            temp.add(text);
-            tempindex.add(index);
-            _pointssend.add(offset);
-            lastclick = index;
-            _visibleflag[index] = true;
-            _statuses[index] = Status.First;
-            for (var i = 0; i < newletters.length; i++) {
-              if (_statuses[i] == Status.Draggable && index != i) {
-                _statuses[i] = Status.Dragtarget;
+          if (!stopdrag) {
+            setState(() {
+              stopdrag = true;
+              temp.add(text);
+              tempindex.add(index);
+              _pointssend.add(offset);
+              lastclick = index;
+              _visibleflag[index] = true;
+              _statuses[index] = Status.First;
+              for (var i = 0; i < newletters.length; i++) {
+                if (_statuses[i] == Status.Draggable && index != i) {
+                  _statuses[i] = Status.Dragtarget;
+                }
               }
-            }
-          });
+            });
+          }
         },
         onwill: (data) {
           if (data == code && _visibleflag[index] == false) {
@@ -273,7 +281,9 @@ class WordgridState extends State<Wordgrid> {
               });
               return true;
             }
-          } else if (data == code && _visibleflag[index] == true && tempindex.length>1) {
+          } else if (data == code &&
+              _visibleflag[index] == true &&
+              tempindex.length > 1) {
             if (index == tempindex[tempindex.length - 2]) {
               setState(() {
                 _visibleflag[tempindex.last] = false;
@@ -309,9 +319,11 @@ class WordgridState extends State<Wordgrid> {
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
+              widget.onScore((40 - tries) ~/ totalgame);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
+                stopdrag = false;
                 _pointssend = [];
                 _ShakeCells = newletters
                     .map((a) => ShakeCell.InActive)
@@ -324,7 +336,7 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
-            widget.onScore(((40 - tries) ~/ totalgame));
+            widget.onScore((40 - tries) ~/ totalgame);
             widget.onProgress(1.0);
             endflag = 1;
             new Future.delayed(const Duration(milliseconds: 300), () {
@@ -408,6 +420,7 @@ class WordgridState extends State<Wordgrid> {
                     words = '';
                     temp = [];
                     tempindex = [];
+                    stopdrag = false;
                     _pointssend = [];
                     tries = 0;
                   });
@@ -655,7 +668,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           elevation: widget.vflag == true ? 8.0 : 0.0,
                           color: Colors.transparent,
                           child: new UnitButton(
-                            highlighted: widget.vflag == true ? true : false,
+                            highlighted: widget.vflag,
                             text: _displayText,
                             onPress: () => {},
                             unitMode: UnitMode.text,
@@ -669,11 +682,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         widget.tile == ShakeCell.Right
                             ? {}
                             : widget.onCancel(v, g),
-                    maxSimultaneousDrags: 1,        
+                    maxSimultaneousDrags: 1,
                     data: widget.code,
                     feedback: new Container(),
                     child: new UnitButton(
-                      highlighted: widget.vflag == true ? true : false,
+                      highlighted: widget.vflag,
                       text: _displayText,
                       onPress: () => {},
                       unitMode: UnitMode.text,
