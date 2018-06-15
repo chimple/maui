@@ -82,6 +82,7 @@ var temp=0;
    @override
   void initState() {
     super.initState();
+    print("hello this should come first...");
     _initBoard();
   }
 
@@ -252,6 +253,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
   }
    @override
   void didUpdateWidget(Connectdots oldWidget) {
+    print("object...iterartion in connect dots");
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
@@ -323,13 +325,14 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
          else
                 return false;
          }
-          else if(data == code && _visibleflag[index]==true){
+          else if(data == code && _visibleflag[index]==true&&tempindex.length>1){
             if(index==tempindex[tempindex.length-2]){
             setState(() {
                   _visibleflag[tempindex.last] =false;
                   tempindex.removeLast();
                   forAns.removeLast();
-                    tempindex.removeLast();
+                   _pointssend.removeLast();
+                   
                       //  temp.removeLast();
                   lastclick=tempindex.last;
                 });
@@ -458,15 +461,15 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
              print("object....shanking thing is...:$_visibleflag");
              setState(() {
                forAns=[];
-               _pointssend=[];
+             
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
             });
-           }
-         
-                new Future.delayed(const Duration(milliseconds: 800), () {
+             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
+                 
                 _ShakeCells = _letters
+                
                     .map((a) => ShakeCell.InActive)
                     .toList(growable: false);
                 _statuses = _letters
@@ -474,15 +477,30 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
                     .toList(growable: false);
                 _visibleflag =
                     _letters.map((a) => false).toList(growable: false);
+                     _pointssend=[];
               });
-            }); // _ShakeCells = _letters
+            });
+           }
+         
+            //     new Future.delayed(const Duration(milliseconds: 800), () {
+            //   setState(() {
+            //     _ShakeCells = _letters
+            //         .map((a) => ShakeCell.InActive)
+            //         .toList(growable: false);
+            //     _statuses = _letters
+            //         .map((a) => Status.Draggable)
+            //         .toList(growable: false);
+            //     _visibleflag =
+            //         _letters.map((a) => false).toList(growable: false);
+            //   });
+            // }); // _ShakeCells = _letters
                 //     .map((a) => ShakeCell.InActive)
                 //     .toList(growable: false);
-                _statuses = _letters
-                    .map((a) => Status.Draggable)
-                    .toList(growable: false);
-                _visibleflag =
-                    _letters.map((a) => false).toList(growable: false);
+                // _statuses = _letters
+                //     .map((a) => Status.Draggable)
+                //     .toList(growable: false);
+                // _visibleflag =
+                //     _letters.map((a) => false).toList(growable: false);
               });
 
         
@@ -500,6 +518,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
     print("MyTableState.build");
        
  MediaQueryData media = MediaQuery.of(context);
+ print("hello data coming or not in widgets is $_letters");
 
     if (_isLoading) {
       return new SizedBox(
@@ -838,6 +857,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                             : widget.onCancel(v, g),
                     data: widget.code,
                     feedback: new Container(),
+                    maxSimultaneousDrags: 1,
                     child: new UnitButton(
                       highlighted: widget.vflag == true ? true : false,
                       text: _displayText,

@@ -353,8 +353,7 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   ]);
 }
 
-Future<Tuple2<List<String>, String>> fetchCirclewrdData(
-    int categoryId) async {
+Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
   switch (0) {
@@ -552,4 +551,41 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
       break;
   }
   return null;
+}
+
+Future<Map<String, Map<String, List<String>>>> fetchClueGame(
+    int categoryId) async {
+  var completer = Completer<Map<String, Map<String, List<String>>>>();
+  Map<String, List<String>> drink = {
+    'water': ['wa', 'ter'],
+    'milk': ['mi', 'lk'],
+    'coke': ['co', 'ke'],
+    'beer': ['be', 'er'],
+  };
+  Map<String, List<String>> travel = {
+    'bus': ['bu', 's'],
+    'car': ['ca', 'r'],
+    'train': ['tr', 'ain'],
+    'aeroplane': ['aero', 'plane'],
+  };
+  Map<String, List<String>> redfruit = {
+    'apple': ['ap', 'ple'],
+    'cheery': ['che', 'ery'],
+    'litchi': ['lit', 'chi'],
+    'tomoto': ['tom', 'oto'],
+  };
+  Map<String, List<String>> blackpet = {
+    'cat': ['ca', 't'],
+    'dog': ['do', 'g'],
+    'panda': ['pa', 'nda'],
+    'cow': ['co', 'w'],
+  };
+  Map<String, Map<String, List<String>>> value = {
+    'drink': drink,
+    'travel': travel,
+    'redfruit': redfruit,
+    'blackpet': blackpet
+  };
+  completer.complete(value);
+  return completer.future;
 }

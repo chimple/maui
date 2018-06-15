@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data.dart';
 import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -7,6 +6,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/repos/game_data.dart';
 
 class ClueGame extends StatefulWidget {
   Function onScore;
@@ -43,23 +43,34 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  List<String> _category;
-  List<String> _categoryup;
-  List<String> _categorydown;
-  List<String> _holdwords;
-  List<String> _redfruit;
-  List<String> _travel;
-  List<String> _drink;
-  List<String> _blackpet;
+  List<String> _categoryup=[];
+  List<String> _categorydown=[];
+  List<String> categoryName = [];
+  List<String> listOfThings = [];
+  List<String> listOfSyllables =[];
+   bool _isLoading = true;
+  Map<String, List<String>> data1;
+  Map<String, Map<String, List<String>>> data;
+  
 
-  void _initClueGame() {
-    _category = ['Red Fruit', 'Travel', 'Drink', 'Black Pet'];
-    _categoryup = ['Red Fruit', 'Travel'];
-    _categorydown = ['Drink', 'Black Pet'];
-    _redfruit = ['apple', 'cheery', 'stawarrey', 'tomoto'];
-    _travel = ['bus', 'car', 'train', 'aeroplane'];
-    _drink = ['milk', 'water', 'beer', 'wine'];
-    _blackpet = ['cat', 'dog', 'panda', 'cow'];
+  void _initClueGame() async{
+     setState(() => _isLoading = true);
+      data = await fetchClueGame(widget.gameCategoryId);
+      data.forEach((k, data1) {
+      categoryName.add(k);
+       data1.forEach((a, list) {
+        listOfThings.add(a);
+        list.forEach((c) {
+          listOfSyllables.add(c);
+        });
+      });
+    });
+    _categoryup = categoryName.sublist(0, 2);
+    _categorydown = categoryName.sublist(2, 4);
+     print('categoryName is $categoryName');
+    print('listOfThings is $listOfThings');
+    print('listOfSyllables is $listOfSyllables');
+    setState(() => _isLoading = false);
   }
 
   var keys = 0;
@@ -68,10 +79,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
   void _validate() {
     // setState(()  {
-    if (_result == _redfruit[0] ||
-        (_result == _redfruit[1]) ||
-        (_result == _redfruit[2]) ||
-        (_result == _redfruit[3])) {
+    if (_result == listOfThings.sublist(0, 3).first) {
       setState(() {
         _result = 'you Type Red Fruit';
       });
@@ -84,10 +92,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
         controller.stop();
       });
-    } else if (_result == _travel[0] ||
-        (_result == _travel[1]) ||
-        (_result == _travel[2]) ||
-        (_result == _travel[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type Travel';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -96,10 +101,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (_result == _drink[0] ||
-        (_result == _drink[1]) ||
-        (_result == _drink[2]) ||
-        (_result == _drink[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type Drink';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -108,10 +110,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (_result == _blackpet[0] ||
-        (_result == _blackpet[1]) ||
-        (_result == _blackpet[2]) ||
-        (_result == _blackpet[3])) {
+    } else if (_result == listOfThings.sublist(0, 3).first) {
       _result = 'you Type black Pet';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -233,8 +232,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         final hPadding = pow(constraints.maxWidth / 150.0, 2);
         final vPadding = pow(constraints.maxHeight / 150.0, 2);
         double maxWidth = 0.0, maxHeight = 0.0;
-        final maxChars = (_category != null
-            ? _category.fold(
+        final maxChars = (categoryName != null
+            ? categoryName.fold(
                 1,
                 (prev, element) =>
                     element.length > prev ? element.length : prev)
@@ -295,7 +294,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             child: new ResponsiveGridView(
               rows: 1,
               cols: 1,
-              children: _words
+              children: listOfSyllables
                   .map((e) =>buildCircle(context, e, j,maxWidth,maxHeight))
                   .toList(growable: false),
             ),
@@ -351,7 +350,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             child: new ResponsiveGridView(
               rows: 1,
               cols: 1,
-              children: _words
+              children: listOfSyllables
                   .map((e) => buildCircle(context, e, j,maxWidth,maxHeight))
                   .toList(growable: false),
             ),
@@ -368,7 +367,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         text: text,
          maxwidth:maxW,
         maxheight:maxH,
-      //  key: new ValueKey<int>(index),
         onPress: () {
           setData(text);
           print("asdd");
@@ -382,9 +380,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     });
   }
 
-  List _words = [
-      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
-    int wordsIndex = 0;
+  int wordsIndex = 0;
   int j = 0;
 }
 
@@ -410,19 +406,11 @@ class _CircleState extends State<Circle> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    // double circleSize = orientation == Orientation.portrait
-    //     ? MediaQuery.of(context).size.width * 0.7
-    //     : MediaQuery.of(context).size.height * 0.7;
     double ht =widget.maxheight;
     double wd = widget.maxwidth;
     double circleSize = ht+wd;   
     double bigRadius = circleSize / 2;
     double smallRadius = (bigRadius) * 0.15;
-    MediaQueryData media = MediaQuery.of(context);
-    // List _words = [
-    //   'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
-    // int wordsIndex = 0;
     List<Widget> widgets = new List();
     widgets.add(new Container(
         width: circleSize,
@@ -452,10 +440,7 @@ class _CircleState extends State<Circle> {
 
     return new Center(child: new Stack(children: widgets));
   }
-
-  //it calculates points on circle
-  //these points are centers for small circles
-  List<Offset> calculateOffsets(
+    List<Offset> calculateOffsets(
       double circleRadii, Offset circleCenter, int amount) {
     double angle = 2 * pi / amount;
     double alpha = 300.0;
