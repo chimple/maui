@@ -589,3 +589,15 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   completer.complete(value);
   return completer.future;
 }
+Future <Tuple3<String,List<String>,List<String>>> fetchPictureSentenceData(int categoryId) async{
+
+ String sentence1 = "MOUNT EVEREST is the highest _ in the _";
+ //String sentence2 = "Today is_ ";
+ List<String> answer = ['mountain','world'];
+ List<String> option =['mountain','world','chair','home'];
+ return new Tuple3(
+   sentence1, 
+   answer,
+    option);
+
+}
