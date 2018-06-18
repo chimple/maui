@@ -56,6 +56,8 @@ class MyFillnumberState extends State<Fillnumber> {
       z = 3,
       flag=0,
       count1 = 0;
+      int tries = 0;
+      int totalgame = 7;
 List<int> tempindex = [];
   List<String> num3 = [];
   final int _size = 4;
@@ -130,6 +132,7 @@ List<String> Ssum=[];
     }
     Ansr = Ansum;
     _val2.removeRange(0, _val2.length);
+
   }
 
   @override
@@ -256,9 +259,10 @@ List<String> Ssum=[];
                       ssum = '$ssum' + '=$sum';
                        _pointssend.removeRange(0, _pointssend.length);
                       new Future.delayed(const Duration(milliseconds: 250), () {
-                        widget.onScore(1);
+                       widget.onScore(((40 - tries) ~/ totalgame));
+            
                          count1=count1+1;
-                        widget.onProgress((count1) /(7));
+                        widget.onProgress((count1) /(9));
                        
                         for (var i = 0; i < _Index.length; i++) {
                           _letters[_Index[i]] = null;
@@ -284,6 +288,7 @@ List<String> Ssum=[];
                         _letters.removeWhere((value) => value == null);
                         for (var i = 0; i < count; i++) {
                           _letters.add(null);
+                          // _letters.insert(0, null);
                         }
                         print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
@@ -291,7 +296,7 @@ List<String> Ssum=[];
 
                         Ansum = 0;
                         _val2 = _letters.sublist(0, z);
-                        z++;
+                       z= z+count;
                         print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
                         _val2.forEach((e) {
                           if (e == null) {}
@@ -307,7 +312,7 @@ List<String> Ssum=[];
                         print("thhhiiiiiiisssss isss shanthuuuu$_val2");
                         Ansr = Ansum;
 
-                        count = 0;
+                        // count = 0;
                         // _statuses = _copyVal
                         //     .map((a) => Status.Active)
                         //     .toList(growable: false);
@@ -353,6 +358,7 @@ List<String> Ssum=[];
                     }
                     else{
                        setState(() {
+                          tries += 5;
                clickAns=[];
                _pointssend=[];
               for (var i = 0; i < _visibleflag.length; i++)
