@@ -591,6 +591,7 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
 }
 Future <Tuple3<String,List<String>,List<String>>> fetchPictureSentenceData(int categoryId) async{
 
+ String sentence1 = "Mount Everest is the highest ________ in the _____ .";
  //String sentence2 = "Today is_ ";
  List<String> answer = ['mountain','world'];
  List<String> option =['mountain','world','chair','ball'];
