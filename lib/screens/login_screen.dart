@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-    new UserRepo().getUsers().then((users) {
+    new UserRepo().getLocalUsers().then((users) {
       setState(() {
         _users = users;
         _isLoading = false;

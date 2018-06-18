@@ -39,7 +39,6 @@ class ChatScreenState extends State<ChatScreen> {
   List<dynamic> _messages;
   static final chatMessageType = 'chat';
   bool _isLoading = true;
-  List<int> memoryImage;
 
   @override
   void initState() {
@@ -48,11 +47,6 @@ class ChatScreenState extends State<ChatScreen> {
         ? 'chat_${widget.friendId}_${widget.myId}'
         : 'chat_${widget.myId}_${widget.friendId}';
     print(chatId);
-    try {
-      memoryImage = base64.decode(widget.friendImageUrl);
-    } catch (e) {
-      print(e);
-    }
     _initMessages();
 //    _reference = FirebaseDatabase.instance.reference().child(chatId);
   }
@@ -116,8 +110,7 @@ class ChatScreenState extends State<ChatScreen> {
                         : ChatMessage(
                             animation: animation,
                             side: Side.right,
-                            imageMemory: memoryImage,
-                            isFile: false,
+                            imageFile: widget.friendImageUrl,
                             child: new Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(message['message'],
@@ -204,7 +197,8 @@ class ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
 
-    Flores().addMessage(widget.myId, widget.friendId, chatMessageType, text);
+    Flores().addMessage(
+        widget.myId, widget.friendId, chatMessageType, text, true, '');
 //    final index = _messages.length;
     listKey.currentState.insertItem(0);
     _messages.insert(0, <String, String>{
