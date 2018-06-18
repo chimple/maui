@@ -18,7 +18,6 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
 
-String sentence1 = "MOUNT EVEREST is the highest";
 String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
@@ -26,7 +25,7 @@ class PictureSentence extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
-   int gameCategoryId;
+  int gameCategoryId;
   GameConfig gameConfig;
   bool isRotated;
 
@@ -51,11 +50,13 @@ class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
   int _size = 2;
+  int index = 0;
   // String questionText;
-  
-  List<String> ans =[];
+
+  List<String> ans = [];
   List<String> choice = [];
   List<Status> _statuses = [];
+  String sentence1;
   bool isCorrect;
   int scoretrack = 0;
 
@@ -64,14 +65,14 @@ class PictureSentenceState extends State<PictureSentence> {
     super.initState();
     _initBoard();
   }
-Tuple3<String,List<String>,List<String>> picturedata;
+
+  Tuple3<String, List<String>, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-    
-    picturedata =
-        await fetchPictureSentenceData(widget.gameCategoryId);
-        print(" fectched data  >>>> $picturedata");
-    
+
+    picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
+    print(" fectched data  >>>> $picturedata");
+    sentence1 = picturedata.item1;
     ans = picturedata.item2;
     choice = picturedata.item3;
     // ans = _allques.item2;
@@ -102,10 +103,10 @@ Tuple3<String,List<String>,List<String>> picturedata;
         unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
-        // ans: this.ans,
+        ans: this.ans[0],
         keys: keys++,
         onPress: () {
-          if (text == ans) {
+          if (text == ans[0]) {
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
@@ -130,13 +131,39 @@ Tuple3<String,List<String>,List<String>> picturedata;
         });
   }
 
+  Widget sentenceLayout(String sentence) {
+    var space = new Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: new Container(
+          color: Colors.grey,
+          height: 40.0,
+          width: 100.0,
+          child: new FlatButton(
+            child: const Text(""),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  child: new FractionallySizedBox(
+                      heightFactor: 0.5,
+                      widthFactor: 0.8,
+                      child: new PictureCard(text: "widget.text")));
+            },
+          ),
+        ));
+
+    index = sentence.indexOf("_");
+    String subString = sentence.substring(0, index);
+    print("subString >>>>> $subString");
+
+    return new Text(subString);
+  }
+
   @override
   void didUpdateWidget(PictureSentence oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-     
     }
   }
 
@@ -183,74 +210,100 @@ Tuple3<String,List<String>,List<String>> picturedata;
           new Expanded(
             flex: 1,
             child: new Material(
-                color: Theme.of(context).accentColor,
-                elevation: 4.0,
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    new Text(sentence1,
-                        softWrap: true,
-                        style: new TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 40.0)),
-                     
-                   
-                    new Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Container(
-                    child: new FlatButton(
+              color: Theme.of(context).accentColor,
+              elevation: 4.0,
+              child: new Stack(
+                children: <Widget>[
+                  new FlatButton(
+                    child: new Container(
                       child: const Text(""),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: new FractionallySizedBox(
-                                heightFactor: 0.5,
-                                widthFactor: 0.8,
-                                child:
-                                    new PictureCard(text: "widget.text")));
-                      },
                     ),
-                    color: Colors.grey,
-                    height: 40.0,
-                    width: 100.0,
-                      ),
-                    ),
-                    new Text(
-                      sentence2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.clip,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          child: new FractionallySizedBox(
+                              heightFactor: 0.5,
+                              widthFactor: 0.8,
+                              child: new PictureCard(text: "widget.text")));
+                    },
+                  ),
+                   new Text(sentence1,
+                      softWrap: true,
                       style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                      color: Colors.black),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Container(
-                    child: new FlatButton(
-                      child: const Text(""),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: new FractionallySizedBox(
-                                heightFactor: 0.5,
-                                widthFactor: 0.8,
-                                child:
-                                    new PictureCard(text: "widget.text")));
-                      },
-                    ),
-                    color: Colors.grey,
-                    height: 40.0,
-                    width: 100.0,
-                      ),
-                    ),
-                  ],
-                )),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 40.0)),
+                ],
+              ),
+
+              // child:  new (
+              //  child:  sentenceLayout( sentence1)
+              // )
+              // // child: new Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: <Widget>[
+              //     new Text(sentence1,
+              //         softWrap: true,
+              //         style: new TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             color: Colors.black,
+              //             fontSize: 40.0)),
+              //     new Padding(
+              //       padding: const EdgeInsets.all(4.0),
+              //       child: new Container(
+              //         height: 40.0,
+              //         width: 100.0,
+              //         color: Colors.grey,
+              //         child: new FlatButton(
+              //           child: const Text(""),
+              //           onPressed: () {
+              //             showDialog(
+              //                 context: context,
+              //                 child: new FractionallySizedBox(
+              //                     heightFactor: 0.5,
+              //                     widthFactor: 0.8,
+              //                     child:
+              //                         new PictureCard(text: "widget.text")));
+              //           },
+              //         ),
+              //       ),
+              //     ),
+              //     new Text(
+              //       sentence2,
+              //       textAlign: TextAlign.center,
+              //       overflow: TextOverflow.clip,
+              //       style: new TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 40.0,
+              //           color: Colors.black),
+              //     ),
+              //     new Padding(
+              //       padding: const EdgeInsets.all(4.0),
+              //       child: new Container(
+              //         child: new FlatButton(
+              //           child: const Text(""),
+              //           onPressed: () {
+              //             showDialog(
+              //                 context: context,
+              //                 child: new FractionallySizedBox(
+              //                     heightFactor: 0.5,
+              //                     widthFactor: 0.8,
+              //                     child:
+              //                         new PictureCard(text: "widget.text")));
+              //           },
+              //         ),
+              //         color: Colors.grey,
+              //         height: 40.0,
+              //         width: 100.0,
+              //       ),
+              //     ),
+              //   ],
+              // )
+            ),
           ),
           new Expanded(
-              flex: 1,
+              flex: 2,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,
