@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -109,8 +110,7 @@ class ChatScreenState extends State<ChatScreen> {
                         : ChatMessage(
                             animation: animation,
                             side: Side.right,
-                            imageUrl: widget.friendImageUrl,
-                            isFile: false,
+                            imageFile: widget.friendImageUrl,
                             child: new Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(message['message'],
@@ -197,7 +197,8 @@ class ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
 
-    Flores().addMessage(widget.myId, widget.friendId, chatMessageType, text);
+    Flores().addMessage(
+        widget.myId, widget.friendId, chatMessageType, text, true, '');
 //    final index = _messages.length;
     listKey.currentState.insertItem(0);
     _messages.insert(0, <String, String>{
