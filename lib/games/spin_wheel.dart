@@ -2,20 +2,22 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttery/gestures.dart';
+import 'package:maui/components/shaker.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
-final Color GRADIENT_TOP = const Color(0xFFF5F5F5);
-final Color GRADIENT_BOTTOM = const Color(0xFFE8E8E8);
+final Color GRADIENT_TOP = const Color(0xFFe4001b);
+final Color GRADIENT_BOTTOM = const Color(0xFFc00040);
 
 final Color GRADIENT_TOP1 = const Color(0xFFF5F5F5);
 final Color GRADIENT_BOTTOM1 = const Color(0xFFE8E8E8);
 
 class WheelFunction {
   static void rotationDirection(
-      double dragStart, double dragEnd, double antiClock, double clockWise) {
-    print("angle Diffe::$antiClock");
+      double dragStart, double dragEnd, double counterClock, double clockWise) {
+    print("angle Diffe::$counterClock");
   }
 }
 
@@ -41,10 +43,7 @@ class SpinWheel extends StatefulWidget {
   _SpinWheelState createState() => new _SpinWheelState();
 }
 
-class _SpinWheelState extends State<SpinWheel> {
-  Animation animation;
-  AnimationController controller;
-
+class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   List<int> _wheelColor = [
     0XFFFF7676,
     0XFFEDC23B,
@@ -65,7 +64,7 @@ class _SpinWheelState extends State<SpinWheel> {
     0XFFDD6154,
   ];
   List<String> _smallerCircleData = [
-    ' 1',
+    '1',
     '3',
     '7',
     '19',
@@ -94,8 +93,13 @@ class _SpinWheelState extends State<SpinWheel> {
     false,
     false,
     false,
+    false,
+    false,
+    false,
     false
   ];
+  Animation shakeAnimate, noAnimation, animatoin;
+  AnimationController controller, controller1;
 
   double rotationPercent = 0.0, rotationPercent1 = 0.0, angleDiff;
   Duration selectedTime, startDragTime;
@@ -113,7 +117,8 @@ class _SpinWheelState extends State<SpinWheel> {
       dragUpdate = 0.0,
       _clockWisel,
       _endAngle,
-      _angleDiff;
+      _angleDiff,
+      _constAngle;
   int _indexOfContainerData = 0;
 
   final GlobalKey<AnimatedCircularChartState> _chartKey =
@@ -121,6 +126,23 @@ class _SpinWheelState extends State<SpinWheel> {
 
   @override
   void initState() {
+    super.initState();
+    controller1 = new AnimationController(
+        duration: Duration(milliseconds: 300), vsync: this);
+    controller = new AnimationController(
+        duration: Duration(milliseconds: 100), vsync: this);
+    shakeAnimate = new Tween(begin: -2.0, end: 2.0).animate(controller);
+    noAnimation = new Tween(begin: -0.0, end: 0.0).animate(controller);
+    animatoin = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
+    controller1.addStatusListener((status) {});
+    controller1.forward();
+    _initBoard();
+  }
+
+  _initBoard() {
+    for (int i = 0; i < _slice.length; i++) {
+      _slice[i] = false;
+    }
     setState(() {
       rotationPercent = 0.0;
       rotationPercent1 = 0.0;
@@ -130,11 +152,23 @@ class _SpinWheelState extends State<SpinWheel> {
     for (int i = 0; i < _smallerCircleData.length; i++) {
       print("");
     }
+    setState(() {
+      ///  List<CircularStackEntry> _data = _generateChartData(100.0);
+      //_chartKey.currentState.updateData(_data);
+    });
+    _indexOfContainerData = _smallerCircleData.indexOf(_containerData[0]);
+    _slice[_indexOfContainerData] = true;
+    print("index of sllice active: $_indexOfContainerData");
+  }
 
-    super.initState();
-    int _index = _smallerCircleData.indexOf(_containerData[0]);
-    _slice[_index] = true;
-    print("index of sllice active: $_index");
+  @override
+  void didUpdateWidget(SpinWheel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      // List<CircularStackEntry> data = _generateChartData(1.0);
+      // _chartKey.currentState.updateData(data);
+    }
   }
 
   _onDragStart(PolarCoord cord) {
@@ -148,14 +182,10 @@ class _SpinWheelState extends State<SpinWheel> {
 
   _onDragUpdate(PolarCoord dragCord) {
     _endAngle = dragCord;
-
     onDragCordUpdated = dragCord;
     if (onDragCordStarted != null) {
       angleDiff = onDragCordStarted.angle - dragCord.angle;
       angleDiff = angleDiff >= 0 ? angleDiff : angleDiff + (2 * pi);
-
-      // _clockWisel = onDragCordStarted.angle - dragCord.angle;
-      // _clockWisel = angleDiff >= 0 ? _clockWisel : _clockWisel + (2 * pi);
       _angleDiffAntiCockWise = -dragCord.angle + onDragCordStarted.angle;
 
       _angleDiffAntiCockWise = _angleDiffAntiCockWise <= 0
@@ -163,15 +193,10 @@ class _SpinWheelState extends State<SpinWheel> {
           : (_angleDiffAntiCockWise - (2 * pi));
 
       _angleDiff = angleDiff;
-      //final anglePercent = angleDiff / (2 * pi);
-      // _angleDiff = onDragCordStarted.angle <= 0
-      //     ? -onDragCordStarted.angle + angleDiff
-      //     : onDragCordStarted.angle;
 
       setState(() {
         rotationPercent = angleDiff + dragEnd; //angleDiff + dragEnd;
       });
-      //dragUpdate = angleDiff;
     }
     _angleOnDragEnd = (dragCord.angle / (2 * pi) * 360);
   }
@@ -187,6 +212,10 @@ class _SpinWheelState extends State<SpinWheel> {
     compareTheangle();
   }
 
+  void _decreaseAngle(double _angle) {
+    _constAngle = (_angle / (2 * pi) * 360);
+  }
+
   void compareTheangle() {
     //0
     if (_angleDiff >= 20.0 && _angleDiff <= 30.0 && _slice[0] == true) {
@@ -198,6 +227,7 @@ class _SpinWheelState extends State<SpinWheel> {
         rotationPercent = .375;
       });
       _slice[0] = false;
+      _decreaseAngle(rotationPercent);
       _changeData();
     } //1
     else if (_angleDiff >= 61.0 && _angleDiff <= 79.0 && _slice[1] == true) {
@@ -209,6 +239,7 @@ class _SpinWheelState extends State<SpinWheel> {
         rotationPercent = 1.125;
       });
       _slice[1] = false;
+
       _changeData();
     }
     //2
@@ -282,56 +313,67 @@ class _SpinWheelState extends State<SpinWheel> {
       });
       _slice[7] = false;
       _changeData();
+    } else {
+      _changeData();
+      _shake();
+      new Future.delayed(Duration(milliseconds: 500), () {
+        setState(() {
+          doShake = false;
+          _slice[_indexOfContainerData] = false;
+        });
+      });
     }
+  }
+
+  void _shake() {
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      } else if (status == AnimationStatus.completed) {
+        controller.reverse();
+      }
+    });
+    controller.forward();
+    doShake = true;
   }
 
   void _changeData() {
-
     setState(() {
       _indexOfContainerData++;
-      //_slice[_indexOfContainerData] = true;
-      List<CircularStackEntry> data = _generateChartData(100.0);
-      _chartKey.currentState.updateData(data);
+      if (_indexOfContainerData == 8) {
+        _indexOfContainerData = 0;
+      }
+      _slice[_smallerCircleData
+          .indexOf(_containerData[_indexOfContainerData])] = true;
+      List<CircularStackEntry> _data = _generateChartData(100.0);
+      _chartKey.currentState.updateData(_data);
     });
-    if (_indexOfContainerData == 5) {
-      widget.onEnd();
+
+    new Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        dragEnd = 0.0;
+        rotationPercent = 0.0;
+        angleDiff = 0.0;
+        _chartKey.currentState.updateData(data);
+      });
+    });
+    print("slice no::$_indexOfContainerData");
+    for (int i = 0; i < _smallerCircleData.length; i++) {
+      if (_slice[i] == true) {
+        _countGameEnd++;
+      }
     }
   }
-  // _onDragStart1(PolarCoord cord) {
-  //   //print("Drag Start here:: $cord");
-  //   onDragCordStarted = cord;
-  //   startDragTime = currentTime;
-  //   setState(() {
-  //     rotationPercent1 = dragEnd1;
-  //   });
-  // }
 
-  // _onDragUpdate1(PolarCoord dragCord) {
-  //   // print("On Drag Start here:: $dragCord");
-  //   if (onDragCordStarted != null) {
-  //     var angleDiff = onDragCordStarted.angle - dragCord.angle;
-  //     angleDiff = angleDiff >= 0 ? angleDiff : angleDiff + (2 * pi);
-  //     final anglePercent = angleDiff / (2 * pi);
-  //     final timeDiffInSec = (anglePercent * maxTime.inSeconds).round();
-  //     selectedTime =
-  //         new Duration(seconds: startDragTime.inSeconds + timeDiffInSec);
+  int _countGameEnd = 0;
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
-  //     setState(() {
-  //       //new TickerFuture.complete();
-  //       rotationPercent1 = angleDiff + dragEnd1;
-  //     });
-  //   }
-  // }
-
-  // _onDragEnd1() {
-  //   setState(() {
-  //     dragEnd1 = rotationPercent1;
-  //   });
-  // }
   List<CircularStackEntry> data;
   List<CircularStackEntry> _generateChartData(double value) {
-    // _wheelColor[0] = 0XFF77DB65;
-    //for(int i=0;i<8;i++)
     data = [
       new CircularStackEntry(
         <CircularSegmentEntry>[
@@ -359,13 +401,16 @@ class _SpinWheelState extends State<SpinWheel> {
     return data;
   }
 
+  bool doShake = true;
   @override
   Widget build(BuildContext context) {
     double _sizeOfWheel;
+    Size size2= MediaQuery.of(context).size;;
     Size size1 = MediaQuery.of(context).size;
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLanscape = orientation == Orientation.landscape;
     size1 = new Size(size1.height * .6, size1.height * .6);
+    size2= new Size(size2.height * .6+15.0, size2.height * .6+15.0);
     double _constant;
     return new LayoutBuilder(builder: (context, constraints) {
       final bool isPortrait = orientation == Orientation.portrait;
@@ -391,14 +436,34 @@ class _SpinWheelState extends State<SpinWheel> {
             new Expanded(
               flex: 2,
               child: new Container(
-                decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
+                width: size1.width,
+                decoration: BoxDecoration(
+                  gradient:
+                      new LinearGradient(colors: [Colors.pink, Colors.red]),
+                  color: Colors.red,
                 ),
-                // width: size1.width*.4,
-                // height:size1.width*.4,
-                child: new Center(
-                    child: new Text(_containerData[_indexOfContainerData])),
+                child: new Shake(
+                  animation: doShake == true ? shakeAnimate : noAnimation,
+                  child: new Container(
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green,
+                        gradient: new LinearGradient(
+                          tileMode: TileMode.mirror,
+                          colors: [Colors.blue, Colors.green],
+                          //begin:
+                        )),
+                    child: new Center(
+                        child: new Text(
+                      _containerData[_indexOfContainerData],
+                      style: new TextStyle(
+                        fontSize: 30.0,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.white,
+                      ),
+                    )),
+                  ),
+                ),
               ),
             ),
             new Expanded(
@@ -410,45 +475,71 @@ class _SpinWheelState extends State<SpinWheel> {
               child: new Stack(
                 children: <Widget>[
                   new Center(
+                    child: new AnimatedCircularChart(
+                      size: size2,
+                      duration: Duration(milliseconds: 1),
+                      initialChartData: _generateChartData(100.0),
+                      chartType: CircularChartType.Radial,
+                      edgeStyle: SegmentEdgeStyle.round,
+                    ),
+                  ),
+                  new Center(
                     child: new Transform(
                       // transformHitTests: ,
                       origin: new Offset(0.0, 0.0),
                       transform: new Matrix4.rotationZ(-rotationPercent),
                       alignment: Alignment.center,
-                      child: new AnimatedCircularChart(
-                          duration: Duration(milliseconds: 1),
-                          // percentageValues: false,
-                          key: _chartKey,
-                          edgeStyle: SegmentEdgeStyle.flat,
-                          size: size1,
-                          initialChartData: _generateChartData(100.0),
-                          chartType: CircularChartType.Pie),
+                      child: new ScaleTransition(
+                        scale: animatoin,
+                        child: new AnimatedCircularChart(
+                            duration: Duration(milliseconds: 1),
+                            // percentageValues: false,
+                            key: _chartKey,
+                            edgeStyle: SegmentEdgeStyle.flat,
+                            size: size1,
+                            initialChartData: _generateChartData(100.0),
+                            chartType: CircularChartType.Pie),
+                      ),
                     ),
                   ),
                   new Center(
-                      child: new Container(
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      //color: Colors.red
+                      child: new ScaleTransition(
+                    scale: animatoin,
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        //color: Colors.red
+                      ),
+                      height: size1.width * .8,
+                      width: size1.width * .8,
+                      child: new RadialDragGestureDetector(
+                          onRadialDragStart: _onDragStart,
+                          onRadialDragUpdate: _onDragUpdate,
+                          onRadialDragEnd: _onDragEnd,
+                          child: new Container(
+                              // height: size1.width*.80,
+                              // width: size1.width*.80,
+                              child: new CustomPaint(
+                            painter: OuterCircle(
+                              ticksPerSection: rotationPercent,
+                              sizePaint: _constant,
+                              data: _smallerCircleData,
+                              //sizeOfWheel:
+                            ),
+                          ))),
                     ),
-                    height: size1.width * .8,
-                    width: size1.width * .8,
-                    child: new RadialDragGestureDetector(
-                        onRadialDragStart: _onDragStart,
-                        onRadialDragUpdate: _onDragUpdate,
-                        onRadialDragEnd: _onDragEnd,
-                        child: new Container(
-                            // height: size1.width*.80,
-                            // width: size1.width*.80,
-                            child: new CustomPaint(
-                          painter: OuterCircle(
-                            ticksPerSection: rotationPercent,
-                            sizePaint: _constant,
-                            data: _smallerCircleData,
-                            //sizeOfWheel:
-                          ),
-                        ))),
                   )),
+                  new Center(
+                    child: new Container(
+                      height: size1.width,
+                      width: size1.width,
+                      child: new Center(
+                        child: new CustomPaint(
+                          painter: ArrowPainter(),
+                        ),
+                      ),
+                    ),
+                  ),
                   // new Center(
                   //   child: new Transform(
                   //     transform: new Matrix4.rotationZ(-rotationPercent1),
