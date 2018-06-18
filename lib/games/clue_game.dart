@@ -163,12 +163,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       keys: keys++,
     );
   }
-
+  int len;
   Widget answer(String output) {
+     print('result length is anser is ${_result.length}');
+    print('lenghth is $len');
+    print('output  is $output');
+    print('list is $lengthofwords');
+    print('list is ${lengthofwords.length}');
     void remove() {
       setState(() {
         if (_result.length > 0)
-          _result = _result.substring(0, _result.length - 1);
+          _result = _result.substring(0, _result.length - lengthofwords.last);
+            lengthofwords.removeLast();
       });
     }
 
@@ -362,10 +368,13 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         maxheight:maxH,
         onPress: setData); 
   }
-
+  List<int> lengthofwords = [];
   void setData(String a) {
-    print("call here comming");
+   print("string is $a");
+    print("string length is ${a.length}");
     setState(() {
+       len = a.length;
+      lengthofwords.add(len);
       _result = _result + a;
     });
   }
