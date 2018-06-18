@@ -49,6 +49,8 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   int count1 = 0;
   int flag = 0;
   var _currentIndex = 0;
+  var _currentIndex1 = 0;
+  var _currentIndex2 = 0;
 
   AnimationController animation;
 
@@ -66,7 +68,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   void _initBoard() async {
-    _currentIndex = 0;
     setState(() => _isLoading = true);
     data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     data1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
@@ -75,7 +76,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   @override
   void didUpdateWidget(Dice oldWidget) {
     if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
+      // _initBoard();
     }
   }
 
@@ -134,24 +135,33 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           var userControl = false;
           if (flag == 0 && player == "player1") {
             userControl = true;
+            _currentIndex1++;
           } else if (flag == 1 && player == "player2") {
             userControl = true;
+            _currentIndex2++;
           }
           if (userControl) {
             print({"hurry , you are correct user to access keyboard": player});
             for (i = 0; i < data.length; i++) {
               if (btnVal == sum || btnVal == sub) {
                 _currentIndex++;
-                widget.onScore(1);
+                widget.onScore(2);
                 widget.onProgress(_currentIndex / data.length);
-                // widget.onEnd();
+                if ( _currentIndex1 >= data.length-1 || _currentIndex2 >= data1.length-1) {
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                widget.onEnd();
+              });
+            
+          } 
+          // else {
+          //   widget.onScore(-1);
+          // }
                 resetDice();
                 sum = 0;
                 sub = 0;
 
                 if (flag == 0) {
                   data[index] = '';
-
                   flag = 1;
                 } else {
                   data1[index] = '';

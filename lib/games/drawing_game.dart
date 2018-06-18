@@ -134,37 +134,37 @@ class DrawScreen extends State<Drawing> {
           ),
           // new Container(
           //     width: constraints.maxWidth, height: constraints.maxHeight * 0.1,
-          new Expanded(
-            // flex: 1,
-            child: new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  new Container(
-                      width: constraints.maxWidth * 0.2,
-                      height: constraints.maxWidth * 0.1,
-                      child: new RaisedButton(
-                        child: new Text("Clear"),
-                        color: Colors.blue,
-                        onPressed: _onClear,
-                      )),
-                  new Container(
-                      width: constraints.maxWidth * 0.2,
-                      height: constraints.maxWidth * 0.1,
-                      child: new RaisedButton(
-                        child: new Text("Undo"),
-                        color: Colors.blue,
-                        onPressed: _onUndo,
-                      )),
-                  new Container(
-                      width: constraints.maxWidth * 0.2,
-                      height: constraints.maxWidth * 0.1,
-                      child: new RaisedButton(
-                        child: new Text("Send"),
-                        color: Colors.blue,
-                        onPressed: _onSend,
-                      )),
-                ]),
-          ),
+          // new Expanded(
+          // flex: 1,
+          new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                new Container(
+                    width: constraints.maxWidth * 0.2,
+                    height: constraints.maxWidth * 0.07,
+                    child: new RaisedButton(
+                      child: new Text("Clear"),
+                      color: Colors.blue,
+                      onPressed: _onClear,
+                    )),
+                new Container(
+                    width: constraints.maxWidth * 0.2,
+                    height: constraints.maxWidth * 0.07,
+                    child: new RaisedButton(
+                      child: new Text("Undo"),
+                      color: Colors.blue,
+                      onPressed: _onUndo,
+                    )),
+                new Container(
+                    width: constraints.maxWidth * 0.2,
+                    height: constraints.maxWidth * 0.07,
+                    child: new RaisedButton(
+                      child: new Text("Send"),
+                      color: Colors.blue,
+                      onPressed: _onSend,
+                    )),
+              ]),
+          // ),
           //),
           new FittedBox(
             child: new FittedBox(
@@ -174,8 +174,6 @@ class DrawScreen extends State<Drawing> {
                 width: constraints.maxWidth,
                 height: constraints.maxHeight * 0.5,
                 margin: EdgeInsets.only(top: 5.0),
-
-                // otherwise the logo will be tiny
                 child: new MyDrawPage(_padController,
                     key: new GlobalObjectKey('MyDrawPage')),
                 key: new Key('draw_screen'),
@@ -193,15 +191,13 @@ class DrawScreen extends State<Drawing> {
                     _changed(false, "widt");
                   },
                   child: new Container(
-                    // padding: new EdgeInsets.only(top: 10.0),
-                    // margin: new EdgeInsets.only(top: 8.0),
                     child: new Column(
                       children: <Widget>[
                         new Icon(Icons.comment,
                             color: visibilityColor
                                 ? Colors.grey[400]
                                 : Colors.grey[800],
-                            size: 50.0),
+                            size: constraints.maxWidth * 0.1),
                         new Container(
                           // margin: const EdgeInsets.only(top: 8.0),
                           child: new Text(
@@ -218,7 +214,6 @@ class DrawScreen extends State<Drawing> {
                       ],
                     ),
                   )),
-              // new SizedBox(width: constraints.maxHeight * 0.06,),
               new InkWell(
                   onTap: () {
                     visibilityWidth
@@ -227,17 +222,14 @@ class DrawScreen extends State<Drawing> {
                     _changed(false, "colr");
                   },
                   child: new Container(
-                    // padding: new EdgeInsets.only(top: 10.0),
-                    // margin: new EdgeInsets.only(top: 8.0),
                     child: new Column(
                       children: <Widget>[
                         new Icon(Icons.local_offer,
                             color: visibilityWidth
                                 ? Colors.grey[400]
                                 : Colors.grey[800],
-                            size: 50.0),
+                            size: constraints.maxWidth * 0.1),
                         new Container(
-                          // margin: const EdgeInsets.only(top: 8.0),
                           child: new Text(
                             "Width",
                             style: new TextStyle(
@@ -256,7 +248,6 @@ class DrawScreen extends State<Drawing> {
           ),
           visibilityColor
               ? new Expanded(
-                  // flex: 1,
                   child: new ListView(
                     scrollDirection: Axis.horizontal,
                     children: color_val
@@ -264,11 +255,9 @@ class DrawScreen extends State<Drawing> {
                               child: new Container(
                                 width: 40.0,
                                 height: 40.0,
-                                // key: new Key('Green'),
                                 decoration: new BoxDecoration(
                                     color: new Color(colorValue),
                                     shape: BoxShape.circle),
-                                // child: new Text("$width_val"),
                                 margin: new EdgeInsets.all(5.0),
                                 child: new FlatButton(
                                   onPressed: () => _multiColor(colorValue),
@@ -281,7 +270,6 @@ class DrawScreen extends State<Drawing> {
               : new Container(),
           visibilityWidth
               ? new Expanded(
-                  // flex: 1,
                   child: new ListView(
                     scrollDirection: Axis.horizontal,
                     children: width_val
@@ -295,8 +283,6 @@ class DrawScreen extends State<Drawing> {
                                             'assets/dice_game/1.png')),
                                     color: Colors.white10,
                                     shape: BoxShape.circle),
-
-                                // child: new Text("$width_val"),
                                 margin: new EdgeInsets.all(5.0),
                                 child: new FlatButton(
                                   onPressed: () => _multiWidth(widthValue),
@@ -406,7 +392,7 @@ class DrawScreen extends State<Drawing> {
                                   color: visibilityColor
                                       ? Colors.grey[400]
                                       : Colors.grey[800],
-                                  size: 30.0),
+                                  size: constraints.maxHeight * 0.08),
                               new Container(
                                 // padding: new EdgeInsets.only(top: 10.0),
                                 // margin: const EdgeInsets.only(top: 8.0),
@@ -443,7 +429,7 @@ class DrawScreen extends State<Drawing> {
                                 color: visibilityWidth
                                     ? Colors.grey[400]
                                     : Colors.grey[800],
-                                size: 30.0,
+                                size: constraints.maxHeight * 0.08,
                               ),
                               new Container(
                                 // padding: new EdgeInsets.only(top: 10.0),
