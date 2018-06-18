@@ -474,7 +474,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'bingo':
         playTime = 15000;
-        maxIterations = 2;
+        maxIterations = 1;
         return new Bingo(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
