@@ -13,49 +13,23 @@ class ArrowPainter extends CustomPainter {
   }
 
   @override
+  @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
 
-    final radius = size.height / 2;
-    canvas.translate(size.width / 2, 0.0);
-    print("safsaaaaaaaaaaaaaaa $radius");
-    Rect myRect = const Offset(0.0, 0.0) & const Size(100.0, 110.0);
-
+    final radius = size.width;
+    canvas.translate(radius, radius);
+    ////canvas.rotate(2 * PI * rotationPercent);
+    print("canvas size:: $radius");
     Path path = new Path();
-    path.moveTo(0.0, 0.0);
-    path.lineTo(2 * pi * 100 / 16, 90.0);
-    path.lineTo(-2 * pi * 100 / 16, 90.0);
-    //path.arcTo(myRect, 0.0, 30.0, true);
+    path.moveTo(0.0, -100.0);
+    path.lineTo(10.0, -radius + 5.0);
+    path.lineTo(-10.0, -radius + 5.0);
     path.close();
+
     canvas.drawPath(path, dialArrowPaint);
+    canvas.drawShadow(path, Colors.black, 3.0, false);
 
-    for (var i = 0; i < 16; ++i) {
-      if (i % 2 == 0) {
-        // canvas.drawLine(
-        //   new Offset(0.0, 0.0),
-        //   new Offset(0.0,radius-sizePaint+70),
-        //   tickPaint,
-        // );
-        path.close();
-        canvas.drawPath(path, dialArrowPaint);
-      } else {
-        canvas.save();
-        canvas.translate(-0.0, -((size.width) / 3));
-
-        // imagePainter.image = new Image.asset(
-        //   imagePainter,
-        //   fit: BoxFit.cover,
-        //   scale: .2,
-        //   height: 10.0,
-        //   width: 10.0,
-        // );
-
-        canvas.rotate(2 * pi / 2);
-
-        canvas.restore();
-      }
-      canvas.rotate(2 * pi / 16);
-    }
     canvas.restore();
   }
 
@@ -136,7 +110,7 @@ class OuterCircle extends CustomPainter {
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-ticksPerSection);
-    final radius = size.height / 2;
+    final radius = size.width / 2;
     //const var radiud=size.height / 2;
     Rect myRect = const Offset(0.0, 0.0) & Size(size.width / 2, size.width / 2);
     // print("Outer Container:: $size");
@@ -149,14 +123,14 @@ class OuterCircle extends CustomPainter {
     //path.addArc(myRect, 0.0, 2*pi*16);
 
     path.close();
-    int c=0;
+    int c = 0;
     // canvas.drawPath(path, tickPaint);
     for (var i = 0; i < 16; ++i) {
       final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 0.0),
-          new Offset(0.0, radius),
+          new Offset(0.0, radius - 4.2),
           tickPaint,
         );
 
@@ -166,19 +140,12 @@ class OuterCircle extends CustomPainter {
       } else {
         canvas.save();
         canvas.translate(-0.0, -((size.width) / 3));
-       String s=data[c];
+        String s = data[c];
         textPainter.text = new TextSpan(
           text: s,
           style: textStyle,
         );
         c++;
-        // imagePainter.image = new Image.asset(
-        //   imagePainter,
-        //   fit: BoxFit.cover,
-        //   scale: .2,
-        //   height: 10.0,
-        //   width: 10.0,
-        // );
 
         textPainter.layout();
 

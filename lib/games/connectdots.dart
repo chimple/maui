@@ -54,7 +54,9 @@ List<bool> _visibleflag = [];
    var count6=0;
    var count4=0;
   //var count5=0;
+  bool start =false;
   var count0=0;
+   int totalgame = 2;
   var r;
   var rand;
  var code;
@@ -73,6 +75,7 @@ List<String> _letterex=[];
  List<int> tempindex=[];
 bool _isLoading = true;
 var z=0;
+ int tries = 0;
  int lastclick;
 List<Offset> _pointssend = <Offset>[];
  Tuple2<List<String>, List<String>> consecutive;
@@ -88,7 +91,7 @@ var temp=0;
 
  void _initBoard() async {
   
-
+print("data is seecond");
 
     setState(() => _isLoading = true);
       consecutive= await fetchConsecutiveData(widget.gameCategoryId, 7,9);
@@ -275,9 +278,11 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            vflag: vflag,
            code: code,
            onStart: () {
+             if(!start){
           setState(() {
            print('nikkkkkkkkkkkkkk');
            temp=index;
+           start=true;
            forAns.add(text);
             tempindex.add(index);
            _pointssend.add(offset);
@@ -290,6 +295,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
               }
             }
           });
+             }
         },
         onwill: (data) {
           print('nikkkkkkkkkkkkkk  999');
@@ -412,6 +418,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            print("object both value we have to checking ....${consecutive.item1}.....::");
            int flag=0;
             setState(() {
+              start=false;
               if(forAns.length==consecutive.item1.length){
             for(int i=0;i<forAns.length; i++)
             {
@@ -420,18 +427,21 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            
               }
               else{
-              
+               tries += 5;
                 flag=1;
                 break;
               }
             }}
-            else {flag=1;}
+            else {flag=1;
+            tries += 5;
+            }
             print('flaggggggggggggg     $flag');
              if(flag==0){
              print('on  endddd  ');
              setState(() {
                     
-                                           
+                       widget.onScore(((40 - tries) ~/ totalgame));
+            widget.onProgress(1.0);                      
     count1=0;
    forAns=[];
     count3=0;
@@ -449,7 +459,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 
                  new Future.delayed(const Duration(milliseconds: 250),
                             () {
-                        
+                         start=false;
                           widget.onEnd();
                          
                         });
@@ -527,10 +537,13 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
         child: new CircularProgressIndicator(),
       );
     }
-
+   print("how head to head is working");
     var j = 0;
+ 
        return new LayoutBuilder(builder: (context, constraints) {
 
+
+      print("this is where the its comming full");
     final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
       
