@@ -6,7 +6,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/repos/game_data.dart';
 
 Map _decoded;
-int _length;
+int _length = 0;
 
 class IdentifyGame extends StatefulWidget {
   Function onScore;
@@ -29,7 +29,11 @@ class IdentifyGame extends StatefulWidget {
 }
 
 class _IdentifyGameState extends State<IdentifyGame>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
+  List<AnimationController> _textControllers = new List<AnimationController>();
+  List<Animation<double>> _animateText = new List<Animation<double>>();
+  int l;
+
   bool _isLoading = true;
   List<Widget> _paint = [];
 
@@ -47,15 +51,28 @@ class _IdentifyGameState extends State<IdentifyGame>
     });
   }
 
+  void _initialisePaintedTextAnimations(){
+    for (var i = 0; i < 7 ; i++) {
+      _textControllers.add(new AnimationController(
+          vsync: this, duration: new Duration(milliseconds: 500)));
+      _animateText.add(
+          new CurvedAnimation(parent: _textControllers[i], curve: Curves.elasticOut));
+    }
+
+  }
+
   @override
   void initState() {
     super.initState();
     _initBoard();
+    // print(_decoded["parts"]);
+    _initialisePaintedTextAnimations();
     _imgController = new AnimationController(
         duration: new Duration(
           milliseconds: 800,
         ),
         vsync: this);
+    
     animateImage =
         new CurvedAnimation(parent: _imgController, curve: Curves.bounceOut);
     _imgController.forward();
@@ -76,8 +93,12 @@ class _IdentifyGameState extends State<IdentifyGame>
   }
 
   Widget _buildPaint(int i, Widget w) {
-    return new RepaintBoundary(
-      child: w,
+    _textControllers[i].forward();
+    return new ScaleTransition(
+      scale: _animateText[i],
+      child: new RepaintBoundary(
+        child: w,
+      ),
     );
   }
 
@@ -89,6 +110,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   Widget _builtButton(
       BuildContext context, double maxHeight, double maxWidth, int cols) {
     print((_decoded["parts"] as List).length);
+    l = (_decoded["parts"] as List).length;
     int j = 0;
     int r = ((_decoded["parts"] as List).length / cols +
             ((((_decoded["parts"] as List).length % cols) == 0) ? 0 : 1))
@@ -109,13 +131,6 @@ class _IdentifyGameState extends State<IdentifyGame>
     );
   }
 
-  List<String> _buildPartsList() {
-    List<String> partsName = [];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
-    return partsName;
-  }
 
   Widget _buildItems(
       int i, var part, double maxHeight, double maxWidth, int cols) {
@@ -164,7 +179,6 @@ class _IdentifyGameState extends State<IdentifyGame>
       );
     }
     print(_paint);
-    print(_buildPartsList());
     Orientation orientation = MediaQuery.of(context).orientation;
     int cols = orientation == Orientation.landscape ? 7 : 5;
     return new LayoutBuilder(builder: (context, constraint) {
@@ -394,8 +408,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             });
           } 
           // if(true){
-          //   print(offset.dx);
-          //   print(offset.dy);
+          //   print("xxxxxxx...${offset.dx}");
+          //   print("yyyyyyy...${offset.dy}");
           // }
           else {
             widget.onScore(-1);
@@ -403,631 +417,15 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             toAnimateFunction();
             new Future.delayed(const Duration(milliseconds: 1000), () {
               setState(() {
-                // render("", 0.0, 0.0);
                 _flag = 0;
               });
               controller.stop();
             });
           }
-
-          // if (part["name"] == "face" &&
-          //     (offset.dx > 360.0 && offset.dx < 480.0) &&
-          //     (offset.dy > 140.0 && offset.dy < 250.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(i);
-          //   print((oldData as List).length);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     print("under first if");
-          //     for (var d in (oldData as List)) {
-          //       if (d == part["name"]) {
-          //         print("object");
-          //         s = 1;
-          //         break;
-          //       }
-          //       print("under for");
-          //     }
-          //     if (s == 1) {
-          //       print("ssssss111");
-          //       s = 0;
-          //     } else {
-          //       print("ssss0000");
-          //       (oldData as List).add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "upper body" &&
-          //     (offset.dx > 336.0 && offset.dx < 480.0) &&
-          //     (offset.dy > 250.0 && offset.dy < 480.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print((oldData as List));
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "right hand" &&
-          //     (offset.dx > 260.0 && offset.dx < 310.0) &&
-          //     (offset.dy > 300.0 && offset.dy < 540.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "left hand" &&
-          //     (offset.dx > 430.0 && offset.dx < 530.0) &&
-          //     (offset.dy > 300.0 && offset.dy < 540.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "left leg" &&
-          //     (offset.dx > 392.0 && offset.dx < 520.0) &&
-          //     (offset.dy > 620.0 && offset.dy < 820.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "right leg" &&
-          //     (offset.dx > 220.0 && offset.dx < 392.0) &&
-          //     (offset.dy > 620.0 && offset.dy < 820.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "right palm" &&
-          //     (offset.dx > 200.0 && offset.dx < 305.0) &&
-          //     (offset.dy > 510.0 && offset.dy < 600.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "left palm" &&
-          //     (offset.dx > 480.0 && offset.dx < 550.0) &&
-          //     (offset.dy > 510.0 && offset.dy < 620.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "left foot" &&
-          //     (offset.dx > 372.0 && offset.dx < 470.0) &&
-          //     (offset.dy > 835.0 && offset.dy < 930.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else if (part["name"] == "right foot" &&
-          //     (offset.dx > 256.0 && offset.dx < 372.0) &&
-          //     (offset.dy > 835.0 && offset.dy < 930.0)) {
-          //   print(">>>>>>>>>${data.length}");
-          //   print(oldData);
-          //   print(i);
-          //   int s = 0;
-          //   if (i < data.length) {
-          //     for (String d in oldData) {
-          //       if (d == part["name"]) {
-          //         s = 1;
-          //         break;
-          //       }
-          //     }
-          //     if (s == 1) {
-          //       s = 0;
-          //     } else {
-          //       oldData.add(part["name"]);
-          //       i += 1;
-          //       render(part["name"], offset.dx, offset.dy - 150.0);
-          //       widget.onScore(1);
-          //       if (i == 10) {
-          //         widget.onEnd();
-          //       }
-          //     }
-          //   }
-          // } else {
-          //   widget.onScore(-1);
-          //   _flag = 1;
-          //   toAnimateFunction();
-          //   new Future.delayed(const Duration(milliseconds: 1000), () {
-          //     setState(() {
-          //       // render("", 0.0, 0.0);
-          //       _flag = 0;
-          //     });
-          //     controller.stop();
-          //   });
-          // }
-          // render(part["name"], offset.dx, offset.dy - 150.0);
         }, 
         ),
       ),
     );
-
-    // return new ScaleTransition(
-    //   scale: shakeAnimation,
-    //   child: new Draggable(
-    //     data: part["name"],
-    //     child: new AnimatedDrag(
-    //         cols: cols,
-    //         height: maxHeight,
-    //         width: maxWidth,
-    //         animation: (_flag == 0) ? noanimation : animation,
-    //         draggableColor: Theme.of(context).buttonColor,
-    //         draggableText: part["name"]),
-    //     feedback: new AnimatedFeedback(
-    //         height: maxHeight,
-    //         width: maxWidth,
-    //         animation: animation,
-    //         draggableColor: Theme.of(context).disabledColor,
-    //         draggableText: part["name"]),
-    //     onDraggableCanceled: (velocity, offset) {
-    //       Size media = MediaQuery.of(context).size;
-    //       double rh, rw, headerSize;
-    //       rh = (3 * maxHeight) / _decoded["height"];
-    //       print("bffvhqvfihvqfiqvi...$rh");
-    //       rw = maxWidth / _decoded["width"];
-    //       headerSize = media.height - 4 * (maxHeight);
-    //       if (((offset.dy + 35.0) >
-    //               (headerSize +
-    //                   ((rh * part["data"]["y"]) -
-    //                       ((rh * part["data"]["height"]) / 2)))) &&
-    //           ((offset.dy + 35.0) <
-    //               (headerSize +
-    //                   ((rh * part["data"]["y"]) +
-    //                       ((rh * part["data"]["height"]) / 2))))) {
-    //         print(
-    //             " Header Size $headerSize  Start of object ${(headerSize + ((rh * part["data"]["y"]) -((rh * part["data"]["height"]) / 2)))}  End of object  ${(headerSize +((rh * part["data"]["y"]) +((rh * part["data"]["height"]) / 2)))}");
-    //         render(part["name"], offset.dx, (offset.dy - 35.0));
-    //         print(offset.dy);
-    //       } 
-    //       // if(true){
-    //       //   print(offset.dx+ 41.0);
-    //       //   print(offset.dy+ 30.0);
-    //       // }
-    //       else {
-    //         widget.onScore(-1);
-    //         _flag = 1;
-    //         toAnimateFunction();
-    //         new Future.delayed(const Duration(milliseconds: 1000), () {
-    //           setState(() {
-    //             // render("", 0.0, 0.0);
-    //             _flag = 0;
-    //           });
-    //           controller.stop();
-    //         });
-    //       }
-
-    //       // if (part["name"] == "face" &&
-    //       //     (offset.dx > 360.0 && offset.dx < 480.0) &&
-    //       //     (offset.dy > 140.0 && offset.dy < 250.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(i);
-    //       //   print((oldData as List).length);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     print("under first if");
-    //       //     for (var d in (oldData as List)) {
-    //       //       if (d == part["name"]) {
-    //       //         print("object");
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //       print("under for");
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       print("ssssss111");
-    //       //       s = 0;
-    //       //     } else {
-    //       //       print("ssss0000");
-    //       //       (oldData as List).add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "upper body" &&
-    //       //     (offset.dx > 336.0 && offset.dx < 480.0) &&
-    //       //     (offset.dy > 250.0 && offset.dy < 480.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print((oldData as List));
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "right hand" &&
-    //       //     (offset.dx > 260.0 && offset.dx < 310.0) &&
-    //       //     (offset.dy > 300.0 && offset.dy < 540.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "left hand" &&
-    //       //     (offset.dx > 430.0 && offset.dx < 530.0) &&
-    //       //     (offset.dy > 300.0 && offset.dy < 540.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "left leg" &&
-    //       //     (offset.dx > 392.0 && offset.dx < 520.0) &&
-    //       //     (offset.dy > 620.0 && offset.dy < 820.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "right leg" &&
-    //       //     (offset.dx > 220.0 && offset.dx < 392.0) &&
-    //       //     (offset.dy > 620.0 && offset.dy < 820.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "right palm" &&
-    //       //     (offset.dx > 200.0 && offset.dx < 305.0) &&
-    //       //     (offset.dy > 510.0 && offset.dy < 600.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "left palm" &&
-    //       //     (offset.dx > 480.0 && offset.dx < 550.0) &&
-    //       //     (offset.dy > 510.0 && offset.dy < 620.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "left foot" &&
-    //       //     (offset.dx > 372.0 && offset.dx < 470.0) &&
-    //       //     (offset.dy > 835.0 && offset.dy < 930.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else if (part["name"] == "right foot" &&
-    //       //     (offset.dx > 256.0 && offset.dx < 372.0) &&
-    //       //     (offset.dy > 835.0 && offset.dy < 930.0)) {
-    //       //   print(">>>>>>>>>${data.length}");
-    //       //   print(oldData);
-    //       //   print(i);
-    //       //   int s = 0;
-    //       //   if (i < data.length) {
-    //       //     for (String d in oldData) {
-    //       //       if (d == part["name"]) {
-    //       //         s = 1;
-    //       //         break;
-    //       //       }
-    //       //     }
-    //       //     if (s == 1) {
-    //       //       s = 0;
-    //       //     } else {
-    //       //       oldData.add(part["name"]);
-    //       //       i += 1;
-    //       //       render(part["name"], offset.dx, offset.dy - 150.0);
-    //       //       widget.onScore(1);
-    //       //       if (i == 10) {
-    //       //         widget.onEnd();
-    //       //       }
-    //       //     }
-    //       //   }
-    //       // } else {
-    //       //   widget.onScore(-1);
-    //       //   _flag = 1;
-    //       //   toAnimateFunction();
-    //       //   new Future.delayed(const Duration(milliseconds: 1000), () {
-    //       //     setState(() {
-    //       //       // render("", 0.0, 0.0);
-    //       //       _flag = 0;
-    //       //     });
-    //       //     controller.stop();
-    //       //   });
-    //       // }
-    //       // render(part["name"], offset.dx, offset.dy - 150.0);
-    //     },
-    //   ),
-    // );
   }
 }
 
@@ -1049,9 +447,6 @@ class AnimatedFeedback extends AnimatedWidget {
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     return new Container(
-      // width: _width * 0.15,
-      // // height: _height * 0.06,
-      // padding: new EdgeInsets.all( width * 0.015),
       color: draggableColor.withOpacity(0.0),
       child: new Center(
         child: new Text(
@@ -1085,10 +480,21 @@ class AnimatedDrag extends AnimatedWidget {
   final double width;
   final int cols;
 
+  _onDragStart(BuildContext context, DragStartDetails start) {
+    print(start.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(start.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
+  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
+    print(update.globalPosition.toString());
+    // RenderBox getBox = context.findRenderObject();
+    // var local = getBox.globalToLocal(update.globalPosition);
+    // print(local.dx.toString() + "|" + local.dy.toString());
+  }
+
   Widget build(BuildContext context) {
-    // int r = ((_decoded["parts"] as List).length / cols +
-    //         ((((_decoded["parts"] as List).length % cols) == 0) ? 0 : 1))
-    //     .toInt();
     final Animation<double> animation = listenable;
     double translateX = animation.value;
     print("value: $translateX");
@@ -1096,36 +502,15 @@ class AnimatedDrag extends AnimatedWidget {
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Center(
         child: new Text(
-          draggableText,
-          style: new TextStyle(
-            color: Theme.of(context).hintColor,
-              decoration: TextDecoration.none,
-              fontSize: (width / cols) * 0.15,
-              fontWeight: FontWeight.bold,
+            draggableText,
+            style: new TextStyle(
+              color: Theme.of(context).hintColor,
+                decoration: TextDecoration.none,
+                fontSize: (width / cols) * 0.15,
+                fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
       ),
-      // child: new Container(
-      //   width: width / cols,
-      //   height: height / r,
-      //   // padding: new EdgeInsets.all( width * 0.01 ),
-      //   // margin: new EdgeInsets.symmetric(
-      //   //   vertical:  width * 0.005,
-      //   //   horizontal: width * 0.005,
-      //   // ),
-      //   color: draggableColor,
-      //   child: new Center(
-      //     child: new Text(
-      //       draggableText,
-      //       style: new TextStyle(
-      //         color: Theme.of(context).hintColor,
-      //         decoration: TextDecoration.none,
-      //         fontSize: (width / cols) * 0.15,
-      //         fontWeight: FontWeight.bold,
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

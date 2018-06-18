@@ -555,9 +555,12 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 
 
 Future<String> fetchIdentifyData() async {
+    List<String> gameViews = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+    gameViews.shuffle();
+    print(gameViews);
     return await rootBundle.loadString("assets/imageCoordinatesInfoScene.json");
 }
 
 Future<String> fetchGuessData() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfoBody.json");
+    return await rootBundle.loadString("assets/imageCoordinatesInfoScene.json");
 }

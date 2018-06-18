@@ -7,6 +7,7 @@ import 'package:maui/repos/game_data.dart';
 // import '../components/Sticker.dart';
 
 Map _decoded;
+int _length = 0;
 
 class GuessIt extends StatefulWidget {
   Function onScore;
@@ -31,6 +32,7 @@ class GuessIt extends StatefulWidget {
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   bool _isLoading = true;
   List<Widget> _paint = [];
+  List<String> partsName = [];
 
   void _renderChoice(String text, double X, double Y) {
     setState(() {
@@ -54,12 +56,11 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   List<Widget> _createTextPaint(BuildContext context) {
     int i = 0;
-    return _paint.map((f) => _buildPaint(i++, f)).toList(growable: false);
+    return _paint.map((f) => _buildPaint(i++, f)).toList(growable: true);
   }
-
+ 
   List<String> _buildPartsList() {
-    List<String> partsName = [];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+   for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
       partsName.add((_decoded["parts"] as List)[i]["name"]);
     }
     return partsName;
@@ -119,114 +120,36 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   // }
 
   void _validate() {
-    _controller.text = '';
-    _renderChoice(_guess, 350.0, 200.0);
-    //   if (_guess == _decoded["parts"][0]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 50.0, 100.0);
-    //     // this.setState(() {
-    //     //   x1 = 50.0;
-    //     //   y1 = 100.0;
-    //     //   paste1 = _guess;
-    //     // });
-    //     // drawName(  , _guess, 50.0, 100.0);
-    //   } else if (_guess == _decoded["parts"][1]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 250.0, 100.0);
-    //     // this.setState(() {
-    //     //   x2 = 250.0;
-    //     //   y2 = 100.0;
-    //     //   paste2 = _guess;
-    //     // });
-    //   } else if (_guess == _decoded["parts"][2]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 150.0, 100.0);
-    //     // this.setState(() {
-    //     //   x3 = 150.0;
-    //     //   y3 = 100.0;
-    //     //   paste3 = _guess;
-    //     // });
-    //   } else if (_guess == _decoded["parts"][3]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 200.0, 100.0);
-    //     // this.setState(() {
-    //     //   x4 = 200.0;
-    //     //   y4 = 100.0;
-    //     //   paste4 = _guess;
-    //     // });
-    //   } else if (_guess == _decoded["parts"][4]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 250.0, 100.0);
-    //     // this.setState(() {
-    //     //   x5 = 250.0;
-    //     //   y5 = 100.0;
-    //     //   paste5 = _guess;
-    //     // });
-    //   } else if (_guess == _decoded["parts"][5]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     _renderChoice(_guess, 250.0, 100.0);
-    //     // this.setState(() {
-    //     //   x6 = 250.0;
-    //     //   y6 = 100.0;
-    //     //   paste6 = _guess;
-    //     // });
-    //   } else if (_guess == _decoded["parts"][6]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     this.setState(() {
-    //       x7 = 250.0;
-    //       y7 = 100.0;
-    //       paste7 = _guess;
-    //     });
-    //   } else if (_guess == _decoded["parts"][7]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     this.setState(() {
-    //       x8 = 250.0;
-    //       y8 = 100.0;
-    //       paste8 = _guess;
-    //     });
-    //   } else if (_guess == _decoded["parts"][8]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     this.setState(() {
-    //       x9 = 250.0;
-    //       y9 = 100.0;
-    //       paste9 = _guess;
-    //     });
-    //   } else if (_guess == _decoded["parts"][9]["name"]) {
-    //     print(_guess);
-    //     _controller.text = '';
-    //     this.setState(() {
-    //       x10 = 250.0;
-    //       y10 = 100.0;
-    //       paste10 = _guess;
-    //     });
-    //   } else {
-    //     this.setState(() {
-    //       _flag = 1;
-    //       toAnimateFunction();
-    //       new Future.delayed(const Duration(milliseconds: 1000), () {
-    //         setState(() {
-    //           // x = 0.0;
-    //           // y = 0.0;
-    //           // paste = '';
-    //           _flag = 0;
-    //         });
-    //         print(animation.value);
-    //         print(noanimation.value);
-    //         _controller.text = '';
-    //         controller.stop();
-    //       });
-    //     });
-    //     // paste = '';
-    //   }
+    // _controller.text = '';
+    // _renderChoice(_guess, 350.0, 200.0);
+
+    if (true) {
+      print(_guess);
+      _controller.text = '';
+      widget.onScore(1);
+      // _length = _length - 1;
+      _renderChoice(_guess, 50.0, 100.0);
+      new Future.delayed(const Duration(milliseconds: 1000),(){
+              if(_length == 0){
+                widget.onEnd();
+              }
+            });
+    } else {
+      this.setState(() {
+        _flag = 1;
+        toAnimateFunction();
+        new Future.delayed(const Duration(milliseconds: 1000), () {
+          setState(() {
+            _flag = 0;
+          });
+          // print(animation.value);
+          // print(noanimation.value);
+          _controller.text = '';
+          controller.stop();
+        });
+      });
+      // paste = '';
+    }
   }
 
   void _initBoard() async {
@@ -244,6 +167,11 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     _initBoard();
+    
+    // print(_buildPartsList());
+    // _length =partsName.length;
+    // print(partsName.length);
+    // print(_length);print("kgbibibhbhbhbjbbk bg$_length");
     controller = new AnimationController(
         duration: new Duration(milliseconds: 80), vsync: this);
     animation = new Tween(begin: -3.0, end: 3.0).animate(controller);
@@ -297,25 +225,23 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     }
     // FocusScope.of(context).requestFocus(_focusnode);
     // ThemeData themeData = Theme.of(context);
-    print(_buildPartsList());
     Size media = MediaQuery.of(context).size;
     double _height = media.height;
     double _width = media.width;
     return new LayoutBuilder(builder: (context, constraint) {
       return new Scaffold(
         body: new Flex(direction: Axis.vertical, children: <Widget>[
-          new GestureDetector(
-            onHorizontalDragStart: (DragStartDetails start) =>
-                _onDragStart(context, start),
-            onHorizontalDragUpdate: (DragUpdateDetails update) =>
-                _onDragUpdate(context, update),
-            onVerticalDragStart: (DragStartDetails start) =>
-                _onDragStart(context, start),
-            onVerticalDragUpdate: (DragUpdateDetails update) =>
-                _onDragUpdate(context, update),
-            child: new Container(
-              height: (constraint.maxHeight) * 3 / 4,
-              width: constraint.maxWidth,
+          new Expanded(
+            flex: 3,
+            child: new GestureDetector(
+              onHorizontalDragStart: (DragStartDetails start) =>
+                  _onDragStart(context, start),
+              onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                  _onDragUpdate(context, update),
+              onVerticalDragStart: (DragStartDetails start) =>
+                  _onDragStart(context, start),
+              onVerticalDragUpdate: (DragUpdateDetails update) =>
+                  _onDragUpdate(context, update),
               child: new Stack(
                 fit: StackFit.passthrough,
                 children: <Widget>[
@@ -326,21 +252,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                       fit: BoxFit.contain,
                     ),
                   ),
-
-                  // new Expanded(
-                  //   flex: 1,
-                  //   child: new Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: <Widget>[
-                  //       new RaisedButton(
-                  //         key: new Key("checking"),
-                  //         child: new Text("Check"),
-                  //         onPressed: () => _validate(),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
                   new Stack(
                     children: _createTextPaint(context),
                   )
@@ -348,9 +259,10 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
               ),
             ),
           ),
-          new Container(
-            height: (constraint.maxHeight) / 4,
-            width: constraint.maxWidth,
+          new Expanded(
+            flex: 1,
+            // height: (constraint.maxHeight) / 4,
+            // width: constraint.maxWidth,
             child: new Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -424,9 +336,8 @@ class Stickers extends CustomPainter {
         textDirection: TextDirection.ltr);
     tp.layout();
     tp.paint(canvas, new Offset(x, y));
-    //canvas.restore();
     canvas.save();
-    // canvas.saveLayer(rect, new Paint());
+    canvas.restore();
   }
 
   @override
