@@ -48,12 +48,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> categoryName = [];
   List<String> listOfThings = [];
   List<String> listOfSyllables =[];
+  List<String> listOfSyllablescopy = [];
+  List<String> newSyllables = [];
+  List<String> dummylist = ['er','ak','la','pr','no','is','cm','ing','apk','tle','let','di','cb','ni','hi','mi','ko','do','lp','gh'];
+ 
    bool _isLoading = true;
   Map<String, List<String>> data1;
   Map<String, Map<String, List<String>>> data;
   
 
   void _initClueGame() async{
+     listOfSyllables.clear();
+     listOfThings.clear();
      setState(() => _isLoading = true);
       data = await fetchClueGame(widget.gameCategoryId);
       data.forEach((k, data1) {
@@ -70,56 +76,71 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
      print('categoryName is $categoryName');
     print('listOfThings is $listOfThings');
     print('listOfSyllables is $listOfSyllables');
+    if (count >= 6) {
+      listOfSyllables.addAll(dummylist);
+    }
+    for (int i = 0; i < words.length; i++) listOfSyllables.remove(words[i]);
+    listOfSyllablescopy = listOfSyllables.sublist(0, 19);
+    listOfSyllablescopy.shuffle(); 
+    print('listOfSyllables sublist shuffle is $listOfSyllablescopy');
     setState(() => _isLoading = false);
   }
 
   var keys = 0;
   String _result = '';
   String word = '';
-
+   int count = 0;
  void _validate() {
     if (listOfThings.sublist(0, 4).contains(_result)) {
       setState(() {
         _result = 'you Type Drink';
+         count++;
       });
       new Future.delayed(const Duration(milliseconds: 700), () {
         setState(() {
           _flag = 0;
           _result = '';
+            _initClueGame();
         });
         controller.stop();
       });
     } else if (listOfThings.sublist(4, 8).contains(_result)) {
       setState(() {
         _result = 'you Type Travel';
+         count++;
       });
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
           _result = '';
+            _initClueGame();
         });
         controller.stop();
       });
     } else if (listOfThings.sublist(8, 12).contains(_result)) {
       setState(() {
         _result = 'you Type Red Fruit';
+         count++;
       });
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
           _result = '';
+            _initClueGame();
         });
         controller.stop();
       });
     } else if (listOfThings.sublist(12, 16).contains(_result)) {
       setState(() {
         _result = 'you Type black Pet';
+         count++;
       });
 
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
           _result = '';
+            _initClueGame();
         });
         controller.stop();
       });
@@ -163,12 +184,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       keys: keys++,
     );
   }
-
+  int len;
   Widget answer(String output) {
+     print('result length is anser is ${_result.length}');
+    print('lenghth is $len');
+    print('output  is $output');
+    print('list is $lengthofwords');
+    print('list is ${lengthofwords.length}');
     void remove() {
       setState(() {
         if (_result.length > 0)
-          _result = _result.substring(0, _result.length - 1);
+          _result = _result.substring(0, _result.length - lengthofwords.last);
+            lengthofwords.removeLast();
       });
     }
 
@@ -296,7 +323,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Expanded(
             flex: 5,
-             child: buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
+             child: buildCircle(context, listOfSyllablescopy, j,maxWidth,maxHeight),
           ),
         ]);
     } else {
@@ -346,7 +373,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Padding(
             padding: const EdgeInsets.only(left: 50.0),
-            child:  buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
+            child:  buildCircle(context, listOfSyllablescopy, j,maxWidth,maxHeight),
           ),
         ]);
     }
@@ -357,15 +384,20 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   //int j = 0;
   Widget buildCircle(BuildContext context,  List<String> syllables, int index, double maxW,double maxH) {
     return new Circle(
-        listOfSyllables: syllables,
+        listOfSyllablescopy: syllables,
          maxwidth:maxW,
         maxheight:maxH,
         onPress: setData); 
   }
-
+  List<int> lengthofwords = [];
+   List<String> words = [];
   void setData(String a) {
-    print("call here comming");
+   print("string is $a");
+    print("string length is ${a.length}");
     setState(() {
+       len = a.length;
+        words.add(a);
+      lengthofwords.add(len);
       _result = _result + a;
     });
   }
@@ -377,11 +409,11 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 typedef void VoidCallback(String text);
 
 class Circle extends StatefulWidget {
-  List<String> listOfSyllables;
+  List<String> listOfSyllablescopy;
   String text;
   double maxwidth;
   double maxheight;
-  Circle({Key key, this.text,this.listOfSyllables, this.onPress,this.maxheight,this.maxwidth}) : super();
+  Circle({Key key, this.text,this.listOfSyllablescopy, this.onPress,this.maxheight,this.maxwidth}) : super();
   VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
@@ -418,18 +450,18 @@ class _CircleState extends State<Circle> {
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllablescopy[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
     offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllablescopy[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllablescopy[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
