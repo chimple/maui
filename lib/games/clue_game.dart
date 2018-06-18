@@ -43,14 +43,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  List<String> _category;
-  List<String> _categoryup;
-  List<String> _categorydown;
-  List<String> _holdwords;
-  List<String> _redfruit;
-  List<String> _travel;
-  List<String> _drink;
-  List<String> _blackpet;
+  List<String> _categoryup=[];
+  List<String> _categorydown=[];
   List<String> categoryName = [];
   List<String> listOfThings = [];
   List<String> listOfSyllables =[];
@@ -71,6 +65,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
       });
     });
+    _categoryup = categoryName.sublist(0, 2);
+    _categorydown = categoryName.sublist(2, 4);
      print('categoryName is $categoryName');
     print('listOfThings is $listOfThings');
     print('listOfSyllables is $listOfSyllables');
@@ -81,53 +77,45 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   String _result = '';
   String word = '';
 
-  void _validate() {
-    // setState(()  {
-    if (_result == _redfruit[0] ||
-        (_result == _redfruit[1]) ||
-        (_result == _redfruit[2]) ||
-        (_result == _redfruit[3])) {
+ void _validate() {
+    if (listOfThings.sublist(0, 4).contains(_result)) {
       setState(() {
-        _result = 'you Type Red Fruit';
+        _result = 'you Type Drink';
       });
-
       new Future.delayed(const Duration(milliseconds: 700), () {
         setState(() {
           _flag = 0;
           _result = '';
         });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(4, 8).contains(_result)) {
+      setState(() {
+        _result = 'you Type Travel';
+      });
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          _flag = 0;
+          _result = '';
+        });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(8, 12).contains(_result)) {
+      setState(() {
+        _result = 'you Type Red Fruit';
+      });
+      new Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          _flag = 0;
+          _result = '';
+        });
+        controller.stop();
+      });
+    } else if (listOfThings.sublist(12, 16).contains(_result)) {
+      setState(() {
+        _result = 'you Type black Pet';
+      });
 
-        controller.stop();
-      });
-    } else if (_result == _travel[0] ||
-        (_result == _travel[1]) ||
-        (_result == _travel[2]) ||
-        (_result == _travel[3])) {
-      _result = 'you Type Travel';
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        setState(() {
-          _flag = 0;
-          _result = '';
-        });
-        controller.stop();
-      });
-    } else if (_result == _drink[0] ||
-        (_result == _drink[1]) ||
-        (_result == _drink[2]) ||
-        (_result == _drink[3])) {
-      _result = 'you Type Drink';
-      new Future.delayed(const Duration(milliseconds: 1000), () {
-        setState(() {
-          _flag = 0;
-          _result = '';
-        });
-        controller.stop();
-      });
-    } else if (_result == _blackpet[0] ||
-        (_result == _blackpet[1]) ||
-        (_result == _blackpet[2]) ||
-        (_result == _blackpet[3])) {
-      _result = 'you Type black Pet';
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
@@ -198,13 +186,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             : _width * 0.25,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
-          border: new Border.all(width: 1.0),
+         // border: new Border.all(width: 1.0),
           color: Colors.blue[200],
           shape: BoxShape.rectangle,
-          borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
+          borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
         ),
         child: new Center(
             child: new Text(_result,
+              overflow: TextOverflow.ellipsis,
                 style: new TextStyle(
                   color: Colors.black,
                   fontSize: 25.0,
@@ -248,8 +237,8 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         final hPadding = pow(constraints.maxWidth / 150.0, 2);
         final vPadding = pow(constraints.maxHeight / 150.0, 2);
         double maxWidth = 0.0, maxHeight = 0.0;
-        final maxChars = (_category != null
-            ? _category.fold(
+        final maxChars = (categoryName != null
+            ? categoryName.fold(
                 1,
                 (prev, element) =>
                     element.length > prev ? element.length : prev)
@@ -307,13 +296,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Expanded(
             flex: 5,
-            child: new ResponsiveGridView(
-              rows: 1,
-              cols: 1,
-              children: _words
-                  .map((e) =>buildCircle(context, e, j,maxWidth,maxHeight))
-                  .toList(growable: false),
-            ),
+             child: buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
           ),
         ]);
     } else {
@@ -363,13 +346,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           ),
           new Padding(
             padding: const EdgeInsets.only(left: 50.0),
-            child: new ResponsiveGridView(
-              rows: 1,
-              cols: 1,
-              children: _words
-                  .map((e) => buildCircle(context, e, j,maxWidth,maxHeight))
-                  .toList(growable: false),
-            ),
+            child:  buildCircle(context, listOfSyllables, j,maxWidth,maxHeight),
           ),
         ]);
     }
@@ -378,16 +355,12 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   
 
   //int j = 0;
-  Widget buildCircle(BuildContext context, String text, int index, double maxW,double maxH) {
+  Widget buildCircle(BuildContext context,  List<String> syllables, int index, double maxW,double maxH) {
     return new Circle(
-        text: text,
+        listOfSyllables: syllables,
          maxwidth:maxW,
         maxheight:maxH,
-      //  key: new ValueKey<int>(index),
-        onPress: () {
-          setData(text);
-          print("asdd");
-        });
+        onPress: setData); 
   }
 
   void setData(String a) {
@@ -397,17 +370,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     });
   }
 
-  List _words = [
-      'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
-    int wordsIndex = 0;
+  int wordsIndex = 0;
   int j = 0;
 }
 
+typedef void VoidCallback(String text);
+
 class Circle extends StatefulWidget {
+  List<String> listOfSyllables;
   String text;
   double maxwidth;
   double maxheight;
-  Circle({Key key, this.text, this.onPress,this.maxheight,this.maxwidth}) : super();
+  Circle({Key key, this.text,this.listOfSyllables, this.onPress,this.maxheight,this.maxwidth}) : super();
   VoidCallback onPress;
   @override
   _CircleState createState() => new _CircleState();
@@ -425,19 +399,11 @@ class _CircleState extends State<Circle> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    // double circleSize = orientation == Orientation.portrait
-    //     ? MediaQuery.of(context).size.width * 0.7
-    //     : MediaQuery.of(context).size.height * 0.7;
     double ht =widget.maxheight;
     double wd = widget.maxwidth;
     double circleSize = ht+wd;   
     double bigRadius = circleSize / 2;
     double smallRadius = (bigRadius) * 0.15;
-    MediaQueryData media = MediaQuery.of(context);
-    // List _words = [
-    //   'ea','ar', 'pa', 'nd','aw', 'co', 'wa','pl', 'bu', 'sa', 'ra', 'ap', 'ch','st', 'wa', 're', 'to','ot', 'do',  ];
-    // int wordsIndex = 0;
     List<Widget> widgets = new List();
     widgets.add(new Container(
         width: circleSize,
@@ -448,29 +414,27 @@ class _CircleState extends State<Circle> {
     Offset circleCenter = new Offset(bigRadius, bigRadius);
 
     List<Offset> offsets;
+     int syllableIndex = 0;
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
     offsets = calculateOffsets(bigRadius * 0.4, circleCenter, 6);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     offsets = calculateOffsets(bigRadius * 0.0, circleCenter, 1);
     for (int i = 0; i < offsets.length; i++) {
       widgets.add(new PositionCircle(
-          offsets[i], _text, Colors.orange[300], smallRadius, widget.onPress));
+          offsets[i], widget.listOfSyllables[syllableIndex++], Colors.orange[300], smallRadius, widget.onPress));
     }
 
     return new Center(child: new Stack(children: widgets));
   }
-
-  //it calculates points on circle
-  //these points are centers for small circles
-  List<Offset> calculateOffsets(
+    List<Offset> calculateOffsets(
       double circleRadii, Offset circleCenter, int amount) {
     double angle = 2 * pi / amount;
     double alpha = 300.0;
@@ -518,7 +482,7 @@ class _PositionCircleState extends State<PositionCircle> {
       height: widget.radii * 2,
       child: new RawMaterialButton(
         shape: const CircleBorder(side: BorderSide.none),
-        onPressed: () => widget.onPress(),
+        onPressed: () => widget.onPress(widget.label),
         fillColor: widget.itemColor,
         splashColor: Colors.green[900],
         child: new Text(
