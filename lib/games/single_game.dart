@@ -406,7 +406,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           myUser: AppStateContainer.of(context).state.loggedInUser,
           gameName: widget.gameName,
           gameDisplay: widget.gameConfig.gameDisplay,
-          myUser: widget.gameConfig.myUser,
+          // myUser: widget.gameConfig.myUser,
           myScore: widget.gameConfig.myScore,
           otherUser: widget.gameConfig.otherUser,
           otherScore: widget.gameConfig.otherScore,
