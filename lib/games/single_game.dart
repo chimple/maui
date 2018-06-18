@@ -404,9 +404,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(
           gameName: widget.gameName,
-          gameDisplay: GameDisplay.single,
-          myUser: AppStateContainer.of(context).state.loggedInUser,
+          gameDisplay: widget.gameConfig.gameDisplay,
+          myUser: widget.gameConfig.myUser,
           myScore: widget.gameConfig.myScore,
+          otherUser: widget.gameConfig.otherUser,
+          otherScore: widget.gameConfig.otherScore,
         );
       }));
     }
