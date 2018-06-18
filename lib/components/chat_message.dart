@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -12,20 +13,24 @@ class ChatMessage extends StatelessWidget {
       this.side = Side.left,
       this.imageFile,
       this.imageUrl,
-      this.imageAsset});
+      this.imageMemory,
+      this.imageAsset,
+      this.isFile = true});
   final Animation animation;
   final Widget child;
   final Side side;
   final String imageUrl;
+  final List<int> imageMemory;
   final String imageFile;
   final String imageAsset;
+  final bool isFile;
 
   Widget build(BuildContext context) {
     var image = imageFile != null
         ? new FileImage(new File(imageFile))
         : imageAsset != null
             ? new AssetImage(imageAsset)
-            : new NetworkImage(imageUrl);
+            : isFile ? NetworkImage(imageUrl) : MemoryImage(imageMemory);
     return new SizeTransition(
       sizeFactor: new CurvedAnimation(parent: animation, curve: Curves.easeOut),
       axisAlignment: 0.0,

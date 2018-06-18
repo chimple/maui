@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flores/flores.dart';
 
 class ChatScreen extends StatefulWidget {
   final String myId;
@@ -28,9 +32,13 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+  GlobalKey<AnimatedListState> listKey = new GlobalKey<AnimatedListState>();
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
-  DatabaseReference _reference;
+//  DatabaseReference _reference;
+  List<dynamic> _messages;
+  static final chatMessageType = 'chat';
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -39,7 +47,25 @@ class ChatScreenState extends State<ChatScreen> {
         ? 'chat_${widget.friendId}_${widget.myId}'
         : 'chat_${widget.myId}_${widget.friendId}';
     print(chatId);
-    _reference = FirebaseDatabase.instance.reference().child(chatId);
+    _initMessages();
+//    _reference = FirebaseDatabase.instance.reference().child(chatId);
+  }
+
+  void _initMessages() async {
+    setState(() => _isLoading = true);
+    List<dynamic> messages;
+    try {
+      messages = await Flores()
+          .getConversations(widget.myId, widget.friendId, chatMessageType);
+    } on PlatformException {
+      print('Failed getting messages');
+    }
+    print(messages);
+    messages ??= List<Map<String, String>>();
+    setState(() {
+      _isLoading = false;
+      _messages = messages.reversed.toList(growable: true);
+    });
   }
 
   @override
@@ -53,43 +79,52 @@ class ChatScreenState extends State<ChatScreen> {
           elevation:
               Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
         ),
-        body: new Column(children: <Widget>[
-          new Flexible(
-            child: new FirebaseAnimatedList(
-              query: _reference,
-              sort: (a, b) => b.key.compareTo(a.key),
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return snapshot.value['senderId'] == myId
-                    ? new ChatMessage(
-                        animation: animation,
-                        imageFile: myImage,
-                        child: snapshot.value['imageUrl'] != null
-                            ? new Image.network(
-                                snapshot.value['imageUrl'],
-                                width: 250.0,
-                              )
-                            : new Text(snapshot.value['text']))
-                    : new ChatMessage(
-                        animation: animation,
-                        imageUrl: widget.friendImageUrl,
-                        child: snapshot.value['imageUrl'] != null
-                            ? new Image.network(
-                                snapshot.value['imageUrl'],
-                                width: 250.0,
-                              )
-                            : new Text(snapshot.value['text']));
-              },
-            ),
-          ),
-          new Divider(height: 1.0),
-          new Container(
-            decoration: new BoxDecoration(color: Theme.of(context).cardColor),
-            child: _buildTextComposer(),
-          ),
-        ]));
+        body: _isLoading
+            ? Center(
+                child: new SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: new CircularProgressIndicator(),
+              ))
+            : Column(children: <Widget>[
+                new Flexible(
+                    child: AnimatedList(
+                  key: listKey,
+                  reverse: true,
+                  padding: EdgeInsets.all(8.0),
+                  initialItemCount: _messages.length,
+                  itemBuilder: (_, int index, Animation<double> animation) {
+                    Map<dynamic, dynamic> message = _messages[index];
+                    return message['userId'] == myId
+                        ? ChatMessage(
+                            animation: animation,
+                            side: Side.left,
+                            imageFile: myImage,
+                            child: new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                message['message'],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ))
+                        : ChatMessage(
+                            animation: animation,
+                            side: Side.right,
+                            imageFile: widget.friendImageUrl,
+                            child: new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(message['message'],
+                                  style: TextStyle(color: Colors.black)),
+                            ));
+                  },
+                )),
+                new Divider(height: 1.0),
+                new Container(
+                  decoration:
+                      new BoxDecoration(color: Theme.of(context).cardColor),
+                  child: _buildTextComposer(),
+                ),
+              ]));
   }
 
   Widget _buildTextComposer() {
@@ -158,11 +193,26 @@ class ChatScreenState extends State<ChatScreen> {
     _sendMessage(text: text);
   }
 
-  void _sendMessage({String text, String imageUrl}) {
-    _reference.push().set({
-      'text': text,
-      'imageUrl': imageUrl,
-      'senderId': widget.myId,
+  void _sendMessage({String text, String imageUrl}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+
+    Flores().addMessage(
+        widget.myId, widget.friendId, chatMessageType, text, true, '');
+//    final index = _messages.length;
+    listKey.currentState.insertItem(0);
+    _messages.insert(0, <String, String>{
+      'userId': widget.myId,
+      'recipientUserId': widget.friendId,
+      'messageType': chatMessageType,
+      'message': text,
+      'deviceId': deviceId,
+      'loggedAt': DateTime.now().millisecondsSinceEpoch.toString()
     });
+//    _reference.push().set({
+//      'text': text,
+//      'imageUrl': imageUrl,
+//      'senderId': widget.myId,
+//    });
   }
 }

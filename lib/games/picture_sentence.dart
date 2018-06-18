@@ -1,5 +1,7 @@
 import 'dart:math';
+// import 'dart:math' as math;
 import 'dart:async';
+// import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -11,12 +13,20 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
+// import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:maui/db/entity/unit.dart';
+import 'package:maui/repos/unit_repo.dart';
+import 'package:meta/meta.dart';
+
+String sentence1 = "MOUNT EVEREST is the highest";
+String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
+   int gameCategoryId;
   GameConfig gameConfig;
   bool isRotated;
 
@@ -25,6 +35,7 @@ class PictureSentence extends StatefulWidget {
       this.onScore,
       this.onProgress,
       this.onEnd,
+      this.gameCategoryId,
       this.iteration,
       this.gameConfig,
       this.isRotated})
@@ -36,61 +47,50 @@ class PictureSentence extends StatefulWidget {
 
 enum Status { Active, Right, Wrong }
 
-class PictureSentenceState extends State<PictureSentence> with SingleTickerProviderStateMixin {
+class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
-  Tuple3<String, String, List<String>> _allques;
   int _size = 2;
-  String questionText;
-  String ans;
-  List<String> ch;
+  // String questionText;
+  
+  List<String> ans =[];
   List<String> choice = [];
   List<Status> _statuses = [];
   bool isCorrect;
   int scoretrack = 0;
- Animation animation;
- AnimationController animationController;
+
   @override
   void initState() {
     super.initState();
-    animationController= AnimationController(duration: Duration(milliseconds: 3000),vsync: this);
-    animation.addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        animationController.reverse();
-      }
-      else if (status == AnimationStatus.dismissed){
-        animationController.forward();
-      }
-    });
-    animation = Tween(begin: 0.0, end: 1000.0).animate(animationController);
-    animationController.forward();
     _initBoard();
   }
-
+Tuple3<String,List<String>,List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-    choice = [];
-    _allques =
-        await fetchMultipleChoiceData(widget.gameConfig.gameCategoryId, 3);
-    print("this is my data  $_allques");
-    print(_allques.item1);
-    questionText = _allques.item1;
-    print(_allques.item2);
-    ans = _allques.item2;
-    print(_allques.item3);
-    ch = _allques.item3;
-    for (var x = 0; x < ch.length; x++) {
-      choice.add(ch[x]);
-    }
-    choice.add(ans);
+    
+    picturedata =
+        await fetchPictureSentenceData(widget.gameCategoryId);
+        print(" fectched data  >>>> $picturedata");
+    
+    ans = picturedata.item2;
+    choice = picturedata.item3;
+    // ans = _allques.item2;
+    // print(_allques.item3);
+    // ch = _allques.item3;
+    // for (var x = 0; x < ch.length; x++) {
+    //   choice.add(ch[x]);
+    // }
+    // choice.add(ans);
     print("My Choices - $choice");
 
     choice.shuffle();
-    _size = min(2, sqrt(choice.length).floor());
+
+    print("After shuffle Choices - $choice");
+    // _size = min(2, sqrt(choice.length).floor());
 
     _statuses = choice.map((a) => Status.Active).toList(growable: false);
 
-    print("My shuffled Choices - $choice");
+    // print("My shuffled Choices - $choice");
     print("My states - $_statuses");
 
     setState(() => _isLoading = false);
@@ -102,7 +102,7 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
         unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
-        ans: this.ans,
+        // ans: this.ans,
         keys: keys++,
         onPress: () {
           if (text == ans) {
@@ -136,16 +136,13 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print(_allques);
+     
     }
   }
 
   @override
   Widget build(BuildContext context) {
     keys = 0;
-    print("Question text here $questionText");
-    print("Answer here $ans");
-
 
     if (_isLoading) {
       return new SizedBox(
@@ -165,7 +162,7 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / 3;
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -188,71 +185,72 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: new LimitedBox(
-                    maxHeight: maxHeight,
-                    maxWidth: double.infinity,
-                    child: new Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      textBaseline: TextBaseline.ideographic,
-                      children: <Widget>[
-                        new Text("Which is the highest",
-                            overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 40.0)),
-                        new Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Stack(children: [
-                            new Container(
-                              color: Colors.grey,
-                              height: 40.0,
-                              width: 100.0,
-                            ),
-                            new IconButton(
-                              iconSize: 24.0,
-                              color: Colors.black,
-                              icon: new Icon(Icons.comment),
-                              tooltip: 'check the picture',
-                              onPressed: () {
-                                
-                                // PictureAnimation( ,
-                                //    animation);
-                              },
-                            ),
-                          ]),
-                        ),
-                        new Text(
-                          "in the  ",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.clip,
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40.0,
-                              color: Colors.black),
-                        ),
-                        new Container(
-                          color: Colors.grey,
-                          height: 40.0,
-                          width: 100.0,
-                        ),
-                      ],
-                    ))),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(sentence1,
+                        softWrap: true,
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 40.0)),
+                     
+                   
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                    child: new FlatButton(
+                      child: const Text(""),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            child: new FractionallySizedBox(
+                                heightFactor: 0.5,
+                                widthFactor: 0.8,
+                                child:
+                                    new PictureCard(text: "widget.text")));
+                      },
+                    ),
+                    color: Colors.grey,
+                    height: 40.0,
+                    width: 100.0,
+                      ),
+                    ),
+                    new Text(
+                      sentence2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40.0,
+                      color: Colors.black),
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                    child: new FlatButton(
+                      child: const Text(""),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            child: new FractionallySizedBox(
+                                heightFactor: 0.5,
+                                widthFactor: 0.8,
+                                child:
+                                    new PictureCard(text: "widget.text")));
+                      },
+                    ),
+                    color: Colors.grey,
+                    height: 40.0,
+                    width: 100.0,
+                      ),
+                    ),
+                  ],
+                )),
           ),
           new Expanded(
-            flex: 1,
-            child: new Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage('assets/dict/mountain.png')))),
-          ),
-          new Expanded(
-              flex: 2,
+              flex: 1,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,
@@ -267,12 +265,6 @@ class PictureSentenceState extends State<PictureSentence> with SingleTickerProvi
       );
     });
   }
-@override
-void dispose()
-{
-  animationController.dispose();
-  super.dispose();
-}
 }
 
 class MyButton extends StatefulWidget {
@@ -312,7 +304,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-//        print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
           if (widget.text != null) {
@@ -350,39 +341,76 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.build");
     return new Shake(
         animation: widget.status == Status.Wrong ? wrongAnimation : animation,
-        child: new ScaleTransition(
-            scale: animation,
-            child: new GestureDetector(
-              onLongPress: () {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
-              },
-              child: new UnitButton(
-                onPress: () => widget.onPress(),
-                text: _displayText,
-                unitMode: widget.unitMode,
-              ),
-            )));
+        child: new GestureDetector(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                child: new FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.8,
+                    child: new FlashCard(text: widget.text)));
+          },
+          child: new UnitButton(
+            onPress: () => widget.onPress(),
+            text: _displayText,
+            unitMode: widget.unitMode,
+          ),
+        ));
   }
 }
 
-class PictureAnimation extends AnimatedWidget {
-  PictureAnimation(Key key,Animation animation)
-      : super( key: key ,listenable: animation);
+class PictureCard extends StatefulWidget {
+  final String text;
+  final String image;
+
+  PictureCard({Key key, @required this.text, this.image}) : super(key: key);
+
+  @override
+  _PictureCardState createState() {
+    return new _PictureCardState();
+  }
+}
+
+class _PictureCardState extends State<PictureCard> {
+  Unit _unit;
+  bool _isLoading = true;
+
+  int i;
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _unit = await new UnitRepo().getUnit(widget.text);
+    setState(() => _isLoading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
-    Animation animation = listenable;
-    return Center(
-      child: Container(
-        height: animation.value,
-        width: animation.value,
-        child: FlutterLogo(),
-      ),
-    );
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    return new LayoutBuilder(builder: (context, constraints) {
+      return new Card(
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.all(
+                Radius.circular(constraints.maxHeight * 0.02))),
+        child: new Container(
+            width: 200.0,
+            height: 200.0,
+            decoration: new BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage('assets/dict/mountain.png')))),
+      );
+    });
   }
 }
