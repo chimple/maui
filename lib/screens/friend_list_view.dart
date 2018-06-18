@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -55,13 +56,20 @@ class _FriendListViewState extends State<FriendListView> {
       crossAxisSpacing: 12.0,
       mainAxisSpacing: 12.0,
       crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-      children: _friends
-          .map((f) => FriendItem(
-                id: f['userId'],
-                imageUrl: f['message'],
-                isFile: false,
-              ))
-          .toList(growable: false),
+      children: _friends.map((f) {
+        List<int> memoryImage;
+        try {
+          memoryImage = base64.decode(f['message']);
+        } catch (e) {
+          print(e);
+        }
+        return FriendItem(
+          id: f['userId'],
+          imageUrl: f['message'],
+          imageMemory: memoryImage,
+          isFile: false,
+        );
+      }).toList(growable: false),
     );
   }
 }
