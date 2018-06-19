@@ -64,9 +64,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
           _user = u;
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
-        } else if (messages.any((m) => u.id == m['recipientUserId'])) {
-          _myTurn.add(u);
         } else if (messages.any((m) => u.id == m['userId'])) {
+          _myTurn.add(u);
+        } else if (messages.any((m) => u.id == m['recipientUserId'])) {
           _otherTurn.add(u);
         } else {
           _remoteUsers.add(u);
@@ -180,7 +180,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return convertToFriend(context, _otherTurn[index]);
+                      return continueGame(context, _otherTurn[index]);
                     }, childCount: _otherTurn.length),
                   ),
                 ],
@@ -210,6 +210,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   Widget continueGame(BuildContext context, User user) {
+    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
@@ -219,7 +221,12 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
           final message =
               _messages.firstWhere((m) => user.id == m['recipientUserId']);
-          GameConfig gameConfig = GameConfig.fromJson(message);
+          GameConfig gameConfig = GameConfig.fromJson(message['message']);
+          gameConfig.myUser = loggedInUser;
+          gameConfig.otherUser = user;
+          gameConfig.amICurrentPlayer = true;
+          gameConfig.orientation = MediaQuery.of(context).orientation;
+          gameConfig.sessionId = message['sessionId'];
           return SingleGame(
             widget.gameName,
             gameMode: GameMode.iterations,
