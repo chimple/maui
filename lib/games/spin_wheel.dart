@@ -44,26 +44,24 @@ class SpinWheel extends StatefulWidget {
 }
 
 class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
-  List<int> _wheelColor = [
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
-    0XFFFFCE73,
-    0XFFD64C60,
-    0XFFDD4785,
-    0XFF48AECC,
-    0XFFE66796,
-    0XFFFF7676,
-    0XFFEDC23B,
-    0XFFAD85F9,
-    0XFF77DB65,
-    0XFF66488C,
-    0XFFDD6154,
+  List<Color> _wheelColor = [
+    Color(0XFF48AECC),
+    Color(0XFFE66796),
+    Color(0XFFFF7676),
+    Color(0XFFEDC23B),
+    Color(0XFFAD85F9),
+    Color(0XFF77DB65),
+    Color(0XFF66488C),
+    Color(0XFFDD6154),
+    Color(0XFFFFCE73),
+    Color(0XFFD64C60),
+    Color(0XFFDD4785),
+    Color(0XFF52C5CE),
+    Color(0XFFF97658),
+    Color(0XFFA46DBA),
+    Color(0XFFA292FF),
   ];
-  List<int> _colors = [];
+  List<Color> _colors = [];
   List<String> _smallerCircleData = [
     '1',
     '3',
@@ -129,7 +127,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   void initState() {
     _colors = _wheelColor;
     print("collr $_wheelColor");
-    print("color $_colors");
+    print("color trrrrrrrrrrrrrrr $_colors");
     super.initState();
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 400), vsync: this);
@@ -162,7 +160,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
-      //_wheelColor.clear();
+     // _wheelColor.clear();
       reset();
       _initBoard();
     }
@@ -173,16 +171,20 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     for (int i = 0; i < _slice.length; i++) {
       _slice[i] = false;
     }
-    for (int i = 0; i < _wheelColor.length; i++) _wheelColor[i] = _colors[i];
     dragEnd = 0.0;
     rotationPercent = 0.0;
     angleDiff = 0.0;
+    for (int i = 0; i < 8; i++) {
+      setState(() {
+        _wheelColor[i]=_colors[i] ;
+        print(" ${_wheelColor[i]};");
+        List<CircularStackEntry> data = _generateChartData(100.0);
+        _chartKey.currentState.updateData(data);
+      });
+    }
 
-    setState(() {
-      List<CircularStackEntry> data = _generateChartData(100.0);
-      _chartKey.currentState.updateData(data);
-    });
     print("color alal $_wheelColor");
+    controller1.reverse();
   }
 
   _onDragStart(PolarCoord cord) {
@@ -235,98 +237,98 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     if (_angleDiff >= 10.0 && _angleDiff <= 40.0 && _slice[0] == true) {
       print("Slice0::");
       setState(() {
-        _wheelColor[0] = 0XFF8FBC8F;
+        _wheelColor[0] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = .375;
       });
       _slice[0] = null;
       _decreaseAngle(rotationPercent);
-      _changeData();
+      _changeData(0);
     } //1
     else if (_angleDiff >= 45.0 && _angleDiff <= 85.0 && _slice[1] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[1] = 0XFF8FBC8F;
+        _wheelColor[1] = new Color(0XFF8FBC8F);
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 1.125;
       });
       _slice[1] = null;
 
-      _changeData();
+      _changeData(1);
     }
     //2
     else if (_angleDiff >= 95.0 && _angleDiff <= 130.0 && _slice[2] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[2] = 0XFF8FBC8F;
+        _wheelColor[2] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 1.875;
       });
       _slice[2] = null;
-      _changeData();
+      _changeData(2);
     }
     //3
     else if (_angleDiff >= 140.0 && _angleDiff <= 175.0 && _slice[3] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[3] = 0XFF8FBC8F;
+        _wheelColor[3] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 2.75;
       });
       _slice[3] = null;
-      _changeData();
+      _changeData(3);
     }
     //4
     else if (_angleDiff >= 185.0 && _angleDiff <= 215.0 && _slice[4] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[4] = 0XFF8FBC8F;
+        _wheelColor[4] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 3.5;
       });
       _slice[4] = null;
-      _changeData();
+      _changeData(4);
     }
     //5
     else if (_angleDiff >= 225.0 && _angleDiff <= 265.0 && _slice[5] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[5] = 0XFF8FBC8F;
+        _wheelColor[5] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 4.25;
       });
       _slice[5] = null;
-      _changeData();
+      _changeData(5);
     }
     //6
     else if (_angleDiff >= 275.0 && _angleDiff <= 315.0 && _slice[6] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[6] = 0XFF8FBC8F;
+        _wheelColor[6] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 5.1;
       });
       _slice[6] = null;
-      _changeData();
+      _changeData(6);
     }
     //7
     else if (_angleDiff >= 315.0 && _angleDiff <= 355.0 && _slice[7] == true) {
       print("Slice1::");
       setState(() {
-        _wheelColor[7] = 0XFF8FBC8F;
+        _wheelColor[7] = new Color(0XFF8FBC8F);;
         List<CircularStackEntry> data = _generateChartData(100.0);
         _chartKey.currentState.updateData(data);
         rotationPercent = 5.9;
       });
       _slice[7] = null;
-      _changeData();
+      _changeData(7);
     } else {
       _shake();
       new Future.delayed(Duration(milliseconds: 500), () {
@@ -357,7 +359,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   }
 
   int _index = 1;
-  void _changeData() {
+  void _changeData(int indx) {
     new Future.delayed(const Duration(milliseconds: 700), () {
       setState(() {
         dragEnd = 0.0;
@@ -379,8 +381,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     _countGameEnd++;
     print("game count $_countGameEnd");
-    // if(_wheelData.isEmpty)
-    // widget.onEnd;
   }
 
   int _countGameEnd = 0;
@@ -395,21 +395,21 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     data = [
       new CircularStackEntry(
         <CircularSegmentEntry>[
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[0]),
+          new CircularSegmentEntry(500.0, (_wheelColor[0]),
               rankKey: 'Q1'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[1]),
+          new CircularSegmentEntry(500.0, (_wheelColor[1]),
               rankKey: 'Q2'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[2]),
+          new CircularSegmentEntry(500.0, (_wheelColor[2]),
               rankKey: 'Q3'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[3]),
+          new CircularSegmentEntry(500.0, (_wheelColor[3]),
               rankKey: 'Q4'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[4]),
+          new CircularSegmentEntry(500.0, (_wheelColor[4]),
               rankKey: 'Q5'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[5]),
+          new CircularSegmentEntry(500.0, (_wheelColor[5]),
               rankKey: 'Q6'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[6]),
+          new CircularSegmentEntry(500.0, (_wheelColor[6]),
               rankKey: 'Q7'),
-          new CircularSegmentEntry(500.0, new Color(_wheelColor[7]),
+          new CircularSegmentEntry(500.0, (_wheelColor[7]),
               rankKey: 'Q8'),
         ],
         rankKey: 'Quarterly Profits',
