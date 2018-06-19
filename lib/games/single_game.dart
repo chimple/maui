@@ -404,9 +404,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         return new ScoreScreen(
           gameName: widget.gameName,
-          gameDisplay: GameDisplay.single,
-          myUser: AppStateContainer.of(context).state.loggedInUser,
+          gameDisplay: widget.gameConfig.gameDisplay,
+          myUser: widget.gameConfig.myUser,
           myScore: widget.gameConfig.myScore,
+          otherUser: widget.gameConfig.otherUser,
+          otherScore: widget.gameConfig.otherScore,
         );
       }));
     }
@@ -678,7 +680,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
-      maxIterations = 1;
+      maxIterations = 2;
         return new SpinWheel(
             onScore: _onScore,
             onProgress: _onProgress,
