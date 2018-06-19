@@ -70,10 +70,15 @@ class GameConfig {
   int otherIteration;
   bool amICurrentPlayer;
   Orientation orientation;
-  String gameData;
+  Map<String, dynamic> gameData;
   String sessionId;
   //board
   //local or n/w
+
+  @override
+  String toString() {
+    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId}';
+  }
 
   GameConfig(
       {this.questionUnitMode,
@@ -118,7 +123,7 @@ class GameConfig {
     otherScore = data['otherScore'];
     myIteration = data['myIteration'];
     otherIteration = data['otherIteration'];
-    gameData = data['gameData'].cast<String>();
+    gameData = data['gameData'];
   }
 }
 
@@ -248,7 +253,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('_SingleGameState:build');
+    print('_SingleGameState:build: ${widget.gameConfig}');
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     print(widget.key.toString());
@@ -262,6 +267,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
+    print('oh2h: $oh2h');
     return new Theme(
         data: theme,
         child: Scaffold(
@@ -391,7 +397,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     }
   }
 
-  _onEnd(BuildContext context, {String gameData, bool end = false}) async {
+  _onEnd(BuildContext context,
+      {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
     if (maxIterations > 0) {
       if (widget.gameConfig.amICurrentPlayer) {
@@ -441,7 +448,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     }
   }
 
-  _onGameEnd(BuildContext context, {String gameData}) async {
+  _onGameEnd(BuildContext context, {Map<String, dynamic> gameData}) async {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       await Flores().addMessage(
@@ -477,6 +484,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   }
 
   Widget buildSingleGame(BuildContext context, String keyName) {
+    print('buildSingleGame: ${widget.gameConfig.gameData}');
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
@@ -485,7 +493,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: (String gameData, bool end) =>
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
                 _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
