@@ -19,6 +19,7 @@ class _CameraScreenState extends State<CameraScreen> {
   List<CameraDescription> cameras;
   CameraController controller;
   String imagePath;
+  String _deviceId;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -90,7 +91,7 @@ class _CameraScreenState extends State<CameraScreen> {
         });
 //        if (filePath != null) showInSnackBar('Picture saved to $filePath');
         var user = await new UserRepo()
-            .insert(new User(image: filePath, currentLessonId: 1));
+            .insertLocalUser(new User(image: filePath, currentLessonId: 1));
         AppStateContainer.of(context).setLoggedInUser(user);
         Navigator.of(context).pop();
       }

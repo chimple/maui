@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:async';
 
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/nima.dart';
@@ -41,6 +42,7 @@ import 'package:maui/components/hud.dart';
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
+import 'package:flores/flores.dart';
 
 enum GameMode { timed, iterations }
 
@@ -60,11 +62,14 @@ class GameConfig {
   int gameCategoryId;
   int level;
   GameDisplay gameDisplay;
+  User myUser;
   User otherUser;
   int myScore;
   int otherScore;
   bool amICurrentPlayer;
   Orientation orientation;
+  String gameData;
+  String sessionId;
   //board
   //local or n/w
 
@@ -75,9 +80,12 @@ class GameConfig {
       this.gameDisplay,
       this.level,
       this.otherUser,
+      this.myUser,
       this.myScore,
       this.otherScore,
       this.orientation,
+      this.gameData,
+      this.sessionId,
       this.amICurrentPlayer});
 }
 
@@ -261,10 +269,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                   left: !oh2h ? 32.0 : null,
                                   right: oh2h ? 32.0 : null,
                                   child: Hud(
-                                      user: AppStateContainer
-                                          .of(context)
-                                          .state
-                                          .loggedInUser,
+                                      user: widget.gameConfig.myUser,
                                       height: media.size.height / 8.0,
                                       gameMode: widget.gameMode,
                                       playTime: playTime,
@@ -353,42 +358,84 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     }
   }
 
-  _onEnd(BuildContext context) {
-    if (widget.gameConfig.amICurrentPlayer) {
-      setState(() {
-        _myIteration++;
-      });
-      if (_myIteration >= maxIterations &&
-          widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn)
-        _onGameEnd(context);
+  _onEnd(BuildContext context, {String gameData, bool end = false}) async {
+    if (maxIterations > 0) {
+      if (widget.gameConfig.amICurrentPlayer) {
+        setState(() {
+          _myIteration++;
+        });
+        if (_myIteration >= maxIterations &&
+            widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn)
+          _onGameEnd(context, gameData: gameData);
+      } else {
+        setState(() {
+          _otherIteration++;
+        });
+        if (_otherIteration >= maxIterations) _onGameEnd(context);
+      }
     } else {
-      setState(() {
-        _otherIteration++;
-      });
-      if (_otherIteration >= maxIterations) _onGameEnd(context);
+      if (end) {
+        _onGameEnd(context, gameData: gameData);
+      } else {
+        widget.gameConfig.gameData = gameData;
+        if (widget.gameConfig.amICurrentPlayer) {
+          setState(() {
+            _myIteration++;
+          });
+        } else {
+          setState(() {
+            _otherIteration++;
+          });
+        }
+      }
     }
-    if (widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn ||
-        widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+    if (widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
     }
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+      widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
+      await Flores().addMessage(
+          widget.gameConfig.myUser.id,
+          widget.gameConfig.otherUser.id,
+          widget.gameName,
+          gameData,
+          true,
+          widget.gameConfig.sessionId ?? Uuid().v4());
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
   }
 
-  _onTurn(BuildContext context) {
-    widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-  }
-
-  _onGameEnd(BuildContext context) {
+  _onGameEnd(BuildContext context, {String gameData}) async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+      widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
+      await Flores().addMessage(
+          widget.gameConfig.myUser.id,
+          widget.gameConfig.otherUser.id,
+          widget.gameName,
+          gameData,
+          true,
+          widget.gameConfig.sessionId ?? Uuid().v4());
+    }
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
-      // Navigator.of(context).pop();
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
+        final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
         return new ScoreScreen(
           gameName: widget.gameName,
-          gameDisplay: GameDisplay.single,
-          myUser: AppStateContainer.of(context).state.loggedInUser,
-          myScore: widget.gameConfig.myScore,
+          gameDisplay: widget.gameConfig.gameDisplay,
+          myUser: loggedInUser,
+          myScore: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.myScore
+              : widget.gameConfig.otherScore,
+          otherUser: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.otherUser
+              : widget.gameConfig.myUser,
+          otherScore: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.otherScore
+              : widget.gameConfig.myScore,
         );
       }));
     }
@@ -398,12 +445,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = -1;
         return new Reflex(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
+            onEnd: (String gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
@@ -659,6 +707,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
+        maxIterations = 2;
         return new SpinWheel(
             onScore: _onScore,
             onProgress: _onProgress,
