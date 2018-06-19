@@ -707,7 +707,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: _myIteration + _otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
-        maxIterations = 1;
+        maxIterations = 2;
         return new SpinWheel(
             onScore: _onScore,
             onProgress: _onProgress,
