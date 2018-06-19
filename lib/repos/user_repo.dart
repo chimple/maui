@@ -50,7 +50,7 @@ class UserRepo {
             deviceId: f['deviceId'],
             image: imagePath,
             currentLessonId: 1);
-        await new UserRepo().insertLocalUser(user);
+        await userDao.insert(user);
         users.add(user);
       }
     });
