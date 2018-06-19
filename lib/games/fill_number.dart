@@ -296,7 +296,7 @@ List<String> Ssum=[];
 
                         Ansum = 0;
                         _val2 = _letters.sublist(0, z);
-                       z= z+count;
+                        z++;
                         print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
                         _val2.forEach((e) {
                           if (e == null) {}
@@ -312,7 +312,7 @@ List<String> Ssum=[];
                         print("thhhiiiiiiisssss isss shanthuuuu$_val2");
                         Ansr = Ansum;
 
-                        // count = 0;
+                        count = 0;
                         // _statuses = _copyVal
                         //     .map((a) => Status.Active)
                         //     .toList(growable: false);
