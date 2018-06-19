@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
-
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:audioplayer/audioplayer.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -164,13 +168,7 @@ class _ScoreScreenState extends State<ScoreScreen>
 
 
     return new LayoutBuilder(builder: (context, constraints) {
-    final hPadding = pow(constraints.maxWidth / 150.0, 2);
-    final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
-    double maxWidth = (constraints.maxWidth - hPadding) / 2;
-    double maxHeight = (constraints.maxHeight - vPadding) / 3;
-
-    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 10000);
+    
     List <Widget> starsMap1 =  stars
                               .map((e) => _buildItem(j++, e),)
                               .toList(growable: false);
@@ -233,13 +231,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                         )
                       ])),
                  gameDisplay == GameDisplay.myHeadToHead ? new Container(
-                    height: ht > wd ? ht * 0.15 : wd * 0.15,
+                    height: ht > wd ? ht * 0.19 : wd * 0.15,
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           new LimitedBox(
-                            maxHeight: ht > wd ? ht * 0.3 : wd * 0.13,
+                            maxHeight: ht * 0.13,
                             child: new UserItem(user: myUser),),
                           // new Padding(
                           //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
@@ -273,7 +271,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                         new Padding(
                           padding: new EdgeInsets.all(10.0),
                         ),
-
+                        
                         gameDisplay == GameDisplay.myHeadToHead ? new Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -362,6 +360,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
+  // AudioPlayer _audioPlayer;
+  // bool _isPlaying = false;
+  // Directory documentsDirectory;
+  
+
 
   initState() {
     super.initState();
@@ -383,18 +386,48 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       });
 
-      
+      // _initAudioPlayer();
   }
+
+  // void _initAudioPlayer() {
+  //   _audioPlayer = new AudioPlayer();
+  //   _audioPlayer.setCompletionHandler(() {
+  //     _isPlaying = true;
+  //   });
+  //   _audioPlayer.setErrorHandler((msg) {
+  //     _isPlaying = true;
+  //   });
+  // }
+
+  // void initAudioPlayer() async {
+  //   audioPlayer = new AudioPlayer();
+  //   documentsDirectory = await getApplicationDocumentsDirectory();
+  //   audioPlayer.play(join(documentsDirectory.path, 'star_music.mp3'), isLocal: true);
+  // }
+
+  //   void _play() async {
+
+  //  if (!_isPlaying) {
+  //    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  //    final result = await _audioPlayer
+  //        .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
+  //    if (result == 1) {
+  //      _isPlaying = true;
+  //    }
+  //  }
+  // }
 
    @override
     void didUpdateWidget(MyButton oldWidget) {
       // TODO: implement didUpdateWidget
-      super.didUpdateWidget(oldWidget);
+      super.didUpdateWidget(oldWidget); 
     }
 
 
   @override
-  void dispose() {
+  void dispose() {    
+    // _isPlaying=false;
+    // _audioPlayer.stop();
     controller.dispose();
     super.dispose();
   }
@@ -405,7 +438,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     double ht = media.height;
     double wd = media.width;
     widget.keys++;
-    print("_MyButtonState.build");    
+    print("_MyButtonState.build");   
+    // print("$documentsDirectory");
+    // audioPlayer.play(join(documentsDirectory.path, 'star_music.mp3'), isLocal: true);
+    // _play();
     return new Shake(
       animation: animation,
       child: new GestureDetector(
@@ -415,11 +451,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       child: new FlatButton(
          onPressed: () => widget.onPress(),
          color: Colors.transparent,         
-         child: new Icon(
-        _displayText == "true" ? Icons.star : Icons.star_border,
+         child: new IconButton(
+        icon: _displayText == "true" ? new Image.asset("assets/star_gained.png") : new Image.asset("assets/star.png"),
         key: new Key("${widget.keys}"),
-        size:
-         ht > wd ? ht * 0.1 : wd * 0.05,
+        iconSize: ht > wd ? ht * 0.1 : wd * 0.05,
         color: Colors.black,
          )         
     ))

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,25 @@ import 'package:maui/db/entity/game_category.dart';
 import 'expansionTile.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'user_item.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/games/head_to_head_game.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
-      {Key key, @required this.gameCategories, @required this.game})
+      {Key key,
+      @required this.gameCategories,
+      @required this.game,
+      @required this.gameMode,
+      @required this.gameDisplay,
+      this.otherUser})
       : super(key: key);
   State<StatefulWidget> createState() => new _GameCategoryList();
   final List<Tuple2<int, String>> gameCategories;
   final String game;
+  GameMode gameMode;
+  GameDisplay gameDisplay;
+  User otherUser;
 }
 
 class _GameCategoryList extends State<GameCategoryList> {
@@ -100,14 +112,13 @@ class _GameCategoryList extends State<GameCategoryList> {
                         .map((gameCategory) => Container(
                               color: tileColors[j++],
                               child: FlatButton(
-                                onPressed: () => Navigator.of(context).push(
-                                        MaterialPageRoute<void>(
-                                            builder: (BuildContext context) {
-                                      return SelectOpponentScreen(
-                                        gameName: widget.game,
-                                        gameCategoryId: gameCategory.item1,
-                                      );
-                                    })),
+                                onPressed: () => goToGame(
+                                    context,
+                                    widget.game,
+                                    gameCategory.item1,
+                                    widget.gameDisplay,
+                                    widget.gameMode,
+                                    otherUser: widget.otherUser),
                                 child: Text(gameCategory.item2),
                               ),
                             ))
@@ -123,142 +134,106 @@ class _GameCategoryList extends State<GameCategoryList> {
     );
   }
 
-  bool _isLoading = false;
-  Widget _buildTiles(
-    BuildContext context,
-    Color _color,
-    int index,
-    int id,
-    String gameCategory,
-    String game,
-  ) {
-    if (_isLoading) {
-      return new Center(
-        child: new Text(
-          'Loading..',
-          style: new TextStyle(fontSize: 40.0, color: Colors.green),
-        ),
-      );
+  void goToGame(BuildContext context, String gameName, int gameCategoryId,
+      GameDisplay gameDisplay, GameMode gameMode,
+      {User otherUser}) {
+    Random random = new Random();
+    var gameConfig = new GameConfig(
+        gameCategoryId: gameCategoryId,
+        questionUnitMode: UnitMode.values[random.nextInt(3)],
+        answerUnitMode: UnitMode.values[random.nextInt(3)],
+        level: random.nextInt(10) + 1);
+    print('goToGame: $gameName $gameCategoryId, $gameDisplay, $gameMode');
+    switch (gameDisplay) {
+      case GameDisplay.single:
+        gameMode == GameMode.iterations
+            ? Navigator.of(context).push(
+                MaterialPageRoute<Null>(builder: (BuildContext context) {
+                  gameConfig.gameDisplay = GameDisplay.single;
+                  gameConfig.amICurrentPlayer = true;
+                  gameConfig.myScore = 0;
+                  gameConfig.myUser =
+                      AppStateContainer.of(context).state.loggedInUser;
+                  gameConfig.otherScore = 0;
+                  gameConfig.orientation = MediaQuery.of(context).orientation;
+                  return new SingleGame(
+                    gameName,
+                    gameMode: GameMode.iterations,
+                    gameConfig: gameConfig,
+                  );
+                }),
+              )
+            : Navigator.of(context).push(
+                MaterialPageRoute<Null>(builder: (BuildContext context) {
+                  gameConfig.gameDisplay = GameDisplay.single;
+                  gameConfig.orientation = MediaQuery.of(context).orientation;
+                  gameConfig.myUser =
+                      AppStateContainer.of(context).state.loggedInUser;
+                  return new SingleGame(
+                    gameName,
+                    gameMode: GameMode.timed,
+                    gameConfig: gameConfig,
+                  );
+                }),
+              );
+        break;
+      case GameDisplay.localTurnByTurn:
+        Navigator.of(context).push(
+          MaterialPageRoute<Null>(builder: (BuildContext context) {
+            gameConfig.gameDisplay = GameDisplay.localTurnByTurn;
+            gameConfig.amICurrentPlayer = true;
+            gameConfig.myUser =
+                AppStateContainer.of(context).state.loggedInUser;
+            gameConfig.otherUser = otherUser;
+            gameConfig.myScore = 0;
+            gameConfig.otherScore = 0;
+            gameConfig.orientation = MediaQuery.of(context).orientation;
+            return new SingleGame(
+              gameName,
+              gameMode: GameMode.iterations,
+              gameConfig: gameConfig,
+            );
+          }),
+        );
+        break;
+      case GameDisplay.networkTurnByTurn:
+        Navigator.of(context).push(
+          MaterialPageRoute<Null>(builder: (BuildContext context) {
+            gameConfig.gameDisplay = GameDisplay.networkTurnByTurn;
+            gameConfig.amICurrentPlayer = true;
+            gameConfig.myUser =
+                AppStateContainer.of(context).state.loggedInUser;
+            gameConfig.otherUser = otherUser;
+            gameConfig.myScore = 0;
+            gameConfig.otherScore = 0;
+            gameConfig.orientation = MediaQuery.of(context).orientation;
+            return new SingleGame(
+              gameName,
+              gameMode: GameMode.iterations,
+              gameConfig: gameConfig,
+            );
+          }),
+        );
+        break;
+      case GameDisplay.myHeadToHead:
+        gameConfig.orientation = Orientation.landscape;
+        gameConfig.myUser = AppStateContainer.of(context).state.loggedInUser;
+        gameConfig.otherUser = otherUser;
+        gameMode == GameMode.iterations
+            ? Navigator.of(context).push(MaterialPageRoute<Null>(
+                  builder: (BuildContext context) => new HeadToHeadGame(
+                        gameName,
+                        gameMode: GameMode.iterations,
+                        gameConfig: gameConfig,
+                      ),
+                ))
+            : Navigator.of(context).push(MaterialPageRoute<Null>(
+                  builder: (BuildContext context) => new HeadToHeadGame(
+                        gameName,
+                        gameMode: GameMode.timed,
+                        gameConfig: gameConfig,
+                      ),
+                ));
     }
-    return new BuildExpansionTiles(
-      key: ValueKey<int>(index),
-      context: context,
-      categoryId: id,
-      index: index,
-      tilesColor: _color,
-      gameCategory: gameCategory,
-      gameName: game,
-      onClick: (dynamic) {
-        print("print index of tile $index");
-      },
-    );
-  }
-}
-
-class BuildExpansionTiles extends StatefulWidget {
-  BuildExpansionTiles(
-      {Key key,
-      this.context,
-      this.onClick,
-      this.tilesColor,
-      @required this.categoryId,
-      @required this.gameName,
-      @required this.index,
-      @required this.gameCategory})
-      : super(key: key);
-  final BuildContext context;
-  int index;
-  int categoryId;
-  String gameCategory;
-  String gameName;
-  Color tilesColor;
-  ValueChanged onClick;
-  @override
-  State<StatefulWidget> createState() => new _BuildExpansionTiles();
-}
-
-class _BuildExpansionTiles extends State<BuildExpansionTiles> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double _fontSize;
-    _fontSize = (media.height * .58 * .162) / 3.9;
-    return new Container(
-      color: widget.tilesColor,
-      child: new ExpansionTiles(
-          title: new Center(
-              child: new Text(
-            widget.gameCategory,
-            style: TextStyle(color: Colors.white, fontSize: _fontSize),
-          )),
-          trailing: new Text(''),
-          children: widget.gameName != 'guess'
-              ? <Widget>[
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      new IconButton(
-                        color: Colors.white,
-                        key: new Key('single'),
-                        icon: new Icon(Icons.accessibility),
-                        onPressed: () => showModes(context, widget.gameName,
-                            'single_iterations', widget.categoryId),
-                      ),
-                      new IconButton(
-                        color: Colors.white,
-                        key: new Key('h2h'),
-                        icon: new Icon(Icons.people),
-                        onPressed: () => showModes(context, widget.gameName,
-                            'h2h_iterations', widget.categoryId),
-                      ),
-                      new IconButton(
-                        color: Colors.white,
-                        key: new Key('tbtl'),
-                        icon: new Icon(Icons.autorenew),
-                        onPressed: () => showModes(context, widget.gameName,
-                            'tbt_local', widget.categoryId),
-                      ),
-                    ],
-                  )
-                ]
-              : <Widget>[
-                  new Center(
-                    child: new IconButton(
-                      color: Colors.white,
-                      key: new Key('single'),
-                      icon: new Icon(Icons.accessibility),
-                      onPressed: () => showModes(context, widget.gameName,
-                          'single_iterations', widget.categoryId),
-                    ),
-                  )
-                ]),
-    );
-  }
-
-  String selected;
-  showModes(
-    BuildContext context,
-    String game,
-    String _modeName,
-    int id,
-  ) async {
-    selected = await showModalBottomSheet<String>(
-        context: context,
-        builder: (BuildContext context) {
-          if (_modeName == 'single_iterations') {
-            Navigator.of(context).pop('single_iterations');
-          } else if (_modeName == 'h2h_iterations') {
-            Navigator.of(context).pop('h2h_iterations');
-          } else if (_modeName == 'tbt_local') {
-            Navigator.of(context).pop('tbt_local');
-          }
-        });
-    if (selected.isNotEmpty)
-      Navigator.of(context).pushNamed('/games/$game/categories/$id/$selected');
   }
 }

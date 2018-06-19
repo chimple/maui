@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8081e40111917c4daca0b18a8702cdc3d98abd2d"
+      resolved-ref: c229c37560351bb6b87227ad1923deb2d07a82cd
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"

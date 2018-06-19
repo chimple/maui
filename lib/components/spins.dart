@@ -6,9 +6,12 @@ import 'package:flutter/rendering.dart';
 class ArrowPainter extends CustomPainter {
   final Paint dialArrowPaint;
   final double rotationPercent;
-
-  ArrowPainter({this.rotationPercent}) : dialArrowPaint = new Paint() {
-    dialArrowPaint.color = Colors.black;
+  Size sizeArrow;
+  ArrowPainter({
+    this.rotationPercent,
+    this.sizeArrow,
+  }) : dialArrowPaint = new Paint() {
+    dialArrowPaint.color = Colors.blue[50];
     dialArrowPaint.style = PaintingStyle.fill;
   }
 
@@ -19,17 +22,15 @@ class ArrowPainter extends CustomPainter {
 
     final radius = size.width;
     canvas.translate(radius, radius);
-    ////canvas.rotate(2 * PI * rotationPercent);
-    print("canvas size:: $radius");
+    print("canvas size:: ${sizeArrow.width}");
     Path path = new Path();
-    path.moveTo(0.0, -100.0);
-    path.lineTo(10.0, -radius + 5.0);
-    path.lineTo(-10.0, -radius + 5.0);
+    path.moveTo(0.0, -sizeArrow.width * .31);
+    path.lineTo(sizeArrow.width * .35 * .17, -0.0);
+    path.lineTo(-sizeArrow.width * .35 * .17, -0.0);
+
     path.close();
-
     canvas.drawPath(path, dialArrowPaint);
-    canvas.drawShadow(path, Colors.black, 3.0, false);
-
+    canvas.drawShadow(path, Colors.red[300], 30.0, true);
     canvas.restore();
   }
 
