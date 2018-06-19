@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/screens/select_opponent_screen.dart';
 
 class GameListView extends StatelessWidget {
   const GameListView({Key key}) : super(key: key);
@@ -19,7 +20,13 @@ class GameListView extends StatelessWidget {
       ),
       margin: EdgeInsets.all(size.width * .02),
       child: new InkWell(
-        onTap: () => showModes(context, gameName),
+        onTap: () => Navigator
+                .of(context)
+                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+              return SelectOpponentScreen(
+                gameName: gameName,
+              );
+            })),
         key: new Key(gameName),
         child: new Column(
           children: <Widget>[
@@ -70,7 +77,7 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'draw_challenge', 'draw_challenge'),
           _buildButton(context, 'abacus', 'Abacus'),
           _buildButton(context, 'crossword', 'Crossword'),
-         _buildButton(context, 'drawing', 'drawing'),
+          _buildButton(context, 'drawing', 'drawing'),
           _buildButton(context, 'fill_in_the_blanks', 'Fill In The Blanks'),
           _buildButton(context, 'calculate_numbers', 'Calculate'),
           _buildButton(context, 'casino', 'Casino'),
@@ -85,17 +92,14 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'connect_the_dots', 'Connect The Dots'),
           _buildButton(context, 'tap_home', 'Tap Home'),
           _buildButton(context, 'tap_wrong', 'Tap Wrong'),
-         _buildButton(context, 'guess', 'guess'),
-
+          _buildButton(context, 'guess', 'guess'),
           _buildButton(context, 'clue_game', 'Clue'),
           _buildButton(context, 'wordgrid', 'Word Grid'),
           _buildButton(context, 'spin_wheel', 'Spin The Wheel'),
           _buildButton(context, 'first_word', 'First Word'),
           _buildButton(context, 'friend_word', 'Friend Word'),
           _buildButton(context, 'dice', 'Dice'),
-           _buildButton(context, 'circle_word', 'Circle Word'),
-
-
+          _buildButton(context, 'circle_word', 'Circle Word'),
         ]);
   }
 
