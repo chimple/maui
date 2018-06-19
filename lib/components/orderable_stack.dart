@@ -8,7 +8,6 @@ import './orderable.dart';
 typedef Widget WidgetFactory({Orderable data, Size itemSize});
 
 const kMargin = 8.0;
-
 const kMinSize = 50.0;
 const kMaxHeight = 600.0;
 
@@ -19,9 +18,8 @@ const kDefaultItemSize = const Size(140.0, 80.0);
 class OrderableStack<T> extends StatefulWidget {
   /// list of items to reorder
   final List<T> items;
-
+  int iteration = 0;
   final OrderItDirection direction;
-  
 
   final bool isRotated;
 
@@ -34,7 +32,7 @@ class OrderableStack<T> extends StatefulWidget {
 
   /// new order callback
   void Function(List<T>) onChange;
-
+ Function update;
   /// true if items must be randomized (default : true )
   final bool shuffle;
 
@@ -42,23 +40,22 @@ class OrderableStack<T> extends StatefulWidget {
       ? itemSize.width + margin
       : itemSize.height + margin;
 
-  ///
   OrderableStack(
     { @required this.items,
       @required this.itemBuilder,
-        Key key,
-        this.onChange,
-        this.itemSize = kDefaultItemSize,
-        this.margin = kMargin,
-        this.direction = OrderItDirection.Horizontal,
-        this.isRotated = false,
-        this.shuffle = true})
-        : super(key: key);
+      Key key,
+      this.iteration,
+      this.update,
+      this.onChange,
+      this.itemSize = kDefaultItemSize,
+      this.margin = kMargin,
+      this.direction = OrderItDirection.Horizontal,
+      this.isRotated = false,
+      this.shuffle = true})
+      : super(key: key);
 
   @override
-  _OrderableStackState createState() => new _OrderableStackState<T>(
-        items,
-      );
+  _OrderableStackState createState() => new _OrderableStackState<T>(items);
 }
 
 class _OrderableStackState<T> extends State<OrderableStack<T>> {
@@ -77,17 +74,34 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   List<T> get currentOrder => orderableItems.map((item) => item.value).toList();
 
   @override
+    void didUpdateWidget(OrderableStack<T> oldWidget) {
+      // TODO: implement didUpdateWidget
+      super.didUpdateWidget(oldWidget);
+
+      if(oldWidget.iteration!=widget.iteration){
+        _initBoard();
+      }
+    }
+
+  @override
   void initState() {
     super.initState();
+    _initBoard();
+  }
 
-    if (widget.shuffle) orderableItems.shuffle();
-    orderableItems = enumerate(orderableItems)
-        .map<Orderable<T>>((IndexedValue e) => e.value..visibleIndex = e.index)
-        .toList();
+  void _initBoard() {
+    setState(() {
+      if (widget.shuffle) orderableItems.shuffle();
+      orderableItems = enumerate(orderableItems)
+          .map<Orderable<T>>(
+              (IndexedValue e) => e.value..visibleIndex = e.index)
+          .toList();
 
-    /// notify the initial order
-    widget.onChange(currentOrder);
-    lastOrder = currentOrder;
+       //notify the initial order
+      widget.onChange(currentOrder);
+      lastOrder = currentOrder;
+    });
+    
   }
 
   @override
@@ -153,7 +167,8 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
     });
   }
 
-  void updateItemsPos([OrderItDirection direction = OrderItDirection.Horizontal]) {
+  void updateItemsPos(
+      [OrderItDirection direction = OrderItDirection.Horizontal]) {
     enumerate(orderableItems).forEach((item) {
       item.value.visibleIndex = item.index;
       item.value.currentPosition = getCurrentPosition(item.value);
