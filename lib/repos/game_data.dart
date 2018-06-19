@@ -627,8 +627,8 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   Map<String, List<String>> drink = {
     'water': ['wa', 'ter'],
     'milk': ['mi', 'lk'],
-    'coke': ['co', 'ke'],
-    'beer': ['be', 'er'],
+    'coffee': ['cof', 'fee'],
+    'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
     'bus': ['bu', 's'],
@@ -638,15 +638,15 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   };
   Map<String, List<String>> redfruit = {
     'apple': ['ap', 'ple'],
-    'cheery': ['che', 'ery'],
-    'litchi': ['lit', 'chi'],
+    'cherry': ['che', 'rry'],
+    'carrot': ['ca', 'rrot'],
     'tomoto': ['tom', 'oto'],
   };
   Map<String, List<String>> blackpet = {
     'cat': ['ca', 't'],
     'dog': ['do', 'g'],
     'panda': ['pa', 'nda'],
-    'cow': ['co', 'w'],
+    'crow': ['cr', 'ow'],
   };
   Map<String, Map<String, List<String>>> value = {
     'drink': drink,
