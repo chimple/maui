@@ -27,6 +27,7 @@ class SelectOpponentScreen extends StatefulWidget {
 
 class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   List<User> _users;
+  List<dynamic> _messages;
   List<User> _localUsers = [];
   List<User> _remoteUsers = [];
   List<User> _myTurn = [];
@@ -57,6 +58,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     setState(() {
       _deviceId = prefs.getString('deviceId');
       _users = users;
+      _messages = messages;
       _users.forEach((u) {
         if (u.id == user.id) {
           _user = u;
@@ -96,6 +98,28 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         new Container(
+                          padding: EdgeInsets.all(8.0),
+                          color: Theme.of(context).primaryColor,
+                          child: RaisedButton(
+                            onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute<Null>(
+                                      builder: (BuildContext context) =>
+                                          GameCategoryListScreen(
+                                              game: widget.gameName,
+                                              gameMode: GameMode.iterations,
+                                              gameDisplay: GameDisplay.single)),
+                                ),
+                            child: Text('Single Player'),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        new Container(
                             padding: EdgeInsets.all(8.0),
                             color: Theme.of(context).primaryColor,
                             child: Text('My Turn')),
@@ -105,7 +129,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return convertToFriend(context, _myTurn[index]);
+                      return continueGame(context, _myTurn[index]);
                     }, childCount: _myTurn.length),
                   ),
                   SliverToBoxAdapter(
@@ -181,6 +205,27 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           : GameDisplay.networkTurnByTurn,
                   otherUser: user,
                 )));
+      },
+    );
+  }
+
+  Widget continueGame(BuildContext context, User user) {
+    return FriendItem(
+      id: user.id,
+      imageUrl: user.image,
+      onTap: () {
+        Navigator
+            .of(context)
+            .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+          final message =
+              _messages.firstWhere((m) => user.id == m['recipientUserId']);
+          GameConfig gameConfig = GameConfig.fromJson(message);
+          return SingleGame(
+            widget.gameName,
+            gameMode: GameMode.iterations,
+            gameConfig: gameConfig,
+          );
+        }));
       },
     );
   }
