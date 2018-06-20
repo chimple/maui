@@ -216,6 +216,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 //    SystemChrome.setEnabledSystemUIOverlays([]);
+    print('_SingleGameState: initState');
     if (widget.gameConfig.gameDisplay != GameDisplay.myHeadToHead ||
         widget.gameConfig.gameDisplay != GameDisplay.otherHeadToHead) {
       if (widget.gameConfig.orientation == Orientation.landscape) {
@@ -406,7 +407,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           widget.gameConfig.myIteration++;
         });
         if (widget.gameConfig.myIteration >= maxIterations &&
-            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn ||
+            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
                 widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn))
           _onGameEnd(context, gameData: gameData);
       } else {

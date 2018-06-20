@@ -130,18 +130,17 @@ class MemoryState extends State<Memory> {
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
           print("Pressed Statuses before checking: ${_statuses}");
+          print("maxSize Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_maxSize}");
+          print("_size Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_size}");
 
           if(initialVisibility == true) return;
       
           if (_statuses[index] == Status.Disappear) return;
 
-          int numOfVisible = _statuses.fold(0,
-              (prev, element) => element == Status.Visible ? prev + 1 : prev);
+          int numOfVisible = _statuses.fold(0, (prev, element) => element == Status.Visible ? prev + 1 : prev);
 
-          if (_pressedTileIndex == index ||
-              _statuses[index] == Status.Visible ||
-              numOfVisible >= 2 ||
-              _clickCnt > 2) return;
+          if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || _clickCnt > 2) 
+            return;
 
           _clickCnt++;
 
@@ -175,7 +174,7 @@ class MemoryState extends State<Memory> {
 
               _matched++;
               widget.onScore(2);
-              widget.onProgress((_progressCnt) / ((_maxSize * _maxSize) / 2));
+              widget.onProgress((_progressCnt) / ((_size * _size) / 2));
               _progressCnt++;
 
               print("Rajesh-Matched${_matched}");
