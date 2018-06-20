@@ -354,13 +354,21 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
 }
 
 Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
+
+var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+   
+  
+
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
   switch (0) {
     case 0:
       return new Tuple2([
         
-          'catseings',
+          
           ' actings',
           'casing',
           'cast',
@@ -374,6 +382,65 @@ Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
           'at',
           'tas',
           'as',
+          	
+"GEN",	
+"GET",	
+"GIE",	
+"GIN",	
+"GIS",	
+"GIT",	
+"ING",	
+"NAG",	
+"NEG",	
+"SAG",	
+"SEG",	
+"SIG",	
+"TAG",	
+"TEG",	
+"TIG",	
+"AIN",	
+"AIS",	
+"AIT",		
+"ANI",	
+"ANS",	
+"ANT",	
+"ASS",	
+"ATE",	
+"ATS",	
+"EAN",	
+"EAS",	
+"EAT",	
+"ENS",	
+"ESS",	
+"EST",	
+"ETA",	
+"INS",	
+"ITA",	
+"ITS",	
+"NAE",	
+"NAS",	
+"NAT",	
+
+
+"ETAS",	
+"ETNA",	
+"ISNA",	
+"ITAS",	
+"NAES",	
+"NATS",	
+"NEAT",	
+"NESS",	
+"NEST",	
+"NETS",	
+"NIES",	
+"NITE",	
+"NITS",	
+"SAIN",	
+"SAIS",
+"SANE",
+"SANS",
+"SANT",
+"SATE",	
           'ats'
         
       ],'catseings');
@@ -421,6 +488,7 @@ Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
       break;
   }
    return null;
+}
 }
 
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
@@ -559,8 +627,8 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   Map<String, List<String>> drink = {
     'water': ['wa', 'ter'],
     'milk': ['mi', 'lk'],
-    'coke': ['co', 'ke'],
-    'beer': ['be', 'er'],
+    'coffee': ['cof', 'fee'],
+    'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
     'bus': ['bu', 's'],
@@ -570,15 +638,15 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   };
   Map<String, List<String>> redfruit = {
     'apple': ['ap', 'ple'],
-    'cheery': ['che', 'ery'],
-    'litchi': ['lit', 'chi'],
+    'cherry': ['che', 'rry'],
+    'carrot': ['ca', 'rrot'],
     'tomoto': ['tom', 'oto'],
   };
   Map<String, List<String>> blackpet = {
     'cat': ['ca', 't'],
     'dog': ['do', 'g'],
     'panda': ['pa', 'nda'],
-    'cow': ['co', 'w'],
+    'crow': ['cr', 'ow'],
   };
   Map<String, Map<String, List<String>>> value = {
     'drink': drink,
@@ -588,4 +656,16 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   };
   completer.complete(value);
   return completer.future;
+}
+Future <Tuple3<String,List<String>,List<String>>> fetchPictureSentenceData(int categoryId) async{
+
+ String sentence1 = "MOUNT EVEREST is the highest _ in the _";
+ //String sentence2 = "Today is_ ";
+ List<String> answer = ['mountain','world'];
+ List<String> option =['mountain','world','chair','home'];
+ return new Tuple3(
+   sentence1, 
+   answer,
+    option);
+
 }

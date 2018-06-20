@@ -18,7 +18,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
 
-String sentence1 = "Which is the highest";
+String sentence1 = "MOUNT EVEREST is the highest";
 String sentence2 = "in the  ";
 
 class PictureSentence extends StatefulWidget {
@@ -26,6 +26,7 @@ class PictureSentence extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+   int gameCategoryId;
   GameConfig gameConfig;
   bool isRotated;
 
@@ -34,6 +35,7 @@ class PictureSentence extends StatefulWidget {
       this.onScore,
       this.onProgress,
       this.onEnd,
+      this.gameCategoryId,
       this.iteration,
       this.gameConfig,
       this.isRotated})
@@ -48,11 +50,10 @@ enum Status { Active, Right, Wrong }
 class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
-  Tuple3<String, String, List<String>> _allques;
   int _size = 2;
-  String questionText;
-  String ans;
-  List<String> ch;
+  // String questionText;
+  
+  List<String> ans =[];
   List<String> choice = [];
   List<Status> _statuses = [];
   bool isCorrect;
@@ -63,31 +64,33 @@ class PictureSentenceState extends State<PictureSentence> {
     super.initState();
     _initBoard();
   }
-
+Tuple3<String,List<String>,List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-    choice = [];
-    _allques =
-        await fetchMultipleChoiceData(widget.gameConfig.gameCategoryId, 3);
-    print("this is my data  $_allques");
-    print(_allques.item1);
-    questionText = _allques.item1;
-    print(_allques.item2);
-    ans = _allques.item2;
-    print(_allques.item3);
-    ch = _allques.item3;
-    for (var x = 0; x < ch.length; x++) {
-      choice.add(ch[x]);
-    }
-    choice.add(ans);
+    
+    picturedata =
+        await fetchPictureSentenceData(widget.gameCategoryId);
+        print(" fectched data  >>>> $picturedata");
+    
+    ans = picturedata.item2;
+    choice = picturedata.item3;
+    // ans = _allques.item2;
+    // print(_allques.item3);
+    // ch = _allques.item3;
+    // for (var x = 0; x < ch.length; x++) {
+    //   choice.add(ch[x]);
+    // }
+    // choice.add(ans);
     print("My Choices - $choice");
 
     choice.shuffle();
-    _size = min(2, sqrt(choice.length).floor());
+
+    print("After shuffle Choices - $choice");
+    // _size = min(2, sqrt(choice.length).floor());
 
     _statuses = choice.map((a) => Status.Active).toList(growable: false);
 
-    print("My shuffled Choices - $choice");
+    // print("My shuffled Choices - $choice");
     print("My states - $_statuses");
 
     setState(() => _isLoading = false);
@@ -99,7 +102,7 @@ class PictureSentenceState extends State<PictureSentence> {
         unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
-        ans: this.ans,
+        // ans: this.ans,
         keys: keys++,
         onPress: () {
           if (text == ans) {
@@ -133,15 +136,13 @@ class PictureSentenceState extends State<PictureSentence> {
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      print(_allques);
+     
     }
   }
 
   @override
   Widget build(BuildContext context) {
     keys = 0;
-    print("Question text here $questionText");
-    print("Answer here $ans");
 
     if (_isLoading) {
       return new SizedBox(
@@ -184,100 +185,72 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: new LimitedBox(
-                    maxHeight: maxHeight,
-                    maxWidth: double.infinity,
-                    child: new Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      textBaseline: TextBaseline.ideographic,
-                      children: <Widget>[
-                        new Text(sentence1,
-                            overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 40.0)),
-                        new Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Row(children: [
-                            // new FloatingActionButton(
-                            //   onPressed: () {
-                            //     showDialog(
-                            //         context: context,
-                            //         child: new FractionallySizedBox(
-                            //             heightFactor: 0.5,
-                            //             widthFactor: 0.8,
-                            //             child: new PictureCard(
-                            //                 text: "widget.text")));
-                            //   },
-                            //   tooltip: 'Check the picture',
-                            //   child: new Icon(Icons.comment),
-                            // ),
-                            // new IconButton(
-                            //     iconSize: 24.0,
-                            //     color: Colors.black,
-                            //     icon: new Icon(Icons.comment),
-                            //     tooltip: 'check the picture',
-                            //     onPressed: () {
-                            //       showDialog(
-                            //           context: context,
-                            //           child: new FractionallySizedBox(
-                            //               heightFactor: 0.5,
-                            //               widthFactor: 0.8,
-                            //               child: new PictureCard(
-                            //                   text: "widget.text")));
-                            //     }),
-                            new Container(
-                              child: new FlatButton(
-                                child: const Text(""),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      child: new FractionallySizedBox(
-                                          heightFactor: 0.5,
-                                          widthFactor: 0.8,
-                                          child: new PictureCard(
-                                              text: "widget.text")));
-                                },
-                              ),
-                              color: Colors.grey,
-                              height: 40.0,
-                              width: 100.0,
-                            ),
-                          ]),
-                        ),
-                        new Text(
-                          sentence2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.clip,
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40.0,
-                              color: Colors.black),
-                        ),
-                        new Container(
-                          child: new FlatButton(
-                            child: const Text(""),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  child: new FractionallySizedBox(
-                                      heightFactor: 0.5,
-                                      widthFactor: 0.8,
-                                      child: new PictureCard(
-                                          text: "widget.text")));
-                            },
-                          ),
-                          color: Colors.grey,
-                          height: 40.0,
-                          width: 100.0,
-                        ),
-                      ],
-                    ))),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(sentence1,
+                        softWrap: true,
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 40.0)),
+                     
+                   
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                    child: new FlatButton(
+                      child: const Text(""),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            child: new FractionallySizedBox(
+                                heightFactor: 0.5,
+                                widthFactor: 0.8,
+                                child:
+                                    new PictureCard(text: "widget.text")));
+                      },
+                    ),
+                    color: Colors.grey,
+                    height: 40.0,
+                    width: 100.0,
+                      ),
+                    ),
+                    new Text(
+                      sentence2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40.0,
+                      color: Colors.black),
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: new Container(
+                    child: new FlatButton(
+                      child: const Text(""),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            child: new FractionallySizedBox(
+                                heightFactor: 0.5,
+                                widthFactor: 0.8,
+                                child:
+                                    new PictureCard(text: "widget.text")));
+                      },
+                    ),
+                    color: Colors.grey,
+                    height: 40.0,
+                    width: 100.0,
+                      ),
+                    ),
+                  ],
+                )),
           ),
           new Expanded(
-              flex: 2,
+              flex: 1,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,

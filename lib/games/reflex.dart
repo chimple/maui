@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -72,20 +73,46 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
   }
 
   void _initBoard() async {
-    _currentIndex = 0;
-    setState(() => _isLoading = true);
-    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
-    _size = min(_maxSize, sqrt(_allLetters.length).floor());
-    _shuffledLetters = [];
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
-      _shuffledLetters.addAll(
-          _allLetters.skip(i).take(_size * _size).toList(growable: false)
-            ..shuffle());
+    print('_initBoard: ${widget.gameConfig.gameData}');
+    if (widget.gameConfig.gameData != null) {
+      print('initializing from: ${widget.gameConfig.gameData}');
+      fromJsonMap(widget.gameConfig.gameData);
+      setState(() => _isLoading = false);
+    } else {
+      _currentIndex = 0;
+      setState(() => _isLoading = true);
+      _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
+      _size = min(_maxSize, sqrt(_allLetters.length).floor());
+      _shuffledLetters = [];
+      for (var i = 0; i < _allLetters.length; i += _size * _size) {
+        _shuffledLetters.addAll(
+            _allLetters.skip(i).take(_size * _size).toList(growable: false)
+              ..shuffle());
+      }
+      _letters = _shuffledLetters.sublist(0, _size * _size);
+      _solvedLetters = [];
+      setState(() => _isLoading = false);
     }
-//    print(_shuffledLetters);
-    _letters = _shuffledLetters.sublist(0, _size * _size);
-    _solvedLetters = [];
-    setState(() => _isLoading = false);
+  }
+
+  Map<String, dynamic> toJsonMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['allLetters'] = _allLetters;
+    data['shuffledLetters'] = _shuffledLetters;
+    data['letters'] = _letters;
+    data['solvedLetters'] = _solvedLetters;
+    data['currentIndex'] = _currentIndex;
+    data['size'] = _size;
+    return data;
+  }
+
+  void fromJsonMap(Map<String, dynamic> data) {
+    _allLetters = data['allLetters'].cast<String>();
+    _shuffledLetters = data['shuffledLetters'].cast<String>();
+    _letters = data['letters'].cast<String>();
+    _solvedLetters = data['solvedLetters'].cast<String>();
+    _currentIndex = data['currentIndex'];
+    _size = data['size'];
   }
 
   @override
@@ -122,11 +149,12 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
             new Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
                 _solvedLetters.insert(0, text);
+                widget.onEnd(toJsonMap(), false);
               });
             });
             if (_currentIndex >= _allLetters.length) {
               new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd();
+                widget.onEnd(toJsonMap(), true);
               });
             }
           } else {

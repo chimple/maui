@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "92db38eb73b1793a9d2a83c32e8f4fd61ea62de5"
+      resolved-ref: c229c37560351bb6b87227ad1923deb2d07a82cd
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -540,7 +540,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.13"
+    version: "0.0.14"
   string_scanner:
     dependency: transitive
     description:
