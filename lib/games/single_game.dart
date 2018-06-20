@@ -406,7 +406,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           widget.gameConfig.myIteration++;
         });
         if (widget.gameConfig.myIteration >= maxIterations &&
-            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn ||
+            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
                 widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn))
           _onGameEnd(context, gameData: gameData);
       } else {
