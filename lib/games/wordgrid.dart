@@ -60,7 +60,7 @@ class WordgridState extends State<Wordgrid> {
   int lastclick;
   int tries = 0;
   List<Offset> _pointssend = <Offset>[];
-  List<ShakeCell> _ShakeCells = [];
+  List<ShakeCell> _shakeCells = [];
   List<int> clicks = [];
   @override
   void initState() {
@@ -120,19 +120,23 @@ class WordgridState extends State<Wordgrid> {
     }
     var cflag = 1;
     while (cflag == 1) {
-      var start = 0;
-      if (_size < 3) {
-        if (rng.nextInt(3) == 1)
-          start = 0;
-        else
-          start = 1;
-      } else if (rng.nextInt(3) == 1) {
+      cflag = 0;
+      var start = 1;
+      if (rng.nextInt(3) == 1) {
         start = rng.nextInt(_size);
       } else {
         start = rng.nextInt(_size * _size - 2);
       }
-      print('start $start $cdlist');
-      var cdstart = cdlist[start];
+      if (rng.nextInt(3) != 1) {
+        if (_size < 3) {
+          if (rng.nextInt(3) == 1)
+            start = 2;
+          else
+            start = 3;
+        }
+      }
+      if (start == 0) start = 1;
+      var cdstart = cdlist[start - 1];
       int eflag = 1;
       _fun(data) {
         for (var i = 0; i < cdletters.length; i++) {
@@ -147,50 +151,42 @@ class WordgridState extends State<Wordgrid> {
         eflag = 0;
         var p = cdstart.toInt();
         var q = ((cdstart - p) * 10).toInt();
-        var len = 0;
-        var top = 1;
+        var len = 1;
         cdletters = [];
+        var top = true;
         var rand = rng.nextInt(3) == 1;
+        cdletters.add(start - 1);
         while (len < data.item1.length) {
-          cflag = 0;
-          if (q + 1 < _size && _fun(p * _size + (q + 1)) && !rand && top < 2) {
+          if (q + 1 < _size && _fun(p * _size + (q + 1)) && rand && top) {
             cdletters.add(p * _size + (q + 1));
             q++;
-            top = 1;
-          } else if (p + 1 < _size && _fun((p + 1) * _size + q) && top < 3) {
+          } else if (p + 1 < _size && _fun((p + 1) * _size + q) && top) {
             cdletters.add((p + 1) * _size + q);
             p++;
-            top = 2;
           } else if (q + 1 < _size &&
               _fun(p * _size + (q + 1)) &&
-              rand &&
-              top < 2) {
+              !rand &&
+              top) {
             cdletters.add(p * _size + (q + 1));
             q++;
-            top = 1;
-          } else if (q - 1 >= 0 && _fun(p * _size + (q - 1)) && top < 4) {
+          } else if (q - 1 >= 0 && _fun(p * _size + (q - 1))) {
             cdletters.add(p * _size + (q - 1));
             q--;
-            top = 3;
-          } else if (p - 1 >= 0 && _fun((p - 1) * _size + q) && top < 5) {
+          } else if (p - 1 >= 0 && _fun((p - 1) * _size + q)) {
             cdletters.add((p - 1) * _size + q);
             p--;
-            top = 4;
           } else {
             print('exit 2 breakkkkk');
             cflag = 1;
             break;
           }
           len++;
-          if (len > 4) {
-            top = top;
-          } else {
-            top = 1;
+          if (len == 5) {
+            top = rng.nextInt(3) != 1;
           }
         }
-        if (cdletters.length != data.item1.length) {
-          eflag = 1;
-        }
+        if (cflag == 1) break;
+        if (cdletters.length != data.item1.length) eflag = 1;
       }
     }
     newletters = [];
@@ -198,7 +194,6 @@ class WordgridState extends State<Wordgrid> {
     for (var i = 0; i < cdletters.length; i++) {
       newletters[cdletters[i]] = data.item1[i];
     }
-
     for (var i = 0, j = 0; i < newletters.length; i++) {
       if (newletters[i] == null) {
         newletters[i] = data.item2[j];
@@ -208,7 +203,7 @@ class WordgridState extends State<Wordgrid> {
     _statuses = [];
     _statuses = newletters.map((a) => Status.Draggable).toList(growable: false);
     _visibleflag = newletters.map((a) => false).toList(growable: false);
-    _ShakeCells =
+    _shakeCells =
         newletters.map((a) => ShakeCell.InActive).toList(growable: false);
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
@@ -299,7 +294,6 @@ class WordgridState extends State<Wordgrid> {
           return false;
         },
         onCancel: (v, g) {
-          print('cancelled  $v  $g');
           lastclick = -1;
           int flag = 0;
           if (data.item1.length == temp.length) {
@@ -318,14 +312,14 @@ class WordgridState extends State<Wordgrid> {
             tries += 5;
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
-                _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
+                _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
               widget.onScore((40 - tries) ~/ totalgame);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
                 stopdrag = false;
                 _pointssend = [];
-                _ShakeCells = newletters
+                _shakeCells = newletters
                     .map((a) => ShakeCell.InActive)
                     .toList(growable: false);
                 _statuses = newletters
@@ -339,7 +333,7 @@ class WordgridState extends State<Wordgrid> {
             widget.onScore((40 - tries) ~/ totalgame);
             widget.onProgress(1.0);
             endflag = 1;
-            new Future.delayed(const Duration(milliseconds: 300), () {
+            new Future.delayed(const Duration(milliseconds: 350), () {
               setState(() {
                 _isShowingFlashCard = true;
               });
@@ -379,10 +373,7 @@ class WordgridState extends State<Wordgrid> {
       List<Offset> offsets1 =
           calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
       yaxis = yaxis + state.buttonWidth + buttonPadding;
-      double y1 = yaxis;
-
       xaxis = xaxis;
-      double x1 = xaxis;
       double ystart = yaxis;
       double xstart =
           (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
@@ -465,7 +456,7 @@ class WordgridState extends State<Wordgrid> {
                                   j,
                                   e,
                                   _statuses[j],
-                                  _ShakeCells[j],
+                                  _shakeCells[j],
                                   offsets[j],
                                   _visibleflag[j++])))
                           .toList(growable: false),
@@ -526,7 +517,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
-      print("emulator size in canvas .....::...${media.size.height}");
       return new Container(
         child: new CustomPaint(
           // size: new Size(0.0, 0.0),
