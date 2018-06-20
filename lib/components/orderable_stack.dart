@@ -74,16 +74,6 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
   List<T> get currentOrder => orderableItems.map((item) => item.value).toList();
 
   @override
-    void didUpdateWidget(OrderableStack<T> oldWidget) {
-      // TODO: implement didUpdateWidget
-      super.didUpdateWidget(oldWidget);
-
-      if(oldWidget.iteration!=widget.iteration){
-        _initBoard();
-      }
-    }
-
-  @override
   void initState() {
     super.initState();
     _initBoard();
@@ -100,9 +90,18 @@ class _OrderableStackState<T> extends State<OrderableStack<T>> {
        //notify the initial order
       widget.onChange(currentOrder);
       lastOrder = currentOrder;
-    });
-    
+    }); 
   }
+
+   @override
+    void didUpdateWidget(OrderableStack<T> oldWidget) {
+      // TODO: implement didUpdateWidget
+      super.didUpdateWidget(oldWidget);
+
+      if(oldWidget.iteration!=widget.iteration){
+        _initBoard();
+      }
+    }
 
   @override
   Widget build(BuildContext context) => new Column(
