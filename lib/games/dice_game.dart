@@ -142,20 +142,19 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           }
           if (userControl) {
             print({"hurry , you are correct user to access keyboard": player});
-            for (i = 0; i < data.length; i++) {
               if (btnVal == sum || btnVal == sub) {
                 _currentIndex++;
                 widget.onScore(2);
                 widget.onProgress(_currentIndex / data.length);
-                if ( _currentIndex1 >= data.length-1 || _currentIndex2 >= data1.length-1) {
-              new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd();
-              });
-            
-          } 
-          // else {
-          //   widget.onScore(-1);
-          // }
+                if (_currentIndex1 >= data.length - 1 ||
+                    _currentIndex2 >= data1.length - 1) {
+                  new Future.delayed(const Duration(milliseconds: 250), () {
+                    // widget.onEnd();
+                  });
+                }
+                // else {
+                //   widget.onScore(-1);
+                // }
                 resetDice();
                 sum = 0;
                 sub = 0;
@@ -167,8 +166,10 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                   data1[index] = '';
                   flag = 0;
                 }
+              }else{
+                print({"wrong data : " : "animation started"});
+                
               }
-            }
           }
           print("hellow manuuuu $text");
         });
@@ -344,7 +345,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    animation.dispose();
     super.dispose();
   }
 
@@ -396,8 +396,6 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller, controller1;
-  Animation<double> animation, animation1;
   String _displayText;
   String newtext = '';
   var f = 0;
@@ -406,45 +404,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
     _displayText = widget.text;
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
-    controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 40), vsync: this);
-    animation =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate)
-          ..addStatusListener((state) {});
-    controller.forward();
-    animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
-    _myAnim();
-  }
-
-  void _myAnim() {
-    animation1.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller1.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        controller1.forward();
-      }
-    });
-    controller1.forward();
   }
 
   @override
   void dispose() {
-    controller1.dispose();
-    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new ScaleTransition(
-        scale: animation,
-        child: new Container(
-            child: new UnitButton(
-          onPress: widget.onPress,
-          text: widget.text,
-          unitMode: UnitMode.text,
-        )));
+    return new Container(
+        child: new UnitButton(
+      onPress: widget.onPress,
+      text: widget.text,
+      unitMode: UnitMode.text,
+    ));
   }
 }
