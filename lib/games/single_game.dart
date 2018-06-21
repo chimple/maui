@@ -216,6 +216,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 //    SystemChrome.setEnabledSystemUIOverlays([]);
+    print('_SingleGameState: initState');
     if (widget.gameConfig.gameDisplay != GameDisplay.myHeadToHead ||
         widget.gameConfig.gameDisplay != GameDisplay.otherHeadToHead) {
       if (widget.gameConfig.orientation == Orientation.landscape) {
