@@ -200,7 +200,14 @@ List<String> Ssum=[];
          {
             _statuses[temp] = Status.Dragtarget;
           setState(() {
-             ssum = '$ssum' + '+' + '$text';
+            if(ssum==''){
+
+              ssum= '$text';
+            }
+            else{
+              ssum = '$ssum' + '+' + '$text';
+            }
+             
              sum = sum + text;
               _Index.add(index);
              lastclick = index;
@@ -221,29 +228,34 @@ List<String> Ssum=[];
            
             if (index == tempindex[tempindex.length - 2]) {
               setState(() {
-                _visibleflag[tempindex.last] = false;
+               
+
+                  if(ssum.length>=2){
+          ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
+           _visibleflag[tempindex.last] = false;
                 tempindex.removeLast();
                 sum=sum-clickAns.last;
                 clickAns.removeLast();
                
              print("object on undo part when sub doing..$sum....::$text ");
                 lastclick = tempindex.last;
-
-                  if(ssum.length>=2){
-          ssum=ssum.replaceRange(ssum.length-2, ssum.length,'');
           _pointssend.removeLast();
            _Index.removeLast();
-          _method(Ansr,sum);
+          // _method(Ansr,sum);
          
            }
            else{
               ssum=ssum.replaceRange(ssum.length-1, ssum.length,'');
+              _visibleflag[tempindex.last] = false;
               ssum='';
-               sum=sum-clickAns.last;
-               clickAns.removeLast();
-              _pointssend.removeRange(0, _pointssend.length);
-               _center.removeRange(0, _center.length);
-                _Index.removeRange(0, _Index.length);
+                tempindex.removeLast();
+                sum=sum-clickAns.last;
+                clickAns.removeLast();
+               
+             print("object on undo part when sub doing22222..$ssum....::${ssum.length} ");
+                lastclick = tempindex.last;
+          _pointssend.removeLast();
+           _Index.removeLast();
            }
               });
               return true;
@@ -256,11 +268,13 @@ List<String> Ssum=[];
                print("values of sum is ...::..$sum");
                int flag=0;
                setState(() {
+                   _pointssend.removeRange(0, _pointssend.length);
                  start=false;
                     if (sum == Ansr) {
                       flag=1;
                       ssum = '$ssum' + '=$sum';
                        _pointssend.removeRange(0, _pointssend.length);
+                       tempindex.removeRange(0, tempindex.length);
                       new Future.delayed(const Duration(milliseconds: 250), () {
                        widget.onScore(((40 - tries) ~/ totalgame));
             
@@ -942,109 +956,109 @@ List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,state.
     );
   }
 
-   _method(int ansr, int sum) {
-     print("object.....sum and ans is .....$sum......::..$ansr");
-if (sum == ansr) {
-                      flag=1;
-                      ssum = '$ssum' + '=$sum';
-                       _pointssend.removeRange(0, _pointssend.length);
-                      new Future.delayed(const Duration(milliseconds: 250), () {
-                        widget.onScore(1);
-                         count1=count1+1;
-                        widget.onProgress((count1) /(7));
+//    _method(int ansr, int sum) {
+//      print("object.....sum and ans is .....$sum......::..$ansr");
+// if (sum == ansr) {
+//                       flag=1;
+//                       ssum = '$ssum' + '=$sum';
+//                        _pointssend.removeRange(0, _pointssend.length);
+//                       new Future.delayed(const Duration(milliseconds: 250), () {
+//                         widget.onScore(1);
+//                          count1=count1+1;
+//                         widget.onProgress((count1) /(7));
                        
-                        for (var i = 0; i < _Index.length; i++) {
-                          _letters[_Index[i]] = null;
-                        }
+//                         for (var i = 0; i < _Index.length; i++) {
+//                           _letters[_Index[i]] = null;
+//                         }
 
-                        sum = 0;
-                        center = 0;
-                        _center.removeRange(0, _center.length);
-                        print(
-                            'helo this is sum when resetting in it value $sum');
-                        print(
-                            'helo this is sum when resetting in it value $_letters');
-                        _letters.forEach((e) {
-                          if (e == null) {
-                            count = count + 1;
-                          }
-                        });
-                        //this is you want to clear the ans value in it after some time it will disappear
-                        setState(() {
-                          ssum = '';
-                        });
+//                         sum = 0;
+//                         center = 0;
+//                         _center.removeRange(0, _center.length);
+//                         print(
+//                             'helo this is sum when resetting in it value $sum');
+//                         print(
+//                             'helo this is sum when resetting in it value $_letters');
+//                         _letters.forEach((e) {
+//                           if (e == null) {
+//                             count = count + 1;
+//                           }
+//                         });
+//                         //this is you want to clear the ans value in it after some time it will disappear
+//                         setState(() {
+//                           ssum = '';
+//                         });
 
-                        _letters.removeWhere((value) => value == null);
-                        for (var i = 0; i < count; i++) {
-                          _letters.add(null);
-                        }
-                        print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+//                         _letters.removeWhere((value) => value == null);
+//                         for (var i = 0; i < count; i++) {
+//                           _letters.add(null);
+//                         }
+//                         print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
-                        _val2.removeRange(0, _val2.length);
+//                         _val2.removeRange(0, _val2.length);
 
-                        Ansum = 0;
-                        _val2 = _letters.sublist(0, z);
-                        z++;
-                        print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
-                        _val2.forEach((e) {
-                          if (e == null) {}
-                        });
-                        print("my calling onennd value is $k");
-                        _val2.removeWhere((value) => value == null);
-                        k = _val2.length;
+//                         Ansum = 0;
+//                         _val2 = _letters.sublist(0, z);
+//                         z++;
+//                         print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
+//                         _val2.forEach((e) {
+//                           if (e == null) {}
+//                         });
+//                         print("my calling onennd value is $k");
+//                         _val2.removeWhere((value) => value == null);
+//                         k = _val2.length;
 
-                        print("thid is the vlaue of length is valu$k");
-                        for (num e in _val2) {
-                          Ansum += e;
-                        }
-                        print("thhhiiiiiiisssss isss shanthuuuu$_val2");
-                        Ansr = Ansum;
+//                         print("thid is the vlaue of length is valu$k");
+//                         for (num e in _val2) {
+//                           Ansum += e;
+//                         }
+//                         print("thhhiiiiiiisssss isss shanthuuuu$_val2");
+//                         Ansr = Ansum;
 
-                        count = 0;
-                        // _statuses = _copyVal
-                        //     .map((a) => Status.Active)
-                        //     .toList(growable: false);
-                        _Bgstatus = _copyVal
-                            .map((a) => Bgstatus.BgActive)
-                            .toList(growable: false);
-                         _statuses = _copyVal
-                    .map((a) => Status.Draggable)
-                    .toList(growable: false);
-                _visibleflag =
-                   _copyVal.map((a) => false).toList(growable: false);
-                        _Index.removeRange(0, _Index.length);
-                        _num2.removeRange(0, _num2.length);
-                      });
-                      k = _letters[4];
-                      print("helllo this letters$k");
-                      if (_letters[z] == null) {
+//                         count = 0;
+//                         // _statuses = _copyVal
+//                         //     .map((a) => Status.Active)
+//                         //     .toList(growable: false);
+//                         _Bgstatus = _copyVal
+//                             .map((a) => Bgstatus.BgActive)
+//                             .toList(growable: false);
+//                          _statuses = _copyVal
+//                     .map((a) => Status.Draggable)
+//                     .toList(growable: false);
+//                 _visibleflag =
+//                    _copyVal.map((a) => false).toList(growable: false);
+//                         _Index.removeRange(0, _Index.length);
+//                         _num2.removeRange(0, _num2.length);
+//                       });
+//                       k = _letters[4];
+//                       print("helllo this letters$k");
+//                       if (_letters[z] == null) {
 
-                      //here setting every variable data using within the functionality making as initial set 
-                        setState(() {
-                        // here you want to get  another level of data in widget.onend it will call another set of datra
-                          print("its reload time ");
-                          k = 0;
-                          // count1=count1-z;
-                          Ansr = 0;
-                           ssum = "";
-                          sum = 0;
-                          clicks.removeRange(0, clicks.length);
-                          _Index.removeRange(0, _Index.length);
-                          _letters.removeRange(0, _letters.length);
-                          _center.removeRange(0, _center.length);
-                        });
-                        new Future.delayed(const Duration(milliseconds: 250),
-                            () {
-                          start=false;
-                          widget.onEnd();
-                            count1=count1;
-                            _pointssend.removeRange(0, _pointssend.length);
-                        });
-                      }
+//                       //here setting every variable data using within the functionality making as initial set 
+//                         setState(() {
+//                         // here you want to get  another level of data in widget.onend it will call another set of datra
+//                           print("its reload time ");
+//                           k = 0;
+//                           // count1=count1-z;
+//                           Ansr = 0;
+//                            ssum = "";
+//                           sum = 0;
+//                           clicks.removeRange(0, clicks.length);
+//                           _Index.removeRange(0, _Index.length);
+//                           _letters.removeRange(0, _letters.length);
+//                           _center.removeRange(0, _center.length);
+//                         });
+//                         new Future.delayed(const Duration(milliseconds: 250),
+//                             () {
+//                           start=false;
+//                           widget.onEnd();
+//                             count1=count1;
+//                             _pointssend.removeRange(0, _pointssend.length);
+//                         });
+//                       }
 
-                      _val2.removeRange(0, _val2.length);
-                    }
-  }
+//                       _val2.removeRange(0, _val2.length);
+//                     }
+//   }
 
  
 }
@@ -1247,7 +1261,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           elevation: widget.vflag == true ? 10.0 : 0.0,
                           color: Colors.transparent,
                           child: new UnitButton(
-                            highlighted: widget.vflag == true ? true : false,
+                            highlighted: widget.vflag,
                             text: _displayText.toString(),
                             onPress: () => {},
                             unitMode: UnitMode.text,
@@ -1265,7 +1279,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                    maxSimultaneousDrags: 1,
                     feedback: new Container(),
                     child: new UnitButton(
-                      highlighted: widget.vflag == true ? true : false,
+                      highlighted: widget.vflag ,
                       text: _displayText.toString(),
                       onPress: () => {},
                       unitMode: UnitMode.text,
