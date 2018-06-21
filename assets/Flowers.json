@@ -1,0 +1,98 @@
+{
+    "id": "Flowers.png",
+    "height": 1703.0,
+    "width": 1703.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "tulip",
+            "data": {
+                "height": 454.0,
+                "width": 291.0,
+                "x": 253.0,
+                "y": 247.0
+            }
+        },
+        {
+            "name": "hibiscus",
+            "data": {
+                "height": 351.0,
+                "width": 450.0,
+                "x": 825.0,
+                "y": 222.0
+            }
+        },
+        {
+            "name": "lotus",
+            "data": {
+                "height": 378.0,
+                "width": 444.0,
+                "x": 1436.0,
+                "y": 236.0
+            }
+        },
+        {
+            "name": "orchid",
+            "data": {
+                "height": 450.0,
+                "width": 468.0,
+                "x": 302.0,
+                "y": 815.0
+            }
+        },
+        {
+            "name": "daffodil",
+            "data": {
+                "height": 509.0,
+                "width": 333.0,
+                "x": 823.0,
+                "y": 769.0
+            }
+        },
+        {
+            "name": "jasmine",
+            "data": {
+                "height": 213.0,
+                "width": 544.0,
+                "x": 1360.0,
+                "y": 651.0
+            }
+        },
+        {
+            "name": "lavender",
+            "data": {
+                "height": 537.0,
+                "width": 321.0,
+                "x": 258.0,
+                "y": 1413.0
+            }
+        },
+        {
+            "name": "sunflower",
+            "data": {
+                "height": 456.0,
+                "width": 384.0,
+                "x": 828.0,
+                "y": 1454.0
+            }
+        },
+        {
+            "name": "rose",
+            "data": {
+                "height": 327.0,
+                "width": 363.0,
+                "x": 1395.0,
+                "y": 1039.0
+            }
+        },
+        {
+            "name": "chamomile",
+            "data": {
+                "height": 387.0,
+                "width": 387.0,
+                "x": 1383.0,
+                "y": 1478.0
+            }
+        }
+    ]
+}
