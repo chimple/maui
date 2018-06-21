@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "727d9e44ec6445225f65ff3e167ab80e7f216c80"
+      resolved-ref: "7f2be520194c2998761e3151ad74fc9409b8caba"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -647,5 +647,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.58.0.flutter-f981f09760"
+  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.54.0.flutter-46ab040e58"
   flutter: ">=0.1.4 <2.0.0"

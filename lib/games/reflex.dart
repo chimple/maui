@@ -75,7 +75,9 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
   void _initBoard() async {
     print('_initBoard: ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
-      fromJson(widget.gameConfig.gameData);
+      print('initializing from: ${widget.gameConfig.gameData}');
+      fromJsonMap(widget.gameConfig.gameData);
+      setState(() => _isLoading = false);
     } else {
       _currentIndex = 0;
       setState(() => _isLoading = true);
@@ -93,7 +95,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
     }
   }
 
-  String toJson() {
+  Map<String, dynamic> toJsonMap() {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['allLetters'] = _allLetters;
     data['shuffledLetters'] = _shuffledLetters;
@@ -101,11 +103,10 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
     data['solvedLetters'] = _solvedLetters;
     data['currentIndex'] = _currentIndex;
     data['size'] = _size;
-    return json.encode(data);
+    return data;
   }
 
-  void fromJson(String jsonStr) {
-    Map<String, dynamic> data = json.decode(jsonStr);
+  void fromJsonMap(Map<String, dynamic> data) {
     _allLetters = data['allLetters'].cast<String>();
     _shuffledLetters = data['shuffledLetters'].cast<String>();
     _letters = data['letters'].cast<String>();
@@ -148,12 +149,12 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
             new Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
                 _solvedLetters.insert(0, text);
-                widget.onEnd(toJson(), false);
+                widget.onEnd(toJsonMap(), false);
               });
             });
             if (_currentIndex >= _allLetters.length) {
               new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd(toJson(), true);
+                widget.onEnd(toJsonMap(), true);
               });
             }
           } else {
