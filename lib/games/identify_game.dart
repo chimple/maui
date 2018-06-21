@@ -32,8 +32,6 @@ class _IdentifyGameState extends State<IdentifyGame>
     with TickerProviderStateMixin {
   List<AnimationController> _textControllers = new List<AnimationController>();
   List<Animation<double>> _animateText = new List<Animation<double>>();
-  int l;
-
   bool _isLoading = true;
   List<Widget> _paint = [];
 
@@ -45,28 +43,31 @@ class _IdentifyGameState extends State<IdentifyGame>
     setState(() => _isLoading = true);
     String jsonGameInfo = await fetchIdentifyData();
 
-    _decoded = json.decode(jsonGameInfo);
+    _decoded = await json.decode(jsonGameInfo);
+    print("intiborad.>>>>>>$_decoded");
+    print(_decoded["parts"]);
+    // print(_decoded["parts"] as List);
     new Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() => _isLoading = false);
-    });
-  }
-
-  void _initialisePaintedTextAnimations(){
-    for (var i = 0; i < 7 ; i++) {
+      // setState(() => _isLoading = false);
+      setState(() {
+        for (var i = 0; i < _decoded["number"] ; i++) {
       _textControllers.add(new AnimationController(
           vsync: this, duration: new Duration(milliseconds: 500)));
       _animateText.add(
           new CurvedAnimation(parent: _textControllers[i], curve: Curves.elasticOut));
-    }
+    }    
+    _imgController.forward();
+              _isLoading = false;
+            });
 
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _initBoard();
-    // print(_decoded["parts"]);
-    _initialisePaintedTextAnimations();
+    print(">>>>>>>>>initstate.>>>$_decoded");
     _imgController = new AnimationController(
         duration: new Duration(
           milliseconds: 800,
@@ -75,8 +76,18 @@ class _IdentifyGameState extends State<IdentifyGame>
     
     animateImage =
         new CurvedAnimation(parent: _imgController, curve: Curves.bounceOut);
-    _imgController.forward();
+    
   }
+
+   @override
+  void didUpdateWidget(IdentifyGame oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
+  }
+
+  
 
   void _renderChoice(String text, double X, double Y) {
     setState(() {
@@ -86,6 +97,8 @@ class _IdentifyGameState extends State<IdentifyGame>
             text: text,
             x: X,
             y: Y,
+            // x: 100.0,
+            // y: 100.0
           ),
         ),
       );
@@ -100,6 +113,9 @@ class _IdentifyGameState extends State<IdentifyGame>
         child: w,
       ),
     );
+    // return new RepaintBoundary(
+    //   child: w,
+    // );
   }
 
   List<Widget> _createTextPaint(BuildContext context) {
@@ -110,12 +126,12 @@ class _IdentifyGameState extends State<IdentifyGame>
   Widget _builtButton(
       BuildContext context, double maxHeight, double maxWidth, int cols) {
     print((_decoded["parts"] as List).length);
-    l = (_decoded["parts"] as List).length;
     int j = 0;
     int r = ((_decoded["parts"] as List).length / cols +
             ((((_decoded["parts"] as List).length % cols) == 0) ? 0 : 1))
         .toInt();
     print(r);
+    (_decoded["parts"] as List).shuffle();
     return new ResponsiveGridView(
       rows: r,
       cols: cols,
@@ -168,6 +184,7 @@ class _IdentifyGameState extends State<IdentifyGame>
 
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>>inside build $_decoded");
     Size media = MediaQuery.of(context).size;
     print("This is the height of the whole screen >>>>>  ${media.height}");
     print("This is the width of the whole screen >>>>> ${media.width}");
@@ -376,6 +393,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             draggableColor: Theme.of(context).disabledColor,
             draggableText: (_flag1 == 0) ? "" :part["name"]),
           onDraggableCanceled: (velocity, offset) {
+            print(velocity);
           Size media = MediaQuery.of(context).size;
           double rh, rw, headerSize;
           rh = (3 * maxHeight) / _decoded["height"];
@@ -393,7 +411,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                           ((rh * part["data"]["height"]) / 2))))) {
             print(
                 " Header Size $headerSize  Start of object ${(headerSize + ((rh * part["data"]["y"]) -((rh * part["data"]["height"]) / 2)))}  End of object  ${(headerSize +((rh * part["data"]["y"]) +((rh * part["data"]["height"]) / 2)))}");
-            render(part["name"], offset.dx, (offset.dy - 35.0));
+            render(part["name"], offset.dx, (rh * part["data"]["y"]));
             print(offset.dy);
             widget.onScore(1);
             _length = _length - 1;
@@ -407,9 +425,11 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
               }
             });
           } 
-          // if(true){
+          // if(true){ 
           //   print("xxxxxxx...${offset.dx}");
+            
           //   print("yyyyyyy...${offset.dy}");
+          //   print((rh * part["data"]["y"]));
           // }
           else {
             widget.onScore(-1);

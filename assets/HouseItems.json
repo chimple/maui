@@ -1,0 +1,98 @@
+{
+    "id": "HouseItems.png",
+    "height": 1366.0,
+    "width": 1366.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "candle",
+            "data": {
+                "height": 384.0,
+                "width": 201.0,
+                "x": 133.0,
+                "y": 207.0
+            }
+        },
+        {
+            "name": "toaster",
+            "data": {
+                "height": 316.0,
+                "width": 316.0,
+                "x": 485.0,
+                "y": 202.0
+            }
+        },
+        {
+            "name": "teddy bear",
+            "data": {
+                "height": 340.0,
+                "width": 269.0,
+                "x": 860.0,
+                "y": 229.0
+            }
+        },
+        {
+            "name": "bulb",
+            "data": {
+                "height": 375.0,
+                "width": 233.0,
+                "x": 1214.0,
+                "y": 246.0
+            }
+        },
+        {
+            "name": "sofa",
+            "data": {
+                "height": 282.0,
+                "width": 398.0,
+                "x": 243.0,
+                "y": 722.0
+            }
+        },
+        {
+            "name": "headphones",
+            "data": {
+                "height": 327.0,
+                "width": 298.0,
+                "x": 708.0,
+                "y": 699.0
+            }
+        },
+        {
+            "name": "microwave oven",
+            "data": {
+                "height": 264.0,
+                "width": 321.0,
+                "x": 1155.0,
+                "y": 743.0
+            }
+        },
+        {
+            "name": "carpet",
+            "data": {
+                "height": 199.0,
+                "width": 426.0,
+                "x": 1103.0,
+                "y": 1151.0
+            }
+        },
+        {
+            "name": "watch",
+            "data": {
+                "height": 398.0,
+                "width": 342.0,
+                "x": 215.0,
+                "y": 1167.0
+            }
+        },
+        {
+            "name": "clock",
+            "data": {
+                "height": 300.0,
+                "width": 321.0,
+                "x": 657.0,
+                "y": 1160.0
+            }
+        }
+    ]
+}

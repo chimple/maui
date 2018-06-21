@@ -1,0 +1,98 @@
+{
+    "id": "BedRoom.png",
+    "height": 1352.0,
+    "width": 1920.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "air conditioner",
+            "data": {
+                "height": 255.0,
+                "width": 948.0,
+                "x": 535.0,
+                "y": 211.0
+            }
+        },
+        {
+            "name": "light",
+            "data": {
+                "height": 83.0,
+                "width": 432.0,
+                "x": 1186.0,
+                "y": 41.0
+            }
+        },
+        {
+            "name": "plug",
+            "data": {
+                "height": 111.0,
+                "width": 93.0,
+                "x": 1104.0,
+                "y": 238.0
+            }
+        },
+        {
+            "name": "photo",
+            "data": {
+                "height": 390.0,
+                "width": 372.0,
+                "x": 1630.0,
+                "y": 291.0
+            }
+        },
+        {
+            "name": "lamp",
+            "data": {
+                "height": 258.0,
+                "width": 279.0,
+                "x": 939.0,
+                "y": 494.0
+            }
+        },
+        {
+            "name": "table",
+            "data": {
+                "height": 216.0,
+                "width": 552.0,
+                "x": 937.0,
+                "y": 731.0
+            }
+        },
+        {
+            "name": "bedsheet",
+            "data": {
+                "height": 300.0,
+                "width": 780.0,
+                "x": 1141.0,
+                "y": 989.0
+            }
+        },
+        {
+            "name": "pillow",
+            "data": {
+                "height": 87.0,
+                "width": 255.0,
+                "x": 1659.0,
+                "y": 839.0
+            }
+        },
+        {
+            "name": "heater",
+            "data": {
+                "height": 306.0,
+                "width": 498.0,
+                "x": 340.0,
+                "y": 992.0
+            }
+        },
+        {
+            "name": "floor",
+            "data": {
+                "height": 205.0,
+                "width": 1920.0,
+                "x": 959.0,
+                "y": 1249.0
+            }
+        }
+    ]
+}

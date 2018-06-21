@@ -623,15 +623,23 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 
 
 Future<String> fetchIdentifyData() async {
-    List<String> gameViews = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
     gameViews.shuffle();
-    print(gameViews);
-    return await rootBundle.loadString("assets/imageCoordinatesInfoScene.json");
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/Hospital.json");
 }
 
 Future<String> fetchGuessData() async {
-    return await rootBundle.loadString("assets/imageCoordinatesInfoScene.json");
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
 }
+
+
+
 Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
   var completer = Completer<Map<String, Map<String, List<String>>>>();
