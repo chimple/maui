@@ -58,6 +58,7 @@ class MyFillnumberState extends State<Fillnumber> {
       count1 = 0;
       int tries = 0;
       int totalgame = 7;
+       bool start =false;
 List<int> tempindex = [];
   List<String> num3 = [];
   final int _size = 4;
@@ -156,11 +157,13 @@ List<String> Ssum=[];
            vflag: vflag,
            code: code,
            onStart: () {
-               setState(() {
+             if(!start){
+              setState(() {
            print('nikkkkkkkkkkkkkk');
           temp=index;
            clickAns.add(text);
             ssum = '$text';
+            start=true;
              _Index.add(index);
            _pointssend.add(offset);
            tempindex.add(index);
@@ -173,7 +176,7 @@ List<String> Ssum=[];
                 _statuses[i] = Status.Dragtarget;
               }
             }
-          });
+          });}
            },
             onwill: (data) {
           print('nikkkkkkkkkkkkkk  999');
@@ -238,7 +241,7 @@ List<String> Ssum=[];
               ssum='';
                sum=sum-clickAns.last;
                clickAns.removeLast();
-              _pointssend.removeLast();
+              _pointssend.removeRange(0, _pointssend.length);
                _center.removeRange(0, _center.length);
                 _Index.removeRange(0, _Index.length);
            }
@@ -253,7 +256,7 @@ List<String> Ssum=[];
                print("values of sum is ...::..$sum");
                int flag=0;
                setState(() {
-                
+                 start=false;
                     if (sum == Ansr) {
                       flag=1;
                       ssum = '$ssum' + '=$sum';
@@ -326,6 +329,7 @@ List<String> Ssum=[];
                    _copyVal.map((a) => false).toList(growable: false);
                         _Index.removeRange(0, _Index.length);
                         _num2.removeRange(0, _num2.length);
+
                       });
                       k = _letters[4];
                       print("helllo this letters$k");
@@ -347,7 +351,7 @@ List<String> Ssum=[];
                         });
                         new Future.delayed(const Duration(milliseconds: 250),
                             () {
-                         
+                          start=false;
                           widget.onEnd();
                             count1=count1;
                             _pointssend.removeRange(0, _pointssend.length);
@@ -360,7 +364,7 @@ List<String> Ssum=[];
                        setState(() {
                           tries += 5;
                clickAns=[];
-               _pointssend=[];
+                  _pointssend.removeRange(0, _pointssend.length);
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
 
@@ -1031,7 +1035,7 @@ if (sum == ansr) {
                         });
                         new Future.delayed(const Duration(milliseconds: 250),
                             () {
-                         
+                          start=false;
                           widget.onEnd();
                             count1=count1;
                             _pointssend.removeRange(0, _pointssend.length);
