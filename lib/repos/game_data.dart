@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:tuple/tuple.dart';
@@ -620,6 +620,25 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   }
   return null;
 }
+
+
+Future<String> fetchIdentifyData() async {
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
+}
+
+Future<String> fetchGuessData() async {
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
+}
+
+
 
 Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
