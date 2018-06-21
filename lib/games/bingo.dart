@@ -232,15 +232,15 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _RowCells[i] = RowCell.CurveRow;
                         widget.onProgress(2 / 1);
-                        countData = 0;
-                        _copyQuestion.removeRange(0 , _copyQuestion.length);
-                        _copyQuestion1.removeRange(0 , _copyQuestion1.length);
-                        _all.removeRange(0 , _all.length);
-                        _letters.removeRange(0 , _letters.length);
+//                        countData = 0;
+//                        _copyQuestion.removeRange(0 , _copyQuestion.length);
+//                        _copyQuestion1.removeRange(0 , _copyQuestion1.length);
+//                        _all.removeRange(0 , _all.length);
+//                        _letters.removeRange(0 , _letters.length);
 
 
-                        z=0;
-                        bingoCount = 0;
+//                        z=0;
+//                        bingoCount = 0;
                         // this is test of bingo
 //                        _Bingodata.forEach((e, v) {
 //                            _copyQuestion.add(e);
@@ -255,9 +255,19 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     setState(() {
 
 
-                      new Future.delayed(const Duration(milliseconds: 1000) ,
+                      new Future.delayed(const Duration(milliseconds: 5000) ,
                               () {
+                                z=0;
+                                bingoCount = 0;
+                                countData = 0;
                             widget.onEnd();
+//                            z=0;
+//                            bingoCount = 0;
+                            countData = 0;
+                            _copyQuestion.removeRange(0 , _copyQuestion.length);
+                            _copyQuestion1.removeRange(0 , _copyQuestion1.length);
+                            _all.removeRange(0 , _all.length);
+                            _letters.removeRange(0 , _letters.length);
                           });
                     });
                   }
@@ -278,36 +288,44 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       _ColmunCells[i] = ColmunCell.CurveColumn;
                       i = i + _maxSize - 1;
                       widget.onProgress(2 / 1);
-                      countData = 0;
-                      _copyQuestion.removeRange(0 , _copyQuestion.length);
-                      _copyQuestion1.removeRange(0 , _copyQuestion1.length);
-                      _all.removeRange(0 , _all.length);
-                      _letters.removeRange(0 , _letters.length);
-                      z=0;
-                      bingoCount = 0;
+//                      countData = 0;
+//                      _copyQuestion.removeRange(0 , _copyQuestion.length);
+//                      _copyQuestion1.removeRange(0 , _copyQuestion1.length);
+//                      _all.removeRange(0 , _all.length);
+//                      _letters.removeRange(0 , _letters.length);
+//                      z=0;
+//                      bingoCount = 0;
                     });
-                    p2pcount= p2pcount+1;
 
 
                     }
                   }
                   setState(() {
 //
-                    new Future.delayed(const Duration(milliseconds:1000) ,
+                    new Future.delayed(const Duration(milliseconds:5000) ,
                             () {
-                          widget.onEnd();
+                              z=0;
+                              bingoCount =0;
+                              countData = 0;
+                                  widget.onEnd();
+//                          z=0;
+//                          bingoCount = 0;
+//                          countData = 0;
+                          _copyQuestion.removeRange(0 , _copyQuestion.length);
+                          _copyQuestion1.removeRange(0 , _copyQuestion1.length);
+                          _all.removeRange(0 , _all.length);
+                          _letters.removeRange(0 , _letters.length);
                         });
 //                        print({"this is 1": _ColmunCells});
                   });
-//                  print("thius is bngo animation  Colmun curved in it $_ColmunCells");
                 }
 
 //                print({"this is reference": _referenceMatrix});
 //                print({"this is i value ": i});
                 if (matchRow == -1 && matchColumn == -1) {
-                  if (z <= _maxSize * _maxSize - 1) {
+                  if (i <= _maxSize * _maxSize - 1) {
                     _copyQuestion.removeWhere((val) => val == ques);
-                    ques = _copyQuestion[z];
+                    ques = _copyQuestion[i];
                   } else {
 //                    print({"where is green manu ": " hello index is over"});
                   }
