@@ -854,7 +854,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           elevation: widget.vflag == true ? 10.0 : 0.0,
                           color: Colors.transparent,
                           child: new UnitButton(
-                            highlighted: widget.vflag == true ? true : false,
+                            highlighted: widget.vflag,
                             text: _displayText,
                             onPress: () => {},
                             unitMode: UnitMode.text,
@@ -872,7 +872,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     feedback: new Container(),
                     maxSimultaneousDrags: 1,
                     child: new UnitButton(
-                      highlighted: widget.vflag == true ? true : false,
+                      highlighted: widget.vflag,
                       text: _displayText,
                       onPress: () => {},
                       unitMode: UnitMode.text,
