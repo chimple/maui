@@ -53,7 +53,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     } on PlatformException {
       print('Failed getting messages');
     }
-
+    print('_initData: $messages');
     if (!mounted) return;
     setState(() {
       _deviceId = prefs.getString('deviceId');
@@ -129,7 +129,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return continueGame(context, _myTurn[index]);
+                      return continueGame(context, _myTurn[index],
+                          onTap: goToMyTurn);
                     }, childCount: _myTurn.length),
                   ),
                   SliverToBoxAdapter(
@@ -187,53 +188,63 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
               ));
   }
 
-  Widget convertToFriend(BuildContext context, User user) {
-    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-
+  Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
     return FriendItem(
-      id: user.id,
-      imageUrl: user.image,
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute<Null>(
-            builder: (BuildContext context) => GameCategoryListScreen(
-                  game: widget.gameName,
-                  gameMode: GameMode.iterations,
-                  gameDisplay: user.id == loggedInUser.id
-                      ? GameDisplay.single
-                      : user.deviceId == _deviceId
-                          ? GameDisplay.localTurnByTurn
-                          : GameDisplay.networkTurnByTurn,
-                  otherUser: user,
-                )));
-      },
-    );
+        id: user.id,
+        imageUrl: user.image,
+        onTap: () {
+          final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+          Navigator.of(context).push(MaterialPageRoute<Null>(
+              builder: (BuildContext context) => GameCategoryListScreen(
+                    game: widget.gameName,
+                    gameMode: GameMode.iterations,
+                    gameDisplay: user.id == loggedInUser.id
+                        ? GameDisplay.single
+                        : user.deviceId == _deviceId
+                            ? GameDisplay.localTurnByTurn
+                            : GameDisplay.networkTurnByTurn,
+                    otherUser: user,
+                  )));
+        });
   }
 
-  Widget continueGame(BuildContext context, User user) {
+  goToMyTurn(BuildContext context, User user) {
+    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+
+    Navigator
+        .of(context)
+        .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+      print('continueGame: ${user.id} $_messages');
+      final message = _messages.firstWhere((m) => user.id == m['userId']);
+      print('continueGame: message: $message');
+      GameConfig gameConfig = GameConfig.fromJson(message['message']);
+      gameConfig.myUser = loggedInUser;
+      gameConfig.otherUser = user;
+      final tempScore = gameConfig.myScore;
+      gameConfig.myScore = gameConfig.otherScore;
+      gameConfig.otherScore = tempScore;
+      final tempIteration = gameConfig.myIteration;
+      gameConfig.myIteration = gameConfig.otherIteration;
+      gameConfig.otherIteration = tempIteration;
+      gameConfig.amICurrentPlayer = true;
+      gameConfig.orientation = MediaQuery.of(context).orientation;
+      gameConfig.sessionId = message['sessionId'];
+      print('continueGame: gameConfig: $gameConfig');
+      return SingleGame(
+        widget.gameName,
+        gameMode: GameMode.iterations,
+        gameConfig: gameConfig,
+      );
+    }));
+  }
+
+  Widget continueGame(BuildContext context, User user, {Function onTap}) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
-      onTap: () {
-        Navigator
-            .of(context)
-            .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-          final message =
-              _messages.firstWhere((m) => user.id == m['recipientUserId']);
-          GameConfig gameConfig = GameConfig.fromJson(message['message']);
-          gameConfig.myUser = loggedInUser;
-          gameConfig.otherUser = user;
-          gameConfig.amICurrentPlayer = true;
-          gameConfig.orientation = MediaQuery.of(context).orientation;
-          gameConfig.sessionId = message['sessionId'];
-          return SingleGame(
-            widget.gameName,
-            gameMode: GameMode.iterations,
-            gameConfig: gameConfig,
-          );
-        }));
-      },
+      onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }
 }
