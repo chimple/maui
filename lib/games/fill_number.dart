@@ -241,7 +241,7 @@ List<String> Ssum=[];
               ssum='';
                sum=sum-clickAns.last;
                clickAns.removeLast();
-              _pointssend.removeLast();
+              _pointssend.removeRange(0, _pointssend.length);
                _center.removeRange(0, _center.length);
                 _Index.removeRange(0, _Index.length);
            }
@@ -329,6 +329,7 @@ List<String> Ssum=[];
                    _copyVal.map((a) => false).toList(growable: false);
                         _Index.removeRange(0, _Index.length);
                         _num2.removeRange(0, _num2.length);
+
                       });
                       k = _letters[4];
                       print("helllo this letters$k");
@@ -363,7 +364,7 @@ List<String> Ssum=[];
                        setState(() {
                           tries += 5;
                clickAns=[];
-               _pointssend=[];
+                  _pointssend.removeRange(0, _pointssend.length);
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
 
