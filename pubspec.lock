@@ -77,7 +77,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.5.1"
+    version: "5.5.2"
   camera:
     dependency: "direct main"
     description:
@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c229c37560351bb6b87227ad1923deb2d07a82cd
+      resolved-ref: "7f2be520194c2998761e3151ad74fc9409b8caba"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
