@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/game_data.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image;
@@ -73,6 +74,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     '3': 'Three',
     'H': 'Hen',
   };
+  Map<String, String> _allData = new Map<String, String>();
   List<bool> _slice = [
     false,
     false,
@@ -145,6 +147,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   void initState() {
     print("sasfffsa ${widget.unitMode}");
     super.initState();
+
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 400), vsync: this);
     controller = new AnimationController(
@@ -155,11 +158,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         new CurvedAnimation(parent: controller1, curve: Curves.easeInOut);
     controller1.addStatusListener((status) {});
     controller1.forward();
-    for (int i = 0; i < 8; i++) {
-      load(_imageData[i]).then((i) {
-        images.add(i);
-      });
-    }
+
     print("all data from list::$images");
     _initBoard();
   }
@@ -186,7 +185,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   }
 
   int _activeIndex;
-  _initBoard() {
+  _initBoard() async {
+    for (int i = 0; i < 8; i++) {
+      load(_imageData[i]).then((i) {
+        images.add(i);
+      });
+    }
+    _allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
     _slice = _sliceCopy;
     _data.forEach((k, v) {
       _circleData.add(k);
