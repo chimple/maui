@@ -42,6 +42,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
   bool _isLoading = true;
   List<int> dice_tries = [];
+  List<int> originalDice = [];
   // int code, dindex, dcode;
   List<String> arr = new List<String>();
   String _counter = " ";
@@ -50,8 +51,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   int count = 0;
   int count1 = 0;
   int flag = 0;
-  List<ShakeCell> shakecell;
-  List<ShakeCell> shakecell1;
   var _currentIndex = 0;
   var _currentIndex1 = 0;
   var _currentIndex2 = 0;
@@ -95,8 +94,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       BuildContext context, double buttonPadding, String player) {
     if (player == "player1") {
       var j = 0;
-      print({"shakecell 0: ": shakecell});
-      print({"shakecell 1: ": shakecell1});
       return new ResponsiveGridView(
         rows: 2,
         cols: 6,
@@ -160,11 +157,12 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             print({"hurry , you are correct user to access keyboard": player});
             if (btnVal == sum || btnVal == sub) {
               _currentIndex++;
-              widget.onScore(1);
+              widget.onScore(2);
               widget.onProgress(_currentIndex / data.length);
               // widget.onEnd();
-              if (_currentIndex1 > data.length-10 ||
-                  _currentIndex2 > data1.length-10) {
+              if (_currentIndex >= data.length-2 ||
+                  _currentIndex2 >= data1.length-2) {
+                print({"inside main current index : " : _currentIndex});
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   widget.onEnd();
                 });
@@ -179,19 +177,14 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                   data[index] = '';
                   flag = 1;
                 });
-
                 print("palayer 1 data iss $data");
-                
               } else {
                 print({"$player data1 removed index : $data1[$index]": index});
                 setState(() {
                   data1[index] = '';
-                    flag = 0;
+                  flag = 0;
                 });
-
                 print("player 2 data1 iss: $data1");
-                
-              
               }
             } else {
               if (flag == 0 && player == "player1") {
@@ -199,6 +192,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                 new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
                     _shake[index] = 0;
+                    widget.onScore(-1);
                   });
                 });
               } else if (flag == 1 && player == "player2") {
@@ -206,6 +200,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                 new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
                     _shake[index] = 0;
+                    widget.onScore(-1);
                   });
                 });
               }
@@ -220,6 +215,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   void resetDice() {
     count = 0;
     dice_tries.clear();
+    originalDice.clear();
     _counter = " ";
     _counter1 = " ";
     _counter2 = " ";
@@ -229,10 +225,13 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     setState(() async {
       animation.forward(from: 0.0);
       if (flag == 0) {
+        // dice random logic for player 1
         if (count <= 1) {
           count = count + 1;
-          final _random = new Random();
-          var dElement = diceData[_random.nextInt(diceData.length)];
+          String dElement = randomLogic(data);
+          print({"the dElement data is : " : dElement});
+          print({"the dice_tries data is : " : dice_tries});
+          print({"the data is : " : data});
           var randval = int.parse(dElement);
           if (dice_tries.length < 2) dice_tries.add(randval);
           await new Future.delayed(const Duration(milliseconds: 200));
@@ -242,8 +241,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           if (dice_tries.length == 2) {
             var sum = dice_tries[0] + dice_tries[1];
             var sub = dice_tries[0] - dice_tries[1];
-            if(sub<0)
-            sub = -sub;
+            if (sub < 0) sub = -sub;
             var matched = false;
             for (int i = 0; i < data.length; i++) {
               if (data[i] != '') if (int.parse(data[i]) == sum ||
@@ -253,27 +251,29 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
               }
             }
             if (matched != true) {
+              // This is condition for change player and bad luck
               popup();
-              await new Future.delayed(const Duration(milliseconds: 1000));
+              await new Future.delayed(const Duration(seconds: 1));
               setState(() {
-                   _counter1 = " ";
-              flag = 1;
-              resetDice();           
-                            });
-              
+                _counter1 = " ";
+                flag = 1;
+                resetDice();
+              });
             }
           }
         }
       } else {
         if (count <= 1) {
+          // dice random logic for player 2
           count = count + 1;
-          final _random = new Random();
-          var dElement = diceData[_random.nextInt(diceData.length)];
+          String dElement = randomLogic(data1);
+          print({"the dElement data1 is : " : dElement});
+          print({"the dice_tries data1 is : " : dice_tries});
+          print({"the data1 is : " : data1});
 
           var randval = int.parse(dElement);
           if (dice_tries.length < 2) dice_tries.add(randval);
 
-          // new Timer(const Duration(milliseconds: 5000),displayLabel(dElement));
           await new Future.delayed(const Duration(milliseconds: 200));
           displayLabel(dElement);
           // print("dice data $_counter2 ");
@@ -281,6 +281,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           if (dice_tries.length == 2) {
             var sum = dice_tries[0] + dice_tries[1];
             var sub = dice_tries[0] - dice_tries[1];
+            if (sub < 0) sub = -sub;
             var matched = false;
             for (int i = 0; i < data1.length; i++) {
               if (data1[i] != '') if (int.parse(data1[i]) == sum ||
@@ -292,18 +293,55 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             }
             if (matched != true) {
               popup();
-              await new Future.delayed(const Duration(milliseconds: 1000));
+              await new Future.delayed(const Duration(seconds: 1));
               // if we want to add time then use setState
               setState(() {
-                   _counter1 = " ";
-              flag = 0;
-              resetDice();           
-                            });
+                _counter1 = " ";
+                flag = 0;
+                resetDice();
+              });
             }
           }
         }
       }
     });
+  }
+
+  String randomLogic(List<String> data) {
+    // final _random = new Random();
+    // String dElement = diceData[_random.nextInt(diceData.length)];
+    List<int> existingData = getExistingDataInInt(data);
+    int randomExistingValue = existingData[new Random().nextInt(existingData.length)];
+    String dElement = '';
+    if(dice_tries.length == 0){
+      int fValue, sValue;
+      while(true){
+        fValue = new Random().nextInt(6)+1;
+        sValue = new Random().nextInt(6)+1;
+        int sum = (fValue + sValue) , sub = (fValue - sValue);
+        if(sub < 0){sub*=-1;}        
+        if(sum == randomExistingValue || sub == randomExistingValue){
+          if((new Random().nextInt(100)) % 2 == 0){
+            originalDice = [new Random().nextInt(6)+1,new Random().nextInt(6)+1];
+          }else{
+             originalDice = [fValue,sValue];
+          }
+          print({"the final new data is : " : originalDice});
+          return fValue.toString();
+        }
+      }
+    }else if(dice_tries.length == 1){
+      return originalDice[1].toString();
+    }
+    return dElement;
+  }
+
+  List<int> getExistingDataInInt(List<String> data) {
+    List<int> existingData = [];
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] != '') existingData.add(int.parse(data[i]));
+    }
+    return existingData;
   }
 
   displayLabel(String dElement) {
@@ -399,16 +437,19 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   popup() {
+    print({"poped up dice value is  " : dice_tries});
+    print({"player1 - 0 and player2 - 1  " : flag});
     var color = flag == 0 ? Colors.red : Colors.blue;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
-            // title: new Text('Dicegame'),
-            content: new Image(
-                        image: new AssetImage(
-                       'assets/hoodie/dice_sad.png',
-                    )),);
+          // title: new Text('Dicegame'),
+          content: new Image(
+              image: new AssetImage(
+            'assets/hoodie/dice_sad.png',
+          )),
+        );
       },
     );
   }
@@ -469,13 +510,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         if (state == AnimationStatus.dismissed) {
-          if (widget.text=='') {
-           // controller.reverse();
+          if (widget.text == '') {
+            // controller.reverse();
           }
         }
       });
     controller.forward();
-    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
+    animationWrong = new Tween(begin: -2.0, end: 2.0).animate(controller1);
     _myAnim();
   }
 
@@ -494,7 +535,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
-      //controller.reverse();
+      // controller.forward();
     }
   }
 
