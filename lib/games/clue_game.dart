@@ -246,7 +246,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             : _width * 0.32,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
-          color: Colors.blue[200],
+          color: new Color(0xffff77DB65),
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
         ),
@@ -367,16 +367,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                             child: _builtCategory(k++, e),
                           ))
                       .toList(growable: false),),
-                new Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                   child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      new Shake(
-                        animation: (_flag == 0) ? animation : noanimation,
-                        child: answer(_result),
-                      ),
-                      submit(),],),),
+                new Row(
+                 mainAxisAlignment: MainAxisAlignment.end,
+                 children: <Widget>[
+                   new Shake(
+                     animation: (_flag == 0) ? animation : noanimation,
+                     child: answer(_result),
+                   ),
+                   
+                   new Padding(
+                     padding: const EdgeInsets.all(25.0),
+                     child: submit(),
+                   ),],),
               ],),),
           new Padding(
             padding: const EdgeInsets.only(left: 50.0),
@@ -437,7 +439,7 @@ class _CircleState extends State<Circle> {
         width: circleSize,
         height: circleSize,
         decoration:
-            new BoxDecoration(color: Colors.green, shape: BoxShape.circle)));
+            new BoxDecoration(color: new Color(0xffff77DB65), shape: BoxShape.circle)));
 
     Offset circleCenter = new Offset(bigRadius, bigRadius);
     List<Offset> offsets;
