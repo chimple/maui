@@ -598,6 +598,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'clue_game':
+        maxIterations = 1;
         return new ClueGame(
             onScore: _onScore,
             onProgress: _onProgress,

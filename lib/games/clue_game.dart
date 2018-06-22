@@ -76,9 +76,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     });
     _categoryup = categoryName.sublist(0, 2);
     _categorydown = categoryName.sublist(2, 4);
-    if (count >= 6) {
       listOfSyllables.addAll(dummylist);
-    }
     for (int i = 0; i < words.length; i++) listOfSyllables.remove(words[i]);
     listOfSyllablescopy = listOfSyllables.sublist(0, 19);
     listOfSyllablescopy.shuffle(); 
@@ -87,10 +85,23 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
  
  void _validate() {
      String word = _result;
-    if (listOfThings.sublist(0, 4).contains(_result)) {
+        if(word=='')
+     {
+
+     }
+    else  
+    if (listOfThings.sublist(0, 3).contains(_result)) {
       setState(() {
         _result = 'you Type Drink';
          count++;
+        widget.onScore(4);
+        widget.onProgress(count/12);
+        if(count==12)
+        {
+          new Future.delayed(const Duration(seconds:2), () {
+           widget.onEnd();
+          });
+        }
         GlobalKey key = new GlobalObjectKey(categoryName[0]);
         if (key.currentState != null) {
           (key.currentState as _BuildCategoryState).showImage(word);
@@ -103,10 +114,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(4, 8).contains(_result)) {
+    } else if (listOfThings.sublist(3, 6).contains(_result)) {
       setState(() {
         _result = 'you Type Travel';
          count++;
+         widget.onScore(4);
+        widget.onProgress(count/12);
+        if(count==12)
+        {
+         new Future.delayed(const Duration(seconds:2), () {
+           widget.onEnd();
+          });
+        }
           GlobalKey key = new GlobalObjectKey(categoryName[1]);
         if (key.currentState != null) {
           (key.currentState as _BuildCategoryState).showImage(word);
@@ -119,10 +138,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(8, 12).contains(_result)) {
+    } else if (listOfThings.sublist(6, 9).contains(_result)) {
       setState(() {
         _result = 'you Type Red Fruit';
          count++;
+         widget.onScore(4);
+        widget.onProgress(count/12);
+        if(count==12)
+        {
+         new Future.delayed(const Duration(seconds:2), () {
+           widget.onEnd();
+          });
+        }
           GlobalKey key = new GlobalObjectKey(categoryName[2]);
         if (key.currentState != null) {
           (key.currentState as _BuildCategoryState).showImage(word);
@@ -135,10 +162,18 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(12, 16).contains(_result)) {
+    } else if (listOfThings.sublist(9, 12).contains(_result)) {
       setState(() {
         _result = 'you Type black Pet';
          count++;
+         widget.onScore(4);
+        widget.onProgress(count/12);
+        if(count==12)
+        {
+         new Future.delayed(const Duration(seconds:2), () {
+           widget.onEnd();
+          });
+        }
           GlobalKey key = new GlobalObjectKey(categoryName[3]);
         if (key.currentState != null) {
           (key.currentState as _BuildCategoryState).showImage(word);
@@ -157,6 +192,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         setState(() {
           _flag = 0;
           _result = '';
+           widget.onScore(-1);
         });
         controller.stop();
       });}}
@@ -207,7 +243,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             : _height * 0.09,
         width: media.orientation == Orientation.portrait
             ? _width * 0.5
-            : _width * 0.25,
+            : _width * 0.32,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
           color: Colors.blue[200],
