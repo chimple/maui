@@ -256,7 +256,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/world.png",
+                              image: "assets/dict/earth.png",
                             )));
                   },
                 ),
