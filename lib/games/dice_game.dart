@@ -5,6 +5,7 @@ import 'package:maui/games/single_game.dart';
 // import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/Shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
@@ -30,6 +31,8 @@ class Dice extends StatefulWidget {
   State<StatefulWidget> createState() => new DiceGameState();
 }
 
+enum ShakeCell { Right, InActive, Dance, CurveRow }
+
 class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   var correct = 0;
   var keys = 0;
@@ -37,7 +40,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
   static List<String> data1;
   List<String> diceData = ['1', '2', '3', '4', '5', '6'];
-  // List _sortletters = [];
   bool _isLoading = true;
   List<int> dice_tries = [];
   // int code, dindex, dcode;
@@ -48,7 +50,12 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   int count = 0;
   int count1 = 0;
   int flag = 0;
+  List<ShakeCell> shakecell;
+  List<ShakeCell> shakecell1;
   var _currentIndex = 0;
+  var _currentIndex1 = 0;
+  var _currentIndex2 = 0;
+  int scoretrack = 0;
 
   AnimationController animation;
 
@@ -65,17 +72,22 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     });
   }
 
+  List<int> _shake = [];
   void _initBoard() async {
     _currentIndex = 0;
     setState(() => _isLoading = true);
     data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-    data1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    data1 = ['12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
+    for (int i = 0; i < 12; i++) {
+      _shake.add(0);
+    }
   }
 
   @override
   void didUpdateWidget(Dice oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
+      // _initBoard();
     }
   }
 
@@ -83,16 +95,18 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       BuildContext context, double buttonPadding, String player) {
     if (player == "player1") {
       var j = 0;
+      print({"shakecell 0: ": shakecell});
+      print({"shakecell 1: ": shakecell1});
       return new ResponsiveGridView(
         rows: 2,
         cols: 6,
         children: data
             .map((e) => Padding(
                 padding: EdgeInsets.all(buttonPadding),
-                child: _buildItem(j++, e, player)))
+                child: _buildItem(j, e, player, _shake[j++])))
             .toList(growable: false),
       );
-    } else if (player == "player2") {
+    } else {
       var j = 0;
       return new ResponsiveGridView(
         rows: 2,
@@ -100,32 +114,37 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
         children: data1
             .map((e) => Padding(
                 padding: EdgeInsets.all(buttonPadding),
-                child: _buildItem(j++, e, player)))
+                child: _buildItem(j, e, player, _shake[j++])))
             .toList(growable: false),
       );
     }
   }
 
-  Widget _buildItem(int index, String text, String player) {
+  Widget _buildItem(int index, String text, String player, int tile) {
     return new MyButton(
       key: new ValueKey<int>(index),
       index: index,
       text: text,
       player: player,
       color1: 1,
+      tile: tile,
       onPress: () {
         count1 = count1 + 1;
         setState(() {
           print({"player status : ": player});
           print({"key index value : ": index});
-          var btnVal = -1, sum = 0, sub = 0, i = 0;
+          print({"i am : ": text});
+          // print({"player1 data isssssssssssss : ": data});
+          // print({"player2 data1 isssssssss : ": data1});
+
+          var btnVal = -1, sum = 0, sub = 0;
           if (text != '' && dice_tries.length == 2) {
             btnVal = int.parse(text);
             sum = dice_tries[0] + dice_tries[1];
             sub = dice_tries[0] - dice_tries[1];
           }
-          print({"manu sum": sum});
-          print({"manu sub real": sub});
+          // print({"manu sum": sum});
+          // print({"manu sub real": sub});
           if (sub < 0) {
             sub = -sub;
             print({"manu sub": sub});
@@ -139,24 +158,56 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           }
           if (userControl) {
             print({"hurry , you are correct user to access keyboard": player});
-            for (i = 0; i < data.length; i++) {
-              if (btnVal == sum || btnVal == sub) {
-                _currentIndex++;
-                widget.onScore(1);
-                widget.onProgress(_currentIndex / data.length);
-                // widget.onEnd();
-                resetDice();
-                sum = 0;
-                sub = 0;
+            if (btnVal == sum || btnVal == sub) {
+              _currentIndex++;
+              widget.onScore(1);
+              widget.onProgress(_currentIndex / data.length);
+              // widget.onEnd();
+              if (_currentIndex1 > data.length-10 ||
+                  _currentIndex2 > data1.length-10) {
+                new Future.delayed(const Duration(milliseconds: 250), () {
+                  widget.onEnd();
+                });
+              }
+              resetDice();
+              sum = 0;
+              sub = 0;
 
-                if (flag == 0) {
+              if (flag == 0) {
+                print({"$player data removed index : $data[$index]": index});
+                setState(() {
                   data[index] = '';
-
                   flag = 1;
-                } else {
+                });
+
+                print("palayer 1 data iss $data");
+                
+              } else {
+                print({"$player data1 removed index : $data1[$index]": index});
+                setState(() {
                   data1[index] = '';
-                  flag = 0;
-                }
+                    flag = 0;
+                });
+
+                print("player 2 data1 iss: $data1");
+                
+              
+              }
+            } else {
+              if (flag == 0 && player == "player1") {
+                _shake[index] = 1;
+                new Future.delayed(const Duration(milliseconds: 800), () {
+                  setState(() {
+                    _shake[index] = 0;
+                  });
+                });
+              } else if (flag == 1 && player == "player2") {
+                _shake[index] = 1;
+                new Future.delayed(const Duration(milliseconds: 800), () {
+                  setState(() {
+                    _shake[index] = 0;
+                  });
+                });
               }
             }
           }
@@ -182,30 +233,34 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           count = count + 1;
           final _random = new Random();
           var dElement = diceData[_random.nextInt(diceData.length)];
-
           var randval = int.parse(dElement);
           if (dice_tries.length < 2) dice_tries.add(randval);
-
           await new Future.delayed(const Duration(milliseconds: 200));
           displayLabel(dElement);
 
-          print("dice data $_counter ");
+          // print("dice data $_counter ");
           if (dice_tries.length == 2) {
             var sum = dice_tries[0] + dice_tries[1];
             var sub = dice_tries[0] - dice_tries[1];
+            if(sub<0)
+            sub = -sub;
             var matched = false;
             for (int i = 0; i < data.length; i++) {
               if (data[i] != '') if (int.parse(data[i]) == sum ||
                   int.parse(data[i]) == sub) {
+                // print("the data isssssssssssssssssss $data");
                 matched = true;
               }
             }
             if (matched != true) {
-              _counter1 = " ";
               popup();
-              await new Future.delayed(const Duration(milliseconds: 200));
+              await new Future.delayed(const Duration(milliseconds: 1000));
+              setState(() {
+                   _counter1 = " ";
               flag = 1;
-              resetDice();
+              resetDice();           
+                            });
+              
             }
           }
         }
@@ -221,24 +276,29 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           // new Timer(const Duration(milliseconds: 5000),displayLabel(dElement));
           await new Future.delayed(const Duration(milliseconds: 200));
           displayLabel(dElement);
-          print("dice data $_counter2 ");
+          // print("dice data $_counter2 ");
 
           if (dice_tries.length == 2) {
             var sum = dice_tries[0] + dice_tries[1];
             var sub = dice_tries[0] - dice_tries[1];
             var matched = false;
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; i < data1.length; i++) {
               if (data1[i] != '') if (int.parse(data1[i]) == sum ||
                   int.parse(data1[i]) == sub) {
                 matched = true;
+
+                // print("the data1 is sssssssss $data1");
               }
             }
             if (matched != true) {
-              _counter1 = " ";
               popup();
-              await new Future.delayed(const Duration(milliseconds: 200));
+              await new Future.delayed(const Duration(milliseconds: 1000));
+              // if we want to add time then use setState
+              setState(() {
+                   _counter1 = " ";
               flag = 0;
-              resetDice();
+              resetDice();           
+                            });
             }
           }
         }
@@ -251,13 +311,13 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       _counter1 = dElement;
       _counter = " ";
       for (int i = 0; i < dice_tries.length; i++) {
-        _counter = _counter + dice_tries[i].toString() + "  ";
+        _counter = _counter + dice_tries[i].toString() + " ";
       }
     } else {
       _counter1 = dElement;
       _counter2 = " ";
       for (int i = 0; i < dice_tries.length; i++) {
-        _counter2 = _counter2 + dice_tries[i].toString() + "  ";
+        _counter2 = _counter2 + dice_tries[i].toString() + " ";
       }
     }
   }
@@ -268,23 +328,23 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
       double maxWidth = (constraints.maxWidth - hPadding * 2) / 6;
-
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 2;
-
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 2, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
       var dval;
+
       if (_counter1 != " ") {
         dval = _counter1;
       } else {
         dval = flag == 0 ? "tapme" : "tapme1";
       }
+
+      print("data in player1 data $data");
+      print("data in player2 dataq ...$data1");
 
       return new Container(
           padding:
@@ -340,15 +400,15 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
   popup() {
     var color = flag == 0 ? Colors.red : Colors.blue;
-    return showDialog<Null>(
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
             // title: new Text('Dicegame'),
-            content: Text(
-          "Bad luck",
-          style: TextStyle(color: color, fontWeight: FontWeight.w900),
-        ));
+            content: new Image(
+                        image: new AssetImage(
+                       'assets/hoodie/dice_sad.png',
+                    )),);
       },
     );
   }
@@ -366,6 +426,7 @@ class MyButton extends StatefulWidget {
       this.player,
       this.isRotated,
       this.img,
+      this.tile,
       this.onPress,
       this.keys})
       : super(key: key);
@@ -377,6 +438,7 @@ class MyButton extends StatefulWidget {
   final bool isRotated;
   final String text;
   final String img;
+  int tile;
   final VoidCallback onPress;
   final DragTargetAccept onAccepted;
   final keys;
@@ -386,30 +448,39 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller, controller1;
-  Animation<double> animation, animation1;
+  // AnimationController controller, controller1;
+  // Animation<double> animation, animation1;
   String _displayText;
   String newtext = '';
   var f = 0;
   var i = 0;
-
+  AnimationController controller, controller1;
+  Animation<double> animationRight, animation, animationWrong, animationDance;
   initState() {
     super.initState();
-    _displayText = widget.text;
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+    // print("_MyButtonState.initState: ${widget.text}");
+    // position = widget.offset;
     controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 40), vsync: this);
-    animation =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate)
-          ..addStatusListener((state) {});
+        duration: new Duration(milliseconds: 20), vsync: this);
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 250), vsync: this);
+    animationRight =
+        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+      ..addStatusListener((state) {
+        if (state == AnimationStatus.dismissed) {
+          if (widget.text=='') {
+           // controller.reverse();
+          }
+        }
+      });
     controller.forward();
-    animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
+    animationWrong = new Tween(begin: -1.0, end: 1.0).animate(controller1);
     _myAnim();
   }
 
   void _myAnim() {
-    animation1.addStatusListener((status) {
+    animationWrong.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller1.reverse();
       } else if (status == AnimationStatus.dismissed) {
@@ -420,21 +491,33 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 
   @override
+  void didUpdateWidget(MyButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text != widget.text) {
+      //controller.reverse();
+    }
+  }
+
+  @override
   void dispose() {
-    controller1.dispose();
     controller.dispose();
+    controller1.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new ScaleTransition(
-        scale: animation,
-        child: new Container(
-            child: new UnitButton(
-          onPress: widget.onPress,
-          text: widget.text,
-          unitMode: UnitMode.text,
-        )));
+    return new Shake(
+      animation: widget.tile == 1 ? animationWrong : animationRight,
+      child: new ScaleTransition(
+          scale: animation,
+          child: new Container(
+              child: new UnitButton(
+            onPress: widget.onPress,
+            text: widget.text,
+            unitMode: UnitMode.text,
+          ))),
+    );
   }
 }
