@@ -92,6 +92,7 @@ var temp=0;
  void _initBoard() async {
   
 print("data is seecond");
+print("itratin is ....::...${widget.iteration}");
 
     setState(() => _isLoading = true);
       consecutive= await fetchConsecutiveData(widget.gameCategoryId, 7,9);
@@ -648,8 +649,8 @@ List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,state.
     double x;
     for (int i = 0; i < size; i++) {
       if(i==0){
- x=x0;
- y = y0;
+         x=x0;
+          y = y0;
               }
               else{
        x = x0+d+maxWidth;
@@ -658,8 +659,7 @@ List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,state.
               }
       offsets[i] = new Offset(x, y);
       print("object ..x..$x .....y...$y");
-      // print("i:$i  alpha=${(alpha*180/pi).toStringAsFixed(1)}° ${offsets[i]}");
-      // alpha += angle;
+   
 
     }
     return offsets;
@@ -854,7 +854,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           elevation: widget.vflag == true ? 10.0 : 0.0,
                           color: Colors.transparent,
                           child: new UnitButton(
-                            highlighted: widget.vflag == true ? true : false,
+                            highlighted: widget.vflag,
                             text: _displayText,
                             onPress: () => {},
                             unitMode: UnitMode.text,
@@ -872,7 +872,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     feedback: new Container(),
                     maxSimultaneousDrags: 1,
                     child: new UnitButton(
-                      highlighted: widget.vflag == true ? true : false,
+                      highlighted: widget.vflag,
                       text: _displayText,
                       onPress: () => {},
                       unitMode: UnitMode.text,

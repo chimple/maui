@@ -2,6 +2,7 @@
     "id": "Boy.png",
     "height": 419.0,
     "width": 249.0,
+    "number": 4,
     "parts": [
         {
             "name": "face",

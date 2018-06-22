@@ -27,6 +27,7 @@ class SelectOpponentScreen extends StatefulWidget {
 
 class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   List<User> _users;
+  List<dynamic> _messages;
   List<User> _localUsers = [];
   List<User> _remoteUsers = [];
   List<User> _myTurn = [];
@@ -52,19 +53,20 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     } on PlatformException {
       print('Failed getting messages');
     }
-
+    print('_initData: $messages');
     if (!mounted) return;
     setState(() {
       _deviceId = prefs.getString('deviceId');
       _users = users;
+      _messages = messages;
       _users.forEach((u) {
         if (u.id == user.id) {
           _user = u;
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
-        } else if (messages.any((m) => u.id == m['recipientUserId'])) {
-          _myTurn.add(u);
         } else if (messages.any((m) => u.id == m['userId'])) {
+          _myTurn.add(u);
+        } else if (messages.any((m) => u.id == m['recipientUserId'])) {
           _otherTurn.add(u);
         } else {
           _remoteUsers.add(u);
@@ -96,6 +98,28 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         new Container(
+                          padding: EdgeInsets.all(8.0),
+                          color: Theme.of(context).primaryColor,
+                          child: RaisedButton(
+                            onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute<Null>(
+                                      builder: (BuildContext context) =>
+                                          GameCategoryListScreen(
+                                              game: widget.gameName,
+                                              gameMode: GameMode.iterations,
+                                              gameDisplay: GameDisplay.single)),
+                                ),
+                            child: Text('Single Player'),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        new Container(
                             padding: EdgeInsets.all(8.0),
                             color: Theme.of(context).primaryColor,
                             child: Text('My Turn')),
@@ -105,7 +129,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return convertToFriend(context, _myTurn[index]);
+                      return continueGame(context, _myTurn[index],
+                          onTap: goToMyTurn);
                     }, childCount: _myTurn.length),
                   ),
                   SliverToBoxAdapter(
@@ -156,32 +181,70 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return convertToFriend(context, _otherTurn[index]);
+                      return continueGame(context, _otherTurn[index]);
                     }, childCount: _otherTurn.length),
                   ),
                 ],
               ));
   }
 
-  Widget convertToFriend(BuildContext context, User user) {
+  Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
+    return FriendItem(
+        id: user.id,
+        imageUrl: user.image,
+        onTap: () {
+          final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+          Navigator.of(context).push(MaterialPageRoute<Null>(
+              builder: (BuildContext context) => GameCategoryListScreen(
+                    game: widget.gameName,
+                    gameMode: GameMode.iterations,
+                    gameDisplay: user.id == loggedInUser.id
+                        ? GameDisplay.single
+                        : user.deviceId == _deviceId
+                            ? GameDisplay.localTurnByTurn
+                            : GameDisplay.networkTurnByTurn,
+                    otherUser: user,
+                  )));
+        });
+  }
+
+  goToMyTurn(BuildContext context, User user) {
+    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+
+    Navigator
+        .of(context)
+        .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+      print('continueGame: ${user.id} $_messages');
+      final message = _messages.firstWhere((m) => user.id == m['userId']);
+      print('continueGame: message: $message');
+      GameConfig gameConfig = GameConfig.fromJson(message['message']);
+      gameConfig.myUser = loggedInUser;
+      gameConfig.otherUser = user;
+      final tempScore = gameConfig.myScore;
+      gameConfig.myScore = gameConfig.otherScore;
+      gameConfig.otherScore = tempScore;
+      final tempIteration = gameConfig.myIteration;
+      gameConfig.myIteration = gameConfig.otherIteration;
+      gameConfig.otherIteration = tempIteration;
+      gameConfig.amICurrentPlayer = true;
+      gameConfig.orientation = MediaQuery.of(context).orientation;
+      gameConfig.sessionId = message['sessionId'];
+      print('continueGame: gameConfig: $gameConfig');
+      return SingleGame(
+        widget.gameName,
+        gameMode: GameMode.iterations,
+        gameConfig: gameConfig,
+      );
+    }));
+  }
+
+  Widget continueGame(BuildContext context, User user, {Function onTap}) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute<Null>(
-            builder: (BuildContext context) => GameCategoryListScreen(
-                  game: widget.gameName,
-                  gameMode: GameMode.iterations,
-                  gameDisplay: user.id == loggedInUser.id
-                      ? GameDisplay.single
-                      : user.deviceId == _deviceId
-                          ? GameDisplay.localTurnByTurn
-                          : GameDisplay.networkTurnByTurn,
-                  otherUser: user,
-                )));
-      },
+      onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }
 }

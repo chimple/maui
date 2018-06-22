@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:tuple/tuple.dart';
@@ -621,14 +621,33 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   return null;
 }
 
+
+Future<String> fetchIdentifyData() async {
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
+}
+
+Future<String> fetchGuessData() async {
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
+}
+
+
+
 Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
   var completer = Completer<Map<String, Map<String, List<String>>>>();
   Map<String, List<String>> drink = {
     'water': ['wa', 'ter'],
     'milk': ['mi', 'lk'],
-    'coke': ['co', 'ke'],
-    'beer': ['be', 'er'],
+    'coffee': ['cof', 'fee'],
+    'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
     'bus': ['bu', 's'],
@@ -638,15 +657,15 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   };
   Map<String, List<String>> redfruit = {
     'apple': ['ap', 'ple'],
-    'cheery': ['che', 'ery'],
-    'litchi': ['lit', 'chi'],
-    'tomoto': ['tom', 'oto'],
+    'cherry': ['che', 'rry'],
+    'carrot': ['ca', 'rrot'],
+    'tomato': ['tom', 'ato'],
   };
   Map<String, List<String>> blackpet = {
     'cat': ['ca', 't'],
     'dog': ['do', 'g'],
     'panda': ['pa', 'nda'],
-    'cow': ['co', 'w'],
+    'crow': ['cr', 'ow'],
   };
   Map<String, Map<String, List<String>>> value = {
     'drink': drink,

@@ -1,0 +1,98 @@
+{
+    "id": "Colors.png",
+    "height": 768.0,
+    "width": 1004.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "red",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 137.0,
+                "y": 124.0
+            }
+        },
+        {
+            "name": "yellow",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 373.0,
+                "y": 124.0
+            }
+        },
+        {
+            "name": "orange",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 617.0,
+                "y": 124.0
+            }
+        },
+        {
+            "name": "blue",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 849.0,
+                "y": 124.0
+            }
+        },
+        {
+            "name": "green",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 137.0,
+                "y": 378.0
+            }
+        },
+        {
+            "name": "pink",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 373.0,
+                "y": 378.0
+            }
+        },
+        {
+            "name": "cyan",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 617.0,
+                "y": 378.0
+            }
+        },
+        {
+            "name": "purple",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 849.0,
+                "y": 378.0
+            }
+        },
+        {
+            "name": "brown",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 298.0,
+                "y": 632.0
+            }
+        },
+        {
+            "name": "maroon",
+            "data": {
+                "height": 150.0,
+                "width": 150.0,
+                "x": 577.0,
+                "y": 632.0
+            }
+        }
+    ]
+}
