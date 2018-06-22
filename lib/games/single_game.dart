@@ -183,9 +183,9 @@ class SingleGame extends StatefulWidget {
     'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
     'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
     'picture_sentence': [
-      Color(0xFF7A8948),
-      Color(0xFFC79690),
-      Color(0xFF7592BC)
+      Color(0xFF1DC8CC),
+      Color(0xFF282828),
+      Color(0xFFFE6677)
     ]
   };
 
