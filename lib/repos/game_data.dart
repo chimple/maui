@@ -659,7 +659,7 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     'apple': ['ap', 'ple'],
     'cherry': ['che', 'rry'],
     'carrot': ['ca', 'rrot'],
-    'tomoto': ['tom', 'oto'],
+    'tomato': ['tom', 'ato'],
   };
   Map<String, List<String>> blackpet = {
     'cat': ['ca', 't'],
