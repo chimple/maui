@@ -254,10 +254,13 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             }
             if (matched != true) {
               popup();
-              await new Future.delayed(const Duration(milliseconds: 500));
-              _counter1 = " ";
+              await new Future.delayed(const Duration(milliseconds: 1000));
+              setState(() {
+                   _counter1 = " ";
               flag = 1;
-              resetDice();
+              resetDice();           
+                            });
+              
             }
           }
         }
@@ -289,11 +292,13 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             }
             if (matched != true) {
               popup();
-              await new Future.delayed(const Duration(milliseconds: 500));
+              await new Future.delayed(const Duration(milliseconds: 1000));
               // if we want to add time then use setState
-              _counter1 = " ";
+              setState(() {
+                   _counter1 = " ";
               flag = 0;
-              resetDice();
+              resetDice();           
+                            });
             }
           }
         }
@@ -400,10 +405,10 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       builder: (BuildContext context) {
         return new AlertDialog(
             // title: new Text('Dicegame'),
-            content: Text(
-          "Bad luck",
-          style: TextStyle(color: color, fontWeight: FontWeight.w900),
-        ));
+            content: new Image(
+                        image: new AssetImage(
+                       'assets/hoodie/dice_sad.png',
+                    )),);
       },
     );
   }
