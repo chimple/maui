@@ -1,0 +1,98 @@
+{
+    "id": "Body.png",
+    "height": 484.0,
+    "width": 481.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "face",
+            "data": {
+                "height": 66.0,
+                "width": 61.0,
+                "x": 239.0,
+                "y": 41.0
+            }
+        },
+        {
+            "name": "upper body",
+            "data": {
+                "height": 142.0,
+                "width": 86.0,
+                "x": 239.0,
+                "y": 156.0
+            }
+        },
+        {
+            "name": "right hand",
+            "data": {
+                "height": 39.0,
+                "width": 114.0,
+                "x": 125.0,
+                "y": 100.0
+            }
+        },
+        {
+            "name": "left hand",
+            "data": {
+                "height": 43.0,
+                "width": 119.0,
+                "x": 353.0,
+                "y": 102.0
+            }
+        },
+        {
+            "name": "right palm",
+            "data": {
+                "height": 32.0,
+                "width": 55.0,
+                "x": 32.0,
+                "y": 104.0
+            }
+        },
+        {
+            "name": "left palm",
+            "data": {
+                "height": 31.0,
+                "width": 55.0,
+                "x": 449.0,
+                "y": 105.0
+            }
+        },
+        {
+            "name": "right leg",
+            "data": {
+                "height": 175.0,
+                "width": 39.0,
+                "x": 215.0,
+                "y": 349.0
+            }
+        },
+        {
+            "name": "left leg",
+            "data": {
+                "height": 173.0,
+                "width": 36.0,
+                "x": 266.0,
+                "y": 350.0
+            }
+        },
+        {
+            "name": "right foot",
+            "data": {
+                "height": 28.0,
+                "width": 35.0,
+                "x": 218.0,
+                "y": 458.0
+            }
+        },
+        {
+            "name": "left foot",
+            "data": {
+                "height": 28.0,
+                "width": 34.0,
+                "x": 262.0,
+                "y": 458.0
+            }
+        }
+    ]
+}
