@@ -99,7 +99,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   @override
   void didUpdateWidget(Bingo oldWidget) {
 //    print(oldWidget.iteration);
-    print("this is our preseent iteraion ${widget.iteration}");
+    print("this is our preseent iteraion GOOOD SANDJFNDNF DJNFJDNF${widget.iteration}");
     if (widget.iteration != oldWidget.iteration) {
 //      _copyQuestion.clear();
 //      _copyQuestion1.clear();
@@ -146,6 +146,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
     print(" count isssss $countData");
     ques = _copyQuestion[z];
+    print("thia is a ques tio {$ques abd $z}");
 //    print({"this questions :": _copyQuestion});
 //    print({"this questions :": _all[z]});
 //    print("this is a $question");
@@ -232,21 +233,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _RowCells[i] = RowCell.CurveRow;
                         widget.onProgress(2 / 1);
-//                        countData = 0;
-//                        _copyQuestion.removeRange(0 , _copyQuestion.length);
-//                        _copyQuestion1.removeRange(0 , _copyQuestion1.length);
-//                        _all.removeRange(0 , _all.length);
-//                        _letters.removeRange(0 , _letters.length);
-
-
-//                        z=0;
-//                        bingoCount = 0;
-                        // this is test of bingo
-//                        _Bingodata.forEach((e, v) {
-//                            _copyQuestion.add(e);
-//                            _copyQuestion1.add(e);
-//                            _all.add(v);
-//                            });
                       });
 
 
@@ -257,13 +243,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
                       new Future.delayed(const Duration(milliseconds: 5000) ,
                               () {
-                                z=0;
+                                z = 0;
                                 bingoCount = 0;
                                 countData = 0;
                             widget.onEnd();
-//                            z=0;
-//                            bingoCount = 0;
-                            countData = 0;
                             _copyQuestion.removeRange(0 , _copyQuestion.length);
                             _copyQuestion1.removeRange(0 , _copyQuestion1.length);
                             _all.removeRange(0 , _all.length);
@@ -304,13 +287,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 //
                     new Future.delayed(const Duration(milliseconds:5000) ,
                             () {
-                              z=0;
-                              bingoCount =0;
+                              z = 0;
+//                              bingoCount = 0;
                               countData = 0;
                                   widget.onEnd();
-//                          z=0;
-//                          bingoCount = 0;
-//                          countData = 0;
                           _copyQuestion.removeRange(0 , _copyQuestion.length);
                           _copyQuestion1.removeRange(0 , _copyQuestion1.length);
                           _all.removeRange(0 , _all.length);
@@ -323,9 +303,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 //                print({"this is reference": _referenceMatrix});
 //                print({"this is i value ": i});
                 if (matchRow == -1 && matchColumn == -1) {
-                  if (i <= _maxSize * _maxSize - 1) {
+                  if (z <= _maxSize * _maxSize - 1) {
                     _copyQuestion.removeWhere((val) => val == ques);
-                    ques = _copyQuestion[i];
+                    ques = _copyQuestion[z];
+                    print("this is a deleted copyquestion $ques");
                   } else {
 //                    print({"where is green manu ": " hello index is over"});
                   }
@@ -345,6 +326,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       var element =
                       _copyQuestion[_random.nextInt(_copyQuestion.length)];
                       ques = element;
+                      print("this is a elemet of removed $ques");
                     }
 //                    }
                   });
@@ -507,7 +489,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
 //    print("_MyButtonState.initState: ${widget.text}");
-
+print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet"
+    );
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
