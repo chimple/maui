@@ -122,7 +122,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff,
       _constAngle;
-  int _indexOfContainerData = 0, _numberOfSlice = 8;
+  int _indexOfContainerData = 0, _numberOfSlice = 8, _activeIndex;
   String _text = '';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
@@ -184,15 +184,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
   }
 
-  int _activeIndex;
   _initBoard() async {
     for (int i = 0; i < 8; i++) {
       load(_imageData[i]).then((i) {
         images.add(i);
       });
     }
-    _allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-    _slice = _sliceCopy;
+   // _allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
     _data.forEach((k, v) {
       _circleData.add(k);
       _shuffleCircleData1.add(k);
@@ -221,7 +219,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     _shuffleCircleData2.shuffle();
     controller1.forward();
     _countGameEnd = 0;
-    _slice = _sliceCopy;
+    for (int i = 0; i < 8; i++) {
+      _slice[i] = _sliceCopy[i];
+    }
     dragEnd = 0.0;
     angleDiff = 0.0;
     setState(() {
