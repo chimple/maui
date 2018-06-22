@@ -3,10 +3,11 @@ import 'dart:math';
 import 'dart:async';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
-import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/clue_game_unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/games/single_game.dart';
 
 class ClueGame extends StatefulWidget {
   Function onScore;
@@ -42,7 +43,11 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     });
     controller.forward();
   }
-
+  var keys = 0;
+  String _result = '';
+  String word = '';
+  int count = 0;
+  Key key;
   List<String> _categoryup=[];
   List<String> _categorydown=[];
   List<String> categoryName = [];
@@ -50,16 +55,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> listOfSyllables =[];
   List<String> listOfSyllablescopy = [];
   List<String> newSyllables = [];
-  List<String> dummylist = ['er','ak','la','pr','no','is','cm','ing','apk','tle','let','di','cb','ni','hi','mi','ko','do','lp','gh'];
- 
-   bool _isLoading = true;
+  List<String> dummylist = ['eq','ag','fg','cv','bn','mk','lk','asd','po','qw','tyu','uy','cb','ni','oiu','kjh','ko','za','aq','df'];
+  bool _isLoading = true;
   Map<String, List<String>> data1;
   Map<String, Map<String, List<String>>> data;
-  
-
   void _initClueGame() async{
      listOfSyllables.clear();
      listOfThings.clear();
+     categoryName.clear();
      setState(() => _isLoading = true);
       data = await fetchClueGame(widget.gameCategoryId);
       data.forEach((k, data1) {
@@ -73,30 +76,26 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     });
     _categoryup = categoryName.sublist(0, 2);
     _categorydown = categoryName.sublist(2, 4);
-     print('categoryName is $categoryName');
-    print('listOfThings is $listOfThings');
-    print('listOfSyllables is $listOfSyllables');
     if (count >= 6) {
       listOfSyllables.addAll(dummylist);
     }
     for (int i = 0; i < words.length; i++) listOfSyllables.remove(words[i]);
     listOfSyllablescopy = listOfSyllables.sublist(0, 19);
     listOfSyllablescopy.shuffle(); 
-    print('listOfSyllables sublist shuffle is $listOfSyllablescopy');
     setState(() => _isLoading = false);
   }
-
-  var keys = 0;
-  String _result = '';
-  String word = '';
-   int count = 0;
+ 
  void _validate() {
+     String word = _result;
     if (listOfThings.sublist(0, 4).contains(_result)) {
       setState(() {
         _result = 'you Type Drink';
          count++;
-      });
-      new Future.delayed(const Duration(milliseconds: 700), () {
+        GlobalKey key = new GlobalObjectKey(categoryName[0]);
+        if (key.currentState != null) {
+          (key.currentState as _BuildCategoryState).showImage(word);
+        }});
+      new Future.delayed(const Duration(seconds:2), () {
         setState(() {
           _flag = 0;
           _result = '';
@@ -108,8 +107,11 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type Travel';
          count++;
-      });
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+          GlobalKey key = new GlobalObjectKey(categoryName[1]);
+        if (key.currentState != null) {
+          (key.currentState as _BuildCategoryState).showImage(word);
+        }});
+      new Future.delayed(const Duration(seconds:2), () {
         setState(() {
           _flag = 0;
           _result = '';
@@ -121,8 +123,11 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type Red Fruit';
          count++;
-      });
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+          GlobalKey key = new GlobalObjectKey(categoryName[2]);
+        if (key.currentState != null) {
+          (key.currentState as _BuildCategoryState).showImage(word);
+        }});
+      new Future.delayed(const Duration(seconds:2), () {
         setState(() {
           _flag = 0;
           _result = '';
@@ -134,9 +139,11 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type black Pet';
          count++;
-      });
-
-      new Future.delayed(const Duration(milliseconds: 1000), () {
+          GlobalKey key = new GlobalObjectKey(categoryName[3]);
+        if (key.currentState != null) {
+          (key.currentState as _BuildCategoryState).showImage(word);
+        }});
+      new Future.delayed(const Duration(seconds:2), () {
         setState(() {
           _flag = 0;
           _result = '';
@@ -152,14 +159,10 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           _result = '';
         });
         controller.stop();
-      });
-    }
-    // });
-  }
+      });}}
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
@@ -179,27 +182,21 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
 
   Widget _builtCategory(int index, String text) {
     return new BuildCategory(
-      key: new ValueKey<int>(index),
+     key: new GlobalObjectKey(text),
+      unitMode: UnitMode.text,
       text: text,
       keys: keys++,
     );
   }
   int len;
   Widget answer(String output) {
-     print('result length is anser is ${_result.length}');
-    print('lenghth is $len');
-    print('output  is $output');
-    print('list is $lengthofwords');
-    print('list is ${lengthofwords.length}');
     void remove() {
       setState(() {
         if (_result.length > 0)
           _result = _result.substring(0, _result.length - lengthofwords.last);
             lengthofwords.removeLast();
-      });
-    }
-
-    MediaQueryData media = MediaQuery.of(context);
+      });}
+   MediaQueryData media = MediaQuery.of(context);
     double _height = media.size.height;
     double _width = media.size.width;
     return new GestureDetector(
@@ -213,7 +210,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             : _width * 0.25,
         alignment: Alignment.bottomRight,
         decoration: new BoxDecoration(
-         // border: new Border.all(width: 1.0),
           color: Colors.blue[200],
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
@@ -244,33 +240,21 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
           onPressed: () => _validate(),
           shape: new RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
-          child: new Text(
-            '✔',
+          child: new Text('✔',
             style: new TextStyle(
               color: Colors.black,
-              fontSize: 22.0,
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ));
-  }
+              fontSize: 22.0, ),
+            textAlign: TextAlign.left,),));}
 
   @override
   Widget build(BuildContext context) {
-  //  Orientation orientation = MediaQuery.of(context).orientation;
     keys = 0;
-   // if (orientation == Orientation.portrait) {
       return new LayoutBuilder(builder: (context, constraints) {
         final hPadding = pow(constraints.maxWidth / 150.0, 2);
         final vPadding = pow(constraints.maxHeight / 150.0, 2);
         double maxWidth = 0.0, maxHeight = 0.0;
-        final maxChars = (categoryName != null
-            ? categoryName.fold(
-                1,
-                (prev, element) =>
-                    element.length > prev ? element.length : prev)
-            : 1);
-
+        final maxChars = (categoryName != null ? categoryName.fold(1,(prev, element) =>
+                    element.length > prev ? element.length : prev): 1);
         maxWidth = (constraints.maxWidth - hPadding * 2) / 3.7;
         maxHeight = (constraints.maxHeight - vPadding * 2) / 3.7;
         double buttonPadding = sqrt(min(maxWidth, maxHeight));
@@ -292,8 +276,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                             padding: EdgeInsets.all(buttonPadding),
                             child: _builtCategory(k++, e),
                           ))
-                      .toList(growable: false),
-                ),
+                      .toList(growable: false),),
                 new ResponsiveGridView(
                   rows: 2,
                   cols: 1,
@@ -303,11 +286,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                             padding: EdgeInsets.all(buttonPadding),
                             child: _builtCategory(k++, e),
                           ))
-                      .toList(growable: false),
-                ),
-              ],
-            ),
-          ),
+                      .toList(growable: false),),],),),
           new Expanded(
             flex: 1,
             child: new Row(
@@ -318,9 +297,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                   child: answer(_result),
                 ),
                 submit(),
-              ],
-            ),
-          ),
+              ],),),
           new Expanded(
             flex: 5,
              child: buildCircle(context, listOfSyllablescopy, j,maxWidth,maxHeight),
@@ -353,35 +330,24 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
                             padding: EdgeInsets.all(buttonPadding),
                             child: _builtCategory(k++, e),
                           ))
-                      .toList(growable: false),
-                ),
+                      .toList(growable: false),),
                 new Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       new Shake(
                         animation: (_flag == 0) ? animation : noanimation,
                         child: answer(_result),
                       ),
-                      submit(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+                      submit(),],),),
+              ],),),
           new Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child:  buildCircle(context, listOfSyllablescopy, j,maxWidth,maxHeight),
-          ),
-        ]);
-    }
+          ),]);}
       });
-    }
-  
-
-  //int j = 0;
+ }
   Widget buildCircle(BuildContext context,  List<String> syllables, int index, double maxW,double maxH) {
     return new Circle(
         listOfSyllablescopy: syllables,
@@ -392,19 +358,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<int> lengthofwords = [];
    List<String> words = [];
   void setData(String a) {
-   print("string is $a");
-    print("string length is ${a.length}");
     setState(() {
        len = a.length;
         words.add(a);
       lengthofwords.add(len);
       _result = _result + a;
-    });
-  }
-
-  int wordsIndex = 0;
+    });}
   int j = 0;
-}
+ }
 
 typedef void VoidCallback(String text);
 
@@ -421,7 +382,6 @@ class Circle extends StatefulWidget {
 
 class _CircleState extends State<Circle> {
   String _text = '';
-  int wordsIndex = 0;
   void initState() {
     super.initState();
     setState(() {
@@ -444,7 +404,6 @@ class _CircleState extends State<Circle> {
             new BoxDecoration(color: Colors.green, shape: BoxShape.circle)));
 
     Offset circleCenter = new Offset(bigRadius, bigRadius);
-
     List<Offset> offsets;
      int syllableIndex = 0;
     offsets = calculateOffsets(bigRadius * 0.8, circleCenter, 12);
@@ -527,20 +486,46 @@ class _PositionCircleState extends State<PositionCircle> {
 }
 
 class BuildCategory extends StatefulWidget {
-  BuildCategory({Key key, this.keys, this.text}) : super(key: key);
-  final String text;
+  BuildCategory({Key key, this.keys, this.text,this.unitMode}) : super(key: key);
+  String text;
   int keys;
+  UnitMode unitMode;
   @override
-  _BuildCategoryState createState() => new _BuildCategoryState();
+  _BuildCategoryState createState() => new _BuildCategoryState(unitMode, text);
 }
 
 class _BuildCategoryState extends State<BuildCategory> {
+  UnitMode unitMode;
+  String text;
+  _BuildCategoryState(this.unitMode, this.text);
+
+  void showImage (String imageName) {
+     String oldText = widget.text;
+     setState((){
+       this.unitMode = UnitMode.image;
+       this.text = imageName;
+     });
+     new Future.delayed(new Duration(seconds:2), () {
+       setState((){
+         this.unitMode = UnitMode.text;
+         this.text = oldText;
+       });
+     });
+  }
   @override
   Widget build(BuildContext context) {
     widget.keys++;
+      if (unitMode == UnitMode.image) {
+      return new UnitButton(
+        unitMode: this.unitMode,
+        text: this.text,
+        bgImage: this.text,
+         key: new Key("A${widget.keys}"),
+      );
+    }
     return new UnitButton(
-      text: widget.text,
-      disabled: true,
+       unitMode: this.unitMode,
+      text: this.text,
       key: new Key("A${widget.keys}"),
     );
   }
