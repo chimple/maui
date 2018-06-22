@@ -1,0 +1,98 @@
+{
+    "id": "Birds.png",
+    "height": 1088.0,
+    "width": 1608.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "eagle",
+            "data": {
+                "height": 262.0,
+                "width": 420.0,
+                "x": 264.0,
+                "y": 139.0
+            }
+        },
+        {
+            "name": "kingfisher",
+            "data": {
+                "height": 385.0,
+                "width": 322.0,
+                "x": 688.0,
+                "y": 217.0
+            }
+        },
+        {
+            "name": "parrot",
+            "data": {
+                "height": 267.0,
+                "width": 219.0,
+                "x": 1045.0,
+                "y": 254.0
+            }
+        },
+        {
+            "name": "bat",
+            "data": {
+                "height": 213.0,
+                "width": 285.0,
+                "x": 270.0,
+                "y": 508.0
+            }
+        },
+        {
+            "name": "owl",
+            "data": {
+                "height": 231.0,
+                "width": 210.0,
+                "x": 947.0,
+                "y": 570.0
+            }
+        },
+        {
+            "name": "peacock",
+            "data": {
+                "height": 380.0,
+                "width": 301.0,
+                "x": 1392.0,
+                "y": 768.0
+            }
+        },
+        {
+            "name": "swan",
+            "data": {
+                "height": 235.0,
+                "width": 371.0,
+                "x": 993.0,
+                "y": 898.0
+            }
+        },
+        {
+            "name": "rooster",
+            "data": {
+                "height": 306.0,
+                "width": 264.0,
+                "x": 594.0,
+                "y": 899.0
+            }
+        },
+        {
+            "name": "duck",
+            "data": {
+                "height": 313.0,
+                "width": 291.0,
+                "x": 202.0,
+                "y": 895.0
+            }
+        },
+        {
+            "name": "dove",
+            "data": {
+                "height": 425.0,
+                "width": 318.0,
+                "x": 1401.0,
+                "y": 250.0
+            }
+        }
+    ]
+}
