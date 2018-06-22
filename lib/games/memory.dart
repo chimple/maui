@@ -107,13 +107,16 @@ class MemoryState extends State<Memory> {
     _shaker = [];
     _shaker = _letters.map((a) => ShakeCell.Right).toList(growable: false);
     setState(() => _isLoading = false);
-  }
+  }      
 
   @override
   void didUpdateWidget(Memory oldWidget) {
+    super.didUpdateWidget(oldWidget);
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
+      _allLetters.clear();
+      _letters.clear();  
       _initBoard();
       print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
@@ -180,9 +183,10 @@ class MemoryState extends State<Memory> {
               print("Rajesh-Matched${_matched}");
               if (_matched == ((_size * _size) / 2)) {
                 _matched = 0;
+                _progressCnt = 1;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
-                  widget.onEnd();
+                  widget.onEnd();        
                 });
               }
               print("Pressed Statuses2: ${_statuses}");
@@ -310,7 +314,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     flipController = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     noAnimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
@@ -322,14 +326,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       });
 
-    controller.forward().then((f) {
-        flipController.forward();
-        initialVisibility = true;
-       new Future.delayed(const Duration(milliseconds: 2000), () { 
-         initialVisibility = false;
-        flipController.reverse();
-       });
-    });
+        controller.forward().then((f) {
+          flipController.forward();
+          initialVisibility = true;
+        new Future.delayed(const Duration(milliseconds: 2000), () { 
+          initialVisibility = false;
+          flipController.reverse();
+        });
+      });
 
     shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
     _myAnim();
@@ -356,8 +360,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-    print("Rajesh");
     super.didUpdateWidget(oldWidget);
+    print("_MyButtonState.didUpdateWidget: ${oldWidget.text} ${widget.text} ");
+     print("Rajesh");
     if (oldWidget.text == null && widget.text != null) {
       flipController.reverse();
       print("Rajesh1");
@@ -379,7 +384,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       }
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override

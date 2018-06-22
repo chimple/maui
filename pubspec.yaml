@@ -58,11 +58,35 @@ flutter:
     - assets/star.png
     - assets/star_gained.png
     - assets/apple.png
+    - assets/Colors.png
+    - assets/Flowers.png
+    - assets/HouseItems.png
     - assets/Boy.png
     - assets/Body.png
-    - assets/imageCoordinatesInfoShapes.json
-    - assets/imageCoordinatesInfoBoy.json
-    - assets/imageCoordinatesInfoBody.json
+    - assets/Scene.png
+    - assets/Scene.json
+    - assets/Colors.json
+    - assets/Flowers.json
+    - assets/HouseItems.json
+    - assets/Shapes.json
+    - assets/Boy.json
+    - assets/Body.json
+    - assets/Work.json
+    - assets/HomeOffice.json
+    - assets/Hospital.json
+    - assets/LivingRoom.json
+    - assets/StudyRoom.json
+    - assets/Animals.json
+    - assets/BedRoom.json
+    - assets/Birds.json
+    - assets/Work.png
+    - assets/HomeOffice.png
+    - assets/Hospital.png
+    - assets/LivingRoom.png
+    - assets/StudyRoom.png
+    - assets/Animals.png
+    - assets/BedRoom.png
+    - assets/Birds.png
     - assets/apple.ogg
     - assets/dice_game/1.png
     - assets/dice_game/2.png
