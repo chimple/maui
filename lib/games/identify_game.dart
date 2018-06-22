@@ -41,25 +41,24 @@ class _IdentifyGameState extends State<IdentifyGame>
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    String jsonGameInfo = await fetchIdentifyData();
+    // String jsonGameInfo = await fetchIdentifyData();
 
-    _decoded = await json.decode(jsonGameInfo);
+    _decoded = await json.decode(await fetchIdentifyData());
     print("intiborad.>>>>>>$_decoded");
     print(_decoded["parts"]);
     // print(_decoded["parts"] as List);
     new Future.delayed(const Duration(milliseconds: 500), () {
       // setState(() => _isLoading = false);
       setState(() {
-        for (var i = 0; i < _decoded["number"] ; i++) {
-      _textControllers.add(new AnimationController(
-          vsync: this, duration: new Duration(milliseconds: 500)));
-      _animateText.add(
-          new CurvedAnimation(parent: _textControllers[i], curve: Curves.elasticOut));
-    }    
-    _imgController.forward();
-              _isLoading = false;
-            });
-
+        for (var i = 0; i < _decoded["number"]; i++) {
+          _textControllers.add(new AnimationController(
+              vsync: this, duration: new Duration(milliseconds: 500)));
+          _animateText.add(new CurvedAnimation(
+              parent: _textControllers[i], curve: Curves.elasticOut));
+        }
+        _imgController.forward();
+        _isLoading = false;
+      });
     });
   }
 
@@ -73,21 +72,21 @@ class _IdentifyGameState extends State<IdentifyGame>
           milliseconds: 800,
         ),
         vsync: this);
-    
+
     animateImage =
         new CurvedAnimation(parent: _imgController, curve: Curves.bounceOut);
-    
   }
 
-   @override
+  @override
   void didUpdateWidget(IdentifyGame oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _paint = [];
+      _textControllers = [];
+      _animateText = [];
       _initBoard();
     }
   }
-
-  
 
   void _renderChoice(String text, double X, double Y) {
     setState(() {
@@ -147,7 +146,6 @@ class _IdentifyGameState extends State<IdentifyGame>
     );
   }
 
-
   Widget _buildItems(
       int i, var part, double maxHeight, double maxWidth, int cols) {
     return new DragBox(
@@ -203,50 +201,70 @@ class _IdentifyGameState extends State<IdentifyGame>
           "This is the height of the screen except header >>>>>  ${constraint.maxHeight}");
       print(
           "This is the width of the screen except header >>>>> ${constraint.maxWidth}");
-      return new Scaffold(
-        body: new Flex(
-          direction: Axis.vertical,
-          children: <Widget>[
-            new GestureDetector(
-              onHorizontalDragStart: (DragStartDetails start) =>
-                  _onDragStart(context, start),
-              onHorizontalDragUpdate: (DragUpdateDetails update) =>
-                  _onDragUpdate(context, update),
-              onVerticalDragStart: (DragStartDetails start) =>
-                  _onDragStart(context, start),
-              onVerticalDragUpdate: (DragUpdateDetails update) =>
-                  _onDragUpdate(context, update),
-              child: new Container(
-                  height: (constraint.maxHeight) * 3 / 4,
-                  width: constraint.maxWidth,
-                  // decoration: new BoxDecoration(
-                  //   color: Theme.of(context).backgroundColor,
-                  // ),
-                  child: new Stack(
-                    fit: StackFit.passthrough,
-                    children: <Widget>[
-                      new ScaleTransition(
-                        scale: animateImage,
-                        child: new Image(
-                          image: AssetImage('assets/' + _decoded["id"]),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      new Stack(
-                        children: _createTextPaint(context),
-                      ),
-                    ],
-                  )),
-            ),
-            new Container(
-                height: (constraint.maxHeight) / 4,
+      return new Flex(
+        direction: Axis.vertical,
+        children: <Widget>[
+          new GestureDetector(
+            onHorizontalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            onVerticalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onVerticalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            child: new Container(
+                height: (constraint.maxHeight) * 3 / 4,
                 width: constraint.maxWidth,
-                decoration: new BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor),
-                child: _builtButton(context, constraint.maxHeight / 4,
-                    constraint.maxWidth, cols)),
-          ],
-        ),
+                // decoration: new BoxDecoration(
+                //   color: Theme.of(context).backgroundColor,
+                // ),
+                child: new Stack(
+                  fit: StackFit.passthrough,
+                  children: <Widget>[
+                    // new Center(
+                    //   child: new Container(
+                    //     decoration: new BoxDecoration(
+                    //       border: new Border.all(width: 5.0, color: Colors.amber),
+                    //     ),
+                    //     height: (((constraint.maxHeight) * 3) / 4) - (((constraint.maxHeight) * 3) / 20),
+                    //     width: constraint.maxWidth - (constraint.maxWidth/4),
+                    //     child:new ScaleTransition(
+                    //   scale: animateImage,
+                    //   child: new Image(
+                    //     image: AssetImage('assets/' + _decoded["id"]),
+                    //     fit: BoxFit.contain,
+                    //   ),
+                    // ),
+                    //   ),
+                    // ),
+                    new AnimatedImage(
+                      item: _decoded["id"],
+                      animation: animateImage,
+                      height: (constraint.maxHeight) * 3 / 4,
+                      width: constraint.maxWidth,
+                    ),
+                    // new ScaleTransition(
+                    //   scale: animateImage,
+                    //   child: new Image(
+                    //     image: AssetImage('assets/' + _decoded["id"]),
+                    //     fit: BoxFit.contain,
+                    //   ),
+                    // ),
+                    new Stack(
+                      children: _createTextPaint(context),
+                    ),
+                  ],
+                )),
+          ),
+          new Container(
+              height: (constraint.maxHeight) / 4,
+              width: constraint.maxWidth,
+              decoration: new BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor),
+              child: _builtButton(context, constraint.maxHeight / 4,
+                  constraint.maxWidth, cols)),
+        ],
       );
     });
   }
@@ -295,8 +313,6 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     }
     return partsName;
   }
-
-  
 
   _onDragStart(BuildContext context, DragStartDetails start) {
     print(start.globalPosition.toString());
@@ -369,80 +385,88 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     int r = ((_decoded["parts"] as List).length / cols +
             ((((_decoded["parts"] as List).length % cols) == 0) ? 0 : 1))
         .toInt();
-    
+
     return new Container(
-      width: maxWidth / cols ,
+      width: maxWidth / cols,
       height: maxHeight / r,
       color: Theme.of(context).buttonColor,
       child: new ScaleTransition(
-        scale:shakeAnimation,
+        scale: shakeAnimation,
         child: new Draggable(
-          data: (_flag1 == 0) ? "" :part["name"],
+          data: (_flag1 == 0) ? "" : part["name"],
           child: new AnimatedDrag(
             cols: cols,
             height: maxHeight,
             width: maxWidth,
             animation: (_flag == 0) ? noanimation : animation,
             draggableColor: Theme.of(context).buttonColor,
-            draggableText: (_flag1 == 0) ? "" :part["name"],
+            draggableText: (_flag1 == 0) ? "" : part["name"],
           ),
           feedback: new AnimatedFeedback(
-            height: maxHeight,
-            width: maxWidth,
-            animation: animation,
-            draggableColor: Theme.of(context).disabledColor,
-            draggableText: (_flag1 == 0) ? "" :part["name"]),
+              height: maxHeight,
+              width: maxWidth,
+              animation: animation,
+              draggableColor: Theme.of(context).disabledColor,
+              draggableText: (_flag1 == 0) ? "" : part["name"]),
           onDraggableCanceled: (velocity, offset) {
             print(velocity);
-          Size media = MediaQuery.of(context).size;
-          double rh, rw, headerSize;
-          rh = (3 * maxHeight) / _decoded["height"];
-          print("bffvhqvfihvqfiqvi...$rh");
-          print(_length);
-          rw = maxWidth / _decoded["width"];
-          headerSize = media.height - 4 * (maxHeight);
-          if (((offset.dy + 35.0) >
-                  (headerSize +
-                      ((rh * part["data"]["y"]) -
-                          ((rh * part["data"]["height"]) / 2)))) &&
-              ((offset.dy + 35.0) <
-                  (headerSize +
-                      ((rh * part["data"]["y"]) +
-                          ((rh * part["data"]["height"]) / 2))))) {
-            print(
-                " Header Size $headerSize  Start of object ${(headerSize + ((rh * part["data"]["y"]) -((rh * part["data"]["height"]) / 2)))}  End of object  ${(headerSize +((rh * part["data"]["y"]) +((rh * part["data"]["height"]) / 2)))}");
-            render(part["name"], offset.dx, (rh * part["data"]["y"]));
-            print(offset.dy);
-            widget.onScore(1);
-            _length = _length - 1;
+            Size media = MediaQuery.of(context).size;
+            double rh, rw, headerSize;
+            rh = (3 * maxHeight) / _decoded["height"];
+            print("bffvhqvfihvqfiqvi...$rh");
             print(_length);
-            setState(() {
-                          _flag1 = 0;
-                        });
-            new Future.delayed(const Duration(milliseconds: 1000),(){
-              if(_length == 0){
-                widget.onEnd();
-              }
-            });
-          } 
-          // if(true){ 
-          //   print("xxxxxxx...${offset.dx}");
-            
-          //   print("yyyyyyy...${offset.dy}");
-          //   print((rh * part["data"]["y"]));
-          // }
-          else {
-            widget.onScore(-1);
-            _flag = 1;
-            toAnimateFunction();
-            new Future.delayed(const Duration(milliseconds: 1000), () {
+            rw = maxWidth / _decoded["width"];
+            headerSize = media.height - 4 * (maxHeight);
+            if ((((offset.dy + 35.0) >
+                        (headerSize +
+                            ((rh * part["data"]["y"]) -
+                                ((rh * part["data"]["height"]) / 2)))) &&
+                    ((offset.dy + 35.0) <
+                        (headerSize +
+                            ((rh * part["data"]["y"]) +
+                                ((rh * part["data"]["height"]) / 2))))) &&
+                (((offset.dx + 40.0)  >
+                        (((rw * part["data"]["x"]) -
+                            ((rw * part["data"]["width"]) / 2)))) &&
+                    ((offset.dx + 40.0) <
+                        (((rw * part["data"]["x"]) +
+                            ((rw * part["data"]["width"]) / 2)))))) {
+              print(
+                  " Header Size $headerSize  Start of object  along y axis ...>> ${(headerSize + ((rh * part["data"]["y"]) -((rh * part["data"]["height"]) / 2)))}  End of object  ${(headerSize +((rh * part["data"]["y"]) +((rh * part["data"]["height"]) / 2)))}");
+                  print(
+                  "Start of object  along x axis ...>> ${( ((rw * part["data"]["x"]) -((rw * part["data"]["width"]) / 2)))}  End of object  ${(((rw * part["data"]["x"]) +((rw * part["data"]["width"]) / 2)))}");
+              render(part["name"],(rw * part["data"]["x"]) , (rh * part["data"]["y"]));
+              print(offset.dy);
+              widget.onScore(1);
+              _length = _length - 1;
+              print(_length);
               setState(() {
-                _flag = 0;
+                _flag1 = 0;
               });
-              controller.stop();
-            });
-          }
-        }, 
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                if (_length == 0) {
+                  widget.onEnd();
+                }
+              });
+            }
+            // if(true){
+            //   print("xxxxxxx...${offset.dx}");
+
+            //   print("yyyyyyy...${offset.dy}");
+            //   print((rh * part["data"]["y"]));
+            // }
+            else {
+              widget.onScore(-1);
+              _flag = 1;
+              toAnimateFunction();
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                setState(() {
+                  _flag = 0;
+                });
+                controller.stop();
+              });
+            }
+          },
         ),
       ),
     );
@@ -475,7 +499,7 @@ class AnimatedFeedback extends AnimatedWidget {
             // color: Theme.of(context).highlightColor,
             color: Colors.black,
             decoration: TextDecoration.none,
-            fontSize: width * 0.1,
+            fontSize: width * 0.05,
           ),
         ),
       ),
@@ -500,20 +524,6 @@ class AnimatedDrag extends AnimatedWidget {
   final double width;
   final int cols;
 
-  _onDragStart(BuildContext context, DragStartDetails start) {
-    print(start.globalPosition.toString());
-    // RenderBox getBox = context.findRenderObject();
-    // var local = getBox.globalToLocal(start.globalPosition);
-    // print(local.dx.toString() + "|" + local.dy.toString());
-  }
-
-  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
-    print(update.globalPosition.toString());
-    // RenderBox getBox = context.findRenderObject();
-    // var local = getBox.globalToLocal(update.globalPosition);
-    // print(local.dx.toString() + "|" + local.dy.toString());
-  }
-
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     double translateX = animation.value;
@@ -522,16 +532,59 @@ class AnimatedDrag extends AnimatedWidget {
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Center(
         child: new Text(
-            draggableText,
-            style: new TextStyle(
-              color: Theme.of(context).hintColor,
-                decoration: TextDecoration.none,
-                fontSize: (width / cols) * 0.15,
-                fontWeight: FontWeight.bold,
-            ),
+          draggableText,
+          style: new TextStyle(
+            color: Theme.of(context).hintColor,
+            decoration: TextDecoration.none,
+            fontSize: (width / cols) * 0.15,
+            fontWeight: FontWeight.bold,
           ),
+        ),
       ),
     );
+  }
+}
+
+class AnimatedImage extends AnimatedWidget {
+  AnimatedImage({
+    Key key,
+    Animation<double> animation,
+    this.item,
+    this.height,
+    this.width,
+  }) : super(key: key, listenable: animation);
+
+  final double height;
+  final double width;
+  final String item;
+
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Center(
+      child: new ScaleTransition(
+        scale: animation,
+        child: new Image(
+          image: AssetImage('assets/' + item),
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+    // return Center(
+    //                     child: new Container(
+    //                       // decoration: new BoxDecoration(
+    //                       //   border: new Border.all(width: 5.0, color: Colors.amber),
+    //                       // ),
+    //                       height: (((height) * 3) / 4) - (((height) * 3) / 20),
+    //                       width: width - (width/10),
+    //                       child:new ScaleTransition(
+    //                     scale: animation,
+    //                     child: new Image(
+    //                       image: AssetImage('assets/' + _decoded["id"]),
+    //                       fit: BoxFit.contain,
+    //                     ),
+    //                   ),
+    //                     ),
+    //                   );
   }
 }
 

@@ -59,6 +59,10 @@ flutter:
     - assets/apple.png
     - assets/Colors.png
     - assets/Flowers.png
+    - assets/Fruits.png
+    - assets/Clothes.png
+    - assets/Fruits.json
+    - assets/Clothes.json
     - assets/HouseItems.png
     - assets/Boy.png
     - assets/Body.png

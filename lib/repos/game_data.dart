@@ -623,16 +623,16 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 
 
 Future<String> fetchIdentifyData() async {
-    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice", "Clothes", "Fruits"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
     return await rootBundle.loadString("assets/$s.json");
 }
 
 Future<String> fetchGuessData() async {
-  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice", "Clothes", "Fruits"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
     return await rootBundle.loadString("assets/$s.json");
