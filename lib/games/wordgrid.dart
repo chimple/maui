@@ -111,6 +111,9 @@ class WordgridState extends State<Wordgrid> {
     data.item1.forEach((e) {
       words = words + e;
     });
+    if(words[0]==words[1]&&words[0]==words[2]){
+      words=words[0];
+    }
     var rng = new Random();
     cdlist = [];
     for (var i = 0; i < _size; i++) {
@@ -313,7 +316,7 @@ class WordgridState extends State<Wordgrid> {
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
-              widget.onScore((40 - tries) ~/ totalgame);
+              widget.onScore(-5);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
@@ -437,7 +440,7 @@ class WordgridState extends State<Wordgrid> {
                             padding: EdgeInsets.all(buttonPadding / 2.0),
                             child: UnitButton(
                               text: words,
-                              bgImage: 'assets/dict/${words.toLowerCase()}.png',
+                              bgImage: words,
                               primary: false,
                               onPress: () {},
                               unitMode: UnitMode.image,
