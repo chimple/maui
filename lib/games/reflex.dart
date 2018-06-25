@@ -300,12 +300,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-//    print("_MyButtonState.build");
+    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
         child: new UnitButton(
           onPress: widget.onPress,
-          text: _displayText,
+          text: _displayText ?? '',
           unitMode: UnitMode.text,
         ));
   }
