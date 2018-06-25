@@ -228,6 +228,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.7"
+  fluttery_audio:
+    dependency: "direct main"
+    description:
+      name: fluttery_audio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   fluttie:
     dependency: "direct main"
     description:
@@ -647,5 +654,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.54.0.flutter-46ab040e58"
+  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.60.0.flutter-a5e41681e5"
   flutter: ">=0.1.4 <2.0.0"

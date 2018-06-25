@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:math';
-import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
+import 'dart:ui' as ui show Image;
 
 class ArrowPainter extends CustomPainter {
   final Paint dialArrowPaint;
@@ -67,7 +70,6 @@ class OuterCircle extends CustomPainter {
         traingle = new Paint(),
         textPainter = new TextPainter(
           maxLines: 10,
-          //ellipsis:'sa',
           textScaleFactor: 1.30,
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
@@ -76,14 +78,8 @@ class OuterCircle extends CustomPainter {
           color: Colors.black,
           fontFamily: 'BebasNeue',
           fontSize: 20.0,
-        ),
-        buttonStyle = new Container(
-          width: 30.0,
-          height: 30.0,
         ) {
     tickPaint.strokeWidth = 2.5;
-    traingle.color = Colors.black;
-    traingle.style = PaintingStyle.fill;
   }
 
   @override
@@ -92,25 +88,19 @@ class OuterCircle extends CustomPainter {
     canvas.save();
     canvas.rotate(-ticksPerSection);
     final radius = size.width / 2;
-
-    Rect myRect = const Offset(0.0, 0.0) & Size(size.width / 2, size.width / 2);
-
     Path path = new Path();
     path.moveTo(0.0, 0.0);
     path.lineTo(2 * pi * size.width / 2 / 16, size.width / 2 - 20);
     path.lineTo(-2 * pi * size.width / 2 / 16, size.width / 2 - 20);
-
     path.close();
     int c = 0;
-
     for (var i = 0; i < 16; ++i) {
-      final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
       if (i % 2 == 0) {
-        // canvas.drawLine(
-        //   new Offset(0.0, 0.0),
-        //   new Offset(0.0, radius - 4.2),
-        //   tickPaint,
-        // );
+        canvas.drawLine(
+          new Offset(0.0, 0.0),
+          new Offset(0.0, radius - 4.2),
+          tickPaint,
+        );
       } else {
         canvas.save();
         canvas.translate(-0.0, -((size.width) / 3));
@@ -128,7 +118,7 @@ class OuterCircle extends CustomPainter {
           canvas,
           new Offset(
             0.0,
-            (textPainter.height) / 3,
+            (textPainter.height) / 2,
           ),
         );
 
@@ -146,139 +136,58 @@ class OuterCircle extends CustomPainter {
   }
 }
 
-class ImageData1 extends CustomPainter {
-  final LONG_TICK = 50.0;
-  final SHORT_TICK = 4.0;
-  List<String> data;
-  double sizePaint;
-  final Paint traingle;
-  final double rotationPercent;
-  List<int> outerCircle = [1, 10, 3, 2, 3, 4, 15, 25, 3, 32, 5, 6, 6, 7, 4];
-  final tickCount;
-  final ticksPerSection;
-  final ticksInset;
+class ClippedPainter extends CustomPainter {
+  final path;
   final tickPaint;
-  final textPainter;
-  final textStyle;
-  final image;
-  final buttonStyle;
-  
-  ImageData1({
-    this.data,
-    this.sizePaint: 0.0,
-    this.tickCount = 35,
-    this.ticksPerSection = 0.0,
-    this.ticksInset = 0.0,
-  })  : tickPaint = new Paint(),
-        traingle = new Paint(),
-        image =new Image(image: AssetImage('assets/hoodie/fill_in_the_blanks.png'),);
+  double rotation = 0.0;
+  List<ui.Image> images = new List<ui.Image>();
+  //List<String> images = [];
+  ClippedPainter({this.images, this.rotation})
+      : path = new Path()
+          ..addOval(new Rect.fromCircle(
+            center: new Offset(75.0, 75.0),
+            radius: 35.0,
+          )),
+        tickPaint = new Paint() {
+    tickPaint.strokeWidth = 2.5;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.translate(size.width / 2, size.height / 2);
+    int c = 0;
+    print("paint image data:: $images");
     canvas.save();
-    canvas.rotate(-ticksPerSection);
+    canvas.translate(size.width / 2, size.height / 2);
+    canvas.rotate(-rotation);
 
-    canvas.drawImage(image, new Offset(10.0, 200.0), tickPaint);
+    for (var i = 0; i < 16; ++i) {
+      if (i % 2 == 0) {
+        canvas.drawLine(
+          new Offset(0.0, 0.0),
+          new Offset(0.0, size.width / 2 - 4.2),
+          tickPaint,
+        );
+      } else {
+        canvas.save();
+
+        canvas.translate(-0.0, -((size.width) / 2));
+        canvas.clipPath(path);
+        // for (ui.Image image in images)
+        if (images[c] != null) {
+          canvas.drawImage(images[c], Offset(0.0, -00.0), new Paint());
+        }
+        //path.layout();
+        canvas.rotate(2 * pi / 2);
+        canvas.restore();
+        c++;
+      }
+      canvas.rotate(2 * pi / 16);
+    }
     canvas.restore();
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
+  bool shouldRepaint(ClippedPainter oldDelegate) {
     return true;
   }
 }
-class ImageData extends CustomPainter {
-  //final ui.Image image;
-
-  ImageData();
-  
-  ui.Image image;
-  @override
-  void paint(ui.Canvas canvas, ui.Size size) async {
-    
-    // ImageMap images = new ImageMap(rootBundle);
-    // image = await images.loadImage('assets/koala_happy.png');
-    canvas.drawImage(image, ui.Offset.zero, new Paint());
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
-
-// class InnerCircle extends CustomPainter {
-//   final LONG_TICK = 50.0;
-//   final SHORT_TICK = 4.0;
-//   double sizePaint;
-//   final tickCount;
-//   final ticksPerSection1;
-//   final ticksInset;
-//   final tickPaint;
-//   final textPainter;
-//   final textStyle;
-
-//   InnerCircle({
-//     this.tickCount = 35,
-//     this.ticksPerSection1 = 0.0,
-//     this.ticksInset = 0.0,
-//   })  : tickPaint = new Paint(),
-//         textPainter = new TextPainter(
-//           textAlign: TextAlign.center,
-//           textDirection: TextDirection.rtl,
-//         ),
-//         textStyle = const TextStyle(
-//           color: Colors.black,
-//           fontFamily: 'BebasNeue',
-//           fontSize: 20.0,
-//         ) {
-//     tickPaint.color = Colors.black;
-//     tickPaint.strokeWidth = 0.5;
-//   }
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     canvas.translate(size.width / 2, size.height / 2);
-
-//     canvas.save();
-//     canvas.rotate(-ticksPerSection1);
-//     final radius = size.width / 2;
-//     print("Inner Container:: $size");
-//     for (var i = 0; i < 16; ++i) {
-//       //final tickLength = i % ticksPerSection == 0 ? LONG_TICK : SHORT_TICK;
-//       if (i % 2 == 0) {
-//         // canvas.drawLine(
-//         //   new Offset(0.0, 0.0),
-//         //   new Offset(0.0, radius),
-//         //   tickPaint,
-//         // );
-//       } else {
-//         canvas.save();
-//         canvas.translate(-0.0, -(size.width / 4));
-
-//         textPainter.text = new TextSpan(
-//           text: '$i',
-//           style: textStyle,
-//         );
-//         textPainter.layout();
-
-//         canvas.rotate(2 * pi / 2);
-//         textPainter.paint(
-//           canvas,
-//           new Offset(
-//             0.0,
-//             textPainter.height / 2,
-//           ),
-//         );
-
-//         canvas.restore();
-//       }
-//       canvas.rotate(2 * pi / 16);
-//     }
-
-//     canvas.restore();
-//   }
-
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     return true;
-//   }
-// }
