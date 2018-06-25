@@ -367,7 +367,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       flipController.reverse();
       print("Rajesh1");
       _displayText = widget.text;
-      controller.forward();
+      flipController.forward();
     } else if (oldWidget.text != widget.text) {
       print("Rajesh2");
       //controller.reverse();
