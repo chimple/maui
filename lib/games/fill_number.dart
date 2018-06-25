@@ -119,9 +119,9 @@ class MyFillnumberState extends State<Fillnumber> {
     _Bgstatus = _letters.map((a) => Bgstatus.BgActive).toList(growable: false);
     // _statuses = _copyVal.map((a) => Status.Active).toList(growable: false);
     _ShakeCells =
-        _copyVal.map((a) => ShakeCell.InActive).toList(growable: false);
-    _statuses = _copyVal.map((a) => Status.Draggable).toList(growable: false);
-    _visibleflag = _copyVal.map((a) => false).toList(growable: false);
+        _letters.map((a) => ShakeCell.InActive).toList(growable: false);
+    _statuses = _letters.map((a) => Status.Draggable).toList(growable: false);
+    _visibleflag = _letters.map((a) => false).toList(growable: false);
     var rng = new Random();
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
@@ -142,7 +142,6 @@ class MyFillnumberState extends State<Fillnumber> {
     print("some of old widget is $widget.iteration");
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      // print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
   }
 
@@ -162,11 +161,11 @@ class MyFillnumberState extends State<Fillnumber> {
           setState(() {
             print('nikkkkkkkkkkkkkk');
             temp = index;
+            _pointssend.removeRange(0, _pointssend.length);
             clickAns.add(text);
             ssum = '$text';
             start = true;
             _Index.add(index);
-
             tempindex.add(index);
             lastclick = index;
             _visibleflag[index] = true;
@@ -175,8 +174,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 _pointssend.add(offset);
               });
             }
-            print(
-                "........hello.......this is how to get pointsend when i clicked...${_visibleflag[index]}");
+
             sum = sum + text;
             _statuses[index] = Status.First;
             for (var i = 0; i < _letters.length; i++) {
@@ -188,9 +186,21 @@ class MyFillnumberState extends State<Fillnumber> {
         }
       },
       onwill: (data) {
-        print('nikkkkkkkkkkkkkk  999');
+        var lineflag = 0;
         var x;
         var y;
+        var countline = 0;
+        for (var j = 0; j < _letters.length; j++) {
+          if (_visibleflag[j] == false) {
+            lineflag = 1;
+            countline++;
+          }
+        }
+        if (lineflag == 1 && countline == _letters.length ||
+            clickAns.length == 0) {
+          _pointssend.removeRange(0, _pointssend.length);
+          countline = 0;
+        }
 
         if (data == code && _visibleflag[index] == false) {
           if (lastclick == _size ||
@@ -208,77 +218,70 @@ class MyFillnumberState extends State<Fillnumber> {
               (index == lastclick - 1 && x != lastclick) ||
               (index == lastclick + _size) ||
               (index == lastclick - _size)) {
-            _statuses[temp] = Status.Dragtarget;
+            _statuses[tempindex[0]] = Status.Dragtarget;
+            if (ssum == '') {
+              ssum = '$text';
+            } else {
+              ssum = '$ssum' + '+' + '$text';
+            }
             setState(() {
-              print(
-                  "the lenth of the tempindex is .... check it ...${tempindex.length}");
-              if (ssum == '') {
-                ssum = '$text';
-              } else {
-                ssum = '$ssum' + '+' + '$text';
-              }
-
               sum = sum + text;
               _Index.add(index);
               lastclick = index;
               tempindex.add(index);
-              _statuses[tempindex[0]] = Status.Dragtarget;
-              clickAns.add(text);
 
+              clickAns.add(text);
               _visibleflag[index] = true;
               if (_visibleflag[index] == true) {
                 setState(() {
                   _pointssend.add(offset);
                 });
               }
-              print(
-                  "........hello..i clicked.222..${_visibleflag[index]}.........points...$_pointssend");
             });
+
             return true;
-          } else
-            return false;
+          }
         } else if (data == code &&
             _visibleflag[index] == true &&
             tempindex.length > 1) {
           print("object....tempindex..lenth..::${tempindex.length}");
 
           if (index == tempindex[tempindex.length - 2]) {
+            print("befor un do points .....is...::$_pointssend");
+            print("length points isss.......::${_pointssend.length}");
             setState(() {
-              print(
-                  "the lenth of the tempindex is .... check it ....22222..${tempindex.length}");
+              ssum = ssum.replaceRange(ssum.length - 2, ssum.length, '');
 
-              if (ssum.length >= 2) {
-                ssum = ssum.replaceRange(ssum.length - 2, ssum.length, '');
-                _visibleflag[tempindex.last] = false;
-                tempindex.removeLast();
-                sum = sum - clickAns.last;
-                clickAns.removeLast();
-                _pointssend.removeLast();
+              _pointssend.removeLast();
+              _visibleflag[tempindex.last] = false;
+              tempindex.removeLast();
+              sum = sum - clickAns.last;
+              clickAns.removeLast();
 
-                lastclick = tempindex.last;
+              lastclick = tempindex.last;
 
-                _Index.removeLast();
-              }
+              _Index.removeLast();
             });
+
             return true;
-          }
-          return false;
+          } else
+            return false;
         }
         return false;
       },
       onCancel: (v, g) {
-        print("values of sum is ...::..$sum");
-
         setState(() {
-          setState(() {
-            _pointssend.removeRange(0, _pointssend.length);
-          });
+          _pointssend.removeRange(0, _pointssend.length);
 
-          start = false;
           if (sum == Ansr) {
+            setState(() {
+              start = false;
+            });
             flag = 1;
             ssum = '$ssum' + '=$sum';
-            _pointssend.removeRange(0, _pointssend.length);
+            setState(() {
+              _pointssend.removeRange(0, _pointssend.length);
+            });
             tempindex.removeRange(0, tempindex.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
               widget.onScore(((40 - tries) ~/ totalgame));
@@ -293,8 +296,7 @@ class MyFillnumberState extends State<Fillnumber> {
               sum = 0;
               center = 0;
               _center.removeRange(0, _center.length);
-              print('helo this is sum when resetting in it value $sum');
-              print('helo this is sum when resetting in it value $_letters');
+
               _letters.forEach((e) {
                 if (e == null) {
                   count = count + 1;
@@ -310,14 +312,13 @@ class MyFillnumberState extends State<Fillnumber> {
                 _letters.add(null);
                 // _letters.insert(0, null);
               }
-              print("thhhiiiiiiisssss isss shanthuuuu$_val2");
 
               _val2.removeRange(0, _val2.length);
 
               Ansum = 0;
               _val2 = _letters.sublist(0, z);
               z++;
-              print("thhhiiiiiiisssss isss shanthuuuuiiiiiiii$_val2");
+
               _val2.forEach((e) {
                 if (e == null) {}
               });
@@ -333,15 +334,13 @@ class MyFillnumberState extends State<Fillnumber> {
               Ansr = Ansum;
 
               count = 0;
-              // _statuses = _copyVal
-              //     .map((a) => Status.Active)
-              //     .toList(growable: false);
-              _Bgstatus = _copyVal
+
+              _Bgstatus = _letters
                   .map((a) => Bgstatus.BgActive)
                   .toList(growable: false);
               _statuses =
-                  _copyVal.map((a) => Status.Draggable).toList(growable: false);
-              _visibleflag = _copyVal.map((a) => false).toList(growable: false);
+                  _letters.map((a) => Status.Draggable).toList(growable: false);
+              _visibleflag = _letters.map((a) => false).toList(growable: false);
               _Index.removeRange(0, _Index.length);
               _num2.removeRange(0, _num2.length);
             });
@@ -351,9 +350,9 @@ class MyFillnumberState extends State<Fillnumber> {
               //here setting every variable data using within the functionality making as initial set
               setState(() {
                 // here you want to get  another level of data in widget.onend it will call another set of datra
-                print("its reload time ");
+
                 k = 0;
-                // count1=count1-z;
+
                 Ansr = 0;
                 ssum = "";
                 sum = 0;
@@ -361,6 +360,11 @@ class MyFillnumberState extends State<Fillnumber> {
                 _Index.removeRange(0, _Index.length);
                 _letters.removeRange(0, _letters.length);
                 _center.removeRange(0, _center.length);
+                _shuffledLetters.removeRange(0, _shuffledLetters.length);
+                tempindex = [];
+                clickAns = [];
+                lastclick = -1;
+                _pointssend = [];
               });
               new Future.delayed(const Duration(milliseconds: 250), () {
                 start = false;
@@ -373,29 +377,35 @@ class MyFillnumberState extends State<Fillnumber> {
             _val2.removeRange(0, _val2.length);
           } else {
             setState(() {
+              _pointssend = [];
+              start = false;
+              tempindex = [];
               tries += 5;
               clickAns = [];
-              _pointssend.removeRange(0, _pointssend.length);
+              _Index.removeRange(0, _Index.length);
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _ShakeCells[i] = ShakeCell.Right : i;
 
-              new Future.delayed(const Duration(milliseconds: 800), () {
+              new Future.delayed(const Duration(milliseconds: 250), () {
                 setState(() {
-                  _ShakeCells = _copyVal
+                  _ShakeCells = _letters
                       .map((a) => ShakeCell.InActive)
                       .toList(growable: false);
-                  _statuses = _copyVal
+                  _statuses = _letters
                       .map((a) => Status.Draggable)
                       .toList(growable: false);
                   _visibleflag =
-                      _copyVal.map((a) => false).toList(growable: false);
-                  _Index.removeRange(0, _Index.length);
+                      _letters.map((a) => false).toList(growable: false);
+
                   ssum = '';
                   sum = 0;
                 });
               });
             });
           }
+          setState(() {
+            _pointssend = [];
+          });
         });
       },
     );
@@ -622,7 +632,6 @@ class SignaturePainter extends CustomPainter {
   //  var size1 =Size(683.0,345.0);
 
   void paint(Canvas canvas, Size size) {
-    var flag = 0;
     print("hello canvas is ....${size.height}");
     var paint = new Paint()
       ..color = coloris

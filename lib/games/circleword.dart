@@ -186,7 +186,7 @@ class CirclewordState extends State<Circleword> {
                     width: circleSize,
                     height: circleSize,
                     decoration: new BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
+                        color: Color(0xFF7592BC), shape: BoxShape.circle),
                     child: new Stack(children: widgets)),
               ),
               new Center(
@@ -593,7 +593,7 @@ class _PositionCircleState extends State<PositionCircle>
           shape: const CircleBorder(side: BorderSide.none),
           onPressed: () => widget.onPress(),
           fillColor:
-              widget.status == Status.Visible ? Colors.yellow : widget.teal,
+              widget.status == Status.Visible ? Colors.white : Color(0xFFA1EF6F),
           splashColor: Colors.yellow,
           child: new Text(widget.text,
               style: new TextStyle(color: Colors.black, fontSize: 24.0)),
