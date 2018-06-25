@@ -131,17 +131,12 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           print({"player status : ": player});
           print({"key index value : ": index});
           print({"i am : ": text});
-          // print({"player1 data isssssssssssss : ": data});
-          // print({"player2 data1 isssssssss : ": data1});
-
           var btnVal = -1, sum = 0, sub = 0;
           if (text != '' && dice_tries.length == 2) {
             btnVal = int.parse(text);
             sum = dice_tries[0] + dice_tries[1];
             sub = dice_tries[0] - dice_tries[1];
           }
-          // print({"manu sum": sum});
-          // print({"manu sub real": sub});
           if (sub < 0) {
             sub = -sub;
             print({"manu sub": sub});
@@ -160,13 +155,13 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
               widget.onScore(2);
               widget.onProgress(_currentIndex / data.length);
               // widget.onEnd();
-              if (_currentIndex >= data.length-2 ||
-                  _currentIndex2 >= data1.length-2) {
-                print({"inside main current index : " : _currentIndex});
-                new Future.delayed(const Duration(milliseconds: 250), () {
-                  widget.onEnd();
-                });
-              }
+              // if (_currentIndex >= data.length-2 ||
+              //     _currentIndex2 >= data1.length-2) {
+              //   print({"inside main current index : " : _currentIndex});
+              //   new Future.delayed(const Duration(milliseconds: 250), () {
+              //     widget.onEnd();
+              //   });
+              // }
               resetDice();
               sum = 0;
               sub = 0;
