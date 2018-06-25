@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:audioplayer/audioplayer.dart';
+// import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:audioplayer/audioplayer.dart';
+
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -287,7 +288,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       children: <Widget>[
                      new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
-                  gameDisplay != GameDisplay.single ? new Row(
+                  gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
@@ -310,21 +311,30 @@ class _ScoreScreenState extends State<ScoreScreen>
                          icon: new Image.asset("assets/home_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
-                           // Navigator.of(context).pushNamed('/tab');
-                           Navigator.pop(context);
-                           Navigator.pop(context);
-                           Navigator.pop(context);
+                           _animations[3].addStatusListener((status) {
+                             if (status == AnimationStatus.completed) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                             }
+                           });
+                           // Navigator.of(context).pushNamed('/tab');                           
                          })),
                  
-                  new Container(
-                    
+                  new Container(                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
+                            _animations[3].addStatusListener((status) {
+                             if (status == AnimationStatus.completed) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                             }
+                           });
                            // Navigator.of(context).pushNamed('/tab'),
-                           Navigator.pop(context);
-                           Navigator.pop(context);
+                           
                          }),
                    ),
                ],
