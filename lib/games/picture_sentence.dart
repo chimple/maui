@@ -54,11 +54,12 @@ class PictureSentenceState extends State<PictureSentence> {
   String output1 = "";
   String output2 = "";
   Color color = Colors.white;
-
+  String completeSentence = "";
   List<String> ans = [];
   List<String> choice = [];
   List<Status> _statuses = [];
   String sentence1;
+
   bool isCorrect;
   int scoretrack = 0;
 
@@ -68,15 +69,15 @@ class PictureSentenceState extends State<PictureSentence> {
     _initBoard();
   }
 
-  Tuple3<String, List<String>, List<String>> picturedata;
+  Tuple2<String, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
 
     picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
     print(" fectched data  >>>> $picturedata");
     sentence1 = picturedata.item1;
-    ans = picturedata.item2;
-    choice = picturedata.item3;
+    // ans = picturedata.item2;
+    choice = picturedata.item2;
     // ans = _allques.item2;
     // print(_allques.item3);
     // ch = _allques.item3;
@@ -84,6 +85,16 @@ class PictureSentenceState extends State<PictureSentence> {
     //   choice.add(ch[x]);
     // }
     // choice.add(ans);
+    // for (var i = 0; i < answerOption.length; i++) {
+    //   completeSentence += sentence1[i];
+    //   for (var j = 0; j < 4; j++) {
+    //    choice.add(answerOption[i][j]);
+    //   }
+    // }
+
+    for (var i = 0; i < 2; i++) {
+      ans.add(choice[i]);
+    }
     print("My Choices - $choice");
 
     choice.shuffle();
@@ -99,15 +110,9 @@ class PictureSentenceState extends State<PictureSentence> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(Status status, int indexOfBlank1, String text) {
-    // String buttonPressed() {
-    //   output1 = ans[0];
-    //   return output1;
-    // }
-
+  _buildItem(Status status, int indexOfBlank1, String text) {
     return new MyButton(
         key: new ValueKey<int>(indexOfBlank1),
-        // unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
         ans: this.ans[0],
@@ -122,7 +127,7 @@ class PictureSentenceState extends State<PictureSentence> {
             widget.onScore(4);
             widget.onProgress(1.0);
             // widget.onEnd();
-            // choice.removeRange(0, choice.length);
+            choice.removeRange(0, choice.length);
           } else if (text == ans[1]) {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
@@ -152,7 +157,7 @@ class PictureSentenceState extends State<PictureSentence> {
     List<String> split = sentence.split(" ");
     String sentencePart1 = "";
     String sentencePart2 = "";
-    print(split);
+    print("Split >>>>>>>$split");
 
     indexOfBlank1 = sentence.indexOf("1");
     int listElement1 = split.indexOf("1_");
@@ -207,7 +212,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/mountain.png",
+                              image: "assets/dict/${ans[0]}.png",
                             )));
                   },
                 ),
@@ -256,7 +261,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/world.png",
+                              image: "assets/dict/${ans[1]}.png",
                             )));
                   },
                 ),
@@ -343,7 +348,7 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: sentenceLayout(sentence1)),
+                child: sentenceLayout(completeSentence)),
           ),
           new Expanded(
               flex: 2,
