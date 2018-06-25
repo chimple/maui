@@ -402,6 +402,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   _onEnd(BuildContext context,
       {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
+    print('_onEnd gameData: $gameData');
     if (maxIterations > 0) {
       if (widget.gameConfig.amICurrentPlayer) {
         setState(() {
@@ -563,11 +564,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration);
         break;
       case 'dice':
+        maxIterations = 12;
         return new Dice(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
@@ -831,15 +834,14 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'first_word':
         return new FirstWord(
-          key: new GlobalObjectKey(keyName),
-          onScore: _onScore,
-          onProgress: _onProgress,
-          onEnd: () => _onEnd(context),
-          iteration:
-              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
-          isRotated: widget.isRotated,
-          gameConfig: widget.gameConfig
-        );
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'word_fight':
         return new WordFight(
