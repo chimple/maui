@@ -42,7 +42,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.7"
+    version: "0.12.6"
   build_config:
     dependency: transitive
     description:
@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5a19311c777185c726112859b6527c77abe88537"
+      resolved-ref: "7f2be520194c2998761e3151ad74fc9409b8caba"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -228,6 +228,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.7"
+  fluttery_audio:
+    dependency: "direct main"
+    description:
+      name: fluttery_audio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   fluttie:
     dependency: "direct main"
     description:
@@ -519,7 +526,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0"
+    version: "0.10.0"
   stack_trace:
     dependency: transitive
     description:
@@ -647,5 +654,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.54.0.flutter-46ab040e58"
+  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.60.0.flutter-a5e41681e5"
   flutter: ">=0.1.4 <2.0.0"
