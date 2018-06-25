@@ -58,12 +58,13 @@ class ChatMessage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  new Card(
+                  new Flexible(
+                      child: Card(
                     color: Colors.white,
                     shape: new RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16.0))),
                     child: child,
-                  ),
+                  )),
                   new Container(
                     margin: const EdgeInsets.only(left: 16.0),
                     child: new CircleAvatar(backgroundImage: image),
