@@ -4,159 +4,184 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';
+
 class FirstWord extends StatefulWidget {
- Function onScore;
+  Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
- GameConfig gameConfig;
- bool isRotated;
+  GameConfig gameConfig;
+  bool isRotated;
 
-  FirstWord({key, this.onScore, this.onProgress, this.onEnd, this.iteration,  this.gameConfig,this.isRotated=false})
+  FirstWord(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>new  FirstWordState();
+  State<StatefulWidget> createState() => new FirstWordState();
 }
-enum Statuses {right,wrong}
-class FirstWordState extends State<FirstWord> {
-   final TextEditingController _textController = new TextEditingController();
-  Tuple2<List<String >,String> data;
-String _dispText='';
-String _dispText1='';
-bool _isLoading = true;
-String _category='';//['sports'];
-List<String> _catList=[];//['cricket','football','tennis','golf','basketball'];
- var rand =new Random();
-         int randNum;
-         String randomWord='';
-          @override
-  void initState()  {
-    super.initState();
-  _initBoard();
 
-    // randNum =rand.nextInt(_catList.length-1);
-    // randomWord=_catList[randNum];
+enum Statuses { right, wrong }
+
+class FirstWordState extends State<FirstWord> {
+  final TextEditingController _textController = new TextEditingController();
+  Tuple2<List<String>, String> data;
+  String _dispText = '';
+  String _dispText1 = '';
+  bool _isLoading = true;
+  String _category = ''; //['sports'];
+  List<String> _catList =
+      []; //['cricket','football','tennis','golf','basketball'];
+  var rand = new Random();
+  int randNum;
+  String randomWord = '';
+  @override
+  void initState() {
+    super.initState();
+    _initBoard();
   }
- void _initBoard()async{
-   _dispText1='';
-   _category='';
-   _catList=[];
-   setState(() => _isLoading = true);
-data=await fetchFirstWordData(widget.gameConfig.gameCategoryId);
-_category=data.item2;
-_catList=data.item1;
- randNum =rand.nextInt(_catList.length);
-    randomWord=_catList[randNum];
-     setState(() => _isLoading = false);
- }
-   void submit(text){
+
+  void _initBoard() async {
+        print("hello data is not comming here");
+    _dispText1 = '';
+    _category = '';
+    _catList = [];
+    setState(() => _isLoading = true);
+   data = await fetchFirstWordData(widget.gameConfig.gameCategoryId);
+    print('nikkk   ${data.item1}   ${data.item2}');
+    _category = data.item2;
+    _catList = data.item1;
+    randNum = rand.nextInt(_catList.length);
+    randomWord = _catList[randNum];
+    setState(() => _isLoading = false);
+  }
+
+  void submit(text) {
     // print('testing cases     ${text.toLowerCase()}');
-if(text.toLowerCase()==randomWord){
-  _dispText1='CORRECT';
-  _textController.clear();
-  widget.onScore(5);
+    if (text.toLowerCase() == randomWord) {
+      _dispText1 = 'CORRECT';
+      _textController.clear();
+      widget.onScore(5);
       new Future.delayed(const Duration(milliseconds: 500), () {
-                  setState(() {
-                _dispText1='';
-                  });});
-  widget.onEnd();
-}
-else {
-  _dispText1='WRONG';
-}
-   }
- 
+        setState(() {
+          _dispText1 = '';
+        });
+      });
+      widget.onEnd();
+    } else {
+      _dispText1 = 'WRONG';
+    }
+  }
+
   @override
   void didUpdateWidget(FirstWord oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      
     }
   }
- @override
+
+  @override
   Widget build(BuildContext context) {
-   
-    Size size=MediaQuery.of(context).size;
-print('width      ${size.width}');
-int j=0;int i=0;
- if (_isLoading) {
+     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
     }
-    return 
-    new Column(
-      children: <Widget>[
-       
-       
-     
-     new Container(
-      padding: new EdgeInsets.all(size.width/10),
-         child: new Row(
+    Size size = MediaQuery.of(context).size;
+    print('width      ${size.width}');
+    int j = 0;
+    int i = 0;
+   
+    return new Column(children: <Widget>[
+      new Container(
+          padding: new EdgeInsets.all(size.width / 10),
+          child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
-              new  Flexible(
-                flex:3,
-                fit: FlexFit.tight,child:new Container(
-             //   width: 200.0,
-               height: 40.0,
-                color: Colors.brown[300],
-                child: new Text(_category,textAlign: TextAlign.center,style: new TextStyle(fontWeight:FontWeight.bold,fontSize: 24.0),),
-              )),
               new Flexible(
-                flex:1,
-                fit:FlexFit.tight,
-                child:new Container(
-                  height: 40.0,
-                color: Colors.brown[50],
-                child: new Text(randomWord[0],textAlign: TextAlign.center,style: new TextStyle(fontSize: 24.0)),
-              ))
+                  flex: 3,
+                  fit: FlexFit.tight,
+                  child: new Container(
+                    //   width: 200.0,
+                    height: 40.0,
+                    color: Colors.brown[300],
+                    child: new Text(
+                      _category,
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24.0),
+                    ),
+                  )),
+              new Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: new Container(
+                    height: 40.0,
+                    color: Colors.brown[50],
+                    child: new Text(randomWord[0],
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(fontSize: 24.0)),
+                  ))
             ],
           )),
-          new Container(child: new Text(_dispText.toUpperCase(),style:new TextStyle(fontSize: 20.0,color: Colors.red)),),
-            new Container(
-      padding: new EdgeInsets.all(size.width/10),
-         child: new Row(
+      new Container(
+        child: new Text(_dispText.toUpperCase(),
+            style: new TextStyle(fontSize: 20.0, color: Colors.red)),
+      ),
+      new Container(
+          padding: new EdgeInsets.all(size.width / 10),
+          child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
-              new  Flexible(
-                flex:3,
-
-                fit: FlexFit.tight,child:new Container(
-             //   width: 200.0,
-               height: 40.0,
-                color: Colors.brown[300],
-                child:new TextField(
-                  controller: _textController,
-                  decoration: new InputDecoration(border: InputBorder.none),
-                  style: new TextStyle(fontWeight: FontWeight.bold,letterSpacing: 2.0,fontSize: 22.0),
-                  textAlign: TextAlign.center,
-                  onChanged: (text){setState((){ _dispText=text;});},
-                  onSubmitted: (text){submit(text);},
-                ),
-              )),
               new Flexible(
-                flex:1,
-                fit:FlexFit.tight,
-                child:new Container(
-             
-             //   width: 100.0,
-                height: 40.0,
-                color: Colors.brown[50],
-                child: new Text(_dispText1,textAlign: TextAlign.center,style: new TextStyle(fontSize: 18.0,color: Colors.blue)),
-              ))
+                  flex: 3,
+                  fit: FlexFit.tight,
+                  child: new Container(
+                    //   width: 200.0,
+                    height: 40.0,
+                    color: Colors.brown[300],
+                    child: new TextField(
+                      controller: _textController,
+                      decoration: new InputDecoration(border: InputBorder.none),
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2.0,
+                          fontSize: 22.0),
+                      textAlign: TextAlign.center,
+                      onChanged: (text) {
+                        setState(() {
+                          _dispText = text;
+                        });
+                      },
+                      onSubmitted: (text) {
+                        submit(text);
+                      },
+                    ),
+                  )),
+              new Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: new Container(
+                    //   width: 100.0,
+                    height: 40.0,
+                    color: Colors.brown[50],
+                    child: new Text(_dispText1,
+                        textAlign: TextAlign.center,
+                        style:
+                            new TextStyle(fontSize: 18.0, color: Colors.blue)),
+                  ))
             ],
           )),
-     
-        ]);
-     
+    ]);
   }
 }
-
