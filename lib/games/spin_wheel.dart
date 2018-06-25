@@ -10,8 +10,8 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
-import 'dart:ui' as ui show Image;
-import 'dart:ui' as ui show instantiateImageCodec, Codec, FrameInfo;
+import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
+import 'package:maui/components/unit_button.dart';
 
 class SpinWheel extends StatefulWidget {
   Function onScore;
@@ -25,14 +25,15 @@ class SpinWheel extends StatefulWidget {
   GameConfig gameConfig;
   SpinWheel(
       {key,
-      this.unitMode,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.function,
-      this.gameCategoryId,
-      this.isRotated = false})
+        this.unitMode,
+        this.gameConfig,
+        this.onScore,
+        this.onProgress,
+        this.onEnd,
+        this.iteration,
+        this.function,
+        this.gameCategoryId,
+        this.isRotated = false})
       : super(key: key);
   @override
   _SpinWheelState createState() => new _SpinWheelState();
@@ -74,7 +75,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     '3': 'Three',
     'H': 'Hen',
   };
-  Map<String, String> _allData = new Map<String, String>();
+  Map<String, String> allData = new Map<String, String>();
   List<bool> _slice = [
     false,
     false,
@@ -122,32 +123,34 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff,
       _constAngle;
-  int _indexOfContainerData = 0, _numberOfSlice = 8, _activeIndex;
+  int _indexOfContainerData = 0, _numberOfSlice = 8;
   String _text = '';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
-      new GlobalKey<AnimatedCircularChartState>();
+  new GlobalKey<AnimatedCircularChartState>();
   List<ui.Image> images = new List<ui.Image>();
   List<String> _imageData = [
-    'assets/hoodie/reflex_happy.png',
-    'assets/hoodie/abacus_happy.png',
-    'assets/hoodie/bingo_happy.png',
-    'assets/hoodie/calculate_numbers_happy.png',
-    'assets/hoodie/casino_happy.png',
-    'assets/hoodie/circle_words_happy.png',
-    'assets/hoodie/clue_game_happy.png',
-    'assets/hoodie/clue_game_happy.png',
-    'assets/hoodie/clue_game_happy.png',
-    'assets/hoodie/casino_happy.png',
-    'assets/hoodie/circle_words_happy.png',
-    'assets/hoodie/clue_game_happy.png',
-    'assets/hoodie/clue_game_happy.png',
+    // 'assets/hoodie/reflex_happy.png',
+    // 'assets/hoodie/abacus_happy.png',
+    // 'assets/hoodie/bingo_happy.png',
+    // 'assets/hoodie/calculate_numbers_happy.png',
+    // 'assets/hoodie/casino_happy.png',
+    // 'assets/hoodie/circle_words_happy.png',
+    // 'assets/hoodie/clue_game_happy.png',
+    // 'assets/hoodie/clue_game_happy.png',
+    // 'assets/hoodie/clue_game_happy.png',
+    // 'assets/hoodie/casino_happy.png',
+    // 'assets/hoodie/circle_words_happy.png',
+    // 'assets/hoodie/clue_game_happy.png',
+    // 'assets/hoodie/clue_game_happy.png',
   ];
+  String s1 = 'assets/hoodie/', s2 = '.png';
   //List<ui.Image> asas;
   @override
   void initState() {
-    print("sasfffsa ${widget.unitMode}");
+    print("game mode::${widget.gameConfig}");
+    // images = new ImageMap(rootBundle);
+    // image = await images.loadImage('assets/hoodie/order_it.png');
     super.initState();
-
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 400), vsync: this);
     controller = new AnimationController(
@@ -155,18 +158,20 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     shakeAnimate = new Tween(begin: -4.0, end: 4.0).animate(controller);
     noAnimation = new Tween(begin: -0.0, end: 0.0).animate(controller);
     animatoin =
-        new CurvedAnimation(parent: controller1, curve: Curves.easeInOut);
+    new CurvedAnimation(parent: controller1, curve: Curves.easeInOut);
     controller1.addStatusListener((status) {});
     controller1.forward();
 
-    print("all data from list::$images");
+    //print("all data from list::$images");
     _initBoard();
   }
 
   Future<ui.Image> load(String asset) async {
-    print("print asset value:: $asset");
+    //print("print asset value:: $asset");
     ByteData data = await rootBundle.load(asset);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+    ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+    );
     ui.FrameInfo fi = await codec.getNextFrame();
     return fi.image;
   }
@@ -184,19 +189,35 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
   }
 
+  int _activeIndex;
   _initBoard() async {
+    allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    allData.forEach((k, v) {
+      _circleData.add(v);
+      _shuffleCircleData1.add(v);
+      _smallCircleData.add(k);
+      _shuffleCircleData2.add(k);
+    });
+
+    for (int i = 0; i < _circleData.length; i++) {
+      String s = s1 + _circleData[i] + s2;
+      _imageData[i] = s;
+      print("image name:::$s");
+    }
     for (int i = 0; i < 8; i++) {
       load(_imageData[i]).then((i) {
         images.add(i);
       });
     }
-   // _allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-    _data.forEach((k, v) {
-      _circleData.add(k);
-      _shuffleCircleData1.add(k);
-      _smallCircleData.add(v);
-      _shuffleCircleData2.add(v);
-    });
+
+    print("All data::::$allData}");
+    _slice = _sliceCopy;
+    // _data.forEach((k, v) {
+    //   _circleData.add(k);
+    // _shuffleCircleData1.add(k);
+    // _smallCircleData.add(v);
+    // _shuffleCircleData2.add(v);
+    // });
     _shuffleCircleData1.shuffle();
     _shuffleCircleData2.shuffle();
     setState(() {
@@ -219,9 +240,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     _shuffleCircleData2.shuffle();
     controller1.forward();
     _countGameEnd = 0;
-    for (int i = 0; i < 8; i++) {
-      _slice[i] = _sliceCopy[i];
-    }
+    _slice = _sliceCopy;
     dragEnd = 0.0;
     angleDiff = 0.0;
     setState(() {
@@ -246,14 +265,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           _wheelColor[6] = Color(0XFF66488C);
           _wheelColor[7] = Color(0XFFDD6154);
           List<CircularStackEntry> data =
-              _generateChartData(200.0, Colors.pink);
+          _generateChartData(200.0, Colors.pink);
 
           _chartKey.currentState.updateData(data);
         });
       }
     }
 
-    print("color codes::$_wheelColor");
+    //print("color codes::$_wheelColor");
   }
 
   _onDragStart(PolarCoord cord) {
@@ -286,8 +305,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   }
 
   _onDragEnd() {
-    print("Drag Start here:: ${_angleOnDragStard}");
-    print("Drag End here:: ${_angleOnDragEnd}");
+    // print("Drag Start here:: ${_angleOnDragStard}");
+    // print("Drag End here:: ${_angleOnDragEnd}");
     dragEnd = rotationPercent;
     _angleDiff = (angleDiff / (2 * pi) * 360);
 
@@ -356,7 +375,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         setState(() {
           doShake = false;
           List<CircularStackEntry> _data =
-              _generateChartData(100.0, Colors.pink);
+          _generateChartData(100.0, Colors.pink);
           _chartKey.currentState.updateData(_data);
           dragEnd = 0.0;
           rotationPercent = 0.0;
@@ -400,7 +419,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         print("index of samll circle: ${_circleData[_activeIndex]}");
         int a = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
         _slice[a] = true;
-
         _chartKey.currentState.updateData(data);
       });
     });
@@ -421,25 +439,38 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  List<CircularStackEntry> data;
+  List<CircularStackEntry> data, data1;
   List<CircularStackEntry> _generateChartData(double value, Color c) {
     data = [
       new CircularStackEntry(
         <CircularSegmentEntry>[
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q1'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q2'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q3'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q4'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q5'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q6'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q7'),
-          new CircularSegmentEntry(500.0, c, rankKey: 'Q8'),
+          new CircularSegmentEntry(500.0, _wheelColor[0], rankKey: 'Q1'),
+          new CircularSegmentEntry(500.0, _wheelColor[1], rankKey: 'Q2'),
+          new CircularSegmentEntry(500.0, _wheelColor[2], rankKey: 'Q3'),
+          new CircularSegmentEntry(500.0, _wheelColor[3], rankKey: 'Q4'),
+          new CircularSegmentEntry(500.0, _wheelColor[4], rankKey: 'Q5'),
+          new CircularSegmentEntry(500.0, _wheelColor[5], rankKey: 'Q6'),
+          new CircularSegmentEntry(500.0, _wheelColor[6], rankKey: 'Q7'),
+          new CircularSegmentEntry(500.0, _wheelColor[7], rankKey: 'Q8'),
         ],
         rankKey: 'Quarterly Profits',
       ),
     ];
 
     return data;
+  }
+
+  List<CircularStackEntry> _generateChartData1(double value) {
+    data1 = [
+      new CircularStackEntry(
+        <CircularSegmentEntry>[
+          new CircularSegmentEntry(500.0, Colors.black, rankKey: 'Q1'),
+        ],
+        rankKey: 'Quarterly Profits',
+      ),
+    ];
+
+    return data1;
   }
 
   bool doShake = true;
@@ -479,34 +510,19 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
             ),
             new Expanded(
               flex: 2,
-              child: new Container(
-                width: size1.width,
-                decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(20.0),
-                  gradient:
-                      new LinearGradient(colors: [Colors.pink, Colors.red]),
-                  color: Colors.red,
-                ),
-                child: new Shake(
-                  animation: doShake == true ? shakeAnimate : noAnimation,
-                  child: new Container(
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.green,
-                        gradient: new LinearGradient(
-                          tileMode: TileMode.mirror,
-                          colors: [Colors.blue, Colors.green],
-                          //begin:
-                        )),
-                    child: new Center(
-                        child: new Text(
-                      _text,
-                      style: new TextStyle(
-                        fontSize: 30.0,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.white,
-                      ),
-                    )),
+              child: Shake(
+                animation: doShake == true ? shakeAnimate : noAnimation,
+                child: new Container(
+                  //width: size1.width,
+                  decoration: BoxDecoration(
+                    borderRadius: new BorderRadius.circular(15.0),
+                    gradient:
+                    new LinearGradient(colors: [Colors.pink, Colors.red]),
+                    color: Colors.red,
+                  ),
+                  child: new UnitButton(
+                    text: _text,
+                    unitMode: widget.gameConfig.questionUnitMode,
                   ),
                 ),
               ),
@@ -525,8 +541,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                       child: new AnimatedCircularChart(
                         size: size2,
                         duration: Duration(milliseconds: 1),
-                        initialChartData:
-                            _generateChartData(100.0, Colors.black),
+                        initialChartData: _generateChartData1(100.0),
                         chartType: CircularChartType.Radial,
                         edgeStyle: SegmentEdgeStyle.round,
                       ),
@@ -547,38 +562,41 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                             edgeStyle: SegmentEdgeStyle.flat,
                             size: size1,
                             initialChartData:
-                                _generateChartData(100.0, Colors.white),
+                            _generateChartData(100.0, Colors.white),
                             chartType: CircularChartType.Pie),
                       ),
                     ),
                   ),
                   new Center(
                       child: new ScaleTransition(
-                    scale: animatoin,
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        //color: Colors.red
-                      ),
-                      height: size1.width * .8,
-                      width: size1.width * .8,
-                      child: new RadialDragGestureDetector(
-                          onRadialDragStart: _onDragStart,
-                          onRadialDragUpdate: _onDragUpdate,
-                          onRadialDragEnd: _onDragEnd,
-                          child: new Container(
-                              child: new CustomPaint(
-                            painter: widget.unitMode == UnitMode.image
-                                ? OuterCircle(
-                                    ticksPerSection: rotationPercent,
-                                    sizePaint: _constant,
-                                    data: _shuffleCircleData1,
-                                  )
-                                : ClippedPainter(
-                                    images: images, rotation: rotationPercent),
-                          ))),
-                    ),
-                  )),
+                        scale: animatoin,
+                        child: new Container(
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            //color: Colors.red
+                          ),
+                          height: size1.width * .8,
+                          width: size1.width * .8,
+                          child: new RadialDragGestureDetector(
+                              onRadialDragStart: _onDragStart,
+                              onRadialDragUpdate: _onDragUpdate,
+                              onRadialDragEnd: _onDragEnd,
+                              child: new Container(
+                                  child: new CustomPaint(
+                                    painter: widget.gameConfig.questionUnitMode ==
+                                        UnitMode.text ||
+                                        widget.gameConfig.questionUnitMode ==
+                                            UnitMode.audio
+                                        ? OuterCircle(
+                                      ticksPerSection: rotationPercent,
+                                      sizePaint: _constant,
+                                      data: _shuffleCircleData1,
+                                    )
+                                        : ClippedPainter(
+                                        images: images, rotation: rotationPercent),
+                                  ))),
+                        ),
+                      )),
                   new ScaleTransition(
                     scale: animatoin,
                     child: new Center(
