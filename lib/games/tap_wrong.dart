@@ -86,6 +86,9 @@ class TapWrongState extends State<TapWrong> {
     word.forEach((d) {
       _dispText = _dispText + d;
     });
+    if(_dispText[0]==_dispText[1]&&_dispText[0]==_dispText[2]){
+      _dispText=_dispText[0];
+    }
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
@@ -230,7 +233,7 @@ class TapWrongState extends State<TapWrong> {
             widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
             heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
             child: new FlashCard(
-              image: 'assets/dict/${_dispText.toLowerCase()}.png',
+              image: _dispText,
           text: _dispText,
           onChecked: () {
             widget.onEnd(); // _initBoard();
