@@ -644,25 +644,21 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
   var completer = Completer<Map<String, Map<String, List<String>>>>();
   Map<String, List<String>> drink = {
-    'water': ['wa', 'ter'],
     'milk': ['mi', 'lk'],
     'coffee': ['cof', 'fee'],
     'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
-    'bus': ['bu', 's'],
-    'car': ['ca', 'r'],
+    'cycle' : ['cyc','le'],
     'train': ['tr', 'ain'],
     'aeroplane': ['aero', 'plane'],
   };
   Map<String, List<String>> redfruit = {
     'apple': ['ap', 'ple'],
     'cherry': ['che', 'rry'],
-    'carrot': ['ca', 'rrot'],
     'tomato': ['tom', 'ato'],
   };
   Map<String, List<String>> blackpet = {
-    'cat': ['ca', 't'],
     'dog': ['do', 'g'],
     'panda': ['pa', 'nda'],
     'crow': ['cr', 'ow'],
@@ -677,11 +673,11 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   return completer.future;
 }
 Future <Tuple3<String,List<String>,List<String>>> fetchPictureSentenceData(int categoryId) async{
-
- String sentence1 = "MOUNT EVEREST is the highest _ in the _";
+  
+ String sentence1 = "Mount Everest is the highest 1_ in the 2_ .";
  //String sentence2 = "Today is_ ";
  List<String> answer = ['mountain','world'];
- List<String> option =['mountain','world','chair','home'];
+ List<String> option =['mountain','world','chair','ball'];
  return new Tuple3(
    sentence1, 
    answer,

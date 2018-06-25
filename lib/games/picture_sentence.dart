@@ -18,15 +18,12 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
 
-String sentence1 = "MOUNT EVEREST is the highest";
-String sentence2 = "in the  ";
-
 class PictureSentence extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-   int gameCategoryId;
+  int gameCategoryId;
   GameConfig gameConfig;
   bool isRotated;
 
@@ -51,11 +48,17 @@ class PictureSentenceState extends State<PictureSentence> {
   bool _isLoading = true;
   var keys = 0;
   int _size = 2;
+  int indexOfBlank1 = 0;
+  int indexOfBlank2 = 0;
   // String questionText;
-  
-  List<String> ans =[];
+  String output1 = "";
+  String output2 = "";
+  Color color = Colors.white;
+
+  List<String> ans = [];
   List<String> choice = [];
   List<Status> _statuses = [];
+  String sentence1;
   bool isCorrect;
   int scoretrack = 0;
 
@@ -64,14 +67,14 @@ class PictureSentenceState extends State<PictureSentence> {
     super.initState();
     _initBoard();
   }
-Tuple3<String,List<String>,List<String>> picturedata;
+
+  Tuple3<String, List<String>, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-    
-    picturedata =
-        await fetchPictureSentenceData(widget.gameCategoryId);
-        print(" fectched data  >>>> $picturedata");
-    
+
+    picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
+    print(" fectched data  >>>> $picturedata");
+    sentence1 = picturedata.item1;
     ans = picturedata.item2;
     choice = picturedata.item3;
     // ans = _allques.item2;
@@ -96,28 +99,43 @@ Tuple3<String,List<String>,List<String>> picturedata;
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(Status status, int index, String text) {
+  Widget _buildItem(Status status, int indexOfBlank1, String text) {
+    // String buttonPressed() {
+    //   output1 = ans[0];
+    //   return output1;
+    // }
+
     return new MyButton(
-        key: new ValueKey<int>(index),
-        unitMode: widget.gameConfig.answerUnitMode,
+        key: new ValueKey<int>(indexOfBlank1),
+        // unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
-        // ans: this.ans,
+        ans: this.ans[0],
         keys: keys++,
         onPress: () {
-          if (text == ans) {
+          print("ans[0] >>>>> ${ans[0]}");
+          print("ans[1] >>>>> ${ans[1]}");
+          if (text == ans[0]) {
+            output1 = ans[0];
+            print(" inside condition ans[0] >>>>> ${ans[0]}");
+            scoretrack = scoretrack + 4;
+            widget.onScore(4);
+            widget.onProgress(1.0);
+            // widget.onEnd();
+            // choice.removeRange(0, choice.length);
+          } else if (text == ans[1]) {
+            output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
-            choice.removeRange(0, choice.length);
           } else {
             setState(() {
-              _statuses[index] = Status.Wrong;
+              _statuses[indexOfBlank1] = Status.Wrong;
             });
             new Future.delayed(const Duration(milliseconds: 300), () {
               setState(() {
-                _statuses[index] = Status.Active;
+                _statuses[indexOfBlank1] = Status.Active;
               });
             });
             if (scoretrack > 0) {
@@ -130,13 +148,153 @@ Tuple3<String,List<String>,List<String>> picturedata;
         });
   }
 
+  Widget sentenceLayout(String sentence) {
+    List<String> split = sentence.split(" ");
+    String sentencePart1 = "";
+    String sentencePart2 = "";
+    print(split);
+
+    indexOfBlank1 = sentence.indexOf("1");
+    int listElement1 = split.indexOf("1_");
+    String subString1 = sentence.substring(0, 40);
+
+    indexOfBlank2 = sentence.indexOf("2");
+    String subString2 = sentence.substring(40, sentence.length);
+
+    print("split[indexOfBlank1] >>>>>>> ${split[listElement1]}");
+    for (int i = 0; i < listElement1; i++) {
+      if (split[i] != '1_' && split[i] != '2_') {
+        sentencePart1 += split[i] + " ";
+      }
+    }
+    print("sentencePart1 >>>>>>> $sentencePart1");
+
+    int listElement2 = split.indexOf("2_");
+    for (int i = listElement1; i < listElement2; i++) {
+      if (split[i] != '1_' && split[i] != '2_') {
+        sentencePart2 += split[i] + " ";
+      }
+    }
+    print("sentencePart2 >>>>>>> $sentencePart2");
+
+    var text1 = new Text(sentencePart1,
+        softWrap: true,
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+
+    var blankSpace1 = (output1 == "")
+        ? new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Stack(children: [
+              new Container(
+                child: new Text(""),
+                color: Colors.grey,
+                height: 40.0,
+                width: 200.0,
+              ),
+              new Positioned(
+                right: 1.0,
+                child: new IconButton(
+                  iconSize: 24.0,
+                  color: Colors.black,
+                  icon: new Icon(Icons.announcement),
+                  tooltip: 'check the picture',
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        child: new FractionallySizedBox(
+                            heightFactor: 0.5,
+                            widthFactor: 0.8,
+                            child: new PictureCard(
+                              text: "widget.text",
+                              image: "assets/dict/mountain.png",
+                            )));
+                  },
+                ),
+              ),
+            ]),
+          )
+        : new Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: new Container(
+                alignment: Alignment.bottomLeft,
+                child: new Text(output1,
+                    softWrap: true,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                        fontSize: 40.0))),
+          );
+
+    var text2 = new Text(sentencePart2,
+        softWrap: true,
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+
+    var blankSpace2 = (output2 == "")
+        ? new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Stack(children: [
+              new Container(
+                child: new Text(""),
+                color: Colors.grey,
+                height: 40.0,
+                width: 200.0,
+              ),
+              new Positioned(
+                right: 1.0,
+                child: new IconButton(
+                  iconSize: 24.0,
+                  color: Colors.black,
+                  icon: new Icon(Icons.announcement),
+                  tooltip: 'check the picture',
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        child: new FractionallySizedBox(
+                            heightFactor: 0.5,
+                            widthFactor: 0.8,
+                            child: new PictureCard(
+                              text: "widget.text",
+                              image: "assets/dict/world.png",
+                            )));
+                  },
+                ),
+              ),
+            ]),
+          )
+        : new Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: new Container(
+                alignment: Alignment.bottomLeft,
+                child: new Text(output2,
+                    softWrap: true,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                        fontSize: 40.0))),
+          );
+
+    return new Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        new Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[text1, blankSpace1],
+        ),
+        new Row(
+          children: <Widget>[text2, blankSpace2],
+        )
+      ],
+    );
+  }
+
   @override
   void didUpdateWidget(PictureSentence oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-     
     }
   }
 
@@ -185,72 +343,10 @@ Tuple3<String,List<String>,List<String>> picturedata;
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    new Text(sentence1,
-                        softWrap: true,
-                        style: new TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 40.0)),
-                     
-                   
-                    new Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Container(
-                    child: new FlatButton(
-                      child: const Text(""),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: new FractionallySizedBox(
-                                heightFactor: 0.5,
-                                widthFactor: 0.8,
-                                child:
-                                    new PictureCard(text: "widget.text")));
-                      },
-                    ),
-                    color: Colors.grey,
-                    height: 40.0,
-                    width: 100.0,
-                      ),
-                    ),
-                    new Text(
-                      sentence2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.clip,
-                      style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                      color: Colors.black),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Container(
-                    child: new FlatButton(
-                      child: const Text(""),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: new FractionallySizedBox(
-                                heightFactor: 0.5,
-                                widthFactor: 0.8,
-                                child:
-                                    new PictureCard(text: "widget.text")));
-                      },
-                    ),
-                    color: Colors.grey,
-                    height: 40.0,
-                    width: 100.0,
-                      ),
-                    ),
-                  ],
-                )),
+                child: sentenceLayout(sentence1)),
           ),
           new Expanded(
-              flex: 1,
+              flex: 2,
               child: new ResponsiveGridView(
                 rows: _size,
                 cols: _size,
@@ -353,7 +449,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           child: new UnitButton(
             onPress: () => widget.onPress(),
             text: _displayText,
-            unitMode: widget.unitMode,
+            // unitMode: widget.unitMode,
           ),
         ));
   }
@@ -408,8 +504,7 @@ class _PictureCardState extends State<PictureCard> {
             decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
                 image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage('assets/dict/mountain.png')))),
+                    fit: BoxFit.fill, image: new AssetImage(widget.image)))),
       );
     });
   }
