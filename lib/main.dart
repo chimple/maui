@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 void main() async {
-  Flores().initialize((String message) {
+  Flores().initialize((Map<dynamic, dynamic> message) {
     print('Flores received message: $message');
   });
   SharedPreferences prefs = await SharedPreferences.getInstance();
