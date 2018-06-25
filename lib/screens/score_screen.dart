@@ -56,6 +56,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   int otherScore;
   List<Widget> otherscore;
   List<String> stars = [];
+  bool flag = false;
   
   var keys = 0;
 
@@ -99,9 +100,13 @@ class _ScoreScreenState extends State<ScoreScreen>
       _controllers.add(_controller);
       _animations.add(
           new CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
-      new Future.delayed(Duration(milliseconds: 2000 + (i) * 300), () {
+      new Future.delayed(Duration(milliseconds: 1000 + (i) * 150), () {
         _controller.forward();
       });
+      if(i == 3) {
+        print("this ois kvkkv $i");
+        flag = true;
+      }
     }
 
     super.initState();
@@ -166,10 +171,10 @@ class _ScoreScreenState extends State<ScoreScreen>
             new Text('$otherScore')
           ]));
     }
-
+  
 
     return new LayoutBuilder(builder: (context, constraints) {
-    
+      print("flag = $flag");
     List <Widget> starsMap1 =  stars
                               .map((e) => _buildItem(j++, e),)
                               .toList(growable: false);
@@ -299,6 +304,7 @@ class _ScoreScreenState extends State<ScoreScreen>
               ),
             ),
             
+          
 
             // Icons which redirect to home, refresh and fast-forward
              new Row(
@@ -311,13 +317,16 @@ class _ScoreScreenState extends State<ScoreScreen>
                          icon: new Image.asset("assets/home_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
-                           _animations[3].addStatusListener((status) {
-                             if (status == AnimationStatus.completed) {
+                          //  _buttonAnimation.addStatusListener((status) {
+                            //  print("this is my status");
+                             if (flag == true) {
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
+                                Navigator.pop(context);
+                              print(" hi ");
                              }
-                           });
+                          //  });
                            // Navigator.of(context).pushNamed('/tab');                           
                          })),
                  
@@ -326,13 +335,14 @@ class _ScoreScreenState extends State<ScoreScreen>
                          icon: new Image.asset("assets/forward_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
-                            _animations[3].addStatusListener((status) {
-                             if (status == AnimationStatus.completed) {
+                            // _animations[3].addStatusListener((status) {
+                             if (flag == true) {
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
+                              print(" forwAARS ");
                              }
-                           });
+                          //  });
                            // Navigator.of(context).pushNamed('/tab'),
                            
                          }),
