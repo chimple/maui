@@ -644,25 +644,21 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
   var completer = Completer<Map<String, Map<String, List<String>>>>();
   Map<String, List<String>> drink = {
-    'water': ['wa', 'ter'],
     'milk': ['mi', 'lk'],
     'coffee': ['cof', 'fee'],
     'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
-    'bus': ['bu', 's'],
-    'car': ['ca', 'r'],
+    'cycle' : ['cyc','le'],
     'train': ['tr', 'ain'],
     'aeroplane': ['aero', 'plane'],
   };
   Map<String, List<String>> redfruit = {
     'apple': ['ap', 'ple'],
     'cherry': ['che', 'rry'],
-    'carrot': ['ca', 'rrot'],
     'tomato': ['tom', 'ato'],
   };
   Map<String, List<String>> blackpet = {
-    'cat': ['ca', 't'],
     'dog': ['do', 'g'],
     'panda': ['pa', 'nda'],
     'crow': ['cr', 'ow'],
