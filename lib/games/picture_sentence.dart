@@ -127,13 +127,14 @@ class PictureSentenceState extends State<PictureSentence> {
             widget.onScore(4);
             widget.onProgress(1.0);
             // widget.onEnd();
-            choice.removeRange(0, choice.length);
+            // choice.removeRange(0, choice.length);
           } else if (text == ans[1]) {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
+            
           } else {
             setState(() {
               _statuses[indexOfBlank1] = Status.Wrong;
@@ -154,30 +155,31 @@ class PictureSentenceState extends State<PictureSentence> {
   }
 
   Widget sentenceLayout(String sentence) {
-    List<String> split = sentence.split(" ");
+    List<String> eachWord = sentence.split(" ");
     String sentencePart1 = "";
     String sentencePart2 = "";
-    print("Split >>>>>>>$split");
+    print(sentence);
+    print("Split >>>>>>>$eachWord");
 
-    indexOfBlank1 = sentence.indexOf("1");
-    int listElement1 = split.indexOf("1_");
-    String subString1 = sentence.substring(0, 40);
+    // indexOfBlank1 = sentence.indexOf("1");
+    int listElement1 = eachWord.indexOf("1_");
+    // String subString1 = sentence.substring(0, 40);
 
-    indexOfBlank2 = sentence.indexOf("2");
-    String subString2 = sentence.substring(40, sentence.length);
+    // indexOfBlank2 = sentence.indexOf("2");
+    // String subString2 = sentence.substring(40, sentence.length);
 
-    print("split[indexOfBlank1] >>>>>>> ${split[listElement1]}");
+    print("split[indexOfBlank1] >>>>>>> ${eachWord[listElement1]}");
     for (int i = 0; i < listElement1; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart1 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart1 += eachWord[i] + " ";
       }
     }
     print("sentencePart1 >>>>>>> $sentencePart1");
 
-    int listElement2 = split.indexOf("2_");
+    int listElement2 = eachWord.indexOf("2_");
     for (int i = listElement1; i < listElement2; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart2 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart2 += eachWord[i] + " ";
       }
     }
     print("sentencePart2 >>>>>>> $sentencePart2");
@@ -212,7 +214,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/${ans[0]}.png",
+                              image: "assets/dict/${ans[0].toLowerCase()}.png",
                             )));
                   },
                 ),
@@ -261,7 +263,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/${ans[1]}.png",
+                              image: "assets/dict/${ans[1].toLowerCase()}.png",
                             )));
                   },
                 ),
@@ -348,7 +350,7 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: sentenceLayout(completeSentence)),
+                child: sentenceLayout(sentence1)),
           ),
           new Expanded(
               flex: 2,
