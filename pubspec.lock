@@ -228,13 +228,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.7"
-  fluttery_audio:
-    dependency: "direct main"
-    description:
-      name: fluttery_audio
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   fluttie:
     dependency: "direct main"
     description:
