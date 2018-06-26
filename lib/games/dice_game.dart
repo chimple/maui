@@ -54,12 +54,14 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['myData'] = myData;
     data['otherData'] = otherData;
+    data['currentIndex'] = _currentIndex;
     return data;
   }
 
   void fromJsonMap(Map<String, dynamic> data) {
     otherData = data['myData'].cast<String>();
     myData = data['otherData'].cast<String>();
+    _currentIndex = data['currentIndex'];
   }
 
   @override
@@ -150,16 +152,11 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
           if (btnVal == sum || btnVal == sub) {
             _currentIndex++;
+            print("Current index is ${myData.length}");
             widget.onScore(2);
             widget.onProgress(_currentIndex / myData.length);
+            randomLogic(myData);
             widget.onEnd(toJsonMap(), false);
-            // if (_currentIndex >= data.length-2 ||
-            //     _currentIndex2 >= data1.length-2) {
-            //   print({"inside main current index : " : _currentIndex});
-            //   new Future.delayed(const Duration(milliseconds: 250), () {
-            //     widget.onEnd();
-            //   });
-            // }
             resetDice();
             sum = 0;
             sub = 0;
@@ -272,7 +269,10 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     for (int i = 0; i < data.length; i++) {
       if (data[i] != '') existingData.add(int.parse(data[i]));
     }
-    return existingData;
+    if (existingData.length != 0)
+      return existingData;
+    else
+      return widget.onEnd(toJsonMap(), true);
   }
 
   displayLabel(String dElement) {

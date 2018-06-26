@@ -531,7 +531,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'identify':
-        maxIterations = 1;
+        maxIterations = 2;
         return new IdentifyGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -564,7 +564,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration);
         break;
       case 'dice':
-        maxIterations = 12;
+        maxIterations = -1;
         return new Dice(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -776,7 +776,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'guess':
-        maxIterations = 1;
+        maxIterations = 2;
         return new GuessIt(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
