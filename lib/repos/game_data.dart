@@ -687,7 +687,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
       break;
     case 1:
       return new Tuple2("Nile is the longest 1_ on the 2_ .",
-          ['river', 'earth', 'wall', 'Mars']);
+          ['river', 'earth', 'wall', 'mars']);
       break;
     case 2:
       return new Tuple2("Apple is 1_ and also 2_ in colour .",
