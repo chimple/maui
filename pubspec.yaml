@@ -22,7 +22,6 @@ dependencies:
   fluttery: "^0.0.6"
   flutter_circular_chart: "^0.0.3"
   shared_preferences: ^0.4.2
-  fluttery_audio: "^0.0.3"
   camera: 0.2.1
   flores:
     git:
