@@ -33,7 +33,7 @@ class UserRepo {
     }
 
     List<User> users = await userDao.getUsers();
-    friends.forEach((f) async {
+    await Future.forEach(friends, (f) async {
       if (users.any((u) => u.id == f['userId'])) {
       } else {
         List<int> memoryImage;
