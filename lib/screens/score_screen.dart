@@ -274,19 +274,23 @@ class _ScoreScreenState extends State<ScoreScreen>
                     mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new Row(
+                      new Container(
+                        width: wd * 0.49,
+                        child: new Row(
                         mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: tablestars1),
+                        children: tablestars1)),
 
                         new Padding(
                           padding: new EdgeInsets.all(10.0),
                         ),
                         
-                       gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
+                       gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Container(
+                         width: wd * 0.49,
+                         child: new Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: tablestars2) : new Row(),
+                        children: tablestars2)) : new Row(),
                         ]),
                 new Row(
                   mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
@@ -316,13 +320,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                scale: buttoncontroller,
                child: new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
                children: <Widget>[
                  new Container(
                    
                      child: IconButton(
                          icon: new Image.asset("assets/home_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
                           //  _buttonAnimation.addStatusListener((status) {
                             //  print("this is my status");
@@ -340,7 +344,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                   new Container(                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
                             // _animations[3].addStatusListener((status) {
                              if (flag == true) {
@@ -356,9 +360,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                    ),
                ],
              )),
-             new Padding(
-               padding: new EdgeInsets.all(5.0),
-             )
+            
              
             ],
         )));
@@ -445,9 +447,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     return new Shake(
       animation: animation,
       child: new GestureDetector(
-      child: new Container(  
-        height: ht > wd ? ht * 0.3 : ht * 0.15,
-        width: ht > wd ? wd * 0.12 : wd * 0.12,     
+      child: new Padding(
+        padding: new EdgeInsets.only(left: 5.0),
+        child: new Container(  
+        height: ht > wd ? ht * 0.1 : ht * 0.13,
+        width: ht > wd ? wd * 0.15 : wd * 0.12,     
       child: new FlatButton(
          onPressed: () => widget.onPress(),
          color: Colors.transparent, 
@@ -460,7 +464,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,        color: Colors.black,
         onPressed: () {},
          )         
-    ))
+    )))
     ));
   }
 }
