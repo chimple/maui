@@ -7,7 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
@@ -70,14 +69,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData2 = [];
 
   Map<String, String> _data = {
-    'A': 'a',
-    'B': 'Ball',
-    '6': 'six',
-    'D': 'Dog',
-    '1': 'one',
-    'F': 'Fan',
-    '3': 'Three',
-    'H': 'Hen',
+    'A': 'cheek',
+    'B': 'cheese',
+    '6': 'cheetah',
+    'D': 'cherry',
+    '1': 'chess',
+    'F': 'chicken',
+    '3': 'chico',
+    'H': 'chihuahua',
   };
   Map<String, String> allData; // = new Map<String, String>();
   List<bool> _slice = [
@@ -133,6 +132,19 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       new GlobalKey<AnimatedCircularChartState>();
   List<ui.Image> images = new List<ui.Image>();
   List<String> _imageData = [
+    'assets/dict/cheek.png',
+    'assets/dict/cheese.png',
+    'assets/dict/cheetah.png',
+    'assets/dict/cherry.png',
+    'assets/dict/chess.png',
+    'assets/dict/chest.png',
+    'assets/dict/chicken.png',
+    'assets/dict/chico.png',
+    'assets/dict/chihuahua.png',
+    'assets/dict/children.png',
+    'assets/dict/chilli.png',
+    'assets/dict/chimpanzee.png',
+    'assets/dict/chin.png',
     'assets/dict/aubergine.png',
     'assets/dict/aunt.png',
     'assets/dict/autumn.png',
@@ -161,9 +173,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     // image = await images.loadImage('assets/hoodie/order_it.png');
     super.initState();
     controller1 = new AnimationController(
-        duration: Duration(milliseconds: 400), vsync: this);
-    controller = new AnimationController(
         duration: Duration(milliseconds: 500), vsync: this);
+    controller = new AnimationController(
+        duration: Duration(milliseconds: 100), vsync: this);
     shakeAnimate = new Tween(begin: -4.0, end: 4.0).animate(controller);
     noAnimation = new Tween(begin: -0.0, end: 0.0).animate(controller);
     animatoin =
@@ -194,7 +206,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData1.clear();
       _shuffleCircleData2.clear();
       _initBoard();
-      reset();
+     // reset();
     }
   }
 
@@ -221,18 +233,18 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       // if (widget.gameConfig.answerUnitMode == UnitMode.image ||
       //     widget.gameConfig.answerUnitMode == UnitMode.audio ||
       //     widget.gameConfig.answerUnitMode == UnitMode.audio) {
-        //print("image maode::$_circleData ");
+      //print("image maode::$_circleData ");
 
-        // for (int i = 0; i < _circleData.length; i++) {
-        //   String img = s1 + _circleData[i].toLowerCase() + s2;
-        //   _imageData[i] = img;
-        //   print("image name:::$img");
-        // }
-        for (int i = 0; i < 8; i++) {
-          load(_imageData[i]).then((j) {
-            images.add(j);
-          });
-        }
+      // for (int i = 0; i < _circleData.length; i++) {
+      //   String img = s1 + _circleData[i].toLowerCase() + s2;
+      //   _imageData[i] = img;
+      //   print("image name:::$img");
+      // }
+      for (int i = 0; i < 8; i++) {
+        load(_imageData[i]).then((j) {
+          images.add(j);
+        });
+      }
       //}
       // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
       // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
@@ -248,7 +260,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _activeIndex = _smallCircleData.indexOf(_text);
       int a = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
       _slice[a] = true;
-      print("unit button text:: $_text");
+      //print("unit button text:: $_text");
     } catch (exception, e) {}
     setState(() {
       _isLoading = false;
@@ -264,7 +276,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     // });
     _shuffleCircleData1.shuffle();
     _shuffleCircleData2.shuffle();
-    controller1.forward();
+    //controller1.forward();
     _countGameEnd = 0;
     _slice = _sliceCopy;
     dragEnd = 0.0;
@@ -297,8 +309,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         });
       }
     }
-
-    //print("color codes::$_wheelColor");
   }
 
   _onDragStart(PolarCoord cord) {
@@ -343,9 +353,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     //0
     if (_angleDiff >= 10.0 && _angleDiff <= 40.0 && _slice[0] == true) {
       print("Slice0::");
-
       _slice[0] = null;
-
       _changeData(0, .375);
     } //1
     else if (_angleDiff >= 45.0 && _angleDiff <= 85.0 && _slice[1] == true) {
@@ -515,12 +523,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     double _sizeOfWheel;
     Size size2 = MediaQuery.of(context).size;
+    print("size of the screen:: $size2");
     //Image image= new Image(image: AssetImage('assets/hoodie/draw_challenge_happy.png'),);
     Size size1 = MediaQuery.of(context).size;
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLanscape = orientation == Orientation.landscape;
     size1 = new Size(size1.height * .6, size1.height * .6);
-    size2 = new Size(size2.height * .6 + 2.0, size2.height * .6 + 2.0);
+    size2 = new Size(size2.height * .6, size2.height * .6);
     double _constant;
     return new LayoutBuilder(builder: (context, constraints) {
       final bool isPortrait = orientation == Orientation.portrait;
@@ -550,7 +559,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
             new Expanded(
               flex: 2,
               child: Container(
-                width: size2.width,
+                width: size2.width + 10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14.0),
                   color: Colors.green,
@@ -574,7 +583,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                     child: new ScaleTransition(
                       scale: animatoin,
                       child: new AnimatedCircularChart(
-                        size: size2,
+                        size: size2 * .98,
                         duration: Duration(milliseconds: 1),
                         initialChartData: _generateChartData1(100.0),
                         chartType: CircularChartType.Radial,
@@ -617,25 +626,28 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                           onRadialDragUpdate: _onDragUpdate,
                           onRadialDragEnd: _onDragEnd,
                           child: new Container(
+                              width: size1.width,
+                              height: size1.width,
                               child: new CustomPaint(
-                            size: size2 * .01,
-                            painter:
-                                // painter: widget.gameConfig.answerUnitMode ==
-                                //             UnitMode.text ||
-                                //         widget.gameConfig.answerUnitMode ==
-                                //             UnitMode.audio
-                                //     ? OuterCircle(
-                                //         ticksPerSection: rotationPercent,
-                                //         sizePaint: _constant,
-                                //         data: _shuffleCircleData1,
-                                //       )
-                                //     :
-                                ImagePainter(
-                                    renderBox: box,
-                                    parentRender: parentRender,
-                                    images: images,
-                                    rotation: rotationPercent),
-                          ))),
+                                //size: size1,
+                                // size: size2 * .01,
+                                painter:
+                                    // painter: widget.gameConfig.answerUnitMode ==
+                                    //             UnitMode.text ||
+                                    //         widget.gameConfig.answerUnitMode ==
+                                    //             UnitMode.audio
+                                    //     ? OuterCircle(
+                                    //         ticksPerSection: rotationPercent,
+                                    //         sizePaint: _constant,
+                                    //         data: _shuffleCircleData1,
+                                    //       )
+                                    //     :
+                                    ImagePainter(
+                                        renderBox: box,
+                                        parentRender: parentRender,
+                                        images: images,
+                                        rotation: rotationPercent),
+                              ))),
                     ),
                   )),
                   new ScaleTransition(
