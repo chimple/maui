@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:maui/components/user_list.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
