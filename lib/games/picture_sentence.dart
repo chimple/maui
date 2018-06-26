@@ -69,7 +69,7 @@ class PictureSentenceState extends State<PictureSentence> {
   Tuple2<String, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-    
+
     picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
     print(" fectched data  >>>> $picturedata");
     sentence1 = picturedata.item1;
@@ -103,13 +103,15 @@ class PictureSentenceState extends State<PictureSentence> {
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-           
           } else if (text == ans[1]) {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-            widget.onEnd();
+            new Future.delayed(const Duration(milliseconds: 800), () {
+              widget.onEnd();
+            });
+
             choice = [];
           } else {
             setState(() {
@@ -134,7 +136,9 @@ class PictureSentenceState extends State<PictureSentence> {
     List<String> eachWord = sentence.split(" ");
     String sentencePart1 = "";
     String sentencePart2 = "";
-    print(sentence);
+    String sentencePart3 = "";
+    int sentencePart1Length;
+    print("$sentence   (length = ${sentence.length-6})");
     print("Split >>>>>>>$eachWord");
 
     // indexOfBlank1 = sentence.indexOf("1");
@@ -143,14 +147,15 @@ class PictureSentenceState extends State<PictureSentence> {
 
     // indexOfBlank2 = sentence.indexOf("2");
     // String subString2 = sentence.substring(40, sentence.length);
-
     print("split[indexOfBlank1] >>>>>>> ${eachWord[listElement1]}");
     for (int i = 0; i < listElement1; i++) {
       if (eachWord[i] != '1_' && eachWord[i] != '2_') {
         sentencePart1 += eachWord[i] + " ";
       }
     }
-    print("sentencePart1 >>>>>>> $sentencePart1");
+    sentencePart1Length = sentencePart1.length;
+    print(
+        "sentencePart1 >>>>>>> $sentencePart1 <<<length ==== $sentencePart1Length >>>");
 
     int listElement2 = eachWord.indexOf("2_");
     for (int i = listElement1; i < listElement2; i++) {
@@ -159,6 +164,11 @@ class PictureSentenceState extends State<PictureSentence> {
       }
     }
     print("sentencePart2 >>>>>>> $sentencePart2");
+    for (int i = listElement2; i < eachWord.length; i++) {
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart3 += eachWord[i] + " ";
+      }
+    }
 
     var text1 = new Text(sentencePart1,
         softWrap: true,
@@ -173,7 +183,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
-                width: 200.0,
+                width: 150.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -222,7 +232,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
-                width: 200.0,
+                width: 150.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -257,19 +267,35 @@ class PictureSentenceState extends State<PictureSentence> {
                         color: color,
                         fontSize: 40.0))),
           );
+          var text3 = new Text(sentencePart3,
+        softWrap: true,
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
 
-    return new Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        new Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[text1, blankSpace1],
-        ),
-        new Row(
-          children: <Widget>[text2, blankSpace2],
-        )
-      ],
-    );
+
+    if ((sentence.length - 6) <= 27) {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1, text2, blankSpace2,text3],
+          ),
+        ],
+      );
+    } else {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[text1, blankSpace1],
+          ),
+          new Row(
+            children: <Widget>[text2, blankSpace2, text3],
+          )
+        ],
+      );
+    }
   }
 
   @override
@@ -486,8 +512,8 @@ class _PictureCardState extends State<PictureCard> {
             height: 200.0,
             decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                image: new DecorationImage(
-                    fit: BoxFit.fill, image: new AssetImage(widget.image)))),
+                image:
+                    new DecorationImage(image: new AssetImage(widget.image)))),
       );
     });
   }
