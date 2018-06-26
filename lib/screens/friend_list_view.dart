@@ -23,9 +23,6 @@ class FriendListView extends StatefulWidget {
 }
 
 class _FriendListViewState extends State<FriendListView> {
-  List<dynamic> _friends;
-  List<User> _users;
-
   @override
   void initState() {
     super.initState();
@@ -33,18 +30,15 @@ class _FriendListViewState extends State<FriendListView> {
   }
 
   void _initData() async {
-    List<User> users = await UserRepo().getUsers();
-    if (!mounted) return;
-    setState(() {
-      _users = users;
-    });
+    await AppStateContainer.of(context).getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
+    var users = AppStateContainer.of(context).users;
     MediaQueryData media = MediaQuery.of(context);
-    if ((_users?.length ?? 0) == 0) {
+    if (users == null) {
       return new Center(
           child: new SizedBox(
         width: 20.0,
@@ -56,7 +50,7 @@ class _FriendListViewState extends State<FriendListView> {
       crossAxisSpacing: 12.0,
       mainAxisSpacing: 12.0,
       crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-      children: _users.map((u) {
+      children: users.map((u) {
         return FriendItem(
             id: u.id,
             imageUrl: u.image,
