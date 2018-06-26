@@ -141,12 +141,8 @@ class PictureSentenceState extends State<PictureSentence> {
     print("$sentence   (length = ${sentence.length-6})");
     print("Split >>>>>>>$eachWord");
 
-    // indexOfBlank1 = sentence.indexOf("1");
     int listElement1 = eachWord.indexOf("1_");
-    // String subString1 = sentence.substring(0, 40);
 
-    // indexOfBlank2 = sentence.indexOf("2");
-    // String subString2 = sentence.substring(40, sentence.length);
     print("split[indexOfBlank1] >>>>>>> ${eachWord[listElement1]}");
     for (int i = 0; i < listElement1; i++) {
       if (eachWord[i] != '1_' && eachWord[i] != '2_') {
@@ -183,7 +179,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
-                width: 150.0,
+                width: 200.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -232,7 +228,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
-                width: 150.0,
+                width: 200.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -267,18 +263,17 @@ class PictureSentenceState extends State<PictureSentence> {
                         color: color,
                         fontSize: 40.0))),
           );
-          var text3 = new Text(sentencePart3,
+    var text3 = new Text(sentencePart3,
         softWrap: true,
         style: new TextStyle(
             fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
-
 
     if ((sentence.length - 6) <= 27) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1, text2, blankSpace2,text3],
+            children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
           ),
         ],
       );
@@ -300,8 +295,6 @@ class PictureSentenceState extends State<PictureSentence> {
 
   @override
   void didUpdateWidget(PictureSentence oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -310,7 +303,6 @@ class PictureSentenceState extends State<PictureSentence> {
   @override
   Widget build(BuildContext context) {
     keys = 0;
-
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
