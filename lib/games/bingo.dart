@@ -72,8 +72,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   var matchColumn;
   static int _maxSize = 2;
   var bingoCount = 0;
-  var rowFlag,colFlag = 0;
-  var onScoreFlag;
+  var rowFlag = 0;
+  var colFlag = 0;
+  var onScoreFlag = 0;
   /// datattaaaa
 
   bool _isLoading = true;
@@ -222,6 +223,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 }
 
                 matchRow = bingoHorizontalChecker();
+                matchColumn = bingoVerticalChecker();
 //                print({"the bingo checker response row : ": matchRow});
 
                 ///horizontall  data showing part
@@ -244,23 +246,12 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     }
                     setState(() {
                       rowFlag = 1;
-//                      z = 0;
-//                      bingoCount = 0;
-//                      countData = 0;
-////                      widget.onEnd();
-//                      _copyQuestion.removeRange(0, _copyQuestion.length);
-//                      _copyQuestion1.removeRange(0, _copyQuestion1.length);
-//                      _all.removeRange(0, _all.length);
-//                      _letters.removeRange(0, _letters.length);
-//                      _shuffledLetters.removeRange(0, _shuffledLetters.length);
-//                      print("iteration not chhanging.......::..${widget.iteration}");
-//                      rowFlag = 1;
                     });
                   }
 
 //                  print("thius is bngo animati curved in it $_RowCells[i] ");
                 }
-                matchColumn = bingoVerticalChecker();
+
 //                print({"the bingo checker response column: ": matchColumn});
                 if (-1 != matchColumn) {
                   //horizontall animation and Bingo
@@ -285,19 +276,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     setState(() {
 //
                       colFlag=1;
-//                      z = 0;
-//                      bingoCount = 0;
-//                      countData = 0;
-////                      widget.onEnd();
-//                      _copyQuestion.removeRange(0, _copyQuestion.length);
-//                      _copyQuestion1.removeRange(0, _copyQuestion1.length);
-//                      _all.removeRange(0, _all.length);
-//                      _letters.removeRange(0, _letters.length);
-//                      _shuffledLetters.removeRange(0, _shuffledLetters.length);
-//                      print("iteration not chhanging.......::..${widget.iteration}");
-//                      colFlag=1;
-
-//                        print({"this is 1": _ColmunCells});
                     });
                   }
 
@@ -305,28 +283,18 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
 //                print({"this is reference": _referenceMatrix});
 //                print({"this is i value ": i});
-                if(rowFlag==1|| colFlag == 1)
+                if(rowFlag==1|| colFlag==1)
                   {
                     setState(() {
                       rowFlag=0;
                       colFlag=0;
                       onScoreFlag = 1;
-//
-//                      z = 0;
-//                      bingoCount = 0;
-//                      countData = 0;
-////                      widget.onEnd();
-//                      _copyQuestion.removeRange(0, _copyQuestion.length);
-//                      _copyQuestion1.removeRange(0, _copyQuestion1.length);
-//                      _all.removeRange(0, _all.length);
-//                      _letters.removeRange(0, _letters.length);
-//                      _shuffledLetters.removeRange(0, _shuffledLetters.length);
-//                      print("iteration not chhanging.......::..${widget.iteration}");
 
                       new Future.delayed(const Duration(milliseconds: 1000), () {
                         z = 0;
                         bingoCount = 0;
                         countData = 0;
+                        onScoreFlag = 0;
 //                      widget.onEnd();
                         _copyQuestion.removeRange(0, _copyQuestion.length);
                         _copyQuestion1.removeRange(0, _copyQuestion1.length);
@@ -335,6 +303,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         _shuffledLetters.removeRange(0, _shuffledLetters.length);
                         print("iteration not chhanging.......::..${widget.iteration}");
                         widget.onEnd();
+
                       });
 //                        print({"this is 1": _ColmunCells});
                     });

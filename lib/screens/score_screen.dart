@@ -37,16 +37,12 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
-  AnimationController controller;
+  AnimationController controller, buttoncontroller;
   
   List<AnimationController> _controllers = new List<AnimationController>();
   List<Animation<double>> _animations = new List<Animation<double>>();
 
-
-  Animation<double> _buttonAnimation,
-      _characterAnimation,
-      _userAnimation,
-      _textAnimation;
+  Animation<double> _buttonAnimation, _characterAnimation;
 
   String gameName;
   GameDisplay gameDisplay;
@@ -55,7 +51,9 @@ class _ScoreScreenState extends State<ScoreScreen>
   int myScore;
   int otherScore;
   List<Widget> otherscore;
-  List<String> stars = [];
+  List<String> mystars = [];
+  List<String> otherstars = [];
+  bool flag = false;
   
   var keys = 0;
 
@@ -66,19 +64,20 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     
+    buttoncontroller = new AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
 
     _buttonAnimation =
-        new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
+        new CurvedAnimation(parent: buttoncontroller, curve: Curves.bounceInOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-    _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
-        new CurvedAnimation(
-            parent: controller,
-            curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
-    _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
-        new CurvedAnimation(
-            parent: controller,
-            curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
+    // _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+    //     new CurvedAnimation(
+    //         parent: controller,
+    //         curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
+    // _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+    //     new CurvedAnimation(
+    //         parent: controller,
+    //         curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
     
 
     gameName = widget.gameName;
@@ -90,7 +89,10 @@ class _ScoreScreenState extends State<ScoreScreen>
     otherUser = widget.otherUser;
 
     for (var i = 0; i < 4; i++) {
-      myScore > (10*i) ? stars.add("true") : stars.add("false");      
+      myScore > (10*i) ? mystars.add("true") : mystars.add("false");      
+    }
+    for (var i = 0; i < 4; i++) {
+      otherScore > (10*i) ? otherstars.add("true") : otherstars.add("false");      
     }
 
     for (var i = 0; i < 4; i++) {
@@ -99,10 +101,18 @@ class _ScoreScreenState extends State<ScoreScreen>
       _controllers.add(_controller);
       _animations.add(
           new CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
-      new Future.delayed(Duration(milliseconds: 2000 + (i) * 300), () {
+      new Future.delayed(Duration(milliseconds: 1000 + (i) * 150), () {
         _controller.forward();
       });
+      if(i == 3) {
+        print("this ois kvkkv $i");
+        flag = true;
+      }
     }
+
+    new Future.delayed(Duration(milliseconds: 2000), () {
+        buttoncontroller.forward();
+      });
 
     super.initState();
     controller.forward();
@@ -118,13 +128,16 @@ class _ScoreScreenState extends State<ScoreScreen>
     
   }
 
-  Widget _buildItem(int index, String text) {
-    return new MyButton(
+  Widget _buildItem(int index, String text, double ht, double wd) {
+    return new LimitedBox(
+      maxHeight: ht * 0.2,
+      maxWidth: wd * 0.15,
+      child: new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         keys: keys++,
         onPress: () {}
-        );
+        ));
   }
   
 
@@ -166,17 +179,17 @@ class _ScoreScreenState extends State<ScoreScreen>
             new Text('$otherScore')
           ]));
     }
-
+  
 
     return new LayoutBuilder(builder: (context, constraints) {
-    
-    List <Widget> starsMap1 =  stars
-                              .map((e) => _buildItem(j++, e),)
+      print("flag = $flag");
+    List <Widget> starsMap1 =  mystars
+                              .map((e) => _buildItem(j++, e, ht, wd),)
                               .toList(growable: false);
 
 
-    List <Widget> starsMap2 =  stars
-                              .map((e) => _buildItem(k++, e),)
+    List <Widget> starsMap2 =  otherstars
+                              .map((e) => _buildItem(k++, e, ht, wd),)
                               .toList(growable: false);
     for(var i=0; i < 4; i++){
     tablestars1.add(new ScaleTransition(
@@ -208,7 +221,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             ),
 
             new Row(
-              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Container(
@@ -231,7 +244,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                               color: Colors.white),
                         )
                       ])),
-                 gameDisplay == GameDisplay.myHeadToHead ? new Container(
+                 gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Container(
                     height: ht > wd ? ht * 0.19 : wd * 0.15,
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -239,12 +252,12 @@ class _ScoreScreenState extends State<ScoreScreen>
                         children: <Widget>[
                           new LimitedBox(
                             maxHeight: ht * 0.13,
-                            child: new UserItem(user: myUser),),
+                            child: new UserItem(user: otherUser),),
                           // new Padding(
                           //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
                           // ),
                           new Text(
-                            '$myScore',
+                            '$otherScore',
                             style: new TextStyle(
                                 fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
                                 fontWeight: FontWeight.bold,
@@ -261,25 +274,25 @@ class _ScoreScreenState extends State<ScoreScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new  Row(
-                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Row(
-                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: tablestars1),
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: tablestars1),
 
                         new Padding(
                           padding: new EdgeInsets.all(10.0),
                         ),
                         
-                        gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                       gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: tablestars2) : new Row(),
                         ]),
                 new Row(
-                  mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                  mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Row(
@@ -292,56 +305,61 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                    new Text(myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                    new Text(otherScore < 10 ? "Poor" : otherScore >= 10 && otherScore < 20 ? "Good" : otherScore >= 20 && otherScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]) : new Row(),
                   ]),
                 ], 
               ),
             ),
             
+          
 
             // Icons which redirect to home, refresh and fast-forward
-             new Row(
+             new ScaleTransition(
+               scale: buttoncontroller,
+               child: new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
                children: <Widget>[
                  new Container(
                    
                      child: IconButton(
                          icon: new Image.asset("assets/home_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
-                           _animations[3].addStatusListener((status) {
-                             if (status == AnimationStatus.completed) {
+                          //  _buttonAnimation.addStatusListener((status) {
+                            //  print("this is my status");
+                             if (flag == true) {
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
+                                Navigator.pop(context);
+                              print(" hi ");
                              }
-                           });
+                          //  });
                            // Navigator.of(context).pushNamed('/tab');                           
                          })),
                  
                   new Container(                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
-                            _animations[3].addStatusListener((status) {
-                             if (status == AnimationStatus.completed) {
+                            // _animations[3].addStatusListener((status) {
+                             if (flag == true) {
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
+                              print(" forwAARS ");
                              }
-                           });
+                          //  });
                            // Navigator.of(context).pushNamed('/tab'),
                            
                          }),
                    ),
                ],
-             ),
-             new Padding(
-               padding: new EdgeInsets.all(5.0),
-             )
+             )),
+            
              
             ],
         )));
@@ -399,33 +417,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       // _initAudioPlayer();
   }
 
-  // void _initAudioPlayer() {
-  //   _audioPlayer = new AudioPlayer();
-  //   _audioPlayer.setCompletionHandler(() {
-  //     _isPlaying = true;
-  //   });
-  //   _audioPlayer.setErrorHandler((msg) {
-  //     _isPlaying = true;
-  //   });
-  // }
-
-  // void initAudioPlayer() async {
-  //   audioPlayer = new AudioPlayer();
-  //   documentsDirectory = await getApplicationDocumentsDirectory();
-  //   audioPlayer.play(join(documentsDirectory.path, 'star_music.mp3'), isLocal: true);
-  // }
-
-  //   void _play() async {
-
-  //  if (!_isPlaying) {
-  //    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  //    final result = await _audioPlayer
-  //        .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
-  //    if (result == 1) {
-  //      _isPlaying = true;
-  //    }
-  //  }
-  // }
 
    @override
     void didUpdateWidget(MyButton oldWidget) {
@@ -454,20 +445,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     // _play();
     return new Shake(
       animation: animation,
-      child: new GestureDetector(
-      child: new Container(  
-        height: ht > wd ? ht * 0.3 : ht * 0.15,
-        width: ht > wd ? wd * 0.22 : wd * 0.09 ,     
-      child: new FlatButton(
-         onPressed: () => widget.onPress(),
-         color: Colors.transparent,         
-         child: new IconButton(
+      child: new IconButton(
         icon: _displayText == "true" ? new Image.asset("assets/star_gained.png") : new Image.asset("assets/star.png"),
         key: new Key("${widget.keys}"),
-        iconSize: ht > wd ? ht * 0.1 : wd * 0.05,
+        iconSize: ht > wd ? ht * 0.01 : wd * 0.05,        
         color: Colors.black,
-         )         
-    ))
-    ));
+        onPressed: () {},
+      ));
   }
 }

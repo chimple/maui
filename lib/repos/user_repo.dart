@@ -4,8 +4,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:io';
 import 'package:meta/meta.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
 import 'package:flores/flores.dart';
@@ -33,7 +31,7 @@ class UserRepo {
     }
 
     List<User> users = await userDao.getUsers();
-    friends.forEach((f) async {
+    await Future.forEach(friends, (f) async {
       if (users.any((u) => u.id == f['userId'])) {
       } else {
         List<int> memoryImage;
@@ -64,18 +62,6 @@ class UserRepo {
   }
 
   Future<User> insertLocalUser(User user) async {
-//    StorageReference ref = FirebaseStorage.instance
-//        .ref()
-//        .child("user_${user.id}.jpg");
-//    StorageUploadTask uploadTask = ref.put(new File(user.image));
-//    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-//
-//    final reference = FirebaseDatabase.instance.reference().child('users');
-//    reference.push().set({
-//      'id': user.id,
-//      'name': user.name,
-//      'image': downloadUrl.toString()
-//    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     user.deviceId = deviceId;
