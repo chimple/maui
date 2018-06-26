@@ -54,11 +54,12 @@ class PictureSentenceState extends State<PictureSentence> {
   String output1 = "";
   String output2 = "";
   Color color = Colors.white;
-
+  String completeSentence = "";
   List<String> ans = [];
   List<String> choice = [];
   List<Status> _statuses = [];
   String sentence1;
+
   bool isCorrect;
   int scoretrack = 0;
 
@@ -68,15 +69,15 @@ class PictureSentenceState extends State<PictureSentence> {
     _initBoard();
   }
 
-  Tuple3<String, List<String>, List<String>> picturedata;
+  Tuple2<String, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
 
     picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
     print(" fectched data  >>>> $picturedata");
     sentence1 = picturedata.item1;
-    ans = picturedata.item2;
-    choice = picturedata.item3;
+    // ans = picturedata.item2;
+    choice = picturedata.item2;
     // ans = _allques.item2;
     // print(_allques.item3);
     // ch = _allques.item3;
@@ -84,6 +85,16 @@ class PictureSentenceState extends State<PictureSentence> {
     //   choice.add(ch[x]);
     // }
     // choice.add(ans);
+    // for (var i = 0; i < answerOption.length; i++) {
+    //   completeSentence += sentence1[i];
+    //   for (var j = 0; j < 4; j++) {
+    //    choice.add(answerOption[i][j]);
+    //   }
+    // }
+
+    for (var i = 0; i < 2; i++) {
+      ans.add(choice[i]);
+    }
     print("My Choices - $choice");
 
     choice.shuffle();
@@ -99,15 +110,9 @@ class PictureSentenceState extends State<PictureSentence> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(Status status, int indexOfBlank1, String text) {
-    // String buttonPressed() {
-    //   output1 = ans[0];
-    //   return output1;
-    // }
-
+  _buildItem(Status status, int indexOfBlank1, String text) {
     return new MyButton(
         key: new ValueKey<int>(indexOfBlank1),
-        // unitMode: widget.gameConfig.answerUnitMode,
         status: status,
         text: text,
         ans: this.ans[0],
@@ -129,6 +134,7 @@ class PictureSentenceState extends State<PictureSentence> {
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
+            
           } else {
             setState(() {
               _statuses[indexOfBlank1] = Status.Wrong;
@@ -149,30 +155,31 @@ class PictureSentenceState extends State<PictureSentence> {
   }
 
   Widget sentenceLayout(String sentence) {
-    List<String> split = sentence.split(" ");
+    List<String> eachWord = sentence.split(" ");
     String sentencePart1 = "";
     String sentencePart2 = "";
-    print(split);
+    print(sentence);
+    print("Split >>>>>>>$eachWord");
 
-    indexOfBlank1 = sentence.indexOf("1");
-    int listElement1 = split.indexOf("1_");
-    String subString1 = sentence.substring(0, 40);
+    // indexOfBlank1 = sentence.indexOf("1");
+    int listElement1 = eachWord.indexOf("1_");
+    // String subString1 = sentence.substring(0, 40);
 
-    indexOfBlank2 = sentence.indexOf("2");
-    String subString2 = sentence.substring(40, sentence.length);
+    // indexOfBlank2 = sentence.indexOf("2");
+    // String subString2 = sentence.substring(40, sentence.length);
 
-    print("split[indexOfBlank1] >>>>>>> ${split[listElement1]}");
+    print("split[indexOfBlank1] >>>>>>> ${eachWord[listElement1]}");
     for (int i = 0; i < listElement1; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart1 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart1 += eachWord[i] + " ";
       }
     }
     print("sentencePart1 >>>>>>> $sentencePart1");
 
-    int listElement2 = split.indexOf("2_");
+    int listElement2 = eachWord.indexOf("2_");
     for (int i = listElement1; i < listElement2; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart2 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart2 += eachWord[i] + " ";
       }
     }
     print("sentencePart2 >>>>>>> $sentencePart2");
@@ -207,7 +214,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/mountain.png",
+                              image: "assets/dict/${ans[0].toLowerCase()}.png",
                             )));
                   },
                 ),
@@ -256,7 +263,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/world.png",
+                              image: "assets/dict/${ans[1].toLowerCase()}.png",
                             )));
                   },
                 ),
