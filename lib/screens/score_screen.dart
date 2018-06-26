@@ -128,13 +128,16 @@ class _ScoreScreenState extends State<ScoreScreen>
     
   }
 
-  Widget _buildItem(int index, String text) {
-    return new MyButton(
+  Widget _buildItem(int index, String text, double ht, double wd) {
+    return new LimitedBox(
+      maxHeight: ht * 0.2,
+      maxWidth: wd * 0.15,
+      child: new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         keys: keys++,
         onPress: () {}
-        );
+        ));
   }
   
 
@@ -181,12 +184,12 @@ class _ScoreScreenState extends State<ScoreScreen>
     return new LayoutBuilder(builder: (context, constraints) {
       print("flag = $flag");
     List <Widget> starsMap1 =  mystars
-                              .map((e) => _buildItem(j++, e),)
+                              .map((e) => _buildItem(j++, e, ht, wd),)
                               .toList(growable: false);
 
 
     List <Widget> starsMap2 =  otherstars
-                              .map((e) => _buildItem(k++, e),)
+                              .map((e) => _buildItem(k++, e, ht, wd),)
                               .toList(growable: false);
     for(var i=0; i < 4; i++){
     tablestars1.add(new ScaleTransition(
@@ -271,13 +274,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new  Row(
-                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Row(
-                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: tablestars1),
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: tablestars1),
 
                         new Padding(
                           padding: new EdgeInsets.all(10.0),
@@ -316,13 +319,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                scale: buttoncontroller,
                child: new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
                children: <Widget>[
                  new Container(
                    
                      child: IconButton(
                          icon: new Image.asset("assets/home_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
                           //  _buttonAnimation.addStatusListener((status) {
                             //  print("this is my status");
@@ -340,7 +343,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                   new Container(                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
+                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                          onPressed: () {
                             // _animations[3].addStatusListener((status) {
                              if (flag == true) {
@@ -356,9 +359,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                    ),
                ],
              )),
-             new Padding(
-               padding: new EdgeInsets.all(5.0),
-             )
+            
              
             ],
         )));
@@ -444,23 +445,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     // _play();
     return new Shake(
       animation: animation,
-      child: new GestureDetector(
-      child: new Container(  
-        height: ht > wd ? ht * 0.3 : ht * 0.15,
-        width: ht > wd ? wd * 0.12 : wd * 0.12,     
-      child: new FlatButton(
-         onPressed: () => widget.onPress(),
-         color: Colors.transparent, 
-         highlightColor: Colors.black,  
-         disabledColor: Colors.black,
-         splashColor: Colors.black,      
-         child: new IconButton(
+      child: new IconButton(
         icon: _displayText == "true" ? new Image.asset("assets/star_gained.png") : new Image.asset("assets/star.png"),
         key: new Key("${widget.keys}"),
-        iconSize: ht > wd ? ht * 0.1 : wd * 0.1,        color: Colors.black,
+        iconSize: ht > wd ? ht * 0.01 : wd * 0.05,        
+        color: Colors.black,
         onPressed: () {},
-         )         
-    ))
-    ));
+      ));
   }
 }

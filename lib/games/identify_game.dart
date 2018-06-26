@@ -41,25 +41,19 @@ class _IdentifyGameState extends State<IdentifyGame>
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    String jsonGameInfo = await fetchIdentifyData();
 
-    _decoded = await json.decode(jsonGameInfo);
-    print("intiborad.>>>>>>$_decoded");
-    print(_decoded["parts"]);
-    // print(_decoded["parts"] as List);
+    _decoded = await json.decode(await fetchIdentifyData());
     new Future.delayed(const Duration(milliseconds: 500), () {
-      // setState(() => _isLoading = false);
       setState(() {
-        for (var i = 0; i < _decoded["number"] ; i++) {
-      _textControllers.add(new AnimationController(
-          vsync: this, duration: new Duration(milliseconds: 500)));
-      _animateText.add(
-          new CurvedAnimation(parent: _textControllers[i], curve: Curves.elasticOut));
-    }    
-    _imgController.forward();
-              _isLoading = false;
-            });
-
+        for (var i = 0; i < _decoded["number"]; i++) {
+          _textControllers.add(new AnimationController(
+              vsync: this, duration: new Duration(milliseconds: 500)));
+          _animateText.add(new CurvedAnimation(
+              parent: _textControllers[i], curve: Curves.elasticOut));
+        }
+        _imgController.forward();
+        _isLoading = false;
+      });
     });
   }
 
@@ -73,23 +67,24 @@ class _IdentifyGameState extends State<IdentifyGame>
           milliseconds: 800,
         ),
         vsync: this);
-    
+
     animateImage =
         new CurvedAnimation(parent: _imgController, curve: Curves.bounceOut);
-    
   }
 
-   @override
+  @override
   void didUpdateWidget(IdentifyGame oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _paint = [];
+      _textControllers = [];
+      _animateText = [];
       _initBoard();
     }
   }
 
-  
-
-  void _renderChoice(String text, double X, double Y) {
+  void _renderChoice(String text, double height, double width,
+      Orientation orientation, double X, double Y) {
     setState(() {
       _paint.add(
         new CustomPaint(
@@ -97,8 +92,9 @@ class _IdentifyGameState extends State<IdentifyGame>
             text: text,
             x: X,
             y: Y,
-            // x: 100.0,
-            // y: 100.0
+            height: height,
+            width: width,
+            orientation: orientation,
           ),
         ),
       );
@@ -113,9 +109,6 @@ class _IdentifyGameState extends State<IdentifyGame>
         child: w,
       ),
     );
-    // return new RepaintBoundary(
-    //   child: w,
-    // );
   }
 
   List<Widget> _createTextPaint(BuildContext context) {
@@ -123,8 +116,8 @@ class _IdentifyGameState extends State<IdentifyGame>
     return _paint.map((f) => _buildPaint(i++, f)).toList(growable: true);
   }
 
-  Widget _builtButton(
-      BuildContext context, double maxHeight, double maxWidth, int cols) {
+  Widget _builtButton(BuildContext context, double maxHeight, double maxWidth,
+      int cols, Orientation orientation) {
     print((_decoded["parts"] as List).length);
     int j = 0;
     int r = ((_decoded["parts"] as List).length / cols +
@@ -136,20 +129,14 @@ class _IdentifyGameState extends State<IdentifyGame>
       rows: r,
       cols: cols,
       children: (_decoded["parts"] as List)
-          .map((e) => _buildItems(
-                j++,
-                e,
-                maxHeight,
-                maxWidth,
-                cols,
-              ))
+          .map((e) =>
+              _buildItems(j++, e, maxHeight, maxWidth, cols, orientation))
           .toList(growable: false),
     );
   }
 
-
-  Widget _buildItems(
-      int i, var part, double maxHeight, double maxWidth, int cols) {
+  Widget _buildItems(int i, var part, double maxHeight, double maxWidth,
+      int cols, Orientation orientation) {
     return new DragBox(
       onScore: widget.onScore,
       onEnd: widget.onEnd,
@@ -159,6 +146,7 @@ class _IdentifyGameState extends State<IdentifyGame>
       cols: cols,
       key: new ValueKey<int>(i),
       part: part,
+      orientation: orientation,
     );
   }
 
@@ -178,16 +166,16 @@ class _IdentifyGameState extends State<IdentifyGame>
 
   @override
   void dispose() {
-    _imgController.dispose();
     super.dispose();
+    _imgController.dispose();
+    for (var i = 0; i < _decoded["number"]; i++) {
+      _textControllers[i].dispose();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(">>>>>>>>inside build $_decoded");
     Size media = MediaQuery.of(context).size;
-    print("This is the height of the whole screen >>>>>  ${media.height}");
-    print("This is the width of the whole screen >>>>> ${media.width}");
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -203,50 +191,44 @@ class _IdentifyGameState extends State<IdentifyGame>
           "This is the height of the screen except header >>>>>  ${constraint.maxHeight}");
       print(
           "This is the width of the screen except header >>>>> ${constraint.maxWidth}");
-      return new Scaffold(
-        body: new Flex(
-          direction: Axis.vertical,
-          children: <Widget>[
-            new GestureDetector(
-              onHorizontalDragStart: (DragStartDetails start) =>
-                  _onDragStart(context, start),
-              onHorizontalDragUpdate: (DragUpdateDetails update) =>
-                  _onDragUpdate(context, update),
-              onVerticalDragStart: (DragStartDetails start) =>
-                  _onDragStart(context, start),
-              onVerticalDragUpdate: (DragUpdateDetails update) =>
-                  _onDragUpdate(context, update),
-              child: new Container(
-                  height: (constraint.maxHeight) * 3 / 4,
-                  width: constraint.maxWidth,
-                  // decoration: new BoxDecoration(
-                  //   color: Theme.of(context).backgroundColor,
-                  // ),
-                  child: new Stack(
-                    fit: StackFit.passthrough,
-                    children: <Widget>[
-                      new ScaleTransition(
-                        scale: animateImage,
-                        child: new Image(
-                          image: AssetImage('assets/' + _decoded["id"]),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      new Stack(
-                        children: _createTextPaint(context),
-                      ),
-                    ],
-                  )),
-            ),
-            new Container(
-                height: (constraint.maxHeight) / 4,
+      return new Flex(
+        direction: Axis.vertical,
+        children: <Widget>[
+          new GestureDetector(
+            onHorizontalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onHorizontalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            onVerticalDragStart: (DragStartDetails start) =>
+                _onDragStart(context, start),
+            onVerticalDragUpdate: (DragUpdateDetails update) =>
+                _onDragUpdate(context, update),
+            child: new Container(
+                height: (constraint.maxHeight) * 3 / 4,
                 width: constraint.maxWidth,
-                decoration: new BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor),
-                child: _builtButton(context, constraint.maxHeight / 4,
-                    constraint.maxWidth, cols)),
-          ],
-        ),
+                child: new Stack(
+                  fit: StackFit.passthrough,
+                  children: <Widget>[
+                    new AnimatedImage(
+                        item: _decoded["id"],
+                        animation: animateImage,
+                        height: (constraint.maxHeight) * 3 / 4,
+                        width: constraint.maxWidth,
+                        orientation: orientation),
+                    new Stack(
+                      children: _createTextPaint(context),
+                    ),
+                  ],
+                )),
+          ),
+          new Container(
+              height: (constraint.maxHeight) / 4,
+              width: constraint.maxWidth,
+              decoration: new BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor),
+              child: _builtButton(context, constraint.maxHeight / 4,
+                  constraint.maxWidth, cols, orientation)),
+        ],
       );
     });
   }
@@ -260,17 +242,19 @@ class DragBox extends StatefulWidget {
   Function render;
   Function onScore;
   Function onEnd;
+  Orientation orientation;
 
-  DragBox({
-    this.onEnd,
-    this.onScore,
-    this.maxHeight,
-    this.maxWidth,
-    this.cols,
-    Key key,
-    this.part,
-    this.render,
-  }) : super(key: key);
+  DragBox(
+      {this.onEnd,
+      this.onScore,
+      this.maxHeight,
+      this.maxWidth,
+      this.cols,
+      Key key,
+      this.part,
+      this.render,
+      this.orientation})
+      : super(key: key);
 
   @override
   DragBoxState createState() => new DragBoxState();
@@ -287,6 +271,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   double maxWidth;
   int cols;
   Function render;
+  Orientation orientation;
 
   List<String> _buildPartsList() {
     List<String> partsName = [];
@@ -295,8 +280,6 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     }
     return partsName;
   }
-
-  
 
   _onDragStart(BuildContext context, DragStartDetails start) {
     print(start.globalPosition.toString());
@@ -350,6 +333,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     maxWidth = widget.maxWidth;
     render = widget.render;
     cols = widget.cols;
+    orientation = widget.orientation;
 
     toAnimateButton();
   }
@@ -363,86 +347,114 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // Size media = MediaQuery.of(context).size;
-    // double _height = media.height;
-    // double _width = media.width;
     int r = ((_decoded["parts"] as List).length / cols +
             ((((_decoded["parts"] as List).length % cols) == 0) ? 0 : 1))
         .toInt();
-    
+
     return new Container(
-      width: maxWidth / cols ,
+      width: maxWidth / cols,
       height: maxHeight / r,
       color: Theme.of(context).buttonColor,
       child: new ScaleTransition(
-        scale:shakeAnimation,
+        scale: shakeAnimation,
         child: new Draggable(
-          data: (_flag1 == 0) ? "" :part["name"],
+          data: (_flag1 == 0) ? "" : part["name"],
           child: new AnimatedDrag(
             cols: cols,
             height: maxHeight,
             width: maxWidth,
             animation: (_flag == 0) ? noanimation : animation,
             draggableColor: Theme.of(context).buttonColor,
-            draggableText: (_flag1 == 0) ? "" :part["name"],
+            draggableText: (_flag1 == 0) ? "" : part["name"],
           ),
           feedback: new AnimatedFeedback(
-            height: maxHeight,
-            width: maxWidth,
-            animation: animation,
-            draggableColor: Theme.of(context).disabledColor,
-            draggableText: (_flag1 == 0) ? "" :part["name"]),
+              height: maxHeight,
+              width: maxWidth,
+              animation: animation,
+              draggableColor: Theme.of(context).disabledColor,
+              draggableText: (_flag1 == 0) ? "" : part["name"]),
           onDraggableCanceled: (velocity, offset) {
             print(velocity);
-          Size media = MediaQuery.of(context).size;
-          double rh, rw, headerSize;
-          rh = (3 * maxHeight) / _decoded["height"];
-          print("bffvhqvfihvqfiqvi...$rh");
-          print(_length);
-          rw = maxWidth / _decoded["width"];
-          headerSize = media.height - 4 * (maxHeight);
-          if (((offset.dy + 35.0) >
-                  (headerSize +
-                      ((rh * part["data"]["y"]) -
-                          ((rh * part["data"]["height"]) / 2)))) &&
-              ((offset.dy + 35.0) <
-                  (headerSize +
-                      ((rh * part["data"]["y"]) +
-                          ((rh * part["data"]["height"]) / 2))))) {
-            print(
-                " Header Size $headerSize  Start of object ${(headerSize + ((rh * part["data"]["y"]) -((rh * part["data"]["height"]) / 2)))}  End of object  ${(headerSize +((rh * part["data"]["y"]) +((rh * part["data"]["height"]) / 2)))}");
-            render(part["name"], offset.dx, (rh * part["data"]["y"]));
-            print(offset.dy);
-            widget.onScore(1);
-            _length = _length - 1;
-            print(_length);
-            setState(() {
-                          _flag1 = 0;
-                        });
-            new Future.delayed(const Duration(milliseconds: 1000),(){
-              if(_length == 0){
-                widget.onEnd();
-              }
-            });
-          } 
-          // if(true){ 
-          //   print("xxxxxxx...${offset.dx}");
-            
-          //   print("yyyyyyy...${offset.dy}");
-          //   print((rh * part["data"]["y"]));
-          // }
-          else {
-            widget.onScore(-1);
-            _flag = 1;
-            toAnimateFunction();
-            new Future.delayed(const Duration(milliseconds: 1000), () {
+            Size media = MediaQuery.of(context).size;
+            double h, w, h1, w1, x1, y1, rh, rw, headerSize;
+            headerSize = media.height - 4 * (maxHeight);
+            print(orientation);
+            if (orientation == Orientation.portrait) {
+              h = ((9 * 3 * maxHeight * 3) / (40));
+              w = ((4 * maxWidth) / 5);
+              x1 = 90.0;
+              y1 = 120.0;
+            } else {
+              h = ((49 * 3 * maxHeight * 3) / (200));
+              w = ((maxWidth) / 2);
+              x1 = 100.0;
+              y1 = 90.0;
+            }
+            h1 = ((maxHeight * 3) - h) / 2;
+            w1 = (maxWidth - w) / 2;
+            print(h1);
+            print(w1);
+            rh = h / _decoded["height"];
+            rw = w / _decoded["width"];
+            if (((offset.dy - y1) <
+                    (((rh * part["data"]["y"]) + h1) +
+                        (rh * part["data"]["height"]) / 2)) &&
+                ((offset.dy - 1) >
+                    (((rh * part["data"]["y"]) + h1) -
+                        (rh * part["data"]["height"]) / 2)) &&
+                ((offset.dx + x1) <
+                    (((rw * part["data"]["x"]) + w1) +
+                        (rw * part["data"]["width"]) / 2)) &&
+                ((offset.dx + x1) >
+                    (((rw * part["data"]["x"]) + w1) -
+                        (rw * part["data"]["width"]) / 2))) {
+              render(part["name"], maxHeight, maxWidth, orientation,
+                  w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
+              print("These are the system offest of y and x");
+              print(offset.dx);
+              print(offset.dy);
+              print("range in x");
+              print((((rw * part["data"]["x"]) + w1) -
+                  (rw * part["data"]["width"]) / 2));
+              print((((rw * part["data"]["x"]) + w1) +
+                  (rw * part["data"]["width"]) / 2));
+              print("range in y");
+              print((((rh * part["data"]["y"]) + h1) -
+                  (rh * part["data"]["height"]) / 2));
+              print((((rh * part["data"]["y"]) + h1) +
+                  (rh * part["data"]["height"]) / 2));
+              print("centre given cordis");
+              print(h1 + (rh * part["data"]["y"]));
+              print(w1 + (rw * part["data"]["x"]));
+              print("done coredis");
+              print(headerSize);
+              print(maxHeight * 4);
+              print(media.height);
+              print(offset.dy);
+              print(y1);
+              widget.onScore(1);
+              _length = _length - 1;
+              print(_length);
               setState(() {
-                _flag = 0;
+                _flag1 = 0;
               });
-              controller.stop();
-            });
-          }
-        }, 
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                if (_length == 0) {
+                  widget.onEnd();
+                }
+              });
+            } else {
+              widget.onScore(-1);
+              _flag = 1;
+              toAnimateFunction();
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                setState(() {
+                  _flag = 0;
+                });
+                controller.stop();
+              });
+            }
+          },
         ),
       ),
     );
@@ -472,10 +484,9 @@ class AnimatedFeedback extends AnimatedWidget {
         child: new Text(
           draggableText,
           style: new TextStyle(
-            // color: Theme.of(context).highlightColor,
             color: Colors.black,
             decoration: TextDecoration.none,
-            fontSize: width * 0.1,
+            fontSize: width * 0.05,
           ),
         ),
       ),
@@ -500,20 +511,6 @@ class AnimatedDrag extends AnimatedWidget {
   final double width;
   final int cols;
 
-  _onDragStart(BuildContext context, DragStartDetails start) {
-    print(start.globalPosition.toString());
-    // RenderBox getBox = context.findRenderObject();
-    // var local = getBox.globalToLocal(start.globalPosition);
-    // print(local.dx.toString() + "|" + local.dy.toString());
-  }
-
-  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
-    print(update.globalPosition.toString());
-    // RenderBox getBox = context.findRenderObject();
-    // var local = getBox.globalToLocal(update.globalPosition);
-    // print(local.dx.toString() + "|" + local.dy.toString());
-  }
-
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     double translateX = animation.value;
@@ -522,14 +519,54 @@ class AnimatedDrag extends AnimatedWidget {
       transform: new Matrix4.translationValues(translateX, 0.0, 0.0),
       child: new Center(
         child: new Text(
-            draggableText,
-            style: new TextStyle(
-              color: Theme.of(context).hintColor,
-                decoration: TextDecoration.none,
-                fontSize: (width / cols) * 0.15,
-                fontWeight: FontWeight.bold,
-            ),
+          draggableText,
+          style: new TextStyle(
+            color: Theme.of(context).hintColor,
+            decoration: TextDecoration.none,
+            fontSize: (width / cols) * 0.15,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedImage extends AnimatedWidget {
+  AnimatedImage(
+      {Key key,
+      Animation<double> animation,
+      this.item,
+      this.height,
+      this.width,
+      this.orientation})
+      : super(key: key, listenable: animation);
+
+  final double height;
+  final double width;
+  final String item;
+  final Orientation orientation;
+
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Center(
+      child: new Container(
+        decoration: new BoxDecoration(
+            border: new Border.all(width: 5.0, color: Colors.amberAccent),
+            color: Colors.blueGrey),
+        height: orientation == Orientation.portrait
+            ? (((height) * 3) / 4) - (((height) * 3) / 40)
+            : (((height) * 3) / 4) - (((height) * 3) / 200),
+        width: orientation == Orientation.portrait
+            ? width - (width / 5)
+            : width - (width / 2),
+        child: new ScaleTransition(
+          scale: animation,
+          child: new Image(
+            image: AssetImage('assets/' + item),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }
@@ -537,6 +574,9 @@ class AnimatedDrag extends AnimatedWidget {
 
 class Stickers extends CustomPainter {
   Stickers({
+    this.orientation,
+    this.width,
+    this.height,
     this.text,
     this.x,
     this.y,
@@ -544,13 +584,20 @@ class Stickers extends CustomPainter {
   final String text;
   final double x;
   final double y;
+  final double width;
+  final double height;
+  final Orientation orientation;
 
   @override
   void paint(Canvas canvas, Size size) {
     TextSpan span = new TextSpan(
         text: text,
         style: new TextStyle(
-            color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold));
+            color: Colors.black,
+            fontSize: orientation == Orientation.portrait
+                ? ((width * 4) / 5) * 0.03
+                : (width / 2) * 0.03,
+            fontWeight: FontWeight.bold));
     TextPainter tp = new TextPainter(
         text: span,
         textAlign: TextAlign.center,
@@ -563,7 +610,6 @@ class Stickers extends CustomPainter {
 
   @override
   bool shouldRepaint(Stickers oldDelegate) {
-    // TODO: implement shouldRepaint
     if (oldDelegate.text != text) {
       print(">>>>>>>>>>>>>>>>>>$text");
       return true;
