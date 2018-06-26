@@ -37,16 +37,13 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
-  AnimationController controller;
+  AnimationController controller, buttoncontroller;
   
   List<AnimationController> _controllers = new List<AnimationController>();
   List<Animation<double>> _animations = new List<Animation<double>>();
 
 
-  Animation<double> _buttonAnimation,
-      _characterAnimation,
-      _userAnimation,
-      _textAnimation;
+  Animation<double> _buttonAnimation, _characterAnimation;
 
   String gameName;
   GameDisplay gameDisplay;
@@ -67,19 +64,20 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     
+    buttoncontroller = new AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
 
     _buttonAnimation =
-        new CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
+        new CurvedAnimation(parent: buttoncontroller, curve: Curves.bounceInOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-    _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
-        new CurvedAnimation(
-            parent: controller,
-            curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
-    _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
-        new CurvedAnimation(
-            parent: controller,
-            curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
+    // _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+    //     new CurvedAnimation(
+    //         parent: controller,
+    //         curve: new Interval(0.100, 0.400, curve: Curves.elasticOut)));
+    // _textAnimation = new Tween(begin: 0.0, end: 0.0).animate(
+    //     new CurvedAnimation(
+    //         parent: controller,
+    //         curve: new Interval(0.0, 0.5, curve: Curves.easeIn)));
     
 
     gameName = widget.gameName;
@@ -108,6 +106,10 @@ class _ScoreScreenState extends State<ScoreScreen>
         flag = true;
       }
     }
+
+    new Future.delayed(Duration(milliseconds: 2000), () {
+        buttoncontroller.forward();
+      });
 
     super.initState();
     controller.forward();
@@ -213,7 +215,7 @@ class _ScoreScreenState extends State<ScoreScreen>
             ),
 
             new Row(
-              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+              mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Container(
@@ -236,7 +238,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                               color: Colors.white),
                         )
                       ])),
-                 gameDisplay == GameDisplay.myHeadToHead ? new Container(
+                 gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Container(
                     height: ht > wd ? ht * 0.19 : wd * 0.15,
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -278,13 +280,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                           padding: new EdgeInsets.all(10.0),
                         ),
                         
-                        gameDisplay == GameDisplay.myHeadToHead ? new Row(
+                       gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: tablestars2) : new Row(),
                         ]),
                 new Row(
-                  mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                  mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Row(
@@ -297,7 +299,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                    new Text(myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.05,),)
+                    new Text(myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]) : new Row(),
                   ]),
                 ], 
@@ -307,7 +309,9 @@ class _ScoreScreenState extends State<ScoreScreen>
           
 
             // Icons which redirect to home, refresh and fast-forward
-             new Row(
+             new ScaleTransition(
+               scale: buttoncontroller,
+               child: new Row(
                crossAxisAlignment: CrossAxisAlignment.center,
                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
@@ -348,7 +352,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                          }),
                    ),
                ],
-             ),
+             )),
              new Padding(
                padding: new EdgeInsets.all(5.0),
              )
@@ -409,33 +413,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       // _initAudioPlayer();
   }
 
-  // void _initAudioPlayer() {
-  //   _audioPlayer = new AudioPlayer();
-  //   _audioPlayer.setCompletionHandler(() {
-  //     _isPlaying = true;
-  //   });
-  //   _audioPlayer.setErrorHandler((msg) {
-  //     _isPlaying = true;
-  //   });
-  // }
-
-  // void initAudioPlayer() async {
-  //   audioPlayer = new AudioPlayer();
-  //   documentsDirectory = await getApplicationDocumentsDirectory();
-  //   audioPlayer.play(join(documentsDirectory.path, 'star_music.mp3'), isLocal: true);
-  // }
-
-  //   void _play() async {
-
-  //  if (!_isPlaying) {
-  //    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  //    final result = await _audioPlayer
-  //        .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
-  //    if (result == 1) {
-  //      _isPlaying = true;
-  //    }
-  //  }
-  // }
 
    @override
     void didUpdateWidget(MyButton oldWidget) {
@@ -467,15 +444,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       child: new GestureDetector(
       child: new Container(  
         height: ht > wd ? ht * 0.3 : ht * 0.15,
-        width: ht > wd ? wd * 0.22 : wd * 0.09 ,     
+        width: ht > wd ? wd * 0.22 : wd * 0.12,     
       child: new FlatButton(
          onPressed: () => widget.onPress(),
-         color: Colors.transparent,         
+         color: Colors.transparent, 
+         highlightColor: Colors.black,  
+         disabledColor: Colors.black,
+         splashColor: Colors.black,      
          child: new IconButton(
         icon: _displayText == "true" ? new Image.asset("assets/star_gained.png") : new Image.asset("assets/star.png"),
         key: new Key("${widget.keys}"),
-        iconSize: ht > wd ? ht * 0.1 : wd * 0.05,
-        color: Colors.black,
+        iconSize: ht > wd ? ht * 0.1 : wd * 0.1,        color: Colors.black,
+        onPressed: () {},
          )         
     ))
     ));
