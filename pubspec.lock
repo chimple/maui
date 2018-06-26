@@ -42,7 +42,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.6"
+    version: "0.12.7"
   build_config:
     dependency: transitive
     description:
@@ -56,7 +56,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0+2"
+    version: "0.2.1"
   build_runner:
     dependency: "direct dev"
     description:
@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7f2be520194c2998761e3151ad74fc9409b8caba"
+      resolved-ref: "82d54887e63f636ee19081bd16334003584711e3"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -234,7 +234,7 @@ packages:
       name: fluttie
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.3"
   front_end:
     dependency: transitive
     description:
@@ -519,7 +519,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0"
+    version: "0.11.0"
   stack_trace:
     dependency: transitive
     description:

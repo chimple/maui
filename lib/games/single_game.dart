@@ -148,6 +148,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF74D1D6)
     ],
     'casino': [Color(0xFFD64C60), Color(0xFF734052), Color(0xFFf9a346)],
+    'first_word': [Color(0xFFEB706F), Color(0xFFa9b78a), Color(0xFF8C82D8)],
     'circle_word': [Color(0xFFA1EF6F), Color(0xFF7592BC), Color(0xFFFF9D7F)],
     'clue_game': [Color(0xFF57DBFF), Color(0xFFe27329), Color(0xFF77DB65)],
     'connect_the_dots': [
@@ -183,9 +184,9 @@ class SingleGame extends StatefulWidget {
     'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
     'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
     'picture_sentence': [
-      Color(0xFF7A8948),
-      Color(0xFFC79690),
-      Color(0xFF7592BC)
+      Color(0xFF1DC8CC),
+      Color(0xFF282828),
+      Color(0xFFFE6677)
     ]
   };
 
@@ -401,6 +402,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   _onEnd(BuildContext context,
       {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
+    print('_onEnd gameData: $gameData');
     if (maxIterations > 0) {
       if (widget.gameConfig.amICurrentPlayer) {
         setState(() {
@@ -561,11 +563,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration);
         break;
       case 'dice':
+        maxIterations = 12;
         return new Dice(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
@@ -598,6 +602,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'clue_game':
+        maxIterations = 1;
         return new ClueGame(
             onScore: _onScore,
             onProgress: _onProgress,
@@ -823,14 +828,14 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'first_word':
         return new FirstWord(
-          key: new GlobalObjectKey(keyName),
-          onScore: _onScore,
-          onProgress: _onProgress,
-          onEnd: () => _onEnd(context),
-          iteration:
-              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
-          isRotated: widget.isRotated,
-        );
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'word_fight':
         return new WordFight(
