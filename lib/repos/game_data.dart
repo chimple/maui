@@ -623,19 +623,19 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 
 
 Future<String> fetchIdentifyData() async {
-    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
     return await rootBundle.loadString("assets/$s.json");
 }
 
 Future<String> fetchGuessData() async {
-  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
-    return await rootBundle.loadString("assets/$s.json");
+    return await rootBundle.loadString("assets/Colors.json");
 }
 
 
@@ -683,7 +683,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
       break;
     case 1:
       return new Tuple2("Nile is the longest 1_ on the 2_ .",
-          ['river', 'earth', 'wall', 'Mars']);
+          ['river', 'earth', 'wall', 'mars']);
       break;
     case 2:
       return new Tuple2("Apple is 1_ and also 2_ in colour .",

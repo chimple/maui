@@ -1,0 +1,98 @@
+{
+    "id": "Clothes.png",
+    "height": 1366.0,
+    "width": 1366.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "bow",
+            "data": {
+                "height": 228.0,
+                "width": 324.0,
+                "x": 233.0,
+                "y": 143.0
+            }
+        },
+        {
+            "name": "suit",
+            "data": {
+                "height": 285.0,
+                "width": 246.0,
+                "x": 674.0,
+                "y": 171.0
+            }
+        },
+        {
+            "name": "jacket",
+            "data": {
+                "height": 309.0,
+                "width": 269.0,
+                "x": 1159.0,
+                "y": 183.0
+            }
+        },
+        {
+            "name": "dress",
+            "data": {
+                "height": 339.0,
+                "width": 297.0,
+                "x": 219.0,
+                "y": 528.0
+            }
+        },
+        {
+            "name": "heels",
+            "data": {
+                "height": 253.0,
+                "width": 275.0,
+                "x": 654.0,
+                "y": 528.0
+            }
+        },
+        {
+            "name": "shoes",
+            "data": {
+                "height": 267.0,
+                "width": 332.0,
+                "x": 1128.0,
+                "y": 549.0
+            }
+        },
+        {
+            "name": "backpack",
+            "data": {
+                "height": 375.0,
+                "width": 315.0,
+                "x": 210.0,
+                "y": 1035.0
+            }
+        },
+        {
+            "name": "glasses",
+            "data": {
+                "height": 219.0,
+                "width": 324.0,
+                "x": 645.0,
+                "y": 870.0
+            }
+        },
+        {
+            "name": "hat",
+            "data": {
+                "height": 264.0,
+                "width": 381.0,
+                "x": 654.0,
+                "y": 1223.0
+            }
+        },
+        {
+            "name": "coat",
+            "data": {
+                "height": 460.0,
+                "width": 348.0,
+                "x": 1136.0,
+                "y": 1078.0
+            }
+        }
+    ]
+}

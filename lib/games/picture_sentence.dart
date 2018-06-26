@@ -1,7 +1,5 @@
 import 'dart:math';
-// import 'dart:math' as math;
 import 'dart:async';
-// import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -13,7 +11,6 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
-// import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
@@ -50,7 +47,7 @@ class PictureSentenceState extends State<PictureSentence> {
   int _size = 2;
   int indexOfBlank1 = 0;
   int indexOfBlank2 = 0;
-  // String questionText;
+
   String output1 = "";
   String output2 = "";
   Color color = Colors.white;
@@ -72,40 +69,20 @@ class PictureSentenceState extends State<PictureSentence> {
   Tuple2<String, List<String>> picturedata;
   void _initBoard() async {
     setState(() => _isLoading = true);
-
+    
     picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
     print(" fectched data  >>>> $picturedata");
     sentence1 = picturedata.item1;
-    // ans = picturedata.item2;
     choice = picturedata.item2;
-    // ans = _allques.item2;
-    // print(_allques.item3);
-    // ch = _allques.item3;
-    // for (var x = 0; x < ch.length; x++) {
-    //   choice.add(ch[x]);
-    // }
-    // choice.add(ans);
-    // for (var i = 0; i < answerOption.length; i++) {
-    //   completeSentence += sentence1[i];
-    //   for (var j = 0; j < 4; j++) {
-    //    choice.add(answerOption[i][j]);
-    //   }
-    // }
-
+    output1 = "";
+    output2 = "";
+    ans.clear();
     for (var i = 0; i < 2; i++) {
       ans.add(choice[i]);
     }
-    print("My Choices - $choice");
 
     choice.shuffle();
-
-    print("After shuffle Choices - $choice");
-    // _size = min(2, sqrt(choice.length).floor());
-
     _statuses = choice.map((a) => Status.Active).toList(growable: false);
-
-    // print("My shuffled Choices - $choice");
-    print("My states - $_statuses");
 
     setState(() => _isLoading = false);
   }
@@ -126,15 +103,14 @@ class PictureSentenceState extends State<PictureSentence> {
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-            // widget.onEnd();
-            // choice.removeRange(0, choice.length);
+           
           } else if (text == ans[1]) {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
-            
+            choice = [];
           } else {
             setState(() {
               _statuses[indexOfBlank1] = Status.Wrong;
