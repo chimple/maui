@@ -31,12 +31,12 @@ class ChatScreen extends StatefulWidget {
   State createState() => new ChatScreenState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   GlobalKey<AnimatedListState> listKey = new GlobalKey<AnimatedListState>();
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
 //  DatabaseReference _reference;
-  List<dynamic> _messages;
+//  List<dynamic> _messages;
   static final chatMessageType = 'chat';
   bool _isLoading = true;
 
@@ -52,34 +52,32 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _initMessages() async {
-    setState(() => _isLoading = true);
-    List<dynamic> messages;
-    try {
-      messages = await Flores()
-          .getConversations(widget.myId, widget.friendId, chatMessageType);
-    } on PlatformException {
-      print('Failed getting messages');
-    }
-    print(messages);
-    messages ??= List<Map<String, String>>();
-    setState(() {
-      _isLoading = false;
-      _messages = messages.reversed.toList(growable: true);
-    });
+    await AppStateContainer.of(context).beginChat(widget.friendId);
+  }
+
+  @override
+  void dispose() {
+    AppStateContainer.of(context).endChat();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final myId = AppStateContainer.of(context).state.loggedInUser.id;
     final myImage = AppStateContainer.of(context).state.loggedInUser.image;
+    var messages = AppStateContainer.of(context).messages;
+    print('chat_screen $messages');
 
+    AnimationController controller = AnimationController(vsync: this);
+    Animation<double> animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Friendlychat"),
           elevation:
               Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
         ),
-        body: _isLoading
+        body: messages == null
             ? Center(
                 child: new SizedBox(
                 width: 20.0,
@@ -88,13 +86,10 @@ class ChatScreenState extends State<ChatScreen> {
               ))
             : Column(children: <Widget>[
                 new Flexible(
-                    child: AnimatedList(
-                  key: listKey,
+                    child: ListView(
                   reverse: true,
                   padding: EdgeInsets.all(8.0),
-                  initialItemCount: _messages.length,
-                  itemBuilder: (_, int index, Animation<double> animation) {
-                    Map<dynamic, dynamic> message = _messages[index];
+                  children: messages.map((message) {
                     return message['userId'] == myId
                         ? ChatMessage(
                             animation: animation,
@@ -116,7 +111,7 @@ class ChatScreenState extends State<ChatScreen> {
                               child: Text(message['message'],
                                   style: TextStyle(color: Colors.black)),
                             ));
-                  },
+                  }).toList(growable: false),
                 )),
                 new Divider(height: 1.0),
                 new Container(
@@ -194,21 +189,23 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage({String text, String imageUrl}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final deviceId = prefs.getString('deviceId');
-
-    Flores().addMessage(
-        widget.myId, widget.friendId, chatMessageType, text, true, '');
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    final deviceId = prefs.getString('deviceId');
+//    var messages = AppStateContainer.of(context).messages;
+//
+//    Flores().addMessage(
+//        widget.myId, widget.friendId, chatMessageType, text, true, '');
+    AppStateContainer.of(context).addChat(text);
 //    final index = _messages.length;
-    listKey.currentState.insertItem(0);
-    _messages.insert(0, <String, String>{
-      'userId': widget.myId,
-      'recipientUserId': widget.friendId,
-      'messageType': chatMessageType,
-      'message': text,
-      'deviceId': deviceId,
-      'loggedAt': DateTime.now().millisecondsSinceEpoch.toString()
-    });
+//    listKey.currentState.insertItem(0);
+//    messages.insert(0, <String, String>{
+//      'userId': widget.myId,
+//      'recipientUserId': widget.friendId,
+//      'messageType': chatMessageType,
+//      'message': text,
+//      'deviceId': deviceId,
+//      'loggedAt': DateTime.now().millisecondsSinceEpoch.toString()
+//    });
 //    _reference.push().set({
 //      'text': text,
 //      'imageUrl': imageUrl,
