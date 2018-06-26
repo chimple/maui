@@ -42,7 +42,6 @@ class _ScoreScreenState extends State<ScoreScreen>
   List<AnimationController> _controllers = new List<AnimationController>();
   List<Animation<double>> _animations = new List<Animation<double>>();
 
-
   Animation<double> _buttonAnimation, _characterAnimation;
 
   String gameName;
@@ -52,7 +51,8 @@ class _ScoreScreenState extends State<ScoreScreen>
   int myScore;
   int otherScore;
   List<Widget> otherscore;
-  List<String> stars = [];
+  List<String> mystars = [];
+  List<String> otherstars = [];
   bool flag = false;
   
   var keys = 0;
@@ -89,7 +89,10 @@ class _ScoreScreenState extends State<ScoreScreen>
     otherUser = widget.otherUser;
 
     for (var i = 0; i < 4; i++) {
-      myScore > (10*i) ? stars.add("true") : stars.add("false");      
+      myScore > (10*i) ? mystars.add("true") : mystars.add("false");      
+    }
+    for (var i = 0; i < 4; i++) {
+      otherScore > (10*i) ? otherstars.add("true") : otherstars.add("false");      
     }
 
     for (var i = 0; i < 4; i++) {
@@ -177,12 +180,12 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     return new LayoutBuilder(builder: (context, constraints) {
       print("flag = $flag");
-    List <Widget> starsMap1 =  stars
+    List <Widget> starsMap1 =  mystars
                               .map((e) => _buildItem(j++, e),)
                               .toList(growable: false);
 
 
-    List <Widget> starsMap2 =  stars
+    List <Widget> starsMap2 =  otherstars
                               .map((e) => _buildItem(k++, e),)
                               .toList(growable: false);
     for(var i=0; i < 4; i++){
@@ -246,12 +249,12 @@ class _ScoreScreenState extends State<ScoreScreen>
                         children: <Widget>[
                           new LimitedBox(
                             maxHeight: ht * 0.13,
-                            child: new UserItem(user: myUser),),
+                            child: new UserItem(user: otherUser),),
                           // new Padding(
                           //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
                           // ),
                           new Text(
-                            '$myScore',
+                            '$otherScore',
                             style: new TextStyle(
                                 fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
                                 fontWeight: FontWeight.bold,
@@ -299,7 +302,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                    new Text(myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
+                    new Text(otherScore < 10 ? "Poor" : otherScore >= 10 && otherScore < 20 ? "Good" : otherScore >= 20 && otherScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]) : new Row(),
                   ]),
                 ], 
@@ -444,7 +447,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       child: new GestureDetector(
       child: new Container(  
         height: ht > wd ? ht * 0.3 : ht * 0.15,
-        width: ht > wd ? wd * 0.22 : wd * 0.12,     
+        width: ht > wd ? wd * 0.12 : wd * 0.12,     
       child: new FlatButton(
          onPressed: () => widget.onPress(),
          color: Colors.transparent, 
