@@ -5,7 +5,7 @@
     "number": 10,
     "parts": [
         {
-            "name": "circle",
+            "name": "hexagon",
             "data": {
                 "height": 216.0,
                 "width": 216.0,
