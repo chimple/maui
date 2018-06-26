@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:audioplayer/audioplayer.dart';
+// import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:audioplayer/audioplayer.dart';
+
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -55,6 +56,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   int otherScore;
   List<Widget> otherscore;
   List<String> stars = [];
+  bool flag = false;
   
   var keys = 0;
 
@@ -98,9 +100,13 @@ class _ScoreScreenState extends State<ScoreScreen>
       _controllers.add(_controller);
       _animations.add(
           new CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
-      new Future.delayed(Duration(milliseconds: 2000 + (i) * 300), () {
+      new Future.delayed(Duration(milliseconds: 1000 + (i) * 150), () {
         _controller.forward();
       });
+      if(i == 3) {
+        print("this ois kvkkv $i");
+        flag = true;
+      }
     }
 
     super.initState();
@@ -165,10 +171,10 @@ class _ScoreScreenState extends State<ScoreScreen>
             new Text('$otherScore')
           ]));
     }
-
+  
 
     return new LayoutBuilder(builder: (context, constraints) {
-    
+      print("flag = $flag");
     List <Widget> starsMap1 =  stars
                               .map((e) => _buildItem(j++, e),)
                               .toList(growable: false);
@@ -287,7 +293,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                       children: <Widget>[
                      new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
-                  gameDisplay != GameDisplay.single ? new Row(
+                  gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
@@ -298,6 +304,7 @@ class _ScoreScreenState extends State<ScoreScreen>
               ),
             ),
             
+          
 
             // Icons which redirect to home, refresh and fast-forward
              new Row(
@@ -310,21 +317,34 @@ class _ScoreScreenState extends State<ScoreScreen>
                          icon: new Image.asset("assets/home_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
-                           // Navigator.of(context).pushNamed('/tab');
-                           Navigator.pop(context);
-                           Navigator.pop(context);
-                           Navigator.pop(context);
+                          //  _buttonAnimation.addStatusListener((status) {
+                            //  print("this is my status");
+                             if (flag == true) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                                Navigator.pop(context);
+                              print(" hi ");
+                             }
+                          //  });
+                           // Navigator.of(context).pushNamed('/tab');                           
                          })),
                  
-                  new Container(
-                    
+                  new Container(                    
                      child: IconButton(
                          icon: new Image.asset("assets/forward_button.png"),
                          iconSize: ht > wd ? ht * 0.1 : wd * 0.1,
                          onPressed: () {
+                            // _animations[3].addStatusListener((status) {
+                             if (flag == true) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              print(" forwAARS ");
+                             }
+                          //  });
                            // Navigator.of(context).pushNamed('/tab'),
-                           Navigator.pop(context);
-                           Navigator.pop(context);
+                           
                          }),
                    ),
                ],
