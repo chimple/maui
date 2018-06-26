@@ -161,7 +161,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.0"
   firebase_core:
     dependency: transitive
     description:
@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "762f69d617f2311504cdd9623a35e1b41bbd15de"
+      resolved-ref: "82d54887e63f636ee19081bd16334003584711e3"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -262,7 +262,7 @@ packages:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3+1"
+    version: "0.13.3"
   http:
     dependency: transitive
     description:
@@ -276,7 +276,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.4"
   http_parser:
     dependency: transitive
     description:
@@ -325,7 +325,7 @@ packages:
       name: json_rpc_2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.7"
   json_serializable:
     dependency: "direct dev"
     description:
@@ -367,7 +367,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.6+1"
+    version: "0.9.6"
   multi_server_socket:
     dependency: transitive
     description:
@@ -381,7 +381,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.1"
   package_config:
     dependency: transitive
     description:
@@ -395,14 +395,14 @@ packages:
       name: package_resolver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.2"
   path:
     dependency: transitive
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.5.1"
   path_provider:
     dependency: "direct main"
     description:
@@ -423,7 +423,7 @@ packages:
       name: pool
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.5"
+    version: "1.3.4"
   pub_semver:
     dependency: transitive
     description:
@@ -458,7 +458,7 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.3+1"
+    version: "0.7.3"
   shelf_packages_handler:
     dependency: transitive
     description:
@@ -472,14 +472,14 @@ packages:
       name: shelf_static
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7+1"
+    version: "0.2.7"
   shelf_web_socket:
     dependency: transitive
     description:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2+2"
+    version: "0.2.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -533,7 +533,7 @@ packages:
       name: stream_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.7+1"
+    version: "1.6.6"
   stream_transform:
     dependency: transitive
     description:
@@ -568,7 +568,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.40"
+    version: "0.12.37"
   tuple:
     dependency: "direct main"
     description:
@@ -617,21 +617,21 @@ packages:
       name: vm_service_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4+3"
+    version: "0.2.4+1"
   watcher:
     dependency: transitive
     description:
       name: watcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.7+8"
+    version: "0.9.7+7"
   web_socket_channel:
     dependency: transitive
     description:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.7"
   xmlstream:
     dependency: "direct main"
     description:
@@ -645,7 +645,7 @@ packages:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.14"
+    version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.55.0 <=2.0.0-dev.61.0.flutter-c95617b19c"
+  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.58.0.flutter-f981f09760"
   flutter: ">=0.1.4 <2.0.0"
