@@ -335,6 +335,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         _shuffledLetters.removeRange(0, _shuffledLetters.length);
                         print("iteration not chhanging.......::..${widget.iteration}");
                         widget.onEnd();
+                        onScoreFlag = 0;
                       });
 //                        print({"this is 1": _ColmunCells});
                     });
