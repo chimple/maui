@@ -563,7 +563,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration);
         break;
       case 'dice':
-        maxIterations = 12;
+        maxIterations = -1;
         return new Dice(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
