@@ -171,7 +171,7 @@ class TapWrongState extends State<TapWrong> {
               numOFWrongElem++;
               print('array 1           $arr1');
 
-               new Future.delayed(const Duration(milliseconds: 0), () {
+               new Future.delayed(const Duration(milliseconds: 150), () {
                 setState(() {
                     //  _statusList.removeAt(index);
                   
