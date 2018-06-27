@@ -555,12 +555,15 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'drawing':
         return new Drawing(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            isRotated: widget.isRotated,
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
-                widget.gameConfig.otherIteration);
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'dice':
         maxIterations = -1;
