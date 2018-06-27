@@ -2,14 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
-// import 'package:path/path.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:audioplayer/audioplayer.dart';
 
 
 class ScoreScreen extends StatefulWidget {
@@ -129,15 +125,14 @@ class _ScoreScreenState extends State<ScoreScreen>
   }
 
   Widget _buildItem(int index, String text, double ht, double wd) {
-    return new LimitedBox(
-      maxHeight: ht * 0.2,
-      maxWidth: wd * 0.15,
-      child: new MyButton(
-        key: new ValueKey<int>(index),
-        text: text,
-        keys: keys++,
-        onPress: () {}
-        ));
+    return new MyButton(
+      key: new ValueKey<int>(index),
+      text: text,
+      keys: keys++,
+      height: ht,
+      width: wd,
+      onPress: () {}
+      );
   }
   
 
@@ -145,9 +140,6 @@ class _ScoreScreenState extends State<ScoreScreen>
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
     
     int j=0;
     int k = 0;
@@ -183,6 +175,9 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     return new LayoutBuilder(builder: (context, constraints) {
       print("flag = $flag");
+    double ht = constraints.maxHeight;
+    double wd = constraints.maxWidth;
+
     List <Widget> starsMap1 =  mystars
                               .map((e) => _buildItem(j++, e, ht, wd),)
                               .toList(growable: false);
@@ -233,9 +228,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                         new LimitedBox(
                           maxHeight: ht * 0.13,
                           child: new UserItem(user: myUser),),
-                        // new Padding(
-                        //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
-                        // ),
+                       
                         new Text(
                           '$myScore',
                           style: new TextStyle(
@@ -253,9 +246,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                           new LimitedBox(
                             maxHeight: ht * 0.13,
                             child: new UserItem(user: otherUser),),
-                          // new Padding(
-                          //   padding: new EdgeInsets.symmetric(vertical: ht > wd ? ht * 0.01 : wd * 0.01),
-                          // ),
+                          
                           new Text(
                             '$otherScore',
                             style: new TextStyle(
@@ -278,7 +269,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.center : MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: tablestars1),
 
@@ -296,8 +287,8 @@ class _ScoreScreenState extends State<ScoreScreen>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
-                      crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.start : MainAxisAlignment.center,
+                      crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
                      new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
@@ -321,45 +312,39 @@ class _ScoreScreenState extends State<ScoreScreen>
                crossAxisAlignment: CrossAxisAlignment.center,
                mainAxisAlignment: MainAxisAlignment.spaceAround,
                children: <Widget>[
-                 new Container(
-                   
-                     child: IconButton(
-                         icon: new Image.asset("assets/home_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                         onPressed: () {
-                          //  _buttonAnimation.addStatusListener((status) {
-                            //  print("this is my status");
-                             if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                                Navigator.pop(context);
-                              print(" hi ");
-                             }
-                          //  });
-                           // Navigator.of(context).pushNamed('/tab');                           
-                         })),
+                 IconButton(
+                     icon: new Image.asset("assets/home_button.png"),
+                     iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                     onPressed: () {
+                      
+                         if (flag == true) {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                            Navigator.pop(context);
+                          print(" hi ");
+                         }                      
+                     }),
                  
-                  new Container(                    
-                     child: IconButton(
-                         icon: new Image.asset("assets/forward_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                         onPressed: () {
-                            // _animations[3].addStatusListener((status) {
-                             if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              print(" forwAARS ");
-                             }
-                          //  });
-                           // Navigator.of(context).pushNamed('/tab'),
-                           
-                         }),
-                   ),
+                  IconButton(
+                      icon: new Image.asset("assets/forward_button.png"),
+                      iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                      onPressed: () {
+                         
+                          if (flag == true) {
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                           print(" forwAARS ");
+                          }
+                      
+                      }),
                ],
              )),
             
+            ht > wd ? new Padding(
+                          padding: new EdgeInsets.all(ht * 0.001),
+                        ) : new Padding(padding: new EdgeInsets.all(0.0)),
              
             ],
         )));
@@ -375,10 +360,13 @@ class MyButton extends StatefulWidget {
       {Key key,
       this.text,
       this.keys,
+      this.height,
+      this.width,
       this.onPress})
       : super(key: key);
   final String text;
   final VoidCallback onPress;
+  double height, width;
   int keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -388,11 +376,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   String _displayText;
-  // AudioPlayer _audioPlayer;
-  // bool _isPlaying = false;
-  // Directory documentsDirectory;
   
-
 
   initState() {
     super.initState();
@@ -404,7 +388,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-//        print("$state:${animation.value}");
+
         if (state == AnimationStatus.dismissed) {
           print('dismissed');
           if (widget.text != null) {
@@ -413,8 +397,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
-
-      // _initAudioPlayer();
   }
 
 
@@ -427,22 +409,19 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void dispose() {    
-    // _isPlaying=false;
-    // _audioPlayer.stop();
+    
     controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
+    // Size media = MediaQuery.of(context).size;
+    double ht = widget.height;
+    double wd = widget.width;
     widget.keys++;
     print("_MyButtonState.build");   
-    // print("$documentsDirectory");
-    // audioPlayer.play(join(documentsDirectory.path, 'star_music.mp3'), isLocal: true);
-    // _play();
+   
     return new Shake(
       animation: animation,
       child: new IconButton(
