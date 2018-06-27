@@ -1,17 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:maui/components/friend_item.dart';
-import 'package:maui/components/firebase_grid.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/screens/chat_screen.dart';
-
-final usersRef = FirebaseDatabase.instance.reference().child('users');
 
 class FriendListView extends StatefulWidget {
   const FriendListView({Key key}) : super(key: key);

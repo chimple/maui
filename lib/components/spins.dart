@@ -158,44 +158,51 @@ class ImagePainter extends CustomPainter {
   final BoxFit boxfit;
 
   ui.Image img;
+  ui.Rect rect, inputSubrect, outputSubrect;
+  Size imageSize;
+  FittedSizes sizes;
+  double radius, baseLength;
+  int noOfSlize = 8;
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
+    
+    radius = size.width / 2;
+    baseLength = radius * sin((360 / noOfSlize * 2) * pi / 180);
+    print("base length:: $baseLength");
+    print("size of canvas imageCanvas:: ${size.width},${size.height}");
     int c = 0;
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
 
-    for (var i = 0; i < 16; ++i) {
+    for (var i = 0; i < noOfSlize*2; ++i) {
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 0.0),
           new Offset(0.0, size.width / 2 - 4.2),
           tickPaint,
         );
-        //canvas.rotate(2 * pi / 2);
       } else {
+        //canvas.rotate(pi);
         canvas.save();
-        canvas.translate(-10.0, -((size.width) / 2.3));
-        //canvas.clipPath(path);
+        canvas.translate(-0.0, -((size.width) / 2.2));
         if (images[c] != null) {
-          ui.Image img = images[c];
-          final ui.Rect rect = ui.Offset.zero & new Size(200.0, 120.0);
-          ;
-          final Size imageSize = new Size(330.0, 230.0);
-          FittedSizes sizes =
-              applyBoxFit(boxfit, imageSize, new Size(100.0, 200.0));
-          final Rect inputSubrect =
+          rect = ui.Offset(size.width/4,size.width/4) & new Size(size.width / 2.4, size.width / 2.4);
+          imageSize = new Size(size.width, size.width);
+          sizes = applyBoxFit(boxfit, imageSize,
+              new Size(size.width / 2  *.44, size.width / 2 * .44));
+          inputSubrect =
               Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
-          final Rect outputSubrect =
-              Alignment.center.inscribe(sizes.destination, rect);
+          outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
 
-          canvas.drawImageRect(img, inputSubrect, outputSubrect, new Paint());
+          canvas.drawImageRect(
+              images[c], inputSubrect, outputSubrect, new Paint());
         }
-        canvas.rotate(2 * pi / 2);
+        canvas.rotate(2*pi/2);
         canvas.restore();
         c++;
       }
-      canvas.rotate(2 * pi / 16);
+      canvas.rotate(2 * pi /( noOfSlize*2.0));
     }
     canvas.restore();
   }
@@ -203,13 +210,5 @@ class ImagePainter extends CustomPainter {
   @override
   bool shouldRepaint(ImagePainter oldDelegate) {
     return true;
-  }
-
-  ui.Image getGrad(Size size) {
-    var pictureRecorder = new ui.PictureRecorder();
-
-    return pictureRecorder
-        .endRecording()
-        .toImage(size.width.floor(), size.height.floor());
   }
 }

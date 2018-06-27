@@ -683,15 +683,15 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
       break;
     case 1:
       return new Tuple2("Nile is the longest 1_ on the 2_ .",
-          ['river', 'earth', 'wall', 'mars']);
+          ['river', 'earth', 'wall', 'waterfall']);
       break;
     case 2:
       return new Tuple2("Apple is 1_ and also 2_ in colour .",
-          ['red', 'green', 'round', 'triangular']);
+          ['red', 'green', 'round', 'tube']);
       break;
     case 3:
       return new Tuple2(
-          "1_ gives healthy 2_ .", ['cow', 'milk', 'forest', 'grass']);
+          "1_ gives healthy 2_ .", ['cow', 'milk', 'vegetable', 'grass']);
       break;
     case 4:
       return new Tuple2("Fastest 1_ animal is 2_ .",
@@ -699,7 +699,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
       break;
     case 5:
       return new Tuple2(
-          "I love eating 1_ and 2_ .", ['mango', 'grape', 'sun', 'moon']);
+          "I love eating 1_ and 2_ .", ['mango', 'grapes', 'sun', 'moon']);
       break;
     case 6:
       return new Tuple2("Snowy is 1_ but i am trying to make her 2_ .",
