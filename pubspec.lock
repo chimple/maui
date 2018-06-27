@@ -105,7 +105,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   collection:
     dependency: transitive
     description:
@@ -167,7 +167,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "865e8b7d6ab0bf805145e824081015d77fd51fdf"
+      resolved-ref: ef7bc56890afd6630010e964e926a6405638e2a0
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
