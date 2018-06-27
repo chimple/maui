@@ -7,9 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 void main() async {
-  Flores().initialize((String message) {
-    print('Flores received message: $message');
-  });
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());

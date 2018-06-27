@@ -31,46 +31,43 @@ class ChatMessage extends StatelessWidget {
         : imageAsset != null
             ? new AssetImage(imageAsset)
             : isFile ? NetworkImage(imageUrl) : MemoryImage(imageMemory);
-    return new SizeTransition(
-      sizeFactor: new CurvedAnimation(parent: animation, curve: Curves.easeOut),
-      axisAlignment: 0.0,
-      child: new Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        child: side == Side.left
-            ? new Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  new Container(
-                    margin: const EdgeInsets.only(right: 16.0),
-                    child: new CircleAvatar(backgroundImage: image),
-                  ),
-                  new Flexible(
-                      child: new Card(
-                    color: Theme.of(context).accentColor,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                    child: child,
-                  )),
-                ],
-              )
-            : new Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  new Card(
-                    color: Colors.white,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                    child: child,
-                  ),
-                  new Container(
-                    margin: const EdgeInsets.only(left: 16.0),
-                    child: new CircleAvatar(backgroundImage: image),
-                  ),
-                ],
-              ),
-      ),
+    return new Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: side == Side.left
+          ? new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Container(
+                  margin: const EdgeInsets.only(right: 16.0),
+                  child: new CircleAvatar(backgroundImage: image),
+                ),
+                new Flexible(
+                    child: new Card(
+                  color: Theme.of(context).accentColor,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                  child: child,
+                )),
+              ],
+            )
+          : new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                new Flexible(
+                    child: Card(
+                  color: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                  child: child,
+                )),
+                new Container(
+                  margin: const EdgeInsets.only(left: 16.0),
+                  child: new CircleAvatar(backgroundImage: image),
+                ),
+              ],
+            ),
     );
   }
 }
