@@ -67,18 +67,24 @@ class UnitButton extends StatefulWidget {
 class _UnitButtonState extends State<UnitButton> {
   Unit _unit;
   bool _isLoading = true;
+  UnitMode _unitMode;
 
   @override
   void initState() {
     super.initState();
+    _unitMode = widget.unitMode;
     print('initState');
     _getData();
   }
 
   void _getData() async {
-    if (widget.unitMode == UnitMode.audio ||
-        widget.unitMode == UnitMode.image) {
-      _unit = await new UnitRepo().getUnit(widget.text);
+    if (_unitMode == UnitMode.audio || _unitMode == UnitMode.image) {
+      _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
+      print(_unit);
+      if ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
+          (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0)) {
+        _unitMode = UnitMode.text;
+      }
     }
     setState(() => _isLoading = false);
   }
@@ -88,14 +94,9 @@ class _UnitButtonState extends State<UnitButton> {
     return widget.showHelp
         ? new GestureDetector(
             onLongPress: () {
-              AppStateContainer.of(context).play(widget.text);
-              if (widget.unitMode != UnitMode.audio) {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
+              AppStateContainer.of(context).play(widget.text.toLowerCase());
+              if (_unitMode != UnitMode.audio) {
+                AppStateContainer.of(context).display(context, widget.text.toLowerCase());  
               }
             },
             child: _buildButton(context))
@@ -123,7 +124,9 @@ class _UnitButtonState extends State<UnitButton> {
             onPressed: widget.disabled
                 ? null
                 : () {
-                    AppStateContainer.of(context).play(widget.text);
+                    AppStateContainer
+                        .of(context)
+                        .play(widget.text.toLowerCase());
                     widget.onPress();
                   },
             padding: EdgeInsets.all(0.0),
@@ -135,17 +138,17 @@ class _UnitButtonState extends State<UnitButton> {
                             ? Theme.of(context).primaryColor
                             : Colors.white,
                     width: 4.0),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(state.buttonRadius))),
+                borderRadius: BorderRadius
+                    .all(Radius.circular(state.buttonRadius ?? 8.0))),
             child: _buildUnit(widget.fontSize ?? state.buttonFontSize)));
   }
 
   Widget _buildUnit(double fontSize) {
-    if (widget.unitMode == UnitMode.audio) {
+    if (_unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
-    } else if (widget.unitMode == UnitMode.image) {
+    } else if (_unitMode == UnitMode.image) {
       return _isLoading
-          ? new Text(widget.text)
+          ? new Container()
           : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png');
     }
     return Center(

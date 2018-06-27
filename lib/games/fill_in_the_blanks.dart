@@ -6,6 +6,9 @@ import 'dart:math';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/components/unit_button.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -56,6 +59,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   int dragcount = 0;
   int progres = 0;
   int space = 0;
+  
+  @override
+  void didUpdateWidget(FillInTheBlanks oldWidget) {
+         super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+             _initFillBlanks();
+    }
+  }
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
@@ -85,7 +96,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
-    setState(() => _isLoading = false);
     _size = dragBoxData.length;
     _flag.length = dragBoxData.length + _size + 1;
     for (var i = 0; i < _flag.length; i++) {
@@ -99,6 +109,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     }
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
+    setState(() => _isLoading = false);
   }
 
   String data;
@@ -201,17 +212,13 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
+          setState(() {
+                    });
           data = text;
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
   }
 
-  @override
-  void didUpdateWidget(FillInTheBlanks oldWidget) {
-    if (widget.iteration != oldWidget.iteration) {
-      _initFillBlanks();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,36 +246,38 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         _initFillBlanks();
       });
     }
-    var j = 0, k = 100, h = 0, a = 0;
-    var maxChars = _size *
-        (_holdDataOfDragBox != null
-            ? _holdDataOfDragBox.fold(
-                1,
-                (prev, element) =>
-                    element.length > prev ? element.length : prev)
-            : 1);
+
     MediaQueryData media = MediaQuery.of(context);
-    return new Container(
-      child: new Center(
-        child: new Column(
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+      double maxWidth =0.0 ,maxHeight =0.0; 
+      maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
+      var j = 0, k = 100, h = 0, a = 0;
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
+      return new Flex(
+         direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // new Padding(padding: new EdgeInsets.all(10.0)),
             new Expanded(
               flex: 1,
               child: new Container(
                 color: new Color(0xffffa3bc8b),
                 child: new ResponsiveGridView(
                   rows: 1,
-                  padding: media.orientation == Orientation.portrait
-                      ? dropTargetData.length < 5 ? 80.0 : 20.0
-                      : dropTargetData.length < dropTargetData.length * 2
-                          ? 0.0
-                          : 80.0,
                   cols: dropTargetData.length,
                   maxAspectRatio: 1.0,
                   children: dropTargetData
-                      .map((e) => droptarget(j++, e, _flag[h++]))
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: droptarget(j++, e, _flag[h++])))
                       .toList(growable: false),
                 ),
               ),
@@ -281,13 +290,14 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   maxAspectRatio: 1.0,
                   padding: 10.0,
                   children: dragBoxData
-                      .map((e) => dragbox(k++, e, _flag[a++]))
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: dragbox(k++, e, _flag[a++])))
                       .toList(growable: false)),
             ),
           ],
-        ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -299,7 +309,6 @@ class MyButton extends StatefulWidget {
       this.color1,
       this.flag,
       this.onAccepted,
-      this.arr,
       this.code,
       this.length,
       this.onDrag,
@@ -312,7 +321,6 @@ class MyButton extends StatefulWidget {
   final int flag;
   final int length;
   final String text;
-  List arr;
   final int code;
   bool isRotated;
   int keys;
@@ -329,7 +337,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
     _displayText = widget.text;
-    //_displayText = widget.text;
     controllerShake = new AnimationController(
         duration: new Duration(milliseconds: 60), vsync: this);
     animationShake = new Tween(end: -5.0, begin: 5.0).animate(controllerShake);
@@ -383,12 +390,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               List<dynamic> accepted,
               List<dynamic> rejected,
             ) {
-              return new Center(
-                child: new Text(widget.text,
-                    key: new Key('${widget.keys}'),
-                    style: new TextStyle(
-                        color: new Color(0xffDD6154),
-                        fontSize: media.size.height * 0.06)),
+              return new UnitButton(
+                key: new Key('A${widget.keys}'),
+                text: widget.text,
+                showHelp: false,
+                highlighted: widget.flag == 1 ? true : false,
               );
             },
           ),
@@ -397,53 +403,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (widget.index >= 100) {
       return new ScaleTransition(
         scale: animation,
-        child: new Container(
-          decoration: new BoxDecoration(
-            //  color: new Color(0xffffffffff),
-            border: new Border.all(width: 3.0, color: new Color(0xffDD6154)),
-            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-          ),
-          child: new Center(
-              child: new Draggable(
-                  onDragStarted: widget.onDrag,
-                  maxSimultaneousDrags: 1,
-                  data: '${widget.index}' + '_' + '${widget.code}',
-                  child: new Center(
-                    child: new Container(
-                      height: media.orientation == Orientation.portrait
-                          ? widget.length > 10
-                              ? media.size.height * 0.01
-                              : media.size.height * 0.06
-                          : media.size.height * 0.13,
-                      width: media.orientation == Orientation.portrait
-                          ? widget.length > 10
-                              ? media.size.width * 0.1
-                              : media.size.width * 0.06
-                          : media.size.width * 0.07,
-                      child: new Center(
-                        child: new Text(widget.text,
-                            key: new Key("A${widget.keys}"),
-                            style: new TextStyle(
-                                color: new Color(0xffDD6154),
-                                fontSize: media.size.height * 0.04)),
-                      ),
-                    ),
-                  ),
-                  feedback: new Transform.rotate(
-                    angle: widget.isRotated == true
-                        ? portf == 0 ? 3.14 : 0.0
-                        : 0.3,
-                    child: new Text(
-                      widget.text,
-                      style: new TextStyle(
-                        color: new Color(0xffDD6154),
-                        decoration: TextDecoration.none,
-                        fontSize: media.size.height * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ))),
-        ),
+        child: new Draggable(
+            onDragStarted: widget.onDrag,
+            maxSimultaneousDrags: 1,
+            data: '${widget.index}' + '_' + '${widget.code}',
+            child: new UnitButton(
+              key: new Key('A${widget.keys}'),
+              text: widget.text,
+              showHelp: false,
+            ),
+            feedback: new Transform.rotate(
+              angle: 0.2,
+              child: new UnitButton(
+                text: widget.text,
+              ),
+            )),
       );
     }
   }

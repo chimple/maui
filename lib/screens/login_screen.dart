@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:maui/components/user_list.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
@@ -22,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-    new UserRepo().getUsers().then((users) {
+    new UserRepo().getLocalUsers().then((users) {
       setState(() {
         _users = users;
         _isLoading = false;
@@ -31,20 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   getImage(BuildContext context) async {
-    var _fileName = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
-    var user = await new UserRepo()
-        .insert(new User(image: _fileName.path, currentLessonId: 1));
-    AppStateContainer.of(context).setLoggedInUser(user);
+//    var _fileName = await ImagePicker.pickImage(
+//        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
+//    var user = await new UserRepo()
+//        .insert(new User(image: _fileName.path, currentLessonId: 1));
+//    AppStateContainer.of(context).setLoggedInUser(user);
+    Navigator.of(context).pushNamed('/camera');
   }
 
   @override
   Widget build(BuildContext context) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     return loggedInUser != null
-        ? new TabHome(
-            title: "Maui",
-          )
+        ? new TabHome()
         : new Scaffold(
             body: _isLoading
                 ? new SizedBox(

@@ -56,6 +56,7 @@ class _CasinoState extends State<Casino> {
   @override
   void initState() {
     super.initState();
+
     _initLetters();
   }
 
@@ -71,7 +72,7 @@ class _CasinoState extends State<Casino> {
     compareWord = " ";
     givenWordList.clear();
     lst.clear();
-    print(" finalList _initLetters = $finalList");
+    print(" finalList inside  _initLetters = $finalList");
     for (var i = 0; i < data.length; i++) {
       givenWord += data[i][0];
       givenWordList.add(data[i][0]);
@@ -103,12 +104,23 @@ class _CasinoState extends State<Casino> {
     if (j < givenWordList.length) {
       print(
           "scrolling[random] ${scrollingLetterList[random]}   givenletter ${givenWordList[j]}");
-      if (scrollingLetterList[random] == givenWordList[j]) {
-        _selectedItemIndex = 0;
+      if (givenWordList[j] == scrollingLetterList[random]) {
+        _selectedItemIndex = scrollingLetterList.length - 1;
+        if (scrollingLetterList[random] == 'a' ||
+            scrollingLetterList[random] == 'A') {
+          print("The letter is A");
+          // var temp = scrollingLetterList[givenWordList.length - 1];
+          scrollingLetterList[scrollingLetterList.length - 1] =
+              scrollingLetterList[random];
+          scrollingLetterList.removeAt(0);
+        }
+
         print("Hey data shuffled");
+
         print("scrollingLetterList = $scrollingLetterList");
       }
       j++;
+      print("j = $j");
     }
 
     AppState state = AppStateContainer.of(context).state;
@@ -117,36 +129,37 @@ class _CasinoState extends State<Casino> {
       width: state.buttonWidth,
 //      padding: const EdgeInsets.all(8.0),
       child: new DefaultTextStyle(
-        style: const TextStyle(
-            color: Colors.red, fontSize: 30.0, fontWeight: FontWeight.w900),
+        style: const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w900),
         child: new SafeArea(
           child: new CasinoPicker(
             key: new ValueKey(j),
             scrollController: new CasinoScrollController(
                 initialItem: _selectedItemIndex * random),
             itemExtent: 50.0,
-            backgroundColor: new Color(0xfffff8c43c),
+            backgroundColor: new Color(0xFF734052),
+            // backgroundColor: Colors.white,
             isRotated: widget.isRotated,
             onSelectedItemChanged: (int index) {
-              // setState(() {
-              //   _selectedItemIndex = index;
-              // });
               print("buttonNumber  $buttonNumber is triggered");
 
               for (int i = 0; i < givenWordList.length; i++) {
                 if (buttonNumber == i) {
                   print(
                       "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
+
                   if (givenWordList[i] == scrollingLetterList[index]) {
                     print("Letters matched");
+                    //  new Future.delayed(
+                    //     const Duration(milliseconds: 250), () {print("inside delay");});
+                    
                     lst.add(scrollingLetterList[index]);
                     count++;
                   } else if (givenWordList[i] != scrollingLetterList[index] &&
                       lst.isNotEmpty) {
                     print("Letters are not equal");
-                    if (lst.contains(givenWordList[i])) {
+                    if (lst.contains(givenWordList[i]) && buttonNumber == i) {
                       print("Letter removed");
-                      lst.removeAt(i);
+                      lst.remove(givenWordList[i]);
                     }
                   }
                 }
@@ -164,8 +177,12 @@ class _CasinoState extends State<Casino> {
               if (const IterableEquality()
                       .equals(finalList, finalGivenWordList) &&
                   count >= givenWordList.length) {
-                widget.onScore(5);
-                widget.onProgress(1.0);
+                new Future.delayed(const Duration(milliseconds: 1000), () {
+                  widget.onScore(5);
+                  widget.onProgress(1.0);
+                  j = 0;
+                  count = 0;
+                });
 
                 new Future.delayed(const Duration(milliseconds: 800), () {
                   setState(() {
@@ -185,10 +202,11 @@ class _CasinoState extends State<Casino> {
               return new Center(
                 child: new Text(scrollingLetterList[index],
                     style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 45.0,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
+                      color: new Color(0xFFD64C60),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 45.0,
+                      letterSpacing: 5.0,
+                    )),
               );
             }),
           ),
@@ -221,7 +239,7 @@ class _CasinoState extends State<Casino> {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / data.length;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -230,12 +248,14 @@ class _CasinoState extends State<Casino> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
 
-      return new Padding(
-        padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            new Expanded(
+      return new Column(
+        // direction: Axis.vertical,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          new Expanded(
+              flex: 1,
+              child: new Material(
+                color: Theme.of(context).accentColor,
                 child: ResponsiveGridView(
                     rows: 1,
                     cols: data.length,
@@ -255,19 +275,20 @@ class _CasinoState extends State<Casino> {
                                   text: givenWord.trim(),
                                   unitMode: widget.gameConfig.questionUnitMode,
                                 )
-                              ])),
-            new Expanded(
-              child: new ResponsiveGridView(
-                cols: data.length,
-                rows: 1,
-                maxAspectRatio: 0.7,
-                children: data.map((s) {
-                  return _buildScrollButton(context, s, scrollbuttonNumber++);
-                }).toList(growable: false),
-              ),
+                              ]),
+              )),
+          new Expanded(
+            flex: 2,
+            child: new ResponsiveGridView(
+              cols: data.length,
+              rows: 1,
+              maxAspectRatio: 0.7,
+              children: data.map((s) {
+                return _buildScrollButton(context, s, scrollbuttonNumber++);
+              }).toList(growable: false),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
   }

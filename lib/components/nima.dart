@@ -4,7 +4,8 @@ import 'package:maui/components/jitter.dart';
 class Nima extends StatefulWidget {
   final String name;
   final int score;
-  Nima({this.name, this.score});
+  final String tag;
+  Nima({this.name, this.score, this.tag});
 
   @override
   _NimaState createState() {
@@ -42,7 +43,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 500),
         vsync: this);
     scaleAnimation =
-        new CurvedAnimation(parent: scaleController, curve: Curves.bounceIn)
+        new CurvedAnimation(parent: scaleController, curve: Curves.elasticOut)
           ..addStatusListener((state) {
             print(state);
             if (state == AnimationStatus.completed) {
@@ -70,10 +71,12 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
         scale: scaleAnimation,
         child: new Jitter(
             animation: shakeAnimation,
-            child: new Image.asset(
-              'assets/hoodie/${widget.name}$_emotion.png',
-              height: 100.0,
-            )));
+            child: new Hero(
+                tag: widget.tag,
+                child: Image.asset(
+                  'assets/hoodie/${widget.name}$_emotion.png',
+                  height: 100.0,
+                ))));
   }
 
   @override

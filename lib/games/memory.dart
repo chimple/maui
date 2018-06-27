@@ -10,6 +10,8 @@ import '../components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
+ bool initialVisibility = false;
+
 class Memory extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -105,13 +107,16 @@ class MemoryState extends State<Memory> {
     _shaker = [];
     _shaker = _letters.map((a) => ShakeCell.Right).toList(growable: false);
     setState(() => _isLoading = false);
-  }
+  }      
 
   @override
   void didUpdateWidget(Memory oldWidget) {
+    super.didUpdateWidget(oldWidget);
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
+      _allLetters.clear();
+      _letters.clear();  
       _initBoard();
       print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
@@ -123,20 +128,22 @@ class MemoryState extends State<Memory> {
         text: text,
         status: status,
         shaker: shaker,
+        unitMode: widget.gameConfig.questionUnitMode,
         onPress: () {
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
           print("Pressed Statuses before checking: ${_statuses}");
+          print("maxSize Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_maxSize}");
+          print("_size Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_size}");
 
+          if(initialVisibility == true) return;
+      
           if (_statuses[index] == Status.Disappear) return;
 
-          int numOfVisible = _statuses.fold(0,
-              (prev, element) => element == Status.Visible ? prev + 1 : prev);
+          int numOfVisible = _statuses.fold(0, (prev, element) => element == Status.Visible ? prev + 1 : prev);
 
-          if (_pressedTileIndex == index ||
-              _statuses[index] == Status.Visible ||
-              numOfVisible >= 2 ||
-              _clickCnt > 2) return;
+          if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || _clickCnt > 2) 
+            return;
 
           _clickCnt++;
 
@@ -170,15 +177,16 @@ class MemoryState extends State<Memory> {
 
               _matched++;
               widget.onScore(2);
-              widget.onProgress((_progressCnt) / ((_maxSize * _maxSize) / 2));
+              widget.onProgress((_progressCnt) / ((_size * _size) / 2));
               _progressCnt++;
 
               print("Rajesh-Matched${_matched}");
               if (_matched == ((_size * _size) / 2)) {
                 _matched = 0;
+                _progressCnt = 1;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
-                  widget.onEnd();
+                  widget.onEnd();        
                 });
               }
               print("Pressed Statuses2: ${_statuses}");
@@ -276,13 +284,14 @@ class MemoryState extends State<Memory> {
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status, this.shaker, this.onPress})
+  MyButton({Key key, this.text, this.status, this.shaker, this.unitMode, this.onPress})
       : super(key: key);
 
   final String text;
   Status status;
   ShakeCell shaker;
   final VoidCallback onPress;
+  UnitMode unitMode;
 
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -305,7 +314,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     flipController = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     noAnimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
       ..addStatusListener((state) {
         print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
@@ -316,9 +325,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
-    controller.forward().then((f) {
-      flipController.reverse();
-    });
+
+        controller.forward().then((f) {
+          flipController.forward();
+          initialVisibility = true;
+        new Future.delayed(const Duration(milliseconds: 2000), () { 
+          initialVisibility = false;
+          flipController.reverse();
+        });
+      });
 
     shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
     _myAnim();
@@ -339,18 +354,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void dispose() {
     shakeController.dispose();
     controller.dispose();
+    flipController.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-    print("Rajesh");
     super.didUpdateWidget(oldWidget);
+    print("_MyButtonState.didUpdateWidget: ${oldWidget.text} ${widget.text} ");
+     print("Rajesh");
     if (oldWidget.text == null && widget.text != null) {
       flipController.reverse();
       print("Rajesh1");
       _displayText = widget.text;
-      controller.forward();
+      flipController.forward();
     } else if (oldWidget.text != widget.text) {
       print("Rajesh2");
       //controller.reverse();
@@ -367,7 +384,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         }
       }
     }
-    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override
@@ -385,13 +401,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                   child: new UnitButton(
                     onPress: widget.onPress,
                     text: _displayText,
-                    unitMode: UnitMode.text,
+                    unitMode: widget.unitMode,
                     disabled: widget.status == Status.Disappear ? true : false,
                   )),
               back: new UnitButton(
                 onPress: widget.onPress,
                 text: ' ',
-                unitMode: UnitMode.text,
+                unitMode: null,
               ))),
     );
   }

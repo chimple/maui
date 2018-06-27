@@ -1,0 +1,98 @@
+{
+    "id": "Shapes.png",
+    "height": 1195.0,
+    "width": 1074.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "hexagon",
+            "data": {
+                "height": 216.0,
+                "width": 216.0,
+                "x": 175.0,
+                "y": 137.0
+            }
+        },
+        {
+            "name": "square",
+            "data": {
+                "height": 188.0,
+                "width": 183.0,
+                "x": 537.0,
+                "y": 134.0
+            }
+        },
+        {
+            "name": "star",
+            "data": {
+                "height": 249.0,
+                "width": 260.0,
+                "x": 869.0,
+                "y": 164.0
+            }
+        },
+        {
+            "name": "triangle",
+            "data": {
+                "height": 194.0,
+                "width": 214.0,
+                "x": 189.0,
+                "y": 460.0
+            }
+        },
+        {
+            "name": "diamond",
+            "data": {
+                "height": 274.0,
+                "width": 185.0,
+                "x": 543.0,
+                "y": 460.0
+            }
+        },
+        {
+            "name": "rectangle",
+            "data": {
+                "height": 374.0,
+                "width": 179.0,
+                "x": 905.0,
+                "y": 536.0
+            }
+        },
+        {
+            "name": "rhombus",
+            "data": {
+                "height": 260.0,
+                "width": 246.0,
+                "x": 197.0,
+                "y": 755.0
+            }
+        },
+        {
+            "name": "oval",
+            "data": {
+                "height": 186.0,
+                "width": 248.0,
+                "x": 614.0,
+                "y": 753.0
+            }
+        },
+        {
+            "name": "pentagon",
+            "data": {
+                "height": 222.0,
+                "width": 243.0,
+                "x": 451.0,
+                "y": 1045.0
+            }
+        },
+        {
+            "name": "trapezoid",
+            "data": {
+                "height": 171.0,
+                "width": 288.0,
+                "x": 839.0,
+                "y": 1029.0
+            }
+        }
+    ]
+}

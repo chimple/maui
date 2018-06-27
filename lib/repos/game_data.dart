@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:tuple/tuple.dart';
@@ -353,15 +353,22 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   ]);
 }
 
-Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
-    int categoryId) async {
+Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
+
+var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+   
+  
+
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
   switch (0) {
     case 0:
       return new Tuple2([
-        [
-          'catseings',
+        
+          
           ' actings',
           'casing',
           'cast',
@@ -375,22 +382,81 @@ Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
           'at',
           'tas',
           'as',
+          	
+"GEN",	
+"GET",	
+"GIE",	
+"GIN",	
+"GIS",	
+"GIT",	
+"ING",	
+"NAG",	
+"NEG",	
+"SAG",	
+"SEG",	
+"SIG",	
+"TAG",	
+"TEG",	
+"TIG",	
+"AIN",	
+"AIS",	
+"AIT",		
+"ANI",	
+"ANS",	
+"ANT",	
+"ASS",	
+"ATE",	
+"ATS",	
+"EAN",	
+"EAS",	
+"EAT",	
+"ENS",	
+"ESS",	
+"EST",	
+"ETA",	
+"INS",	
+"ITA",	
+"ITS",	
+"NAE",	
+"NAS",	
+"NAT",	
+
+
+"ETAS",	
+"ETNA",	
+"ISNA",	
+"ITAS",	
+"NAES",	
+"NATS",	
+"NEAT",	
+"NESS",	
+"NEST",	
+"NETS",	
+"NIES",	
+"NITE",	
+"NITS",	
+"SAIN",	
+"SAIS",
+"SANE",
+"SANS",
+"SANT",
+"SATE",	
           'ats'
-        ],
-      ], null);
+        
+      ],'catseings');
       break;
     case 1:
-      return new Tuple2([
+      return new Tuple2(
         ['upsc', 'cusp', 'scup', 'cup', 'pus', 'sup', 'ups', 'up', 'us'],
-      ], null);
+       'upsc');
       break;
     case 2:
-      return new Tuple2([
+      return new Tuple2(
         ['ucts', 'scut', 'cut', 'uts', 'st', 'us', 'ut'],
-      ], null);
+      'ucts');
       break;
     case 3:
-      return new Tuple2([
+      return new Tuple2(
         [
           'hate',
           'eath',
@@ -418,9 +484,11 @@ Future<Tuple2<List<List<String>>, String>> fetchCirclewrdData(
           'ta',
           'te'
         ],
-      ], null);
+       'hate');
       break;
   }
+   return null;
+}
 }
 
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
@@ -548,6 +616,98 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
       break;
     case 2:
       return new Tuple2(['car', 'bus', 'train'], 'VEHICLES');
+      break;
+  }
+  return null;
+}
+
+
+Future<String> fetchIdentifyData() async {
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/$s.json");
+}
+
+Future<String> fetchGuessData() async {
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
+    gameViews.shuffle();
+    String s = gameViews[0];
+    return await rootBundle.loadString("assets/Colors.json");
+}
+
+
+
+Future<Map<String, Map<String, List<String>>>> fetchClueGame(
+    int categoryId) async {
+  var completer = Completer<Map<String, Map<String, List<String>>>>();
+  Map<String, List<String>> drink = {
+    'milk': ['mi', 'lk'],
+    'coffee': ['cof', 'fee'],
+    'juice': ['jui', 'ce'],
+  };
+  Map<String, List<String>> travel = {
+    'cycle' : ['cyc','le'],
+    'train': ['tr', 'ain'],
+    'aeroplane': ['aero', 'plane'],
+  };
+  Map<String, List<String>> redfruit = {
+    'apple': ['ap', 'ple'],
+    'cherry': ['che', 'rry'],
+    'tomato': ['tom', 'ato'],
+  };
+  Map<String, List<String>> blackpet = {
+    'dog': ['do', 'g'],
+    'panda': ['pa', 'nda'],
+    'crow': ['cr', 'ow'],
+  };
+  Map<String, Map<String, List<String>>> value = {
+    'drink': drink,
+    'travel': travel,
+    'redfruit': redfruit,
+    'blackpet': blackpet
+  };
+  completer.complete(value);
+  return completer.future;
+}
+Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
+    int categoryId) async {
+  var rand = new Random();
+  var startNum = rand.nextInt(max(0, 8));
+  switch (startNum) {
+    case 0:
+      return new Tuple2("Mount Everest is the highest 1_ in the 2_ .",
+          ['mountain', 'earth', 'chair', 'ball']);
+      break;
+    case 1:
+      return new Tuple2("Nile is the longest 1_ on the 2_ .",
+          ['river', 'earth', 'wall', 'waterfall']);
+      break;
+    case 2:
+      return new Tuple2("Apple is 1_ and also 2_ in colour .",
+          ['red', 'green', 'round', 'tube']);
+      break;
+    case 3:
+      return new Tuple2(
+          "1_ gives healthy 2_ .", ['cow', 'milk', 'vegetable', 'grass']);
+      break;
+    case 4:
+      return new Tuple2("Fastest 1_ animal is 2_ .",
+          ['running', 'cheetah', 'growing', 'monkey']);
+      break;
+    case 5:
+      return new Tuple2(
+          "I love eating 1_ and 2_ .", ['mango', 'grape', 'sun', 'moon']);
+      break;
+    case 6:
+      return new Tuple2("Snowy is 1_ but i am trying to make her 2_ .",
+          ['crying', 'laugh', 'crawling', 'chair']);
+      break;
+    case 7:
+      return new Tuple2("1_ is a beautiful 2_ colour flower .",
+          ['rose', 'red', 'ugly', 'black']);
       break;
   }
   return null;

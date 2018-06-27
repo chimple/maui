@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flores/flores.dart';
 
 class ChatScreen extends StatefulWidget {
   final String myId;
@@ -27,10 +27,14 @@ class ChatScreen extends StatefulWidget {
   State createState() => new ChatScreenState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
+  GlobalKey<AnimatedListState> listKey = new GlobalKey<AnimatedListState>();
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
-  DatabaseReference _reference;
+//  DatabaseReference _reference;
+//  List<dynamic> _messages;
+  static final chatMessageType = 'chat';
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -39,57 +43,78 @@ class ChatScreenState extends State<ChatScreen> {
         ? 'chat_${widget.friendId}_${widget.myId}'
         : 'chat_${widget.myId}_${widget.friendId}';
     print(chatId);
-    _reference = FirebaseDatabase.instance.reference().child(chatId);
+    _initMessages();
+  }
+
+  void _initMessages() async {
+    await AppStateContainer.of(context).beginChat(widget.friendId);
+  }
+
+  @override
+  void dispose() {
+    AppStateContainer.of(context).endChat();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final myId = AppStateContainer.of(context).state.loggedInUser.id;
     final myImage = AppStateContainer.of(context).state.loggedInUser.image;
+    var messages = AppStateContainer.of(context).messages;
+    print('chat_screen $messages');
 
+    AnimationController controller = AnimationController(vsync: this);
+    Animation<double> animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Friendlychat"),
           elevation:
               Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
         ),
-        body: new Column(children: <Widget>[
-          new Flexible(
-            child: new FirebaseAnimatedList(
-              query: _reference,
-              sort: (a, b) => b.key.compareTo(a.key),
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return snapshot.value['senderId'] == myId
-                    ? new ChatMessage(
-                        animation: animation,
-                        imageFile: myImage,
-                        child: snapshot.value['imageUrl'] != null
-                            ? new Image.network(
-                                snapshot.value['imageUrl'],
-                                width: 250.0,
-                              )
-                            : new Text(snapshot.value['text']))
-                    : new ChatMessage(
-                        animation: animation,
-                        imageUrl: widget.friendImageUrl,
-                        child: snapshot.value['imageUrl'] != null
-                            ? new Image.network(
-                                snapshot.value['imageUrl'],
-                                width: 250.0,
-                              )
-                            : new Text(snapshot.value['text']));
-              },
-            ),
-          ),
-          new Divider(height: 1.0),
-          new Container(
-            decoration: new BoxDecoration(color: Theme.of(context).cardColor),
-            child: _buildTextComposer(),
-          ),
-        ]));
+        body: messages == null
+            ? Center(
+                child: new SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: new CircularProgressIndicator(),
+              ))
+            : Column(children: <Widget>[
+                new Flexible(
+                    child: ListView(
+                  reverse: true,
+                  padding: EdgeInsets.all(8.0),
+                  children: messages.map((message) {
+                    return message['userId'] == myId
+                        ? ChatMessage(
+                            animation: animation,
+                            side: Side.left,
+                            imageFile: myImage,
+                            child: new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                message['message'],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ))
+                        : ChatMessage(
+                            animation: animation,
+                            side: Side.right,
+                            imageFile: widget.friendImageUrl,
+                            child: new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(message['message'],
+                                  style: TextStyle(color: Colors.black)),
+                            ));
+                  }).toList(growable: false),
+                )),
+                new Divider(height: 1.0),
+                new Container(
+                  decoration:
+                      new BoxDecoration(color: Theme.of(context).cardColor),
+                  child: _buildTextComposer(),
+                ),
+              ]));
   }
 
   Widget _buildTextComposer() {
@@ -98,21 +123,6 @@ class ChatScreenState extends State<ChatScreen> {
       child: new Container(
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
           child: new Row(children: <Widget>[
-            new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                  icon: new Icon(Icons.photo_camera),
-                  onPressed: () async {
-                    File imageFile =
-                        await ImagePicker.pickImage(source: ImageSource.camera);
-                    var uuid = new Uuid().v4();
-                    StorageReference ref =
-                        FirebaseStorage.instance.ref().child("image_$uuid.jpg");
-                    StorageUploadTask uploadTask = ref.put(imageFile);
-                    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-                    _sendMessage(imageUrl: downloadUrl.toString());
-                  }),
-            ),
             new Flexible(
               child: new TextField(
                 controller: _textController,
@@ -158,11 +168,7 @@ class ChatScreenState extends State<ChatScreen> {
     _sendMessage(text: text);
   }
 
-  void _sendMessage({String text, String imageUrl}) {
-    _reference.push().set({
-      'text': text,
-      'imageUrl': imageUrl,
-      'senderId': widget.myId,
-    });
+  void _sendMessage({String text, String imageUrl}) async {
+    AppStateContainer.of(context).addChat(text);
   }
 }

@@ -4,11 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/components/game_category_list.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/db/entity/user.dart';
 
 class GameCategoryListScreen extends StatefulWidget {
   String game;
+  GameMode gameMode;
+  GameDisplay gameDisplay;
+  User otherUser;
 
-  GameCategoryListScreen({Key key, @required this.game}) : super(key: key);
+  GameCategoryListScreen(
+      {Key key,
+      @required this.game,
+      @required this.gameMode,
+      @required this.gameDisplay,
+      this.otherUser})
+      : super(key: key);
 
   @override
   _GameCategoryListScreenState createState() {
@@ -28,9 +39,23 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .getGameCategoriesByGame(widget.game)
         .then((gameCategories) {
       if (gameCategories.isEmpty) {
-        gameCategories = <Tuple2<int, String>>[
-          new Tuple2<int, String>(1, 'Todo Placeholder')
-        ];
+        if (widget.game == "identify") {
+          gameCategories = <Tuple2<int, String>>[
+          new Tuple2<int, String>(1, 'Modes'),
+        ];         
+        } 
+       else if (widget.game == "drawing") {
+          gameCategories = <Tuple2<int, String>>[
+            new Tuple2<int, String>(2, 'Draw')
+          ];
+        } else {
+          gameCategories = <Tuple2<int, String>>[
+            new Tuple2<int, String>(1, 'Todo Placeholder')
+          ];
+        }
+        //   gameCategories = <Tuple2<int, String>>[
+        //   new Tuple2<int, String>(1, 'Todo Placeholder')
+        // ];
       }
 
       setState(() {
@@ -50,9 +75,14 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
                 child: new CircularProgressIndicator(),
               )
             : new Scaffold(
-                appBar: new AppBar(title: new Text('Categories')),
+                //appBar: new AppBar(title: new Text('Categories')),
                 body: new GameCategoryList(
-                    game: widget.game, gameCategories: _gameCategories),
+                  game: widget.game,
+                  gameCategories: _gameCategories,
+                  gameMode: widget.gameMode,
+                  gameDisplay: widget.gameDisplay,
+                  otherUser: widget.otherUser,
+                ),
               ));
   }
 }

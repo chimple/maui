@@ -1,0 +1,99 @@
+{
+    "id": "Fruits.png",
+    "height": 1366.0,
+    "width": 1366.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "strawberry",
+            "data": {
+
+                "height": 238.0,
+                "width": 238.0,
+                "x": 238.0,
+                "y": 197.0
+            }
+        },
+        {
+            "name": "apple",
+            "data": {
+                "height": 325.0,
+                "width": 325.0,
+                "x": 615.0,
+                "y": 188.0
+            }
+        },
+        {
+            "name": "cherry",
+            "data": {
+                "height": 324.0,
+                "width": 276.0,
+                "x": 1134.0,
+                "y": 205.0
+            }
+        },
+        {
+            "name": "grapes",
+            "data": {
+                "height": 359.0,
+                "width": 279.0,
+                "x": 254.0,
+                "y": 618.0
+            }
+        },
+        {
+            "name": "orange",
+            "data": {
+                "height": 314.0,
+                "width": 342.0,
+                "x": 648.0,
+                "y": 640.0
+            }
+        },
+        {
+            "name": "citrus",
+            "data": {
+                "height": 278.0,
+                "width": 230.0,
+                "x": 1098.0,
+                "y": 658.0
+            }
+        },
+        {
+            "name": "watermelon",
+            "data": {
+                "height": 304.0,
+                "width": 304.0,
+                "x": 191.0,
+                "y": 1115.0
+            }
+        },
+        {
+            "name": "pear",
+            "data": {
+                "height": 291.0,
+                "width": 212.0,
+                "x": 559.0,
+                "y": 1121.0
+            }
+        },
+        {
+            "name": "mango",
+            "data": {
+                "height": 234.0,
+                "width": 234.0,
+                "x": 857.0,
+                "y": 1119.0
+            }
+        },
+        {
+            "name": "banana",
+            "data": {
+                "height": 261.0,
+                "width": 282.0,
+                "x": 1224.0,
+                "y": 1145.0
+            }
+        }
+    ]
+}

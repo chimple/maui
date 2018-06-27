@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -13,6 +14,7 @@ class Reflex extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
+  Function onTurn;
   int iteration;
   GameConfig gameConfig;
   bool isRotated;
@@ -22,6 +24,7 @@ class Reflex extends StatefulWidget {
       this.onScore,
       this.onProgress,
       this.onEnd,
+      this.onTurn,
       this.iteration,
       this.gameConfig,
       this.isRotated = false})
@@ -70,19 +73,46 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
   }
 
   void _initBoard() async {
-    _currentIndex = 0;
-    setState(() => _isLoading = true);
-    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
-    _size = min(_maxSize, sqrt(_allLetters.length).floor());
-    _shuffledLetters = [];
-    for (var i = 0; i < _allLetters.length; i += _size * _size) {
-      _shuffledLetters.addAll(
-          _allLetters.skip(i).take(_size * _size).toList(growable: false)
-            ..shuffle());
+    print('_initBoard: ${widget.gameConfig.gameData}');
+    if (widget.gameConfig.gameData != null) {
+      print('initializing from: ${widget.gameConfig.gameData}');
+      fromJsonMap(widget.gameConfig.gameData);
+      setState(() => _isLoading = false);
+    } else {
+      _currentIndex = 0;
+      setState(() => _isLoading = true);
+      _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
+      _size = min(_maxSize, sqrt(_allLetters.length).floor());
+      _shuffledLetters = [];
+      for (var i = 0; i < _allLetters.length; i += _size * _size) {
+        _shuffledLetters.addAll(
+            _allLetters.skip(i).take(_size * _size).toList(growable: false)
+              ..shuffle());
+      }
+      _letters = _shuffledLetters.sublist(0, _size * _size);
+      _solvedLetters = [];
+      setState(() => _isLoading = false);
     }
-//    print(_shuffledLetters);
-    _letters = _shuffledLetters.sublist(0, _size * _size);
-    setState(() => _isLoading = false);
+  }
+
+  Map<String, dynamic> toJsonMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['allLetters'] = _allLetters;
+    data['shuffledLetters'] = _shuffledLetters;
+    data['letters'] = _letters;
+    data['solvedLetters'] = _solvedLetters;
+    data['currentIndex'] = _currentIndex;
+    data['size'] = _size;
+    return data;
+  }
+
+  void fromJsonMap(Map<String, dynamic> data) {
+    _allLetters = data['allLetters'].cast<String>();
+    _shuffledLetters = data['shuffledLetters'].cast<String>();
+    _letters = data['letters'].cast<String>();
+    _solvedLetters = data['solvedLetters'].cast<String>();
+    _currentIndex = data['currentIndex'];
+    _size = data['size'];
   }
 
   @override
@@ -119,11 +149,12 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
             new Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
                 _solvedLetters.insert(0, text);
+                widget.onEnd(toJsonMap(), false);
               });
             });
             if (_currentIndex >= _allLetters.length) {
               new Future.delayed(const Duration(milliseconds: 250), () {
-                widget.onEnd();
+                widget.onEnd(toJsonMap(), true);
               });
             }
           } else {
@@ -165,28 +196,26 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
 
       return new Column(
         children: <Widget>[
-          new SlideTransition(
-              position: _animation,
-              child: Material(
-                  color: Theme.of(context).accentColor,
-                  elevation: 8.0,
-                  child: new LimitedBox(
-                      maxHeight: maxHeight,
-                      child: ListView(
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.all(buttonPadding),
-                          itemExtent: state.buttonWidth,
-                          children: _solvedLetters
-                              .map((l) => Center(
-                                  child: Padding(
-                                      padding: EdgeInsets.all(buttonPadding),
-                                      child: UnitButton(
-                                        text: l,
-                                        primary: false,
-                                        onPress: () {},
-                                      ))))
-                              .toList(growable: false))))),
+          Material(
+              color: Theme.of(context).accentColor,
+              elevation: 8.0,
+              child: new LimitedBox(
+                  maxHeight: maxHeight,
+                  child: ListView(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.all(buttonPadding),
+                      itemExtent: state.buttonWidth,
+                      children: _solvedLetters
+                          .map((l) => Center(
+                              child: Padding(
+                                  padding: EdgeInsets.all(buttonPadding),
+                                  child: UnitButton(
+                                    text: l,
+                                    primary: false,
+                                    onPress: () {},
+                                  ))))
+                          .toList(growable: false)))),
           new Expanded(
               child: new Padding(
                   padding: EdgeInsets.symmetric(
@@ -252,9 +281,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               }
             }
           });
-    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
-      controller.forward();
-    });
+//    Future.delayed(Duration(milliseconds: 250 + widget.order * 100), () {
+    controller.forward(from: 1.0);
+//    });
   }
 
   @override
@@ -271,12 +300,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-//    print("_MyButtonState.build");
+    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
         child: new UnitButton(
           onPress: widget.onPress,
-          text: _displayText,
+          text: _displayText ?? '',
           unitMode: UnitMode.text,
         ));
   }

@@ -42,7 +42,7 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
   }
 
   onGameEnd(BuildContext context) {
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
     Navigator.push(context,
         new MaterialPageRoute<void>(builder: (BuildContext context) {
       return new ScoreScreen(
@@ -68,6 +68,10 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
             answerUnitMode: widget.gameConfig.answerUnitMode,
             gameCategoryId: widget.gameConfig.gameCategoryId,
             level: widget.gameConfig.level,
+            amICurrentPlayer: true,
+            myUser: widget.gameConfig.myUser,
+            myScore: 0,
+            orientation: Orientation.landscape,
             gameDisplay: GameDisplay.myHeadToHead),
         onScore: setMyScore,
         onGameEnd: onGameEnd,
@@ -80,7 +84,11 @@ class HeadToHeadGameState extends State<HeadToHeadGame> {
                   questionUnitMode: widget.gameConfig.questionUnitMode,
                   answerUnitMode: widget.gameConfig.answerUnitMode,
                   gameCategoryId: widget.gameConfig.gameCategoryId,
+                  amICurrentPlayer: true,
                   level: widget.gameConfig.level,
+                  myUser: widget.gameConfig.otherUser,
+                  myScore: 0,
+                  orientation: Orientation.landscape,
                   gameDisplay: GameDisplay.otherHeadToHead),
               onScore: setOtherScore,
               onGameEnd: onGameEnd)),

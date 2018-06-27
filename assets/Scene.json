@@ -1,0 +1,98 @@
+{
+    "id": "Scene.png",
+    "height": 1869.0,
+    "width": 1868.0,
+    "number": 10,
+    "parts": [
+        {
+            "name": "cloud",
+            "data": {
+                "height": 243.0,
+                "width": 696.0,
+                "x": 749.0,
+                "y": 166.0
+            }
+        },
+        {
+            "name": "sun",
+            "data": {
+                "height": 390.0,
+                "width": 390.0,
+                "x": 1562.0,
+                "y": 264.0
+            }
+        },
+        {
+            "name": "tree",
+            "data": {
+                "height": 849.0,
+                "width": 731.0,
+                "x": 397.0,
+                "y": 796.0
+            }
+        },
+        {
+            "name": "owl",
+            "data": {
+                "height": 375.0,
+                "width": 282.0,
+                "x": 1044.0,
+                "y": 651.0
+            }
+        },
+        {
+            "name": "dove",
+            "data": {
+                "height": 309.0,
+                "width": 371.0,
+                "x": 1615.0,
+                "y": 754.0
+            }
+        },
+        {
+            "name": "leaf",
+            "data": {
+                "height": 325.0,
+                "width": 325.0,
+                "x": 1060.0,
+                "y": 1186.0
+            }
+        },
+        {
+            "name": "ant",
+            "data": {
+                "height": 267.0,
+                "width": 301.0,
+                "x": 1651.0,
+                "y": 1197.0
+            }
+        },
+        {
+            "name": "grass",
+            "data": {
+                "height": 390.0,
+                "width": 477.0,
+                "x": 295.0,
+                "y": 1667.0
+            }
+        },
+        {
+            "name": "stones",
+            "data": {
+                "height": 348.0,
+                "width": 525.0,
+                "x": 972.0,
+                "y": 1688.0
+            }
+        },
+        {
+            "name": "pot",
+            "data": {
+                "height": 327.0,
+                "width": 366.0,
+                "x": 1616.0,
+                "y": 1697.0
+            }
+        }
+    ]
+}

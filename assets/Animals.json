@@ -1,0 +1,80 @@
+{
+    "id": "Animals.png",
+    "height": 1760.0,
+    "width": 1860.0,
+    "number": 8,
+    "parts": [
+        {
+            "name": "owl",
+            "data": {
+                "height": 484.0,
+                "width": 579.0,
+                "x": 332.0,
+                "y": 316.0
+            }
+        },
+        {
+            "name": "giraffe",
+            "data": {
+                "height": 532.0,
+                "width": 447.0,
+                "x": 928.0,
+                "y": 322.0
+            }
+        },
+        {
+            "name": "rabbit",
+            "data": {
+                "height": 532.0,
+                "width": 581.0,
+                "x": 1530.0,
+                "y": 327.0
+            }
+        },
+        {
+            "name": "dog",
+            "data": {
+                "height": 498.0,
+                "width": 545.0,
+                "x": 348.0,
+                "y": 924.0
+            }
+        },
+        {
+            "name": "cat",
+            "data": {
+                "height": 457.0,
+                "width": 545.0,
+                "x": 928.0,
+                "y": 919.0
+            }
+        },
+        {
+            "name": "monkey",
+            "data": {
+                "height": 457.0,
+                "width": 545.0,
+                "x": 1531.0,
+                "y": 924.0
+            }
+        },
+        {
+            "name": "bear",
+            "data": {
+                "height": 498.0,
+                "width": 545.0,
+                "x": 597.0,
+                "y": 1478.0
+            }
+        },
+        {
+            "name": "frog",
+            "data": {
+                "height": 404.0,
+                "width": 491.0,
+                "x": 1346.0,
+                "y": 1465.0
+            }
+        }
+    ]
+}

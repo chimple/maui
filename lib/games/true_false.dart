@@ -3,13 +3,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/components/responsive_grid_view.dart';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/shaker.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+
 
 class TrueFalseGame extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
-  int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
   TrueFalseGame(
@@ -18,7 +26,7 @@ class TrueFalseGame extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.gameCategoryId,
+      this.gameConfig,
       this.isRotated})
       : super(key: key);
 
@@ -26,15 +34,21 @@ class TrueFalseGame extends StatefulWidget {
   State createState() => new TrueFalseGameState();
 }
 
+enum Status { Active, Right, Wrong }
+
 class TrueFalseGameState extends State<TrueFalseGame> {
   bool _isLoading = true;
 
   Tuple3<String, String, bool> _allques;
-  String questionText;
+  String questionText, answerText;
   bool tf;
   bool isCorrect;
   bool overlayShouldBeVisible = false;
   int scoretrack = 0;
+  List<String> choice = [];
+  List<Status> _statuses = [];
+  String ans;
+  var keys = 0;
 
   @override
   void initState() {
@@ -44,37 +58,69 @@ class TrueFalseGameState extends State<TrueFalseGame> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _allques = await fetchTrueOrFalse(widget.gameCategoryId);
+    _allques = await fetchTrueOrFalse(widget.gameConfig.gameCategoryId);
     print("this is my data  $_allques");
     print(_allques.item1);
     questionText = _allques.item1;
     print(_allques.item2);
+    answerText = _allques.item2;
+    print(_allques.item3);
     tf = _allques.item3;
+    choice = ['true', 'false'];
+     _statuses = choice.map((a) => Status.Active).toList(growable: false);
+    ans = tf == true ? 'true' : 'false';
     setState(() => _isLoading = false);
   }
 
-  void handleAnswer(bool answer) {
-    isCorrect = (tf == answer);
-    if (isCorrect) {
-      scoretrack = scoretrack + 4;
-      widget.onScore(4);
-      widget.onProgress(1.0);
-    } else {
-      if (scoretrack > 0) {
-        scoretrack = scoretrack - 1;
-        widget.onScore(-1);
-      } else {
-        widget.onScore(0);
-      }
+  Widget _buildItem(Status status, int index, String text) {
+    return new MyButton(
+        key: new ValueKey<int>(index),
+        unitMode: widget.gameConfig.answerUnitMode,
+        text: text,
+        status: status,
+        ans: this.ans,
+        keys: keys++,
+        onPress: () {
+          if (text == ans) {
+            scoretrack = scoretrack + 4;
+            widget.onScore(4);
+            widget.onProgress(1.0);
+            widget.onEnd();
+            choice.removeRange(0, choice.length);
+          } else {
+            setState(() {
+              _statuses[index] = Status.Wrong;
+            });
+            new Future.delayed(const Duration(milliseconds: 300), () {
+              setState(() {
+                _statuses[index] = Status.Active;
+              });
+            });
+            
+            if (scoretrack > 0) {
+              scoretrack = scoretrack - 1;
+              widget.onScore(-1);
+            } else {
+              widget.onScore(0);
+            }
+          }
+        });
+  }
+  
+
+  @override
+  void didUpdateWidget(TrueFalseGame oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+      print(_allques);
     }
-    this.setState(() {
-      print(4);
-      overlayShouldBeVisible = true;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    keys = 0;
     Size media = MediaQuery.of(context).size;
     print("Question text here $questionText");
     print("Answer here $tf");
@@ -87,248 +133,204 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       );
     }
 
+    final maxChars = (choice != null
+        ? choice.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+    int j =0;
     return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      AppState state = AppStateContainer.of(context).state;
+
       double ht = constraints.maxHeight;
       double wd = constraints.maxWidth;
       print("My Height - $ht");
       print("My Width - $wd");
-      return new Material(
-        child: new Stack(
-          fit: StackFit.loose,
+      return new Column(
           children: <Widget>[
+            
             new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              verticalDirection: VerticalDirection.up,
               children: <Widget>[
-                new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        child: new QuestionText(questionText, ht, wd),
-                      )
-                    ]),
-                new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
-
-                      new AnswerButton(
-                          true, () => handleAnswer(true), ht, wd), //true button
-
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
-
-                      new AnswerButton(false, () => handleAnswer(false), ht,
-                          wd), //false button
-
-                      new Padding(
-                        padding: new EdgeInsets.all(wd * 0.015),
-                      ),
-                    ]),
-              ],
-            ),
-            overlayShouldBeVisible == true
-                ? new Container(
-                    height: ht,
-                    width: wd,
-                    child: new CorrectWrongOverlay(isCorrect, () {
-                      this.setState(() {
-                        print(1);
-                        overlayShouldBeVisible = false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 20), () {
-                        widget.onEnd();
-                        _initBoard();
-                      });
-                    }))
-                : new Container()
+                new Material(
+                  color: Theme.of(context).accentColor,
+                  elevation: 4.0,
+                  child: new LimitedBox(
+                    maxHeight: maxHeight,
+                    maxWidth: maxWidth,
+                    child: new Material(
+                        color: Theme.of(context).accentColor,
+                        elevation: 4.0,
+                        textStyle: new TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: state.buttonFontSize),
+                        child: new Container(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: new Center(
+                              child: new UnitButton(text:"$questionText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
+                            ))))),
+                    new Material(
+                      color: Theme.of(context).accentColor,
+                      elevation: 8.0,
+                      child: new LimitedBox(
+                      maxHeight: maxHeight,
+                      maxWidth: maxWidth,
+                      child: new Material(
+                          color: Theme.of(context).accentColor,
+                          elevation: 4.0,
+                          textStyle: new TextStyle(
+                              color: Colors.orangeAccent,
+                              fontSize: state.buttonFontSize),
+                          child: new Container(
+                              padding: EdgeInsets.all(buttonPadding),
+                              child: new Center(
+                                child: new UnitButton(text:"$answerText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
+                              )))),
+                    )]),
+                    
+                new Expanded(
+                  child: new ResponsiveGridView(
+                  rows: 1,
+                  cols: 2,
+                  children: choice
+                      .map((e) => new Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(_statuses[j], j++, e),
+                          ))
+                      .toList(growable: false),
+                ))
+            
           ],
-        ),
       );
     });
   }
 }
 
-class QuestionText extends StatefulWidget {
-  final String _question;
-  double ht, wd;
-
-  QuestionText(this._question, this.ht, this.wd);
-
+class MyButton extends StatefulWidget {
+  String ans;
+  Status status;
+  UnitMode unitMode;
+  MyButton(
+      {Key key,
+      this.status,
+      this.text,
+      this.ans,
+      this.keys,
+      this.unitMode,
+      this.onPress})
+      : super(key: key);
+  final String text;
+  final VoidCallback onPress;
+  int keys;
   @override
-  State createState() => new QuestionTextState();
+  _MyButtonState createState() => new _MyButtonState();
 }
 
-class QuestionTextState extends State<QuestionText>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
+class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+  AnimationController controller, wrongController;
+  Animation<double> animation, wrongAnimation;
+  String _displayText;
 
-  @override
-  void initState() {
+  initState() {
     super.initState();
-    _fontSizeAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {
-          print(2);
-        }));
-    _fontSizeAnimationController.forward();
+    print("_MyButtonState.initState: ${widget.text}");
+    _displayText = widget.text;
+
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 600), vsync: this);
+    wrongController = new AnimationController(
+        duration: new Duration(milliseconds: 100), vsync: this);
+
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+      ..addStatusListener((state) {
+//        print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+          // print('dismissed');
+          // if (widget.text != null) {
+          //   setState(() => _displayText = widget.text);
+          //   controller.forward();
+          // }
+        }
+      });
+    wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);
+    controller.forward();
+    _myAnim();
+  }
+
+  void _myAnim() {
+    wrongAnimation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        wrongController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        wrongController.forward();
+      }
+    });
+    wrongController.forward();
   }
 
   @override
   void dispose() {
-    _fontSizeAnimationController.dispose();
+    wrongController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
   @override
-  void didUpdateWidget(QuestionText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.reset();
-      _fontSizeAnimationController.forward();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return new Material(
-      child: new Container(
-        height: widget.ht * 0.3,
-        width: widget.ht > widget.wd ? widget.wd * 0.6 : widget.wd * 0.5,
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(25.0),
-          color: const Color(0xFFf8c43c),
-        ),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            new Text(widget._question,
-                style: new TextStyle(
-                    color: Colors.white,
-                    fontSize: widget.ht > widget.wd
-                        ? widget.ht * 0.06
-                        : widget.wd * 0.06,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AnswerButton extends StatelessWidget {
-  final bool _answer;
-  final VoidCallback _onTap;
-  double ht, wd;
-
-  AnswerButton(this._answer, this._onTap, this.ht, this.wd);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Expanded(
-      child: new Material(
-        child: new InkWell(
-          onTap: () => _onTap(),
-          child: new Container(
-            height: ht > wd ? ht * 0.35 : ht * 0.43,
-            width: wd * 0.6,
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(25.0),
-              color: _answer == true
-                  ? const Color(0xFF64DD17)
-                  : const Color(0xFFE53935),
-            ),
-            child: new Center(
-                child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Icon(
-                  _answer == true ? Icons.check : Icons.close,
+    Size media = MediaQuery.of(context).size;
+    double ht = media.height;
+    double wd = media.width;
+    widget.keys++;
+    print("_MyButtonState.build");
+    return new Shake(
+        animation: widget.status == Status.Wrong ? wrongAnimation : animation,
+        child: new ScaleTransition(
+            scale: animation,
+            child: new GestureDetector(
+              onLongPress: () {
+                showDialog(
+                    context: context,
+                    child: new FractionallySizedBox(
+                        heightFactor: 0.5,
+                        widthFactor: 0.8,
+                        child: new FlashCard(text: widget.text)));
+              },
+              // child: new UnitButton(
+              //   onPress: () => widget.onPress(),
+              //   text: _displayText,
+              //   unitMode: widget.unitMode,
+               child: new Container(
+                 decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(20.0),
+                  border: new Border.all(
+                    width: 6.0,
+                    color: _displayText == 'true' ? Colors.green : Colors.red,
+                  ),
+                ),
+               child: new FlatButton(
+                   onPressed: () => widget.onPress(),
+                   color: Colors.transparent,
+                   shape: new RoundedRectangleBorder(
+                       borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
+                   child: new Icon(
+                  _displayText == 'true' ? Icons.check : Icons.close,
+                  key: new Key("${widget.keys}"),
                   size: ht > wd ? ht * 0.15 : wd * 0.15,
-                  color: Colors.white,
-                ),
-              ],
-            )),
-          ),
-        ),
-      ),
-    );
+                  color: _displayText == 'true' ? Colors.green : Colors.red,
+                   )
+                   
+              ),)
+            )));
   }
 }
 
-class CorrectWrongOverlay extends StatefulWidget {
-  final bool _isCorrect;
-  final VoidCallback _onTap;
-
-  CorrectWrongOverlay(this._isCorrect, this._onTap);
-
-  @override
-  State createState() => new CorrectWrongOverlayState();
-}
-
-class CorrectWrongOverlayState extends State<CorrectWrongOverlay>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _iconAnimation;
-  AnimationController _iconAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _iconAnimationController = new AnimationController(
-        duration: new Duration(seconds: 2), vsync: this);
-    _iconAnimation = new CurvedAnimation(
-        parent: _iconAnimationController, curve: Curves.elasticOut);
-    _iconAnimation.addListener(() => this.setState(() {
-          print(3);
-        }));
-    _iconAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _iconAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Material(
-      color: Colors.black54,
-      child: new InkWell(
-        onTap: () => widget._onTap(),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-              decoration: new BoxDecoration(
-                  color: Colors.white, shape: BoxShape.circle),
-              child: new Transform.rotate(
-                angle: _iconAnimation.value * 2 * PI,
-                child: new Icon(
-                  widget._isCorrect == true ? Icons.done : Icons.clear,
-                  size: _iconAnimation.value * 80.0,
-                ),
-              ),
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(bottom: 20.0),
-            ),
-            new Text(
-              widget._isCorrect == true ? "Correct!" : "Wrong!",
-              style: new TextStyle(color: Colors.white, fontSize: 30.0),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
