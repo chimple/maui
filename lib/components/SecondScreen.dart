@@ -1,11 +1,18 @@
 import 'dart:convert';
-
+import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maui/components/draw_convert.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:tuple/tuple.dart';
+
+import '../components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
+
+import '../games/single_game.dart';
 
 class SecondScreen extends StatelessWidget {
   String output;
@@ -14,13 +21,13 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    print({"this is object of drawwwwww": output});
+// print({"this is object of drawwwwww": output});
     return new MaterialApp(home: new LayoutBuilder(builder: _build));
   }
 
   Widget _build(BuildContext context, BoxConstraints constraints) {
-//    print([constraints.maxWidth, constraints.maxHeight]);
-//    print({"the output is : " : output});
+// print([constraints.maxWidth, constraints.maxHeight]);
+// print({"the output is : " : output});
     Orientation orientation = MediaQuery.of(context).orientation;
     var height = constraints.maxHeight;
     var width = constraints.maxWidth;
@@ -37,7 +44,7 @@ class SecondScreen extends StatelessWidget {
                     width: width > height ? width * 0.6 : width * .95,
                     child: new Drawing(output)),
                 new Expanded(
-//                height: constraints.maxHeight*.3, width: constraints.maxWidth,
+// height: constraints.maxHeight*.3, width: constraints.maxWidth,
                     child: new DrawOptions()),
               ],
             )
@@ -49,7 +56,7 @@ class SecondScreen extends StatelessWidget {
                     width: width > height ? width * 0.45 : width,
                     child: new Drawing(output)),
                 new Expanded(
-//                height: constraints.maxHeight*.3, width: constraints.maxWidth,
+// height: constraints.maxHeight*.3, width: constraints.maxWidth,
                     child: new DrawOptions()),
               ],
             ),
@@ -87,7 +94,7 @@ class MyImagePage extends StatefulWidget {
 
   MyImagePage(this.output);
 
-//  var data = json.decode(output);
+// var data = json.decode(output);
 
   @override
   State createState() => new MyDrawPageState(this.output);
@@ -98,12 +105,12 @@ class MyDrawPageState extends State<MyImagePage> {
 
   MyDrawPageState(this.output);
 
-//  List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
+// List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
   DrawPainting currentPainter;
 
   @override
   Widget build(BuildContext context) {
-//    print({"the decoded value is : " :  output});
+// print({"the decoded value is : " : output});
 
     currentPainter = new DrawPainting(output);
 
@@ -134,12 +141,12 @@ class DrawPainting extends CustomPainter {
 
     Paint paint = new Paint()..strokeCap = StrokeCap.round;
 
-//    print({"the canvasproperty value is : " : canvasProperty});
+// print({"the canvasproperty value is : " : canvasProperty});
 
     var decode = json.decode(canvasProperty);
 
-//    print({"the json to obj value is fo pos : " : decode['draw'][0]['position'][0]['x']});
-//    print({"the lenth of draw : " : decode['draw'].length});
+// print({"the json to obj value is fo pos : " : decode['draw'][0]['position'][0]['x']});
+// print({"the lenth of draw : " : decode['draw'].length});
 
     for (int i = 0; i < decode['draw'].length; i++) {
       var draw = decode['draw'][i];
@@ -212,22 +219,8 @@ class optionState extends State<DrawOptions> {
         _ans.add(e);
       });
     }
-//    _allques =  await fetchMultipleChoiceData(widget.gameCategoryId, 3);
-//    print("this is my data  $_allques");
-
-//    print("My shuffled Choices - $choice");
     setState(() => _isLoading = false);
   }
-
-//  void handleAnswer(String answer) {
-//    isCorrect = (ans == answer);
-//    if (isCorrect) {
-//      widget.onScore(1);
-//      widget.onProgress(1.0);
-//      widget.onEnd();
-//      _initBoard();
-//    }
-//  }
 
   Widget _buildItem(int index, String text) {
     return new MyButton(
@@ -248,11 +241,11 @@ class optionState extends State<DrawOptions> {
 
   @override
   void didUpdateWidget(DrawOptions oldWidget) {
-//    print(oldWidget.iteration);
+// print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-//      print(_allques);
+// print(_allques);
     }
     choice = [];
   }
@@ -272,11 +265,42 @@ class optionState extends State<DrawOptions> {
     }
 
     int j = 0;
-    return new ResponsiveGridView(
-      rows: _size,
-      cols: _size,
-      children: _ans.map((e) => _buildItem(j++, e)).toList(growable: false),
-    );
+    return new LayoutBuilder(builder: (context, constraints) {
+      print("this is where the its comming full");
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size);
+
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      print(
+          "object horizantal padding....:$hPadding.....vpadding : ..$vPadding");
+      print("object button padding ......:$buttonPadding");
+      maxWidth -= buttonPadding * 2;
+      maxHeight -= buttonPadding * 2;
+
+      double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
+
+      double buttonarea = maxWidth * maxHeight;
+      print("object....buttonarea .......:$buttonarea");
+      UnitButton.saveButtonSize(context, 6, maxWidth, maxHeight);
+
+      AppState state = AppStateContainer.of(context).state;
+      return new Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+          child: new ResponsiveGridView(
+            rows: _size,
+            cols: _size,
+            // maxAspectRatio: 1.0,
+            children: _ans
+                .map((e) => new Padding(
+                    padding: EdgeInsets.all(buttonPadding),
+                    child: _buildItem(j++, e)))
+                .toList(growable: false),
+          ));
+    });
   }
 }
 
@@ -375,15 +399,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-//    print("_MyButtonState.initState: ${widget.text}");
+// print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-//        print("$state:${animation.value}");
+// print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-//          print('dismissed');
+// print('dismissed');
           if (widget.text != null) {
             setState(() => _displayText = widget.text);
             controller.forward();
@@ -402,13 +426,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     } else if (oldWidget.text != widget.text) {
       controller.reverse();
     }
-//    print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
 
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
-//    print("_MyButtonState.build");
     return new ScaleTransition(
         scale: animation,
         child: new GestureDetector(
@@ -420,19 +442,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       widthFactor: 0.8,
                       child: new FlashCard(text: widget.text)));
             },
-            child: new Container(
-              height: 80.0,
-              width: orientation == Orientation.portrait ? 200.0 : 150.0,
-              padding: EdgeInsets.all(10.0),
-              child: new RaisedButton(
-                  onPressed: () => widget.onPress(),
-                  color: Colors.blue,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius:
-                          const BorderRadius.all(const Radius.circular(8.0))),
-                  child: new Text(_displayText,
-                      style:
-                          new TextStyle(color: Colors.white, fontSize: 24.0))),
+            child: new UnitButton(
+              text: _displayText,
+              onPress: () => widget.onPress(),
+              // unitMode: UnitMode.text,
+              showHelp: false,
             )));
   }
 }

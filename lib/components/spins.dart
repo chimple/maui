@@ -15,7 +15,7 @@ class ArrowPainter extends CustomPainter {
     this.rotationPercent,
     this.sizeArrow,
   }) : dialArrowPaint = new Paint() {
-    dialArrowPaint.color = Colors.blue[50];
+    dialArrowPaint.color = Colors.pink;
     dialArrowPaint.style = PaintingStyle.fill;
   }
 
@@ -26,7 +26,6 @@ class ArrowPainter extends CustomPainter {
 
     final radius = size.width;
     canvas.translate(radius, radius);
-    print("canvas size:: ${sizeArrow.width}");
     Path path = new Path();
     path.moveTo(0.0, -sizeArrow.width * .31);
     path.lineTo(sizeArrow.width * .35 * .17, -0.0);
@@ -34,7 +33,7 @@ class ArrowPainter extends CustomPainter {
 
     path.close();
     canvas.drawPath(path, dialArrowPaint);
-    canvas.drawShadow(path, Colors.red[300], 30.0, true);
+    canvas.drawShadow(path, Colors.blue, 30.0, true);
     canvas.restore();
   }
 
@@ -58,7 +57,6 @@ class OuterCircle extends CustomPainter {
   final tickPaint;
   final textPainter;
   final textStyle;
-  final image;
   final buttonStyle;
   OuterCircle({
     this.data,
@@ -67,7 +65,6 @@ class OuterCircle extends CustomPainter {
     this.ticksPerSection = 0.0,
     this.ticksInset = 0.0,
   })  : tickPaint = new Paint(),
-        traingle = new Paint(),
         textPainter = new TextPainter(
           maxLines: 10,
           textScaleFactor: 1.30,
@@ -136,31 +133,49 @@ class OuterCircle extends CustomPainter {
   }
 }
 
-class ClippedPainter extends CustomPainter {
-  final path;
-  final tickPaint;
-  double rotation = 0.0;
+class ImagePainter extends CustomPainter {
   List<ui.Image> images = new List<ui.Image>();
-  //List<String> images = [];
-  ClippedPainter({this.images, this.rotation})
+  ImagePainter(
+      {Key key,
+      this.renderBox,
+      this.parentRender,
+      @required this.images,
+      @required this.rotation,
+      this.boxfit = BoxFit.contain})
       : path = new Path()
           ..addOval(new Rect.fromCircle(
             center: new Offset(75.0, 75.0),
-            radius: 35.0,
+            radius: 40.0,
           )),
         tickPaint = new Paint() {
     tickPaint.strokeWidth = 2.5;
   }
+  final path;
+  final tickPaint;
+  double rotation = 0.0;
+  final RenderBox renderBox;
+  final RenderBox parentRender;
+  final BoxFit boxfit;
 
+  ui.Image img;
+  ui.Rect rect, inputSubrect, outputSubrect;
+  Size imageSize;
+  FittedSizes sizes;
+  double radius, baseLength;
+  int noOfSlize = 8;
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(ui.Canvas canvas, ui.Size size) {
+    
+    radius = size.width / 2;
+    baseLength = radius * sin((360 / noOfSlize * 2) * pi / 180);
+    print("base length:: $baseLength");
+    print("size of canvas imageCanvas:: ${size.width},${size.height}");
     int c = 0;
-    print("paint image data:: $images");
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
 
-    for (var i = 0; i < 16; ++i) {
+    for (var i = 0; i < noOfSlize*2; ++i) {
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 0.0),
@@ -168,26 +183,32 @@ class ClippedPainter extends CustomPainter {
           tickPaint,
         );
       } else {
+        //canvas.rotate(pi);
         canvas.save();
-
-        canvas.translate(-0.0, -((size.width) / 2));
-        canvas.clipPath(path);
-        // for (ui.Image image in images)
+        canvas.translate(-0.0, -((size.width) / 2.2));
         if (images[c] != null) {
-          canvas.drawImage(images[c], Offset(0.0, -00.0), new Paint());
+          rect = ui.Offset(size.width/4,size.width/4) & new Size(size.width / 2.4, size.width / 2.4);
+          imageSize = new Size(size.width, size.width);
+          sizes = applyBoxFit(boxfit, imageSize,
+              new Size(size.width / 2  *.44, size.width / 2 * .44));
+          inputSubrect =
+              Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
+          outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
+
+          canvas.drawImageRect(
+              images[c], inputSubrect, outputSubrect, new Paint());
         }
-        //path.layout();
-        canvas.rotate(2 * pi / 2);
+        canvas.rotate(2*pi/2);
         canvas.restore();
         c++;
       }
-      canvas.rotate(2 * pi / 16);
+      canvas.rotate(2 * pi /( noOfSlize*2.0));
     }
     canvas.restore();
   }
 
   @override
-  bool shouldRepaint(ClippedPainter oldDelegate) {
+  bool shouldRepaint(ImagePainter oldDelegate) {
     return true;
   }
 }

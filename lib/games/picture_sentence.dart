@@ -1,7 +1,5 @@
 import 'dart:math';
-// import 'dart:math' as math;
 import 'dart:async';
-// import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
@@ -13,7 +11,6 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:flutter/animation.dart';
-// import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
@@ -50,7 +47,7 @@ class PictureSentenceState extends State<PictureSentence> {
   int _size = 2;
   int indexOfBlank1 = 0;
   int indexOfBlank2 = 0;
-  // String questionText;
+
   String output1 = "";
   String output2 = "";
   Color color = Colors.white;
@@ -76,36 +73,16 @@ class PictureSentenceState extends State<PictureSentence> {
     picturedata = await fetchPictureSentenceData(widget.gameCategoryId);
     print(" fectched data  >>>> $picturedata");
     sentence1 = picturedata.item1;
-    // ans = picturedata.item2;
     choice = picturedata.item2;
-    // ans = _allques.item2;
-    // print(_allques.item3);
-    // ch = _allques.item3;
-    // for (var x = 0; x < ch.length; x++) {
-    //   choice.add(ch[x]);
-    // }
-    // choice.add(ans);
-    // for (var i = 0; i < answerOption.length; i++) {
-    //   completeSentence += sentence1[i];
-    //   for (var j = 0; j < 4; j++) {
-    //    choice.add(answerOption[i][j]);
-    //   }
-    // }
-
+    output1 = "";
+    output2 = "";
+    ans.clear();
     for (var i = 0; i < 2; i++) {
       ans.add(choice[i]);
     }
-    print("My Choices - $choice");
 
     choice.shuffle();
-
-    print("After shuffle Choices - $choice");
-    // _size = min(2, sqrt(choice.length).floor());
-
     _statuses = choice.map((a) => Status.Active).toList(growable: false);
-
-    // print("My shuffled Choices - $choice");
-    print("My states - $_statuses");
 
     setState(() => _isLoading = false);
   }
@@ -120,20 +97,21 @@ class PictureSentenceState extends State<PictureSentence> {
         onPress: () {
           print("ans[0] >>>>> ${ans[0]}");
           print("ans[1] >>>>> ${ans[1]}");
-          if (text == ans[0]) {
+          if (text == ans[0] && output1 == "") {
             output1 = ans[0];
             print(" inside condition ans[0] >>>>> ${ans[0]}");
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-            // widget.onEnd();
-            choice.removeRange(0, choice.length);
-          } else if (text == ans[1]) {
+          } else if (text == ans[1] && output1 != "") {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-            widget.onEnd();
+            new Future.delayed(const Duration(milliseconds: 800), () {
+              widget.onEnd();
+            });
+            choice.clear();
           } else {
             setState(() {
               _statuses[indexOfBlank1] = Status.Wrong;
@@ -154,33 +132,38 @@ class PictureSentenceState extends State<PictureSentence> {
   }
 
   Widget sentenceLayout(String sentence) {
-    List<String> split = sentence.split(" ");
+    List<String> eachWord = sentence.split(" ");
     String sentencePart1 = "";
     String sentencePart2 = "";
-    print("Split >>>>>>>$split");
+    String sentencePart3 = "";
+    int sentencePart1Length;
+    print("$sentence   (length = ${sentence.length-6})");
+    print("Split >>>>>>>$eachWord");
 
-    indexOfBlank1 = sentence.indexOf("1");
-    int listElement1 = split.indexOf("1_");
-    String subString1 = sentence.substring(0, 40);
+    int listElement1 = eachWord.indexOf("1_");
 
-    indexOfBlank2 = sentence.indexOf("2");
-    String subString2 = sentence.substring(40, sentence.length);
-
-    print("split[indexOfBlank1] >>>>>>> ${split[listElement1]}");
+    print("split[indexOfBlank1] >>>>>>> ${eachWord[listElement1]}");
     for (int i = 0; i < listElement1; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart1 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart1 += eachWord[i] + " ";
       }
     }
-    print("sentencePart1 >>>>>>> $sentencePart1");
+    sentencePart1Length = sentencePart1.length;
+    print(
+        "sentencePart1 >>>>>>> $sentencePart1 <<<length ==== $sentencePart1Length >>>");
 
-    int listElement2 = split.indexOf("2_");
+    int listElement2 = eachWord.indexOf("2_");
     for (int i = listElement1; i < listElement2; i++) {
-      if (split[i] != '1_' && split[i] != '2_') {
-        sentencePart2 += split[i] + " ";
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart2 += eachWord[i] + " ";
       }
     }
     print("sentencePart2 >>>>>>> $sentencePart2");
+    for (int i = listElement2; i < eachWord.length; i++) {
+      if (eachWord[i] != '1_' && eachWord[i] != '2_') {
+        sentencePart3 += eachWord[i] + " ";
+      }
+    }
 
     var text1 = new Text(sentencePart1,
         softWrap: true,
@@ -192,7 +175,6 @@ class PictureSentenceState extends State<PictureSentence> {
             padding: const EdgeInsets.all(8.0),
             child: new Stack(children: [
               new Container(
-                child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
                 width: 200.0,
@@ -212,7 +194,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/${ans[0]}.png",
+                              image: "assets/dict/${ans[0].toLowerCase()}.png",
                             )));
                   },
                 ),
@@ -241,7 +223,6 @@ class PictureSentenceState extends State<PictureSentence> {
             padding: const EdgeInsets.all(8.0),
             child: new Stack(children: [
               new Container(
-                child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
                 width: 200.0,
@@ -261,7 +242,7 @@ class PictureSentenceState extends State<PictureSentence> {
                             widthFactor: 0.8,
                             child: new PictureCard(
                               text: "widget.text",
-                              image: "assets/dict/${ans[1]}.png",
+                              image: "assets/dict/${ans[1].toLowerCase()}.png",
                             )));
                   },
                 ),
@@ -279,25 +260,37 @@ class PictureSentenceState extends State<PictureSentence> {
                         color: color,
                         fontSize: 40.0))),
           );
+    var text3 = new Text(sentencePart3,
+        softWrap: true,
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
 
-    return new Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        new Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[text1, blankSpace1],
-        ),
-        new Row(
-          children: <Widget>[text2, blankSpace2],
-        )
-      ],
-    );
+    if ((sentence.length - 6) <= 27) {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+          ),
+        ],
+      );
+    } else {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1],
+          ),
+          new Row(
+            children: <Widget>[text2, blankSpace2, text3],
+          )
+        ],
+      );
+    }
   }
 
   @override
   void didUpdateWidget(PictureSentence oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
     }
@@ -306,7 +299,6 @@ class PictureSentenceState extends State<PictureSentence> {
   @override
   Widget build(BuildContext context) {
     keys = 0;
-
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -348,7 +340,7 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: sentenceLayout(completeSentence)),
+                child: sentenceLayout(sentence1)),
           ),
           new Expanded(
               flex: 2,
@@ -508,8 +500,8 @@ class _PictureCardState extends State<PictureCard> {
             height: 200.0,
             decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                image: new DecorationImage(
-                    fit: BoxFit.fill, image: new AssetImage(widget.image)))),
+                image:
+                    new DecorationImage(image: new AssetImage(widget.image)))),
       );
     });
   }

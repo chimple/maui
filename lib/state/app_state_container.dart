@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flores/flores.dart';
-
+import 'package:maui/repos/user_repo.dart';
 import '../components/flash_card.dart';
 
 class AppStateContainerController extends StatefulWidget {
@@ -32,6 +32,7 @@ class _AppStateContainerControllerState
   List<dynamic> messages;
   String activity;
   String friendId;
+  List<User> users;
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
@@ -135,7 +136,17 @@ class _AppStateContainerControllerState
         message['messageType'] == 'chat' &&
         activity == 'chat') {
       _beginChat(friendId);
+    } else if (message['messageType'] == 'Photo' && activity == 'friends') {
+      _getUsers();
     }
+  }
+
+  void _getUsers() async {
+    activity = 'friends';
+    final userList = await UserRepo().getUsers();
+    setState(() {
+      users = userList;
+    });
   }
 
   @override
@@ -145,6 +156,8 @@ class _AppStateContainerControllerState
       messages: messages,
       friendId: friendId,
       activity: activity,
+      users: users,
+      getUsers: _getUsers,
       setLoggedInUser: _setLoggedInUser,
       play: _play,
       display: _display,
@@ -180,6 +193,8 @@ class AppStateContainer extends InheritedWidget {
   List<dynamic> messages;
   String activity;
   String friendId;
+  List<User> users;
+  final Function() getUsers;
   final Function(User user) setLoggedInUser;
   final Function(String string) play;
   final Function(BuildContext context, String string) display;
@@ -194,6 +209,8 @@ class AppStateContainer extends InheritedWidget {
     @required this.messages,
     @required this.friendId,
     @required this.activity,
+    @required this.users,
+    @required this.getUsers,
     @required this.setLoggedInUser,
     @required this.play,
     @required this.display,
@@ -211,5 +228,5 @@ class AppStateContainer extends InheritedWidget {
 
   @override
   bool updateShouldNotify(AppStateContainer old) =>
-      state != old.state || messages != old.messages;
+      state != old.state || messages != old.messages || users != old.users;
 }
