@@ -84,14 +84,14 @@ class _ScoreScreenState extends State<ScoreScreen>
     otherscore = widget.otherscore;
     otherUser = widget.otherUser;
 
-    for (var i = 0; i < 4; i++) {
-      myScore > (10*i) ? mystars.add("true") : mystars.add("false");      
+    for (var i = 0; i < 3; i++) {
+      myScore > (13*i) ? mystars.add("true") : mystars.add("false");      
     }
-    for (var i = 0; i < 4; i++) {
-      otherScore > (10*i) ? otherstars.add("true") : otherstars.add("false");      
+    for (var i = 0; i < 3; i++) {
+      otherScore > (13*i) ? otherstars.add("true") : otherstars.add("false");      
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 3; i++) {
       final _controller = new AnimationController(
           vsync: this, duration: new Duration(milliseconds: 500));
       _controllers.add(_controller);
@@ -100,7 +100,7 @@ class _ScoreScreenState extends State<ScoreScreen>
       new Future.delayed(Duration(milliseconds: 1000 + (i) * 150), () {
         _controller.forward();
       });
-      if(i == 3) {
+      if(i == 2) {
         print("this ois kvkkv $i");
         flag = true;
       }
@@ -186,12 +186,12 @@ class _ScoreScreenState extends State<ScoreScreen>
     List <Widget> starsMap2 =  otherstars
                               .map((e) => _buildItem(k++, e, ht, wd),)
                               .toList(growable: false);
-    for(var i=0; i < 4; i++){
+    for(var i=0; i < 3; i++){
     tablestars1.add(new ScaleTransition(
                            scale: _animations[i],
                            child: starsMap1[i]));}                       
 
-    for(var l=0; l < 4; l++){
+    for(var l=0; l < 3; l++){
     tablestars2.add(new ScaleTransition(
                            scale: _animations[l],
                            child: starsMap2[l]));}  
@@ -265,7 +265,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new  Row(
-                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                    mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Row(
@@ -290,13 +290,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                       mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.start : MainAxisAlignment.center,
                       crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
-                     new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
+                     new Text( myScore < 13 ? "Poor" : myScore >= 13 && myScore < 26 ? "Good" : myScore >= 26 && myScore < 39 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
                   gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? new Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                    new Text(otherScore < 10 ? "Poor" : otherScore >= 10 && otherScore < 20 ? "Good" : otherScore >= 20 && otherScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
+                    new Text(otherScore < 13 ? "Poor" : otherScore >= 13 && otherScore < 26 ? "Good" : otherScore >= 26 && otherScore < 39 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]) : new Row(),
                   ]),
                 ], 
@@ -421,15 +421,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     double wd = widget.width;
     widget.keys++;
     print("_MyButtonState.build");   
-   
+   print("star height - $ht");
+   print("star width - $wd");
     return new Shake(
       animation: animation,
       child: new IconButton(
         icon: _displayText == "true" ? new Image.asset("assets/star_gained.png") : new Image.asset("assets/star.png"),
         key: new Key("${widget.keys}"),
-        iconSize: ht > wd ? ht * 0.01 : wd * 0.05,        
+        iconSize: ht > wd ? wd * 0.1 : wd * 0.05,        
         color: Colors.black,
         onPressed: () {},
       ));
   }
 }
+// (ht > 1080 ? ht * 0.06 : (ht < 600 ? ht * 0.007 : ht * 0.01))
