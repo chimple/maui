@@ -125,15 +125,14 @@ class _ScoreScreenState extends State<ScoreScreen>
   }
 
   Widget _buildItem(int index, String text, double ht, double wd) {
-    return new LimitedBox(
-      maxHeight: ht * 0.2,
-      maxWidth: ht > wd ? wd * 0.1 : wd * 0.15,
-      child: new MyButton(
-        key: new ValueKey<int>(index),
-        text: text,
-        keys: keys++,
-        onPress: () {}
-        ));
+    return new MyButton(
+      key: new ValueKey<int>(index),
+      text: text,
+      keys: keys++,
+      height: ht,
+      width: wd,
+      onPress: () {}
+      );
   }
   
 
@@ -141,9 +140,6 @@ class _ScoreScreenState extends State<ScoreScreen>
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
     
     int j=0;
     int k = 0;
@@ -179,6 +175,9 @@ class _ScoreScreenState extends State<ScoreScreen>
 
     return new LayoutBuilder(builder: (context, constraints) {
       print("flag = $flag");
+    double ht = constraints.maxHeight;
+    double wd = constraints.maxWidth;
+
     List <Widget> starsMap1 =  mystars
                               .map((e) => _buildItem(j++, e, ht, wd),)
                               .toList(growable: false);
@@ -270,7 +269,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.center : MainAxisAlignment.center,
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.center : MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: tablestars1),
 
@@ -288,8 +287,8 @@ class _ScoreScreenState extends State<ScoreScreen>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Row(
-                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? MainAxisAlignment.start : MainAxisAlignment.center,
-                      crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? MainAxisAlignment.start : MainAxisAlignment.center,
+                      crossAxisAlignment: gameDisplay == GameDisplay.myHeadToHead || gameDisplay == GameDisplay.networkTurnByTurn || gameDisplay == GameDisplay.localTurnByTurn ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                       children: <Widget>[
                      new Text( myScore < 10 ? "Poor" : myScore >= 10 && myScore < 20 ? "Good" : myScore >= 20 && myScore < 30 ? "Very Good" : "Excellent", style: new TextStyle(color: Colors.black, fontSize: ht > wd ? ht * 0.05 : wd * 0.04,),)
                   ]),
@@ -313,41 +312,39 @@ class _ScoreScreenState extends State<ScoreScreen>
                crossAxisAlignment: CrossAxisAlignment.center,
                mainAxisAlignment: MainAxisAlignment.spaceAround,
                children: <Widget>[
-                 new Container(
-                   
-                     child: IconButton(
-                         icon: new Image.asset("assets/home_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                         onPressed: () {
-                          
-                             if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                                Navigator.pop(context);
-                              print(" hi ");
-                             }
-                          
-                         })),
+                 IconButton(
+                     icon: new Image.asset("assets/home_button.png"),
+                     iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                     onPressed: () {
+                      
+                         if (flag == true) {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                            Navigator.pop(context);
+                          print(" hi ");
+                         }                      
+                     }),
                  
-                  new Container(                    
-                     child: IconButton(
-                         icon: new Image.asset("assets/forward_button.png"),
-                         iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                         onPressed: () {
-                            
-                             if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              print(" forwAARS ");
-                             }
+                  IconButton(
+                      icon: new Image.asset("assets/forward_button.png"),
+                      iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                      onPressed: () {
                          
-                         }),
-                   ),
+                          if (flag == true) {
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                           Navigator.pop(context);
+                           print(" forwAARS ");
+                          }
+                      
+                      }),
                ],
              )),
             
+            ht > wd ? new Padding(
+                          padding: new EdgeInsets.all(ht * 0.001),
+                        ) : new Padding(padding: new EdgeInsets.all(0.0)),
              
             ],
         )));
@@ -363,10 +360,13 @@ class MyButton extends StatefulWidget {
       {Key key,
       this.text,
       this.keys,
+      this.height,
+      this.width,
       this.onPress})
       : super(key: key);
   final String text;
   final VoidCallback onPress;
+  double height, width;
   int keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -416,9 +416,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
+    // Size media = MediaQuery.of(context).size;
+    double ht = widget.height;
+    double wd = widget.width;
     widget.keys++;
     print("_MyButtonState.build");   
    
