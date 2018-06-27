@@ -18,6 +18,7 @@ dependencies:
   flutter_circular_chart: "^0.0.3"
   shared_preferences: ^0.4.2
   camera: 0.2.1
+  nima: 1.0.0
   flores:
     git:
       https://github.com/chimple/flores.git
@@ -46,6 +47,8 @@ flutter:
 
   assets:
     - assets/database.db
+    - assets/solo.nima
+    - assets/solo.png
     - assets/chimple_logo.png
     - assets/african_child.png
     - assets/indian_child.png
