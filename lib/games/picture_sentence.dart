@@ -97,13 +97,13 @@ class PictureSentenceState extends State<PictureSentence> {
         onPress: () {
           print("ans[0] >>>>> ${ans[0]}");
           print("ans[1] >>>>> ${ans[1]}");
-          if (text == ans[0]) {
+          if (text == ans[0] && output1 == "") {
             output1 = ans[0];
             print(" inside condition ans[0] >>>>> ${ans[0]}");
             scoretrack = scoretrack + 4;
             widget.onScore(4);
             widget.onProgress(1.0);
-          } else if (text == ans[1]) {
+          } else if (text == ans[1] && output1 != "") {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
             widget.onScore(4);
@@ -111,8 +111,7 @@ class PictureSentenceState extends State<PictureSentence> {
             new Future.delayed(const Duration(milliseconds: 800), () {
               widget.onEnd();
             });
-
-            choice = [];
+            choice.clear();
           } else {
             setState(() {
               _statuses[indexOfBlank1] = Status.Wrong;
@@ -176,7 +175,6 @@ class PictureSentenceState extends State<PictureSentence> {
             padding: const EdgeInsets.all(8.0),
             child: new Stack(children: [
               new Container(
-                child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
                 width: 200.0,
@@ -225,7 +223,6 @@ class PictureSentenceState extends State<PictureSentence> {
             padding: const EdgeInsets.all(8.0),
             child: new Stack(children: [
               new Container(
-                child: new Text(""),
                 color: Colors.grey,
                 height: 40.0,
                 width: 200.0,
@@ -282,7 +279,6 @@ class PictureSentenceState extends State<PictureSentence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[text1, blankSpace1],
           ),
           new Row(
