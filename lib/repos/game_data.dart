@@ -699,7 +699,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
       break;
     case 5:
       return new Tuple2(
-          "I love eating 1_ and 2_ .", ['mango', 'grapes', 'sun', 'moon']);
+          "I love eating 1_ and 2_ .", ['mango', 'grape', 'sun', 'moon']);
       break;
     case 6:
       return new Tuple2("Snowy is 1_ but i am trying to make her 2_ .",
