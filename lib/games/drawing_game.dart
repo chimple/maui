@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import '../components/drawing.dart';
 import 'dart:ui' as ui;
 
@@ -7,6 +8,7 @@ class Drawing extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
 
   Drawing(
@@ -15,7 +17,8 @@ class Drawing extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
-      this.isRotated})
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -26,6 +29,44 @@ class DrawScreen extends State<Drawing> {
   DrawPadController _padController = new DrawPadController();
   bool visibilityColor = false;
   bool visibilityWidth = false;
+  bool _isLoading = true;
+   List<String> myData;
+  List<String> otherData;
+
+    Map<String, dynamic> toJsonMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['myData'] = myData;
+    data['otherData'] = otherData;
+    return data;
+  }
+
+  void fromJsonMap(Map<String, dynamic> data) {
+    otherData = data['myData'].cast<String>();
+    myData = data['otherData'].cast<String>();
+  }
+
+    @override
+  void initState() {
+    super.initState();
+    _initBoard();
+  }
+    void _initBoard() async {
+    setState(() => _isLoading = true);
+    print('gameData: ${widget.gameConfig.gameData}');
+    if (widget.gameConfig.gameData != null) {
+      fromJsonMap(widget.gameConfig.gameData);
+    } else {
+      myData = [];
+      otherData = [];
+    }
+  }
+    @override
+  void didUpdateWidget(Drawing oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
+  }
 
   _changed(bool visibility, String field) {
     setState(() {
@@ -61,24 +102,7 @@ class DrawScreen extends State<Drawing> {
       0xffd50670,
       0xff00e876,
       0xffffe67f,
-      0xff29624f,
-      0xffd53450,
-      0xff00e676,
-      0xffffd54f,
-      0xff2962ff,
-      0xffd50760,
-      0xff00e676,
-      0xffffd68f,
-      0xff000000,
-      0xffd50000,
-      0xff00e676,
-      0xffffd75f,
-      0xff2962ff,
-      0xffd50670,
-      0xff00e876,
-      0xffffe67f,
-      0xff29624f,
-      0xffd53450,
+      0xff29624f
     ];
     List<double> width_val = [
       2.0,
@@ -92,19 +116,7 @@ class DrawScreen extends State<Drawing> {
       22.0,
       25.0,
       28.0,
-      30.0,
-      2.0,
-      5.0,
-      8.0,
-      10.0,
-      12.0,
-      15.0,
-      18.0,
-      20.0,
-      22.0,
-      25.0,
-      28.0,
-      30.0,
+      30.0
     ];
     // var X = color_val;
 
