@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
 import '../components/SecondScreen.dart';

@@ -75,22 +75,20 @@ class Drawing extends StatefulWidget {
   Drawing(this.output);
 
   @override
-  State createState() => new MyHomePageState(output);
+  State createState() => new MyHomePageState();
 }
 
 class MyHomePageState extends State<Drawing> {
-  String output;
-
-  MyHomePageState(this.output);
-
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return new Scaffold(
-        body: new Container(
-            child: new Center(
-                child: new Container(
-      child: new MyImagePage(this.output),
-    ))));
+        body: new Center(
+            child: new Container(
+              margin: orientation == Orientation.portrait ? EdgeInsets.only(top: 5.0):EdgeInsets.only(left: 5.0),
+                    color: Colors.grey,
+      child: new MyImagePage(widget.output),
+    )));
   }
 }
 
@@ -102,13 +100,10 @@ class MyImagePage extends StatefulWidget {
 // var data = json.decode(output);
 
   @override
-  State createState() => new MyDrawPageState(this.output);
+  State createState() => new MyDrawPageState();
 }
 
 class MyDrawPageState extends State<MyImagePage> {
-  String output = null;
-
-  MyDrawPageState(this.output);
 
 // List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
   DrawPainting currentPainter;
@@ -117,10 +112,10 @@ class MyDrawPageState extends State<MyImagePage> {
   Widget build(BuildContext context) {
 // print({"the decoded value is : " : output});
 
-    currentPainter = new DrawPainting(output);
+    currentPainter = new DrawPainting(widget.output);
 
     return new Container(
-      margin: new EdgeInsets.all(5.0),
+      // margin: new EdgeInsets.all(5.0),
       child: new Card(
         child: new ConstrainedBox(
           constraints: const BoxConstraints.expand(),
@@ -208,7 +203,7 @@ class OptionState extends State<DrawOptions> {
   void _initBoard() async {
     setState(() => _isLoading = true);
     for (var i = 0; i < _size; i++) {
-      widget.choice.forEach((e) {
+      widget.choice..forEach((e) {
         _ans.add(e);
       });
     }

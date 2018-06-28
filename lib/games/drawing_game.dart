@@ -3,7 +3,6 @@ import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import '../components/drawing.dart';
 import 'package:maui/repos/game_data.dart';
-import 'dart:ui' as ui;
 
 class Drawing extends StatefulWidget {
   Function onScore;
@@ -34,43 +33,44 @@ class DrawScreen extends State<Drawing> {
   bool visibilityColor = false;
   bool visibilityWidth = false;
   bool _isLoading = true;
-   List<String> myData;
-  List<String> otherData;
+  List<String> DrawData;
+  List<String> ReceiveData;
   List<String> choice = [];
-Tuple2<String, List<String>> drawingData;
-var ansimage;
-    Map<String, dynamic> toJsonMap() {
+  Tuple2<String, List<String>> drawingData;
+  var ansimage;
+  Map<String, dynamic> toJsonMap() {
     Map<String, dynamic> data = new Map<String, dynamic>();
-    data['myData'] = myData;
-    data['otherData'] = otherData;
+    data['myData'] = DrawData;
+    data['otherData'] = ReceiveData;
     return data;
   }
 
   void fromJsonMap(Map<String, dynamic> data) {
-    otherData = data['myData'].cast<String>();
-    myData = data['otherData'].cast<String>();
+    ReceiveData = data['myData'].cast<String>();
+    DrawData = data['otherData'].cast<String>();
   }
 
-    @override
+  @override
   void initState() {
     super.initState();
     _initBoard();
   }
-  
-    void _initBoard() async {
+
+  void _initBoard() async {
     setState(() => _isLoading = true);
     drawingData = await fetchDrawingData(widget.gameCategoryId);
-choice = drawingData.item2;
-ansimage=choice[0];
+    choice = drawingData.item2;
+    ansimage = choice[0];
     print('gameData: ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
       fromJsonMap(widget.gameConfig.gameData);
     } else {
-      myData = [];
-      otherData = [];
+      DrawData = [];
+      ReceiveData = [];
     }
   }
-    @override
+
+  @override
   void didUpdateWidget(Drawing oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
@@ -93,9 +93,6 @@ ansimage=choice[0];
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     MediaQueryData media = MediaQuery.of(context);
-//    print({"this is mediaaa1:": media.size});
-//    final height = media.size.height;
-//    final width = media.size.width;
     var assetsImage = new AssetImage('assets/dict/${choice[1]}.png');
     List<int> color_val = [
       0xff00e676,
@@ -189,17 +186,14 @@ ansimage=choice[0];
           // ),
           //),
           new FittedBox(
-            child: new FittedBox(
-              fit: BoxFit.fill,
-              child: new Container(
-                color: Colors.grey,
-                width: constraints.maxWidth,
-                height: constraints.maxHeight * 0.5,
-                margin: EdgeInsets.only(top: 5.0),
-                child: new MyDrawPage(_padController,choice,
-                    key: new GlobalObjectKey('MyDrawPage')),
-                key: new Key('draw_screen'),
-              ),
+            child: new Container(
+              color: Colors.grey,
+              width: constraints.maxWidth,
+              height: constraints.maxHeight * 0.5,
+              margin: EdgeInsets.only(top: 5.0),
+              child: new MyDrawPage(_padController, choice,
+                  key: new GlobalObjectKey('MyDrawPage')),
+              key: new Key('draw_screen'),
             ),
           ),
           new Row(
@@ -390,7 +384,7 @@ ansimage=choice[0];
                     height: constraints.maxHeight * 0.75,
 
                     // otherwise the logo will be tiny
-                    child: new MyDrawPage(_padController,choice,
+                    child: new MyDrawPage(_padController, choice,
                         key: new GlobalObjectKey('MyDrawPage')),
                     key: new Key('draw_screen'),
                   ),
