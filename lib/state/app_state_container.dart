@@ -1,17 +1,17 @@
-import 'dart:io';
-import 'package:audioplayer/audioplayer.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:meta/meta.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flores/flores.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
-import '../components/flash_card.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:maui/screens/chat_screen.dart';
 
 class AppStateContainerController extends StatefulWidget {
   final AppState state;
@@ -20,7 +20,7 @@ class AppStateContainerController extends StatefulWidget {
   AppStateContainerController({this.child, this.state});
 
   @override
-  State<StatefulWidget> createState() =>
+  _AppStateContainerControllerState createState() =>
       new _AppStateContainerControllerState();
 }
 
@@ -36,6 +36,7 @@ class _AppStateContainerControllerState
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   @override
   void initState() {
@@ -50,6 +51,14 @@ class _AppStateContainerControllerState
       _onReceiveMessage(message);
     });
     _initAudioPlayer();
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        selectNotification: onSelectNotification);
   }
 
   void _initAudioPlayer() {
@@ -60,6 +69,41 @@ class _AppStateContainerControllerState
     _audioPlayer.setErrorHandler((msg) {
       _isPlaying = false;
     });
+  }
+
+  Future _showNotification(
+      String userId, String title, String body, String payload) async {
+    User user = await UserRepo().getUser(userId);
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        'maui_id', 'maui_name', 'maui_description',
+        largeIcon: user.image,
+        largeIconBitmapSource: BitmapSource.FilePath,
+        importance: Importance.Max,
+        priority: Priority.High);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin
+        .show(0, title, body, platformChannelSpecifics, payload: payload);
+  }
+
+  Future onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+    var split = payload.split(':');
+    debugPrint('split $split');
+    if (split[0] == 'chat') {
+      User user = await UserRepo().getUser(split[1]);
+      debugPrint('navigating to $user');
+      await Navigator.push(
+          context,
+          MaterialPageRoute<Null>(
+              builder: (BuildContext context) => new ChatScreen(
+                  myId: state.loggedInUser.id,
+                  friendId: user.id,
+                  friendImageUrl: user.image)));
+    }
   }
 
   void _play(String fileName) async {
@@ -131,6 +175,18 @@ class _AppStateContainerControllerState
   void _onReceiveMessage(Map<dynamic, dynamic> message) async {
     print(
         '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
+    if (message['recipientUserId'] == state.loggedInUser.id) {
+      if (message['messageType'] == 'chat') {
+        _showNotification(
+            message['userId'],
+            message['messageType'],
+            message['message'],
+            message['messageType'] + ':' + message['userId']);
+      } else if (message['messageType'] != 'Photo') {
+        _showNotification(message['userId'], message['messageType'], '',
+            message['messageType'] + ':' + message['userId']);
+      }
+    }
     if (message['recipientUserId'] == state.loggedInUser.id &&
         message['userId'] == friendId &&
         message['messageType'] == 'chat' &&
