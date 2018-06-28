@@ -563,7 +563,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
-            gameConfig: widget.gameConfig);
+            gameConfig: widget.gameConfig,
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'dice':
         maxIterations = -1;
