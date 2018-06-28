@@ -212,6 +212,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   int playTime = 10000;
   AnimationController _controller;
   Animation<Offset> _animation;
+  int _cumulativeIncrement = 0;
 
   @override
   void initState() {
@@ -322,7 +323,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                               new Center(
                                 child: Nima(
                                     name: widget.gameName,
-                                    score: widget.gameConfig.myScore,
+                                    score: _cumulativeIncrement,
                                     tag: !oh2h
                                         ? 'assets/hoodie/${widget.gameName}.png'
                                         : 'other.png'),
@@ -380,6 +381,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         widget.gameConfig.otherScore =
             max(0, widget.gameConfig.otherScore + incrementScore);
       }
+      _cumulativeIncrement += incrementScore;
     });
     //for now we only pass myscore up to the head to head
     if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
