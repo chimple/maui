@@ -51,11 +51,13 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   List<String> _categoryup=[];
   List<String> _categorydown=[];
   List<String> categoryName = [];
+  List<String> newlist = [];
   List<String> listOfThings = [];
   List<String> listOfSyllables =[];
+  List<String> listOfSyllablesremove =[];
   List<String> listOfSyllablescopy = [];
   List<String> newSyllables = [];
-  List<String> dummylist = ['eq','ag','fg','cv','bn','mk','lk','asd','po','qw','tyu','uy','cb','ni','oiu','kjh','ko','za','aq','df'];
+  List<String> dummylist = ['eq','ag','fg','cv','bn','mk','lk','asd','po','qw','tyu','uy','cb','ni','oiu','kjh','ko','za','aq'];
   bool _isLoading = true;
   Map<String, List<String>> data1;
   Map<String, Map<String, List<String>>> data;
@@ -77,7 +79,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
     _categoryup = categoryName.sublist(0, 2);
     _categorydown = categoryName.sublist(2, 4);
       listOfSyllables.addAll(dummylist);
-    for (int i = 0; i < words.length; i++) listOfSyllables.remove(words[i]);
+    print('list of syllables is $listOfSyllables'); 
+    print('word is vefore $words');
+   
+    newlist.addAll(words);
+    for (int i = 0; i < newlist.length; i++) listOfSyllables.remove(newlist[i]);
+   // listOfSyllablesremove=listOfSyllables;
+    print('list of syll.remv is $listOfSyllables');
+   // print('newlist is $newlist');
+    print('word is $words');
     listOfSyllablescopy = listOfSyllables.sublist(0, 19);
     listOfSyllablescopy.shuffle(); 
     setState(() => _isLoading = false);
@@ -188,6 +198,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       });
     } else {
       toAnimateFunction();
+      words.clear();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
