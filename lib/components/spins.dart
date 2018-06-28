@@ -64,9 +64,9 @@ class CirclePainter extends CustomPainter {
   final int noOfSlice;
   final int maxChar;
   List<String> data = [];
-  final double rotationPercent;
-  final rotation, tickPaint, textStyle, textPainter;
 
+  final rotation, tickPaint, textStyle;
+  final textPainter;
   final String maxString;
   double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
 
@@ -152,16 +152,17 @@ class ImagePainter extends CustomPainter {
       @required this.images,
       @required this.rotation,
       this.boxfit = BoxFit.contain})
-      : path = new Path()
-          ..addOval(new Rect.fromCircle(
-            center: new Offset(75.0, 75.0),
-            radius: 40.0,
-          )),
+      :
+        // : path = new Path()
+        //     ..addOval(new Rect.fromCircle(
+        //       center: new Offset(75.0, 75.0),
+        //       radius: 40.0,
+        //     )),
         tickPaint = new Paint() {
     tickPaint.strokeWidth = 2.5;
   }
   final int noOfSlice;
-  final path;
+  //final path;
   final tickPaint;
   double rotation = 0.0;
 
