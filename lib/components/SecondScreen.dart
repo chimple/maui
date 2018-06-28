@@ -14,10 +14,15 @@ import 'package:maui/state/app_state.dart';
 
 import '../games/single_game.dart';
 
-class SecondScreen extends StatelessWidget {
+class SecondScreen extends StatefulWidget {
   String output;
+  final List choice;
+  SecondScreen(this.output, this.choice);
 
-  SecondScreen(this.output);
+  @override
+  State createState() => new SecondScreenState();
+}
+class SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +47,10 @@ class SecondScreen extends StatelessWidget {
                 new Container(
                     height: height > width ? height * 0.45 : height * .75,
                     width: width > height ? width * 0.6 : width * .95,
-                    child: new Drawing(output)),
+                    child: new Drawing(widget.output)),
                 new Expanded(
 // height: constraints.maxHeight*.3, width: constraints.maxWidth,
-                    child: new DrawOptions()),
+                    child: new DrawOptions(widget.choice)),
               ],
             )
           : new Row(
@@ -54,10 +59,10 @@ class SecondScreen extends StatelessWidget {
                 new Container(
                     height: height > width ? height * 0.5 : height * .5625,
                     width: width > height ? width * 0.45 : width,
-                    child: new Drawing(output)),
+                    child: new Drawing(widget.output)),
                 new Expanded(
 // height: constraints.maxHeight*.3, width: constraints.maxWidth,
-                    child: new DrawOptions()),
+                    child: new DrawOptions(widget.choice)),
               ],
             ),
     );
@@ -177,32 +182,20 @@ class DrawPainting extends CustomPainter {
 }
 
 class DrawOptions extends StatefulWidget {
-  Function onScore;
-  Function onProgress;
-  Function onEnd;
-  int iteration;
-  int gameCategoryId;
-  bool isRotated;
 
-  DrawOptions(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated})
-      : super(key: key);
+ List choice;
+
+  DrawOptions(this.choice);
 
   @override
-  State createState() => new optionState();
+  State createState() => new OptionState();
 }
 
-class optionState extends State<DrawOptions> {
+class OptionState extends State<DrawOptions> {
   bool _isLoading = true;
   Tuple3<String, String, List<String>> _allques;
   int _size = 2;
-  List<String> choice = ['Apple', 'Banana', 'Grape', 'Orange'];
+  // List<String> choice = ['Apple', 'Banana', 'Grape', 'Orange'];
   List<String> _ans = [];
   bool isCorrect;
 
@@ -215,7 +208,7 @@ class optionState extends State<DrawOptions> {
   void _initBoard() async {
     setState(() => _isLoading = true);
     for (var i = 0; i < _size; i++) {
-      choice.forEach((e) {
+      widget.choice.forEach((e) {
         _ans.add(e);
       });
     }
@@ -228,26 +221,18 @@ class optionState extends State<DrawOptions> {
         text: text,
         onPress: () {
           if (text == _ans) {
-            widget.onScore(1);
-            widget.onProgress(1.0);
-            widget.onEnd();
+            // widget.onScore(1);
+            // widget.onProgress(1.0);
+            // widget.onEnd();
             _initBoard();
-            choice = [];
           } else {
-            widget.onScore(-1);
+            // widget.onScore(-1);
           }
         });
   }
 
   @override
   void didUpdateWidget(DrawOptions oldWidget) {
-// print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-// print(_allques);
-    }
-    choice = [];
   }
 
   @override
