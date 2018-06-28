@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:tuple/tuple.dart';
 import '../components/drawing.dart';
+import 'package:maui/repos/game_data.dart';
 import 'dart:ui' as ui;
 
 class Drawing extends StatefulWidget {
@@ -8,6 +10,7 @@ class Drawing extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  int gameCategoryId;
   GameConfig gameConfig;
   bool isRotated;
 
@@ -17,6 +20,7 @@ class Drawing extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
+      this.gameCategoryId,
       this.gameConfig,
       this.isRotated = false})
       : super(key: key);
@@ -32,7 +36,9 @@ class DrawScreen extends State<Drawing> {
   bool _isLoading = true;
    List<String> myData;
   List<String> otherData;
-
+  List<String> choice = [];
+Tuple2<String, List<String>> drawingData;
+var ansimage;
     Map<String, dynamic> toJsonMap() {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['myData'] = myData;
@@ -50,8 +56,12 @@ class DrawScreen extends State<Drawing> {
     super.initState();
     _initBoard();
   }
+  
     void _initBoard() async {
     setState(() => _isLoading = true);
+    drawingData = await fetchDrawingData(widget.gameCategoryId);
+choice = drawingData.item2;
+ansimage=choice[0];
     print('gameData: ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
       fromJsonMap(widget.gameConfig.gameData);
@@ -86,7 +96,7 @@ class DrawScreen extends State<Drawing> {
 //    print({"this is mediaaa1:": media.size});
 //    final height = media.size.height;
 //    final width = media.size.width;
-    var assetsImage = new AssetImage('assets/apple.png');
+    var assetsImage = new AssetImage('assets/dict/${choice[1]}.png');
     List<int> color_val = [
       0xff00e676,
       0xffffd54f,
@@ -137,7 +147,7 @@ class DrawScreen extends State<Drawing> {
             child: new Container(
                 width: constraints.maxWidth,
                 height: constraints.maxHeight * 0.08,
-                child: new Text("APPLE",
+                child: new Text('${choice[1]}',
                     key: new Key('imgtext'),
                     textAlign: TextAlign.center,
                     style: new TextStyle(
@@ -186,7 +196,7 @@ class DrawScreen extends State<Drawing> {
                 width: constraints.maxWidth,
                 height: constraints.maxHeight * 0.5,
                 margin: EdgeInsets.only(top: 5.0),
-                child: new MyDrawPage(_padController,
+                child: new MyDrawPage(_padController,choice,
                     key: new GlobalObjectKey('MyDrawPage')),
                 key: new Key('draw_screen'),
               ),
@@ -380,7 +390,7 @@ class DrawScreen extends State<Drawing> {
                     height: constraints.maxHeight * 0.75,
 
                     // otherwise the logo will be tiny
-                    child: new MyDrawPage(_padController,
+                    child: new MyDrawPage(_padController,choice,
                         key: new GlobalObjectKey('MyDrawPage')),
                     key: new Key('draw_screen'),
                   ),
