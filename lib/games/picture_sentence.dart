@@ -136,7 +136,7 @@ class PictureSentenceState extends State<PictureSentence> {
     String sentencePart1 = "";
     String sentencePart2 = "";
     String sentencePart3 = "";
-    int sentencePart1Length;
+
     print("$sentence   (length = ${sentence.length-6})");
     print("Split >>>>>>>$eachWord");
 
@@ -148,9 +148,9 @@ class PictureSentenceState extends State<PictureSentence> {
         sentencePart1 += eachWord[i] + " ";
       }
     }
-    sentencePart1Length = sentencePart1.length;
+
     print(
-        "sentencePart1 >>>>>>> $sentencePart1 <<<length ==== $sentencePart1Length >>>");
+        "sentencePart1 >>>>>>> $sentencePart1 <<<length ==== ${sentencePart1.length} >>>");
 
     int listElement2 = eachWord.indexOf("2_");
     for (int i = listElement1; i < listElement2; i++) {
@@ -158,13 +158,15 @@ class PictureSentenceState extends State<PictureSentence> {
         sentencePart2 += eachWord[i] + " ";
       }
     }
-    print("sentencePart2 >>>>>>> $sentencePart2");
+    print(
+        "sentencePart2 >>>>>>> $sentencePart2 <<<length ==== ${sentencePart2.length} >>>");
     for (int i = listElement2; i < eachWord.length; i++) {
       if (eachWord[i] != '1_' && eachWord[i] != '2_') {
         sentencePart3 += eachWord[i] + " ";
       }
     }
-
+    print(
+        "sentencePart3 >>>>>>> $sentencePart3 <<<length ==== ${sentencePart3.length} >>>");
     var text1 = new Text(sentencePart1,
         softWrap: true,
         style: new TextStyle(
@@ -177,7 +179,7 @@ class PictureSentenceState extends State<PictureSentence> {
               new Container(
                 color: Colors.grey,
                 height: 40.0,
-                width: 200.0,
+                width: 170.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -225,7 +227,7 @@ class PictureSentenceState extends State<PictureSentence> {
               new Container(
                 color: Colors.grey,
                 height: 40.0,
-                width: 200.0,
+                width: 170.0,
               ),
               new Positioned(
                 right: 1.0,
@@ -264,16 +266,29 @@ class PictureSentenceState extends State<PictureSentence> {
         softWrap: true,
         style: new TextStyle(
             fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
-
-    if ((sentence.length - 6) <= 27) {
-      return new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Row(
-            children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
-          ),
-        ],
-      );
+    if (sentencePart1.length + 8 + sentencePart2.length < 37) {
+      if ((sentence.length - 6) < 25) {
+        return new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Row(
+              children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+            ),
+          ],
+        );
+      } else {
+        return new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Row(
+              children: <Widget>[text1, blankSpace1, text2],
+            ),
+            new Row(
+              children: <Widget>[blankSpace2, text3],
+            )
+          ],
+        );
+      }
     } else {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
