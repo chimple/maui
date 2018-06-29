@@ -676,7 +676,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
     int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 8));
-  switch (0) {
+  switch (startNum) {
     case 0:
       return new Tuple2("Mount Everest is the highest 1_ in the 2_ .",
           ['mountain', 'earth', 'chair', 'ball']);
