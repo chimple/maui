@@ -46,22 +46,12 @@ class ArrowPainter extends CustomPainter {
 class CirclePainter extends CustomPainter {
   // final LONG_TICK = 50.0;
   // final SHORT_TICK = 4.0;
-  final int noOfSlice;
-  int maxChar;
-  List<String> data = [];
-  double sizePaint;
-
-  final double rotationPercent;
-  final rotation;
-  final tickPaint;
-  final textPainter;
-  final textStyle;
 
   CirclePainter({
+    this.maxString,
     this.maxChar,
-    this.noOfSlice,
-    this.data,
-    this.sizePaint: 0.0,
+    @required this.noOfSlice,
+    @required this.data,
     this.rotation = 0.0,
   })  : tickPaint = new Paint(),
         textPainter = new TextPainter(
@@ -71,18 +61,29 @@ class CirclePainter extends CustomPainter {
         ) {
     tickPaint.strokeWidth = 2.5;
   }
+  final int noOfSlice;
+  final int maxChar;
+  List<String> data = [];
+
+  final rotation, tickPaint, textStyle;
+  final textPainter;
+  final String maxString;
   double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
-  String _maxString = '';
+
   @override
   void paint(Canvas canvas, Size size) {
-    _maxString = data[0];
-    for (int i = 1; i < data.length; i++) {
-      if (_maxString.length < data[i].length) {
-        _maxString = data[i];
-      }
+    double _uperCaseConstant = 0.0;
+    if (maxString.toUpperCase() == maxString.toUpperCase()) {
+      _uperCaseConstant = 8.0;
     }
-    int _wLength = 'w'.allMatches(_maxString.toLowerCase()).length;
-    print("max len string:: ${_wLength}");
+    double _const = 0.0;
+    if (noOfSlice == 2) {
+      _const = -25.0;
+    } else if (noOfSlice == 4) {
+      _const = -21.0;
+    }
+    int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
+    //print("max len string:: ${_wLength}");
     if (_wLength > 0) {
       _wFactor = 2.5 / _wLength.toDouble();
     } else {
@@ -92,9 +93,9 @@ class CirclePainter extends CustomPainter {
     _angle = 360 / (noOfSlice * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
-    print("_angle :: $_angle");
-    print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize = _wFactor * (_baseLength * 1.24) / (maxChar);
+    // print("_angle :: $_angle");
+    // print("radius :: ${2*radius*sin(_radiun)}");
+    _fontSize = _wFactor * (_baseLength * 1.22) / (maxChar);
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -120,7 +121,7 @@ class CirclePainter extends CustomPainter {
             fontStyle: FontStyle.italic,
             color: Colors.black,
             fontFamily: 'BebasNeue',
-            fontSize: _fontSize,
+            fontSize: _fontSize - _uperCaseConstant,
           ),
         );
         incr++;
@@ -131,8 +132,8 @@ class CirclePainter extends CustomPainter {
         textPainter.paint(
           canvas,
           new Offset(
-            -((5.2 * _text.length) * _baseLength) / 117.0,
-            -(size.height / 7.200),
+            -((5.20 * _text.length) * _baseLength) / 117.50,
+            -(size.height / 7.800 + _const),
           ),
         );
         canvas.restore();
@@ -153,40 +154,40 @@ class ImagePainter extends CustomPainter {
   List<ui.Image> images = new List<ui.Image>();
   ImagePainter(
       {Key key,
-      this.noOfSlice,
-      this.renderBox,
-      this.parentRender,
+      @required this.noOfSlice,
       @required this.images,
       @required this.rotation,
       this.boxfit = BoxFit.contain})
-      : path = new Path()
-          ..addOval(new Rect.fromCircle(
-            center: new Offset(75.0, 75.0),
-            radius: 40.0,
-          )),
+      :
+        // : path = new Path()
+        //     ..addOval(new Rect.fromCircle(
+        //       center: new Offset(75.0, 75.0),
+        //       radius: 40.0,
+        //     )),
         tickPaint = new Paint() {
     tickPaint.strokeWidth = 2.5;
   }
   final int noOfSlice;
-  final path;
+  //final path;
   final tickPaint;
   double rotation = 0.0;
-  final RenderBox renderBox;
-  final RenderBox parentRender;
+
   final BoxFit boxfit;
 
   ui.Image img;
   ui.Rect rect, inputSubrect, outputSubrect;
   Size imageSize;
   FittedSizes sizes;
-  double radius, baseLength;
+  double radius, baseLength, _angle, _radiun, _baseLength, _imageCircleradius;
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
     radius = size.width / 2;
-    baseLength = radius * sin((360 / noOfSlice * 2) * pi / 180);
-    print("size of the image canvas : $size");
-    // print("size of canvas imageCanvas:: ${size.width},${size.height}");
+    _angle = 360 / (noOfSlice * 2.0);
+    _radiun = (_angle * pi) / 180;
+    _baseLength = 2 * radius * sin(_radiun);
+    _imageCircleradius = (_baseLength / 2) * tan(_radiun);
+    print("circle radisu:: $_imageCircleradius");
     int c = 0;
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
@@ -205,7 +206,7 @@ class ImagePainter extends CustomPainter {
         canvas.translate(-0.0, -((size.width) / 2.2));
         if (images[c] != null) {
           rect =
-              ui.Offset(size.width / 15, size.width / 8) & new Size(0.0, 0.0);
+              ui.Offset(size.width / 32, size.width / 9) & new Size(0.0, 0.0);
           //rect = ui.Offset.zero & new Size(size.height, size.height);
           imageSize = new Size(size.width, size.width);
           sizes = applyBoxFit(boxfit, imageSize,
@@ -217,7 +218,7 @@ class ImagePainter extends CustomPainter {
           canvas.drawImageRect(
               images[c], inputSubrect, outputSubrect, new Paint());
         }
-        //canvas.rotate(2 * pi/2);
+
         canvas.restore();
         c++;
       }
