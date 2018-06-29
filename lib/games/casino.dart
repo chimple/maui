@@ -44,7 +44,7 @@ class _CasinoState extends State<Casino> {
   bool _isLoading = true;
 
   var givenWordList = new List();
-  var lst = new List();
+  List<String> lst = [];
   int i;
   int j;
   int count;
@@ -127,89 +127,85 @@ class _CasinoState extends State<Casino> {
     return new Container(
       height: state.buttonHeight * 2,
       width: state.buttonWidth,
-//    padding: const EdgeInsets.all(8.0),
-      child: new DefaultTextStyle(
-        style: const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w900),
-        child: new CasinoPicker(
-          diameterRatio: 1.0,
-          key: new ValueKey(j),
-          scrollController: new CasinoScrollController(
-              initialItem: _selectedItemIndex * random),
-          itemExtent: 50.0,
-          backgroundColor: new Color(0xFF734052),
-          // backgroundColor: Colors.white,
-          // isRotated: widget.isRotated,
-          onSelectedItemChanged: (int index) {
-            print("buttonNumber  $buttonNumber is triggered");
+      child: new CasinoPicker(
+        diameterRatio: 1.0,
+        key: new ValueKey(j),
+        scrollController: new CasinoScrollController(
+            initialItem: _selectedItemIndex * random),
+        itemExtent: 50.0,
+        backgroundColor: new Color(0xFF734052),
+        // backgroundColor: Colors.white,
+        // isRotated: widget.isRotated,
+        onSelectedItemChanged: (int index) {
+          print("buttonNumber  $buttonNumber is triggered");
 
-            for (int i = 0; i < givenWordList.length; i++) {
-              if (buttonNumber == i) {
-                print(
-                    "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
+          for (int i = 0; i < givenWordList.length; i++) {
+            if (buttonNumber == i) {
+              print(
+                  "index  number $index  scrollingLetterList[index] ${scrollingLetterList[index]}");
 
-                if (givenWordList[i] == scrollingLetterList[index]) {
-                  print("Letters matched");
-                  //  new Future.delayed(
-                  //     const Duration(milliseconds: 250), () {print("inside delay");});
-
-                  lst.add(scrollingLetterList[index]);
-                  count++;
-                } else if (givenWordList[i] != scrollingLetterList[index] &&
-                    lst.isNotEmpty) {
-                  print("Letters are not equal");
-                  if (lst.contains(givenWordList[i]) && buttonNumber == i) {
-                    print("Letter removed");
-                    lst.remove(givenWordList[i]);
-                  }
+              if (givenWordList[i] == scrollingLetterList[index]) {
+                print("Letters matched");
+              
+                // new Future.delayed(const Duration(milliseconds: 50), () {
+                //   print("inside delay");
+                // });
+                lst.add(scrollingLetterList[index]);
+                count++;
+              } else if (givenWordList[i] != scrollingLetterList[index] &&
+                  lst.isNotEmpty) {
+                print("Letters are not equal");
+                if (lst.contains(givenWordList[i]) && buttonNumber == i) {
+                  print("Letter removed");
+                  lst.remove(givenWordList[i]);
                 }
               }
             }
-            lst.sort();
-            print(" lst = $lst \n");
-            print("");
-            Set<String> finalSet = new Set<String>.from(lst);
-            finalList = new List<String>.from(finalSet);
+          }
+          lst.sort();
+          print(" lst = $lst \n");
+          print("");
+          Set<String> finalSet = new Set<String>.from(lst);
+          finalList = new List<String>.from(finalSet);
 
-            print(" finalList = $finalList");
+          print(" finalList = $finalList");
 
-            print(" finalGivenWordList = $finalGivenWordList");
-            print("count = $count");
-            if (const IterableEquality()
-                    .equals(finalList, finalGivenWordList) &&
-                count >= givenWordList.length) {
-              new Future.delayed(const Duration(milliseconds: 1000), () {
-                widget.onScore(5);
-                widget.onProgress(1.0);
-                j = 0;
-                count = 0;
+          print(" finalGivenWordList = $finalGivenWordList");
+          print("count = $count");
+          if (const IterableEquality().equals(finalList, finalGivenWordList) &&
+              count >= givenWordList.length) {
+            new Future.delayed(const Duration(milliseconds: 1000), () {
+              widget.onScore(5);
+              widget.onProgress(1.0);
+              j = 0;
+              count = 0;
+            });
+
+            new Future.delayed(const Duration(milliseconds: 800), () {
+              setState(() {
+                _isShowingFlashCard = true;
+                lst.clear();
               });
+            });
 
-              new Future.delayed(const Duration(milliseconds: 800), () {
-                setState(() {
-                  _isShowingFlashCard = true;
-                  lst.clear();
-                });
-              });
+            print("the end");
+          }
+        },
+        children:
+            new List<Widget>.generate(scrollingLetterList.length, (int index) {
+          print(
+              "index inside list $index  Letter  ${scrollingLetterList[index]}");
 
-              print("the end");
-            }
-          },
-          children: new List<Widget>.generate(scrollingLetterList.length,
-              (int index) {
-            print(
-                "index inside list $index  Letter  ${scrollingLetterList[index]}");
-
-            return new Center(
-              child: new Text(scrollingLetterList[index],
-                  style: new TextStyle(
-                    color: new Color(0xFFD64C60),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 45.0,
-                    letterSpacing: 5.0,
-                  )),
-            );
-          }),
-        ),
+          return new Center(
+            child: new Text(scrollingLetterList[index],
+                style: new TextStyle(
+                  color: new Color(0xFFD64C60),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 45.0,
+                  letterSpacing: 5.0,
+                )),
+          );
+        }),
       ),
     );
   }
