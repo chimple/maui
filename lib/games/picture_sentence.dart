@@ -211,7 +211,7 @@ class PictureSentenceState extends State<PictureSentence> {
                     softWrap: true,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: color,
+                        color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
 
@@ -259,7 +259,7 @@ class PictureSentenceState extends State<PictureSentence> {
                     softWrap: true,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: color,
+                        color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
     var text3 = new Text(sentencePart3,
@@ -507,9 +507,8 @@ class _PictureCardState extends State<PictureCard> {
     }
     return new LayoutBuilder(builder: (context, constraints) {
       return new Card(
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.all(
-                Radius.circular(constraints.maxHeight * 0.02))),
+        shape: new CircleBorder(
+            side: new BorderSide()),
         child: new Container(
             width: 200.0,
             height: 200.0,
