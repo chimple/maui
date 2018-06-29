@@ -19,7 +19,6 @@ class GameCategoryRepo {
     'tap_home',
     'word_grid',
     'guess',
-    'spin_wheel',
     'circle_word',
     'draw_challenge',
     'friend_word',
