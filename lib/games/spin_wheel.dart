@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,8 +7,6 @@ import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/state/app_state_container.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
@@ -107,19 +104,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff;
 
-  int _indexOfContainerData = 0, dataSize = 4, _countGameEnd = 0;
+  int _indexOfContainerData = 0, dataSize = 6, _countGameEnd = 0;
   String _text = '', s1 = 'assets/dict/', s2 = '.png';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
   List<ui.Image> images = new List<ui.Image>();
-
-  //List<ui.Image> asas;
   @override
   void initState() {
-    // print("question mode::${widget.gameConfig.questionUnitMode}");
-    // print("answer mode::${widget.gameConfig.answerUnitMode}");
-    // images = new ImageMap(rootBundle);
-    // image = await images.loadImage('assets/hoodie/order_it.png');
     super.initState();
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 500), vsync: this);
@@ -171,71 +162,53 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _isLoading = true;
     });
     try {
-    // allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+      //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
 
-    //print("game category:: ${widget.gameConfig.questionUnitMode}");
-    _data.forEach((k, v) {
-      _circleData.add(k);
-      _shuffleCircleData1.add(k);
-      _smallCircleData.add(v);
-      _shuffleCircleData2.add(v);
-    });
-    //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+      print("game category:: $allData");
 
-    //  print("all data::${allData} ");
-    // allData.forEach((k, v) {
-    //   _circleData.add(v);
-    //   _shuffleCircleData1.add(v);
-    //   _smallCircleData.add(k);
-    //   _shuffleCircleData2.add(k);
-    // });
-    // if (widget.gameConfig.answerUnitMode == UnitMode.image ||
-    //     widget.gameConfig.answerUnitMode == UnitMode.audio ||
-    //     widget.gameConfig.answerUnitMode == UnitMode.audio) {
-    //print("image maode::$_circleData ");
+      _data.forEach((k, v) {
+        _circleData.add(k);
 
-    // for (int i = 0; i < _circleData.length; i++) {
-    //   String img = s1 + _circleData[i].toLowerCase() + s2;
-    //   _imageData[i] = img;
-    //   print("image name:::$img");
-    // }
+        _smallCircleData.add(v);
+      });
 
-    _shuffleCircleData1.shuffle();
-    _shuffleCircleData2.shuffle();
-    mode.shuffle();
-    //}
-    // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
-    // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
-    // print("Answer data::::${_circleData}");
-    // print("Question data::::${_smallCircleData}");
+      _shuffleCircleData1 = _circleData.sublist(0, dataSize);
+      _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
+      _shuffleCircleData1.shuffle();
+      _shuffleCircleData2.shuffle();
+      mode.shuffle();
 
-    rotationPercent = 0.0;
-    _text = _shuffleCircleData2[0];
+      // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
+      // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
+      // print("Answer data::::${_circleData}");
+      // print("Question data::::${_smallCircleData}");
 
-    _activeIndex = _smallCircleData.indexOf(_text);
-    print("active index:: $_activeIndex");
-    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
-    print("text in active index:: ${_circleData[_activeIndex]}");
-    print("unit button text:: $_text , index $index");
-    _slice[index] = true;
+      rotationPercent = 0.0;
+      _text = _shuffleCircleData2[0];
 
-    if (mode[0] == 'image') {
-      for (int i = 0; i < dataSize; i++) {
-        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
-        print("image url:: $_image");
-        load(_image).then((j) {
-          if (j != null) images.add(j);
-        });
+      _activeIndex = _smallCircleData.indexOf(_text);
+     // print("active index:: $_activeIndex");
+      int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+      //print("text in active index:: ${_circleData[_activeIndex]}");
+     // print("unit button text:: $_text , index $index");
+      _slice[index] = true;
+
+      if (mode[0] == 'image') {
+        for (int i = 0; i < dataSize; i++) {
+          String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+         // print("image url:: $_image");
+          load(_image).then((j) {
+            if (j != null) images.add(j);
+          });
+        }
       }
-    }
-    _maxString = _shuffleCircleData1[0];
-    for (int i = 1; i < dataSize; i++) {
-      if (_maxString.length < _shuffleCircleData1[i].length) {
-        _maxString = _shuffleCircleData1[i];
+      _maxString = _shuffleCircleData1[0];
+      for (int i = 1; i < dataSize; i++) {
+        if (_maxString.length < _shuffleCircleData1[i].length) {
+          _maxString = _shuffleCircleData1[i];
+        }
       }
-    }
-    // print("all data :: $allData");
-     } catch (exception, e) {}
+    } catch (exception, e) {}
     setState(() {
       _isLoading = false;
     });

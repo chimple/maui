@@ -214,12 +214,11 @@ class ImagePainter extends CustomPainter {
           inputSubrect =
               Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
           outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
-          // try {
+
           canvas.drawImageRect(
               images[c], inputSubrect, outputSubrect, new Paint());
-          // } catch (exception, e) {}
         }
-        //canvas.rotate(2 * pi/2);
+
         canvas.restore();
         c++;
       }
