@@ -4,8 +4,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:io';
 import 'package:meta/meta.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
 import 'package:flores/flores.dart';
@@ -24,37 +22,30 @@ class UserRepo {
   }
 
   Future<List<User>> getUsers() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    List<dynamic> friends;
-    try {
-      friends = await Flores().users;
-    } on PlatformException {
-      print('Failed getting friends');
-    }
+    return await userDao.getUsers();
+  }
 
-    List<User> users = await userDao.getUsers();
-    await Future.forEach(friends, (f) async {
-      if (users.any((u) => u.id == f['userId'])) {
-      } else {
-        List<int> memoryImage;
-        try {
-          memoryImage = base64.decode(f['message']);
-        } catch (e) {
-          print(e);
-        }
-        String userId = f['userId'];
-        String imagePath = join(documentsDirectory.path, '$userId.png');
-        await new File(imagePath).writeAsBytes(memoryImage);
-        User user = User(
-            id: f['userId'],
-            deviceId: f['deviceId'],
-            image: imagePath,
-            currentLessonId: 1);
-        await userDao.insert(user);
-        users.add(user);
-      }
-    });
-    return users;
+  Future<User> insertOrUpdateRemoteUser(
+      String userId, String deviceId, String base64Image) async {
+    print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    List<int> memoryImage;
+    try {
+      memoryImage = base64.decode(base64Image);
+    } catch (e) {
+      print(e);
+    }
+    String imagePath = join(documentsDirectory.path, '$userId.png');
+    await new File(imagePath).writeAsBytes(memoryImage);
+
+    User user = await userDao.getUser(userId);
+    if (user == null) {
+      await userDao.insert(User(
+          id: userId,
+          deviceId: deviceId,
+          image: imagePath,
+          currentLessonId: 1));
+    }
   }
 
   Future<List<User>> getLocalUsers() async {
@@ -64,18 +55,6 @@ class UserRepo {
   }
 
   Future<User> insertLocalUser(User user) async {
-//    StorageReference ref = FirebaseStorage.instance
-//        .ref()
-//        .child("user_${user.id}.jpg");
-//    StorageUploadTask uploadTask = ref.put(new File(user.image));
-//    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-//
-//    final reference = FirebaseDatabase.instance.reference().child('users');
-//    reference.push().set({
-//      'id': user.id,
-//      'name': user.name,
-//      'image': downloadUrl.toString()
-//    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     user.deviceId = deviceId;
