@@ -232,9 +232,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _RowCells[i] = RowCell.CurveRow;
                         widget.onProgress(2 / 1);
-
                       });
                     }
+                  }
+                }
                 if (-1 != matchColumn) {
                   setState(() {
 //
@@ -297,7 +298,11 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 } else {
                   _copyQuestion.removeRange(0, _copyQuestion.length);
                 }
-              } else {
+              }
+
+
+
+              else {
                 if(onScoreFlag != 1){
                   widget.onScore(-1);
                 _ShakeCells[index] = ShakeCell.Right;
