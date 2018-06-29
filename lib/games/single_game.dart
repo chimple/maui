@@ -794,6 +794,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       case 'spin_wheel':
         maxIterations = 2;
         return new SpinWheel(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
