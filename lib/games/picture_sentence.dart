@@ -297,7 +297,7 @@ class PictureSentenceState extends State<PictureSentence> {
      
       return 
           new Row(
-            children: <Widget>[text1, blankSpace1,text3],
+            children: <Widget>[text1, blankSpace1,text2],
           );
          
       
