@@ -4,13 +4,9 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:maui/components/chat_message.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
@@ -48,7 +44,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         : 'chat_${widget.myId}_${widget.friendId}';
     print(chatId);
     _initMessages();
-//    _reference = FirebaseDatabase.instance.reference().child(chatId);
   }
 
   void _initMessages() async {
@@ -128,21 +123,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       child: new Container(
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
           child: new Row(children: <Widget>[
-            new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                  icon: new Icon(Icons.photo_camera),
-                  onPressed: () async {
-                    File imageFile =
-                        await ImagePicker.pickImage(source: ImageSource.camera);
-                    var uuid = new Uuid().v4();
-                    StorageReference ref =
-                        FirebaseStorage.instance.ref().child("image_$uuid.jpg");
-                    StorageUploadTask uploadTask = ref.put(imageFile);
-                    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-                    _sendMessage(imageUrl: downloadUrl.toString());
-                  }),
-            ),
             new Flexible(
               child: new TextField(
                 controller: _textController,
@@ -189,27 +169,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _sendMessage({String text, String imageUrl}) async {
-//    SharedPreferences prefs = await SharedPreferences.getInstance();
-//    final deviceId = prefs.getString('deviceId');
-//    var messages = AppStateContainer.of(context).messages;
-//
-//    Flores().addMessage(
-//        widget.myId, widget.friendId, chatMessageType, text, true, '');
     AppStateContainer.of(context).addChat(text);
-//    final index = _messages.length;
-//    listKey.currentState.insertItem(0);
-//    messages.insert(0, <String, String>{
-//      'userId': widget.myId,
-//      'recipientUserId': widget.friendId,
-//      'messageType': chatMessageType,
-//      'message': text,
-//      'deviceId': deviceId,
-//      'loggedAt': DateTime.now().millisecondsSinceEpoch.toString()
-//    });
-//    _reference.push().set({
-//      'text': text,
-//      'imageUrl': imageUrl,
-//      'senderId': widget.myId,
-//    });
   }
 }

@@ -623,19 +623,19 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 
 
 Future<String> fetchIdentifyData() async {
-    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital",];
+    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
     return await rootBundle.loadString("assets/$s.json");
 }
 
 Future<String> fetchGuessData() async {
-  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "LivingRoom", "StudyRoom", "Hospital", "HomeOffice"];
-  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "BedRoom", "Hospital"];
+  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
+  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
-    return await rootBundle.loadString("assets/$s.json");
+    return await rootBundle.loadString("assets/Colors.json");
 }
 
 
@@ -676,22 +676,22 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
     int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 8));
-  switch (startNum) {
+  switch (0) {
     case 0:
       return new Tuple2("Mount Everest is the highest 1_ in the 2_ .",
           ['mountain', 'earth', 'chair', 'ball']);
       break;
     case 1:
-      return new Tuple2("Nile is the longest 1_ on the 2_ .",
-          ['river', 'earth', 'wall', 'Mars']);
+      return new Tuple2("Nile is the longest 1_ on  2_ .",
+          ['river', 'earth', 'wall', 'waterfall']);
       break;
     case 2:
       return new Tuple2("Apple is 1_ and also 2_ in colour .",
-          ['red', 'green', 'round', 'triangular']);
+          ['red', 'green', 'round', 'tube']);
       break;
     case 3:
       return new Tuple2(
-          "1_ gives healthy 2_ .", ['cow', 'milk', 'forest', 'grass']);
+          "1_ gives healthy 2_ .", ['cow', 'milk', 'vegetable', 'grass']);
       break;
     case 4:
       return new Tuple2("Fastest 1_ animal is 2_ .",
@@ -702,12 +702,52 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
           "I love eating 1_ and 2_ .", ['mango', 'grape', 'sun', 'moon']);
       break;
     case 6:
-      return new Tuple2("Snowy is 1_ but i am trying to make her 2_ .",
+      return new Tuple2("Snowy is 1_ but I am trying to make her 2_ .",
           ['crying', 'laugh', 'crawling', 'chair']);
       break;
     case 7:
       return new Tuple2("1_ is a beautiful 2_ colour flower .",
           ['rose', 'red', 'ugly', 'black']);
+      break;
+  }
+  return null;
+}
+Future<Tuple2<String, List<String>>> fetchDrawingData(
+    int categoryId) async {
+  var rand = new Random();
+  var startNum = rand.nextInt(max(0, 8));
+  switch (startNum) {
+    case 0:
+      return new Tuple2("fruits name",
+          ['banana', 'apple', 'grape', 'ball']);
+      break;
+    case 1:
+      return new Tuple2("nature",
+          ['bat', 'grape', 'rat', 'cat']);
+      break;
+    case 2:
+      return new Tuple2("Colors",
+          ['book', 'chair', 'table', 'pen']);
+      break;
+    case 3:
+      return new Tuple2(
+          "animals .", ['milk', 'cow', 'vegetable', 'grass']);
+      break;
+    case 4:
+      return new Tuple2("vegitables",
+          ['onion', 'carrot', 'tomoto', 'chilli']);
+      break;
+    case 5:
+      return new Tuple2(
+          "wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
+      break;
+    case 6:
+      return new Tuple2("vehicles",
+          ['bus', 'car', 'bike', 'train']);
+      break;
+    case 7:
+      return new Tuple2("flowers",
+          ['rose', 'bike', 'home', 'jasmin']);
       break;
   }
   return null;
