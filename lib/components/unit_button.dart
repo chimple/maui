@@ -96,7 +96,7 @@ class _UnitButtonState extends State<UnitButton> {
             onLongPress: () {
               AppStateContainer.of(context).play(widget.text.toLowerCase());
               if (_unitMode != UnitMode.audio) {
-                AppStateContainer.of(context).display(context, widget.text);  
+                AppStateContainer.of(context).display(context, widget.text.toLowerCase());  
               }
             },
             child: _buildButton(context))
