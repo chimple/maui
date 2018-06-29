@@ -67,16 +67,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData2 = [];
 
   Map<String, String> _data = {
-    'cheek': 'cheek',
+    'CHEEK': 'CHEEK',
     'cheese': 'cheese',
     'cheetah': 'cheetah',
     'cherry': 'cherry',
-    'chess': 'chess',
+    'CHESS': 'CHESS',
     'chicken': 'chicken',
     'chico': 'chico',
-    'chihuahua': 'chihuahua',
-    'tap': 'tap',
-    'table': 'table'
+    'CHIHUAHUA': 'CHIHUAHUA',
   };
   Map<String, String> allData = new Map<String, String>();
   List<bool> _slice = [
@@ -109,7 +107,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff;
 
-  int _indexOfContainerData = 0, dataSize = 8, _countGameEnd = 0;
+  int _indexOfContainerData = 0, dataSize = 4, _countGameEnd = 0;
   String _text = '', s1 = 'assets/dict/', s2 = '.png';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
@@ -173,68 +171,71 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _isLoading = true;
     });
     try {
-      // allData = await fetchPairData(4, 8);
-      //print("game category:: ${widget.gameConfig.questionUnitMode}");
-      _data.forEach((k, v) {
-        _circleData.add(k);
-        _shuffleCircleData1.add(k);
-        _smallCircleData.add(v);
-        _shuffleCircleData2.add(v);
-      });
-      // allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-      // allData.forEach((k, v) {
-      //   _circleData.add(v);
-      //   _shuffleCircleData1.add(v);
-      //   _smallCircleData.add(k);
-      //   _shuffleCircleData2.add(k);
-      // });
-      // if (widget.gameConfig.answerUnitMode == UnitMode.image ||
-      //     widget.gameConfig.answerUnitMode == UnitMode.audio ||
-      //     widget.gameConfig.answerUnitMode == UnitMode.audio) {
-      //print("image maode::$_circleData ");
+    // allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
 
-      // for (int i = 0; i < _circleData.length; i++) {
-      //   String img = s1 + _circleData[i].toLowerCase() + s2;
-      //   _imageData[i] = img;
-      //   print("image name:::$img");
-      // }
+    //print("game category:: ${widget.gameConfig.questionUnitMode}");
+    _data.forEach((k, v) {
+      _circleData.add(k);
+      _shuffleCircleData1.add(k);
+      _smallCircleData.add(v);
+      _shuffleCircleData2.add(v);
+    });
+    //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
 
-      _shuffleCircleData1.shuffle();
-      _shuffleCircleData2.shuffle();
-      mode.shuffle();
-      //}
-      // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
-      // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
-      // print("Answer data::::${_circleData}");
-      // print("Question data::::${_smallCircleData}");
+    //  print("all data::${allData} ");
+    // allData.forEach((k, v) {
+    //   _circleData.add(v);
+    //   _shuffleCircleData1.add(v);
+    //   _smallCircleData.add(k);
+    //   _shuffleCircleData2.add(k);
+    // });
+    // if (widget.gameConfig.answerUnitMode == UnitMode.image ||
+    //     widget.gameConfig.answerUnitMode == UnitMode.audio ||
+    //     widget.gameConfig.answerUnitMode == UnitMode.audio) {
+    //print("image maode::$_circleData ");
 
-      rotationPercent = 0.0;
-      _text = _shuffleCircleData2[0];
+    // for (int i = 0; i < _circleData.length; i++) {
+    //   String img = s1 + _circleData[i].toLowerCase() + s2;
+    //   _imageData[i] = img;
+    //   print("image name:::$img");
+    // }
 
-      _activeIndex = _smallCircleData.indexOf(_text);
-      print("active index:: $_activeIndex");
-      int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
-      print("text in active index:: ${_circleData[_activeIndex]}");
-      print("unit button text:: $_text , index $index");
-      _slice[index] = true;
+    _shuffleCircleData1.shuffle();
+    _shuffleCircleData2.shuffle();
+    mode.shuffle();
+    //}
+    // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
+    // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
+    // print("Answer data::::${_circleData}");
+    // print("Question data::::${_smallCircleData}");
 
-      if (mode[0] == 'image') {
-        for (int i = 0; i < dataSize; i++) {
-          String _image = s1 + _shuffleCircleData1[i] + s2;
-          print("image url:: $_image");
-          load(_image).then((j) {
-            if (j != null) images.add(j);
-          });
-        }
+    rotationPercent = 0.0;
+    _text = _shuffleCircleData2[0];
+
+    _activeIndex = _smallCircleData.indexOf(_text);
+    print("active index:: $_activeIndex");
+    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+    print("text in active index:: ${_circleData[_activeIndex]}");
+    print("unit button text:: $_text , index $index");
+    _slice[index] = true;
+
+    if (mode[0] == 'image') {
+      for (int i = 0; i < dataSize; i++) {
+        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+        print("image url:: $_image");
+        load(_image).then((j) {
+          if (j != null) images.add(j);
+        });
       }
-      _maxString = _shuffleCircleData1[0];
-      for (int i = 1; i < dataSize; i++) {
-        if (_maxString.length < _shuffleCircleData1[i].length) {
-          _maxString = _shuffleCircleData1[i];
-        }
+    }
+    _maxString = _shuffleCircleData1[0];
+    for (int i = 1; i < dataSize; i++) {
+      if (_maxString.length < _shuffleCircleData1[i].length) {
+        _maxString = _shuffleCircleData1[i];
       }
-      // print("all data :: $allData");
-    } catch (exception, e) {}
+    }
+    // print("all data :: $allData");
+     } catch (exception, e) {}
     setState(() {
       _isLoading = false;
     });
