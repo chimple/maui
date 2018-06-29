@@ -167,42 +167,43 @@ class PictureSentenceState extends State<PictureSentence> {
     }
     print(
         "sentencePart3 >>>>>>> $sentencePart3 <<<length ==== ${sentencePart3.length} >>>");
-    var text1 = new Text(sentencePart1,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text1 = new Expanded(
+          child: new Text(sentencePart1,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
 
     var blankSpace1 = (output1 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Expanded(
+                  child: new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: 40.0,
+              width: 170.0,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[0].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[0].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
+            ),
+          ]),
+        )
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -215,42 +216,43 @@ class PictureSentenceState extends State<PictureSentence> {
                         fontSize: 40.0))),
           );
 
-    var text2 = new Text(sentencePart2,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text2 = new Expanded(
+          child: new Text(sentencePart2,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
 
     var blankSpace2 = (output2 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Expanded(
+                  child: new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: 40.0,
+              width: 170.0,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[1].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[1].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
+            ),
+          ]),
+        )
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -262,46 +264,44 @@ class PictureSentenceState extends State<PictureSentence> {
                         color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
-    var text3 = new Text(sentencePart3,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
-    if (sentencePart1.length + 8 + sentencePart2.length < 37) {
-      if ((sentence.length - 6) < 25) {
-        return new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
-            ),
-          ],
-        );
-      } else {
-        return new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              children: <Widget>[text1, blankSpace1, text2],
-            ),
-            new Row(
-              children: <Widget>[blankSpace2, text3],
-            )
-          ],
-        );
-      }
-    } else {
-      return new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+    var text3 = new Expanded(
+          child: new Text(sentencePart3,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
+    // if (sentencePart1.length + 8 + sentencePart2.length < 37) {
+    //   if ((sentence.length - 6) < 25) {
+    //     return new Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: <Widget>[
+    //         new Row(
+    //           children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+    //         ),
+    //       ],
+    //     );
+    //   } else {
+    //     return new Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: <Widget>[
+    //         new Row(
+    //           children: <Widget>[text1, blankSpace1, text2],
+    //         ),
+    //         new Row(
+    //           children: <Widget>[blankSpace2, text3],
+    //         )
+    //       ],
+    //     );
+    //   }
+    // }
+     
+      return 
           new Row(
-            children: <Widget>[text1, blankSpace1],
-          ),
-          new Row(
-            children: <Widget>[text2, blankSpace2, text3],
-          )
-        ],
-      );
-    }
+            children: <Widget>[text1, blankSpace1,text3],
+          );
+         
+      
+    
   }
 
   @override
