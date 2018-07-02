@@ -159,7 +159,11 @@ class CirclewordState extends State<Circleword> {
           Colors.teal, circleSize / dradius, _statuses[j], _shakecell[j++])));
       double potl = 180.0;
       double landl = 140.0;
+      double subwidthp =(media.size.width/2)*.4;
+      double subwidthl=(media.size.width/2)*.25;
+
       double lposition = _height > _width ? potl : landl;
+      double sizeofsub=_height > _width ?subwidthp:subwidthl;
 
     //  final hPadding = pow(constraints.maxWidth / 150.0, 2);
     //   final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -191,10 +195,13 @@ class CirclewordState extends State<Circleword> {
               ),
               new Center(
                 child: new Container(
-                  width: 100.0,
-                  height: 30.0,
+                  width: sizeofsub,
+                  height: (media.size.height/2)*.1,
                   margin: new EdgeInsets.only( top: 5.0,),
                   child: new RaisedButton(
+                     shape: new RoundedRectangleBorder(
+                   borderRadius:
+                       new BorderRadius.all(new Radius.circular(8.0))),
                     onPressed: () => method(),
                     child: new Text("submit"),
                   ),
@@ -470,7 +477,7 @@ AnimationController controller, controller1;
     @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
-
+ MediaQueryData media = MediaQuery.of(context);
     int _color =0xFF5F9EA0;
 
 
@@ -484,19 +491,24 @@ AnimationController controller, controller1;
    animation: widget.tile == ShakeCell1.Right
                 ? animationWrong
                 : animationRight,
-            child: new RaisedButton(
-             onPressed: () => {},
+            child: new Container(
+              margin: EdgeInsets.only(top: 5.0),
+              height: (media.size.height/2)*.15,
+              width: (media.size.width/2)*.4,
+              child: new RaisedButton(
+               onPressed: () => {},
        
-             color: widget.status == Status1.Visible
-                 ? new Color(0xFFffffff)
-                 : new Color(_color),
-             shape: new RoundedRectangleBorder(
-                 borderRadius:
-                     new BorderRadius.all(new Radius.circular(8.0))),
-             child: new Text("${widget.text}",
-             key: new Key(widget.index.toString()+"but"),
-                 style:
-                     new TextStyle(color: Colors.black, fontSize: 24.0))),
+               color: widget.status == Status1.Visible
+                   ? new Color(0xFFffffff)
+                   : Theme.of(context).primaryColor,
+               shape: new RoundedRectangleBorder(
+                   borderRadius:
+                       new BorderRadius.all(new Radius.circular(8.0))),
+               child: new Text("${widget.text}",
+               key: new Key(widget.index.toString()+"but"),
+                   style:
+                       new TextStyle(color: Colors.black, fontSize: 14.0))),
+            ),
           ) );
   }
 }
@@ -593,7 +605,7 @@ class _PositionCircleState extends State<PositionCircle>
           shape: const CircleBorder(side: BorderSide.none),
           onPressed: () => widget.onPress(),
           fillColor:
-              widget.status == Status.Visible ? Colors.white : Color(0xFFA1EF6F),
+              widget.status == Status.Visible ? Colors.white : Theme.of(context).primaryColor,
           splashColor: Colors.yellow,
           child: new Text(widget.text,
               style: new TextStyle(color: Colors.black, fontSize: 24.0)),

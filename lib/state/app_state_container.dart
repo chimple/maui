@@ -175,25 +175,26 @@ class _AppStateContainerControllerState
   void _onReceiveMessage(Map<dynamic, dynamic> message) async {
     print(
         '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
-    if (message['recipientUserId'] == state.loggedInUser.id) {
+    if (message['messageType'] == 'Photo') {
+      await UserRepo().insertOrUpdateRemoteUser(
+          message['userId'], message['deviceId'], message['message']);
+      if (activity == 'friends') {
+        _getUsers();
+      }
+    } else if (message['recipientUserId'] == state.loggedInUser.id) {
       if (message['messageType'] == 'chat') {
         _showNotification(
             message['userId'],
             message['messageType'],
             message['message'],
             message['messageType'] + ':' + message['userId']);
-      } else if (message['messageType'] != 'Photo') {
+        if (message['userId'] == friendId && activity == 'chat') {
+          _beginChat(friendId);
+        }
+      } else {
         _showNotification(message['userId'], message['messageType'], '',
             message['messageType'] + ':' + message['userId']);
       }
-    }
-    if (message['recipientUserId'] == state.loggedInUser.id &&
-        message['userId'] == friendId &&
-        message['messageType'] == 'chat' &&
-        activity == 'chat') {
-      _beginChat(friendId);
-    } else if (message['messageType'] == 'Photo' && activity == 'friends') {
-      _getUsers();
     }
   }
 

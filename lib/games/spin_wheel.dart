@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,8 +7,6 @@ import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/state/app_state_container.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
@@ -67,14 +64,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData2 = [];
 
   Map<String, String> _data = {
-    'cheek': 'cheek',
+    'CHEEK': 'CHEEK',
     'cheese': 'cheese',
     'cheetah': 'cheetah',
     'cherry': 'cherry',
-    'chess': 'chess',
+    'CHESS': 'CHESS',
     'chicken': 'chicken',
     'chico': 'chico',
-    'chihuahua': 'chihuahua',
+    'CHIHUAHUA': 'CHIHUAHUA',
   };
   Map<String, String> allData = new Map<String, String>();
   List<bool> _slice = [
@@ -96,9 +93,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   AnimationController controller, controller1;
 
   double rotationPercent = 0.0, rotationPercent1 = 0.0, angleDiff;
-  Duration selectedTime, startDragTime;
-  final maxTime = const Duration(minutes: 10);
-  final currentTime = new Duration(minutes: 0);
+
   bool _isLoading = true;
   var _angleDiffAntiCockWise = 0.0,
       onDragCordUpdated,
@@ -109,19 +104,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff;
 
-  int _indexOfContainerData = 0, dataSize = 8, _countGameEnd = 0;
+  int _indexOfContainerData = 0, dataSize = 6, _countGameEnd = 0;
   String _text = '', s1 = 'assets/dict/', s2 = '.png';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
   List<ui.Image> images = new List<ui.Image>();
-
-  //List<ui.Image> asas;
   @override
   void initState() {
-    // print("question mode::${widget.gameConfig.questionUnitMode}");
-    // print("answer mode::${widget.gameConfig.answerUnitMode}");
-    // images = new ImageMap(rootBundle);
-    // image = await images.loadImage('assets/hoodie/order_it.png');
     super.initState();
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 500), vsync: this);
@@ -173,68 +162,52 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _isLoading = true;
     });
     try {
-      // allData = await fetchPairData(4, 8);
-      //print("game category:: ${widget.gameConfig.questionUnitMode}");
+      //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+
+      print("game category:: $allData");
+
       _data.forEach((k, v) {
         _circleData.add(k);
-        _shuffleCircleData1.add(k);
+
         _smallCircleData.add(v);
-        _shuffleCircleData2.add(v);
       });
-      // allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-      // allData.forEach((k, v) {
-      //   _circleData.add(v);
-      //   _shuffleCircleData1.add(v);
-      //   _smallCircleData.add(k);
-      //   _shuffleCircleData2.add(k);
-      // });
-      // if (widget.gameConfig.answerUnitMode == UnitMode.image ||
-      //     widget.gameConfig.answerUnitMode == UnitMode.audio ||
-      //     widget.gameConfig.answerUnitMode == UnitMode.audio) {
-      //print("image maode::$_circleData ");
 
-      // for (int i = 0; i < _circleData.length; i++) {
-      //   String img = s1 + _circleData[i].toLowerCase() + s2;
-      //   _imageData[i] = img;
-      //   print("image name:::$img");
-      // }
-
+      _shuffleCircleData1 = _circleData.sublist(0, dataSize);
+      _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
       _shuffleCircleData1.shuffle();
       _shuffleCircleData2.shuffle();
+      mode.shuffle();
 
-      //}
       // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
       // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
       // print("Answer data::::${_circleData}");
       // print("Question data::::${_smallCircleData}");
 
-      setState(() {
-        rotationPercent = 0.0;
-        _text = _shuffleCircleData2[0];
-      });
+      rotationPercent = 0.0;
+      _text = _shuffleCircleData2[0];
+
       _activeIndex = _smallCircleData.indexOf(_text);
-      print("active index:: $_activeIndex");
+     // print("active index:: $_activeIndex");
       int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
-      print("text in active index:: ${_circleData[_activeIndex]}");
-      print("unit button text:: $_text , index $index");
+      //print("text in active index:: ${_circleData[_activeIndex]}");
+     // print("unit button text:: $_text , index $index");
       _slice[index] = true;
-      mode.shuffle();
+
       if (mode[0] == 'image') {
-        for (int i = 0; i < 8; i++) {
-          String _image = s1 + _shuffleCircleData1[i] + s2;
-          print("imag url:: $_image");
+        for (int i = 0; i < dataSize; i++) {
+          String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+         // print("image url:: $_image");
           load(_image).then((j) {
             if (j != null) images.add(j);
           });
         }
       }
       _maxString = _shuffleCircleData1[0];
-      for (int i = 1; i < data.length; i++) {
+      for (int i = 1; i < dataSize; i++) {
         if (_maxString.length < _shuffleCircleData1[i].length) {
           _maxString = _shuffleCircleData1[i];
         }
       }
-      // print("all data :: $allData");
     } catch (exception, e) {}
     setState(() {
       _isLoading = false;
@@ -244,9 +217,29 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   void reset() {
     if (dataSize == 2) {
     } else if (dataSize == 4) {
+      setState(() {
+        _wheelColor[0] = Color(0XFFD1F2EB);
+        _wheelColor[1] = Color(0XFFD1F2EB);
+        _wheelColor[2] = Color(0XFFD1F2EB);
+        _wheelColor[3] = Color(0XFFD1F2EB);
+
+        List<CircularStackEntry> data = _generateChartData(dataSize);
+        _chartKey.currentState.updateData(data);
+      });
     } else if (dataSize == 6) {
+      setState(() {
+        _wheelColor[0] = Color(0XFFD1F2EB);
+        _wheelColor[1] = Color(0XFFD1F2EB);
+        _wheelColor[2] = Color(0XFFD1F2EB);
+        _wheelColor[3] = Color(0XFFD1F2EB);
+        _wheelColor[4] = Color(0XFFD1F2EB);
+        _wheelColor[5] = Color(0XFFD1F2EB);
+
+        List<CircularStackEntry> data = _generateChartData(dataSize);
+        _chartKey.currentState.updateData(data);
+      });
     } else if (dataSize == 8) {
-      for (int i = 0; i < 8; i++) {
+      for (int i = 0; i < dataSize; i++) {
         setState(() {
           _wheelColor[0] = Color(0XFFD1F2EB);
           _wheelColor[1] = Color(0XFFD1F2EB);
@@ -257,10 +250,24 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           _wheelColor[6] = Color(0XFFD1F2EB);
           _wheelColor[7] = Color(0XFFD1F2EB);
           List<CircularStackEntry> data = _generateChartData(dataSize);
-
           _chartKey.currentState.updateData(data);
         });
       }
+    } else if (dataSize == 10) {
+      setState(() {
+        _wheelColor[0] = Color(0XFFD1F2EB);
+        _wheelColor[1] = Color(0XFFD1F2EB);
+        _wheelColor[2] = Color(0XFFD1F2EB);
+        _wheelColor[3] = Color(0XFFD1F2EB);
+        _wheelColor[4] = Color(0XFFD1F2EB);
+        _wheelColor[5] = Color(0XFFD1F2EB);
+        _wheelColor[6] = Color(0XFFD1F2EB);
+        _wheelColor[7] = Color(0XFFD1F2EB);
+        _wheelColor[8] = Color(0XFFD1F2EB);
+        _wheelColor[9] = Color(0XFFD1F2EB);
+        List<CircularStackEntry> data = _generateChartData(dataSize);
+        _chartKey.currentState.updateData(data);
+      });
     }
   }
 
@@ -325,54 +332,46 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     //2
     else if (_angleDiff >= 95.0 && _angleDiff <= 135.0 && _slice[2] == true) {
-      print("Slice1::");
+      print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, 1.875);
     }
     //3
     else if (_angleDiff >= 140.0 && _angleDiff <= 185.0 && _slice[3] == true) {
-      print("Slice1::");
+      print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, 2.75);
     }
     //4
     else if (_angleDiff >= 190.0 && _angleDiff <= 230.0 && _slice[4] == true) {
-      print("Slice1::");
+      print("Slice4::");
 
       _slice[4] = false;
       _changeData(4, 3.5);
     }
     //5
     else if (_angleDiff >= 235.0 && _angleDiff <= 275.0 && _slice[5] == true) {
-      print("Slice1::");
+      print("Slice5::");
 
       _slice[5] = false;
       _changeData(5, 4.25);
     }
     //6
     else if (_angleDiff >= 280.0 && _angleDiff <= 320.0 && _slice[6] == true) {
-      print("Slice1::");
+      print("Slice6::");
 
       _slice[6] = false;
       _changeData(6, 5.1);
     }
     //7
     else if (_angleDiff >= 320.0 && _angleDiff <= 365.0 && _slice[7] == true) {
-      print("Slice1::");
+      print("Slice7::");
       _slice[7] = false;
       _changeData(7, 5.9);
     } else {
       _shake();
-      // new Future.delayed(Duration(milliseconds: 500), () {
-      //   setState(() {
-      //     doShake = false;
-      //     dragEnd = 0.0;
-      //     rotationPercent = 0.0;
-      //     angleDiff = 0.0;
-      //   });
-      // });
     }
   }
 
@@ -387,35 +386,35 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       print("Slice1::");
 
       _slice[1] = false;
-      _changeData(1,pi/2);
+      _changeData(1, pi / 2);
     }
     //2
     else if (_angleDiff >= 125.0 && _angleDiff <= 180.0 && _slice[2] == true) {
-      print("Slice1::");
+      print("Slice2::");
 
       _slice[2] = false;
-      _changeData(2, 5*pi/6);
+      _changeData(2, 5 * pi / 6);
     }
     //3
     else if (_angleDiff >= 185.0 && _angleDiff <= 240.0 && _slice[3] == true) {
-      print("Slice1::");
+      print("Slice3::");
 
       _slice[3] = false;
-      _changeData(3, 7*pi/6);
+      _changeData(3, 7 * pi / 6);
     }
     //4
     else if (_angleDiff >= 245.0 && _angleDiff <= 310.0 && _slice[4] == true) {
-      print("Slice1::");
+      print("Slice4::");
 
       _slice[4] = false;
-      _changeData(4, 3*pi/2);
+      _changeData(4, 3 * pi / 2);
     }
     //5
     else if (_angleDiff >= 315.0 && _angleDiff <= 360.0 && _slice[5] == true) {
-      print("Slice1::");
+      print("Slice5::");
 
       _slice[5] = false;
-      _changeData(5, (11*pi)/6);
+      _changeData(5, (11 * pi) / 6);
     } else {
       _shake();
     }
@@ -432,19 +431,18 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       print("Slice1::");
 
       _slice[1] = false;
-
       _changeData(1, (pi / 4 + pi / 2));
     }
     //2
     else if (_angleDiff >= 185.0 && _angleDiff <= 270.0 && _slice[2] == true) {
-      print("Slice1::");
+      print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, (pi / 4 + (pi / 2) * 2));
     }
     //3
     else if (_angleDiff >= 275.0 && _angleDiff <= 360.0 && _slice[3] == true) {
-      print("Slice1::");
+      print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, (pi / 4 + (pi / 2) * 3));
@@ -465,7 +463,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       _slice[1] = false;
 
-      _changeData(1, pi/2+pi);
+      _changeData(1, pi / 2 + pi);
     } else {
       _shake();
     }
@@ -514,7 +512,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       });
     });
     // print("slice no::$_index");
-    if (_countGameEnd == 7) {
+    if (_countGameEnd == dataSize - 1) {
       new Future.delayed(Duration(seconds: 2), () {
         widget.onEnd();
       });
@@ -540,7 +538,22 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     //     rankKey: 'Quarterly Profits',
     //   );
     // }
-    if (size == 8) {
+    if (size == 10) {
+      data = [
+        new CircularStackEntry(<CircularSegmentEntry>[
+          new CircularSegmentEntry(500.0, _wheelColor[0], rankKey: 'Q1'),
+          new CircularSegmentEntry(500.0, _wheelColor[1], rankKey: 'Q2'),
+          new CircularSegmentEntry(500.0, _wheelColor[2], rankKey: 'Q3'),
+          new CircularSegmentEntry(500.0, _wheelColor[3], rankKey: 'Q4'),
+          new CircularSegmentEntry(500.0, _wheelColor[4], rankKey: 'Q5'),
+          new CircularSegmentEntry(500.0, _wheelColor[5], rankKey: 'Q6'),
+          new CircularSegmentEntry(500.0, _wheelColor[6], rankKey: 'Q7'),
+          new CircularSegmentEntry(500.0, _wheelColor[7], rankKey: 'Q8'),
+          new CircularSegmentEntry(500.0, _wheelColor[8], rankKey: 'Q9'),
+          new CircularSegmentEntry(500.0, _wheelColor[9], rankKey: 'Q10'),
+        ], rankKey: 'Spin_Wheel'),
+      ];
+    } else if (size == 8) {
       data = [
         new CircularStackEntry(<CircularSegmentEntry>[
           new CircularSegmentEntry(500.0, _wheelColor[0], rankKey: 'Q1'),
