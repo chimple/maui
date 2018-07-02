@@ -648,19 +648,21 @@ List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,state.
     double y;
     double x;
     for (int i = 0; i < size; i++) {
-      if(i==0){
-         x=x0;
-          y = y0;
-              }
-              else{
-       x = x0+d+maxWidth;
-      x0=x;
-       y = y0;
-              }
-      offsets[i] = new Offset(x, y);
-      print("object ..x..$x .....y...$y");
-   
+      if (i == 0) {
+        x = x0;
+        y = y0;
+      } else if(i==1){
+        x = x0 + d + maxWidth;
+        x0 = x;
+        y = y0;
+      }
+      else{
+         x = x0 + d + maxWidth+(maxWidth/6);
+        x0 = x;
+        y = y0;
 
+      }
+      offsets[i] = new Offset(x, y);
     }
     return offsets;
   }
