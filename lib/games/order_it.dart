@@ -39,21 +39,12 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
   int flag = 0;
   bool isUpdate = false;
   AnimationController controller, shakeController;
-  Animation<double> animation, noAnimation, shakeAnimation;
+  Animation<double> animation;
   @override
   void initState() {
     super.initState();
     print('OrderItState:initState');
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 800), vsync: this);
-    noAnimation = new Tween(begin: 0.0, end: 0.0).animate(controller);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-        }
-      });
+   
 
     if (widget.gameConfig.level < 4) {
       _maxSize = 5;
@@ -62,17 +53,20 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     } else {
       _maxSize = 12;
     }
-    controller.forward();
     _initBoard();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   void _initBoard() async {
+   controller = new AnimationController(duration: new Duration(milliseconds: 800), vsync: this);
+   animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    ..addStatusListener((state) {
+      print("$state:${animation.value}");
+      if (state == AnimationStatus.dismissed) {
+        print('dismissed');
+      }
+    });
+    controller.forward();
+
     setState(() => _isLoading = true);
     _allLetters = [];
     _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
@@ -87,6 +81,12 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     _letters = _allLetters.sublist(0, _maxSize);
     print("Rajesh Patil Sublisted Data ${_letters}");
     setState(() => _isLoading = false);
+  }
+
+   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
