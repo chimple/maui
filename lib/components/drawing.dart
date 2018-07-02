@@ -27,8 +27,9 @@ abstract class _DrawPadDelegate {
 
 class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
+  final List choice;
 
-  MyDrawPage(this.controller, {Key key}) : super(key: key);
+  MyDrawPage(this.controller,this.choice, {Key key}) : super(key: key);
 
   State<StatefulWidget> createState() {
     return new MyHomePageState(this.controller);
@@ -216,7 +217,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
     if(getLastPosition == null && isSendActive){
       Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new SecondScreen(drawJson)));
+          builder: (BuildContext context) => new SecondScreen(drawJson,widget.choice)));
+          print("data of choice isss ${widget.choice}");
 
     }
   }

@@ -56,7 +56,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0+2"
+    version: "0.2.1"
   build_runner:
     dependency: "direct dev"
     description:
@@ -105,7 +105,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   collection:
     dependency: transitive
     description:
@@ -148,13 +148,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.14"
-  event_stream:
-    dependency: transitive
-    description:
-      name: event_stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   file:
     dependency: transitive
     description:
@@ -162,27 +155,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
-  firebase_core:
-    dependency: transitive
-    description:
-      name: firebase_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.4"
-  firebase_database:
-    dependency: "direct main"
-    description:
-      name: firebase_database
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.6"
-  firebase_storage:
-    dependency: "direct main"
-    description:
-      name: firebase_storage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.6"
   fixnum:
     dependency: transitive
     description:
@@ -195,7 +167,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5a19311c777185c726112859b6527c77abe88537"
+      resolved-ref: "61ada2349060bc9d856db8f6a3087711adfda77c"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -216,6 +188,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_local_notifications:
+    dependency: "direct main"
+    description:
+      name: flutter_local_notifications
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -228,13 +207,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.7"
-  fluttie:
-    dependency: "direct main"
-    description:
-      name: fluttie
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2"
   front_end:
     dependency: transitive
     description:
@@ -284,13 +256,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
-  image_picker:
-    dependency: "direct main"
-    description:
-      name: image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.5"
   intl:
     dependency: transitive
     description:
@@ -375,6 +340,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  nima:
+    dependency: "direct main"
+    description:
+      name: nima
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -410,6 +382,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.1"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.2"
   plugin:
     dependency: transitive
     description:
@@ -583,13 +562,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.5"
-  unittest:
-    dependency: transitive
-    description:
-      name: unittest
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.11.7"
   utf:
     dependency: transitive
     description:
@@ -632,13 +604,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.7"
-  xmlstream:
-    dependency: "direct main"
-    description:
-      name: xmlstream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0"
   yaml:
     dependency: transitive
     description:
@@ -647,5 +612,5 @@ packages:
     source: hosted
     version: "2.1.13"
 sdks:
-  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.54.0.flutter-46ab040e58"
+  dart: ">=2.0.0-dev.54.0 <=2.0.0-dev.58.0.flutter-f981f09760"
   flutter: ">=0.1.4 <2.0.0"

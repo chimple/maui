@@ -1,17 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:maui/components/friend_item.dart';
-import 'package:maui/components/firebase_grid.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/screens/chat_screen.dart';
-
-final usersRef = FirebaseDatabase.instance.reference().child('users');
 
 class FriendListView extends StatefulWidget {
   const FriendListView({Key key}) : super(key: key);
@@ -23,9 +18,6 @@ class FriendListView extends StatefulWidget {
 }
 
 class _FriendListViewState extends State<FriendListView> {
-  List<dynamic> _friends;
-  List<User> _users;
-
   @override
   void initState() {
     super.initState();
@@ -33,18 +25,15 @@ class _FriendListViewState extends State<FriendListView> {
   }
 
   void _initData() async {
-    List<User> users = await UserRepo().getUsers();
-    if (!mounted) return;
-    setState(() {
-      _users = users;
-    });
+    await AppStateContainer.of(context).getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
+    var users = AppStateContainer.of(context).users;
     MediaQueryData media = MediaQuery.of(context);
-    if ((_users?.length ?? 0) == 0) {
+    if (users == null) {
       return new Center(
           child: new SizedBox(
         width: 20.0,
@@ -56,7 +45,7 @@ class _FriendListViewState extends State<FriendListView> {
       crossAxisSpacing: 12.0,
       mainAxisSpacing: 12.0,
       crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-      children: _users.map((u) {
+      children: users.map((u) {
         return FriendItem(
             id: u.id,
             imageUrl: u.image,

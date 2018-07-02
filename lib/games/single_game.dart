@@ -212,6 +212,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   int playTime = 10000;
   AnimationController _controller;
   Animation<Offset> _animation;
+  int _cumulativeIncrement = 0;
 
   @override
   void initState() {
@@ -322,7 +323,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                               new Center(
                                 child: Nima(
                                     name: widget.gameName,
-                                    score: widget.gameConfig.myScore,
+                                    score: _cumulativeIncrement,
                                     tag: !oh2h
                                         ? 'assets/hoodie/${widget.gameName}.png'
                                         : 'other.png'),
@@ -380,6 +381,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         widget.gameConfig.otherScore =
             max(0, widget.gameConfig.otherScore + incrementScore);
       }
+      _cumulativeIncrement += incrementScore;
     });
     //for now we only pass myscore up to the head to head
     if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
@@ -402,6 +404,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   _onEnd(BuildContext context,
       {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
+    print('_onEnd gameData: $gameData');
     if (maxIterations > 0) {
       if (widget.gameConfig.amICurrentPlayer) {
         setState(() {
@@ -529,7 +532,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'identify':
-        maxIterations = 1;
+        maxIterations = 2;
         return new IdentifyGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -554,19 +557,25 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'drawing':
         return new Drawing(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            isRotated: widget.isRotated,
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
-                widget.gameConfig.otherIteration);
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig,
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'dice':
+        maxIterations = -1;
         return new Dice(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
+            onEnd: (Map<String, dynamic> gameData, bool end) =>
+                _onEnd(context, gameData: gameData, end: end),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
@@ -767,7 +776,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'guess':
-        maxIterations = 1;
+        maxIterations = 2;
         return new GuessIt(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -779,6 +788,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       case 'spin_wheel':
         maxIterations = 2;
         return new SpinWheel(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
@@ -825,15 +835,14 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'first_word':
         return new FirstWord(
-          key: new GlobalObjectKey(keyName),
-          onScore: _onScore,
-          onProgress: _onProgress,
-          onEnd: () => _onEnd(context),
-          iteration:
-              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
-          isRotated: widget.isRotated,
-          gameConfig: widget.gameConfig
-        );
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'word_fight':
         return new WordFight(
