@@ -167,16 +167,16 @@ class PictureSentenceState extends State<PictureSentence> {
     }
     print(
         "sentencePart3 >>>>>>> $sentencePart3 <<<length ==== ${sentencePart3.length} >>>");
-    var text1 = new Expanded(
-          child: new Text(sentencePart1,
+    var text1 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart1,
           softWrap: true,
           style: new TextStyle(
               fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
     );
 
     var blankSpace1 = (output1 == "")
-        ? new Expanded(
-                  child: new Stack(children: [
+        ? new Stack(children: [
             new Container(
               color: Colors.grey,
               height: 40.0,
@@ -202,8 +202,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 },
               ),
             ),
-          ]),
-        )
+          ])
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -216,16 +215,16 @@ class PictureSentenceState extends State<PictureSentence> {
                         fontSize: 40.0))),
           );
 
-    var text2 = new Expanded(
-          child: new Text(sentencePart2,
+    var text2 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart2,
           softWrap: true,
           style: new TextStyle(
               fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
     );
 
     var blankSpace2 = (output2 == "")
-        ? new Expanded(
-                  child: new Stack(children: [
+        ? new Stack(children: [
             new Container(
               color: Colors.grey,
               height: 40.0,
@@ -251,8 +250,7 @@ class PictureSentenceState extends State<PictureSentence> {
                 },
               ),
             ),
-          ]),
-        )
+          ])
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -264,44 +262,54 @@ class PictureSentenceState extends State<PictureSentence> {
                         color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
-    var text3 = new Expanded(
-          child: new Text(sentencePart3,
+    var text3 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart3,
           softWrap: true,
           style: new TextStyle(
               fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
     );
-    // if (sentencePart1.length + 8 + sentencePart2.length < 37) {
-    //   if ((sentence.length - 6) < 25) {
-    //     return new Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: <Widget>[
-    //         new Row(
-    //           children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
-    //         ),
-    //       ],
-    //     );
-    //   } else {
-    //     return new Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: <Widget>[
-    //         new Row(
-    //           children: <Widget>[text1, blankSpace1, text2],
-    //         ),
-    //         new Row(
-    //           children: <Widget>[blankSpace2, text3],
-    //         )
-    //       ],
-    //     );
-    //   }
-    // }
-     
-      return 
+    if (sentencePart1.length + 8 + sentencePart2.length < 37) {
+      if ((sentence.length - 6) < 25) {
+        return new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Row(
+              children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+            ),
+          ],
+        );
+      } else {
+        return new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Row(
+              children: <Widget>[text1, blankSpace1, text2],
+            ),
+            new Row(
+              children: <Widget>[blankSpace2, text3],
+            )
+          ],
+        );
+      }
+    } else {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1,text2],
-          );
-         
-      
-    
+            children: <Widget>[text1, blankSpace1],
+          ),
+          new Row(
+            children: <Widget>[text2, blankSpace2, text3],
+          )
+        ],
+      );
+    }
+
+    // return
+    //     new Row(
+    //       children: <Widget>[text1, blankSpace1,text2],
+    //     );
   }
 
   @override
@@ -507,15 +515,14 @@ class _PictureCardState extends State<PictureCard> {
     }
     return new LayoutBuilder(builder: (context, constraints) {
       return new Card(
-        shape: new CircleBorder(
-            side: new BorderSide()),
+        shape: new CircleBorder(side: new BorderSide()),
         child: new Container(
             width: 200.0,
             height: 200.0,
             decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                image:
-                    new DecorationImage(image: new AssetImage(widget.image)))),
+                image: new DecorationImage(
+                   image: new AssetImage(widget.image)))),
       );
     });
   }
