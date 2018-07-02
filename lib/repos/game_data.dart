@@ -364,7 +364,7 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
 
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 4));
-  switch (0) {
+  switch (startNum) {
     case 0:
       return new Tuple2([
         
@@ -447,44 +447,100 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
       break;
     case 1:
       return new Tuple2(
-        ['upsc', 'cusp', 'scup', 'cup', 'pus', 'sup', 'ups', 'up', 'us'],
-       'upsc');
+        [
+'puces',
+'ceps',
+'cups',
+'cusp',
+'pecs',
+'puce',
+'scup',
+'spec',
+'cep',
+'cup',
+'pec',
+'cues',
+'ecus',
+'spue',
+'supe',
+'cue',
+'ecu',
+'pes',
+'pus',
+'esc',
+'sup',
+'ups',
+'pe',
+'up',
+'sue',
+'use',
+'us'],
+       'upsce');
       break;
+  
     case 2:
       return new Tuple2(
-        ['ucts', 'scut', 'cut', 'uts', 'st', 'us', 'ut'],
-      'ucts');
-      break;
-    case 3:
-      return new Tuple2(
         [
-          'hate',
-          'eath',
-          'haet',
-          'heat',
-          'thae',
-          'eth',
-          'hae',
-          'hat',
-          'het',
-          'the',
-          'ah',
-          'eh',
-          'ha',
-          'he',
-          'ate',
-          'eat',
-          'eta',
-          'tae',
-          'tea',
-          'ae',
-          'at',
-          'ea',
-          'et',
-          'ta',
-          'te'
+          'ashet',
+'haets',
+'haste',
+'hates',
+'heats',
+'eath',
+'eths',
+'haes',
+'haet',
+'hast',
+'hate',
+'hats',
+'heat',
+'hest',
+'hets',
+'shat',
+'shea',
+'shet',
+'tash',
+'thae',
+'ahs',
+'ash',
+'eth',
+'hae',
+'has',
+'hat',
+'hes',
+'het',
+'sha',
+'she',
+'the',
+'he',
+'ates',
+'east',
+'eats',
+'etas',
+'sate',
+'seat',
+'taes',
+'tase',
+'teas',
+'ate',
+'ats',
+'eas',
+'eat',
+'est',
+'sae',
+'sat',
+'sea',
+'set',
+'tae',
+'tas',
+'tea',
+'tes',
+'as',
+'at',
+'st',
+'te'
         ],
-       'hate');
+       'hates');
       break;
   }
    return null;
