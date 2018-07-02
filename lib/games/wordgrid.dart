@@ -312,11 +312,11 @@ class WordgridState extends State<Wordgrid> {
           if (flag == 1) {
             temp = [];
             tempindex = [];
-            tries += 5;
+            tries += 4;
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
-              widget.onScore(-5);
+              widget.onScore(-4);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
@@ -333,7 +333,7 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
-            widget.onScore((40 - tries) ~/ totalgame);
+            widget.onScore((40~/ totalgame)- tries);
             widget.onProgress(1.0);
             endflag = 1;
             new Future.delayed(const Duration(milliseconds: 350), () {

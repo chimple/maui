@@ -14,6 +14,7 @@ class Crossword extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
+  Function onTurn;
   int iteration;
   GameConfig gameConfig;
   bool isRotated;
@@ -22,6 +23,7 @@ class Crossword extends StatefulWidget {
       this.onScore,
       this.onProgress,
       this.onEnd,
+      this.onTurn,
       this.iteration,
       this.isRotated = false,
       this.gameConfig})
@@ -32,10 +34,6 @@ class Crossword extends StatefulWidget {
 }
 
 class CrosswordState extends State<Crossword> {
-  var flag1 = 0;
-  var correct = 0;
-  var keys = 0;
-  var textsize = 24.0;
   Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data;
   List<String> _rightwords = [];
   List<String> _letters = new List();
@@ -44,11 +42,11 @@ class CrosswordState extends State<Crossword> {
   List<int> _flag = new List();
   List<String> _data1 = new List();
   List _sortletters = [];
-  List _gridsize = [];
   bool _isLoading = true;
   String img, dragdata;
   int _rows, _cols, code, dindex, dcode;
-  int len, _rightlen, j, k;
+  int len, _rightlen, j, k, l;
+  var flag1, correct, keys;
   @override
   void initState() {
     super.initState();
@@ -57,14 +55,25 @@ class CrosswordState extends State<Crossword> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _letters = [];
-    _data2 = [];
-    _data1 = [];
-    _data3 = [];
-    _sortletters = [];
-    _rightwords = [];
+    _data2.removeRange(0, _data2.length);
+    _data1.removeRange(0, _data1.length);
+    _data3.removeRange(0, _data3.length);
+    _sortletters.removeRange(0, _sortletters.length);
+    _rightwords.removeRange(0, _rightwords.length);
+    _letters.removeRange(0,_letters.length);
+    _rightlen = 0;
+    correct = 0;
+    flag1 = 0;
+    _letters.removeRange(0, _letters.length);
+    _flag.removeRange(0, _flag.length);
+    _rows = 0;
+    _cols = 0;
+    j = 0;
+    k = 0;
+    keys = 0;
+    l = 0;
     data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
-
+    print('data camee $data');
     data.item1.forEach((e) {
       e.forEach((v) {
         _data1.add(v);
@@ -79,9 +88,9 @@ class CrosswordState extends State<Crossword> {
       _data3.add(data.item2[i].item2 * _rows + data.item2[i].item3);
     }
     _letters = _data1;
-    len=_data2.length+1;
-    if(len>14){
-      len=14;
+    len = _data2.length + 1;
+    if (len > 14) {
+      len = 14;
     }
     var rng = new Random();
     var i = 0, f = 0;
@@ -111,17 +120,27 @@ class CrosswordState extends State<Crossword> {
       _letters[_sortletters[i]] = '';
     }
     _rightlen = _rightwords.length;
+    print("this is right word $_rightwords");
     _rightwords.shuffle();
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
     _flag = [];
-    print('flag ${_flag.length}');
     for (var i = 0; i < (_rows * _cols) + _rows * 2 + _cols * 2; i++) {
       _flag.add(0);
     }
+
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(Crossword oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
   }
 
   Widget _buildItem(int index, String text, int flag) {
@@ -144,7 +163,7 @@ class CrosswordState extends State<Crossword> {
             dindex = int.parse(dragdata.substring(0, 3));
             dcode = int.parse(dragdata.substring(4));
             if (code == dcode) {
-              var i = 0, flagtemp = 0;
+              var i = 0;
               for (i; i < _sortletters.length; i++) {
                 if (_rightwords[dindex - 100] == _sortletters[i] &&
                     index == _sortletters[++i] &&
@@ -159,23 +178,37 @@ class CrosswordState extends State<Crossword> {
                   _rightwords[dindex - 100] += '.';
                   _letters[index] = _sortletters[--i];
                   correct++;
-                  widget.onScore(((1/_rightlen)*40).toInt());
+                  widget.onScore(((1 / _rightlen) * 40).toInt());
                   widget.onProgress(correct / _rightlen);
                   if (correct == _rightlen) {
+                    _data2.removeRange(0, _data2.length);
+                    _data1.removeRange(0, _data1.length);
+                    _data3.removeRange(0, _data3.length);
+                    _sortletters.removeRange(0, _sortletters.length);
+                    _rightwords.removeRange(0, _rightwords.length);
+                        _letters.removeRange(0,_letters.length);
+                    _rightlen = 0;
+                    correct = 0;
+                    flag1 = 0;
+                    _letters.removeRange(0, _letters.length);
+                    _flag.removeRange(0, _flag.length);
+                    _rows = 0;
+                    _cols = 0;
+                    i = 0;
+                    j = 0;
+                    keys = 0;
+                    l = 0;
+                    k = 0;
                     widget.onEnd();
                   }
                 } else if (flag1 == 0 && _letters[index] == '') {
                   _flag[index] = 1;
-                    _letters[index] = _rightwords[dindex - 100];
-                    flagtemp = 1;
+                  _letters[index] = _rightwords[dindex - 100];
                   new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
-                       widget.onScore(-((1/_rightlen)*20).toInt());
+                      widget.onScore(-((1 / _rightlen) * 20).toInt());
                       _flag[index] = 0;
-                      if (flagtemp == 1) {
-                        _letters[index] = '';
-                        flagtemp = 0;
-                      }
+                      _letters[index] = '';
                     });
                   });
                 }
@@ -183,11 +216,10 @@ class CrosswordState extends State<Crossword> {
             }
           },
           flag: flag,
-          grid: _gridsize,
-          textsize: textsize,
           code: code,
           onDrag: () {
-          setState(() {});},
+            setState(() {});
+          },
           isRotated: widget.isRotated,
           img: img,
           keys: keys++);
@@ -198,14 +230,13 @@ class CrosswordState extends State<Crossword> {
           text: '',
           color1: 0,
           flag: flag,
-          textsize: textsize,
           onAccepted: (text) {},
           code: code,
-          grid: _gridsize,
           isRotated: widget.isRotated,
           img: img,
           onDrag: () {
-          setState(() {});},
+            setState(() {});
+          },
           keys: keys);
     }
   }
@@ -236,10 +267,6 @@ class CrosswordState extends State<Crossword> {
     //   }
     // }
     return new LayoutBuilder(builder: (context, constraints) {
-      keys = 0;
-      j = 0;
-      k = 100;
-      var l=(_rows*_cols)-1;
       var rwidth, rheight;
       rwidth = constraints.maxWidth;
       rheight = constraints.maxHeight;
@@ -251,12 +278,18 @@ class CrosswordState extends State<Crossword> {
       double maxWidth = (constraints.maxWidth - hPadding * 2) /
           (isPortait ? _cols : _cols + _rows + _rightlen > _cols ? 2 : 1);
       double maxHeight = (constraints.maxHeight - vPadding * 2) /
-          (isPortait ? _rows + 1+(_rightlen > _cols ? 2 : 1) : _cols);
+          (isPortait ? _rows + 1 + (_rightlen > _cols ? 2 : 1) : _cols);
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
+      keys = 0;
+      var j = 0;
+      var k = 100;
+     var l = (_rows * _cols) - 1;
+     print('builded widget ${_flag.length}   $_rows $_cols ${_letters.length}');
+     print('letters      $_letters');
       return new Container(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -265,55 +298,58 @@ class CrosswordState extends State<Crossword> {
                   // portrait mode
                   children: <Widget>[
                       new Expanded(
-                        child:new Container(
-                          color:Color(0xFFD32F2F),
-                          child: ResponsiveGridView(
-                        rows: _rows,
-                        cols: _cols,
-                        children: _letters
-                            .map((e) =>Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child:_buildItem(j, e, _flag[j++]))
-                      ).toList(growable: false)))),
-                      new Padding(padding:new EdgeInsets.all(buttonPadding)),
-                     new Container(
-                          color:Colors.white,
-                       child:new ResponsiveGridView(
-                        rows: _rightlen > _cols ? 2 : 1,
-                        cols: _cols,
-                        children: _rightwords
-                            .map((e) =>Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(k++, e, _flag[j++]))
-                      ).toList(growable: false)))
+                          child: new Container(
+                              color: Color(0xFFD32F2F),
+                              child: ResponsiveGridView(
+                                  rows: _rows,
+                                  cols: _cols,
+                                  children: _letters
+                                      .map((e) => Padding(
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
+                                          child: _buildItem(j, e, _flag[j++])))
+                                      .toList(growable: false)))),
+                      new Padding(padding: new EdgeInsets.all(buttonPadding)),
+                      new Container(
+                          color: Colors.white,
+                          child: new ResponsiveGridView(
+                              rows: _rightlen > _cols ? 2 : 1,
+                              cols: _cols,
+                              children: _rightwords
+                                  .map((e) => Padding(
+                                      padding: EdgeInsets.all(buttonPadding),
+                                      child: _buildItem(k++, e, _flag[j++])))
+                                  .toList(growable: false)))
                     ])
               : new Row(
                   // landsape mode
                   children: <Widget>[
-                    new Expanded(
-                      child:new Container(
-                          color:Colors.white,
-                       child:
-                      new ResponsiveGridView(
-                        rows: _cols,
-                        cols: _rightlen > _cols ? 2 : 1,
-                        children: _rightwords
-                            .map((e) =>Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(k++, e, _flag[l++]))
-                      ).toList(growable: false)))),
-                       new Expanded(
-                         flex: 4,
-                           child:new Container(
-                          color:Color(0xFFD32F2F),
-                         child: new ResponsiveGridView(
-                        rows: _rows,
-                        cols: _cols,
-                        children: _letters
-                            .map((e) =>Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(j, e, _flag[j++]))
-                      ).toList(growable: false))))
+                      new Expanded(
+                          child: new Container(
+                              color: Colors.white,
+                              child: new ResponsiveGridView(
+                                  rows: _cols,
+                                  cols: _rightlen > _cols ? 2 : 1,
+                                  children: _rightwords
+                                      .map((e) => Padding(
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
+                                          child:
+                                              _buildItem(k++, e, _flag[l++])))
+                                      .toList(growable: false)))),
+                      new Expanded(
+                          flex: 4,
+                          child: new Container(
+                              color: Color(0xFFD32F2F),
+                              child: new ResponsiveGridView(
+                                  rows: _rows,
+                                  cols: _cols,
+                                  children: _letters
+                                      .map((e) => Padding(
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
+                                          child: _buildItem(j, e, _flag[j++])))
+                                      .toList(growable: false))))
                     ]));
     });
   }
@@ -329,10 +365,8 @@ class MyButton extends StatefulWidget {
       this.onAccepted,
       this.code,
       this.isRotated,
-      this.textsize,
       this.img,
       this.onDrag,
-      this.grid,
       this.keys})
       : super(key: key);
   final index;
@@ -344,8 +378,6 @@ class MyButton extends StatefulWidget {
   final String img;
   final DragTargetAccept onAccepted;
   final keys;
-  final textsize;
-  final List grid;
   final VoidCallback onDrag;
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -415,7 +447,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         text: widget.text,
                         bgImage: widget.img,
                         showHelp: false,
-                        highlighted: widget.flag==1?true:false,
+                        highlighted: widget.flag == 1 ? true : false,
                       );
                     },
                   ),
