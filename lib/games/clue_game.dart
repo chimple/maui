@@ -47,6 +47,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   String word = '';
   int count = 0;
   Key key;
+  int flag;
   List<String> _categoryup=[];
   List<String> _categorydown=[];
   List<String> categoryName = [];
@@ -75,12 +76,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       });
     });
     reset(word);
+    flag=0;
     listOfThingscopy.addAll(listOfThings);
     _categoryup = categoryName.sublist(0, 2);
     _categorydown = categoryName.sublist(2, 4);
     setState(() => _isLoading = false);
   }
   void reset( String name){
+    flag=0;
      listOfSyllables.clear();
      listOfThings.clear();
      data.forEach((k, data1) {
@@ -105,6 +108,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type Drink';
          count++;
+         flag=1;
         widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -129,6 +133,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type Travel';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -153,6 +158,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type Red Fruit';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -177,6 +183,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
       setState(() {
         _result = 'you Type black Pet';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -284,7 +291,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             ? _width * 0.15
             : _width * 0.1,
         child: new RaisedButton(
-          onPressed: () => _validate(),
+          onPressed: () => flag==0?_validate():null,
           shape: new RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
           child: new Text('✔',
