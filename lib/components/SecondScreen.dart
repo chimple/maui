@@ -67,11 +67,11 @@ class OptionState extends State<SecondScreen> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    print('gameData manuuuuuuuuuu sec: ${widget.gameConfig.gameData}');
+    print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
       fromJsonMap(widget.gameConfig.gameData);
     } else {
-      DrawData = [];
+      DrawData = [widget.jsonVal];
       ReceiveData = [];
     }
     for (var i = 0; i < _size; i++) {
@@ -107,19 +107,19 @@ class OptionState extends State<SecondScreen> {
   Widget _buildItem(int index, String text) {
     print("text issssssssss $text");
     print("choice if b issssssssss ${widget.choice}");
-    // DrawData = {widget.jsonVal}
-    // print("choice issssssssss ${choice[1]}");
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
           if (text == widget.choice[1]) {
             print("hiii manuu");
-            widget.onScore(5);
-            widget.onEnd(toJsonMap(), false);
-            // widget.onProgress(1.0);
+            widget.onScore(1);
+            widget.onProgress(1.0);
+            widget.onEnd(toJsonMap(),false);
+            
             // widget.onEnd();
             _initBoard();
+            // Navigator.pop(context);
           } else {
             widget.onScore(-1);
           }
@@ -330,7 +330,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       child: new FlashCard(text: widget.text)));
             },
             child: new UnitButton(
-              text: _displayText,
+              text: _displayText.toUpperCase(),
               onPress: () => widget.onPress(),
               // unitMode: UnitMode.text,
               showHelp: false,

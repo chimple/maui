@@ -328,7 +328,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
               new Container(
                   height: media.size.height > media.size.width
                       ? constraints.maxHeight * .08
-                      : constraints.maxHeight * .12,
+                      : constraints.maxHeight * .11,
                   width: media.size.height < media.size.width
                       ? constraints.maxWidth * .15
                       : constraints.maxWidth * .2,

@@ -90,6 +90,8 @@ flutter:
     - assets/dice_game/4.png
     - assets/dice_game/5.png
     - assets/dice_game/6.png
+    - assets/dice_game/color_picker.png
+    - assets/dice_game/color_brush.png
     - assets/dice_game/dice1.gif
     - assets/dice_game/dice4.gif
     - assets/dice_game/tapme.png
