@@ -43,6 +43,7 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/repos/notif_repo.dart';
 
 enum GameMode { timed, iterations }
 
@@ -156,7 +157,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF76abd3),
       Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF77DB65), Color(0xFFFAFAFA), Color(0xFF379EDD)],
+    'crossword': [Color(0xFF56EDE6), Color(0xFFD32F2F), Color(0xFF379EDD)],
     'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
     'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
@@ -182,7 +183,7 @@ class SingleGame extends StatefulWidget {
     'tap_home': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'tap_wrong': [Color(0xFFF47C5D), Color(0xFF30d858), Color(0xFFA367F9)],
     'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
-    'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'wordgrid': [Color(0xFFFF7D8F), Color(0xFFDAECF7), Color(0xFFFFCB57)],
     'picture_sentence': [
       Color(0xFF1DC8CC),
       Color(0xFF282828),
@@ -243,6 +244,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     new Future.delayed(const Duration(milliseconds: 250), () {
       _controller.forward();
     });
+    _initData();
+  }
+
+  void _initData() async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn &&
+        widget.gameConfig.myIteration > 1 &&
+        widget.gameConfig.amICurrentPlayer) {
+      await NotifRepo()
+          .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
+    }
   }
 
   @override
@@ -786,7 +797,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
-        maxIterations = 2;
+        maxIterations = 1;
         return new SpinWheel(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -795,7 +806,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'circle_word':
         return new Circleword(

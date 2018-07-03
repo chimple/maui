@@ -325,10 +325,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
-
+        
+        initialVisibility = true;
         controller.forward().then((f) {
           flipController.forward();
-          initialVisibility = true;
         new Future.delayed(const Duration(milliseconds: 2000), () { 
           initialVisibility = false;
           flipController.reverse();
