@@ -20,6 +20,7 @@ dependencies:
   camera: 0.2.1
   nima: 1.0.0
   flutter_local_notifications: 0.3.3
+  badge: 0.0.2
   flores:
     git:
       https://github.com/chimple/flores.git

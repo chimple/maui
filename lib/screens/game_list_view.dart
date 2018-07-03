@@ -3,9 +3,36 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
+import 'package:maui/repos/notif_repo.dart';
+import 'package:badge/badge.dart';
 
-class GameListView extends StatelessWidget {
+class GameListView extends StatefulWidget {
   const GameListView({Key key}) : super(key: key);
+
+  @override
+  GameListViewState createState() {
+    return new GameListViewState();
+  }
+
+  showModes(BuildContext context, String game) {
+    Navigator.of(context).pushNamed('/categories/$game');
+  }
+}
+
+class GameListViewState extends State<GameListView> {
+  Map<String, int> _notifs = Map<String, int>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _initData() async {
+    var notifs = await NotifRepo().getNotifCountByType();
+    setState(() {
+      _notifs = notifs;
+    });
+  }
 
   Widget _buildButton(
       BuildContext context, String gameName, String displayName) {
@@ -32,10 +59,19 @@ class GameListView extends StatelessWidget {
           children: <Widget>[
             new Expanded(
                 child: Align(
-                    child: new Hero(
-              tag: 'assets/hoodie/$gameName.png',
-              child: Image.asset('assets/hoodie/$gameName.png', scale: 0.3),
-            ))),
+                    child: _notifs[gameName] == null
+                        ? new Hero(
+                            tag: 'assets/hoodie/$gameName.png',
+                            child: Image.asset('assets/hoodie/$gameName.png',
+                                scale: 0.3),
+                          )
+                        : Badge(
+                            value: '${_notifs[gameName]}',
+                            child: Hero(
+                              tag: 'assets/hoodie/$gameName.png',
+                              child: Image.asset('assets/hoodie/$gameName.png',
+                                  scale: 0.3),
+                            )))),
             new Container(
                 padding: EdgeInsets.all(size.width * .01),
                 decoration: new BoxDecoration(
@@ -101,9 +137,5 @@ class GameListView extends StatelessWidget {
           _buildButton(context, 'dice', 'Dice'),
           _buildButton(context, 'circle_word', 'Circle Word'),
         ]);
-  }
-
-  showModes(BuildContext context, String game) {
-    Navigator.of(context).pushNamed('/categories/$game');
   }
 }
