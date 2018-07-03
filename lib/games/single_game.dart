@@ -43,6 +43,7 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/repos/notif_repo.dart';
 
 enum GameMode { timed, iterations }
 
@@ -243,6 +244,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     new Future.delayed(const Duration(milliseconds: 250), () {
       _controller.forward();
     });
+    _initData();
+  }
+
+  void _initData() async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn &&
+        widget.gameConfig.myIteration > 1 &&
+        widget.gameConfig.amICurrentPlayer) {
+      await NotifRepo()
+          .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
+    }
   }
 
   @override
@@ -792,7 +803,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
-        maxIterations = 2;
+        maxIterations = 1;
         return new SpinWheel(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,

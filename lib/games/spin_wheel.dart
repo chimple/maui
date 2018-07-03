@@ -139,7 +139,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.iteration != oldWidget.iteration && widget.iteration != 2) {
+    if (widget.iteration != oldWidget.iteration) {
       _indexOfContainerData = 0;
       _countGameEnd = 0;
 
@@ -161,7 +161,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     setState(() {
       _isLoading = true;
     });
-    try {
+    //try {
       //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
 
       print("game category:: $allData");
@@ -208,7 +208,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           _maxString = _shuffleCircleData1[i];
         }
       }
-    } catch (exception, e) {}
+   // } catch (exception, e) {}
     setState(() {
       _isLoading = false;
     });
@@ -470,6 +470,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   }
 
   void _shake() {
+    widget.onScore(-1);
     controller.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
         controller.forward();
@@ -519,7 +520,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     _countGameEnd++;
     //print("game count $_countGameEnd");
-    widget.onScore(1);
+    widget.onScore(4);
   }
 
   @override
