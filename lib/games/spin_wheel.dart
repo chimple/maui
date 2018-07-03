@@ -12,6 +12,7 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
 import 'package:maui/components/unit_button.dart';
 import 'dart:ui' as ui;
+import 'dart:async';
 
 class SpinWheel extends StatefulWidget {
   Function onScore;
@@ -20,21 +21,18 @@ class SpinWheel extends StatefulWidget {
   int iteration;
   Function function;
   int gameCategoryId;
-  bool isRotated;
-  UnitMode unitMode;
   GameConfig gameConfig;
-  VoidCallback onPress;
+  bool isRotated;
+  final Color disableColor;
   SpinWheel(
       {key,
-      this.unitMode,
-      this.onPress,
-      this.gameConfig,
       this.onScore,
       this.onProgress,
       this.onEnd,
       this.iteration,
       this.function,
-      this.gameCategoryId,
+      this.gameConfig,
+      this.disableColor,
       this.isRotated = false})
       : super(key: key);
   @override
@@ -102,9 +100,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragEnd = 0.0,
       dragEnd1 = 0.0,
       dragUpdate = 0.0,
-      _angleDiff;
+      _angleDiff,
+      gameEndFlag = true;
 
-  int _indexOfContainerData = 0, dataSize = 6, _countGameEnd = 0;
+  int _indexOfContainerData = 0, dataSize, _countGameEnd = 0;
   String _text = '', s1 = 'assets/dict/', s2 = '.png';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
@@ -122,7 +121,16 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         new CurvedAnimation(parent: controller1, curve: Curves.easeInOut);
     controller1.addStatusListener((status) {});
     controller1.forward();
-
+     if (widget.gameConfig.level < 4) {
+        print("level <4");
+        dataSize = 4;
+      } else if (widget.gameConfig.level < 6) {
+        print("level <8");
+        dataSize = 6;
+      } else {
+        print("level <10");
+        dataSize = 8;
+      }
     _initBoard();
   }
 
@@ -139,7 +147,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.iteration != oldWidget.iteration && widget.iteration != 2) {
+    if (widget.iteration != oldWidget.iteration) {
       _indexOfContainerData = 0;
       _countGameEnd = 0;
 
@@ -150,6 +158,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData1.clear();
       _shuffleCircleData2.clear();
       images.clear();
+
+      gameEndFlag = true;
       _initBoard();
       reset();
     }
@@ -161,54 +171,54 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     setState(() {
       _isLoading = true;
     });
-    try {
-      //allData = await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    //try {
+    allData = await fetchPairData(widget.gameConfig.gameCategoryId, dataSize);
 
-      print("game category:: $allData");
+    print("game category:: $allData");
 
-      _data.forEach((k, v) {
-        _circleData.add(k);
+    allData.forEach((k, v) {
+      _circleData.add(k);
 
-        _smallCircleData.add(v);
-      });
+      _smallCircleData.add(v);
+    });
 
-      _shuffleCircleData1 = _circleData.sublist(0, dataSize);
-      _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
-      _shuffleCircleData1.shuffle();
-      _shuffleCircleData2.shuffle();
-      mode.shuffle();
+    _shuffleCircleData1 = _circleData.sublist(0, dataSize);
+    _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
+    _shuffleCircleData1.shuffle();
+    _shuffleCircleData2.shuffle();
+    mode.shuffle();
 
-      // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
-      // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
-      // print("Answer data::::${_circleData}");
-      // print("Question data::::${_smallCircleData}");
+    // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
+    // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
+    // print("Answer data::::${_circleData}");
+    // print("Question data::::${_smallCircleData}");
 
-      rotationPercent = 0.0;
-      _text = _shuffleCircleData2[0];
+    rotationPercent = 0.0;
+    _text = _shuffleCircleData2[0];
 
-      _activeIndex = _smallCircleData.indexOf(_text);
-     // print("active index:: $_activeIndex");
-      int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
-      //print("text in active index:: ${_circleData[_activeIndex]}");
-     // print("unit button text:: $_text , index $index");
-      _slice[index] = true;
+    _activeIndex = _smallCircleData.indexOf(_text);
+    // print("active index:: $_activeIndex");
+    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+    //print("text in active index:: ${_circleData[_activeIndex]}");
+    // print("unit button text:: $_text , index $index");
+    _slice[index] = true;
 
-      if (mode[0] == 'image') {
-        for (int i = 0; i < dataSize; i++) {
-          String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
-         // print("image url:: $_image");
-          load(_image).then((j) {
-            if (j != null) images.add(j);
-          });
-        }
+    if (widget.gameConfig.answerUnitMode == UnitMode.image) {
+      for (int i = 0; i < dataSize; i++) {
+        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+        // print("image url:: $_image");
+        load(_image).then((j) {
+          if (j != null) images.add(j);
+        });
       }
-      _maxString = _shuffleCircleData1[0];
-      for (int i = 1; i < dataSize; i++) {
-        if (_maxString.length < _shuffleCircleData1[i].length) {
-          _maxString = _shuffleCircleData1[i];
-        }
+    }
+    _maxString = _shuffleCircleData1[0];
+    for (int i = 1; i < dataSize; i++) {
+      if (_maxString.length < _shuffleCircleData1[i].length) {
+        _maxString = _shuffleCircleData1[i];
       }
-    } catch (exception, e) {}
+    }
+    // } catch (exception, e) {}
     setState(() {
       _isLoading = false;
     });
@@ -487,6 +497,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         angleDiff = 0.0;
       });
     });
+    if (gameEndFlag) widget.onScore(-1);
   }
 
   void _changeData(int indx, double angle) {
@@ -516,10 +527,11 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       new Future.delayed(Duration(seconds: 2), () {
         widget.onEnd();
       });
+      gameEndFlag = false;
     }
     _countGameEnd++;
     //print("game count $_countGameEnd");
-    widget.onScore(1);
+    widget.onScore(4);
   }
 
   @override
@@ -740,7 +752,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                             width: size1.width,
                             height: size1.width,
                             child: new CustomPaint(
-                              painter: mode[0] == 'text'
+                              painter: widget.gameConfig.answerUnitMode !=
+                                      UnitMode.image
                                   ? CirclePainter(
                                       maxChar: maxChars,
                                       noOfSlice: dataSize,
