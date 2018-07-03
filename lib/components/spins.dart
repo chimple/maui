@@ -132,7 +132,7 @@ class CirclePainter extends CustomPainter {
         textPainter.paint(
           canvas,
           new Offset(
-            -((5.20 * _text.length) * _baseLength) / 117.50,
+            -((6.10 * _text.length) * _baseLength) / 117.50,
             -(size.height / 7.800 + _const),
           ),
         );
