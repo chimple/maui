@@ -167,42 +167,42 @@ class PictureSentenceState extends State<PictureSentence> {
     }
     print(
         "sentencePart3 >>>>>>> $sentencePart3 <<<length ==== ${sentencePart3.length} >>>");
-    var text1 = new Text(sentencePart1,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text1 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart1,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
 
     var blankSpace1 = (output1 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: 40.0,
+              width: 170.0,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[0].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[0].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
+            ),
+          ])
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -211,46 +211,46 @@ class PictureSentenceState extends State<PictureSentence> {
                     softWrap: true,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: color,
+                        color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
 
-    var text2 = new Text(sentencePart2,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text2 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart2,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
 
     var blankSpace2 = (output2 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: 40.0,
+              width: 170.0,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[1].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[1].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
+            ),
+          ])
         : new Padding(
             padding: const EdgeInsets.all(16.0),
             child: new Container(
@@ -259,13 +259,16 @@ class PictureSentenceState extends State<PictureSentence> {
                     softWrap: true,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: color,
+                        color: Colors.greenAccent,
                         fontSize: 40.0))),
           );
-    var text3 = new Text(sentencePart3,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text3 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart3,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, color: color, fontSize: 40.0)),
+    );
     if (sentencePart1.length + 8 + sentencePart2.length < 37) {
       if ((sentence.length - 6) < 25) {
         return new Column(
@@ -302,6 +305,11 @@ class PictureSentenceState extends State<PictureSentence> {
         ],
       );
     }
+
+    // return
+    //     new Row(
+    //       children: <Widget>[text1, blankSpace1,text2],
+    //     );
   }
 
   @override
@@ -507,16 +515,14 @@ class _PictureCardState extends State<PictureCard> {
     }
     return new LayoutBuilder(builder: (context, constraints) {
       return new Card(
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.all(
-                Radius.circular(constraints.maxHeight * 0.02))),
+        shape: new CircleBorder(side: new BorderSide()),
         child: new Container(
             width: 200.0,
             height: 200.0,
             decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                image:
-                    new DecorationImage(image: new AssetImage(widget.image)))),
+                image: new DecorationImage(
+                   image: new AssetImage(widget.image)))),
       );
     });
   }

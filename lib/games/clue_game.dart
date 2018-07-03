@@ -28,7 +28,6 @@ class ClueGame extends StatefulWidget {
   @override
   _ClueGameState createState() => new _ClueGameState();
 }
-
 class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation, noanimation;
@@ -48,15 +47,14 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
   String word = '';
   int count = 0;
   Key key;
+  int flag;
   List<String> _categoryup=[];
   List<String> _categorydown=[];
   List<String> categoryName = [];
-  List<String> newlist = [];
   List<String> listOfThings = [];
+  List<String> listOfThingscopy = [];
   List<String> listOfSyllables =[];
-  List<String> listOfSyllablesremove =[];
-  List<String> listOfSyllablescopy = [];
-  List<String> newSyllables = [];
+  List<String> listOfSyllablescopy =[];
   List<String> dummylist = ['eq','ag','fg','cv','bn','mk','lk','asd','po','qw','tyu','uy','cb','ni','oiu','kjh','ko','za','aq'];
   bool _isLoading = true;
   Map<String, List<String>> data1;
@@ -65,6 +63,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
      listOfSyllables.clear();
      listOfThings.clear();
      categoryName.clear();
+     listOfThingscopy.clear();
      setState(() => _isLoading = true);
       data = await fetchClueGame(widget.gameCategoryId);
       data.forEach((k, data1) {
@@ -76,34 +75,40 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         });
       });
     });
+    reset(word);
+    flag=0;
+    listOfThingscopy.addAll(listOfThings);
     _categoryup = categoryName.sublist(0, 2);
     _categorydown = categoryName.sublist(2, 4);
-      listOfSyllables.addAll(dummylist);
-    print('list of syllables is $listOfSyllables'); 
-    print('word is vefore $words');
-   
-    newlist.addAll(words);
-    for (int i = 0; i < newlist.length; i++) listOfSyllables.remove(newlist[i]);
-   // listOfSyllablesremove=listOfSyllables;
-    print('list of syll.remv is $listOfSyllables');
-   // print('newlist is $newlist');
-    print('word is $words');
-    listOfSyllablescopy = listOfSyllables.sublist(0, 19);
-    listOfSyllablescopy.shuffle(); 
     setState(() => _isLoading = false);
   }
- 
+  void reset( String name){
+    flag=0;
+     listOfSyllables.clear();
+     listOfThings.clear();
+     data.forEach((k, data1) {
+      categoryName.add(k);
+      data1.remove(name);
+       data1.forEach((a, list) {
+        listOfThings.add(a);
+        listOfThings.remove(name);
+        list.forEach((c) {
+          listOfSyllables.add(c);
+        });
+      });
+    });
+     listOfSyllables.addAll(dummylist);
+    listOfSyllablescopy = listOfSyllables.sublist(0, 19);
+    listOfSyllablescopy.shuffle(); 
+  }
  void _validate() {
      String word = _result;
-        if(word=='')
-     {
-
-     }
-    else  
-    if (listOfThings.sublist(0, 3).contains(_result)) {
+    if(word=='')  {}
+   else if (listOfThingscopy.sublist(0, 3).contains(_result)) {
       setState(() {
         _result = 'you Type Drink';
          count++;
+         flag=1;
         widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -120,14 +125,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         setState(() {
           _flag = 0;
           _result = '';
-            _initClueGame();
+            reset(word);
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(3, 6).contains(_result)) {
+    } else if (listOfThingscopy.sublist(3, 6).contains(_result)) {
       setState(() {
         _result = 'you Type Travel';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -144,14 +150,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         setState(() {
           _flag = 0;
           _result = '';
-            _initClueGame();
+          reset(word);
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(6, 9).contains(_result)) {
+    } else if (listOfThingscopy.sublist(6, 9).contains(_result)) {
       setState(() {
         _result = 'you Type Red Fruit';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -168,14 +175,15 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         setState(() {
           _flag = 0;
           _result = '';
-            _initClueGame();
+            reset(word);
         });
         controller.stop();
       });
-    } else if (listOfThings.sublist(9, 12).contains(_result)) {
+    } else if (listOfThingscopy.sublist(9, 12).contains(_result)) {
       setState(() {
         _result = 'you Type black Pet';
          count++;
+            flag=1;
          widget.onScore(4);
         widget.onProgress(count/12);
         if(count==12)
@@ -192,13 +200,12 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         setState(() {
           _flag = 0;
           _result = '';
-            _initClueGame();
+          reset(word);
         });
         controller.stop();
       });
     } else {
       toAnimateFunction();
-      words.clear();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;
@@ -284,7 +291,7 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
             ? _width * 0.15
             : _width * 0.1,
         child: new RaisedButton(
-          onPressed: () => _validate(),
+          onPressed: () => flag==0?_validate():null,
           shape: new RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
           child: new Text('✔',
@@ -405,14 +412,13 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         onPress: setData); 
   }
   List<int> lengthofwords = [];
-   List<String> words = [];
   void setData(String a) {
     setState(() {
        len = a.length;
-        words.add(a);
       lengthofwords.add(len);
       _result = _result + a;
-    });}
+    });  
+    }
   int j = 0;
  }
 
