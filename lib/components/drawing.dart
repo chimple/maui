@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:maui/games/single_game.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
 import '../components/SecondScreen.dart';
@@ -25,8 +26,24 @@ abstract class _DrawPadDelegate {
 class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
   final List choice;
+  Function onScore;
+  Function onProgress;
+  Function onEnd;
+  int iteration;
+  int gameCategoryId;
+  GameConfig gameConfig;
+  bool isRotated;
 
-  MyDrawPage(this.controller,this.choice, {Key key}) : super(key: key);
+  MyDrawPage(
+      this.controller,
+      this.choice,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.gameConfig,
+      this.isRotated);
 
   State<StatefulWidget> createState() {
     return new MyHomePageState(this.controller);
@@ -93,7 +110,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   print({
                     "convert into percentage is : ": convertedIntoPercentage
                   });
-                  double tolerence = 0.06;
+                  double tolerence = 0.1;
                   if (_drawLineProperty.length < 1) {
                     _drawLineProperty = new List.from(_drawLineProperty)
                       ..add(new DrawLineProperty(
@@ -153,12 +170,10 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
           _drawLineProperty.removeAt(i);
         } else {
           _drawLineProperty.removeLast();
-          if(_drawLineProperty.length == 1)
-            _drawLineProperty.clear();
+          if (_drawLineProperty.length == 1) _drawLineProperty.clear();
           break;
         }
       }
-
     });
   }
 
@@ -176,8 +191,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       if (current._color.value == colorRef && current._width == widthRef) {
         if (current._position != null) {
           position.add(new Position(current._position.x, current._position.y));
-        }
-        else
+        } else
           position.add(new Position(null, null));
       } else if (current._color.value != colorRef ||
           current._width != widthRef) {
@@ -210,13 +224,24 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 //    print({"the object is : ": decode});
 //    var _output = decode;
 
-    var getLastPosition = drawList[drawList.length-1].position[drawList[drawList.length-1].position.length-1].x;
+    var getLastPosition = drawList[drawList.length - 1]
+        .position[drawList[drawList.length - 1].position.length - 1]
+        .x;
 
-    if(getLastPosition == null && isSendActive){
+    if (getLastPosition == null && isSendActive) {
       Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new SecondScreen(drawJson,widget.choice)));
-          print("data of choice isss ${widget.choice}");
-
+          builder: (BuildContext context) => new SecondScreen(
+            widget.choice,
+                 drawJson,
+                widget.onScore,
+                widget.onProgress,
+                widget.onEnd,
+                widget.iteration,
+                widget.gameCategoryId,
+                widget.gameConfig,
+                widget.isRotated,
+              )));
+      print("data of choice isss ${widget.choice}");
     }
   }
 
@@ -240,7 +265,6 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       width = widthValue;
     });
   }
-
 }
 
 class DrawPainting extends CustomPainter {
@@ -273,7 +297,7 @@ class DrawPainting extends CustomPainter {
     print({"size of paint is in draw is ": size});
     for (int i = 0; i < drawLineProperty.length - 1; i++) {
       if (drawLineProperty[i]._position != null &&
-          drawLineProperty[i + 1]._position != null  &&
+          drawLineProperty[i + 1]._position != null &&
           (drawLineProperty[i]._position.x * _width >= 0 &&
               drawLineProperty[i]._position.y * _height >= 0 &&
               drawLineProperty[i]._position.x * _width < size.width &&
@@ -295,6 +319,7 @@ class DrawPainting extends CustomPainter {
 //        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
+    
   }
 
   @override

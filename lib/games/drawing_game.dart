@@ -3,6 +3,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import '../components/drawing.dart';
 import 'package:maui/repos/game_data.dart';
+// import '../components/SecondScreen.dart';
 
 class Drawing extends StatefulWidget {
   Function onScore;
@@ -33,22 +34,9 @@ class DrawScreen extends State<Drawing> {
   bool visibilityColor = false;
   bool visibilityWidth = false;
   bool _isLoading = true;
-  List<String> DrawData;
-  List<String> ReceiveData;
   List<String> choice = [];
   Tuple2<String, List<String>> drawingData;
   var ansimage;
-  Map<String, dynamic> toJsonMap() {
-    Map<String, dynamic> data = new Map<String, dynamic>();
-    data['myData'] = DrawData;
-    data['otherData'] = ReceiveData;
-    return data;
-  }
-
-  void fromJsonMap(Map<String, dynamic> data) {
-    ReceiveData = data['myData'].cast<String>();
-    DrawData = data['otherData'].cast<String>();
-  }
 
   @override
   void initState() {
@@ -62,12 +50,6 @@ class DrawScreen extends State<Drawing> {
     choice = drawingData.item2;
     ansimage = choice[0];
     print('gameData: ${widget.gameConfig.gameData}');
-    if (widget.gameConfig.gameData != null) {
-      fromJsonMap(widget.gameConfig.gameData);
-    } else {
-      DrawData = [];
-      ReceiveData = [];
-    }
   }
 
   @override
@@ -191,9 +173,19 @@ class DrawScreen extends State<Drawing> {
               width: constraints.maxWidth,
               height: constraints.maxHeight * 0.5,
               margin: EdgeInsets.only(top: 5.0),
-              child: new MyDrawPage(_padController, choice,
-                  key: new GlobalObjectKey('MyDrawPage')),
-              key: new Key('draw_screen'),
+              child: new MyDrawPage(
+                  _padController,
+                  choice,
+                  widget.onScore,
+                  widget.onProgress,
+                  widget.onEnd,
+                  widget.iteration,
+                  widget.gameCategoryId,
+                  widget.gameConfig,
+                  widget.isRotated,
+                  // key: new GlobalObjectKey('MyDrawPage')
+                  ),
+              // key: new Key('draw_screen'),
             ),
           ),
           new Row(
@@ -384,8 +376,18 @@ class DrawScreen extends State<Drawing> {
                     height: constraints.maxHeight * 0.75,
 
                     // otherwise the logo will be tiny
-                    child: new MyDrawPage(_padController, choice,
-                        key: new GlobalObjectKey('MyDrawPage')),
+                    child: new MyDrawPage(
+                        _padController,
+                        choice,
+                        widget.onScore,
+                        widget.onProgress,
+                        widget.onEnd,
+                        widget.iteration,
+                        widget.gameCategoryId,
+                        widget.gameConfig,
+                        widget.isRotated,
+                        // key: new GlobalObjectKey('MyDrawPage')
+                        ),
                     key: new Key('draw_screen'),
                   ),
                 ),
@@ -540,6 +542,7 @@ class DrawScreen extends State<Drawing> {
 
   void _onSend() {
     _padController.send();
+    
   }
 
   void _multiColor(colorValue) {
