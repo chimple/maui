@@ -83,7 +83,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   String _guess = '';
   int _flag = 0;
-  int s = 0;
+  // int s = 0;
 
   AnimationController controller, _imgController;
   Animation<double> animation, noanimation, animateImage;
@@ -195,7 +195,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
           for (var i = 0; i < _length; i++) {
       partsName.add((_decoded["parts"] as List)[i]["name"]);
     }
-        s = 1;
+        // s = 1;
         _isLoading = false;
       });
     });
