@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:maui/components/friend_item.dart';
-import 'package:maui/components/firebase_grid.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/db/entity/notif.dart';
 import 'package:maui/screens/chat_screen.dart';
-
-final usersRef = FirebaseDatabase.instance.reference().child('users');
 
 class FriendListView extends StatefulWidget {
   const FriendListView({Key key}) : super(key: key);
@@ -37,6 +33,7 @@ class _FriendListViewState extends State<FriendListView> {
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
     var users = AppStateContainer.of(context).users;
+    var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
     if (users == null) {
       return new Center(
@@ -51,9 +48,12 @@ class _FriendListViewState extends State<FriendListView> {
       mainAxisSpacing: 12.0,
       crossAxisCount: media.size.height > media.size.width ? 3 : 4,
       children: users.map((u) {
+        var notif = notifs.firstWhere((n) => n.userId == u.id,
+            orElse: () => Notif(userId: u.id, numNotifs: 0));
         return FriendItem(
             id: u.id,
             imageUrl: u.image,
+            numNotifs: notif.numNotifs,
             onTap: () => user.id == u.id
                 ? Navigator.of(context).pushNamed('/chatbot')
                 : Navigator.of(context).push(MaterialPageRoute<Null>(

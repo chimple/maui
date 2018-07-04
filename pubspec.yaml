@@ -8,21 +8,19 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
-  image_picker: ^0.4.4
-  xmlstream: ^0.10.0
   sqflite: any
   uuid: ^0.5.0
   path_provider: ^0.4.0
   tuple: ^1.0.1
-  firebase_database: ^0.4.1
-  firebase_storage: ^0.2.0
   json_annotation: ^0.2.2
   audioplayer: ^0.4.0
-  fluttie: ^0.2.1
   fluttery: "^0.0.6"
   flutter_circular_chart: "^0.0.3"
   shared_preferences: ^0.4.2
   camera: 0.2.1
+  nima: 1.0.0
+  flutter_local_notifications: 0.3.3
+  badge: 0.0.2
   flores:
     git:
       https://github.com/chimple/flores.git
@@ -51,6 +49,8 @@ flutter:
 
   assets:
     - assets/database.db
+    - assets/solo.nima
+    - assets/solo.png
     - assets/chimple_logo.png
     - assets/african_child.png
     - assets/indian_child.png

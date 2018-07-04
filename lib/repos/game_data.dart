@@ -320,39 +320,43 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
 enum Direction { across, down }
 Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
     fetchCrosswordData(int categoryId) async {
-  var rand = new Random();
-  switch (rand.nextInt(2)) {
-    case (0):
-      return new Tuple2([
-        ['E', null, null, null, null],
-        ['A', null, null, null, null],
-        ['T', 'I', 'G', 'E', 'R'],
-        [null, null, null, null, 'A'],
-        [null, null, null, null, 'T']
-      ], [
-        new Tuple4('assets/apple.png', 0, 0, Direction.down),
-        new Tuple4('assets/apple.png', 2, 0, Direction.across),
-        new Tuple4('assets/apple.png', 2, 4, Direction.down),
-      ]);
-      break;
-  }
-  return new Tuple2([
-    ['C', 'A', 'T', null, null, 'E'],
-    [null, 'N', null, null, null, 'G'],
-    [null, 'T', 'I', 'G', 'E', 'R'],
-    [null, null, 'B', null, null, 'E'],
-    [null, null, 'E', null, null, 'T'],
-    [null, 'O', 'X', 'E', 'N', null]
-  ], [
-    new Tuple4('assets/apple.png', 0, 0, Direction.across),
-    new Tuple4('assets/apple.png', 0, 1, Direction.down),
-    new Tuple4('assets/apple.png', 0, 5, Direction.down),
-    new Tuple4('assets/apple.png', 2, 1, Direction.across),
-    new Tuple4('assets/apple.png', 2, 2, Direction.down),
-    new Tuple4('assets/apple.png', 5, 1, Direction.across)
-  ]);
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    switch (rand.nextInt(2)) {
+      case (0):
+        return new Tuple2([
+          ['E', null, null, null, null],
+          ['A', null, null, null, null],
+          ['T', 'I', 'G', 'E', 'R'],
+          [null, null, null, null, 'A'],
+          [null, null, null, null, 'T']
+        ], [
+          new Tuple4('assets/apple.png', 0, 0, Direction.down),
+          new Tuple4('assets/apple.png', 2, 0, Direction.across),
+          new Tuple4('assets/apple.png', 2, 4, Direction.down),
+        ]);
+        break;
+    }
+    return new Tuple2([
+      ['C', 'A', 'T', null, null, 'E'],
+      [null, 'N', null, null, null, 'G'],
+      [null, 'T', 'I', 'G', 'E', 'R'],
+      [null, null, 'B', null, null, 'E'],
+      [null, null, 'E', null, null, 'T'],
+      [null, 'O', 'X', 'E', 'N', null]
+    ], [
+      new Tuple4('assets/apple.png', 0, 0, Direction.across),
+      new Tuple4('assets/apple.png', 0, 1, Direction.down),
+      new Tuple4('assets/apple.png', 0, 5, Direction.down),
+      new Tuple4('assets/apple.png', 2, 1, Direction.across),
+      new Tuple4('assets/apple.png', 2, 2, Direction.down),
+      new Tuple4('assets/apple.png', 5, 1, Direction.across)
+    ]);
+   }
+    return null;
 }
-
 Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
 
 var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
@@ -363,8 +367,9 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   
 
   var rand = new Random();
-  var startNum = rand.nextInt(max(0, 4));
-  switch (0) {
+  var startNum = rand.nextInt(max(0, 3));
+  print(" ......random number is... $startNum");
+  switch (startNum) {
     case 0:
       return new Tuple2([
         
@@ -447,44 +452,100 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
       break;
     case 1:
       return new Tuple2(
-        ['upsc', 'cusp', 'scup', 'cup', 'pus', 'sup', 'ups', 'up', 'us'],
-       'upsc');
+        [
+'puces',
+'ceps',
+'cups',
+'cusp',
+'pecs',
+'puce',
+'scup',
+'spec',
+'cep',
+'cup',
+'pec',
+'cues',
+'ecus',
+'spue',
+'supe',
+'cue',
+'ecu',
+'pes',
+'pus',
+'esc',
+'sup',
+'ups',
+'pe',
+'up',
+'sue',
+'use',
+'us'],
+       'upsce');
       break;
+  
     case 2:
       return new Tuple2(
-        ['ucts', 'scut', 'cut', 'uts', 'st', 'us', 'ut'],
-      'ucts');
-      break;
-    case 3:
-      return new Tuple2(
         [
-          'hate',
-          'eath',
-          'haet',
-          'heat',
-          'thae',
-          'eth',
-          'hae',
-          'hat',
-          'het',
-          'the',
-          'ah',
-          'eh',
-          'ha',
-          'he',
-          'ate',
-          'eat',
-          'eta',
-          'tae',
-          'tea',
-          'ae',
-          'at',
-          'ea',
-          'et',
-          'ta',
-          'te'
+          'ashet',
+'haets',
+'haste',
+'hates',
+'heats',
+'eath',
+'eths',
+'haes',
+'haet',
+'hast',
+'hate',
+'hats',
+'heat',
+'hest',
+'hets',
+'shat',
+'shea',
+'shet',
+'tash',
+'thae',
+'ahs',
+'ash',
+'eth',
+'hae',
+'has',
+'hat',
+'hes',
+'het',
+'sha',
+'she',
+'the',
+'he',
+'ates',
+'east',
+'eats',
+'etas',
+'sate',
+'seat',
+'taes',
+'tase',
+'teas',
+'ate',
+'ats',
+'eas',
+'eat',
+'est',
+'sae',
+'sat',
+'sea',
+'set',
+'tae',
+'tas',
+'tea',
+'tes',
+'as',
+'at',
+'st',
+'te'
         ],
-       'hate');
+       'hates');
       break;
   }
    return null;
@@ -682,16 +743,16 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
           ['mountain', 'earth', 'chair', 'ball']);
       break;
     case 1:
-      return new Tuple2("Nile is the longest 1_ on the 2_ .",
-          ['river', 'earth', 'wall', 'mars']);
+      return new Tuple2("Nile is the longest 1_ on  2_ .",
+          ['river', 'earth', 'wall', 'waterfall']);
       break;
     case 2:
       return new Tuple2("Apple is 1_ and also 2_ in colour .",
-          ['red', 'green', 'round', 'triangular']);
+          ['red', 'green', 'round', 'tube']);
       break;
     case 3:
       return new Tuple2(
-          "1_ gives healthy 2_ .", ['cow', 'milk', 'forest', 'grass']);
+          "1_ gives healthy 2_ .", ['cow', 'milk', 'vegetable', 'grass']);
       break;
     case 4:
       return new Tuple2("Fastest 1_ animal is 2_ .",
@@ -702,12 +763,52 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
           "I love eating 1_ and 2_ .", ['mango', 'grape', 'sun', 'moon']);
       break;
     case 6:
-      return new Tuple2("Snowy is 1_ but i am trying to make her 2_ .",
+      return new Tuple2("Snowy is 1_ but I am trying to make her 2_ .",
           ['crying', 'laugh', 'crawling', 'chair']);
       break;
     case 7:
       return new Tuple2("1_ is a beautiful 2_ colour flower .",
           ['rose', 'red', 'ugly', 'black']);
+      break;
+  }
+  return null;
+}
+Future<Tuple2<String, List<String>>> fetchDrawingData(
+    int categoryId) async {
+  var rand = new Random();
+  var startNum = rand.nextInt(max(0, 8));
+  switch (startNum) {
+    case 0:
+      return new Tuple2("fruits name",
+          ['banana', 'apple', 'grape', 'ball']);
+      break;
+    case 1:
+      return new Tuple2("nature",
+          ['bat', 'grape', 'rat', 'cat']);
+      break;
+    case 2:
+      return new Tuple2("Colors",
+          ['book', 'chair', 'table', 'pen']);
+      break;
+    case 3:
+      return new Tuple2(
+          "animals .", ['milk', 'cow', 'vegetable', 'grass']);
+      break;
+    case 4:
+      return new Tuple2("vegitables",
+          ['onion', 'carrot', 'tomoto', 'chilli']);
+      break;
+    case 5:
+      return new Tuple2(
+          "wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
+      break;
+    case 6:
+      return new Tuple2("vehicles",
+          ['bus', 'car', 'bike', 'train']);
+      break;
+    case 7:
+      return new Tuple2("flowers",
+          ['rose', 'bike', 'home', 'jasmin']);
       break;
   }
   return null;

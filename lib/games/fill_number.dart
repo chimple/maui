@@ -354,7 +354,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 k = 0;
 
                 Ansr = 0;
-                ssum = "";
+                ssum = '';
                 sum = 0;
                 clicks.removeRange(0, clicks.length);
                 _Index.removeRange(0, _Index.length);
@@ -377,6 +377,7 @@ class MyFillnumberState extends State<Fillnumber> {
             _val2.removeRange(0, _val2.length);
           } else {
             setState(() {
+                widget.onScore(-1);
               _pointssend = [];
               start = false;
               tempindex = [];
@@ -574,10 +575,16 @@ class MyFillnumberState extends State<Fillnumber> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else {
+      } else if(i==1){
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
+      }
+      else{
+         x = x0 + d + maxWidth+(maxWidth/6);
+        x0 = x;
+        y = y0;
+
       }
       offsets[i] = new Offset(x, y);
     }
@@ -652,13 +659,13 @@ class SignaturePainter extends CustomPainter {
 
   bool shouldRepaint(SignaturePainter other) => other.points != points;
 
-  _difference(double dx, double dx2) {
-    if (dx > dx2) {
-      return dx - dx2;
-    } else {
-      return dx2 - dx;
-    }
-  }
+  // _difference(double dx, double dx2) {
+  //   if (dx > dx2) {
+  //     return dx - dx2;
+  //   } else {
+  //     return dx2 - dx;
+  //   }
+  // }
 }
 
 class MyButton extends StatefulWidget {

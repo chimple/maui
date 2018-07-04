@@ -54,12 +54,14 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['myData'] = myData;
     data['otherData'] = otherData;
+    data['currentIndex'] = _currentIndex;
     return data;
   }
 
   void fromJsonMap(Map<String, dynamic> data) {
     otherData = data['myData'].cast<String>();
     myData = data['otherData'].cast<String>();
+    _currentIndex = data['currentIndex'];
   }
 
   @override
@@ -150,16 +152,10 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
           if (btnVal == sum || btnVal == sub) {
             _currentIndex++;
+            print("Current index is ${myData.length}");
             widget.onScore(2);
             widget.onProgress(_currentIndex / myData.length);
-            widget.onEnd(toJsonMap(), false);
-            // if (_currentIndex >= data.length-2 ||
-            //     _currentIndex2 >= data1.length-2) {
-            //   print({"inside main current index : " : _currentIndex});
-            //   new Future.delayed(const Duration(milliseconds: 250), () {
-            //     widget.onEnd();
-            //   });
-            // }
+            getExistingDataForScore(myData);
             resetDice();
             sum = 0;
             sub = 0;
@@ -233,8 +229,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   String randomLogic(List<String> data) {
-    // final _random = new Random();
-    // String dElement = diceData[_random.nextInt(diceData.length)];
     List<int> existingData = getExistingDataInInt(data);
     int randomExistingValue =
         existingData[new Random().nextInt(existingData.length)];
@@ -272,8 +266,21 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     for (int i = 0; i < data.length; i++) {
       if (data[i] != '') existingData.add(int.parse(data[i]));
     }
-    return existingData;
+      return existingData;
   }
+
+   getExistingDataForScore(List<String> myData) {
+                List<int> existingData1 = [];
+                for (int i = 0; i < myData.length; i++) {
+                  if (myData[i] != '') existingData1.add(int.parse(myData[i]));
+                }
+                  if(existingData1.length <= 1){
+                    widget.onEnd(toJsonMap(), true);
+                  }
+                  else{
+                    widget.onEnd(toJsonMap(), false);
+                  }
+              }
 
   displayLabel(String dElement) {
     _myCounter = dElement;
@@ -359,15 +366,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
   popup() {
     print({"poped up dice value is  ": dice_tries});
+    MediaQueryData media = MediaQuery.of(context);
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
           // title: new Text('Dicegame'),
-          content: new Image(
-              image: new AssetImage(
-            'assets/hoodie/dice_sad.png',
-          )),
+          content: Container(
+            height: media.size.height * .2,
+            width: media.size.width * .2,
+            child: new Image(
+                image: new AssetImage(
+              'assets/hoodie/dice_sad.png',
+            )),
+          ),
         );
       },
     );

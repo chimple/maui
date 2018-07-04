@@ -15,7 +15,7 @@ class ArrowPainter extends CustomPainter {
     this.rotationPercent,
     this.sizeArrow,
   }) : dialArrowPaint = new Paint() {
-    dialArrowPaint.color = Colors.pink;
+    dialArrowPaint.color = Colors.green;
     dialArrowPaint.style = PaintingStyle.fill;
   }
 
@@ -33,7 +33,7 @@ class ArrowPainter extends CustomPainter {
 
     path.close();
     canvas.drawPath(path, dialArrowPaint);
-    canvas.drawShadow(path, Colors.blue, 30.0, true);
+    canvas.drawShadow(path, Colors.green, 30.0, true);
     canvas.restore();
   }
 
@@ -43,85 +43,102 @@ class ArrowPainter extends CustomPainter {
   }
 }
 
-class OuterCircle extends CustomPainter {
-  final LONG_TICK = 50.0;
-  final SHORT_TICK = 4.0;
-  List<String> data;
-  double sizePaint;
-  final Paint traingle;
-  final double rotationPercent;
-  List<int> outerCircle = [1, 10, 3, 2, 3, 4, 15, 25, 3, 32, 5, 6, 6, 7, 4];
-  final tickCount;
-  final ticksPerSection;
-  final ticksInset;
-  final tickPaint;
-  final textPainter;
-  final textStyle;
-  final buttonStyle;
-  OuterCircle({
-    this.data,
-    this.sizePaint: 0.0,
-    this.tickCount = 35,
-    this.ticksPerSection = 0.0,
-    this.ticksInset = 0.0,
+class CirclePainter extends CustomPainter {
+  // final LONG_TICK = 50.0;
+  // final SHORT_TICK = 4.0;
+
+  CirclePainter({
+    this.maxString,
+    this.maxChar,
+    @required this.noOfSlice,
+    @required this.data,
+    this.rotation = 0.0,
   })  : tickPaint = new Paint(),
         textPainter = new TextPainter(
-          maxLines: 10,
           textScaleFactor: 1.30,
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
-        ),
-        textStyle = const TextStyle(
-          color: Colors.black,
-          fontFamily: 'BebasNeue',
-          fontSize: 20.0,
         ) {
     tickPaint.strokeWidth = 2.5;
   }
+  final int noOfSlice;
+  final int maxChar;
+  List<String> data = [];
+
+  final rotation, tickPaint, textStyle;
+  final textPainter;
+  final String maxString;
+  double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
 
   @override
   void paint(Canvas canvas, Size size) {
+    double _uperCaseConstant = 0.0;
+    if (maxString.toUpperCase() == maxString.toUpperCase()) {
+      _uperCaseConstant = 8.0;
+    }
+    double _const = 0.0;
+    if (noOfSlice == 2) {
+      _const = -25.0;
+    } else if (noOfSlice == 4) {
+      _const = -21.0;
+    }
+    int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
+    //print("max len string:: ${_wLength}");
+    if (_wLength > 0) {
+      _wFactor = 2.5 / _wLength.toDouble();
+    } else {
+      _wFactor = 1.0;
+    }
+    radius = size.width / 2;
+    _angle = 360 / (noOfSlice * 2.0);
+    _radiun = (_angle * pi) / 180;
+    _baseLength = 2 * radius * sin(_radiun);
+    // print("_angle :: $_angle");
+    // print("radius :: ${2*radius*sin(_radiun)}");
+    _fontSize = _wFactor * (_baseLength * 1.22) / (maxChar);
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
-    canvas.rotate(-ticksPerSection);
-    final radius = size.width / 2;
+    canvas.rotate(-rotation);
+
     Path path = new Path();
     path.moveTo(0.0, 0.0);
     path.lineTo(2 * pi * size.width / 2 / 16, size.width / 2 - 20);
     path.lineTo(-2 * pi * size.width / 2 / 16, size.width / 2 - 20);
     path.close();
-    int c = 0;
-    for (var i = 0; i < 16; ++i) {
+    int incr = 0;
+    for (var i = 0; i < noOfSlice * 2; ++i) {
       if (i % 2 == 0) {
         canvas.drawLine(
-          new Offset(0.0, 0.0),
-          new Offset(0.0, radius - 4.2),
-          tickPaint,
-        );
+            new Offset(0.0, 0.0), new Offset(0.0, radius - 4.2), tickPaint);
       } else {
         canvas.save();
         canvas.translate(-0.0, -((size.width) / 3));
-        String s = data[c];
+        String _text = data[incr];
         textPainter.text = new TextSpan(
-          text: s,
-          style: textStyle,
+          text: _text,
+          style: new TextStyle(
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.black,
+            fontFamily: 'BebasNeue',
+            fontSize: _fontSize - _uperCaseConstant,
+          ),
         );
-        c++;
+        incr++;
 
         textPainter.layout();
 
-        canvas.rotate(2 * pi / 2);
+        canvas.rotate(-pi * 2);
         textPainter.paint(
           canvas,
           new Offset(
-            0.0,
-            (textPainter.height) / 2,
+            -((6.10 * _text.length) * _baseLength) / 117.50,
+            -(size.height / 7.800 + _const),
           ),
         );
-
         canvas.restore();
       }
-      canvas.rotate(2 * pi / 16);
+      canvas.rotate(2 * pi / (noOfSlice.toDouble() * 2));
     }
 
     canvas.restore();
@@ -137,65 +154,75 @@ class ImagePainter extends CustomPainter {
   List<ui.Image> images = new List<ui.Image>();
   ImagePainter(
       {Key key,
-      this.renderBox,
-      this.parentRender,
+      @required this.noOfSlice,
       @required this.images,
       @required this.rotation,
       this.boxfit = BoxFit.contain})
-      : path = new Path()
-          ..addOval(new Rect.fromCircle(
-            center: new Offset(75.0, 75.0),
-            radius: 40.0,
-          )),
+      :
+        // : path = new Path()
+        //     ..addOval(new Rect.fromCircle(
+        //       center: new Offset(75.0, 75.0),
+        //       radius: 40.0,
+        //     )),
         tickPaint = new Paint() {
     tickPaint.strokeWidth = 2.5;
   }
-  final path;
+  final int noOfSlice;
+  //final path;
   final tickPaint;
   double rotation = 0.0;
-  final RenderBox renderBox;
-  final RenderBox parentRender;
+
   final BoxFit boxfit;
 
   ui.Image img;
+  ui.Rect rect, inputSubrect, outputSubrect;
+  Size imageSize;
+  FittedSizes sizes;
+  double radius, baseLength, _angle, _radiun, _baseLength, _imageCircleradius;
+
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
+    radius = size.width / 2;
+    _angle = 360 / (noOfSlice * 2.0);
+    _radiun = (_angle * pi) / 180;
+    _baseLength = 2 * radius * sin(_radiun);
+    _imageCircleradius = (_baseLength / 2) * tan(_radiun);
+    print("circle radisu:: $_imageCircleradius");
     int c = 0;
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
 
-    for (var i = 0; i < 16; ++i) {
+    for (var i = 0; i < noOfSlice * 2; ++i) {
       if (i % 2 == 0) {
         canvas.drawLine(
           new Offset(0.0, 0.0),
           new Offset(0.0, size.width / 2 - 4.2),
           tickPaint,
         );
-        //canvas.rotate(2 * pi / 2);
       } else {
+        //canvas.rotate(pi);
         canvas.save();
-        canvas.translate(-10.0, -((size.width) / 2.3));
-        //canvas.clipPath(path);
+        canvas.translate(-0.0, -((size.width) / 2.2));
         if (images[c] != null) {
-          ui.Image img = images[c];
-          final ui.Rect rect = ui.Offset.zero & new Size(200.0, 120.0);
-          ;
-          final Size imageSize = new Size(330.0, 230.0);
-          FittedSizes sizes =
-              applyBoxFit(boxfit, imageSize, new Size(100.0, 200.0));
-          final Rect inputSubrect =
+          rect =
+              ui.Offset(size.width / 32, size.width / 9) & new Size(0.0, 0.0);
+          //rect = ui.Offset.zero & new Size(size.height, size.height);
+          imageSize = new Size(size.width, size.width);
+          sizes = applyBoxFit(boxfit, imageSize,
+              new Size(size.width / 2 * .45, size.width / 2 * .45));
+          inputSubrect =
               Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
-          final Rect outputSubrect =
-              Alignment.center.inscribe(sizes.destination, rect);
+          outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
 
-          canvas.drawImageRect(img, inputSubrect, outputSubrect, new Paint());
+          canvas.drawImageRect(
+              images[c], inputSubrect, outputSubrect, new Paint());
         }
-        canvas.rotate(2 * pi / 2);
+
         canvas.restore();
         c++;
       }
-      canvas.rotate(2 * pi / 16);
+      canvas.rotate(2 * pi / (noOfSlice * 2.0));
     }
     canvas.restore();
   }
@@ -203,13 +230,5 @@ class ImagePainter extends CustomPainter {
   @override
   bool shouldRepaint(ImagePainter oldDelegate) {
     return true;
-  }
-
-  ui.Image getGrad(Size size) {
-    var pictureRecorder = new ui.PictureRecorder();
-
-    return pictureRecorder
-        .endRecording()
-        .toImage(size.width.floor(), size.height.floor());
   }
 }
