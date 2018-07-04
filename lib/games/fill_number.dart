@@ -377,6 +377,7 @@ class MyFillnumberState extends State<Fillnumber> {
             _val2.removeRange(0, _val2.length);
           } else {
             setState(() {
+                widget.onScore(-1);
               _pointssend = [];
               start = false;
               tempindex = [];
