@@ -574,6 +574,7 @@ class _BuildCategoryState extends State<BuildCategory> {
       return new UnitButton(
         unitMode: this.unitMode,
         text: this.text,
+         showHelp: false,
         bgImage: this.text,
          key: new Key("A${widget.keys}"),
       );
@@ -581,6 +582,7 @@ class _BuildCategoryState extends State<BuildCategory> {
     return new UnitButton(
        unitMode: this.unitMode,
       text: this.text,
+      showHelp: false,
       key: new Key("A${widget.keys}"),
     );
   }

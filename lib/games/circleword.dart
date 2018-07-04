@@ -274,10 +274,13 @@ class CirclewordState extends State<Circleword> {
           indexstore = [];
           widget.onScore(score);
                  if(_solvedLetters.length==_letters.length){
+                  
       setState(() {
                  new Future.delayed(const Duration(milliseconds: 250),
                             () {
-                              indexstore =[];
+                              
+                              // indexstore =[];
+
                          _solvedLetters.removeRange(0, _solvedLetters.length);
                           widget.onEnd();
                             
@@ -603,6 +606,7 @@ class _PositionCircleState extends State<PositionCircle>
             widget.tile == ShakeCell.Right ? animationWrong : animationRight,
         child: new RawMaterialButton(
           shape: const CircleBorder(side: BorderSide.none),
+           elevation: widget.status == Status.Visible ? 10.0 : 0.0,
           onPressed: () => widget.onPress(),
           fillColor:
               widget.status == Status.Visible ? Colors.white : Theme.of(context).primaryColor,
