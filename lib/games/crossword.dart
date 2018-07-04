@@ -36,11 +36,10 @@ class Crossword extends StatefulWidget {
 class CrosswordState extends State<Crossword> {
   Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data;
   List<String> _rightwords = [];
-  List<String> _letters = new List();
-  List<String> _data2 = new List();
-  List<int> _data3 = new List();
-  List<int> _flag = new List();
-  List<String> _data1 = new List();
+  List<String> _letters = [];
+  List<String> _images = [];
+  List<int> _data3 = [];
+  List<int> _flag = [];
   List _sortletters = [];
   bool _isLoading = true;
   String img, dragdata;
@@ -55,16 +54,15 @@ class CrosswordState extends State<Crossword> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _data2.removeRange(0, _data2.length);
-    _data1.removeRange(0, _data1.length);
     _data3.removeRange(0, _data3.length);
     _sortletters.removeRange(0, _sortletters.length);
     _rightwords.removeRange(0, _rightwords.length);
-    _letters.removeRange(0,_letters.length);
+    _letters.removeRange(0, _letters.length);
     _rightlen = 0;
     correct = 0;
     flag1 = 0;
     _letters.removeRange(0, _letters.length);
+    _images.removeRange(0, _images.length);
     _flag.removeRange(0, _flag.length);
     _rows = 0;
     _cols = 0;
@@ -76,19 +74,15 @@ class CrosswordState extends State<Crossword> {
     print('data camee $data');
     data.item1.forEach((e) {
       e.forEach((v) {
-        _data1.add(v);
+        _letters.add(v);
       });
     });
     _rows = data.item1.length;
     _cols = data.item1[0].length;
     for (var i = 0; i < data.item2.length; i++) {
-      _data2.add(data.item2[i].item1);
-    }
-    for (var i = 0; i < data.item2.length; i++) {
       _data3.add(data.item2[i].item2 * _rows + data.item2[i].item3);
     }
-    _letters = _data1;
-    len = _data2.length + 1;
+    len = _data3.length + 1;
     if (len > 14) {
       len = 14;
     }
@@ -120,17 +114,23 @@ class CrosswordState extends State<Crossword> {
       _letters[_sortletters[i]] = '';
     }
     _rightlen = _rightwords.length;
-    print("this is right word $_rightwords");
     _rightwords.shuffle();
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
-    _flag = [];
     for (var i = 0; i < (_rows * _cols) + _rows * 2 + _cols * 2; i++) {
       _flag.add(0);
     }
-
+    _data3.add(null);
+    _images.length = _letters.length;
+    for (var i = 0, j = 0; i < _letters.length; i++) {
+      if (i == _data3[j]) {
+        _images[i] = data.item2[j].item1;
+        j++;
+      } else
+        _images[i] = null;
+    }
     setState(() => _isLoading = false);
   }
 
@@ -143,14 +143,7 @@ class CrosswordState extends State<Crossword> {
     }
   }
 
-  Widget _buildItem(int index, String text, int flag) {
-    img = null;
-    for (var i = 0; i < _data3.length; i++) {
-      if (_data3[i] == index) {
-        img = _data2[i];
-        break;
-      }
-    }
+  Widget _buildItem(int index, String text, int flag, String img) {
     if (text != null || text == '') {
       return new MyButton(
           key: new ValueKey<int>(index),
@@ -164,7 +157,7 @@ class CrosswordState extends State<Crossword> {
             dcode = int.parse(dragdata.substring(4));
             if (code == dcode) {
               var i = 0;
-              for (i; i < _sortletters.length; i++) {
+              for (; i < _sortletters.length; i++) {
                 if (_rightwords[dindex - 100] == _sortletters[i] &&
                     index == _sortletters[++i] &&
                     _letters[index] == '') {
@@ -172,25 +165,23 @@ class CrosswordState extends State<Crossword> {
                   break;
                 }
               }
-              setState(() {
-                print('progress $correct $_rightlen ');
-                if (flag1 == 1) {
+              if (flag1 == 1) {
+                setState(() {
                   _rightwords[dindex - 100] += '.';
                   _letters[index] = _sortletters[--i];
                   correct++;
                   widget.onScore(((1 / _rightlen) * 40).toInt());
                   widget.onProgress(correct / _rightlen);
+                  print('progress $correct $_rightlen ');
                   if (correct == _rightlen) {
-                    _data2.removeRange(0, _data2.length);
-                    _data1.removeRange(0, _data1.length);
+                    _images.removeRange(0, _images.length);
                     _data3.removeRange(0, _data3.length);
                     _sortletters.removeRange(0, _sortletters.length);
                     _rightwords.removeRange(0, _rightwords.length);
-                        _letters.removeRange(0,_letters.length);
+                    _letters.removeRange(0, _letters.length);
                     _rightlen = 0;
                     correct = 0;
                     flag1 = 0;
-                    _letters.removeRange(0, _letters.length);
                     _flag.removeRange(0, _flag.length);
                     _rows = 0;
                     _cols = 0;
@@ -201,18 +192,20 @@ class CrosswordState extends State<Crossword> {
                     k = 0;
                     widget.onEnd();
                   }
-                } else if (flag1 == 0 && _letters[index] == '') {
+                });
+              } else if (flag1 == 0 && _letters[index] == '') {
+                setState(() {
                   _flag[index] = 1;
                   _letters[index] = _rightwords[dindex - 100];
-                  new Future.delayed(const Duration(milliseconds: 700), () {
-                    setState(() {
-                      widget.onScore(-((1 / _rightlen) * 20).toInt());
-                      _flag[index] = 0;
-                      _letters[index] = '';
-                    });
+                });
+                new Future.delayed(const Duration(milliseconds: 700), () {
+                  setState(() {
+                    widget.onScore(-((1 / _rightlen) * 20).toInt());
+                    _flag[index] = 0;
+                    _letters[index] = '';
                   });
-                }
-              });
+                });
+              }
             }
           },
           flag: flag,
@@ -251,21 +244,6 @@ class CrosswordState extends State<Crossword> {
         child: new CircularProgressIndicator(),
       );
     }
-    // if (media.orientation == Orientation.portrait) {
-    //   if (_rightlen > _cols) {
-    //     while (_rightwords.length <= _cols * 2) {
-    //       _rightwords.add(null);
-    //     }
-    //   } else {
-    //     while (_rightwords.length <= _cols) {
-    //       _rightwords.add(null);
-    //     }
-    //   }
-    // } else {
-    //   while (_rightwords.length <= _rows * 2) {
-    //     _rightwords.add(null);
-    //   }
-    // }
     return new LayoutBuilder(builder: (context, constraints) {
       var rwidth, rheight;
       rwidth = constraints.maxWidth;
@@ -287,9 +265,12 @@ class CrosswordState extends State<Crossword> {
       keys = 0;
       var j = 0;
       var k = 100;
-     var l = (_rows * _cols) - 1;
-     print('builded widget ${_flag.length}   $_rows $_cols ${_letters.length}');
-     print('letters      $_letters');
+      var l = (_rows * _cols) - 1;
+      print(
+          'builded widget ${_flag.length}   $_rows $_cols ${_letters.length}');
+      print('letters      $_letters');
+      print(' right  words      $_rightwords');
+      print('_images   is   ${_images.length}');
       return new Container(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -307,7 +288,8 @@ class CrosswordState extends State<Crossword> {
                                       .map((e) => Padding(
                                           padding:
                                               EdgeInsets.all(buttonPadding),
-                                          child: _buildItem(j, e, _flag[j++])))
+                                          child: _buildItem(
+                                              j, e, _flag[j], _images[j++])))
                                       .toList(growable: false)))),
                       new Padding(padding: new EdgeInsets.all(buttonPadding)),
                       new Container(
@@ -318,7 +300,8 @@ class CrosswordState extends State<Crossword> {
                               children: _rightwords
                                   .map((e) => Padding(
                                       padding: EdgeInsets.all(buttonPadding),
-                                      child: _buildItem(k++, e, _flag[j++])))
+                                      child:
+                                          _buildItem(k++, e, _flag[j++], null)))
                                   .toList(growable: false)))
                     ])
               : new Row(
@@ -334,8 +317,8 @@ class CrosswordState extends State<Crossword> {
                                       .map((e) => Padding(
                                           padding:
                                               EdgeInsets.all(buttonPadding),
-                                          child:
-                                              _buildItem(k++, e, _flag[l++])))
+                                          child: _buildItem(
+                                              k++, e, _flag[l++], null)))
                                       .toList(growable: false)))),
                       new Expanded(
                           flex: 4,
@@ -348,7 +331,8 @@ class CrosswordState extends State<Crossword> {
                                       .map((e) => Padding(
                                           padding:
                                               EdgeInsets.all(buttonPadding),
-                                          child: _buildItem(j, e, _flag[j++])))
+                                          child: _buildItem(
+                                              j, e, _flag[j], _images[j++])))
                                       .toList(growable: false))))
                     ]));
     });
@@ -458,7 +442,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       if (widget.text == '') {
         newtext = '';
       } else {
-        newtext = widget.text[0];
+        newtext = widget.text.substring(0, 1);
       }
       return new ScaleTransition(
           scale: animation,
@@ -479,7 +463,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               text: widget.text,
               showHelp: false,
             )),
-        //  childWhenDragging: new Container(),
         feedback: UnitButton(
           text: widget.text,
         ),
