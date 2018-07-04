@@ -38,12 +38,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   bool _isShowingFlashCard = false;
   var keys = 0;
   int _size;
-  int scoretrack = 0;
   String dragdata;
   List<String> dragBoxData, _holdDataOfDragBox, shuffleData, dragBoxDataStore;
   List<String> dropTargetData;
   List<Tuple2<String, String>> _fillData;
-  List<String> ref;
   List<int> _flag = new List();
   String fruit = ' ';
   int indexOfDragText, indexOfTarget;
@@ -52,14 +50,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     super.initState();
     _initFillBlanks();
   }
-
-  List<String> shufflelist;
-  int newprogress = 0;
   int count = 0;
   int dragcount = 0;
   int progres = 0;
   int space = 0;
-  
   @override
   void didUpdateWidget(FillInTheBlanks oldWidget) {
          super.didUpdateWidget(oldWidget);
@@ -111,7 +105,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     dragBoxData.shuffle();
     setState(() => _isLoading = false);
   }
-
   String data;
   Widget droptarget(int index, String text, int flag) {
     return new MyButton(
@@ -135,16 +128,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
               } else {
                 if (dropTargetData[index] == '_') {
                   dragcount++;
-                  if (scoretrack > 0) {
-                    scoretrack = scoretrack - 1;
                     widget.onScore(-1);
-                  } else {
-                    widget.onScore(0);
-                  }
                 }
               }
               if (progres == space) {
-                scoretrack = scoretrack + 4;
                 widget.onScore(4);
                 new Future.delayed(const Duration(milliseconds: 400), () {
                   setState(() {
@@ -152,17 +139,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   });
                 });
               }
-            } else {
-              if (dropTargetData[index] == '_') {
-                dragcount++;
-                if (scoretrack > 0) {
-                  scoretrack = scoretrack - 1;
-                  widget.onScore(-1);
-                } else {
-                  widget.onScore(0);
-                }
-              }
-            }
+            } 
+            print('dragcount is $dragcount');
             if (dragcount == space + 2) {
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
@@ -170,7 +148,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 });
               });
             }
-
             setState(() {
               if (dropTargetData[index] == '_') {
                 if (flag1 == 0) {
@@ -212,14 +189,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
-          setState(() {
-                    });
+          setState(() {});
           data = text;
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
   }
-
-
   @override
   Widget build(BuildContext context) {
     keys = 0;
@@ -240,14 +214,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             });
           });
     }
-    print("space is $space");
     if (space == 0) {
       setState(() {
         _initFillBlanks();
       });
     }
-
-    MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -256,12 +227,10 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
       var j = 0, k = 100, h = 0, a = 0;
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
-
       return new Flex(
          direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -315,7 +284,6 @@ class MyButton extends StatefulWidget {
       this.isRotated = false,
       this.keys})
       : super(key: key);
-
   var index;
   final int color1;
   final int flag;
@@ -351,14 +319,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller.forward();
     shake();
   }
-
   @override
   void dispose() {
     controller.dispose();
     controllerShake.dispose();
     super.dispose();
   }
-
   void shake() {
     animationShake.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
@@ -369,14 +335,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controllerShake.forward();
   }
-
   @override
   Widget build(BuildContext context) {
-    int portf = 0;
-    MediaQueryData media = MediaQuery.of(context);
-    if (media.size.height < media.size.width) {
-      portf = 1;
-    }
     widget.keys++;
     if (widget.index < 100) {
       return new Shake(

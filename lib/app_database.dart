@@ -108,8 +108,6 @@ class AppDatabase {
     fetchMathData(10).then((m) => print(m));
     fetchMathData(11).then((m) => print(m));
     fetchMathData(12).then((m) => print(m));
-    fetchMathData(13).then((m) => print(m));
-    fetchMathData(14).then((m) => print(m));
     fetchTablesData(21).then((m) => print(m));
     fetchFillNumberData(39, 4).then((f) => print(f));
     fetchCrosswordData(1).then((c) => print(c));

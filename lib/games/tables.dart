@@ -113,7 +113,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             });
           }
           else if (text == '✔') {
-            if (_count  == _tableShuffledData.length - 1 ) {
+            if (_count  == _tableShuffledData.length - 1 && int.parse(_result) == _answer ) {
               print("coming.........");
               int _temp = _tableShuffledData.length;
               print("$_count $_temp");

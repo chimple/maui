@@ -15,12 +15,13 @@ class Nima extends StatefulWidget {
 
 class _NimaState extends State<Nima> with TickerProviderStateMixin {
   int _prevScore;
-  String _name = 'bear';
+  String _name;
   String _emotion = 'blinking';
 
   @override
   void initState() {
     super.initState();
+    _name = widget.name;
     _prevScore = widget.score;
   }
 
@@ -36,7 +37,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
     return NimaActor("assets/solo",
         alignment: Alignment.center,
         fit: BoxFit.contain,
-        animation: '${_name} $_emotion', completed: (String animationName) {
+        animation: '${_name}_$_emotion', completed: (String animationName) {
       setState(() {
         _emotion = 'blinking';
       });

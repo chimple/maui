@@ -53,7 +53,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     } on PlatformException {
       print('Failed getting messages');
     }
+
     print('_initData: $messages');
+
     if (!mounted) return;
     setState(() {
       _deviceId = prefs.getString('deviceId');

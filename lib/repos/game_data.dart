@@ -320,39 +320,43 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
 enum Direction { across, down }
 Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
     fetchCrosswordData(int categoryId) async {
-  var rand = new Random();
-  switch (rand.nextInt(2)) {
-    case (0):
-      return new Tuple2([
-        ['E', null, null, null, null],
-        ['A', null, null, null, null],
-        ['T', 'I', 'G', 'E', 'R'],
-        [null, null, null, null, 'A'],
-        [null, null, null, null, 'T']
-      ], [
-        new Tuple4('assets/apple.png', 0, 0, Direction.down),
-        new Tuple4('assets/apple.png', 2, 0, Direction.across),
-        new Tuple4('assets/apple.png', 2, 4, Direction.down),
-      ]);
-      break;
-  }
-  return new Tuple2([
-    ['C', 'A', 'T', null, null, 'E'],
-    [null, 'N', null, null, null, 'G'],
-    [null, 'T', 'I', 'G', 'E', 'R'],
-    [null, null, 'B', null, null, 'E'],
-    [null, null, 'E', null, null, 'T'],
-    [null, 'O', 'X', 'E', 'N', null]
-  ], [
-    new Tuple4('assets/apple.png', 0, 0, Direction.across),
-    new Tuple4('assets/apple.png', 0, 1, Direction.down),
-    new Tuple4('assets/apple.png', 0, 5, Direction.down),
-    new Tuple4('assets/apple.png', 2, 1, Direction.across),
-    new Tuple4('assets/apple.png', 2, 2, Direction.down),
-    new Tuple4('assets/apple.png', 5, 1, Direction.across)
-  ]);
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    switch (rand.nextInt(2)) {
+      case (0):
+        return new Tuple2([
+          ['E', null, null, null, null],
+          ['A', null, null, null, null],
+          ['T', 'I', 'G', 'E', 'R'],
+          [null, null, null, null, 'A'],
+          [null, null, null, null, 'T']
+        ], [
+          new Tuple4('assets/apple.png', 0, 0, Direction.down),
+          new Tuple4('assets/apple.png', 2, 0, Direction.across),
+          new Tuple4('assets/apple.png', 2, 4, Direction.down),
+        ]);
+        break;
+    }
+    return new Tuple2([
+      ['C', 'A', 'T', null, null, 'E'],
+      [null, 'N', null, null, null, 'G'],
+      [null, 'T', 'I', 'G', 'E', 'R'],
+      [null, null, 'B', null, null, 'E'],
+      [null, null, 'E', null, null, 'T'],
+      [null, 'O', 'X', 'E', 'N', null]
+    ], [
+      new Tuple4('assets/apple.png', 0, 0, Direction.across),
+      new Tuple4('assets/apple.png', 0, 1, Direction.down),
+      new Tuple4('assets/apple.png', 0, 5, Direction.down),
+      new Tuple4('assets/apple.png', 2, 1, Direction.across),
+      new Tuple4('assets/apple.png', 2, 2, Direction.down),
+      new Tuple4('assets/apple.png', 5, 1, Direction.across)
+    ]);
+   }
+    return null;
 }
-
 Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
 
 var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
