@@ -635,7 +635,7 @@ Future<String> fetchGuessData() async {
   List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
-    return await rootBundle.loadString("assets/Colors.json");
+    return await rootBundle.loadString("assets/$s.json");
 }
 
 
