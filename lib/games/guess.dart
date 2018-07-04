@@ -83,6 +83,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   String _guess = '';
   int _flag = 0;
+  // int s = 0;
 
   AnimationController controller, _imgController;
   Animation<double> animation, noanimation, animateImage;
@@ -178,7 +179,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   void _initBoard() async {
     setState(() => _isLoading = true);
     // String jsonGameInfo = await fetchGuessData();
-    partsName = ["red", "maroon", "cyan", "orange", "yellow", "green", "pink", "blue", "purple", "brown" ];
+    // partsName = ["red", "maroon", "cyan", "orange", "yellow", "green", "pink", "blue", "purple", "brown" ];
+
     _decoded = await json.decode(await fetchGuessData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
@@ -190,6 +192,10 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         }
         _length = _decoded["number"];
         _imgController.forward();
+          for (var i = 0; i < _length; i++) {
+      partsName.add((_decoded["parts"] as List)[i]["name"]);
+    }
+        // s = 1;
         _isLoading = false;
       });
     });
