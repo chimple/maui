@@ -43,11 +43,11 @@ class ArrowPainter extends CustomPainter {
   }
 }
 
-class CirclePainter extends CustomPainter {
+class TextPainters extends CustomPainter {
   // final LONG_TICK = 50.0;
   // final SHORT_TICK = 4.0;
 
-  CirclePainter({
+  TextPainters({
     this.maxString,
     this.maxChar,
     @required this.noOfSlice,
@@ -69,9 +69,9 @@ class CirclePainter extends CustomPainter {
   final textPainter;
   final String maxString;
   double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
-
   @override
   void paint(Canvas canvas, Size size) {
+
     double _uperCaseConstant = 0.0;
     if (maxString.toUpperCase() == maxString.toUpperCase()) {
       _uperCaseConstant = 8.0;
@@ -83,7 +83,8 @@ class CirclePainter extends CustomPainter {
       _const = -21.0;
     }
     int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
-    //print("max len string:: ${_wLength}");
+    _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
+    print("max len string w:: ${data}");
     if (_wLength > 0) {
       _wFactor = 2.5 / _wLength.toDouble();
     } else {
@@ -95,7 +96,7 @@ class CirclePainter extends CustomPainter {
     _baseLength = 2 * radius * sin(_radiun);
     // print("_angle :: $_angle");
     // print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize = _wFactor * (_baseLength * 1.22) / (maxChar);
+    _fontSize = _wFactor * (_baseLength * .2) / (maxChar);
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -121,7 +122,7 @@ class CirclePainter extends CustomPainter {
             fontStyle: FontStyle.italic,
             color: Colors.black,
             fontFamily: 'BebasNeue',
-            fontSize: _fontSize - _uperCaseConstant,
+            fontSize: 25.0,
           ),
         );
         incr++;
@@ -132,7 +133,7 @@ class CirclePainter extends CustomPainter {
         textPainter.paint(
           canvas,
           new Offset(
-            -((6.10 * _text.length) * _baseLength) / 117.50,
+            -((6.10 * _text.length) * _baseLength) / (117.50),
             -(size.height / 7.800 + _const),
           ),
         );
@@ -174,25 +175,31 @@ class ImagePainter extends CustomPainter {
 
   final BoxFit boxfit;
 
-  ui.Image img;
+  ui.ImageByteFormat img;
   ui.Rect rect, inputSubrect, outputSubrect;
   Size imageSize;
   FittedSizes sizes;
-  double radius, baseLength, _angle, _radiun, _baseLength, _imageCircleradius;
-
+  double radius,
+      _angle,
+      _radiun,
+      _baseLength,
+      _imageCircleradius,
+      _incircleRadius;
+  int c = 0;
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
     radius = size.width / 2;
     _angle = 360 / (noOfSlice * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
-    _imageCircleradius = (_baseLength / 2) * tan(_radiun);
-    print("circle radisu:: $_imageCircleradius");
-    int c = 0;
+    _incircleRadius = (_baseLength / 2) * tan(_radiun);
+    //print("circle radisu:: $_incircleRadius");
+    c = 0;
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
-
+   //print("canvas size:: ${size.width}");
+    //print("size of canvas ::${size.width * 2}");
     for (var i = 0; i < noOfSlice * 2; ++i) {
       if (i % 2 == 0) {
         canvas.drawLine(
@@ -206,11 +213,11 @@ class ImagePainter extends CustomPainter {
         canvas.translate(-0.0, -((size.width) / 2.2));
         if (images[c] != null) {
           rect =
-              ui.Offset(size.width / 32, size.width / 9) & new Size(0.0, 0.0);
+              ui.Offset(size.width / 4, size.width / 4) & new Size(0.0, 0.0);
           //rect = ui.Offset.zero & new Size(size.height, size.height);
-          imageSize = new Size(size.width, size.width);
+          imageSize = new Size(size.width * 2, size.width * 2);
           sizes = applyBoxFit(boxfit, imageSize,
-              new Size(size.width / 2 * .45, size.width / 2 * .45));
+              new Size(size.width / 2*.90, size.width / 2 * .90));
           inputSubrect =
               Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
           outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
@@ -229,6 +236,6 @@ class ImagePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ImagePainter oldDelegate) {
-    return true;
+    return images[c] != oldDelegate.images[c];
   }
 }
