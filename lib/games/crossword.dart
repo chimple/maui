@@ -144,94 +144,80 @@ class CrosswordState extends State<Crossword> {
   }
 
   Widget _buildItem(int index, String text, int flag, String img) {
-    if (text != null || text == '') {
-      return new MyButton(
-          key: new ValueKey<int>(index),
-          index: index,
-          text: text,
-          color1: 1,
-          onAccepted: (dcindex) {
-            flag1 = 0;
-            dragdata = dcindex;
-            dindex = int.parse(dragdata.substring(0, 3));
-            dcode = int.parse(dragdata.substring(4));
-            if (code == dcode) {
-              var i = 0;
-              for (; i < _sortletters.length; i++) {
-                if (_rightwords[dindex - 100] == _sortletters[i] &&
-                    index == _sortletters[++i] &&
-                    _letters[index] == '') {
-                  flag1 = 1;
-                  break;
+    return new MyButton(
+        key: new ValueKey<int>(index),
+        index: index,
+        text: text,
+        color1: text == null ? 0 : 1,
+        flag: flag,
+        code: code,
+        onDrag: () {
+          setState(() {});
+        },
+        isRotated: widget.isRotated,
+        img: img,
+        onAccepted: (text == null)
+            ? (e) {}
+            : (dcindex) {
+                flag1 = 0;
+                dragdata = dcindex;
+                dindex = int.parse(dragdata.substring(0, 3));
+                dcode = int.parse(dragdata.substring(4));
+                if (code == dcode) {
+                  var i = 0;
+                  for (; i < _sortletters.length; i++) {
+                    if (_rightwords[dindex - 100] == _sortletters[i] &&
+                        index == _sortletters[++i] &&
+                        _letters[index] == '') {
+                      flag1 = 1;
+                      break;
+                    }
+                  }
+                  if (flag1 == 1) {
+                    setState(() {
+                      _rightwords[dindex - 100] += '.';
+                      _letters[index] = _sortletters[--i];
+                      correct++;
+                      widget.onScore(((1 / _rightlen) * 40).toInt());
+                      widget.onProgress(correct / _rightlen);
+                      print('progress $correct $_rightlen ');
+                      if (correct == _rightlen) {
+                        _images.removeRange(0, _images.length);
+                        _data3.removeRange(0, _data3.length);
+                        _sortletters.removeRange(0, _sortletters.length);
+                        _rightwords.removeRange(0, _rightwords.length);
+                        _letters.removeRange(0, _letters.length);
+                        _rightlen = 0;
+                        correct = 0;
+                        flag1 = 0;
+                        _flag.removeRange(0, _flag.length);
+                        _rows = 0;
+                        _cols = 0;
+                        i = 0;
+                        j = 0;
+                        keys = 0;
+                        l = 0;
+                        k = 0;
+                        widget.onEnd();
+                      }
+                    });
+                  } else if (flag1 == 0 && _letters[index] == '') {
+                    setState(() {
+                      _flag[index] = 1;
+                      _letters[index] = _rightwords[dindex - 100];
+                    });
+                    new Future.delayed(const Duration(milliseconds: 700), () {
+                      setState(() {
+                        widget.onScore(-((1 / _rightlen) * 20).toInt());
+                        _flag[index] = 0;
+                        _letters[index] = '';
+                      });
+                    });
+                  }
                 }
               }
-              if (flag1 == 1) {
-                setState(() {
-                  _rightwords[dindex - 100] += '.';
-                  _letters[index] = _sortletters[--i];
-                  correct++;
-                  widget.onScore(((1 / _rightlen) * 40).toInt());
-                  widget.onProgress(correct / _rightlen);
-                  print('progress $correct $_rightlen ');
-                  if (correct == _rightlen) {
-                    _images.removeRange(0, _images.length);
-                    _data3.removeRange(0, _data3.length);
-                    _sortletters.removeRange(0, _sortletters.length);
-                    _rightwords.removeRange(0, _rightwords.length);
-                    _letters.removeRange(0, _letters.length);
-                    _rightlen = 0;
-                    correct = 0;
-                    flag1 = 0;
-                    _flag.removeRange(0, _flag.length);
-                    _rows = 0;
-                    _cols = 0;
-                    i = 0;
-                    j = 0;
-                    keys = 0;
-                    l = 0;
-                    k = 0;
-                    widget.onEnd();
-                  }
-                });
-              } else if (flag1 == 0 && _letters[index] == '') {
-                setState(() {
-                  _flag[index] = 1;
-                  _letters[index] = _rightwords[dindex - 100];
-                });
-                new Future.delayed(const Duration(milliseconds: 700), () {
-                  setState(() {
-                    widget.onScore(-((1 / _rightlen) * 20).toInt());
-                    _flag[index] = 0;
-                    _letters[index] = '';
-                  });
-                });
-              }
-            }
-          },
-          flag: flag,
-          code: code,
-          onDrag: () {
-            setState(() {});
-          },
-          isRotated: widget.isRotated,
-          img: img,
-          keys: keys++);
-    } else {
-      return new MyButton(
-          key: new ValueKey<int>(index),
-          index: index,
-          text: '',
-          color1: 0,
-          flag: flag,
-          onAccepted: (text) {},
-          code: code,
-          isRotated: widget.isRotated,
-          img: img,
-          onDrag: () {
-            setState(() {});
-          },
-          keys: keys);
-    }
+        // keys: keys++
+        );
   }
 
   @override
@@ -244,6 +230,9 @@ class CrosswordState extends State<Crossword> {
         child: new CircularProgressIndicator(),
       );
     }
+    int j = 0;
+    int k = 100;
+    int l = (_rows * _cols) - 1;
     return new LayoutBuilder(builder: (context, constraints) {
       var rwidth, rheight;
       rwidth = constraints.maxWidth;
@@ -262,10 +251,10 @@ class CrosswordState extends State<Crossword> {
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
-      keys = 0;
-      var j = 0;
-      var k = 100;
-      var l = (_rows * _cols) - 1;
+      //  keys = 0;
+      j = 0;
+      k = 100;
+      l = (_rows * _cols) - 1;
       print(
           'builded widget ${_flag.length}   $_rows $_cols ${_letters.length}');
       print('letters      $_letters');
@@ -371,10 +360,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animation, animation1;
   String newtext = '';
+  String disptext;
   var f = 0;
   var i = 0;
   initState() {
     super.initState();
+    disptext = widget.text == null ? '' : widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
     controller1 = new AnimationController(
@@ -403,6 +394,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1.dispose();
     controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(MyButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text != widget.text) {
+      controller.forward();
+    }
   }
 
   @override
@@ -460,11 +459,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             scale: animation,
             child: new UnitButton(
               key: new Key('A${widget.keys}'),
-              text: widget.text,
+              text: disptext,
               showHelp: false,
             )),
         feedback: UnitButton(
-          text: widget.text,
+          text: disptext,
         ),
       );
     } else {
@@ -472,7 +471,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           scale: animation,
           child: new UnitButton(
             key: new Key('A${widget.keys}'),
-            text: widget.text,
+            text: disptext,
             disabled: true,
             showHelp: false,
           ));
