@@ -71,7 +71,6 @@ class TextPainters extends CustomPainter {
   double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
   @override
   void paint(Canvas canvas, Size size) {
-
     double _uperCaseConstant = 0.0;
     if (maxString.toUpperCase() == maxString.toUpperCase()) {
       _uperCaseConstant = 8.0;
@@ -84,7 +83,7 @@ class TextPainters extends CustomPainter {
     }
     int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
     _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
-    print("max len string w:: ${data}");
+    // print("max len string w:: ${data}");
     if (_wLength > 0) {
       _wFactor = 2.5 / _wLength.toDouble();
     } else {
@@ -133,7 +132,7 @@ class TextPainters extends CustomPainter {
         textPainter.paint(
           canvas,
           new Offset(
-            -((6.10 * _text.length) * _baseLength) / (117.50),
+            -((5.00 * _text.length) * _baseLength) / (117.50),
             -(size.height / 7.800 + _const),
           ),
         );
@@ -180,62 +179,83 @@ class ImagePainter extends CustomPainter {
   Size imageSize;
   FittedSizes sizes;
   double radius,
+      _x,
+      _y,
       _angle,
       _radiun,
       _baseLength,
       _imageCircleradius,
-      _incircleRadius;
-  int c = 0;
+      _incircleRadius,
+      _imageOffset = 0.0,
+      _imageSizeConst = 0.0;
+
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
+    print("image data:: $images");
     radius = size.width / 2;
     _angle = 360 / (noOfSlice * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
     _incircleRadius = (_baseLength / 2) * tan(_radiun);
+    if (noOfSlice == 4) {
+      _imageOffset = 30.0;
+      _imageSizeConst = 30.0;
+      _x = 18.0;
+      _y = 6.0;
+    } else if (noOfSlice == 6) {
+      _imageOffset = 20.0;
+      _x = 14.0;
+      _y = 10.0;
+    } else if (noOfSlice == 8) {
+      _imageOffset = 40.0;
+      _imageSizeConst = 30.0;
+      _x = 25.0;
+      _y = 10.0;
+    }
+
     //print("circle radisu:: $_incircleRadius");
-    c = 0;
+
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
-   //print("canvas size:: ${size.width}");
+    //print("canvas size:: ${size.width}");
     //print("size of canvas ::${size.width * 2}");
-    for (var i = 0; i < noOfSlice * 2; ++i) {
-      if (i % 2 == 0) {
-        canvas.drawLine(
-          new Offset(0.0, 0.0),
-          new Offset(0.0, size.width / 2 - 4.2),
-          tickPaint,
-        );
-      } else {
-        //canvas.rotate(pi);
-        canvas.save();
-        canvas.translate(-0.0, -((size.width) / 2.2));
-        if (images[c] != null) {
-          rect =
-              ui.Offset(size.width / 4, size.width / 4) & new Size(0.0, 0.0);
-          //rect = ui.Offset.zero & new Size(size.height, size.height);
-          imageSize = new Size(size.width * 2, size.width * 2);
-          sizes = applyBoxFit(boxfit, imageSize,
-              new Size(size.width / 2*.90, size.width / 2 * .90));
-          inputSubrect =
-              Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
-          outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
+    int incr = 0;
+    rect = ui.Offset((size.width / _x), size.width / _y) & new Size(0.0, 0.0);
 
-          canvas.drawImageRect(
-              images[c], inputSubrect, outputSubrect, new Paint());
+    imageSize = new Size(size.width * 2, size.width * 2);
+    sizes = applyBoxFit(boxfit, imageSize,
+        new Size(size.width / 2 * .40, size.width / 2 * .40));
+    inputSubrect =
+        Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
+    outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
+    if (images.length == noOfSlice)
+      for (var i = 1; i <= noOfSlice * 2; ++i) {
+        if (i % 2 != 0) {
+          canvas.drawLine(
+            new Offset(0.0, 0.0),
+            new Offset(0.0, size.width / 2 - 4.2),
+            tickPaint,
+          );
+        } else {
+          canvas.save();
+          canvas.translate(-0.0, -((size.width) / 2.2));
+          ui.Image image = images[incr];
+          if (image != null) {
+            canvas.drawImageRect(
+                image, inputSubrect, outputSubrect, new Paint());
+          }
+
+          canvas.restore();
+          incr++;
         }
-
-        canvas.restore();
-        c++;
+        canvas.rotate(2 * pi / (noOfSlice * 2.0));
       }
-      canvas.rotate(2 * pi / (noOfSlice * 2.0));
-    }
     canvas.restore();
   }
 
   @override
-  bool shouldRepaint(ImagePainter oldDelegate) {
-    return images[c] != oldDelegate.images[c];
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
