@@ -70,7 +70,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     _initBoard();
     animation = new AnimationController(
       vsync: this,
-      duration: new Duration(milliseconds: 400),
+      duration: new Duration(milliseconds: 600),
     );
     animation.addListener(() {
       this.setState(() {});
@@ -165,7 +165,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             });
           } else {
             _shake[index] = 1;
-            new Future.delayed(const Duration(milliseconds: 800), () {
+            new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
                 _shake[index] = 0;
                 widget.onScore(-1);
@@ -328,9 +328,9 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
               new Container(
                   height: media.size.height > media.size.width
                       ? constraints.maxHeight * .08
-                      : constraints.maxHeight * .08,
+                      : constraints.maxHeight * .11,
                   width: media.size.height < media.size.width
-                      ? constraints.maxWidth * .1
+                      ? constraints.maxWidth * .15
                       : constraints.maxWidth * .2,
                   color: Colors.red,
                   child: new Center(
@@ -349,7 +349,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                     child: new Image(
                         image: new AssetImage(
                       animation.isAnimating
-                          ? 'assets/dice_game/dice1.gif'
+                          ? 'assets/dice_game/dice4.gif'
                           : 'assets/dice_game/$dval.png',
                     )),
                   )),
