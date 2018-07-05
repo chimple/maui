@@ -29,7 +29,7 @@ class GuessIt extends StatefulWidget {
 }
 
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
-  List<AnimationController> _textControllers = new List<AnimationController>();
+  List<AnimationController> _textAnimationControllers = new List<AnimationController>();
   List<Animation<double>> _animateText = new List<Animation<double>>();
   bool _isLoading = true;
   List<Widget> _paint = [];
@@ -38,7 +38,11 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   void _renderChoice(String text, double X, double Y, double height,
       double width, Orientation orientation) {
+        print("objectrenderchoicestart");
+        print(X);
+        print(Y);
     setState(() {
+      print("objectrender choice set state");
       _paint.add(
         new CustomPaint(
           painter: new Stickers(
@@ -52,10 +56,11 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         ),
       );
     });
+    print("objectrenderchoiceend");
   }
 
   Widget _buildPaint(int i, Widget w) {
-    _textControllers[i].forward();
+    _textAnimationControllers[i].forward();
     return new ScaleTransition(
       scale: _animateText[i],
       child: new RepaintBoundary(
@@ -69,17 +74,16 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     return _paint.map((f) => _buildPaint(i++, f)).toList(growable: true);
   }
 
-  List<String> _buildPartsList() {
-    List<String> parts=[];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
-    return parts;
-  }
+  // void _buildPartsList() {
+  //   for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+  //     partsName.add((_decoded["parts"] as List)[i]["name"]);
+  //   }
+  // }
 
   final TextEditingController _textController = new TextEditingController();
   String _guess = '';
   int _flag = 0;
+  // int s = 0;
 
   AnimationController controller, _imgController;
   Animation<double> animation, noanimation, animateImage;
@@ -100,9 +104,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   void _validate(double height, double width, Orientation orientation) {
     double h1, w1, h, w, rh, rw, x, y;
-    // print("before trimming $_guess");
-    // _guess.trim();
-    // print("after trimming $_guess");
     if (orientation == Orientation.portrait) {
       h = (height * 3 * 9) / 40;
       w = (width * 4) / 5;
@@ -115,33 +116,49 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     h1 = (((height * 3) / 4) - h) / 2;
     w1 = (width - w) / 2;
     if (partsName.indexOf(_guess) != -1) {
-      // int i = 0;
+      int i = 0;
+      // int l = partsName.length;
       partsName.remove(_guess);
       // print(i);
       print(partsName);
+      print(_guess);
       _textController.text = '';
       widget.onScore(1);
-      // _length = _length - 1;
-      // while (i < partsName.length) {
-      //   if (_guess == _decoded["parts"][i]["name"]) {
-      //     print(_decoded["parts"][i]["name"]);
-      //     // y = rh * _decoded["parts"][i]["data"]["y"];
-      //     // x = rw * _decoded["parts"][i]["data"]["x"];
-
-      //     print(h1 + y);
-      //     print(w1 + x);
-      //     break;
-      //   } else {
-      //     i = i + 1;
-      //   }
-      // }
-      _renderChoice(_guess, w1, h1, height, width, orientation);
+      
+      while (i < _length) {
+        print(i);
+        if (_guess == _decoded["parts"][i]["name"]) {
+          // _length = _length - 1;
+          // print("inside if length = $_length");
+          // print("inside if i = $i");
+          // print("inside while = ${_decoded["parts"][i]["name"]}");
+         
+          
+          y = rh * _decoded["parts"][i]["data"]["y"];
+          x = rw * _decoded["parts"][i]["data"]["x"];
+          
+          
+          break;
+        } else {
+          // print("inside else $i");
+          i = i + 1;
+        }
+      }
+      _renderChoice(_guess, (w1 + x), (h1 + y), height, width, orientation);
+      // _renderChoice(_guess, 10.0, 10.0, height, width, orientation);
       new Future.delayed(const Duration(milliseconds: 1000), () {
         if (partsName.isEmpty) {
+          // print('guess onEnd');
           widget.onEnd();
         }
       });
-    } else {
+    }
+    // if(true){
+    //   print("object");
+    //   widget.onScore(1);
+    // }
+     else {
+       widget.onScore(-1);
       print("this is th elist of parts $partsName");
       this.setState(() {
         _flag = 1;
@@ -162,18 +179,23 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   void _initBoard() async {
     setState(() => _isLoading = true);
     // String jsonGameInfo = await fetchGuessData();
+    // partsName = ["red", "maroon", "cyan", "orange", "yellow", "green", "pink", "blue", "purple", "brown" ];
 
     _decoded = await json.decode(await fetchGuessData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         for (var i = 0; i < _decoded["number"]; i++) {
-          _textControllers.add(new AnimationController(
+          _textAnimationControllers.add(new AnimationController(
               vsync: this, duration: new Duration(milliseconds: 500)));
           _animateText.add(new CurvedAnimation(
-              parent: _textControllers[i], curve: Curves.elasticOut));
+              parent: _textAnimationControllers[i], curve: Curves.elasticOut));
         }
         _length = _decoded["number"];
         _imgController.forward();
+          for (var i = 0; i < _length; i++) {
+      partsName.add((_decoded["parts"] as List)[i]["name"]);
+    }
+        // s = 1;
         _isLoading = false;
       });
     });
@@ -183,6 +205,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _initBoard();
+    
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 80), vsync: this);
@@ -204,13 +227,13 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(GuessIt oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     if (widget.iteration != oldWidget.iteration) {
       _paint = [];
-      _textControllers = [];
+      _textAnimationControllers = [];
       _animateText = [];
       _initBoard();
-      _length = 0;
-      partsName = [];
+      _length = _decoded["number"];
     }
   }
 
@@ -235,16 +258,13 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     _textController.dispose();
     controller.dispose();
     for (var i = 0; i < _decoded["number"]; i++) {
-      _textControllers[i].dispose();
+      _textAnimationControllers[i].dispose();
     }
     // _focusnode.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(partsName.isEmpty){
-      partsName = _buildPartsList();
-    }
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -274,35 +294,12 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
             child: new Stack(
               fit: StackFit.passthrough,
               children: <Widget>[
-                // new Center(
-                //   child: new Container(
-                //     decoration: new BoxDecoration(
-                //       border: new Border.all(width: 5.0, color: Colors.amber),
-                //     ),
-                //     height: (((constraint.maxHeight) * 3) / 4) - (((constraint.maxHeight) * 3) / 20),
-                //     width: constraint.maxWidth - (constraint.maxWidth/4),
-                //     child:new ScaleTransition(
-                //   scale: animateImage,
-                //   child: new Image(
-                //     image: AssetImage('assets/' + _decoded["id"]),
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
-                //   ),
-                // ),
                 new AnimatedImage(
                     item: _decoded["id"],
                     animation: animateImage,
                     height: constraint.maxHeight,
                     width: constraint.maxWidth,
                     orientation: orientation),
-                // new ScaleTransition(
-                //   scale: animateImage,
-                //   child: new Image(
-                //     image: AssetImage('assets/' + _decoded["id"]),
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
                 new Stack(
                   children: _createTextPaint(context),
                 )
@@ -419,6 +416,7 @@ class Stickers extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    print("objectpainteend");
     TextSpan span = new TextSpan(
         text: text,
         style: new TextStyle(
@@ -435,6 +433,7 @@ class Stickers extends CustomPainter {
     tp.paint(canvas, new Offset(x, y));
     canvas.save();
     canvas.restore();
+    print("objectpaintend");
   }
 
   @override
