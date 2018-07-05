@@ -27,10 +27,12 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (_prevScore < widget.score) {
-      _emotion = 'happy';
-    } else if (_prevScore > widget.score) {
-      _emotion = 'sad';
+    if (_emotion == 'blinking') {
+      if (_prevScore < widget.score) {
+        _emotion = 'happy';
+      } else if (_prevScore > widget.score) {
+        _emotion = 'sad';
+      }
     }
     print('emotion: $_emotion');
     _prevScore = widget.score;
