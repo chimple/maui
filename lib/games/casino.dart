@@ -132,7 +132,7 @@ class _CasinoState extends State<Casino> {
         key: new ValueKey(j),
         scrollController: new CasinoScrollController(
             initialItem: _selectedItemIndex * random),
-        itemExtent: 50.0,
+        itemExtent: 100.0,
         backgroundColor: new Color(0xFF734052),
         // backgroundColor: Colors.white,
         // isRotated: widget.isRotated,
