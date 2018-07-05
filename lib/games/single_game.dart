@@ -305,17 +305,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                         child: Stack(
                             alignment: AlignmentDirectional.centerStart,
                             children: <Widget>[
-                              !oh2h
-                                  ? Positioned(
-                                      left: 0.0,
-                                      top: 0.0,
-                                      child: IconButton(
-                                        icon: Icon(Icons.arrow_back),
-                                        color: Colors.white,
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                      ))
-                                  : Container(),
                               new Positioned(
                                   left: !oh2h ? 32.0 : null,
                                   right: oh2h ? 32.0 : null,
@@ -339,6 +328,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                         ? 'assets/hoodie/${widget.gameName}.png'
                                         : 'other.png'),
                               ),
+                              !oh2h
+                                  ? Positioned(
+                                      left: 0.0,
+                                      top: 0.0,
+                                      child: IconButton(
+                                        icon: Icon(Icons.arrow_back),
+                                        color: Colors.white,
+                                        onPressed: () {
+                                          print('onPressed');
+                                          Navigator.of(context).pop();
+                                        },
+                                      ))
+                                  : Container(),
                               widget.gameConfig.gameDisplay ==
                                           GameDisplay.localTurnByTurn ||
                                       widget.gameConfig.gameDisplay ==
@@ -567,7 +569,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
-      maxIterations = 2;
+        maxIterations = 2;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
