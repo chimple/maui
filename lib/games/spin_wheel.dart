@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
+import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/unit_repo.dart';
 import '../components/spins.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
@@ -102,7 +104,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff,
       gameEndFlag = true;
-
+  UnitMode _unitMode;
   int _indexOfContainerData = 0, dataSize, _countGameEnd = 0;
   String _text = '', s1 = 'assets/dict/', s2 = '.png';
   final GlobalKey<AnimatedCircularChartState> _chartKey =
@@ -114,23 +116,23 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     controller1 = new AnimationController(
         duration: Duration(milliseconds: 500), vsync: this);
     controller = new AnimationController(
-        duration: Duration(milliseconds: 100), vsync: this);
-    shakeAnimate = new Tween(begin: -4.0, end: 4.0).animate(controller);
+        duration: Duration(milliseconds: 80), vsync: this);
+    shakeAnimate = new Tween(begin: -8.0, end: 8.0).animate(controller);
     noAnimation = new Tween(begin: -0.0, end: 0.0).animate(controller);
     animatoin =
         new CurvedAnimation(parent: controller1, curve: Curves.easeInOut);
     controller1.addStatusListener((status) {});
     controller1.forward();
-     if (widget.gameConfig.level < 4) {
-        print("level <4");
-        dataSize = 4;
-      } else if (widget.gameConfig.level < 6) {
-        print("level <8");
-        dataSize = 6;
-      } else {
-        print("level <10");
-        dataSize = 8;
-      }
+    if (widget.gameConfig.level < 4) {
+      print("level <4");
+      dataSize = 4;
+    } else if (widget.gameConfig.level < 6) {
+      print("level <8");
+      dataSize = 6;
+    } else {
+      print("level <10");
+      dataSize = 8;
+    }
     _initBoard();
   }
 
@@ -174,8 +176,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     //try {
     allData = await fetchPairData(widget.gameConfig.gameCategoryId, dataSize);
 
-    print("game category:: $allData");
-
+    print("mode question:: ${widget.gameConfig.questionUnitMode}");
+    print("mode answer:: ${widget.gameConfig.answerUnitMode}");
     allData.forEach((k, v) {
       _circleData.add(k);
 
@@ -197,21 +199,31 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     _text = _shuffleCircleData2[0];
 
     _activeIndex = _smallCircleData.indexOf(_text);
-    // print("active index:: $_activeIndex");
-    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
-    //print("text in active index:: ${_circleData[_activeIndex]}");
-    // print("unit button text:: $_text , index $index");
-    _slice[index] = true;
 
+    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+
+    _slice[index] = true;
     if (widget.gameConfig.answerUnitMode == UnitMode.image) {
-      for (int i = 0; i < dataSize; i++) {
-        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
-        // print("image url:: $_image");
-        load(_image).then((j) {
-          if (j != null) images.add(j);
-        });
+      _unit =
+          await new UnitRepo().getUnit(_shuffleCircleData1[0].toLowerCase());
+      print(_unit);
+      if ((widget.gameConfig.answerUnitMode == UnitMode.audio &&
+              (_unit.sound?.length ?? 0) == 0) ||
+          (widget.gameConfig.answerUnitMode == UnitMode.image &&
+              (_unit.image?.length ?? 0) == 0)) {
+        _unitMode = UnitMode.text;
+      } else {
+        for (int i = 0; i < dataSize; i++) {
+          String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+          // print("image url:: $_image");
+          load(_image).then((j) {
+            images.add(j);
+          });
+        }
+        _unitMode = UnitMode.image;
       }
     }
+
     _maxString = _shuffleCircleData1[0];
     for (int i = 1; i < dataSize; i++) {
       if (_maxString.length < _shuffleCircleData1[i].length) {
@@ -486,18 +498,21 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       } else if (status == AnimationStatus.completed) {
         controller.reverse();
       }
+
     });
     controller.forward();
     doShake = true;
-    new Future.delayed(Duration(milliseconds: 500), () {
+    new Future.delayed(Duration(milliseconds: 600), () {
       setState(() {
-        doShake = false;
+        //doShake = false;
         dragEnd = 0.0;
         rotationPercent = 0.0;
         angleDiff = 0.0;
+        controller.stop();
       });
+      if (gameEndFlag) widget.onScore(-1);
     });
-    if (gameEndFlag) widget.onScore(-1);
+   
   }
 
   void _changeData(int indx, double angle) {
@@ -542,6 +557,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
   List<CircularStackEntry> data, data1;
   List<CircularStackEntry> _generateChartData(int size) {
+    // not working
     // for (int i = 0; i < 8; i++) {
     //   data[i] = new CircularStackEntry(
     //     [
@@ -625,7 +641,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   bool doShake = true;
   bool test = true;
   List<String> mode = ['image', 'text'];
-
+  Unit _unit;
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -666,39 +682,41 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth =
-          (constraints.maxWidth - hPadding * 2) / 2; //- middle_spacing;
+          (constraints.maxWidth - hPadding * 2) / 2.4; //- middle_spacing;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 1;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight - 10);
       // AppState state = AppStateContainer.of(context).state;
 
       return new Column(
         //direction: Axis.vertical,
         children: <Widget>[
           new Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 width: double.infinity,
                 color: new Color(0xFFA52A2A),
                 child: Stack(
                   children: <Widget>[
-                    new Text(''),
+                    // new Text(''),
                     Center(
                       child: Shake(
-                        animation: doShake ? shakeAnimate : noAnimation,
+                        animation: shakeAnimate,
                         child: new UnitButton(
                           text: _text,
+                          unitMode: widget.gameConfig.questionUnitMode,
                         ),
                       ),
                     )
                   ],
                 ),
               )),
-          new Expanded(flex: 1, child: new Text('')),
+          // new Expanded(flex: 1, child: new Text('')
+          //),
           new Expanded(
             flex: 6,
             child: new Stack(
@@ -752,9 +770,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                             width: size1.width,
                             height: size1.width,
                             child: new CustomPaint(
-                              painter: widget.gameConfig.answerUnitMode !=
-                                      UnitMode.image
-                                  ? CirclePainter(
+                              painter: (_unitMode != UnitMode.image)
+                                  ? TextPainters(
                                       maxChar: maxChars,
                                       noOfSlice: dataSize,
                                       rotation: rotationPercent,
@@ -795,10 +812,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
               ],
             ),
           ),
-          new Expanded(
-            flex: 1,
-            child: new Text(''),
-          )
+          // new Expanded(
+          //   flex: 1,
+          //   child: new Text(''),
+          // ),
         ],
       );
     });
