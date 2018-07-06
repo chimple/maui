@@ -51,7 +51,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
    
 //  List<Offset> _points = [];
   var color = new Color(0xff000000);
-  var width = 8.0;
+  var width = 4.0;
   DrawPadController _controller;
   MyHomePageState(this._controller);
   DrawPainting _currentPainter;
@@ -97,7 +97,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   // print({
                   //   "convert into percentage is : ": convertedIntoPercentage
                   // });
-                  double tolerence = 0.1;
+                  double tolerence = 0.06;
                   if (_drawLineProperty.length < 1) {
                     _drawLineProperty = new List.from(_drawLineProperty)
                       ..add(new DrawLineProperty(

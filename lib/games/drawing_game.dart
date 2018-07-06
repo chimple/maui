@@ -63,7 +63,7 @@ class DrawScreen extends State<Drawing> {
   }
 
   void _initBoard() async {
-    navVal=0;
+    // navVal=0;
     setState(() => _isLoading = true);
     // print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
@@ -85,18 +85,13 @@ class DrawScreen extends State<Drawing> {
     if (widget.iteration != oldWidget.iteration) {
       print(
           "both the iterartin is old...${oldWidget.iteration}.........new ${widget.iteration}");
-      navVal = widget.iteration;
 
-      print("navi value is... $navVal");
-      // if (navVal == 0 && count == 0) {
-      //   count++;
-      //   navVal;
-      // } else {
-      //   count = 0;
-      //   navVal = 1;
-      // }
-
-      _initBoard();
+      if (navVal == 0) {
+        navVal = widget.iteration;
+      } else {
+        navVal = 0;
+        _initBoard();
+      }
     }
   }
 
@@ -124,28 +119,17 @@ class DrawScreen extends State<Drawing> {
       0xff00e376,
       0xffffd68f,
       0xff000000,
-      0xffd50000,
-      0xff00e356,
-      0xffffd75f,
-      0xff2332ff,
-      0xffd50670,
-      0xff00e876,
-      0xffffe67f,
-      0xff29624f
+      0xffd50000
     ];
     List<double> width_val = [
       2.0,
+      3.0,
+      4.0,
       5.0,
+      6.0,
       8.0,
       10.0,
       12.0,
-      15.0,
-      18.0,
-      20.0,
-      22.0,
-      25.0,
-      28.0,
-      30.0
     ];
     int roundColor;
 
@@ -584,13 +568,14 @@ class DrawScreen extends State<Drawing> {
     var jsonData = _padController.send();
     print({"json data is : ": jsonData});
     drawJson = jsonData;
-    // setState(() {
-    //   widget.onEnd(toJsonMap(), false);
-    // });
-
     setState(() {
-      navVal = 1;
+      widget.onEnd(toJsonMap(), false);
+      widget.onScore(10);
     });
+
+    // setState(() {
+    //   navVal = 1;
+    // });
   }
 
   void _multiColor(colorValue) {

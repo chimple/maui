@@ -65,7 +65,7 @@ class OptionState extends State<SecondScreen> {
   }
 
   void _initBoard() async {
-    widget.navVal=0;
+    // widget.navVal = 0;
     setState(() => _isLoading = true);
     print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
@@ -153,7 +153,7 @@ class OptionState extends State<SecondScreen> {
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
       var sizeOrientation =
-          orientation == Orientation.portrait ? (_size + .5) : (_size + 2);
+          orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -169,7 +169,7 @@ class OptionState extends State<SecondScreen> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
 
-      double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
+      // double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");

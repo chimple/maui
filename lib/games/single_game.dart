@@ -556,7 +556,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
-      maxIterations = 2;
+      maxIterations = 1;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
