@@ -113,8 +113,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller1 = new AnimationController(
-        duration: Duration(milliseconds: 500), vsync: this);
+    controller1 =
+        new AnimationController(duration: Duration(seconds: 2), vsync: this);
     controller = new AnimationController(
         duration: Duration(milliseconds: 80), vsync: this);
     shakeAnimate = new Tween(begin: -8.0, end: 8.0).animate(controller);
@@ -136,16 +136,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     _initBoard();
   }
 
-  Future<ui.Image> load(String asset) async {
-    //print("print asset value:: $asset");
-    ByteData data = await rootBundle.load(asset);
-    ui.Codec codec = await ui.instantiateImageCodec(
-      data.buffer.asUint8List(),
-    );
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return fi.image;
-  }
-
   @override
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -160,27 +150,27 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _shuffleCircleData1.clear();
       _shuffleCircleData2.clear();
       images.clear();
-
+      controller1.forward();
       gameEndFlag = true;
       _initBoard();
       reset();
     }
   }
 
+  bool _imageFound = true;
   int _activeIndex;
   String _maxString = '';
   void _initBoard() async {
     setState(() {
       _isLoading = true;
     });
-    //try {
+
     allData = await fetchPairData(widget.gameConfig.gameCategoryId, dataSize);
 
     print("mode question:: ${widget.gameConfig.questionUnitMode}");
     print("mode answer:: ${widget.gameConfig.answerUnitMode}");
     allData.forEach((k, v) {
       _circleData.add(k);
-
       _smallCircleData.add(v);
     });
 
@@ -188,12 +178,32 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
     _shuffleCircleData1.shuffle();
     _shuffleCircleData2.shuffle();
-    mode.shuffle();
 
-    // print("question Mode:: ${widget.gameConfig.questionUnitMode}");
-    // print("answee mode:: ${widget.gameConfig.answerUnitMode}");
-    // print("Answer data::::${_circleData}");
-    // print("Question data::::${_smallCircleData}");
+    if (widget.gameConfig.answerUnitMode == UnitMode.image) {
+      for (int i = 0; i < dataSize; i++) {
+        _unit =
+            await new UnitRepo().getUnit(_shuffleCircleData1[i].toLowerCase());
+        // print(_unit);
+        if ((widget.gameConfig.answerUnitMode == UnitMode.audio &&
+                (_unit.sound?.length ?? 0) == 0) ||
+            (widget.gameConfig.answerUnitMode == UnitMode.image &&
+                (_unit.image?.length ?? 0) == 0)) {
+          _unitMode = UnitMode.text;
+          _imageFound = false;
+          break;
+        }
+      }
+    }
+    if (_imageFound && widget.gameConfig.answerUnitMode == UnitMode.image) {
+      for (int i = 0; i < dataSize; i++) {
+        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
+        // print("image url:: $_image");
+        load(_image).then((j) {
+          images.add(j);
+        });
+      }
+      _unitMode = UnitMode.image;
+    }
 
     rotationPercent = 0.0;
     _text = _shuffleCircleData2[0];
@@ -203,37 +213,25 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
 
     _slice[index] = true;
-    if (widget.gameConfig.answerUnitMode == UnitMode.image) {
-      _unit =
-          await new UnitRepo().getUnit(_shuffleCircleData1[0].toLowerCase());
-      print(_unit);
-      if ((widget.gameConfig.answerUnitMode == UnitMode.audio &&
-              (_unit.sound?.length ?? 0) == 0) ||
-          (widget.gameConfig.answerUnitMode == UnitMode.image &&
-              (_unit.image?.length ?? 0) == 0)) {
-        _unitMode = UnitMode.text;
-      } else {
-        for (int i = 0; i < dataSize; i++) {
-          String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
-          // print("image url:: $_image");
-          load(_image).then((j) {
-            images.add(j);
-          });
-        }
-        _unitMode = UnitMode.image;
-      }
-    }
-
     _maxString = _shuffleCircleData1[0];
     for (int i = 1; i < dataSize; i++) {
       if (_maxString.length < _shuffleCircleData1[i].length) {
         _maxString = _shuffleCircleData1[i];
       }
     }
-    // } catch (exception, e) {}
     setState(() {
       _isLoading = false;
     });
+  }
+
+  Future<ui.Image> load(String asset) async {
+    //print("print asset value:: $asset");
+    ByteData data = await rootBundle.load(asset);
+    ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+    );
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return fi.image;
   }
 
   void reset() {
@@ -498,7 +496,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       } else if (status == AnimationStatus.completed) {
         controller.reverse();
       }
-
     });
     controller.forward();
     doShake = true;
@@ -512,7 +509,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       });
       if (gameEndFlag) widget.onScore(-1);
     });
-   
   }
 
   void _changeData(int indx, double angle) {
@@ -644,14 +640,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   Unit _unit;
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return new Center(
-        child: new Text(
-          'loading',
-          style: new TextStyle(fontSize: 40.0, color: Colors.green),
-        ),
-      );
-    }
     double _sizeOfWheel;
     Size size2 = MediaQuery.of(context).size;
     // print("size of the screen:: $size2");
@@ -691,7 +679,16 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight - 10);
       // AppState state = AppStateContainer.of(context).state;
-
+      if (_isLoading) {
+        return Container(
+          height: 40.0,
+          width: 40.0,
+          child: new CircularProgressIndicator(
+            strokeWidth: 2.0,
+            backgroundColor: Colors.blue,
+          ),
+        );
+      }
       return new Column(
         //direction: Axis.vertical,
         children: <Widget>[
