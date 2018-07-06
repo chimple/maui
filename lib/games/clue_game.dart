@@ -205,6 +205,9 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         controller.stop();
       });
     } else {
+      setState(() {
+              flag=1;
+            });
       toAnimateFunction();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
