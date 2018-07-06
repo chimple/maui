@@ -484,9 +484,10 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
         return new ScoreScreen(
+          myUser: AppStateContainer.of(context).state.loggedInUser,
           gameName: widget.gameName,
           gameDisplay: widget.gameConfig.gameDisplay,
-          myUser: loggedInUser,
+          // myUser: loggedInUser,
           myScore: loggedInUser == widget.gameConfig.myUser
               ? widget.gameConfig.myScore
               : widget.gameConfig.otherScore,
@@ -775,7 +776,12 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
-            gameConfig: widget.gameConfig);
+             gameConfig: widget.gameConfig);
+              // gameConfig: new GameConfig(
+              //   gameCategoryId: widget.gameCategoryId,
+              //   questionUnitMode: UnitMode.values[random.nextInt(3)],
+              //   answerUnitMode: UnitMode.values[random.nextInt(3)],
+              //   level: random.nextInt(10) + 1));
         break;
       case 'wordgrid':
         playTime = 15000;
