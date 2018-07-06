@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
 import 'package:maui/repos/game_data.dart';
-// import '../components/Sticker.dart';
+import 'package:maui/components/responsive_grid_view.dart';
 
 Map _decoded;
 
@@ -29,18 +28,81 @@ class GuessIt extends StatefulWidget {
 }
 
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
-  List<AnimationController> _textAnimationControllers = new List<AnimationController>();
+  List<AnimationController> _textAnimationControllers =
+      new List<AnimationController>();
   List<Animation<double>> _animateText = new List<Animation<double>>();
   bool _isLoading = true;
   List<Widget> _paint = [];
   List<String> partsName = [];
   int _length = 0;
 
+  List<String> keys = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+    'space'
+  ];
+
+  Widget _builtKeyBoard(BuildContext context, double height, double width,
+      Orientation orientation) {
+    int r = 3;
+    int col = 9;
+    double buttonWidth = width / col;
+    double buttonHeight = ((2 * height) / 3) / r;
+    return new ResponsiveGridView(
+        rows: r,
+        cols: col,
+        children: keys
+            .map((e) => Container(
+                  height: buttonHeight,
+                  width: buttonWidth,
+                  child: new RaisedButton(
+                    color: Colors.amberAccent,
+                    key: new Key(e),
+                    onPressed: () {
+                      _textController.text = (_textController.text + e);
+                      print(_textController.text);
+                    },
+                    child: new Center(
+                        child: new Text(
+                      e,
+                      style: new TextStyle(
+                          fontSize: buttonWidth * 0.15,
+                          fontWeight: FontWeight.bold),
+                    )),
+                  ),
+                ))
+            .toList(growable: false));
+  }
+
   void _renderChoice(String text, double X, double Y, double height,
       double width, Orientation orientation) {
-        print("objectrenderchoicestart");
-        print(X);
-        print(Y);
+    print("objectrenderchoicestart");
+    print(X);
+    print(Y);
     setState(() {
       print("objectrender choice set state");
       _paint.add(
@@ -87,8 +149,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   AnimationController controller, _imgController;
   Animation<double> animation, noanimation, animateImage;
-
-  // final FocusNode _focusnode = new FocusNode();
+  ScrollController _scroll = new ScrollController();
+  FocusNode _focusnode = new FocusNode();
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
@@ -117,14 +179,12 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     w1 = (width - w) / 2;
     if (partsName.indexOf(_guess) != -1) {
       int i = 0;
-      // int l = partsName.length;
       partsName.remove(_guess);
-      // print(i);
       print(partsName);
       print(_guess);
       _textController.text = '';
       widget.onScore(1);
-      
+
       while (i < _length) {
         print(i);
         if (_guess == _decoded["parts"][i]["name"]) {
@@ -132,12 +192,10 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
           // print("inside if length = $_length");
           // print("inside if i = $i");
           // print("inside while = ${_decoded["parts"][i]["name"]}");
-         
-          
+
           y = rh * _decoded["parts"][i]["data"]["y"];
           x = rw * _decoded["parts"][i]["data"]["x"];
-          
-          
+
           break;
         } else {
           // print("inside else $i");
@@ -145,20 +203,13 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         }
       }
       _renderChoice(_guess, (w1 + x), (h1 + y), height, width, orientation);
-      // _renderChoice(_guess, 10.0, 10.0, height, width, orientation);
       new Future.delayed(const Duration(milliseconds: 1000), () {
         if (partsName.isEmpty) {
-          // print('guess onEnd');
           widget.onEnd();
         }
       });
-    }
-    // if(true){
-    //   print("object");
-    //   widget.onScore(1);
-    // }
-     else {
-       widget.onScore(-1);
+    } else {
+      widget.onScore(-1);
       print("this is th elist of parts $partsName");
       this.setState(() {
         _flag = 1;
@@ -192,20 +243,29 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         }
         _length = _decoded["number"];
         _imgController.forward();
-          for (var i = 0; i < _length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
+        for (var i = 0; i < _length; i++) {
+          partsName.add((_decoded["parts"] as List)[i]["name"]);
+        }
         // s = 1;
         _isLoading = false;
       });
     });
   }
 
+  void _focusChange() {
+    print("<<<<<Focus>>>>>:" + _focusnode.hasFocus.toString());
+    // new Future.delayed(const Duration(milliseconds: 1000), () {
+    //     _focusnode.unfocus();
+    //   });
+    _scroll.animateTo(20.0,
+        duration: const Duration(milliseconds: 1000), curve: Curves.bounceIn);
+  }
+
   @override
   void initState() {
     super.initState();
     _initBoard();
-    
+    _focusnode.addListener(_focusChange);
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 80), vsync: this);
@@ -227,7 +287,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(GuessIt oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    print(
+        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     if (widget.iteration != oldWidget.iteration) {
       _paint = [];
       _textAnimationControllers = [];
@@ -260,7 +321,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     for (var i = 0; i < _decoded["number"]; i++) {
       _textAnimationControllers[i].dispose();
     }
-    // _focusnode.dispose();
+    _focusnode.removeListener(_focusChange);
+    _scroll.dispose();
   }
 
   @override
@@ -312,46 +374,73 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
           // height: (constraint.maxHeight) / 4,
           // width: constraint.maxWidth,
           child: new Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              new Expanded(
-                flex: 8,
-                child: new Shake(
-                  animation: (_flag == 0) ? noanimation : animation,
-                  child: new TextField(
-                    // focusNode: _focusnode,
-                    // textAlign: TextAlign.center,
-                    autofocus: false,
-                    controller: _textController,
-                    obscureText: false,
-                    style: new TextStyle(color: Colors.black, fontSize: 25.0),
-                    decoration: new InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "name what you see and press check",
-                      hintStyle:
-                          new TextStyle(color: Colors.blueGrey, fontSize: 15.0),
-                      border: InputBorder.none,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  new Shake(
+                    animation: (_flag == 0) ? noanimation : animation,
+                    child: Container(
+                      height: (constraint.maxHeight / 4) * 0.6,
+                      width: constraint.maxWidth * 0.7,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Colors.grey,
+                          border: new Border.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              width: 2.0)),
+                      child: new TextField(
+                        focusNode: _focusnode,
+                        // textAlign: TextAlign.center,
+                        autofocus: false,
+                        controller: _textController,
+                        obscureText: false,
+                        style: new TextStyle(
+                            color: Colors.black,
+                            fontSize: (constraint.maxHeight / 4) * 0.6 * 0.7),
+                        decoration: new InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: "Guess image",
+                          hintStyle: new TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: (constraint.maxHeight / 4) * 0.6 * 0.7),
+                          // border: new OutlineInputBorder(borderRadius: const BorderRadius.all(const Radius.circular(30.0))),
+                          border: InputBorder.none,
+                          // labelText: "Object name",
+                          helperText: "Guess the objects shown above",
+                          helperStyle: new TextStyle(
+                              color: Colors.black,
+                              fontSize: (constraint.maxHeight / 4) * 0.1),
+                        ),
+                        onChanged: (String str) {
+                          _guess = str.toLowerCase();
+                          print(_guess);
+                        },
+                      ),
                     ),
-                    onChanged: (String str) {
-                      _guess = str.toLowerCase();
-                      print(_guess);
-                    },
                   ),
-                ),
+                  new Container(
+                    height: (constraint.maxHeight / 4) * 0.6,
+                    width: constraint.maxWidth * 0.2,
+                    // color: Colors.green,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.green),
+
+                    child: new IconButton(
+                      // color: Colors.blue,
+                      key: new Key("checking"),
+                      // padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
+                      icon: new Center(
+                          child: new Icon(Icons.check,
+                              color: Colors.black,
+                              size: (constraint.maxHeight / 4) * 0.4)),
+                      onPressed: () => _validate(constraint.maxHeight,
+                          constraint.maxWidth, orientation),
+                    ),
+                  ),
+                ],
               ),
-              new Expanded(
-                  flex: 2,
-                  child: new RaisedButton(
-                    key: new Key("checking"),
-                    padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
-                    child: new Text("Check"),
-                    onPressed: () => _validate(
-                        constraint.maxHeight, constraint.maxWidth, orientation),
-                  ))
-            ],
-          ),
         ),
       ]);
     });
