@@ -25,6 +25,12 @@ class UserRepo {
     return await userDao.getUsers();
   }
 
+  Future<List<User>> getRemoteUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+    return await userDao.getUsersOtherThanDeviceId(deviceId);
+  }
+
   Future<User> insertOrUpdateRemoteUser(
       String userId, String deviceId, String base64Image) async {
     print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
@@ -57,12 +63,15 @@ class UserRepo {
   Future<User> insertLocalUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
-    user.deviceId = deviceId;
-    var config = File(user.image);
-    var contents = await config.readAsBytes();
-    var enc = base64.encode(contents);
-    Flores().addUser(user.id, deviceId, enc);
-    print(user);
+    final loggedInUserId = prefs.getString('userId');
+    if (loggedInUserId == user.id) {
+      user.deviceId = deviceId;
+      var config = File(user.image);
+      var contents = await config.readAsBytes();
+      var enc = base64.encode(contents);
+      Flores().addUser(user.id, deviceId, enc);
+      print('Added main user: $user');
+    }
     return await userDao.insert(user);
   }
 

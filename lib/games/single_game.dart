@@ -43,6 +43,8 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/repos/score_repo.dart';
+import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
 
 enum GameMode { timed, iterations }
@@ -73,12 +75,13 @@ class GameConfig {
   Orientation orientation;
   Map<String, dynamic> gameData;
   String sessionId;
+  bool isGameOver;
   //board
   //local or n/w
 
   @override
   String toString() {
-    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId}';
+    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId, isGameOver: $isGameOver}';
   }
 
   GameConfig(
@@ -96,6 +99,7 @@ class GameConfig {
       this.orientation,
       this.gameData,
       this.sessionId,
+      this.isGameOver = false,
       this.amICurrentPlayer});
 
   String toJson() {
@@ -110,6 +114,7 @@ class GameConfig {
     data['myIteration'] = myIteration;
     data['otherIteration'] = otherIteration;
     data['gameData'] = gameData;
+    data['isGameOver'] = isGameOver;
     return json.encode(data);
   }
 
@@ -125,6 +130,7 @@ class GameConfig {
     myIteration = data['myIteration'];
     otherIteration = data['otherIteration'];
     gameData = data['gameData'];
+    isGameOver = data['isGameOver'];
   }
 }
 
@@ -245,6 +251,10 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       _controller.forward();
     });
     _initData();
+    if (widget.gameConfig.isGameOver) {
+      _onGameEnd(context, ack: true);
+      return;
+    }
   }
 
   void _initData() async {
@@ -418,65 +428,113 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
     print('_onEnd gameData: $gameData');
-    if (maxIterations > 0) {
-      if (widget.gameConfig.amICurrentPlayer) {
-        setState(() {
-          widget.gameConfig.myIteration++;
-        });
-        if (widget.gameConfig.myIteration >= maxIterations &&
-            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
-                widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn))
-          _onGameEnd(context, gameData: gameData);
-      } else {
-        setState(() {
-          widget.gameConfig.otherIteration++;
-        });
-        if (widget.gameConfig.otherIteration >= maxIterations)
-          _onGameEnd(context);
-      }
+    if (widget.gameConfig.amICurrentPlayer) {
+      setState(() {
+        widget.gameConfig.myIteration++;
+      });
     } else {
-      if (end) {
-        _onGameEnd(context, gameData: gameData);
-      } else {
+      setState(() {
+        widget.gameConfig.otherIteration++;
+      });
+    }
+
+    if (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
+        widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn) {
+      if (maxIterations > 0) {
         if (widget.gameConfig.amICurrentPlayer) {
-          setState(() {
-            widget.gameConfig.myIteration++;
-          });
+          if (widget.gameConfig.myIteration >= maxIterations)
+//            _onGameEnd(context, gameData: gameData);
+            widget.gameConfig.isGameOver = true;
         } else {
-          setState(() {
-            widget.gameConfig.otherIteration++;
-          });
+          if (widget.gameConfig.otherIteration >= maxIterations)
+//            _onGameEnd(context);
+            widget.gameConfig.isGameOver = true;
+        }
+      } else {
+        if (end) {
+//          _onGameEnd(context, gameData: gameData);
+          widget.gameConfig.isGameOver = true;
         }
       }
-    }
-    if (widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn) {
+      if (widget.gameConfig.isGameOver) {
+        _onGameEnd(context, gameData: gameData);
+      }
+    } else {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-    }
-    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
-      widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-      await Flores().addMessage(
-          widget.gameConfig.myUser.id,
-          widget.gameConfig.otherUser.id,
-          widget.gameName,
-          widget.gameConfig.toJson(),
-          true,
-          widget.gameConfig.sessionId ?? Uuid().v4());
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      if (maxIterations > 0) {
+        //since we have already switched amICurrentPlayer, test for reverse condition
+        if (!widget.gameConfig.amICurrentPlayer) {
+          if (widget.gameConfig.myIteration >= maxIterations &&
+              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
+//            _onGameEnd(context, gameData: gameData);
+            widget.gameConfig.isGameOver = true;
+        } else {
+          if (widget.gameConfig.otherIteration >= maxIterations &&
+              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
+//            _onGameEnd(context);
+            widget.gameConfig.isGameOver = true;
+        }
+      } else {
+        if (end) {
+//          _onGameEnd(context, gameData: gameData);
+          widget.gameConfig.isGameOver = true;
+        }
+      }
+      if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+        await Flores().addMessage(
+            widget.gameConfig.myUser.id,
+            widget.gameConfig.otherUser.id,
+            widget.gameName,
+            widget.gameConfig.toJson(),
+            true,
+            widget.gameConfig.sessionId ?? Uuid().v4());
+      }
+      if (widget.gameConfig.isGameOver) {
+        _onGameEnd(context, gameData: gameData);
+      }
+      if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+        Navigator.push(context,
+            new MaterialPageRoute<void>(builder: (BuildContext context) {
+          final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+          return new ScoreScreen(
+            gameName: widget.gameName,
+            gameDisplay: widget.gameConfig.gameDisplay,
+            myUser: loggedInUser,
+            myScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.myScore
+                : widget.gameConfig.otherScore,
+            otherUser: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherUser
+                : widget.gameConfig.myUser,
+            otherScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherScore
+                : widget.gameConfig.myScore,
+            isGameOver: false,
+          );
+        }));
+      }
     }
   }
 
-  _onGameEnd(BuildContext context, {Map<String, dynamic> gameData}) async {
-    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+  _onGameEnd(BuildContext context,
+      {Map<String, dynamic> gameData, bool ack = false}) async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       await Flores().addMessage(
           widget.gameConfig.myUser.id,
           widget.gameConfig.otherUser.id,
           widget.gameName,
           widget.gameConfig.toJson(),
-          true,
+          false,
           widget.gameConfig.sessionId ?? Uuid().v4());
     }
+    ScoreRepo().insert(Score(
+        myUser: widget.gameConfig.myUser.id,
+        otherUser: widget.gameConfig.otherUser?.id,
+        myScore: widget.gameConfig.myScore,
+        otherScore: widget.gameConfig.otherScore,
+        game: widget.gameName,
+        playedAt: DateTime.now().millisecondsSinceEpoch));
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
