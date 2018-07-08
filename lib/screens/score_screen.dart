@@ -133,6 +133,13 @@ class _ScoreScreenState extends State<ScoreScreen>
         onPress: () {});
   }
 
+  Future<bool> _onWillPop() {
+    Navigator.of(context).popUntil(ModalRoute.withName('/tab'));
+    var completer = Completer<bool>();
+    completer.complete(true);
+    return completer.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
@@ -168,250 +175,259 @@ class _ScoreScreenState extends State<ScoreScreen>
           ]));
     }
 
-    return new LayoutBuilder(builder: (context, constraints) {
-      print("flag = $flag");
-      double ht = constraints.maxHeight;
-      double wd = constraints.maxWidth;
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: new LayoutBuilder(builder: (context, constraints) {
+        print("flag = $flag");
+        double ht = constraints.maxHeight;
+        double wd = constraints.maxWidth;
 
-      List<Widget> starsMap1 = mystars
-          .map(
-            (e) => _buildItem(j++, e, ht, wd),
-          )
-          .toList(growable: false);
+        List<Widget> starsMap1 = mystars
+            .map(
+              (e) => _buildItem(j++, e, ht, wd),
+            )
+            .toList(growable: false);
 
-      List<Widget> starsMap2 = otherstars
-          .map(
-            (e) => _buildItem(k++, e, ht, wd),
-          )
-          .toList(growable: false);
-      for (var i = 0; i < 3; i++) {
-        tablestars1.add(
-            new ScaleTransition(scale: _animations[i], child: starsMap1[i]));
-      }
+        List<Widget> starsMap2 = otherstars
+            .map(
+              (e) => _buildItem(k++, e, ht, wd),
+            )
+            .toList(growable: false);
+        for (var i = 0; i < 3; i++) {
+          tablestars1.add(
+              new ScaleTransition(scale: _animations[i], child: starsMap1[i]));
+        }
 
-      for (var l = 0; l < 3; l++) {
-        tablestars2.add(
-            new ScaleTransition(scale: _animations[l], child: starsMap2[l]));
-      }
+        for (var l = 0; l < 3; l++) {
+          tablestars2.add(
+              new ScaleTransition(scale: _animations[l], child: starsMap2[l]));
+        }
 
-      return new Scaffold(
-          backgroundColor: color,
-          body: new SafeArea(
-              child: new Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              new ScaleTransition(
-                scale: _characterAnimation,
-                child: new Container(
-                  height: ht > wd ? ht * 0.15 : wd * 0.13,
-                  child: new Image(
-                    image: new AssetImage("assets/hoodie/$gameName.png"),
+        return new Scaffold(
+            backgroundColor: color,
+            body: new SafeArea(
+                child: new Flex(
+              direction: Axis.vertical,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new ScaleTransition(
+                  scale: _characterAnimation,
+                  child: new Container(
+                    height: ht > wd ? ht * 0.15 : wd * 0.13,
+                    child: new Image(
+                      image: new AssetImage("assets/hoodie/$gameName.png"),
+                    ),
                   ),
                 ),
-              ),
 
-              new Row(
-                mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ||
-                        gameDisplay == GameDisplay.networkTurnByTurn ||
-                        gameDisplay == GameDisplay.localTurnByTurn
-                    ? MainAxisAlignment.spaceAround
-                    : MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Container(
-                      height: ht > wd ? ht * 0.19 : wd * 0.15,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new LimitedBox(
-                              maxHeight: ht * 0.13,
-                              child: new UserItem(user: myUser),
-                            ),
-                            new Text(
-                              '$myScore',
-                              style: new TextStyle(
-                                  fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          ])),
-                  gameDisplay == GameDisplay.myHeadToHead ||
+                new Row(
+                  mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ||
                           gameDisplay == GameDisplay.networkTurnByTurn ||
                           gameDisplay == GameDisplay.localTurnByTurn
-                      ? new Container(
-                          height: ht > wd ? ht * 0.19 : wd * 0.15,
-                          child: new Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                new LimitedBox(
-                                  maxHeight: ht * 0.13,
-                                  child: new UserItem(user: otherUser),
-                                ),
-                                new Text(
-                                  '$otherScore',
-                                  style: new TextStyle(
-                                      fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                )
-                              ]))
-                      : new Row()
-                ],
-              ),
-
-              //Stars Being Displayed according to the score
-              new ScaleTransition(
-                scale: _characterAnimation,
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                      ? MainAxisAlignment.spaceAround
+                      : MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Row(
-                        mainAxisAlignment: gameDisplay ==
-                                    GameDisplay.myHeadToHead ||
-                                gameDisplay == GameDisplay.networkTurnByTurn ||
-                                gameDisplay == GameDisplay.localTurnByTurn
-                            ? MainAxisAlignment.spaceEvenly
-                            : MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Row(
-                              mainAxisAlignment: gameDisplay ==
-                                          GameDisplay.myHeadToHead ||
-                                      gameDisplay ==
-                                          GameDisplay.networkTurnByTurn ||
-                                      gameDisplay == GameDisplay.localTurnByTurn
-                                  ? MainAxisAlignment.center
-                                  : MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: tablestars1),
-                          new Padding(
-                            padding: new EdgeInsets.all(10.0),
-                          ),
-                          gameDisplay == GameDisplay.myHeadToHead ||
-                                  gameDisplay ==
-                                      GameDisplay.networkTurnByTurn ||
-                                  gameDisplay == GameDisplay.localTurnByTurn
-                              ? new Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: tablestars2)
-                              : new Row(),
-                        ]),
-                    new Row(
-                        mainAxisAlignment: gameDisplay ==
-                                    GameDisplay.myHeadToHead ||
-                                gameDisplay == GameDisplay.networkTurnByTurn ||
-                                gameDisplay == GameDisplay.localTurnByTurn
-                            ? MainAxisAlignment.spaceAround
-                            : MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Row(
-                              mainAxisAlignment: gameDisplay ==
-                                          GameDisplay.myHeadToHead ||
-                                      gameDisplay ==
-                                          GameDisplay.networkTurnByTurn ||
-                                      gameDisplay == GameDisplay.localTurnByTurn
-                                  ? MainAxisAlignment.start
-                                  : MainAxisAlignment.center,
-                              crossAxisAlignment: gameDisplay ==
-                                          GameDisplay.myHeadToHead ||
-                                      gameDisplay ==
-                                          GameDisplay.networkTurnByTurn ||
-                                      gameDisplay == GameDisplay.localTurnByTurn
-                                  ? CrossAxisAlignment.start
-                                  : CrossAxisAlignment.center,
-                              children: <Widget>[
-                                new Text(
-                                  myScore < 13
-                                      ? "Poor"
-                                      : myScore >= 13 && myScore < 26
-                                          ? "Good"
-                                          : myScore >= 26 && myScore < 39
-                                              ? "Very Good"
-                                              : "Excellent",
-                                  style: new TextStyle(
-                                    color: Colors.black,
-                                    fontSize: ht > wd ? ht * 0.05 : wd * 0.04,
+                    new Container(
+                        height: ht > wd ? ht * 0.19 : wd * 0.15,
+                        child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new LimitedBox(
+                                maxHeight: ht * 0.13,
+                                child: new UserItem(user: myUser),
+                              ),
+                              new Text(
+                                '$myScore',
+                                style: new TextStyle(
+                                    fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              )
+                            ])),
+                    gameDisplay == GameDisplay.myHeadToHead ||
+                            gameDisplay == GameDisplay.networkTurnByTurn ||
+                            gameDisplay == GameDisplay.localTurnByTurn
+                        ? new Container(
+                            height: ht > wd ? ht * 0.19 : wd * 0.15,
+                            child: new Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new LimitedBox(
+                                    maxHeight: ht * 0.13,
+                                    child: new UserItem(user: otherUser),
                                   ),
-                                )
-                              ]),
-                          gameDisplay == GameDisplay.myHeadToHead ||
-                                  gameDisplay ==
-                                      GameDisplay.networkTurnByTurn ||
-                                  gameDisplay == GameDisplay.localTurnByTurn
-                              ? new Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                      new Text(
-                                        otherScore < 13
-                                            ? "Poor"
-                                            : otherScore >= 13 &&
-                                                    otherScore < 26
-                                                ? "Good"
-                                                : otherScore >= 26 &&
-                                                        otherScore < 39
-                                                    ? "Very Good"
-                                                    : "Excellent",
-                                        style: new TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              ht > wd ? ht * 0.05 : wd * 0.04,
-                                        ),
-                                      )
-                                    ])
-                              : new Row(),
-                        ]),
+                                  new Text(
+                                    '$otherScore',
+                                    style: new TextStyle(
+                                        fontSize:
+                                            ht > wd ? ht * 0.05 : wd * 0.05,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  )
+                                ]))
+                        : new Row()
                   ],
                 ),
-              ),
 
-              // Icons which redirect to home, refresh and fast-forward
-              new ScaleTransition(
-                  scale: buttoncontroller,
-                  child: new Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //Stars Being Displayed according to the score
+                new ScaleTransition(
+                  scale: _characterAnimation,
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      IconButton(
-                          icon: new Image.asset("assets/home_button.png"),
-                          iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                          onPressed: () {
-                            if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              print(" hi ");
-                            }
-                          }),
-                      IconButton(
-                          icon: new Image.asset("assets/forward_button.png"),
-                          iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                          onPressed: () {
-                            if (flag == true) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              print(" forwAARS ");
-                            }
-                          }),
+                      new Row(
+                          mainAxisAlignment:
+                              gameDisplay == GameDisplay.myHeadToHead ||
+                                      gameDisplay ==
+                                          GameDisplay.networkTurnByTurn ||
+                                      gameDisplay == GameDisplay.localTurnByTurn
+                                  ? MainAxisAlignment.spaceEvenly
+                                  : MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Row(
+                                mainAxisAlignment:
+                                    gameDisplay == GameDisplay.myHeadToHead ||
+                                            gameDisplay ==
+                                                GameDisplay.networkTurnByTurn ||
+                                            gameDisplay ==
+                                                GameDisplay.localTurnByTurn
+                                        ? MainAxisAlignment.center
+                                        : MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: tablestars1),
+                            new Padding(
+                              padding: new EdgeInsets.all(10.0),
+                            ),
+                            gameDisplay == GameDisplay.myHeadToHead ||
+                                    gameDisplay ==
+                                        GameDisplay.networkTurnByTurn ||
+                                    gameDisplay == GameDisplay.localTurnByTurn
+                                ? new Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: tablestars2)
+                                : new Row(),
+                          ]),
+                      new Row(
+                          mainAxisAlignment:
+                              gameDisplay == GameDisplay.myHeadToHead ||
+                                      gameDisplay ==
+                                          GameDisplay.networkTurnByTurn ||
+                                      gameDisplay == GameDisplay.localTurnByTurn
+                                  ? MainAxisAlignment.spaceAround
+                                  : MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Row(
+                                mainAxisAlignment:
+                                    gameDisplay == GameDisplay.myHeadToHead ||
+                                            gameDisplay ==
+                                                GameDisplay.networkTurnByTurn ||
+                                            gameDisplay ==
+                                                GameDisplay.localTurnByTurn
+                                        ? MainAxisAlignment.start
+                                        : MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                    gameDisplay == GameDisplay.myHeadToHead ||
+                                            gameDisplay ==
+                                                GameDisplay.networkTurnByTurn ||
+                                            gameDisplay ==
+                                                GameDisplay.localTurnByTurn
+                                        ? CrossAxisAlignment.start
+                                        : CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new Text(
+                                    myScore < 13
+                                        ? "Poor"
+                                        : myScore >= 13 && myScore < 26
+                                            ? "Good"
+                                            : myScore >= 26 && myScore < 39
+                                                ? "Very Good"
+                                                : "Excellent",
+                                    style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: ht > wd ? ht * 0.05 : wd * 0.04,
+                                    ),
+                                  )
+                                ]),
+                            gameDisplay == GameDisplay.myHeadToHead ||
+                                    gameDisplay ==
+                                        GameDisplay.networkTurnByTurn ||
+                                    gameDisplay == GameDisplay.localTurnByTurn
+                                ? new Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                        new Text(
+                                          otherScore < 13
+                                              ? "Poor"
+                                              : otherScore >= 13 &&
+                                                      otherScore < 26
+                                                  ? "Good"
+                                                  : otherScore >= 26 &&
+                                                          otherScore < 39
+                                                      ? "Very Good"
+                                                      : "Excellent",
+                                          style: new TextStyle(
+                                            color: Colors.black,
+                                            fontSize:
+                                                ht > wd ? ht * 0.05 : wd * 0.04,
+                                          ),
+                                        )
+                                      ])
+                                : new Row(),
+                          ]),
                     ],
-                  )),
+                  ),
+                ),
 
-              ht > wd
-                  ? new Padding(
-                      padding: new EdgeInsets.all(ht * 0.001),
-                    )
-                  : new Padding(padding: new EdgeInsets.all(0.0)),
-            ],
-          )));
-    });
+                // Icons which redirect to home, refresh and fast-forward
+                new ScaleTransition(
+                    scale: buttoncontroller,
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        IconButton(
+                            icon: new Image.asset("assets/home_button.png"),
+                            iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                            onPressed: () {
+                              if (flag == true) {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                print(" hi ");
+                              }
+                            }),
+                        IconButton(
+                            icon: new Image.asset("assets/forward_button.png"),
+                            iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
+                            onPressed: () {
+                              if (flag == true) {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                print(" forwAARS ");
+                              }
+                            }),
+                      ],
+                    )),
+
+                ht > wd
+                    ? new Padding(
+                        padding: new EdgeInsets.all(ht * 0.001),
+                      )
+                    : new Padding(padding: new EdgeInsets.all(0.0)),
+              ],
+            )));
+      }),
+    );
   }
 }
 

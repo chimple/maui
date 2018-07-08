@@ -275,6 +275,29 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Future<bool> _onWillPop() {
+    return showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+                title: new Text('Do you want to exit?'),
+                content: new Text('You will lose your progress'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: new Text('No'),
+                  ),
+                  new FlatButton(
+                    onPressed: () => Navigator
+                        .of(context)
+                        .popUntil(ModalRoute.withName('/tab')),
+                    child: new Text('Yes'),
+                  ),
+                ],
+              ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
     print('_SingleGameState:build: ${widget.gameConfig}');
@@ -292,107 +315,110 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
     print('oh2h: $oh2h');
-    return new Theme(
-        data: theme,
-        child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            backgroundColor: colors[0],
-            body: new SafeArea(
-                child: Stack(fit: StackFit.expand, children: <Widget>[
-              Image.asset(
-                'assets/background_tile.png',
-                repeat: ImageRepeat.repeat,
-              ),
-              new Column(verticalDirection: VerticalDirection.up, children: <
-                  Widget>[
-                new Expanded(
-                    child: SlideTransition(position: _animation, child: game)),
-                SizedBox(
-                    height: media.size.height / 8.0,
-                    child: Material(
-                        elevation: 8.0,
-                        color: oh2h ? colors[2] : colors[0],
-                        child: Stack(
-                            alignment: AlignmentDirectional.centerStart,
-                            children: <Widget>[
-                              new Positioned(
-                                  left: !oh2h ? 32.0 : null,
-                                  right: oh2h ? 32.0 : null,
-                                  child: Hud(
-                                      user: widget.gameConfig.myUser,
-                                      height: media.size.height / 8.0,
-                                      gameMode: widget.gameMode,
-                                      playTime: playTime,
-                                      onEnd: widget.onGameEnd,
-                                      progress: _myProgress,
-                                      start: !oh2h,
-                                      score: widget.gameConfig.myScore,
-                                      backgroundColor:
-                                          oh2h ? colors[0] : colors[2],
-                                      foregroundColor: colors[1])),
-                              new Center(
-                                child: Nima(
-                                    name: widget.gameName,
-                                    score: _cumulativeIncrement,
-                                    tag: !oh2h
-                                        ? 'assets/hoodie/${widget.gameName}.png'
-                                        : 'other.png'),
-                              ),
-                              !oh2h
-                                  ? Positioned(
-                                      left: 0.0,
-                                      top: 0.0,
-                                      child: IconButton(
-                                        icon: Icon(Icons.arrow_back),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          print('onPressed');
-                                          Navigator.of(context).pop();
-                                        },
-                                      ))
-                                  : Container(),
-                              widget.gameConfig.gameDisplay ==
-                                          GameDisplay.localTurnByTurn ||
-                                      widget.gameConfig.gameDisplay ==
-                                          GameDisplay.networkTurnByTurn
-                                  ? Positioned(
-                                      right: 32.0,
-                                      child: Hud(
-                                          start: false,
-                                          user: widget.gameConfig.otherUser,
-                                          height: media.size.height / 8.0,
-                                          gameMode: widget.gameMode,
-                                          playTime: playTime,
-                                          onEnd: widget.onGameEnd,
-                                          progress: _otherProgress,
-                                          score: widget.gameConfig.otherScore,
-                                          backgroundColor: colors[2],
-                                          foregroundColor: colors[1]))
-                                  : Container(),
-                              widget.gameConfig.gameDisplay ==
-                                          GameDisplay.localTurnByTurn ||
-                                      widget.gameConfig.gameDisplay ==
-                                          GameDisplay.networkTurnByTurn
-                                  ? new AnimatedPositioned(
-                                      key: ValueKey<String>('currentPlayer'),
-                                      left: widget.gameConfig.amICurrentPlayer
-                                          ? 32.0
-                                          : media.size.width -
-                                              32.0 -
-                                              media.size.height / 8.0 * 0.6,
-                                      bottom: 0.0,
-                                      duration: Duration(milliseconds: 1000),
-                                      curve: Curves.elasticOut,
-                                      child: Container(
-                                        color: colors[1],
-                                        width: media.size.height / 8.0 * 0.6,
-                                        height: 8.0,
-                                      ),
-                                    )
-                                  : Container()
-                            ])))
-              ]),
-            ]))));
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: new Theme(
+          data: theme,
+          child: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              backgroundColor: colors[0],
+              body: new SafeArea(
+                  child: Stack(fit: StackFit.expand, children: <Widget>[
+                Image.asset(
+                  'assets/background_tile.png',
+                  repeat: ImageRepeat.repeat,
+                ),
+                new Column(verticalDirection: VerticalDirection.up, children: <
+                    Widget>[
+                  new Expanded(
+                      child:
+                          SlideTransition(position: _animation, child: game)),
+                  SizedBox(
+                      height: media.size.height / 8.0,
+                      child: Material(
+                          elevation: 8.0,
+                          color: oh2h ? colors[2] : colors[0],
+                          child: Stack(
+                              alignment: AlignmentDirectional.centerStart,
+                              children: <Widget>[
+                                new Positioned(
+                                    left: !oh2h ? 32.0 : null,
+                                    right: oh2h ? 32.0 : null,
+                                    child: Hud(
+                                        user: widget.gameConfig.myUser,
+                                        height: media.size.height / 8.0,
+                                        gameMode: widget.gameMode,
+                                        playTime: playTime,
+                                        onEnd: widget.onGameEnd,
+                                        progress: _myProgress,
+                                        start: !oh2h,
+                                        score: widget.gameConfig.myScore,
+                                        backgroundColor:
+                                            oh2h ? colors[0] : colors[2],
+                                        foregroundColor: colors[1])),
+                                new Center(
+                                  child: Nima(
+                                      name: widget.gameName,
+                                      score: _cumulativeIncrement,
+                                      tag: !oh2h
+                                          ? 'assets/hoodie/${widget.gameName}.png'
+                                          : 'other.png'),
+                                ),
+                                !oh2h
+                                    ? Positioned(
+                                        left: 0.0,
+                                        top: 0.0,
+                                        child: IconButton(
+                                          icon: Icon(Icons.arrow_back),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            _onWillPop();
+                                          },
+                                        ))
+                                    : Container(),
+                                widget.gameConfig.gameDisplay ==
+                                            GameDisplay.localTurnByTurn ||
+                                        widget.gameConfig.gameDisplay ==
+                                            GameDisplay.networkTurnByTurn
+                                    ? Positioned(
+                                        right: 32.0,
+                                        child: Hud(
+                                            start: false,
+                                            user: widget.gameConfig.otherUser,
+                                            height: media.size.height / 8.0,
+                                            gameMode: widget.gameMode,
+                                            playTime: playTime,
+                                            onEnd: widget.onGameEnd,
+                                            progress: _otherProgress,
+                                            score: widget.gameConfig.otherScore,
+                                            backgroundColor: colors[2],
+                                            foregroundColor: colors[1]))
+                                    : Container(),
+                                widget.gameConfig.gameDisplay ==
+                                            GameDisplay.localTurnByTurn ||
+                                        widget.gameConfig.gameDisplay ==
+                                            GameDisplay.networkTurnByTurn
+                                    ? new AnimatedPositioned(
+                                        key: ValueKey<String>('currentPlayer'),
+                                        left: widget.gameConfig.amICurrentPlayer
+                                            ? 32.0
+                                            : media.size.width -
+                                                32.0 -
+                                                media.size.height / 8.0 * 0.6,
+                                        bottom: 0.0,
+                                        duration: Duration(milliseconds: 1000),
+                                        curve: Curves.elasticOut,
+                                        child: Container(
+                                          color: colors[1],
+                                          width: media.size.height / 8.0 * 0.6,
+                                          height: 8.0,
+                                        ),
+                                      )
+                                    : Container()
+                              ])))
+                ]),
+              ])))),
+    );
   }
 
   _onScore(int incrementScore) {
