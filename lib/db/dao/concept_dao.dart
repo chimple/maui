@@ -16,4 +16,11 @@ class ConceptDao {
     }
     return null;
   }
+
+  Future<List<Concept>> getConcepts({Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(Concept.table,
+        columns: [Concept.idCol, Concept.nameCol, Concept.areaIdCol]);
+    return maps.map((conceptMap) => Concept.fromMap(conceptMap)).toList();
+  }
 }

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
+import 'package:badge/badge.dart';
 import 'package:maui/components/friend_item.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/single_game.dart';
@@ -34,6 +35,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   List<User> _otherTurn = [];
   User _user;
   String _deviceId;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -42,6 +44,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   void _initData() async {
+    _isLoading = true;
     var user = AppStateContainer.of(context).state.loggedInUser;
     List<User> users;
     users = await UserRepo().getUsers();
@@ -61,9 +64,10 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       _deviceId = prefs.getString('deviceId');
       _users = users;
       _messages = messages;
+      _localUsers.add(user);
       _users.forEach((u) {
         if (u.id == user.id) {
-          _user = u;
+          //no op
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
         } else if (messages.any((m) => u.id == m['userId'])) {
@@ -74,19 +78,20 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
           _remoteUsers.add(u);
         }
       });
+      _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
+    final mediaSize = MediaQuery.of(context).size;
+    final _colors = SingleGame.gameColors[widget.gameName];
+    final color = _colors != null ? _colors[0] : Colors.amber;
+    final secondColor = _colors != null ? _colors[1] : Colors.amber;
+    final thirdColor = _colors != null ? _colors[2] : Colors.amber;
+
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text("Select Opponent"),
-          elevation:
-              Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-        ),
-        body: (_user == null)
+        body: (_isLoading)
             ? new Center(
                 child: new SizedBox(
                 width: 20.0,
@@ -95,26 +100,43 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
               ))
             : CustomScrollView(
                 slivers: <Widget>[
+                  new SliverAppBar(
+                      backgroundColor: color,
+                      pinned: true,
+                      expandedHeight: mediaSize.height * .37,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: new FittedBox(
+                          child: new Hero(
+                              tag: 'assets/hoodie/${widget.gameName}.png',
+                              child: new Image.asset(
+                                'assets/hoodie/${widget.gameName}.png',
+                                scale: .8,
+                              )),
+                        ),
+                        centerTitle: true,
+                        title: new Text(widget.gameName),
+                      )),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         new Container(
-                          padding: EdgeInsets.all(8.0),
-                          color: Theme.of(context).primaryColor,
-                          child: RaisedButton(
-                            onPressed: () => Navigator.of(context).push(
-                                  MaterialPageRoute<Null>(
-                                      builder: (BuildContext context) =>
-                                          GameCategoryListScreen(
-                                              game: widget.gameName,
-                                              gameMode: GameMode.iterations,
-                                              gameDisplay: GameDisplay.single)),
-                                ),
-                            child: Text('Single Player'),
-                          ),
-                        )
+                            padding: EdgeInsets.all(8.0),
+                            color: secondColor,
+                            child: Text('Family')),
                       ],
+                    ),
+                  ),
+                  new SliverGrid(
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                    ),
+                    delegate: new SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return convertToFriend(context, _localUsers[index],
+                            onTap: startGame);
+                      },
+                      childCount: _localUsers.length,
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -123,91 +145,66 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                       children: <Widget>[
                         new Container(
                             padding: EdgeInsets.all(8.0),
-                            color: Theme.of(context).primaryColor,
-                            child: Text('My Turn')),
+                            color: thirdColor,
+                            child: Text('Friends')),
                       ],
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                      return continueGame(context, _myTurn[index],
-                          onTap: goToMyTurn);
-                    }, childCount: _myTurn.length),
-                  ),
-                  SliverToBoxAdapter(
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        new Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Theme.of(context).primaryColor,
-                            child: Text('New local game')),
-                      ],
+                  new SliverGrid(
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                    ),
+                    delegate: new SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return Badge(
+                          value: '!',
+                          positionTop: 20.0,
+                          positionRight: 20.0,
+                          child: convertToFriend(context, _myTurn[index],
+                              onTap: goToMyTurn),
+                        );
+                      },
+                      childCount: _myTurn.length,
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                      return convertToFriend(context, _localUsers[index]);
-                    }, childCount: _localUsers.length),
-                  ),
-                  SliverToBoxAdapter(
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        new Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Theme.of(context).primaryColor,
-                            child: Text('New network game')),
-                      ],
+                  new SliverGrid(
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                    ),
+                    delegate: new SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return convertToFriend(context, _remoteUsers[index],
+                            onTap: startGame);
+                      },
+                      childCount: _remoteUsers.length,
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                      return convertToFriend(context, _remoteUsers[index]);
-                    }, childCount: _remoteUsers.length),
-                  ),
-                  SliverToBoxAdapter(
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        new Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Theme.of(context).primaryColor,
-                            child: Text('Waiting for Other Turn')),
-                      ],
+                  SliverGrid(
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
                     ),
-                  ),
-                  SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return continueGame(context, _otherTurn[index]);
+                      return convertToFriend(context, _otherTurn[index]);
                     }, childCount: _otherTurn.length),
                   ),
                 ],
               ));
   }
 
-  Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
-    return FriendItem(
-        id: user.id,
-        imageUrl: user.image,
-        onTap: () {
-          final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-          Navigator.of(context).push(MaterialPageRoute<Null>(
-              builder: (BuildContext context) => GameCategoryListScreen(
-                    game: widget.gameName,
-                    gameMode: GameMode.iterations,
-                    gameDisplay: user.id == loggedInUser.id
-                        ? GameDisplay.single
-                        : user.deviceId == _deviceId
-                            ? GameDisplay.localTurnByTurn
-                            : GameDisplay.networkTurnByTurn,
-                    otherUser: user,
-                  )));
-        });
+  startGame(BuildContext context, User user) {
+    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+    Navigator.of(context).push(MaterialPageRoute<Null>(
+        builder: (BuildContext context) => GameCategoryListScreen(
+              game: widget.gameName,
+              gameMode: GameMode.iterations,
+              gameDisplay: user.id == loggedInUser.id
+                  ? GameDisplay.single
+                  : user.deviceId == _deviceId
+                      ? GameDisplay.localTurnByTurn
+                      : GameDisplay.networkTurnByTurn,
+              otherUser: user,
+            )));
   }
 
   goToMyTurn(BuildContext context, User user) {
@@ -240,9 +237,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     }));
   }
 
-  Widget continueGame(BuildContext context, User user, {Function onTap}) {
-    final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-
+  Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
