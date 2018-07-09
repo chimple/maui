@@ -25,6 +25,7 @@ class GameListViewState extends State<GameListView> {
   @override
   void initState() {
     super.initState();
+    _initData();
   }
 
   void _initData() async {
