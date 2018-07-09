@@ -19,23 +19,30 @@ class FriendListView extends StatefulWidget {
 }
 
 class _FriendListViewState extends State<FriendListView> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
     _initData();
   }
 
   void _initData() async {
     await AppStateContainer.of(context).getUsers();
+    _isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    var users = AppStateContainer.of(context).users;
+    var appUsers = AppStateContainer.of(context).users;
+    print('FriendListView.users $appUsers');
+    var users = [user];
+    if (appUsers != null) users.addAll(appUsers);
     var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
-    if (users == null) {
+    if (_isLoading) {
       return new Center(
           child: new SizedBox(
         width: 20.0,
