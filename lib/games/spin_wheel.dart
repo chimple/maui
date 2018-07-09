@@ -139,7 +139,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.iteration != oldWidget.iteration) {
+    if (widget.iteration != oldWidget.iteration && widget.iteration != 2) {
       _indexOfContainerData = 0;
       _countGameEnd = 0;
 
@@ -169,8 +169,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
     print("mode question:: ${widget.gameConfig.questionUnitMode}");
     print("mode answer:: ${widget.gameConfig.answerUnitMode}");
+    print("all data:: $allData");
     allData.forEach((k, v) {
       _circleData.add(k);
+
       _smallCircleData.add(v);
     });
 
@@ -203,6 +205,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         });
       }
       _unitMode = UnitMode.image;
+    } else {
+      _maxString = _shuffleCircleData1[0];
+      for (int i = 1; i < dataSize; i++) {
+        if (_maxString.length < _shuffleCircleData1[i].length) {
+          _maxString = _shuffleCircleData1[i];
+        }
+      }
     }
 
     rotationPercent = 0.0;
@@ -213,12 +222,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
 
     _slice[index] = true;
-    _maxString = _shuffleCircleData1[0];
-    for (int i = 1; i < dataSize; i++) {
-      if (_maxString.length < _shuffleCircleData1[i].length) {
-        _maxString = _shuffleCircleData1[i];
-      }
-    }
     setState(() {
       _isLoading = false;
     });
@@ -391,7 +394,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[7] = false;
       _changeData(7, 5.9);
     } else {
-      _shake();
+      if (_angleDiff >= 2.0) _shake();
     }
   }
 
@@ -436,7 +439,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[5] = false;
       _changeData(5, (11 * pi) / 6);
     } else {
-      _shake();
+      if (_angleDiff >= 2.0) _shake();
     }
   }
 
@@ -467,7 +470,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[3] = false;
       _changeData(3, (pi / 4 + (pi / 2) * 3));
     } else {
-      _shake();
+      if (_angleDiff >= 2.0) _shake();
     }
   }
 
@@ -485,7 +488,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       _changeData(1, pi / 2 + pi);
     } else {
-      _shake();
+      if (_angleDiff >= 2.0) _shake();
     }
   }
 
@@ -779,7 +782,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                                       noOfSlice: dataSize,
                                       images: images,
                                       rotation: rotationPercent),
-                            ))),
+                            )
+                            )),
                   ),
                 )),
                 new ScaleTransition(
