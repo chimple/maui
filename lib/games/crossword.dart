@@ -34,7 +34,32 @@ class Crossword extends StatefulWidget {
 }
 
 class CrosswordState extends State<Crossword> {
-  Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data;
+ static var rand = new Random();
+  Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data=(rand.nextInt(2))==0?new Tuple2([
+          ['E', null, null, null, null],
+          ['A', null, null, null, null],
+          ['T', 'I', 'G', 'E', 'R'],
+          [null, null, null, null, 'A'],
+          [null, null, null, null, 'T']
+        ], [
+          new Tuple4('assets/apple.png', 0, 0, Direction.down),
+          new Tuple4('assets/apple.png', 2, 0, Direction.across),
+          new Tuple4('assets/apple.png', 2, 4, Direction.down),
+        ]):new Tuple2([
+      ['C', 'A', 'T', null, null, 'E'],
+      [null, 'N', null, null, null, 'G'],
+      [null, 'T', 'I', 'G', 'E', 'R'],
+      [null, null, 'B', null, null, 'E'],
+      [null, null, 'E', null, null, 'T'],
+      [null, 'O', 'X', 'E', 'N', null]
+    ], [
+      new Tuple4('assets/apple.png', 0, 0, Direction.across),
+      new Tuple4('assets/apple.png', 0, 1, Direction.down),
+      new Tuple4('assets/apple.png', 0, 5, Direction.down),
+      new Tuple4('assets/apple.png', 2, 1, Direction.across),
+      new Tuple4('assets/apple.png', 2, 2, Direction.down),
+      new Tuple4('assets/apple.png', 5, 1, Direction.across)
+    ]);
   List<String> _rightwords = [];
   List<String> _letters = [];
   List<String> _images = [];
@@ -46,6 +71,7 @@ class CrosswordState extends State<Crossword> {
   int _rows, _cols, code, dindex, dcode;
   int len, _rightlen, j, k, l;
   var flag1, correct, keys;
+
   @override
   void initState() {
     super.initState();
@@ -54,23 +80,23 @@ class CrosswordState extends State<Crossword> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _data3.removeRange(0, _data3.length);
-    _sortletters.removeRange(0, _sortletters.length);
-    _rightwords.removeRange(0, _rightwords.length);
-    _letters.removeRange(0, _letters.length);
-    _rightlen = 0;
-    correct = 0;
-    flag1 = 0;
-    _letters.removeRange(0, _letters.length);
-    _images.removeRange(0, _images.length);
-    _flag.removeRange(0, _flag.length);
-    _rows = 0;
-    _cols = 0;
-    j = 0;
-    k = 0;
-    keys = 0;
-    l = 0;
-    data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
+    // _data3.removeRange(0, _data3.length);
+    // _sortletters.removeRange(0, _sortletters.length);
+    // _rightwords.removeRange(0, _rightwords.length);
+    // _letters.removeRange(0, _letters.length);
+    // _rightlen = 0;
+     correct = 0;
+    //  flag1 = 0;
+    // _letters.removeRange(0, _letters.length);
+    // _images.removeRange(0, _images.length);
+    // _flag.removeRange(0, _flag.length);
+    // _rows = 0;
+    // _cols = 0;
+    // j = 0;
+    // k = 0;
+     keys = 0;
+    // l = 0;
+   // data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
     print('data camee $data');
     data.item1.forEach((e) {
       e.forEach((v) {
@@ -79,39 +105,39 @@ class CrosswordState extends State<Crossword> {
     });
     _rows = data.item1.length;
     _cols = data.item1[0].length;
-    for (var i = 0; i < data.item2.length; i++) {
-      _data3.add(data.item2[i].item2 * _rows + data.item2[i].item3);
+    for (var n = 0; n < data.item2.length; n++) {
+      _data3.add(data.item2[n].item2 * _rows + data.item2[n].item3);
     }
     len = _data3.length + 1;
     if (len > 14) {
       len = 14;
     }
     var rng = new Random();
-    var i = 0, f = 0;
-    for (; i < _letters.length; i++) {
+    var f = 0;
+    for (var t = 0; t < _letters.length; t++) {
       f = 0;
       for (var j = 0; j < _data3.length; j++) {
-        if (i == _data3[j]) {
+        if (t == _data3[j]) {
           f = 1;
         }
       }
-      if (_letters[i] != null && f != 1) {
+      if (_letters[t] != null && f != 1) {
         if (rng.nextInt(2) == 1) {
-          _rightwords.add(_letters[i]);
-          _sortletters.add(_letters[i]);
-          _sortletters.add(i);
+          _rightwords.add(_letters[t]);
+          _sortletters.add(_letters[t]);
+          _sortletters.add(t);
         }
       }
-      if (i == _letters.length - 1) {
+      if (t == _letters.length - 1) {
         if (_rightwords.length != len) {
-          i = 0;
+          t = 0;
           _rightwords = [];
           _sortletters = [];
         }
       }
     }
-    for (var i = 1; i < _sortletters.length; i += 2) {
-      _letters[_sortletters[i]] = '';
+    for (var p = 1; p < _sortletters.length; p += 2) {
+      _letters[_sortletters[p]] = '';
     }
     _rightlen = _rightwords.length;
     _rightwords.shuffle();
@@ -119,17 +145,17 @@ class CrosswordState extends State<Crossword> {
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
-    for (var i = 0; i < (_rows * _cols) + _rows * 2 + _cols * 2; i++) {
+    for (var k = 0; k < (_rows * _cols) + _rows * 2 + _cols * 2; k++) {
       _flag.add(0);
     }
     _data3.add(null);
     _images.length = _letters.length;
-    for (var i = 0, j = 0; i < _letters.length; i++) {
-      if (i == _data3[j]) {
-        _images[i] = data.item2[j].item1;
+    for (var m = 0, j = 0; m < _letters.length; m++) {
+      if (m == _data3[j]) {
+        _images[m] = data.item2[j].item1;
         j++;
       } else
-        _images[i] = null;
+        _images[m] = null;
     }
     setState(() => _isLoading = false);
   }
@@ -163,11 +189,11 @@ class CrosswordState extends State<Crossword> {
                 dragdata = dcindex;
                 dindex = int.parse(dragdata.substring(0, 3));
                 dcode = int.parse(dragdata.substring(4));
-                if (code == dcode) {
-                  var i = 0;
-                  for (; i < _sortletters.length; i++) {
-                    if (_rightwords[dindex - 100] == _sortletters[i] &&
-                        index == _sortletters[++i] &&
+                if (code == dcode) {  
+                  var c = 0;      
+                  for (; c < _sortletters.length; c++) {
+                    if (_rightwords[dindex - 100] == _sortletters[c] &&
+                        index == _sortletters[++c] &&
                         _letters[index] == '') {
                       flag1 = 1;
                       break;
@@ -176,7 +202,7 @@ class CrosswordState extends State<Crossword> {
                   if (flag1 == 1) {
                     setState(() {
                       _rightwords[dindex - 100] += '.';
-                      _letters[index] = _sortletters[--i];
+                      _letters[index] = _sortletters[--c];
                       correct++;
                       widget.onScore(((1 / _rightlen) * 40).toInt());
                       widget.onProgress(correct / _rightlen);
@@ -193,7 +219,7 @@ class CrosswordState extends State<Crossword> {
                         _flag.removeRange(0, _flag.length);
                         _rows = 0;
                         _cols = 0;
-                        i = 0;
+                        c = 0;
                         j = 0;
                         keys = 0;
                         l = 0;
@@ -231,6 +257,7 @@ class CrosswordState extends State<Crossword> {
       );
     }
     int j = 0;
+    int inc=0;
     int k = 100;
     int l = (_rows * _cols) - 1;
     return new LayoutBuilder(builder: (context, constraints) {
@@ -253,6 +280,7 @@ class CrosswordState extends State<Crossword> {
       AppState state = AppStateContainer.of(context).state;
       //  keys = 0;
       j = 0;
+      inc=0;
       k = 100;
       l = (_rows * _cols) - 1;
       print(
@@ -260,6 +288,7 @@ class CrosswordState extends State<Crossword> {
       print('letters      $_letters');
       print(' right  words      $_rightwords');
       print('_images   is   ${_images.length}');
+      print('sortletters    $_sortletters');
       return new Container(
           padding:
               EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
@@ -278,7 +307,7 @@ class CrosswordState extends State<Crossword> {
                                           padding:
                                               EdgeInsets.all(buttonPadding),
                                           child: _buildItem(
-                                              j, e, _flag[j], _images[j++])))
+                                              inc, e, _flag[inc], _images[inc++])))
                                       .toList(growable: false)))),
                       new Padding(padding: new EdgeInsets.all(buttonPadding)),
                       new Container(
@@ -287,10 +316,10 @@ class CrosswordState extends State<Crossword> {
                               rows: _rightlen > _cols ? 2 : 1,
                               cols: _cols,
                               children: _rightwords
-                                  .map((e) => Padding(
+                                  .map((r) => Padding(
                                       padding: EdgeInsets.all(buttonPadding),
                                       child:
-                                          _buildItem(k++, e, _flag[j++], null)))
+                                          _buildItem(k++, r, _flag[inc++], null)))
                                   .toList(growable: false)))
                     ])
               : new Row(
@@ -361,8 +390,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Animation<double> animation, animation1;
   String newtext = '';
   String disptext;
-  var f = 0;
-  var i = 0;
   initState() {
     super.initState();
     disptext = widget.text == null ? '' : widget.text;
