@@ -12,6 +12,8 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/db/entity/notif.dart';
 
 class AppStateContainerController extends StatefulWidget {
   final AppState state;
@@ -33,6 +35,7 @@ class _AppStateContainerControllerState
   String activity;
   String friendId;
   List<User> users;
+  List<Notif> notifs;
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
@@ -150,6 +153,7 @@ class _AppStateContainerControllerState
     }
     print('_fetchMessages: $msgs');
     msgs ??= List<Map<String, String>>();
+    await NotifRepo().delete(fId, 'chat');
     setState(() {
       messages = msgs.reversed.toList(growable: true);
     });
@@ -175,6 +179,11 @@ class _AppStateContainerControllerState
   void _onReceiveMessage(Map<dynamic, dynamic> message) async {
     print(
         '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
+    if (!(message['userId'] == friendId &&
+        activity == 'chat' &&
+        message['messageType'] == 'chat')) {
+      await NotifRepo().increment(message['userId'], message['messageType'], 1);
+    }
     if (message['messageType'] == 'Photo') {
       await UserRepo().insertOrUpdateRemoteUser(
           message['userId'], message['deviceId'], message['message']);
@@ -182,6 +191,7 @@ class _AppStateContainerControllerState
         _getUsers();
       }
     } else if (message['recipientUserId'] == state.loggedInUser.id) {
+      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
         _showNotification(
             message['userId'],
@@ -200,9 +210,11 @@ class _AppStateContainerControllerState
 
   void _getUsers() async {
     activity = 'friends';
-    final userList = await UserRepo().getUsers();
+    final userList = await UserRepo().getRemoteUsers();
+    final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
+      notifs = notifList;
     });
   }
 
@@ -214,6 +226,7 @@ class _AppStateContainerControllerState
       friendId: friendId,
       activity: activity,
       users: users,
+      notifs: notifs,
       getUsers: _getUsers,
       setLoggedInUser: _setLoggedInUser,
       play: _play,
@@ -229,6 +242,7 @@ class _AppStateContainerControllerState
   _setLoggedInUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
+    prefs.setString('userId', user.id);
     if (user != null) {
       Flores().loggedInUser(user.id, deviceId);
     }
@@ -251,6 +265,7 @@ class AppStateContainer extends InheritedWidget {
   String activity;
   String friendId;
   List<User> users;
+  List<Notif> notifs;
   final Function() getUsers;
   final Function(User user) setLoggedInUser;
   final Function(String string) play;
@@ -267,6 +282,7 @@ class AppStateContainer extends InheritedWidget {
     @required this.friendId,
     @required this.activity,
     @required this.users,
+    @required this.notifs,
     @required this.getUsers,
     @required this.setLoggedInUser,
     @required this.play,

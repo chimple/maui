@@ -12,4 +12,8 @@ class ConceptRepo {
   Future<Concept> getConcept(int id) async {
     return conceptDao.getConcept(id);
   }
+
+  Future<List<Concept>> getConcepts() async {
+    return conceptDao.getConcepts();
+  }
 }

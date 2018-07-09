@@ -17,6 +17,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/instruction_card.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/chat_bot_data.dart';
 
 enum ChatItemType { card, text, game, image, audio }
 enum ChatMode { teach, conversation, quiz }
@@ -170,13 +171,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 ? Container()
                 : TextChoice(
                     onSubmit: _handleSubmitted,
-                    texts: [
-                      'Hello',
-                      'What is your name?',
-                      'Where do you live?',
-                      'What is your favorite book?',
-                      'What is your favorite color?'
-                    ],
+                    texts: getPossibleReplies(_chatItems[0].content, 5),
                   )
           ],
         ),
