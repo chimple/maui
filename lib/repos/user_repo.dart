@@ -22,37 +22,36 @@ class UserRepo {
   }
 
   Future<List<User>> getUsers() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    List<dynamic> friends;
-    try {
-      friends = await Flores().users;
-    } on PlatformException {
-      print('Failed getting friends');
-    }
+    return await userDao.getUsers();
+  }
 
-    List<User> users = await userDao.getUsers();
-    await Future.forEach(friends, (f) async {
-      if (users.any((u) => u.id == f['userId'])) {
-      } else {
-        List<int> memoryImage;
-        try {
-          memoryImage = base64.decode(f['message']);
-        } catch (e) {
-          print(e);
-        }
-        String userId = f['userId'];
-        String imagePath = join(documentsDirectory.path, '$userId.png');
-        await new File(imagePath).writeAsBytes(memoryImage);
-        User user = User(
-            id: f['userId'],
-            deviceId: f['deviceId'],
-            image: imagePath,
-            currentLessonId: 1);
-        await userDao.insert(user);
-        users.add(user);
-      }
-    });
-    return users;
+  Future<List<User>> getRemoteUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final deviceId = prefs.getString('deviceId');
+    return await userDao.getUsersOtherThanDeviceId(deviceId);
+  }
+
+  Future<User> insertOrUpdateRemoteUser(
+      String userId, String deviceId, String base64Image) async {
+    print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    List<int> memoryImage;
+    try {
+      memoryImage = base64.decode(base64Image);
+    } catch (e) {
+      print(e);
+    }
+    String imagePath = join(documentsDirectory.path, '$userId.png');
+    await new File(imagePath).writeAsBytes(memoryImage);
+
+    User user = await userDao.getUser(userId);
+    if (user == null) {
+      await userDao.insert(User(
+          id: userId,
+          deviceId: deviceId,
+          image: imagePath,
+          currentLessonId: 1));
+    }
   }
 
   Future<List<User>> getLocalUsers() async {
@@ -64,12 +63,13 @@ class UserRepo {
   Future<User> insertLocalUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
+    final loggedInUserId = prefs.getString('userId');
     user.deviceId = deviceId;
     var config = File(user.image);
     var contents = await config.readAsBytes();
     var enc = base64.encode(contents);
     Flores().addUser(user.id, deviceId, enc);
-    print(user);
+    print('Added main user: $user');
     return await userDao.insert(user);
   }
 

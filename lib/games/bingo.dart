@@ -191,20 +191,14 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         Rtile: Rtile,
         unitMode: widget.gameConfig.answerUnitMode, //question unit mode
         onPress: () {
-//          print({"reference max size ": _referenceMatrix});
-//          print("this is index of prssted text ");
-//          print("index $index");
           print("text $text");
           if (status == Status.Active) {
-//            print("index kirrrrran $index");
             print("testing $text");
             setState(() {
               var str1 = _all.indexOf(text);
               var str2 = _copyQuestion1.indexOf(ques);
-//              print("index of");
 
               if (str1 == str2 ) {
-//                print("heloo this shanttttthuuuuu");
                 setState(() {
                   _statuses[index] = Status.Visible;
                   widget.onScore(4);
@@ -213,8 +207,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 int counter = 0;
                 for (int i = 0; i < _maxSize; i++) {
                   for (int j = 0; j < _maxSize; j++) {
-//                    print("hello kisrrrrraaan $index");
-//                    print("hello this is maannnnu $counter");
                     if (counter == index) {
                       _referenceMatrix[i][j] = 1;
                     }
@@ -224,11 +216,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
                 matchRow = bingoHorizontalChecker();
                 matchColumn = bingoVerticalChecker();
-//                print({"the bingo checker response row : ": matchRow});
-
-                ///horizontall  data showing part
                 if (-1 != matchRow) {
-//                  print("this is BINGORow");
+                  setState(() {
+                    rowFlag = 1;
+                  });
                   if (matchRow == 0 ||
                       matchRow == 1 ||
                       matchRow == 2 ||
@@ -241,29 +232,22 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       setState(() {
                         _RowCells[i] = RowCell.CurveRow;
                         widget.onProgress(2 / 1);
-
                       });
                     }
-                    setState(() {
-                      rowFlag = 1;
-                    });
                   }
-
-//                  print("thius is bngo animati curved in it $_RowCells[i] ");
                 }
-
-//                print({"the bingo checker response column: ": matchColumn});
                 if (-1 != matchColumn) {
-                  //horizontall animation and Bingo
+                  setState(() {
+//
+                    colFlag=1;
+                  });
                   if (matchColumn == 0 ||
                       matchColumn == 1 ||
                       matchColumn == 2 ||
                       matchColumn == 3 ||
                       matchColumn == 4 ||
                       matchColumn == 5) {
-//                    print("this is 000first column of kiran $matchColumn ");
                     for (i = matchColumn; i < _maxSize * _maxSize; i++) {
-//                      print("print iiiiiiiiiiii is iiiiiiii is $i");
                       setState(() {
                         print("this is great");
                         _ColmunCells[i] = ColmunCell.CurveColumn;
@@ -272,17 +256,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
                       });
                     }
-
-                    setState(() {
-//
-                      colFlag=1;
-                    });
                   }
 
                 }
-
-//                print({"this is reference": _referenceMatrix});
-//                print({"this is i value ": i});
                 if(rowFlag==1|| colFlag==1)
                   {
                     setState(() {
@@ -305,7 +281,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                         widget.onEnd();
 
                       });
-//                        print({"this is 1": _ColmunCells});
                     });
 
                        }
@@ -319,12 +294,15 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     print("this is a deleted copyquestion $ques");
                     print("this is a length copyquestion ${_copyQuestion[z]}");
                   } else {
-//                    print({"where is green manu ": " hello index is over"});
                   }
                 } else {
                   _copyQuestion.removeRange(0, _copyQuestion.length);
                 }
-              } else {
+              }
+
+
+
+              else {
                 if(onScoreFlag != 1){
                   widget.onScore(-1);
                 _ShakeCells[index] = ShakeCell.Right;
@@ -340,7 +318,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       ques = element;
                       print("this is a elemet of removed $ques");
                     }
-//                    }
                   });
                 });
               }

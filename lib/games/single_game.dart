@@ -43,6 +43,9 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/repos/score_repo.dart';
+import 'package:maui/db/entity/score.dart';
+import 'package:maui/repos/notif_repo.dart';
 
 enum GameMode { timed, iterations }
 
@@ -72,12 +75,13 @@ class GameConfig {
   Orientation orientation;
   Map<String, dynamic> gameData;
   String sessionId;
+  bool isGameOver;
   //board
   //local or n/w
 
   @override
   String toString() {
-    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId}';
+    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId, isGameOver: $isGameOver}';
   }
 
   GameConfig(
@@ -95,6 +99,7 @@ class GameConfig {
       this.orientation,
       this.gameData,
       this.sessionId,
+      this.isGameOver = false,
       this.amICurrentPlayer});
 
   String toJson() {
@@ -109,6 +114,7 @@ class GameConfig {
     data['myIteration'] = myIteration;
     data['otherIteration'] = otherIteration;
     data['gameData'] = gameData;
+    data['isGameOver'] = isGameOver;
     return json.encode(data);
   }
 
@@ -124,6 +130,7 @@ class GameConfig {
     myIteration = data['myIteration'];
     otherIteration = data['otherIteration'];
     gameData = data['gameData'];
+    isGameOver = data['isGameOver'];
   }
 }
 
@@ -133,7 +140,7 @@ class SingleGame extends StatefulWidget {
   final String gameName;
   final GameConfig gameConfig;
   final Function onGameEnd;
-  final Function onScore;
+  final Function onScore; //TODO: Can be removed
   final GameMode gameMode;
   final bool isRotated;
   final Key key;
@@ -156,7 +163,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF76abd3),
       Color(0xFFE068D5)
     ],
-    'crossword': [Color(0xFF77DB65), Color(0xFFFAFAFA), Color(0xFF379EDD)],
+    'crossword': [Color(0xFF56EDE6), Color(0xFFD32F2F), Color(0xFF379EDD)],
     'draw_challenge': [Color(0xFFEDC23B), Color(0xFFef4822), Color(0xFF1EC1A1)],
     'drawing': [Color(0xFF66488C), Color(0xFFffb300), Color(0xFF1EA6AD)],
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
@@ -182,7 +189,7 @@ class SingleGame extends StatefulWidget {
     'tap_home': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'tap_wrong': [Color(0xFFF47C5D), Color(0xFF30d858), Color(0xFFA367F9)],
     'true_or_false': [Color(0xFFF97658), Color(0xFF18c9c0), Color(0xFFDB5D87)],
-    'wordgrid': [Color(0xFF7A8948), Color(0xFFC79690), Color(0xFF7592BC)],
+    'wordgrid': [Color(0xFFFF7D8F), Color(0xFFDAECF7), Color(0xFFFFCB57)],
     'picture_sentence': [
       Color(0xFF1DC8CC),
       Color(0xFF282828),
@@ -212,6 +219,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   int playTime = 10000;
   AnimationController _controller;
   Animation<Offset> _animation;
+  int _cumulativeIncrement = 0;
 
   @override
   void initState() {
@@ -242,6 +250,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     new Future.delayed(const Duration(milliseconds: 250), () {
       _controller.forward();
     });
+    _initData();
+    if (widget.gameConfig.isGameOver) {
+      _onGameEnd(context, ack: true);
+      return;
+    }
+  }
+
+  void _initData() async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn &&
+        widget.gameConfig.myIteration > 1 &&
+        widget.gameConfig.amICurrentPlayer) {
+      await NotifRepo()
+          .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
+    }
   }
 
   @override
@@ -251,6 +273,29 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     SystemChrome.setPreferredOrientations([]);
     _controller?.dispose();
     super.dispose();
+  }
+
+  Future<bool> _onWillPop() {
+    return showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+                title: new Text('Do you want to exit?'),
+                content: new Text('You will lose your progress'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: new Text('No'),
+                  ),
+                  new FlatButton(
+                    onPressed: () => Navigator
+                        .of(context)
+                        .popUntil(ModalRoute.withName('/tab')),
+                    child: new Text('Yes'),
+                  ),
+                ],
+              ),
+        ) ??
+        false;
   }
 
   @override
@@ -269,106 +314,110 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
-    print('oh2h: $oh2h');
-    return new Theme(
-        data: theme,
-        child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            backgroundColor: colors[0],
-            body: new SafeArea(
-                child: Stack(fit: StackFit.expand, children: <Widget>[
-              Image.asset(
-                'assets/background_tile.png',
-                repeat: ImageRepeat.repeat,
-              ),
-              new Column(verticalDirection: VerticalDirection.up, children: <
-                  Widget>[
-                new Expanded(
-                    child: SlideTransition(position: _animation, child: game)),
-                SizedBox(
-                    height: media.size.height / 8.0,
-                    child: Material(
-                        elevation: 8.0,
-                        color: oh2h ? colors[2] : colors[0],
-                        child: Stack(
-                            alignment: AlignmentDirectional.centerStart,
-                            children: <Widget>[
-                              !oh2h
-                                  ? Positioned(
-                                      left: 0.0,
-                                      top: 0.0,
-                                      child: IconButton(
-                                        icon: Icon(Icons.arrow_back),
-                                        color: Colors.white,
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                      ))
-                                  : Container(),
-                              new Positioned(
-                                  left: !oh2h ? 32.0 : null,
-                                  right: oh2h ? 32.0 : null,
-                                  child: Hud(
-                                      user: widget.gameConfig.myUser,
-                                      height: media.size.height / 8.0,
-                                      gameMode: widget.gameMode,
-                                      playTime: playTime,
-                                      onEnd: widget.onGameEnd,
-                                      progress: _myProgress,
-                                      start: !oh2h,
-                                      score: widget.gameConfig.myScore,
-                                      backgroundColor:
-                                          oh2h ? colors[0] : colors[2],
-                                      foregroundColor: colors[1])),
-                              new Center(
-                                child: Nima(
-                                    name: widget.gameName,
-                                    score: widget.gameConfig.myScore,
-                                    tag: !oh2h
-                                        ? 'assets/hoodie/${widget.gameName}.png'
-                                        : 'other.png'),
-                              ),
-                              widget.gameConfig.gameDisplay ==
-                                          GameDisplay.localTurnByTurn ||
-                                      widget.gameConfig.gameDisplay ==
-                                          GameDisplay.networkTurnByTurn
-                                  ? Positioned(
-                                      right: 32.0,
-                                      child: Hud(
-                                          start: false,
-                                          user: widget.gameConfig.otherUser,
-                                          height: media.size.height / 8.0,
-                                          gameMode: widget.gameMode,
-                                          playTime: playTime,
-                                          onEnd: widget.onGameEnd,
-                                          progress: _otherProgress,
-                                          score: widget.gameConfig.otherScore,
-                                          backgroundColor: colors[2],
-                                          foregroundColor: colors[1]))
-                                  : Container(),
-                              widget.gameConfig.gameDisplay ==
-                                          GameDisplay.localTurnByTurn ||
-                                      widget.gameConfig.gameDisplay ==
-                                          GameDisplay.networkTurnByTurn
-                                  ? new AnimatedPositioned(
-                                      key: ValueKey<String>('currentPlayer'),
-                                      left: widget.gameConfig.amICurrentPlayer
-                                          ? 32.0
-                                          : media.size.width -
-                                              32.0 -
-                                              media.size.height / 8.0 * 0.6,
-                                      bottom: 0.0,
-                                      duration: Duration(milliseconds: 1000),
-                                      curve: Curves.elasticOut,
-                                      child: Container(
-                                        color: colors[1],
-                                        width: media.size.height / 8.0 * 0.6,
-                                        height: 8.0,
-                                      ),
-                                    )
-                                  : Container()
-                            ])))
-              ]),
-            ]))));
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: new Theme(
+          data: theme,
+          child: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              backgroundColor: colors[0],
+              body: new SafeArea(
+                  child: Stack(fit: StackFit.expand, children: <Widget>[
+                Image.asset(
+                  'assets/background_tile.png',
+                  repeat: ImageRepeat.repeat,
+                ),
+                new Column(verticalDirection: VerticalDirection.up, children: <
+                    Widget>[
+                  new Expanded(
+                      child:
+                          SlideTransition(position: _animation, child: game)),
+                  SizedBox(
+                      height: media.size.height / 8.0,
+                      child: Material(
+                          elevation: 8.0,
+                          color: oh2h ? colors[2] : colors[0],
+                          child: Stack(
+                              alignment: AlignmentDirectional.centerStart,
+                              children: <Widget>[
+                                new Positioned(
+                                    left: !oh2h ? 32.0 : null,
+                                    right: oh2h ? 32.0 : null,
+                                    child: Hud(
+                                        user: widget.gameConfig.myUser,
+                                        height: media.size.height / 8.0,
+                                        gameMode: widget.gameMode,
+                                        playTime: playTime,
+                                        onEnd: widget.onGameEnd,
+                                        progress: _myProgress,
+                                        start: !oh2h,
+                                        score: widget.gameConfig.myScore,
+                                        backgroundColor:
+                                            oh2h ? colors[0] : colors[2],
+                                        foregroundColor: colors[1])),
+                                new Center(
+                                  child: Nima(
+                                      name: widget.gameName,
+                                      score: _cumulativeIncrement,
+                                      tag: !oh2h
+                                          ? 'assets/hoodie/${widget.gameName}.png'
+                                          : 'other.png'),
+                                ),
+                                !oh2h
+                                    ? Positioned(
+                                        left: 0.0,
+                                        top: 0.0,
+                                        child: IconButton(
+                                          icon: Icon(Icons.arrow_back),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            _onWillPop();
+                                          },
+                                        ))
+                                    : Container(),
+                                widget.gameConfig.gameDisplay ==
+                                            GameDisplay.localTurnByTurn ||
+                                        widget.gameConfig.gameDisplay ==
+                                            GameDisplay.networkTurnByTurn
+                                    ? Positioned(
+                                        right: 32.0,
+                                        child: Hud(
+                                            start: false,
+                                            user: widget.gameConfig.otherUser,
+                                            height: media.size.height / 8.0,
+                                            gameMode: widget.gameMode,
+                                            playTime: playTime,
+                                            onEnd: widget.onGameEnd,
+                                            progress: _otherProgress,
+                                            score: widget.gameConfig.otherScore,
+                                            backgroundColor: colors[2],
+                                            foregroundColor: colors[1]))
+                                    : Container(),
+                                widget.gameConfig.gameDisplay ==
+                                            GameDisplay.localTurnByTurn ||
+                                        widget.gameConfig.gameDisplay ==
+                                            GameDisplay.networkTurnByTurn
+                                    ? new AnimatedPositioned(
+                                        key: ValueKey<String>('currentPlayer'),
+                                        left: widget.gameConfig.amICurrentPlayer
+                                            ? 32.0
+                                            : media.size.width -
+                                                32.0 -
+                                                media.size.height / 8.0 * 0.6,
+                                        bottom: 0.0,
+                                        duration: Duration(milliseconds: 1000),
+                                        curve: Curves.elasticOut,
+                                        child: Container(
+                                          color: colors[1],
+                                          width: media.size.height / 8.0 * 0.6,
+                                          height: 8.0,
+                                        ),
+                                      )
+                                    : Container()
+                              ])))
+                ]),
+              ])))),
+    );
   }
 
   _onScore(int incrementScore) {
@@ -380,9 +429,10 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         widget.gameConfig.otherScore =
             max(0, widget.gameConfig.otherScore + incrementScore);
       }
+      _cumulativeIncrement += incrementScore;
     });
     //for now we only pass myscore up to the head to head
-    if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
+    //if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
   }
 
   _onProgress(double progress) {
@@ -403,65 +453,113 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       {Map<String, dynamic> gameData, bool end = false}) async {
     widget.gameConfig.gameData = gameData;
     print('_onEnd gameData: $gameData');
-    if (maxIterations > 0) {
-      if (widget.gameConfig.amICurrentPlayer) {
-        setState(() {
-          widget.gameConfig.myIteration++;
-        });
-        if (widget.gameConfig.myIteration >= maxIterations &&
-            (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
-                widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn))
-          _onGameEnd(context, gameData: gameData);
-      } else {
-        setState(() {
-          widget.gameConfig.otherIteration++;
-        });
-        if (widget.gameConfig.otherIteration >= maxIterations)
-          _onGameEnd(context);
-      }
+    if (widget.gameConfig.amICurrentPlayer) {
+      setState(() {
+        widget.gameConfig.myIteration++;
+      });
     } else {
-      if (end) {
-        _onGameEnd(context, gameData: gameData);
-      } else {
+      setState(() {
+        widget.gameConfig.otherIteration++;
+      });
+    }
+
+    if (widget.gameConfig.gameDisplay != GameDisplay.localTurnByTurn &&
+        widget.gameConfig.gameDisplay != GameDisplay.networkTurnByTurn) {
+      if (maxIterations > 0) {
         if (widget.gameConfig.amICurrentPlayer) {
-          setState(() {
-            widget.gameConfig.myIteration++;
-          });
+          if (widget.gameConfig.myIteration >= maxIterations)
+//            _onGameEnd(context, gameData: gameData);
+            widget.gameConfig.isGameOver = true;
         } else {
-          setState(() {
-            widget.gameConfig.otherIteration++;
-          });
+          if (widget.gameConfig.otherIteration >= maxIterations)
+//            _onGameEnd(context);
+            widget.gameConfig.isGameOver = true;
+        }
+      } else {
+        if (end) {
+//          _onGameEnd(context, gameData: gameData);
+          widget.gameConfig.isGameOver = true;
         }
       }
-    }
-    if (widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn) {
+      if (widget.gameConfig.isGameOver) {
+        _onGameEnd(context, gameData: gameData);
+      }
+    } else {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-    }
-    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
-      widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-      await Flores().addMessage(
-          widget.gameConfig.myUser.id,
-          widget.gameConfig.otherUser.id,
-          widget.gameName,
-          widget.gameConfig.toJson(),
-          true,
-          widget.gameConfig.sessionId ?? Uuid().v4());
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      if (maxIterations > 0) {
+        //since we have already switched amICurrentPlayer, test for reverse condition
+        if (!widget.gameConfig.amICurrentPlayer) {
+          if (widget.gameConfig.myIteration >= maxIterations &&
+              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
+//            _onGameEnd(context, gameData: gameData);
+            widget.gameConfig.isGameOver = true;
+        } else {
+          if (widget.gameConfig.otherIteration >= maxIterations &&
+              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
+//            _onGameEnd(context);
+            widget.gameConfig.isGameOver = true;
+        }
+      } else {
+        if (end) {
+//          _onGameEnd(context, gameData: gameData);
+          widget.gameConfig.isGameOver = true;
+        }
+      }
+      if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+        await Flores().addMessage(
+            widget.gameConfig.myUser.id,
+            widget.gameConfig.otherUser.id,
+            widget.gameName,
+            widget.gameConfig.toJson(),
+            true,
+            widget.gameConfig.sessionId ?? Uuid().v4());
+      }
+      if (widget.gameConfig.isGameOver) {
+        _onGameEnd(context, gameData: gameData);
+      }
+      if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+        Navigator.push(context,
+            new MaterialPageRoute<void>(builder: (BuildContext context) {
+          final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+          return new ScoreScreen(
+            gameName: widget.gameName,
+            gameDisplay: widget.gameConfig.gameDisplay,
+            myUser: loggedInUser,
+            myScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.myScore
+                : widget.gameConfig.otherScore,
+            otherUser: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherUser
+                : widget.gameConfig.myUser,
+            otherScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherScore
+                : widget.gameConfig.myScore,
+            isGameOver: false,
+          );
+        }));
+      }
     }
   }
 
-  _onGameEnd(BuildContext context, {Map<String, dynamic> gameData}) async {
-    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
+  _onGameEnd(BuildContext context,
+      {Map<String, dynamic> gameData, bool ack = false}) async {
+    if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       await Flores().addMessage(
           widget.gameConfig.myUser.id,
           widget.gameConfig.otherUser.id,
           widget.gameName,
           widget.gameConfig.toJson(),
-          true,
+          false,
           widget.gameConfig.sessionId ?? Uuid().v4());
     }
+    ScoreRepo().insert(Score(
+        myUser: widget.gameConfig.myUser.id,
+        otherUser: widget.gameConfig.otherUser?.id,
+        myScore: widget.gameConfig.myScore,
+        otherScore: widget.gameConfig.otherScore,
+        game: widget.gameName,
+        playedAt: DateTime.now().millisecondsSinceEpoch));
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
@@ -554,6 +652,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
+      maxIterations = 1;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -563,7 +662,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
-            gameConfig: widget.gameConfig);
+            gameConfig: widget.gameConfig,
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
       case 'dice':
         maxIterations = -1;
@@ -783,15 +883,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated);
       case 'spin_wheel':
-        maxIterations = 2;
+        maxIterations = 1;
         return new SpinWheel(
+            key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
             onEnd: () => _onEnd(context),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
-            gameCategoryId: widget.gameConfig.gameCategoryId);
+            gameConfig: widget.gameConfig);
         break;
       case 'circle_word':
         return new Circleword(
