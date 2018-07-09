@@ -77,7 +77,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.5.2"
+    version: "5.5.3"
   camera:
     dependency: "direct main"
     description:
@@ -167,7 +167,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "61ada2349060bc9d856db8f6a3087711adfda77c"
+      resolved-ref: "7b92fe7d02989190ba5e7da7c425dc46c05940ed"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -498,7 +498,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0"
+    version: "0.11.0+1"
   stack_trace:
     dependency: transitive
     description:
