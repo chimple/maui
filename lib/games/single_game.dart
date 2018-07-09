@@ -140,7 +140,7 @@ class SingleGame extends StatefulWidget {
   final String gameName;
   final GameConfig gameConfig;
   final Function onGameEnd;
-  final Function onScore;
+  final Function onScore; //TODO: Can be removed
   final GameMode gameMode;
   final bool isRotated;
   final Key key;
@@ -314,7 +314,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
-    print('oh2h: $oh2h');
     return WillPopScope(
       onWillPop: _onWillPop,
       child: new Theme(
@@ -433,7 +432,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       _cumulativeIncrement += incrementScore;
     });
     //for now we only pass myscore up to the head to head
-    if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
+    //if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
   }
 
   _onProgress(double progress) {
@@ -653,7 +652,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
-        maxIterations = 2;
+      maxIterations = 1;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,

@@ -792,7 +792,7 @@ Future<Tuple2<String, List<String>>> fetchDrawingData(
       break;
     case 3:
       return new Tuple2(
-          "animals .", ['milk', 'cow', 'vegetable', 'grass']);
+          "animals .", ['milk', 'cow', 'snake', 'grass']);
       break;
     case 4:
       return new Tuple2("vegitables",

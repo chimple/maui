@@ -202,7 +202,7 @@ class MyFillnumberState extends State<Fillnumber> {
           countline = 0;
         }
 
-        if (data == code && _visibleflag[index] == false) {
+        if (data == code && _visibleflag[index] == false&& text!=null) {
           if (lastclick == _size ||
               lastclick == _size + _size ||
               lastclick == _size + _size + _size) {
@@ -489,6 +489,11 @@ class MyFillnumberState extends State<Fillnumber> {
       // AppState state = AppStateContainer.of(context).state;
 
       var coloris = Theme.of(context).primaryColor;
+      if(ssum==null){
+        setState(() {
+                  ssum='';
+                });
+      }
       return new Stack(
         // overflow: Overflow.visible,
         children: [
@@ -742,6 +747,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print("data isrrrrrrrrrrrrrrrrrrrrrr ddd$oldWidget");
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
