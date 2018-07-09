@@ -205,6 +205,9 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         controller.stop();
       });
     } else {
+      setState(() {
+              flag=1;
+            });
       toAnimateFunction();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
@@ -574,6 +577,7 @@ class _BuildCategoryState extends State<BuildCategory> {
       return new UnitButton(
         unitMode: this.unitMode,
         text: this.text,
+         showHelp: false,
         bgImage: this.text,
          key: new Key("A${widget.keys}"),
       );
@@ -581,6 +585,7 @@ class _BuildCategoryState extends State<BuildCategory> {
     return new UnitButton(
        unitMode: this.unitMode,
       text: this.text,
+      showHelp: false,
       key: new Key("A${widget.keys}"),
     );
   }

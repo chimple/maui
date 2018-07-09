@@ -367,7 +367,8 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   
 
   var rand = new Random();
-  var startNum = rand.nextInt(max(0, 4));
+  var startNum = rand.nextInt(max(0, 3));
+  print(" ......random number is... $startNum");
   switch (startNum) {
     case 0:
       return new Tuple2([
@@ -695,7 +696,7 @@ Future<String> fetchGuessData() async {
   List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
     gameViews.shuffle();
     String s = gameViews[0];
-    return await rootBundle.loadString("assets/Colors.json");
+    return await rootBundle.loadString("assets/$s.json");
 }
 
 
