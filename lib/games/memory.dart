@@ -115,6 +115,7 @@ class MemoryState extends State<Memory> {
     print(oldWidget.iteration);
     print(widget.iteration);
     if (widget.iteration != oldWidget.iteration) {
+      initialVisibility = true;
       _allLetters.clear();
       _letters.clear();  
       _initBoard();
@@ -133,8 +134,9 @@ class MemoryState extends State<Memory> {
           print("Pressed Index: ${index}");
           print("Pressed Text: ${text}");
           print("Pressed Statuses before checking: ${_statuses}");
-          print("maxSize Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_maxSize}");
-          print("_size Sizeeeeeeeeeeeeeeeeeeeeeeeeee ${_size}");
+          print("maxSize Size ${_maxSize}");
+          print("_size Size ${_size}");
+          print("initialVisibility ${initialVisibility}");
 
           if(initialVisibility == true) return;
       
@@ -308,7 +310,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     print("_MyButtonState.initState: ${widget.text}");
     _displayText = widget.text;
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 800), vsync: this);
+        duration: new Duration(milliseconds: 2000), vsync: this);
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
     flipController = new AnimationController(
@@ -325,13 +327,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           }
         }
       });
-
+        
+        initialVisibility = true;
         controller.forward().then((f) {
           flipController.forward();
-          initialVisibility = true;
         new Future.delayed(const Duration(milliseconds: 2000), () { 
-          initialVisibility = false;
           flipController.reverse();
+          initialVisibility = false;
         });
       });
 

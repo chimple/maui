@@ -73,18 +73,14 @@ class _UnitButtonState extends State<UnitButton> {
   void initState() {
     super.initState();
     _unitMode = widget.unitMode;
-    print('initState');
     _getData();
   }
 
   void _getData() async {
-    if (_unitMode == UnitMode.audio || _unitMode == UnitMode.image) {
-      _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
-      print(_unit);
-      if ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
-          (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0)) {
-        _unitMode = UnitMode.text;
-      }
+    _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
+    if ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
+        (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0)) {
+      _unitMode = UnitMode.text;
     }
     setState(() => _isLoading = false);
   }
@@ -95,8 +91,8 @@ class _UnitButtonState extends State<UnitButton> {
         ? new GestureDetector(
             onLongPress: () {
               AppStateContainer.of(context).play(widget.text.toLowerCase());
-              if (_unitMode != UnitMode.audio) {
-                AppStateContainer.of(context).display(context, widget.text.toLowerCase());  
+              if (_unit != null && _unitMode != UnitMode.audio) {
+                AppStateContainer.of(context).display(context, widget.text);
               }
             },
             child: _buildButton(context))

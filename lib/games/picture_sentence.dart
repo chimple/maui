@@ -136,7 +136,24 @@ class PictureSentenceState extends State<PictureSentence> {
     String sentencePart1 = "";
     String sentencePart2 = "";
     String sentencePart3 = "";
+    MediaQueryData media = MediaQuery.of(context);
+    double _height = media.size.height;
+    double _width = media.size.width;
 
+    var blankSpaceHeight = 0.0;
+    var blankSpaceWidth = 0.0;
+    if (media.orientation == Orientation.portrait) {
+      blankSpaceHeight = _height * 0.04;
+      blankSpaceWidth = _width * 0.21;
+    } else {
+      blankSpaceHeight = _height * 0.04;
+      blankSpaceWidth = _width * 0.1;
+    }
+
+    print('height is $_height');
+    print('width is $_width');
+    print('blankSpaceWidth/ 23  ${blankSpaceWidth/ 23}');
+   
     print("$sentence   (length = ${sentence.length-6})");
     print("Split >>>>>>>$eachWord");
 
@@ -167,129 +184,143 @@ class PictureSentenceState extends State<PictureSentence> {
     }
     print(
         "sentencePart3 >>>>>>> $sentencePart3 <<<length ==== ${sentencePart3.length} >>>");
-    var text1 = new Text(sentencePart1,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text1 = Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: new Text(sentencePart1,
+          // softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: _height * 0.04)),
+    );
 
     var blankSpace1 = (output1 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: blankSpaceHeight,
+              width: blankSpaceWidth,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[0].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[0].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
-        : new Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: new Container(
-                alignment: Alignment.bottomLeft,
-                child: new Text(output1,
-                    softWrap: true,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: color,
-                        fontSize: 40.0))),
-          );
+            ),
+          ])
+        : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Container(
+              alignment: Alignment.bottomLeft,
+              child: new Text(output1,
+                  softWrap: true,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.greenAccent,
+                      fontSize: _height * 0.04))),
+        );
 
-    var text2 = new Text(sentencePart2,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
+    var text2 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart2,
+          // softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: _height * 0.04)),
+    );
 
     var blankSpace2 = (output2 == "")
-        ? new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Stack(children: [
-              new Container(
-                color: Colors.grey,
-                height: 40.0,
-                width: 170.0,
+        ? new Stack(children: [
+            new Container(
+              color: Colors.grey,
+              height: blankSpaceHeight,
+              width: blankSpaceWidth,
+            ),
+            new Positioned(
+              right: 1.0,
+              child: new IconButton(
+                iconSize: 24.0,
+                color: Colors.black,
+                icon: new Icon(Icons.announcement),
+                tooltip: 'check the picture',
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new PictureCard(
+                            text: "widget.text",
+                            image: "assets/dict/${ans[1].toLowerCase()}.png",
+                          )));
+                },
               ),
-              new Positioned(
-                right: 1.0,
-                child: new IconButton(
-                  iconSize: 24.0,
-                  color: Colors.black,
-                  icon: new Icon(Icons.announcement),
-                  tooltip: 'check the picture',
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: new FractionallySizedBox(
-                            heightFactor: 0.5,
-                            widthFactor: 0.8,
-                            child: new PictureCard(
-                              text: "widget.text",
-                              image: "assets/dict/${ans[1].toLowerCase()}.png",
-                            )));
-                  },
-                ),
-              ),
-            ]),
-          )
+            ),
+          ])
         : new Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: new Container(
                 alignment: Alignment.bottomLeft,
                 child: new Text(output2,
                     softWrap: true,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: color,
-                        fontSize: 40.0))),
+                        color: Colors.greenAccent,
+                        fontSize: _height * 0.04))),
           );
-    var text3 = new Text(sentencePart3,
-        softWrap: true,
-        style: new TextStyle(
-            fontWeight: FontWeight.bold, color: color, fontSize: 40.0));
-    if (sentencePart1.length + 8 + sentencePart2.length < 37) {
-      if ((sentence.length - 6) < 25) {
-        return new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
-            ),
-          ],
-        );
-      } else {
-        return new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              children: <Widget>[text1, blankSpace1, text2],
-            ),
-            new Row(
-              children: <Widget>[blankSpace2, text3],
-            )
-          ],
-        );
-      }
-    } else {
+    var text3 = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Text(sentencePart3,
+          softWrap: true,
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: _height * 0.04)),
+    );
+
+    if ((sentencePart1.length +
+            blankSpaceWidth/23 +
+            sentencePart2.length +
+            blankSpaceWidth/23 +
+            sentencePart3.length) <
+        _width/19) {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+          ),
+        ],
+      );
+    }
+    else if ((sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length + blankSpaceWidth/23) <_width/19){
+       return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1 ,text2, blankSpace2],
+          ),
+          new Row(
+            children: <Widget>[ text3],
+          )
+        ],
+      );
+    } else if (sentencePart1.length < _width/19 && (sentencePart1.length + blankSpaceWidth/23) >= _width/19) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -298,6 +329,33 @@ class PictureSentenceState extends State<PictureSentence> {
           ),
           new Row(
             children: <Widget>[text2, blankSpace2, text3],
+          )
+        ],
+      );
+    } else if ((sentencePart1.length + blankSpaceWidth/23) < _width/19 &&
+        (sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length) > _width/19) {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1],
+          ),
+          new Row(
+            children: <Widget>[text2, blankSpace2, text3],
+          )
+        ],
+      );
+    } else if ((sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length) < _width/19 &&
+        (sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length + blankSpaceWidth/23 + sentencePart3.length) > _width/19) {
+     
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Row(
+            children: <Widget>[text1, blankSpace1,text2],
+          ),
+          new Row(
+            children: <Widget>[ blankSpace2, text3],
           )
         ],
       );
@@ -355,7 +413,10 @@ class PictureSentenceState extends State<PictureSentence> {
             child: new Material(
                 color: Theme.of(context).accentColor,
                 elevation: 4.0,
-                child: sentenceLayout(sentence1)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: sentenceLayout(sentence1),
+                )),
           ),
           new Expanded(
               flex: 2,
@@ -507,9 +568,7 @@ class _PictureCardState extends State<PictureCard> {
     }
     return new LayoutBuilder(builder: (context, constraints) {
       return new Card(
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.all(
-                Radius.circular(constraints.maxHeight * 0.02))),
+        shape: new CircleBorder(side: new BorderSide()),
         child: new Container(
             width: 200.0,
             height: 200.0,

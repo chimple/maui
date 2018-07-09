@@ -28,7 +28,7 @@ class GameCategoryListScreen extends StatefulWidget {
 }
 
 class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
-  List<Tuple2<int, String>> _gameCategories;
+  List<Tuple3<int, int, String>> _gameCategories;
   bool _isLoading = false;
 
   @override
@@ -40,17 +40,16 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .then((gameCategories) {
       if (gameCategories.isEmpty) {
         if (widget.game == "identify") {
-          gameCategories = <Tuple2<int, String>>[
-          new Tuple2<int, String>(1, 'Modes'),
-        ];         
-        } 
-       else if (widget.game == "drawing") {
-          gameCategories = <Tuple2<int, String>>[
-            new Tuple2<int, String>(2, 'Draw')
+          gameCategories = <Tuple3<int, int, String>>[
+            new Tuple3<int, int, String>(1, 1, 'Modes'),
+          ];
+        } else if (widget.game == "drawing") {
+          gameCategories = <Tuple3<int, int, String>>[
+            new Tuple3<int, int, String>(2, 1, 'Draw')
           ];
         } else {
-          gameCategories = <Tuple2<int, String>>[
-            new Tuple2<int, String>(1, 'Todo Placeholder')
+          gameCategories = <Tuple3<int, int, String>>[
+            new Tuple3<int, int, String>(1, 1, 'Todo Placeholder')
           ];
         }
         //   gameCategories = <Tuple2<int, String>>[

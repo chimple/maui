@@ -21,7 +21,7 @@ class GameCategoryList extends StatefulWidget {
       this.otherUser})
       : super(key: key);
   State<StatefulWidget> createState() => new _GameCategoryList();
-  final List<Tuple2<int, String>> gameCategories;
+  final List<Tuple3<int, int, String>> gameCategories;
   final String game;
   GameMode gameMode;
   GameDisplay gameDisplay;
@@ -119,7 +119,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                                     widget.gameDisplay,
                                     widget.gameMode,
                                     otherUser: widget.otherUser),
-                                child: Text(gameCategory.item2),
+                                child: Text(gameCategory.item3),
                               ),
                             ))
                         .toList(growable: false),
