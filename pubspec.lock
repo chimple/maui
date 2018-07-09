@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: cde8f4326ff113741c8c55455a616de1604c92b6
+      resolved-ref: "040faccd959e199c2b871ac7ca0d988c91bb9f23"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -505,7 +505,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0"
+    version: "0.11.0+1"
   stack_trace:
     dependency: transitive
     description:

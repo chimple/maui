@@ -210,7 +210,7 @@ class _AppStateContainerControllerState
 
   void _getUsers() async {
     activity = 'friends';
-    final userList = await UserRepo().getUsers();
+    final userList = await UserRepo().getRemoteUsers();
     final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
@@ -242,6 +242,7 @@ class _AppStateContainerControllerState
   _setLoggedInUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
+    prefs.setString('userId', user.id);
     if (user != null) {
       Flores().loggedInUser(user.id, deviceId);
     }

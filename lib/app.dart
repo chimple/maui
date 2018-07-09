@@ -53,10 +53,13 @@ class MauiApp extends StatelessWidget {
     if (path[1] == 'games' && path.length == 6) {
       int gameCategoryId = int.parse(path[4], onError: (source) => null);
       Random random = new Random();
+      final textMode = random.nextBool();
       var gameConfig = new GameConfig(
           gameCategoryId: gameCategoryId,
-          questionUnitMode: UnitMode.values[random.nextInt(3)],
-          answerUnitMode: UnitMode.values[random.nextInt(3)],
+          questionUnitMode:
+              textMode ? UnitMode.text : UnitMode.values[random.nextInt(5) % 3],
+          answerUnitMode:
+              textMode ? UnitMode.values[random.nextInt(5) % 3] : UnitMode.text,
           level: random.nextInt(10) + 1);
 
       switch (path[5]) {
