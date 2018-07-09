@@ -136,7 +136,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   Future<bool> _onWillPop() {
     Navigator.of(context).popUntil(ModalRoute.withName('/tab'));
     var completer = Completer<bool>();
-    completer.complete(true);
+    completer.complete(false);
     return completer.future;
   }
 

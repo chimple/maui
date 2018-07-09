@@ -194,6 +194,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
 
   startGame(BuildContext context, User user) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+    Random random = Random();
     Navigator.of(context).push(MaterialPageRoute<Null>(
         builder: (BuildContext context) => GameCategoryListScreen(
               game: widget.gameName,
@@ -201,7 +202,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
               gameDisplay: user.id == loggedInUser.id
                   ? GameDisplay.single
                   : user.deviceId == _deviceId
-                      ? GameDisplay.localTurnByTurn
+                      ? random.nextBool()
+                          ? GameDisplay.localTurnByTurn
+                          : GameDisplay.myHeadToHead
                       : GameDisplay.networkTurnByTurn,
               otherUser: user,
             )));
