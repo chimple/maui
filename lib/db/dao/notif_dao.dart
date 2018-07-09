@@ -56,19 +56,24 @@ class NotifDao {
   Future<Map<String, int>> getNotifCountByUser({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Notif.table,
-        columns: [Notif.userIdCol, 'count'],
-        where: "GROUP BY ${Notif.userIdCol}");
+        columns: [Notif.userIdCol, 'count(${Notif.userIdCol})'],
+        groupBy: '${Notif.userIdCol}');
     Map<String, int> returnMap = Map<String, int>();
-    maps.forEach((n) => returnMap[n[Notif.userIdCol]] = n['count']);
+    maps.forEach(
+        (n) => returnMap[n[Notif.userIdCol]] = n['count(${Notif.userIdCol})']);
     return returnMap;
   }
 
   Future<Map<String, int>> getNotifCountByType({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Notif.table,
-        columns: [Notif.typeCol, 'count'], where: "GROUP BY ${Notif.typeCol}");
+        columns: [Notif.typeCol, 'count(${Notif.typeCol})'],
+        groupBy: '${Notif.typeCol}');
+    print('getNotifCountByType: $maps');
     Map<String, int> returnMap = Map<String, int>();
-    maps.forEach((n) => returnMap[n[Notif.typeCol]] = n['count']);
+    maps.forEach(
+        (n) => returnMap[n[Notif.typeCol]] = n['count(${Notif.typeCol})']);
+    print('getNotifCountByType: $returnMap');
     return returnMap;
   }
 

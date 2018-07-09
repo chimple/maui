@@ -38,6 +38,22 @@ class UserDao {
     return maps.map((userMap) => new User.fromMap(userMap)).toList();
   }
 
+  Future<List<User>> getUsersOtherThanDeviceId(String deviceId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(User.table,
+        columns: [
+          User.columnId,
+          User.columnDeviceId,
+          User.columnName,
+          User.columnImage,
+          User.columnCurrentLessonId
+        ],
+        where: "${User.columnDeviceId} != ?",
+        whereArgs: [deviceId]);
+    return maps.map((userMap) => new User.fromMap(userMap)).toList();
+  }
+
   Future<List<User>> getUsers({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(User.table, columns: [
