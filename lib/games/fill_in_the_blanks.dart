@@ -42,6 +42,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   List<String> dragBoxData, _holdDataOfDragBox, shuffleData, dragBoxDataStore;
   List<String> dropTargetData;
   List<Tuple2<String, String>> _fillData;
+  List _correct = [];
   List<int> _flag = new List();
   String fruit = ' ';
   int indexOfDragText, indexOfTarget;
@@ -98,9 +99,18 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
     }
+     for(int i =0; i< dragBoxData.length;i++)
+    {
+      if(dropTargetData[i].isEmpty)
+      {
+        _correct.add(dragBoxData[i]);
+        _correct.add(i);
+      }
+    }
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isEmpty) dropTargetData[j] = '_';
     }
+   
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
     setState(() => _isLoading = false);
@@ -119,12 +129,20 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           dindex = int.parse(dragdata.substring(0, 3));
           dcode = int.parse(dragdata.substring(4));
           if (code == dcode) {
-            if (dropTargetData[index] == '_') {
-              if (_holdDataOfDragBox[index] == data) {
-                flag1 = 1;
+             var i = 0;
+                  for (; i < _correct.length; i++) {
+                    if (dragBoxData[dindex - 100] == _correct[i] &&
+                        index == _correct[++i] &&
+                        dropTargetData[index] == '_') {
+                      flag1 = 1;
+                       break;
+                    }
+                  }
+              if (flag1 == 1) {
+                print('correct');
                 progres++;
                 widget.onProgress(progres / space);
-                dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
+                dropTargetData[index] = _correct[--i];
               } else {
                 if (dropTargetData[index] == '_') {
                   dragcount++;
@@ -139,8 +157,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                   });
                 });
               }
-            } 
-            print('dragcount is $dragcount');
             if (dragcount == space + 2) {
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {

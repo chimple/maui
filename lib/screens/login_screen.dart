@@ -3,6 +3,7 @@ import 'package:maui/components/user_list.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'tab_home.dart';
 
@@ -21,11 +22,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-    new UserRepo().getLocalUsers().then((users) {
-      setState(() {
-        _users = users;
-        _isLoading = false;
-      });
+    _initData();
+  }
+
+  _initData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');
+    if (userId != null) {
+      User user = await UserRepo().getUser(userId);
+      AppStateContainer.of(context).setLoggedInUser(user);
+      Navigator.of(context).pushNamed('/tab');
+    }
+    var users = await UserRepo().getLocalUsers();
+    setState(() {
+      _users = users;
+      _isLoading = false;
     });
   }
 
