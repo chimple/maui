@@ -489,6 +489,11 @@ class MyFillnumberState extends State<Fillnumber> {
       // AppState state = AppStateContainer.of(context).state;
 
       var coloris = Theme.of(context).primaryColor;
+      if(ssum==null){
+        setState(() {
+                  ssum='';
+                });
+      }
       return new Stack(
         // overflow: Overflow.visible,
         children: [
