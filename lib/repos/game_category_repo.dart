@@ -19,7 +19,6 @@ class GameCategoryRepo {
     'tap_home',
     'word_grid',
     'guess',
-    'spin_wheel',
     'circle_word',
     'draw_challenge',
     'friend_word',
@@ -34,21 +33,22 @@ class GameCategoryRepo {
 
   const GameCategoryRepo();
 
-  Future<List<Tuple2<int, String>>> getGameCategoriesByGame(String game) async {
+  Future<List<Tuple3<int, int, String>>> getGameCategoriesByGame(
+      String game) async {
     if (mathGames.contains(game)) {
       var gameCategories = await gameCategoryDao.getGameCategoriesByGame(game);
       return gameCategories
-          .map((g) => new Tuple2(g.id, g.name))
+          .map((g) => new Tuple3(g.id, g.conceptId, g.name))
           .toList(growable: false);
     } else if (orderedGames.contains(game)) {
       var lessons = await lessonDao.getLessonsByHasOrder(1);
       return lessons
-          .map((l) => new Tuple2(l.id, l.title))
+          .map((l) => new Tuple3(l.id, l.conceptId, l.title))
           .toList(growable: false);
     } else {
       var lessons = await lessonDao.getLessons();
       return lessons
-          .map((l) => new Tuple2(l.id, l.title))
+          .map((l) => new Tuple3(l.id, l.conceptId, l.title))
           .toList(growable: false);
     }
   }

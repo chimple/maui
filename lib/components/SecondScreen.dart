@@ -1,210 +1,62 @@
 import 'dart:convert';
-import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:maui/components/draw_convert.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:tuple/tuple.dart';
-
 import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
-
 import '../games/single_game.dart';
 
-class SecondScreen extends StatelessWidget {
-  String output;
-
-  SecondScreen(this.output);
-
-  @override
-  Widget build(BuildContext context) {
-// print({"this is object of drawwwwww": output});
-    return new MaterialApp(home: new LayoutBuilder(builder: _build));
-  }
-
-  Widget _build(BuildContext context, BoxConstraints constraints) {
-// print([constraints.maxWidth, constraints.maxHeight]);
-// print({"the output is : " : output});
-    Orientation orientation = MediaQuery.of(context).orientation;
-    var height = constraints.maxHeight;
-    var width = constraints.maxWidth;
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Drawing'),
-      ),
-      body: orientation == Orientation.portrait
-          ? new Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                new Container(
-                    height: height > width ? height * 0.45 : height * .75,
-                    width: width > height ? width * 0.6 : width * .95,
-                    child: new Drawing(output)),
-                new Expanded(
-// height: constraints.maxHeight*.3, width: constraints.maxWidth,
-                    child: new DrawOptions()),
-              ],
-            )
-          : new Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                new Container(
-                    height: height > width ? height * 0.5 : height * .5625,
-                    width: width > height ? width * 0.45 : width,
-                    child: new Drawing(output)),
-                new Expanded(
-// height: constraints.maxHeight*.3, width: constraints.maxWidth,
-                    child: new DrawOptions()),
-              ],
-            ),
-    );
-  }
-}
-
-class Drawing extends StatefulWidget {
-  String output;
-
-  Drawing(this.output);
-
-  @override
-  State createState() => new MyHomePageState(output);
-}
-
-class MyHomePageState extends State<Drawing> {
-  String output;
-
-  MyHomePageState(this.output);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        body: new Container(
-            child: new Center(
-                child: new Container(
-      child: new MyImagePage(this.output),
-    ))));
-  }
-}
-
-class MyImagePage extends StatefulWidget {
-  String output;
-
-  MyImagePage(this.output);
-
-// var data = json.decode(output);
-
-  @override
-  State createState() => new MyDrawPageState(this.output);
-}
-
-class MyDrawPageState extends State<MyImagePage> {
-  String output = null;
-
-  MyDrawPageState(this.output);
-
-// List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
-  DrawPainting currentPainter;
-
-  @override
-  Widget build(BuildContext context) {
-// print({"the decoded value is : " : output});
-
-    currentPainter = new DrawPainting(output);
-
-    return new Container(
-      margin: new EdgeInsets.all(5.0),
-      child: new Card(
-        child: new ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: new CustomPaint(
-            painter: currentPainter,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DrawPainting extends CustomPainter {
-  String canvasProperty = null;
-
-  DrawPainting(this.canvasProperty);
-
-  void paint(Canvas canvas, Size size) {
-    double _height = size.height;
-    double _width = size.width;
-    double _hsize = _height;
-    double _wsize = _width;
-
-    Paint paint = new Paint()..strokeCap = StrokeCap.round;
-
-// print({"the canvasproperty value is : " : canvasProperty});
-
-    var decode = json.decode(canvasProperty);
-
-// print({"the json to obj value is fo pos : " : decode['draw'][0]['position'][0]['x']});
-// print({"the lenth of draw : " : decode['draw'].length});
-
-    for (int i = 0; i < decode['draw'].length; i++) {
-      var draw = decode['draw'][i];
-
-      for (int j = 0; j < draw['position'].length; j++) {
-        var position = draw['position'];
-
-        paint.strokeWidth = draw['width'];
-        paint.color = new Color(draw['color']);
-
-        if (position[j]['x'] != null && position[j + 1]['x'] != null) {
-          Offset currentPixel = new Offset(
-              ((position[j]['x']) * _wsize), ((position[j]['y']) * _hsize));
-
-          Offset nextPixel = new Offset(((position[j + 1]['x']) * _wsize),
-              ((position[j + 1]['y']) * _hsize));
-
-          canvas.drawLine(currentPixel, nextPixel, paint);
-        }
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class DrawOptions extends StatefulWidget {
+class SecondScreen extends StatefulWidget {
+  int navVal;
+  List choice;
+  String jsonVal;
   Function onScore;
   Function onProgress;
   Function onEnd;
   int iteration;
   int gameCategoryId;
+  GameConfig gameConfig;
   bool isRotated;
 
-  DrawOptions(
-      {key,
+  SecondScreen(
+    this.navVal,
+      this.choice,
+      this.jsonVal,
       this.onScore,
       this.onProgress,
       this.onEnd,
       this.iteration,
       this.gameCategoryId,
-      this.isRotated})
-      : super(key: key);
+      this.gameConfig,
+      this.isRotated);
 
   @override
-  State createState() => new optionState();
+  State createState() => new OptionState();
 }
 
-class optionState extends State<DrawOptions> {
+class OptionState extends State<SecondScreen> {
   bool _isLoading = true;
-  Tuple3<String, String, List<String>> _allques;
+  List choice;
   int _size = 2;
-  List<String> choice = ['Apple', 'Banana', 'Grape', 'Orange'];
   List<String> _ans = [];
   bool isCorrect;
+  List<String> DrawData;
+  List<String> ReceiveData;
+
+  Map<String, dynamic> toJsonMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['myData'] = DrawData;
+    data['otherData'] = ReceiveData;
+    return data;
+  }
+
+  void fromJsonMap(Map<String, dynamic> data) {
+    ReceiveData = data['myData'].cast<String>();
+    DrawData = data['otherData'].cast<String>();
+  }
 
   @override
   void initState() {
@@ -213,41 +65,72 @@ class optionState extends State<DrawOptions> {
   }
 
   void _initBoard() async {
+    // widget.navVal = 0;
     setState(() => _isLoading = true);
+    print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
+    if (widget.gameConfig.gameData != null) {
+      fromJsonMap(widget.gameConfig.gameData);
+    } else {
+      DrawData = [widget.jsonVal];
+      ReceiveData = [];
+    }
     for (var i = 0; i < _size; i++) {
-      choice.forEach((e) {
-        _ans.add(e);
-      });
+      widget.choice
+        ..forEach((e) {
+          _ans.add(e);
+        });
     }
     setState(() => _isLoading = false);
   }
 
+  @override
+  void didUpdateWidget(SecondScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
+  }
+
+  Widget _playerKeyBoard(BuildContext context, double buttonPadding) {
+    var j = 0;
+    return new ResponsiveGridView(
+      rows: _size,
+      cols: _size,
+      children: _ans
+          .map((e) => new Padding(
+              padding: EdgeInsets.all(buttonPadding),
+              child: _buildItem(j++, e)))
+          .toList(growable: false),
+    );
+  }
+
   Widget _buildItem(int index, String text) {
+    print("text issssssssss $text");
+    print("choice if b issssssssss ${widget.choice}");
+    //  print("nav value iss ${widget.navVal}");
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (text == _ans) {
-            widget.onScore(1);
+          if (text == widget.choice[1]) {
+            print("hiii manuu");
+            print("hello rhis on end we are calling");
+            widget.onScore(10);
             widget.onProgress(1.0);
-            widget.onEnd();
-            _initBoard();
-            choice = [];
+             setState(() {
+                widget.onEnd(toJsonMap(), false);
+                       widget.navVal = 0;
+                        });
+           
+           
+
+            // widget.onEnd();
+            // _initBoard();
+            // Navigator.pop(context);
           } else {
-            widget.onScore(-1);
+            widget.onScore(-5);
           }
         });
-  }
-
-  @override
-  void didUpdateWidget(DrawOptions oldWidget) {
-// print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-// print(_allques);
-    }
-    choice = [];
   }
 
   @override
@@ -266,12 +149,18 @@ class optionState extends State<DrawOptions> {
 
     int j = 0;
     return new LayoutBuilder(builder: (context, constraints) {
+      Orientation orientation = MediaQuery.of(context).orientation;
+      var height = constraints.maxHeight;
+      var width = constraints.maxWidth;
+      var sizeOrientation =
+          orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size);
+      double maxWidth =
+          (constraints.maxWidth - hPadding * 2) / (sizeOrientation);
+      double maxHeight =
+          (constraints.maxHeight - vPadding * 2) / (sizeOrientation);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       print(
@@ -280,26 +169,33 @@ class optionState extends State<DrawOptions> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
 
-      double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
+      // double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");
       UnitButton.saveButtonSize(context, 6, maxWidth, maxHeight);
 
       AppState state = AppStateContainer.of(context).state;
-      return new Padding(
-          padding:
-              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
-          child: new ResponsiveGridView(
-            rows: _size,
-            cols: _size,
-            // maxAspectRatio: 1.0,
-            children: _ans
-                .map((e) => new Padding(
-                    padding: EdgeInsets.all(buttonPadding),
-                    child: _buildItem(j++, e)))
-                .toList(growable: false),
-          ));
+      return Scaffold(
+          body: orientation == Orientation.portrait
+              ? Column(children: <Widget>[
+                  new Container(
+                      height: height > width ? height * 0.45 : height * .75,
+                      width: width > height ? width * 0.6 : width * .95,
+                      child: new DrawJsonImage(widget.jsonVal)),
+                  new Expanded(
+                    child: _playerKeyBoard(context, buttonPadding),
+                  ),
+                ])
+              : new Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  new Container(
+                      height: height > width ? height * 0.5 : height * .5625,
+                      width: width > height ? width * 0.45 : width,
+                      child: new DrawJsonImage(widget.jsonVal)),
+                  Expanded(
+                    child: _playerKeyBoard(context, buttonPadding),
+                  )
+                ]));
     });
   }
 }
@@ -443,10 +339,115 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       child: new FlashCard(text: widget.text)));
             },
             child: new UnitButton(
-              text: _displayText,
+              text: _displayText.toUpperCase(),
               onPress: () => widget.onPress(),
               // unitMode: UnitMode.text,
               showHelp: false,
             )));
+  }
+}
+
+class DrawJsonImage extends StatefulWidget {
+  String jsonVal;
+
+  DrawJsonImage(this.jsonVal);
+
+  @override
+  State<StatefulWidget> createState() => new MyHomePageState();
+}
+
+class MyHomePageState extends State<DrawJsonImage> {
+  @override
+  Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    return new Scaffold(
+        body: new Center(
+            child: new Container(
+      margin: orientation == Orientation.portrait
+          ? EdgeInsets.only(top: 5.0)
+          : EdgeInsets.only(left: 5.0),
+      color: Colors.grey,
+      child: new MyImagePage(widget.jsonVal),
+    )));
+  }
+
+}
+class MyImagePage extends StatefulWidget {
+  String jsonVal;
+  MyImagePage(this.jsonVal);
+
+  @override
+  State createState() => new MyDrawPageState();
+}
+
+class MyDrawPageState extends State<MyImagePage> {
+// List<Offset> _points = [Offset(23.0, 54.0), Offset(44.0, 87.0)];
+  DrawPainting currentPainter;
+
+  @override
+  Widget build(BuildContext context) {
+// print({"the decoded value is : " : jsonVal});
+
+    currentPainter = new DrawPainting(widget.jsonVal);
+
+    return new Container(
+      // margin: new EdgeInsets.all(5.0),
+      child: new Card(
+        child: new ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+          child: new CustomPaint(
+            painter: currentPainter,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DrawPainting extends CustomPainter {
+  String canvasProperty = null;
+
+  DrawPainting(this.canvasProperty);
+
+  void paint(Canvas canvas, Size size) {
+    double _height = size.height;
+    double _width = size.width;
+    double _hsize = _height;
+    double _wsize = _width;
+
+    Paint paint = new Paint()..strokeCap = StrokeCap.round;
+
+// print({"the canvasproperty value is : " : canvasProperty});
+
+    var decode = json.decode(canvasProperty);
+
+// print({"the json to obj value is fo pos : " : decode['draw'][0]['position'][0]['x']});
+// print({"the lenth of draw : " : decode['draw'].length});
+
+    for (int i = 0; i < decode['draw'].length; i++) {
+      var draw = decode['draw'][i];
+
+      for (int j = 0; j < draw['position'].length; j++) {
+        var position = draw['position'];
+
+        paint.strokeWidth = draw['width'];
+        paint.color = new Color(draw['color']);
+
+        if (position[j]['x'] != null && position[j + 1]['x'] != null) {
+          Offset currentPixel = new Offset(
+              ((position[j]['x']) * _wsize), ((position[j]['y']) * _hsize));
+
+          Offset nextPixel = new Offset(((position[j + 1]['x']) * _wsize),
+              ((position[j + 1]['y']) * _hsize));
+
+          canvas.drawLine(currentPixel, nextPixel, paint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
