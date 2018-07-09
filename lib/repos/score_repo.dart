@@ -13,8 +13,7 @@ class ScoreRepo {
     return await scoreDao.getScoresByUserByGame(userId, game);
   }
 
-  Future<Map<String, int>> getScoreCountByUser(
-      String userId, String game) async {
+  Future<Map<String, int>> getScoreCountByUser(String userId) async {
     return await scoreDao.getScoreCountByUser(userId);
   }
 

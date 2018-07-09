@@ -27,7 +27,8 @@ class ScoreDao {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Score.table,
         columns: [Score.gameCol, 'sum(${Score.myScoreCol}'],
-        where: "${Score.myUserCol} = ? GROUP BY ${Score.gameCol}");
+        where: "${Score.myUserCol} = ?",
+        groupBy: '${Score.gameCol}');
     Map<String, int> returnMap = Map<String, int>();
     maps.forEach(
         (n) => returnMap[n[Score.gameCol]] = n['sum(${Score.myScoreCol}']);
