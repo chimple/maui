@@ -63,7 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 : (_users?.length ?? 0) == 0
                     ? new Container()
-                    : new UserList(users: _users),
+//                    : new UserList(users: _users),
+                    : new Container(),
             floatingActionButton: new FloatingActionButton(
               key: new ValueKey('add-user'),
               child: new Icon(Icons.add),

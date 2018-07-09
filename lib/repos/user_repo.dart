@@ -64,14 +64,12 @@ class UserRepo {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     final loggedInUserId = prefs.getString('userId');
-    if (loggedInUserId == user.id) {
-      user.deviceId = deviceId;
-      var config = File(user.image);
-      var contents = await config.readAsBytes();
-      var enc = base64.encode(contents);
-      Flores().addUser(user.id, deviceId, enc);
-      print('Added main user: $user');
-    }
+    user.deviceId = deviceId;
+    var config = File(user.image);
+    var contents = await config.readAsBytes();
+    var enc = base64.encode(contents);
+    Flores().addUser(user.id, deviceId, enc);
+    print('Added main user: $user');
     return await userDao.insert(user);
   }
 
