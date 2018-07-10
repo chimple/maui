@@ -4,6 +4,7 @@ import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/story/story_list_view.dart';
 import 'package:maui/loca.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 class TabHome extends StatefulWidget {
   final String title;
@@ -19,8 +20,11 @@ class TabHome extends StatefulWidget {
 class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   final List<MyTabs> _tabs = [
     new MyTabs(img: "assets/chat.png", color: Colors.teal[200]),
-    new MyTabs(img: "assets/games.png", color: Colors.orange[200])
+    new MyTabs(img: "assets/games.png", color: Colors.orange[200]),
+    new MyTabs(img: "", color: Colors.black)
   ];
+  Animation<double> imageAnimation;
+  AnimationController imageController;
   MyTabs _myHandler;
   TabController _controller;
   void initState() {
@@ -28,12 +32,30 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_handleSelected);
+    // _controller.indexIsChanging;
+    // _controller.notifyListeners();
+    // imageController = new AnimationController(duration: const Duration(milliseconds: 1500), vsync: this);
+    // imageAnimation = new CurvedAnimation(parent: imageController, curve: Curves.bounceInOut);
+    //   imageController.forward();
   }
 
   void _handleSelected() {
     setState(() {
-      _myHandler = _tabs[_controller.index];
+      if (_controller.indexIsChanging) {
+        _myHandler = _tabs[2];
+      } else {
+        _myHandler = _tabs[_controller.index];
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.removeListener(_handleSelected);
+    _controller.dispose();
+    // imageController.dispose();
   }
 
   @override
@@ -48,26 +70,37 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       body: new NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
+            // new SliverList(),
+
             new SliverAppBar(
               backgroundColor: _myHandler.color,
               pinned: true,
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
               expandedHeight: _size.height * .3,
-              // title: const Text('Maui App Testing'),
               // centerTitle: true,
-              forceElevated: innerBoxIsScrolled,
-              // floating: true,
+              forceElevated: true,
               flexibleSpace: new FlexibleSpaceBar(
                 background: new FittedBox(
+                  fit: BoxFit.contain,
+                  alignment: Alignment.center,
                   child: new Image.asset(
                     '${_myHandler.img}',
                     scale: .3,
                   ),
                 ),
-                centerTitle: true,
+                // centerTitle: true,
               ),
               bottom: new TabBar(
+                isScrollable: false,
+                indicatorColor: Colors.black,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorWeight: 5.0,
+                labelColor: Colors.white,
+                labelStyle: new TextStyle(
+                    fontSize: _size.height * 0.3 * 0.07,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.normal),
                 controller: _controller,
                 unselectedLabelColor: Colors.blue,
                 tabs: <Tab>[
