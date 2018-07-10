@@ -7,6 +7,7 @@ import 'package:maui/db/entity/game_category.dart';
 import 'expansionTile.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'user_item.dart';
+import 'package:maui/repos/concept_repo.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
@@ -60,11 +61,23 @@ class _GameCategoryList extends State<GameCategoryList> {
   ];
   static final List<Color> tileColors = [];
   int count = 0;
+  List<int> conceptId = [];
+  List<int> uniqueId = [];
+  List<String> name = [];
+  Set<int> list;
   @override
   void initState() {
     super.initState();
     int categoriesLength = widget.gameCategories.length;
-    print("Length of categories::$categoriesLength");
+    widget.gameCategories
+        .map((f) => uniqueId.add(f.item1))
+        .toList(growable: false);
+    widget.gameCategories
+        .map((f) => conceptId.add(f.item2))
+        .toList(growable: false);
+    widget.gameCategories.map((f) => name.add(f.item3)).toList(growable: false);
+    list = Set.from(conceptId);
+    print("Length of categories::$list");
     for (int i = 0; i < categoriesLength + 1; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
