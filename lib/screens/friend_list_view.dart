@@ -50,25 +50,28 @@ class _FriendListViewState extends State<FriendListView> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return GridView.count(
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-      children: users.map((u) {
-        var notif = notifs.firstWhere((n) => n.userId == u.id,
-            orElse: () => Notif(userId: u.id, numNotifs: 0));
-        return FriendItem(
-            id: u.id,
-            imageUrl: u.image,
-            numNotifs: notif.numNotifs,
-            onTap: () => user.id == u.id
-                ? Navigator.of(context).pushNamed('/chatbot')
-                : Navigator.of(context).push(MaterialPageRoute<Null>(
-                    builder: (BuildContext context) => new ChatScreen(
-                        myId: user.id,
-                        friendId: u.id,
-                        friendImageUrl: u.image))));
-      }).toList(growable: false),
+    return Container(
+          color: Colors.lime,
+          child: new GridView.count(
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
+          crossAxisCount: media.size.height > media.size.width ? 3 : 4,
+          children: users.map((u) {
+            var notif = notifs.firstWhere((n) => n.userId == u.id,
+                orElse: () => Notif(userId: u.id, numNotifs: 0));
+            return FriendItem(
+                id: u.id,
+                imageUrl: u.image,
+                numNotifs: notif.numNotifs,
+                onTap: () => user.id == u.id
+                    ? Navigator.of(context).pushNamed('/chatbot')
+                    : Navigator.of(context).push(MaterialPageRoute<Null>(
+                        builder: (BuildContext context) => new ChatScreen(
+                            myId: user.id,
+                            friendId: u.id,
+                            friendImageUrl: u.image))));
+          }).toList(growable: false),
+        ),
     );
   }
 }
