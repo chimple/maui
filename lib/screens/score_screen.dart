@@ -151,6 +151,7 @@ class _ScoreScreenState extends State<ScoreScreen>
     List<Widget> tablestars2 = new List<Widget>();
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
+    final textcolor = _colors != null ? _colors[2] : Colors.black;
 
     print(
         "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
@@ -238,15 +239,16 @@ class _ScoreScreenState extends State<ScoreScreen>
                               new LimitedBox(
                                 maxHeight: ht * 0.13,
                                 child: new UserItem(user: myUser),
-                              ),
-                              new Text(
-                                '$myScore',
-                                style: new TextStyle(
-                                    fontSize: ht > wd ? ht * 0.05 : wd * 0.05,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              )
+                              ),                              
                             ])),
+
+                            gameDisplay == GameDisplay.myHeadToHead ||
+                            gameDisplay == GameDisplay.networkTurnByTurn ||
+                            gameDisplay == GameDisplay.localTurnByTurn
+                        ? new Container(
+                          child: new Text(widget.isGameOver == true ? "Game Over" : "Waiting for Turn", style: new TextStyle(fontSize: ht > wd ? ht * 0.02 : wd * 0.05, fontWeight: FontWeight.bold, color: textcolor))
+                        ) : new Row(),
+
                     gameDisplay == GameDisplay.myHeadToHead ||
                             gameDisplay == GameDisplay.networkTurnByTurn ||
                             gameDisplay == GameDisplay.localTurnByTurn
@@ -260,16 +262,83 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     maxHeight: ht * 0.13,
                                     child: new UserItem(user: otherUser),
                                   ),
-                                  new Text(
+                                  
+                                ]))
+                        : new Row()
+                  ],
+                ),
+
+                new Stack(
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                    new Container(
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                  borderRadius: new BorderRadius.circular(20.0),
+                  border: new Border.all(
+                    width: 6.0,
+                    color: Colors.white,
+                  ),
+                ),
+                      child: new Row(
+                        mainAxisAlignment: gameDisplay == GameDisplay.myHeadToHead ||
+                          gameDisplay == GameDisplay.networkTurnByTurn ||
+                          gameDisplay == GameDisplay.localTurnByTurn
+                      ? MainAxisAlignment.spaceAround
+                      : MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                        new Column( mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[new Text(
+                                '$myScore',
+                                style: new TextStyle(
+                                    fontSize: ht > wd ? ht * 0.05 : wd * 0.035,
+                                    fontWeight: FontWeight.bold,
+                                    color: textcolor),
+                              )],
+                        ),
+
+                        gameDisplay == GameDisplay.myHeadToHead ||
+                            gameDisplay == GameDisplay.networkTurnByTurn ||
+                            gameDisplay == GameDisplay.localTurnByTurn
+                        ? new Container(
+                          decoration: new BoxDecoration(
+                        color: textcolor,
+                          borderRadius: new BorderRadius.circular(40.0),
+                          border: new Border.all(
+                            color: textcolor,
+                          ),
+                        ),
+                          child: new Text("V/S",style: new TextStyle(
+                                    fontSize: ht > wd ? ht * 0.05 : wd * 0.035,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white))
+                        ) : new Row(),
+
+
+                        gameDisplay == GameDisplay.myHeadToHead ||
+                            gameDisplay == GameDisplay.networkTurnByTurn ||
+                            gameDisplay == GameDisplay.localTurnByTurn
+                        ? new Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[new Text(
                                     '$otherScore',
                                     style: new TextStyle(
                                         fontSize:
-                                            ht > wd ? ht * 0.05 : wd * 0.05,
+                                            ht > wd ? ht * 0.05 : wd * 0.035,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  )
-                                ]))
-                        : new Row()
+                                        color: textcolor),
+                                  )],
+                        ) : new Row()
+                        ],
+                      )
+                    )]),
+                    new Container()
                   ],
                 ),
 
@@ -313,75 +382,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     children: tablestars2)
                                 : new Row(),
                           ]),
-                      new Row(
-                          mainAxisAlignment:
-                              gameDisplay == GameDisplay.myHeadToHead ||
-                                      gameDisplay ==
-                                          GameDisplay.networkTurnByTurn ||
-                                      gameDisplay == GameDisplay.localTurnByTurn
-                                  ? MainAxisAlignment.spaceAround
-                                  : MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            new Row(
-                                mainAxisAlignment:
-                                    gameDisplay == GameDisplay.myHeadToHead ||
-                                            gameDisplay ==
-                                                GameDisplay.networkTurnByTurn ||
-                                            gameDisplay ==
-                                                GameDisplay.localTurnByTurn
-                                        ? MainAxisAlignment.start
-                                        : MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                    gameDisplay == GameDisplay.myHeadToHead ||
-                                            gameDisplay ==
-                                                GameDisplay.networkTurnByTurn ||
-                                            gameDisplay ==
-                                                GameDisplay.localTurnByTurn
-                                        ? CrossAxisAlignment.start
-                                        : CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  new Text(
-                                    myScore < 13
-                                        ? "Poor"
-                                        : myScore >= 13 && myScore < 26
-                                            ? "Good"
-                                            : myScore >= 26 && myScore < 39
-                                                ? "Very Good"
-                                                : "Excellent",
-                                    style: new TextStyle(
-                                      color: Colors.black,
-                                      fontSize: ht > wd ? ht * 0.05 : wd * 0.04,
-                                    ),
-                                  )
-                                ]),
-                            gameDisplay == GameDisplay.myHeadToHead ||
-                                    gameDisplay ==
-                                        GameDisplay.networkTurnByTurn ||
-                                    gameDisplay == GameDisplay.localTurnByTurn
-                                ? new Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: <Widget>[
-                                        new Text(
-                                          otherScore < 13
-                                              ? "Poor"
-                                              : otherScore >= 13 &&
-                                                      otherScore < 26
-                                                  ? "Good"
-                                                  : otherScore >= 26 &&
-                                                          otherScore < 39
-                                                      ? "Very Good"
-                                                      : "Excellent",
-                                          style: new TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                ht > wd ? ht * 0.05 : wd * 0.04,
-                                          ),
-                                        )
-                                      ])
-                                : new Row(),
-                          ]),
+                      
                     ],
                   ),
                 ),
@@ -389,7 +390,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                 // Icons which redirect to home, refresh and fast-forward
                 new ScaleTransition(
                     scale: buttoncontroller,
-                    child: new Row(
+                    child: new Container(
+                      color: textcolor,
+                      child: new Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -417,13 +420,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                               }
                             }),
                       ],
-                    )),
-
-                ht > wd
-                    ? new Padding(
-                        padding: new EdgeInsets.all(ht * 0.001),
-                      )
-                    : new Padding(padding: new EdgeInsets.all(0.0)),
+                    ))),
               ],
             )));
       }),
