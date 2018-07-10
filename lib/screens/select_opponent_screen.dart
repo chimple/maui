@@ -122,7 +122,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: secondColor,
-                            child: Text('Family')),
+                            child: Text(Loca.of(context).family)),
                       ],
                     ),
                   ),
@@ -145,7 +145,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: thirdColor,
-                            child: Text('Friends')),
+                            child: Text(Loca.of(context).friends)),
                       ],
                     ),
                   ),

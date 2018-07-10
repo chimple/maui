@@ -159,5 +159,15 @@
   "@circle_word": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+    "family": "Familia",
+    "@family": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "friends": "Marafiki",
+    "@friends": {
+      "type": "text",
+      "placeholders": {}
+    }
 }
