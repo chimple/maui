@@ -2,7 +2,6 @@ name: maui
 description: Literacy application for children
 
 dependencies:
-  flutter_sticky_header: "^0.1.0"
   flutter:
     sdk: flutter
 
