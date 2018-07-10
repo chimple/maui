@@ -21,9 +21,13 @@ dependencies:
   nima: 1.0.0
   flutter_local_notifications: 0.3.3
   badge: 0.0.2
+  intl: 0.15.6
+  intl_translation: 0.16.8
   flores:
     git:
       https://github.com/chimple/flores.git
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -5,6 +5,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:badge/badge.dart';
+import 'package:maui/loca.dart';
 
 class GameListView extends StatefulWidget {
   const GameListView({Key key}) : super(key: key);
@@ -83,7 +84,7 @@ class GameListViewState extends State<GameListView> {
                 ),
                 child: new Center(
                     child: new Text(
-                  displayName,
+                  Loca.of(context).intl(gameName),
                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
                   overflow: TextOverflow.ellipsis,
                 ))),

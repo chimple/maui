@@ -3,6 +3,7 @@ import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/story/story_list_view.dart';
+import 'package:maui/loca.dart';
 
 class TabHome extends StatefulWidget {
   final String title;
@@ -40,50 +41,49 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     MediaQueryData media = MediaQuery.of(context);
     var _size = media.size;
     return new Scaffold(
-          drawer: new ProfileDrawer(),
-          floatingActionButton: new FloatingActionButton(
-              onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-              child: new Image.asset('assets/koala_neutral.png')),
-          body: new NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                new SliverAppBar(
-                  backgroundColor: _myHandler.color,
-                  pinned: true,
-                  leading: new ProfileDrawerIcon(),
-                  title: new Text("Maui"),
-                  expandedHeight: _size.height * .3,
-                  // title: const Text('Maui App Testing'),
-                  // centerTitle: true,
-                  forceElevated: innerBoxIsScrolled,
-                  // floating: true,
-                  flexibleSpace: new FlexibleSpaceBar(
-                    background: new FittedBox(
-                      child: new Image.asset(
-                        '${_myHandler.img}',
-                        scale: .3,
-                      ),
-                    ),
-                    centerTitle: true,
-                  ),
-                  bottom: new TabBar(
-                    controller: _controller,
-                    unselectedLabelColor: Colors.blue,
-                    tabs: <Tab>[
-                      new Tab(text: 'Chat'),
-                      new Tab(text: 'Game')
-                    ],
+      drawer: new ProfileDrawer(),
+      floatingActionButton: new FloatingActionButton(
+          onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
+          child: new Image.asset('assets/koala_neutral.png')),
+      body: new NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            new SliverAppBar(
+              backgroundColor: _myHandler.color,
+              pinned: true,
+              leading: new ProfileDrawerIcon(),
+              title: new Text(Loca.of(context).title),
+              expandedHeight: _size.height * .3,
+              // title: const Text('Maui App Testing'),
+              // centerTitle: true,
+              forceElevated: innerBoxIsScrolled,
+              // floating: true,
+              flexibleSpace: new FlexibleSpaceBar(
+                background: new FittedBox(
+                  child: new Image.asset(
+                    '${_myHandler.img}',
+                    scale: .3,
                   ),
                 ),
-              ];
-            },
-            body: new TabBarView(
-              controller: _controller,
-              children: <Widget>[new FriendListView(), new GameListView()],
+                centerTitle: true,
+              ),
+              bottom: new TabBar(
+                controller: _controller,
+                unselectedLabelColor: Colors.blue,
+                tabs: <Tab>[
+                  new Tab(text: Loca.of(context).chat),
+                  new Tab(text: Loca.of(context).game)
+                ],
+              ),
             ),
-          ),
-        );
+          ];
+        },
+        body: new TabBarView(
+          controller: _controller,
+          children: <Widget>[new FriendListView(), new GameListView()],
+        ),
+      ),
+    );
   }
 }
 

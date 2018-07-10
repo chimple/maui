@@ -1,0 +1,163 @@
+{
+  "@@last_modified": "2018-07-10T14:54:21.472395",
+  "title": "Maui",
+  "@title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chat": "Chat",
+  "@chat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "game": "Game",
+  "@game": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reflex": "Reflex",
+  "@reflex": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "order_it": "Order It",
+  "@order_it": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "memory": "Memory",
+  "@memory": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "draw_challenge": "draw_challenge",
+  "@draw_challenge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "abacus": "Abacus",
+  "@abacus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "crossword": "Crossword",
+  "@crossword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawing": "drawing",
+  "@drawing": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "fill_in_the_blanks": "Fill In The Blanks",
+  "@fill_in_the_blanks": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "calculate_numbers": "Calculate",
+  "@calculate_numbers": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "casino": "Casino",
+  "@casino": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "match_the_following": "Match",
+  "@match_the_following": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bingo": "Bingo",
+  "@bingo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "true_or_false": "True Or False",
+  "@true_or_false": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tables": "Tables",
+  "@tables": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "identify": "identify",
+  "@identify": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "picture_sentence": "Picture Sentence",
+  "@picture_sentence": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "fill_number": "Fill Number",
+  "@fill_number": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quiz": "Quiz",
+  "@quiz": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "connect_the_dots": "Connect The Dots",
+  "@connect_the_dots": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tap_home": "Tap Home",
+  "@tap_home": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tap_wrong": "Tap Wrong",
+  "@tap_wrong": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "guess": "guess",
+  "@guess": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "clue_game": "Clue",
+  "@clue_game": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wordgrid": "Word Grid",
+  "@wordgrid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "spin_wheel": "Spin The Wheel",
+  "@spin_wheel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "first_word": "First Word",
+  "@first_word": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "friend_word": "Friend Word",
+  "@friend_word": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dice": "Dice",
+  "@dice": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "circle_word": "Circle Word",
+  "@circle_word": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
