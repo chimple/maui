@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-07-10T14:54:21.472395",
+  "@@last_modified": "2018-07-10T15:58:27.590273",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -15,7 +15,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "reflex": "Reflex",
+  "reflex": "reflex",
   "@reflex": {
     "type": "text",
     "placeholders": {}
@@ -157,6 +157,16 @@
   },
   "circle_word": "Circle Word",
   "@circle_word": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "family": "Family",
+  "@family": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "friends": "Friends",
+  "@friends": {
     "type": "text",
     "placeholders": {}
   }

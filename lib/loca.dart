@@ -59,6 +59,8 @@ class Loca {
   String get friend_word => Intl.message('Friend Word', name: 'friend_word');
   String get dice => Intl.message('Dice', name: 'dice');
   String get circle_word => Intl.message('Circle Word', name: 'circle_word');
+  String get family => Intl.message('Family', name: 'family');
+  String get friends => Intl.message('Friends', name: 'friends');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {
