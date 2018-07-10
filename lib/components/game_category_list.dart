@@ -61,23 +61,41 @@ class _GameCategoryList extends State<GameCategoryList> {
   ];
   static final List<Color> tileColors = [];
   int count = 0;
-  List<int> conceptId = [];
-  List<int> uniqueId = [];
+  List<int> conceptid = [];
+  List<int> unique = [];
   List<String> name = [];
   Set<int> list;
+  Set<int> list1;
+  Set<String> list2;
+  List<String> listname = [
+    'Upper Case Letters',
+    'lower Case Letters',
+    'Upper Case Letters to Lower Case Letters',
+    'word with Upper Case Letters',
+    'word with lower Case Letters',
+    'concepts'
+  ];
+  List<Tuple3<int, int, String>> subGroup;
+  List<Tuple3<int, int, String>> subGroup1;
   @override
   void initState() {
     super.initState();
     int categoriesLength = widget.gameCategories.length;
     widget.gameCategories
-        .map((f) => uniqueId.add(f.item1))
+        .map((f) => unique.add(f.item1))
         .toList(growable: false);
     widget.gameCategories
-        .map((f) => conceptId.add(f.item2))
+        .map((f) => conceptid.add(f.item2))
         .toList(growable: false);
     widget.gameCategories.map((f) => name.add(f.item3)).toList(growable: false);
-    list = Set.from(conceptId);
+    list = Set.from(conceptid);
+    print("gameCategories:::::::::::::${widget.gameCategories}");
+    subGroup = widget.gameCategories.sublist(0, 6);
+    subGroup1 = widget.gameCategories.sublist(3, 30);
     print("Length of categories::$list");
+    print("gameCategories================$subGroup");
+
+    print('list name is $listname');
     for (int i = 0; i < categoriesLength + 1; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
@@ -121,20 +139,46 @@ class _GameCategoryList extends State<GameCategoryList> {
                   alignment: Alignment.center,
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: widget.gameCategories
+                    children: subGroup
                         .map((gameCategory) => Container(
-                              color: tileColors[j++],
-                              child: FlatButton(
-                                onPressed: () => goToGame(
-                                    context,
-                                    widget.game,
-                                    gameCategory.item1,
-                                    widget.gameDisplay,
-                                    widget.gameMode,
-                                    otherUser: widget.otherUser),
-                                child: Text(gameCategory.item3),
-                              ),
-                            ))
+                            color: tileColors[j++],
+                            child: gameCategory.item2 == 3 ||
+                                    gameCategory.item2 == 4 ||
+                                    gameCategory.item2 == 5
+                                ? ExpansionTile(
+                                    title: new Text(
+                                      'A',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 34.0,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    children: subGroup1
+                                        .map((gameCategory) => Container(
+                                              child: ListTile(
+                                                title: Text(gameCategory.item3),
+                                                onTap: () => goToGame(
+                                                    context,
+                                                    widget.game,
+                                                    gameCategory.item1,
+                                                    widget.gameDisplay,
+                                                    widget.gameMode,
+                                                    otherUser:
+                                                        widget.otherUser),
+                                              ),
+                                            ))
+                                        .toList(growable: false),
+                                  )
+                                : FlatButton(
+                                    onPressed: () => goToGame(
+                                        context,
+                                        widget.game,
+                                        gameCategory.item1,
+                                        widget.gameDisplay,
+                                        widget.gameMode,
+                                        otherUser: widget.otherUser),
+                                    child: Text(gameCategory.item3),
+                                  )))
                         .toList(growable: false),
                   ));
             },
