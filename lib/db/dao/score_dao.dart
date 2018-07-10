@@ -24,14 +24,17 @@ class ScoreDao {
 
   Future<Map<String, int>> getScoreCountByUser(String userId,
       {Database db}) async {
+        print('ScoreDao: $userId');
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Score.table,
-        columns: [Score.gameCol, 'sum(${Score.myScoreCol}'],
+        columns: [Score.gameCol, 'sum(${Score.myScoreCol})'],
         where: "${Score.myUserCol} = ?",
-        groupBy: '${Score.gameCol}');
+        groupBy: '${Score.gameCol}',
+        whereArgs: [userId]);
     Map<String, int> returnMap = Map<String, int>();
+    print('ScoreDao: $maps');
     maps.forEach(
-        (n) => returnMap[n[Score.gameCol]] = n['sum(${Score.myScoreCol}']);
+        (n) => returnMap[n[Score.gameCol]] = n['sum(${Score.myScoreCol})']);
     return returnMap;
   }
 
