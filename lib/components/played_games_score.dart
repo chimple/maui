@@ -6,16 +6,16 @@ import 'package:maui/state/app_state_container.dart';
 
 class PlayedGamesScoreDisplay extends StatefulWidget {
   @override
-  RandomState createState() {
-    return new RandomState();
+  PlayedGamesScoreDisplayState createState() {
+    return new PlayedGamesScoreDisplayState();
   }
 }
 
-class RandomState extends State<PlayedGamesScoreDisplay> {
+class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, int> _scores;
-   Map<String, List<Color>> game ;
-   List<String> gameName;
+  Map<String, List<Color>> game ;
+  List<String> gameName;
   @override
     void initState() {
       super.initState();
@@ -23,7 +23,7 @@ class RandomState extends State<PlayedGamesScoreDisplay> {
     }
 
     void _initData() async {
-    _isLoading = true;
+    setState(() => _isLoading = true);
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Map<String, int> fetchData = await ScoreRepo().getScoreCountByUser(loggedInUser.id);
     print("Fetched Data ${fetchData}");
@@ -35,9 +35,12 @@ class RandomState extends State<PlayedGamesScoreDisplay> {
 
   @override
  Widget build(BuildContext context) {  
-    if(_isLoading) {
-      //return a spinner
-      return Container();
+     if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
     }
     List<Widget> scoreWidgets = List<Widget>();
     _scores.forEach((k, v) {
