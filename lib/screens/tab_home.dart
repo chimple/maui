@@ -7,9 +7,8 @@ import 'package:maui/screens/game_list_view.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
-  final String title;
 
-  TabHome({Key key, this.title}) : super(key: key);
+  TabHome({Key key}) : super(key: key);
 
   @override
   TabHomeState createState() {
@@ -89,14 +88,13 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
               backgroundColor: _myHandler.color,
               pinned: true,
               actions: <Widget>[
-                new AnimatedTabIcon(
-                  color: _myHandler.color,
-                  img: _myHandler.img,
-                  animation: animateImage,
-                ),
+                new ShowIcon(
+                    color: _myHandler.color,
+                    img: _myHandler.img,
+                  ),
               ],
               leading: new ProfileDrawerIcon(),
-              title: new Text(widget.title),
+              title: new Text("Maui"),
               expandedHeight: _size.height * .3,
               // centerTitle: true,
               forceElevated: innerBoxIsScrolled,
@@ -158,30 +156,26 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   }
 }
 
-class AnimatedTabIcon extends AnimatedWidget {
-  AnimatedTabIcon({
+class ShowIcon extends StatelessWidget {
+  ShowIcon({
     Key key,
     Animation<double> animation,
     AnimationController controller,
     this.color,
     this.img,
-  }) : super(key: key, listenable: animation);
+  }) : super(key: key);
 
   final Color color;
   final String img;
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
     return new Container(
       // height: 10.0,
       width: 60.0,
-      child: new ScaleTransition(
-        scale: animation,
-        child: new Image(
+      child: new Image(
           image: AssetImage(img),
           fit: BoxFit.fill,
         ),
-      ),
       decoration: new BoxDecoration(
         // color:  color,
         shape: BoxShape.circle,
