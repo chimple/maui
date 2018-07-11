@@ -7,8 +7,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class FriendWord extends StatefulWidget {
   Function onScore;
@@ -19,17 +18,18 @@ class FriendWord extends StatefulWidget {
   bool isRotated;
   FriendWord(
       {key,
-        this.onScore,
-        this.onProgress,
-        this.onEnd,
-        this.iteration,
-        this.isRotated = false,
-        this.gameConfig})
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.isRotated = false,
+      this.gameConfig})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new FriendWordState();
 }
+
 enum Status { Active, Visible, Disappear }
 
 class FriendWordState extends State<FriendWord> {
@@ -39,9 +39,9 @@ class FriendWordState extends State<FriendWord> {
   var keys = 0;
   List<int> clicks = [];
   static int _size = 5;
-  List<String> data = ['' , '' , '' , '' , '' , '' , '' , '' , ''];
+  List<String> data = ['', '', '', '', '', '', '', '', ''];
   List<String> _rightwords = [];
-  List<String> dragData = ['c' , 'a' , 't' , 'b' , 'g' , 'r' , 't' , 'y' , 'u'];
+  List<String> dragData = ['c', 'a', 't', 'b', 'g', 'r', 't', 'y', 'u'];
   List<int> _starList = new List();
   List<int> _flag = new List();
   List<String> _data1 = new List();
@@ -50,17 +50,12 @@ class FriendWordState extends State<FriendWord> {
   List _center = [];
   String Cword = '';
   String Rword = '';
-  var L , R;
-  var i = 0 ,
-      j = 0;
+  var L, R;
+  var i = 0, j = 0;
   var counter = 0;
-  var row , col;
-  int _rows , _cols , code , dindex , dcode;
-  var Top = _size ,
-      Bot = _size ,
-      Lef = 1 ,
-      Rig = 1 ,
-      point = 0;
+  var row, col;
+  int _rows, _cols, code, dindex, dcode;
+  var Top = _size, Bot = _size, Lef = 1, Rig = 1, point = 0;
   List<Status> _statuses;
   List<Status> _dragStatus;
   static var median1 = (_size - 1) / 2;
@@ -68,7 +63,7 @@ class FriendWordState extends State<FriendWord> {
   int median = k;
   int center = (k * _size) + k;
   List<String> arr = new List<String>();
-  var _referenceMatrix = new List.generate(_size , (_) => new List(_size));
+  var _referenceMatrix = new List.generate(_size, (_) => new List(_size));
 
   @override
   void initState() {
@@ -134,19 +129,19 @@ class FriendWordState extends State<FriendWord> {
     _starList.forEach((e) {
       arr[e] = "*";
     });
-    _statuses = arr.map((e)=> Status.Visible).toList(growable: false);
-    _dragStatus = dragData.map((e)=> Status.Disappear).toList(growable: false);
+    _statuses = arr.map((e) => Status.Visible).toList(growable: false);
+    _dragStatus = dragData.map((e) => Status.Disappear).toList(growable: false);
     print("the satus $_statuses");
-    print("this is drag status $_dragStatus"    );
+    print("this is drag status $_dragStatus");
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(int index , String text,Status status) {
+  Widget _buildItem(int index, String text, Status status) {
     return new MyButton(
-        key: new ValueKey<int>(index) ,
-        index: index ,
-        text: text ,
-        color1: 1 ,
+        key: new ValueKey<int>(index),
+        index: index,
+        text: text,
+        color1: 1,
         status: status,
         onAccepted: (dcindex) {
           print("index is .......$dcindex");
@@ -191,12 +186,11 @@ class FriendWordState extends State<FriendWord> {
                 } else if (index == point - 1) {
                   Rword = "$dcindex" + "$Rword";
                 } else if (index == point - Top) {
-                  Cword = "$dcindex"+"$Cword" ;
+                  Cword = "$dcindex" + "$Cword";
                   print("this is new   Cword $Cword");
-                }else if(index == point+Bot){
+                } else if (index == point + Bot) {
                   Cword = "$Cword" + "$dcindex";
                 }
-
               });
             }
 
@@ -204,7 +198,6 @@ class FriendWordState extends State<FriendWord> {
             verticalChecker(Cword);
 //              var Hword = bingoHorizontalChecker(Rword);
 //              print("this is horizontal ${Hword}");
-
           });
 //            if(index == center +1 ){
 //              word = "$word" + "$dcindex";
@@ -234,7 +227,6 @@ class FriendWordState extends State<FriendWord> {
 //            print("this is my _center index2 $_center");
 //            print("this is my _center clicks $clicks");
 //          print("this is my reference $_referenceMatrix");
-
         });
   }
 
@@ -248,9 +240,7 @@ class FriendWordState extends State<FriendWord> {
     print("this is Vertical   ${Vword}");
   }
 
-
-
-   horizontalChecker(String searchWord) {
+  horizontalChecker(String searchWord) {
     bool allChar = true;
     print("this is my search word $searchWord");
     if (searchWord != null) {
@@ -263,8 +253,9 @@ class FriendWordState extends State<FriendWord> {
             print({"the first word i and j": _referenceMatrix[i][j]});
             int searchRow = i;
             int searchColumn = j;
-            for (int charIndex = 0; charIndex < searchWord.length;
-            charIndex++) {
+            for (int charIndex = 0;
+                charIndex < searchWord.length;
+                charIndex++) {
               if (searchRow >= _referenceMatrix.length ||
                   searchColumn >= _referenceMatrix[searchRow].length ||
                   _referenceMatrix[searchRow][searchColumn] !=
@@ -274,8 +265,7 @@ class FriendWordState extends State<FriendWord> {
               searchColumn++;
             }
           }
-          if (allChar)
-            return true;
+          if (allChar) return true;
           return searchWord;
 //        print("hello");
 //        print("this is row ${i}");
@@ -286,8 +276,6 @@ class FriendWordState extends State<FriendWord> {
       return false;
     }
   }
-
-
 
   verticalChecker(String searchWord) {
     bool allChar = true;
@@ -302,8 +290,9 @@ class FriendWordState extends State<FriendWord> {
             print({"the first word i and j": _referenceMatrix[i][j]});
             int searchRow = i;
             int searchColumn = j;
-            for (int charIndex = 0; charIndex < searchWord.length;
-            charIndex++) {
+            for (int charIndex = 0;
+                charIndex < searchWord.length;
+                charIndex++) {
               if (searchRow >= _referenceMatrix.length ||
                   searchColumn >= _referenceMatrix[searchRow].length ||
                   _referenceMatrix[searchRow][searchColumn] !=
@@ -313,8 +302,7 @@ class FriendWordState extends State<FriendWord> {
               searchColumn++;
             }
           }
-          if (allChar)
-            return true;
+          if (allChar) return true;
           return searchWord;
 //        print("hello");
 //        print("this is row ${i}");
@@ -329,83 +317,77 @@ class FriendWordState extends State<FriendWord> {
   @override
   Widget build(BuildContext context) {
     print("this is my array $arr");
-    var j = 0 ,
-        k = 0;
-    var rwidth , rheight;
+    var j = 0, k = 0;
+    var rwidth, rheight;
     //  print(constraints.maxHeight);
-    return new LayoutBuilder(builder: (context , constraints) {
-      final hPadding = pow(constraints.maxWidth / 150.0 , 2);
-      final vPadding = pow(constraints.maxHeight / 150.0 , 2);
+    return new LayoutBuilder(builder: (context, constraints) {
+      final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 2);
 
-      final buttonPadding = sqrt(min(maxWidth , maxHeight) / 5);
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context , 1 , maxWidth , maxHeight);
-      AppState state = AppStateContainer
-          .of(context)
-          .state;
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
 
       return new Container(
-          color: Colors.purple[300] ,
+          color: Colors.purple[300],
           child: new Column(
             // portrait mode
             children: <Widget>[
               new Expanded(
                 child: new ResponsiveGridView(
-                  rows: _size ,
-                  cols: _size ,
-                  maxAspectRatio: 1.0 ,
+                  rows: _size,
+                  cols: _size,
+                  maxAspectRatio: 1.0,
                   children: arr
-                      .map((e) =>
-                      Padding(
-                          padding: EdgeInsets.all(buttonPadding) ,
-                          child: _buildItem(j , e,_statuses[j++])))
-                      .toList(growable: false) ,
-                ) ,
-              ) ,
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _buildItem(j, e, _statuses[j++])))
+                      .toList(growable: false),
+                ),
+              ),
               new Container(
                 child: new ResponsiveGridView(
-                  rows: 1 ,
-                  cols: 9 ,
+                  rows: 1,
+                  cols: 9,
                   children: dragData
-                      .map((e) =>
-                      Padding(
-                          padding: EdgeInsets.all(buttonPadding) ,
-                          child: _buildItem(k , e,_dragStatus[k++])))
-                      .toList(growable: false) ,
-                ) ,
-              ) ,
+                      .map((e) => Padding(
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _buildItem(k, e, _dragStatus[k++])))
+                      .toList(growable: false),
+                ),
+              ),
               new Container(
                 child: new RaisedButton(
-                  onPressed:()=> submit(),
-                    child:new Text("SUBMIT"),
-                    splashColor: Colors.orangeAccent,) ,
-
+                  onPressed: () => submit(),
+                  child: new Text("SUBMIT"),
+                  splashColor: Colors.orangeAccent,
+                ),
               )
-            ] ,
-          )
-      );
+            ],
+          ));
     });
   }
 }
 
 class MyButton extends StatefulWidget {
   MyButton(
-      { Key key,
-        this.index,
-        this.text,
-        this.color1,
-        this.flag,
-        this.onAccepted,
-        this.code,
-        this.isRotated,
-        this.img,
-        this.status,
-        this.keys}): super(key: key);
+      {Key key,
+      this.index,
+      this.text,
+      this.color1,
+      this.flag,
+      this.onAccepted,
+      this.code,
+      this.isRotated,
+      this.img,
+      this.status,
+      this.keys})
+      : super(key: key);
   final index;
   final int color1;
   final int flag;
@@ -414,7 +396,7 @@ class MyButton extends StatefulWidget {
   final String text;
   final String img;
   final DragTargetAccept onAccepted;
-  final  Status status;
+  final Status status;
   final keys;
   @override
   _MyButtonState createState() => new _MyButtonState();
@@ -424,7 +406,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animation, animation1;
   String _displayText;
-  String newtext='';
+  String newtext = '';
   var f = 0;
   var i = 0;
   initState() {
@@ -435,8 +417,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 40), vsync: this);
     animation =
-    new CurvedAnimation(parent: controller, curve: Curves.decelerate)
-      ..addStatusListener((state) {});
+        new CurvedAnimation(parent: controller, curve: Curves.decelerate)
+          ..addStatusListener((state) {});
     controller.forward();
     animation1 = new Tween(begin: -5.0, end: 5.0).animate(controller1);
     _myAnim();
@@ -452,14 +434,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controller1.forward();
   }
+
   @override
   void dispose() {
     controller1.dispose();
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (widget.status == Status.Visible && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -470,22 +455,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 child: new Container(
                   decoration: new BoxDecoration(
                     borderRadius:
-                    new BorderRadius.all(new Radius.circular(8.0)),
+                        new BorderRadius.all(new Radius.circular(8.0)),
                   ),
                   child: new DragTarget(
                     onAccept: (String data) => widget.onAccepted(data),
 //                    onWillAccept:(String data) => true,
                     builder: (
-                        BuildContext context,
-                        List<dynamic> accepted,
-                        List<dynamic> rejected,
-                        ) {
+                      BuildContext context,
+                      List<dynamic> accepted,
+                      List<dynamic> rejected,
+                    ) {
                       return new UnitButton(
                         key: new Key('A${widget.keys}'),
                         text: widget.text,
                         bgImage: widget.img,
                         showHelp: false,
-                        highlighted: widget.flag==1?true:false,
+                        highlighted: widget.flag == 1 ? true : false,
                       );
                     },
                   ),
@@ -506,7 +491,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             showHelp: false,
             disabled: true,
           ));
-    } else if (widget.status == Status.Disappear || widget.status == Status.Active) {
+    } else if (widget.status == Status.Disappear ||
+        widget.status == Status.Active) {
       return new Draggable(
         data: '${widget.text}',
         child: new ScaleTransition(
@@ -519,7 +505,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         //  childWhenDragging: new Container(),
         feedback: UnitButton(
           text: widget.text,
-
+          maxHeight: buttonConfig.height,
+          maxWidth: buttonConfig.width,
+          fontSize: buttonConfig.fontSize,
         ),
       );
     } else {
