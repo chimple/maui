@@ -356,7 +356,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new Shake(
             animation: widget.status == Statuses.wrong ? animation1 : animation,
             child: new UnitButton(
-              onPress: widget.onPress,
+              onPress:  widget.status == Statuses.wrong ? (){}:widget.onPress ,
               text: widget.text,
               unitMode: UnitMode.text,
             )));
