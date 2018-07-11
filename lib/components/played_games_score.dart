@@ -14,8 +14,6 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, int> _scores;
-  Map<String, List<Color>> game ;
-  List<String> gameName;
   @override
     void initState() {
       super.initState();
@@ -51,11 +49,17 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
           child: ExpansionTile( 
             leading: Image.asset('assets/hoodie/${k}.png',scale: 5.0,),
             title: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                new Text('$k',textAlign: TextAlign.left, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
-                new Text('$v',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
-              ],
+                new Expanded(
+                  child: new Container(
+                    child: new Text('$k',textAlign: TextAlign.left, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
+                  ),
+                ),
+                new Container(
+                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                  child: new Text('$v',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
+                )
+              ], 
             ),
             children: <Widget>[
                 new Text('Hello World!!'),

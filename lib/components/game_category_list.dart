@@ -10,6 +10,7 @@ import 'user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/loca.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -98,7 +99,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                     )),
               ),
               centerTitle: true,
-              title: new Text(widget.game),
+              title: new Text(Loca.of(context).intl(widget.game)),
             )),
         new SliverList(
           delegate: new SliverChildListDelegate(new List<Widget>.generate(

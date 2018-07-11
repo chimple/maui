@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
@@ -9,17 +10,28 @@ import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'components/camera.dart';
+import 'loca.dart';
 
 class MauiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      localizationsDelegates: [
+        const LocaDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        const FallbackMaterialLocalisationsDelegate()
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('sw', ''),
+      ],
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new LoginScreen(),
-        '/tab': (BuildContext context) => new TabHome(),
+        '/tab': (BuildContext context) => new TabHome(title: "Maui",),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen()
       },

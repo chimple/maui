@@ -282,8 +282,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1 &&
             leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-      correct++;
       widget.onScore(1);
+      correct++;
+
       widget.onProgress(correct / _numButtons);
 
       setState(() {
@@ -342,8 +343,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
 
     if (correct == _numButtons) {
-      widget.onScore(-_wrongAttem);
-      new Future.delayed(const Duration(milliseconds: 0), () {
+      //widget.onScore(-_wrongAttem);
+      new Future.delayed(const Duration(milliseconds: 300), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
