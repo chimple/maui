@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:tuple/tuple.dart';
-
 import 'concept_repo.dart';
 import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
@@ -808,7 +807,7 @@ Future<Tuple2<String, List<String>>> fetchDrawingData(
       break;
     case 7:
       return new Tuple2("flowers",
-          ['rose', 'bike', 'home', 'jasmin']);
+          ['rose', 'television', 'home', 'jasmin']);
       break;
   }
   return null;

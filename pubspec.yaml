@@ -92,13 +92,16 @@ flutter:
     - assets/dice_game/3.png
     - assets/dice_game/4.png
     - assets/dice_game/5.png
-    - assets/dice_game/6.png
+    - assets/dice_game/6.png  
+    - assets/dice_game/brush.png
+    - assets/dice_game/clear.png
+    - assets/dice_game/undo.png
+    - assets/dice_game/send.png
+    - assets/dice_game/paint.png
     - assets/dice_game/color_picker.png
     - assets/dice_game/color_brush.png
-    - assets/dice_game/dice1.gif
     - assets/dice_game/dice4.gif
     - assets/dice_game/tapme.png
-    - assets/dice_game/tapme1.png 
     - assets/games.png
     - assets/chat.png
     - assets/story.png

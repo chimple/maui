@@ -39,6 +39,7 @@ class DrawScreen extends State<Drawing> {
   Tuple2<String, List<String>> drawingData;
   var ansimage;
   int selectedColor = 0xff000000;
+  double selectedWidth = 2.0;
   String drawJson;
   int count = 0;
   List<String> DrawData;
@@ -112,27 +113,24 @@ class DrawScreen extends State<Drawing> {
     MediaQueryData media = MediaQuery.of(context);
     var assetsImage = new AssetImage('assets/dict/${choice[1]}.png');
     List<int> color_val = [
-      0xff00e676,
-      0xffffd54f,
-      0xff2962ff,
-      0xffd50760,
-      0xff00e376,
-      0xffffd68f,
+      0xff76ff03,
+      0xffffff00,
+      0xffd50000,
+      0xffe65100,
+      0xff00bcd4,
+      0xffd500f9,
+      0xff1b5e20,
       0xff000000,
-      0xffd50000
+      0xffc62828
     ];
     List<double> width_val = [
       2.0,
-      3.0,
       4.0,
-      5.0,
       6.0,
       8.0,
-      10.0,
-      12.0,
     ];
     int roundColor;
-
+    
     if (selectedColor == 0xff000000)
       roundColor = 0xff00e676;
     else
@@ -170,33 +168,32 @@ class DrawScreen extends State<Drawing> {
                 new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      new Container(
-                          width: constraints.maxWidth * 0.2,
-                          height: constraints.maxWidth * 0.07,
-                          child: new RaisedButton(
-                            child: new Icon(Icons.clear,
-                                color: Colors.black,
-                                size: constraints.maxWidth * .07),
-                            onPressed: _onClear,
-                          )),
-                      new Container(
-                          width: constraints.maxWidth * 0.2,
-                          height: constraints.maxWidth * 0.07,
-                          child: new RaisedButton(
-                            child: new Icon(Icons.undo,
-                                color: Colors.black,
-                                size: constraints.maxWidth * .07),
-                            onPressed: _onUndo,
-                          )),
-                      new Container(
-                          width: constraints.maxWidth * 0.2,
-                          height: constraints.maxWidth * 0.07,
-                          child: new RaisedButton(
-                            child: new Icon(Icons.send,
-                                color: Colors.black,
-                                size: constraints.maxWidth * .07),
-                            onPressed: _onSend,
-                          )),
+                      new InkWell(
+                        onTap: _onClear,
+                        child: new Container(
+                            child: Image(
+                                height: constraints.maxWidth * .08,
+                                width: constraints.maxWidth * .08,
+                                image: new AssetImage(
+                                    'assets/dice_game/clear.png'))),
+                      ),
+                      new InkWell(
+                          onTap: _onUndo,
+                          child: new Container(
+                              child: Image(
+                                  height: constraints.maxWidth * .08,
+                                  width: constraints.maxWidth * .08,
+                                  image: new AssetImage(
+                                      'assets/dice_game/undo.png')))),
+                      new InkWell(
+                        onTap: _onSend,
+                        child: new Container(
+                            child: Image(
+                                height: constraints.maxWidth * .08,
+                                width: constraints.maxWidth * .08,
+                                image: new AssetImage(
+                                    'assets/dice_game/send.png'))),
+                      ),
                     ]),
                 // ),
                 //),
@@ -209,10 +206,8 @@ class DrawScreen extends State<Drawing> {
                     child: new MyDrawPage(
                       drawJson,
                       _padController,
-
                       // key: new GlobalObjectKey('MyDrawPage')
                     ),
-                    // key: new Key('draw_screen'),
                   ),
                 ),
                 new Row(
@@ -234,7 +229,7 @@ class DrawScreen extends State<Drawing> {
                                   decoration: new BoxDecoration(
                                       image: new DecorationImage(
                                           image: new AssetImage(
-                                              'assets/dice_game/color_picker.png')),
+                                              'assets/dice_game/paint.png')),
                                       color: visibilityWidth
                                           ? Colors.grey[400]
                                           : Colors.grey[800],
@@ -258,7 +253,7 @@ class DrawScreen extends State<Drawing> {
                                   decoration: new BoxDecoration(
                                       image: new DecorationImage(
                                           image: new AssetImage(
-                                              'assets/dice_game/color_brush.png')),
+                                              'assets/dice_game/brush.png')),
                                       color: visibilityWidth
                                           ? Colors.grey[400]
                                           : Colors.grey[800],
@@ -299,24 +294,30 @@ class DrawScreen extends State<Drawing> {
                     ? new Expanded(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // scrollDirection: Axis.horizontal,
                           children: width_val
                               .map((widthValue) => Center(
-                                    child: new Container(
-                                      width: constraints.maxWidth * .05,
-                                      height: constraints.maxHeight * .07,
-                                      decoration: new BoxDecoration(
-                                          image: new DecorationImage(
-                                              image: new AssetImage(
-                                                  'assets/dice_game/color_brush.png')),
-                                          color: Colors.white10,
-                                          shape: BoxShape.circle),
-                                      margin: new EdgeInsets.all(5.0),
-                                      child: new FlatButton(
-                                        onPressed: () =>
-                                            _multiWidth(widthValue),
+                                      child: Container(
+                                    // width: constraints.maxWidth * widthValue/10,
+                                    height: constraints.maxHeight * widthValue,
+                                    child: RawMaterialButton(
+                                      onPressed: () => _multiWidth(widthValue),
+                                      constraints: new BoxConstraints.tightFor(
+                                        width: constraints.maxWidth * .05,
+                                        height: constraints.maxHeight * .07,
+                                      ),
+                                      fillColor: new Color(0xffffffff),
+                                      shape: new CircleBorder(
+                                        side: new BorderSide(
+                                          
+                                          color: widthValue == selectedWidth
+                                              ? Color(0xf0000000)
+                                              : const Color(0xFFD5D7DA),
+                                          width: widthValue,
+                                        ),
                                       ),
                                     ),
-                                  ))
+                                  )))
                               .toList(growable: false),
                         ),
                       )
@@ -366,33 +367,33 @@ class DrawScreen extends State<Drawing> {
                         child: new Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              new Container(
-                                  width: constraints.maxHeight * 0.25,
-                                  height: constraints.maxHeight * 0.1,
-                                  child: new RaisedButton(
-                                    child: new Icon(Icons.clear,
-                                        color: Colors.black,
-                                        size: constraints.maxWidth * .05),
-                                    onPressed: _onClear,
-                                  )),
-                              new Container(
-                                  width: constraints.maxHeight * 0.25,
-                                  height: constraints.maxHeight * 0.1,
-                                  child: new RaisedButton(
-                                    child: new Icon(Icons.undo,
-                                        color: Colors.black,
-                                        size: constraints.maxWidth * .05),
-                                    onPressed: _onUndo,
-                                  )),
-                              new Container(
-                                  width: constraints.maxHeight * 0.25,
-                                  height: constraints.maxHeight * 0.1,
-                                  child: new RaisedButton(
-                                    child: new Icon(Icons.send,
-                                        color: Colors.black,
-                                        size: constraints.maxWidth * .05),
-                                    onPressed: _onSend,
-                                  )),
+                              new InkWell(
+                                onTap: _onClear,
+                                child: new Container(
+                                    child: Image(
+                                        width: constraints.maxHeight * 0.1,
+                                        height: constraints.maxHeight * 0.1,
+                                        image: new AssetImage(
+                                            'assets/dice_game/clear.png'))),
+                              ),
+                              new InkWell(
+                                onTap: _onUndo,
+                                child: new Container(
+                                    child: Image(
+                                        width: constraints.maxHeight * 0.1,
+                                        height: constraints.maxHeight * 0.1,
+                                        image: new AssetImage(
+                                            'assets/dice_game/undo.png'))),
+                              ),
+                              new InkWell(
+                                onTap: _onSend,
+                                child: new Container(
+                                    child: Image(
+                                        width: constraints.maxHeight * 0.1,
+                                        height: constraints.maxHeight * 0.1,
+                                        image: new AssetImage(
+                                            'assets/dice_game/send.png'))),
+                              ),
                             ]),
                       )
                     ])),
@@ -408,8 +409,6 @@ class DrawScreen extends State<Drawing> {
                           color: Colors.grey,
                           width: constraints.maxWidth * .6,
                           height: constraints.maxHeight * 0.75,
-
-                          // otherwise the logo will be tiny
                           child: new MyDrawPage(drawJson, _padController
                               // key: new GlobalObjectKey('MyDrawPage')
                               ),
@@ -428,7 +427,7 @@ class DrawScreen extends State<Drawing> {
                                 _changed(false, "widt");
                               },
                               child: new Container(
-                                margin: new EdgeInsets.only(top: 8.0),
+                                // margin: new EdgeInsets.only(top: 8.0),
                                 child: new Column(
                                   children: <Widget>[
                                     new Container(
@@ -437,7 +436,7 @@ class DrawScreen extends State<Drawing> {
                                         decoration: new BoxDecoration(
                                             image: new DecorationImage(
                                                 image: new AssetImage(
-                                                    'assets/dice_game/color_picker.png')),
+                                                    'assets/dice_game/paint.png')),
                                             color: visibilityWidth
                                                 ? Colors.grey[400]
                                                 : Colors.grey[800],
@@ -456,7 +455,7 @@ class DrawScreen extends State<Drawing> {
                                 _changed(false, "colr");
                               },
                               child: new Container(
-                                margin: new EdgeInsets.only(top: 8.0),
+                                margin: new EdgeInsets.only(top: 5.0),
                                 child: new Column(
                                   children: <Widget>[
                                     new Container(
@@ -465,7 +464,7 @@ class DrawScreen extends State<Drawing> {
                                         decoration: new BoxDecoration(
                                             image: new DecorationImage(
                                                 image: new AssetImage(
-                                                    'assets/dice_game/color_brush.png')),
+                                                    'assets/dice_game/brush.png')),
                                             color: visibilityWidth
                                                 ? Colors.grey[400]
                                                 : Colors.grey[800],
@@ -520,7 +519,7 @@ class DrawScreen extends State<Drawing> {
                                             decoration: new BoxDecoration(
                                                 image: new DecorationImage(
                                                     image: new AssetImage(
-                                                        'assets/dice_game/color_brush.png')),
+                                                        'assets/dice_game/brush.png')),
                                                 color: Colors.white10,
                                                 shape: BoxShape.circle),
                                             // child: new Text("$width_val"),
@@ -568,11 +567,13 @@ class DrawScreen extends State<Drawing> {
     var jsonData = _padController.send();
     print({"json data is : ": jsonData});
     drawJson = jsonData;
-    setState(() {
-      widget.onEnd(toJsonMap(), false);
-      widget.onScore(10);
-    });
-
+    if (jsonData != null) {
+      setState(() {
+        widget.onEnd(toJsonMap(), false);
+        widget.onScore(10);
+        widget.onProgress(1.0);
+      });
+    }
     // setState(() {
     //   navVal = 1;
     // });
@@ -589,6 +590,9 @@ class DrawScreen extends State<Drawing> {
 
   void _multiWidth(widthValue) {
     _padController.multiWidth(widthValue);
+    setState(() {
+      selectedWidth = widthValue;
+    });
     // _changed(false, "widt");
     print({"this is _multiWidth methode": widthValue});
   }
