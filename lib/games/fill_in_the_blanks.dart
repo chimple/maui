@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
 
@@ -51,17 +51,19 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     super.initState();
     _initFillBlanks();
   }
+
   int count = 0;
   int dragcount = 0;
   int progres = 0;
   int space = 0;
   @override
   void didUpdateWidget(FillInTheBlanks oldWidget) {
-         super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
-             _initFillBlanks();
+      _initFillBlanks();
     }
   }
+
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
@@ -99,10 +101,8 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
     }
-     for(int i =0; i< dragBoxData.length;i++)
-    {
-      if(dropTargetData[i].isEmpty)
-      {
+    for (int i = 0; i < dragBoxData.length; i++) {
+      if (dropTargetData[i].isEmpty) {
         _correct.add(dragBoxData[i]);
         _correct.add(i);
       }
@@ -110,11 +110,12 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isEmpty) dropTargetData[j] = '_';
     }
-   
+
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
     setState(() => _isLoading = false);
   }
+
   String data;
   Widget droptarget(int index, String text, int flag) {
     return new MyButton(
@@ -129,34 +130,34 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           dindex = int.parse(dragdata.substring(0, 3));
           dcode = int.parse(dragdata.substring(4));
           if (code == dcode) {
-             var i = 0;
-                  for (; i < _correct.length; i++) {
-                    if (dragBoxData[dindex - 100] == _correct[i] &&
-                        index == _correct[++i] &&
-                        dropTargetData[index] == '_') {
-                      flag1 = 1;
-                       break;
-                    }
-                  }
-              if (flag1 == 1) {
-                print('correct');
-                progres++;
-                widget.onProgress(progres / space);
-                dropTargetData[index] = _correct[--i];
-              } else {
-                if (dropTargetData[index] == '_') {
-                  dragcount++;
-                    widget.onScore(-1);
-                }
+            var i = 0;
+            for (; i < _correct.length; i++) {
+              if (dragBoxData[dindex - 100] == _correct[i] &&
+                  index == _correct[++i] &&
+                  dropTargetData[index] == '_') {
+                flag1 = 1;
+                break;
               }
-              if (progres == space) {
-                widget.onScore(4);
-                new Future.delayed(const Duration(milliseconds: 400), () {
-                  setState(() {
-                    _isShowingFlashCard = true;
-                  });
+            }
+            if (flag1 == 1) {
+              print('correct');
+              progres++;
+              widget.onProgress(progres / space);
+              dropTargetData[index] = _correct[--i];
+            } else {
+              if (dropTargetData[index] == '_') {
+                dragcount++;
+                widget.onScore(-1);
+              }
+            }
+            if (progres == space) {
+              widget.onScore(4);
+              new Future.delayed(const Duration(milliseconds: 400), () {
+                setState(() {
+                  _isShowingFlashCard = true;
                 });
-              }
+              });
+            }
             if (dragcount == space + 2) {
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
@@ -210,6 +211,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
   }
+
   @override
   Widget build(BuildContext context) {
     keys = 0;
@@ -238,7 +240,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      double maxWidth =0.0 ,maxHeight =0.0; 
+      double maxWidth = 0.0, maxHeight = 0.0;
       maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
       var j = 0, k = 100, h = 0, a = 0;
@@ -246,41 +248,40 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
       return new Flex(
-         direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Expanded(
-              flex: 1,
-              child: new Container(
-                color: new Color(0xffffa3bc8b),
-                child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: dropTargetData.length,
-                  maxAspectRatio: 1.0,
-                  children: dropTargetData
-                      .map((e) => Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: droptarget(j++, e, _flag[h++])))
-                      .toList(growable: false),
-                ),
+        direction: Axis.vertical,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Expanded(
+            flex: 1,
+            child: new Container(
+              color: new Color(0xffffa3bc8b),
+              child: new ResponsiveGridView(
+                rows: 1,
+                cols: dropTargetData.length,
+                maxAspectRatio: 1.0,
+                children: dropTargetData
+                    .map((e) => Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: droptarget(j++, e, _flag[h++])))
+                    .toList(growable: false),
               ),
             ),
-            new Expanded(
-              flex: 2,
-              child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: dragBoxData.length,
-                  maxAspectRatio: 1.0,
-                  padding: 10.0,
-                  children: dragBoxData
-                      .map((e) => Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: dragbox(k++, e, _flag[a++])))
-                      .toList(growable: false)),
-            ),
-          ],
+          ),
+          new Expanded(
+            flex: 2,
+            child: new ResponsiveGridView(
+                rows: 1,
+                cols: dragBoxData.length,
+                maxAspectRatio: 1.0,
+                padding: 10.0,
+                children: dragBoxData
+                    .map((e) => Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: dragbox(k++, e, _flag[a++])))
+                    .toList(growable: false)),
+          ),
+        ],
       );
     });
   }
@@ -335,12 +336,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller.forward();
     shake();
   }
+
   @override
   void dispose() {
     controller.dispose();
     controllerShake.dispose();
     super.dispose();
   }
+
   void shake() {
     animationShake.addStatusListener((state) {
       if (state == AnimationStatus.completed) {
@@ -351,8 +354,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     });
     controllerShake.forward();
   }
+
   @override
   Widget build(BuildContext context) {
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     widget.keys++;
     if (widget.index < 100) {
       return new Shake(
@@ -392,6 +397,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               angle: 0.2,
               child: new UnitButton(
                 text: widget.text,
+                maxHeight: buttonConfig.height,
+                maxWidth: buttonConfig.width,
+                fontSize: buttonConfig.fontSize,
               ),
             )),
       );

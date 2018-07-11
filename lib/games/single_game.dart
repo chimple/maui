@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/nima.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
@@ -330,8 +331,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 new Column(verticalDirection: VerticalDirection.up, children: <
                     Widget>[
                   new Expanded(
-                      child:
-                          SlideTransition(position: _animation, child: game)),
+                      child: SlideTransition(
+                          position: _animation,
+                          child: ButtonStateContainer(child: game))),
                   SizedBox(
                       height: media.size.height / 8.0,
                       child: Material(
@@ -652,7 +654,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
-      maxIterations = 1;
+        maxIterations = 1;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
