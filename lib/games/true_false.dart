@@ -8,9 +8,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
-
+import 'package:maui/state/button_state_container.dart';
 
 class TrueFalseGame extends StatefulWidget {
   Function onScore;
@@ -67,7 +65,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
     print(_allques.item3);
     tf = _allques.item3;
     choice = ['true', 'false'];
-     _statuses = choice.map((a) => Status.Active).toList(growable: false);
+    _statuses = choice.map((a) => Status.Active).toList(growable: false);
     ans = tf == true ? 'true' : 'false';
     setState(() => _isLoading = false);
   }
@@ -96,7 +94,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 _statuses[index] = Status.Active;
               });
             });
-            
+
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
@@ -106,7 +104,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
           }
         });
   }
-  
 
   @override
   void didUpdateWidget(TrueFalseGame oldWidget) {
@@ -137,7 +134,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
         ? choice.fold(
             1, (prev, element) => element.length > prev ? element.length : prev)
         : 1);
-    int j =0;
+    int j = 0;
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -150,39 +147,43 @@ class TrueFalseGameState extends State<TrueFalseGame> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
       double ht = constraints.maxHeight;
       double wd = constraints.maxWidth;
       print("My Height - $ht");
       print("My Width - $wd");
       return new Column(
-          children: <Widget>[
-            
-            new Column(
+        children: <Widget>[
+          new Column(
               verticalDirection: VerticalDirection.up,
               children: <Widget>[
                 new Material(
+                    color: Theme.of(context).accentColor,
+                    elevation: 4.0,
+                    child: new LimitedBox(
+                        maxHeight: maxHeight,
+                        maxWidth: maxWidth,
+                        child: new Material(
+                            color: Theme.of(context).accentColor,
+                            elevation: 4.0,
+                            textStyle: new TextStyle(
+                                color: Colors.orangeAccent,
+                                fontSize: buttonConfig.fontSize),
+                            child: new Container(
+                                padding: EdgeInsets.all(buttonPadding),
+                                child: new Center(
+                                  child: new UnitButton(
+                                    text: "$questionText",
+                                    primary: true,
+                                    unitMode:
+                                        widget.gameConfig.questionUnitMode,
+                                  ),
+                                ))))),
+                new Material(
                   color: Theme.of(context).accentColor,
-                  elevation: 4.0,
+                  elevation: 8.0,
                   child: new LimitedBox(
-                    maxHeight: maxHeight,
-                    maxWidth: maxWidth,
-                    child: new Material(
-                        color: Theme.of(context).accentColor,
-                        elevation: 4.0,
-                        textStyle: new TextStyle(
-                            color: Colors.orangeAccent,
-                            fontSize: state.buttonFontSize),
-                        child: new Container(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: new Center(
-                              child: new UnitButton(text:"$questionText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
-                            ))))),
-                    new Material(
-                      color: Theme.of(context).accentColor,
-                      elevation: 8.0,
-                      child: new LimitedBox(
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
                       child: new Material(
@@ -190,27 +191,30 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                           elevation: 4.0,
                           textStyle: new TextStyle(
                               color: Colors.orangeAccent,
-                              fontSize: state.buttonFontSize),
+                              fontSize: buttonConfig.fontSize),
                           child: new Container(
                               padding: EdgeInsets.all(buttonPadding),
                               child: new Center(
-                                child: new UnitButton(text:"$answerText",primary: true,unitMode: widget.gameConfig.questionUnitMode,),
+                                child: new UnitButton(
+                                  text: "$answerText",
+                                  primary: true,
+                                  unitMode: widget.gameConfig.questionUnitMode,
+                                ),
                               )))),
-                    )]),
-                    
-                new Expanded(
-                  child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: 2,
-                  children: choice
-                      .map((e) => new Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(_statuses[j], j++, e),
-                          ))
-                      .toList(growable: false),
-                ))
-            
-          ],
+                )
+              ]),
+          new Expanded(
+              child: new ResponsiveGridView(
+            rows: 1,
+            cols: 2,
+            children: choice
+                .map((e) => new Padding(
+                      padding: EdgeInsets.all(buttonPadding),
+                      child: _buildItem(_statuses[j], j++, e),
+                    ))
+                .toList(growable: false),
+          ))
+        ],
       );
     });
   }
@@ -297,40 +301,39 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new ScaleTransition(
             scale: animation,
             child: new GestureDetector(
-              onLongPress: () {
-                showDialog(
-                    context: context,
-                    child: new FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.8,
-                        child: new FlashCard(text: widget.text)));
-              },
-              // child: new UnitButton(
-              //   onPress: () => widget.onPress(),
-              //   text: _displayText,
-              //   unitMode: widget.unitMode,
-               child: new Container(
-                 decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(20.0),
-                  border: new Border.all(
-                    width: 6.0,
-                    color: _displayText == 'true' ? Colors.green : Colors.red,
+                onLongPress: () {
+                  showDialog(
+                      context: context,
+                      child: new FractionallySizedBox(
+                          heightFactor: 0.5,
+                          widthFactor: 0.8,
+                          child: new FlashCard(text: widget.text)));
+                },
+                // child: new UnitButton(
+                //   onPress: () => widget.onPress(),
+                //   text: _displayText,
+                //   unitMode: widget.unitMode,
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(20.0),
+                    border: new Border.all(
+                      width: 6.0,
+                      color: _displayText == 'true' ? Colors.green : Colors.red,
+                    ),
                   ),
-                ),
-               child: new FlatButton(
-                   onPressed: () => widget.onPress(),
-                   color: Colors.transparent,
-                   shape: new RoundedRectangleBorder(
-                       borderRadius: const BorderRadius.all(const Radius.circular(8.0))),
-                   child: new Icon(
-                  _displayText == 'true' ? Icons.check : Icons.close,
-                  key: new Key("${widget.keys}"),
-                  size: ht > wd ? ht * 0.15 : wd * 0.15,
-                  color: _displayText == 'true' ? Colors.green : Colors.red,
-                   )
-                   
-              ),)
-            )));
+                  child: new FlatButton(
+                      onPressed: () => widget.onPress(),
+                      color: Colors.transparent,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: const BorderRadius.all(
+                              const Radius.circular(8.0))),
+                      child: new Icon(
+                        _displayText == 'true' ? Icons.check : Icons.close,
+                        key: new Key("${widget.keys}"),
+                        size: ht > wd ? ht * 0.15 : wd * 0.15,
+                        color:
+                            _displayText == 'true' ? Colors.green : Colors.red,
+                      )),
+                ))));
   }
 }
-
