@@ -8,6 +8,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 
 class Reflex extends StatefulWidget {
@@ -192,7 +193,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
       return new Column(
         children: <Widget>[
@@ -205,7 +206,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
                       reverse: true,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.all(buttonPadding),
-                      itemExtent: state.buttonWidth,
+                      itemExtent: buttonConfig.width,
                       children: _solvedLetters
                           .map((l) => Center(
                               child: Padding(
