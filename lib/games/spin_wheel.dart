@@ -782,8 +782,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                                       noOfSlice: dataSize,
                                       images: images,
                                       rotation: rotationPercent),
-                            )
-                            )),
+                            ))),
                   ),
                 )),
                 new ScaleTransition(

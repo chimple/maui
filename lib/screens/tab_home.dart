@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
@@ -107,6 +108,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
+    SystemChrome.setPreferredOrientations([]);
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),

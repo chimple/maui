@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/camera.dart';
 import 'package:maui/components/user_list.dart';
@@ -74,10 +75,18 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Orientation ornt;
+  @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    print("user satish::$imagePathStore");
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return (user != null)
         ? new TabHome()
         : new Scaffold(
@@ -180,7 +189,6 @@ class _LoginScreenState extends State<LoginScreen>
 
   _onTyping(String name) {
     userName = name;
-    print('user name:: $userName');
   }
 
   _submit(String name) {
@@ -191,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tabSreen() async {
-    if (imagePathStore != null && userName != null) {
+    if (imagePathStore != null && userName != '' && userName != null) {
       var user = await new UserRepo().insertLocalUser(
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
