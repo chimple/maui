@@ -9,8 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Quiz extends StatefulWidget {
   Function onScore;
@@ -160,7 +159,7 @@ class QuizState extends State<Quiz> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
       double ht = constraints.maxHeight;
       double wd = constraints.maxWidth;
@@ -177,7 +176,7 @@ class QuizState extends State<Quiz> {
                     child: new Text(questionText,
                         style: new TextStyle(
                             color: Colors.white,
-                            fontSize: state.buttonFontSize)),
+                            fontSize: buttonConfig.fontSize)),
                   ))),
           new Expanded(
               child: new ResponsiveGridView(
@@ -231,17 +230,18 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     wrongController = new AnimationController(
         duration: new Duration(milliseconds: 100), vsync: this);
 
-    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticOut)
-      ..addStatusListener((state) {
+    animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticOut)
+          ..addStatusListener((state) {
 //        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          // print('dismissed');
-          // if (widget.text != null) {
-          //   setState(() => _displayText = widget.text);
-          //   controller.forward();
-          // }
-        }
-      });
+            if (state == AnimationStatus.dismissed) {
+              // print('dismissed');
+              // if (widget.text != null) {
+              //   setState(() => _displayText = widget.text);
+              //   controller.forward();
+              // }
+            }
+          });
     wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);
     controller.forward();
     _myAnim();

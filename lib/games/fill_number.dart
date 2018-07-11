@@ -7,8 +7,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import '../components/unit_button.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Fillnumber extends StatefulWidget {
   Function onScore;
@@ -202,7 +201,7 @@ class MyFillnumberState extends State<Fillnumber> {
           countline = 0;
         }
 
-        if (data == code && _visibleflag[index] == false&& text!=null) {
+        if (data == code && _visibleflag[index] == false && text != null) {
           if (lastclick == _size ||
               lastclick == _size + _size ||
               lastclick == _size + _size + _size) {
@@ -377,7 +376,7 @@ class MyFillnumberState extends State<Fillnumber> {
             _val2.removeRange(0, _val2.length);
           } else {
             setState(() {
-                widget.onScore(-1);
+              widget.onScore(-1);
               _pointssend = [];
               start = false;
               tempindex = [];
@@ -439,27 +438,27 @@ class MyFillnumberState extends State<Fillnumber> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
-      double fullwidth = (_size * state.buttonWidth) + (_size * buttonPadding);
+      double fullwidth = (_size * buttonConfig.width) + (_size * buttonPadding);
       double removeallpaddingh = constraints.maxWidth - fullwidth;
       double startpointx = removeallpaddingh / 2;
       double removeallpaddingv = constraints.maxHeight - fullwidth;
       double startpointy = removeallpaddingv / 2;
 
       double yaxis =
-          startpointy + (state.buttonHeight) + (state.buttonHeight / 2);
+          startpointy + (buttonConfig.height) + (buttonConfig.height / 2);
       double y0 = yaxis;
-      double xaxis = startpointx + (state.buttonWidth / 2);
+      double xaxis = startpointx + (buttonConfig.width / 2);
       double x0 = xaxis;
       print(
           ".....maxheight of button...:$maxHeight........max height is :...$vPadding");
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       Offset startpoint = new Offset(xaxis, yaxis);
 
-      List<Offset> offsets1 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      List<Offset> offsets1 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       double y1 = yaxis;
       double ystart = y1 - y0;
       xaxis = xaxis;
@@ -468,31 +467,31 @@ class MyFillnumberState extends State<Fillnumber> {
           (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets2 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+      List<Offset> offsets2 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
 
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
 
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets3 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      List<Offset> offsets3 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets4 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+      List<Offset> offsets4 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
 
       List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
       // AppState state = AppStateContainer.of(context).state;
 
       var coloris = Theme.of(context).primaryColor;
-      if(ssum==null){
+      if (ssum == null) {
         setState(() {
-                  ssum='';
-                });
+          ssum = '';
+        });
       }
       return new Stack(
         // overflow: Overflow.visible,
@@ -512,7 +511,7 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Colors.white,
-                            fontSize: state.buttonFontSize,
+                            fontSize: buttonConfig.fontSize,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
@@ -529,7 +528,7 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: state.buttonFontSize,
+                            fontSize: buttonConfig.fontSize,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
@@ -580,16 +579,14 @@ class MyFillnumberState extends State<Fillnumber> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else if(i==1){
+      } else if (i == 1) {
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
-      }
-      else{
-         x = x0 + d + maxWidth+(maxWidth/6);
+      } else {
+        x = x0 + d + maxWidth + (maxWidth / 6);
         x0 = x;
         y = y0;
-
       }
       offsets[i] = new Offset(x, y);
     }
