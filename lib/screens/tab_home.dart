@@ -95,7 +95,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                   ),
               ],
               leading: new ProfileDrawerIcon(),
-              title: new Text("Maui"),
+              title: new Text(Loca.of(context).title),
               expandedHeight: _size.height * .3,
               // centerTitle: true,
               forceElevated: innerBoxIsScrolled,
@@ -203,22 +203,4 @@ class TestTween extends Tween<double> {
   }
 }
 
-// class TabIcon extends StatelessWidget {
-//   final String img;
-//   final Color color;
-//   final bool flag;
-//   TabIcon({this.img, this.color, this.flag});
 
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return flag ? new Container(
-//       // height: 10.0,
-//       width: 60.0,
-//       decoration: new BoxDecoration(
-//         color:  Colors.red,
-//         shape: BoxShape.circle,
-//       ),
-//     ) : new Container();
-//   }
-// }
