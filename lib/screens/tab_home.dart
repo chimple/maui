@@ -23,11 +23,15 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     new MyTabs(img: "assets/games.png", color: Colors.orange[200]),
   ];
   MyTabs _myHandler;
+  Widget _icon = new Container();
   AnimationController _imgController, _bubbleController;
+  ScrollController _scrollcontroller;
   Animation<double> animateImage;
   TabController _controller;
   void initState() {
     super.initState();
+    _scrollcontroller = new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
+    _scrollcontroller.addListener(_scrolling);
     _bubbleController = new AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -38,14 +42,27 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
         new CurvedAnimation(parent: _imgController, curve: Curves.bounceInOut);
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
-    _controller.addListener(_handleSelected);
+    _controller.addListener(_tabSelected);
     _imgController.forward();
   }
 
-  void _handleSelected() {
+  void _tabSelected() {
     setState(() {
       _myHandler = _tabs[_controller.index];
     });
+  }
+
+  void _scrolling(){
+    // setState(() {
+      
+    //       _icon = new ShowIcon(
+    //                 color: _myHandler.color,
+    //                 img: _myHandler.img,
+    //               );
+    //     });
+    print("object");
+    print(_scrollcontroller.offset);
+    
   }
 
   buildCircle(double delay) {
@@ -67,10 +84,12 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _controller.removeListener(_handleSelected);
+    _controller.removeListener(_tabSelected);
     _controller.dispose();
     _imgController.dispose();
     _bubbleController.dispose();
+    _scrollcontroller.removeListener(_scrolling);
+    _scrollcontroller.dispose();
   }
 
   @override
@@ -83,16 +102,14 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
           onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
           child: new Image.asset('assets/koala_neutral.png')),
       body: new NestedScrollView(
+        controller: _scrollcontroller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             new SliverAppBar(
               backgroundColor: _myHandler.color,
               pinned: true,
               actions: <Widget>[
-                new ShowIcon(
-                    color: _myHandler.color,
-                    img: _myHandler.img,
-                  ),
+                _icon
               ],
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
