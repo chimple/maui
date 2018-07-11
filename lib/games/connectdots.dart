@@ -428,20 +428,22 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            
               }
               else{
-               tries += 5;
+              //  tries += 5;
                 flag=1;
                 break;
               }
             }}
             else {flag=1;
-            tries += 5;
+            // tries += 5;
             }
             print('flaggggggggggggg     $flag');
              if(flag==0){
              print('on  endddd  ');
+              // widget.onScore(((40 - tries) ~/ totalgame));
+               widget.onScore(20);
              setState(() {
                     
-                       widget.onScore(((40 - tries) ~/ totalgame));
+                      
             widget.onProgress(1.0);                      
     count1=0;
    forAns=[];
@@ -468,10 +470,10 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            }
            if(flag==1)
            {
-
+widget.onScore(-1);
              print("object....shanking thing is...:$_visibleflag");
              setState(() {
-               widget.onScore(-1);
+               
                forAns=[];
              
               for (var i = 0; i < _visibleflag.length; i++)

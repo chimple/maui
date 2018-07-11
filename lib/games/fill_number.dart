@@ -284,8 +284,8 @@ class MyFillnumberState extends State<Fillnumber> {
             });
             tempindex.removeRange(0, tempindex.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
-              widget.onScore(((40 - tries) ~/ totalgame));
-
+              // widget.onScore(((40 - tries) ~/ totalgame));
+              widget.onScore(5);
               count1 = count1 + 1;
               widget.onProgress((count1) / (9));
 
@@ -376,12 +376,13 @@ class MyFillnumberState extends State<Fillnumber> {
 
             _val2.removeRange(0, _val2.length);
           } else {
+             widget.onScore(-1);
             setState(() {
-                widget.onScore(-1);
+               
               _pointssend = [];
               start = false;
               tempindex = [];
-              tries += 5;
+              // tries += 5;
               clickAns = [];
               _Index.removeRange(0, _Index.length);
               for (var i = 0; i < _visibleflag.length; i++)
