@@ -130,7 +130,7 @@ class DrawScreen extends State<Drawing> {
       8.0,
     ];
     int roundColor;
-    
+
     if (selectedColor == 0xff000000)
       roundColor = 0xff00e676;
     else
@@ -297,9 +297,6 @@ class DrawScreen extends State<Drawing> {
                           // scrollDirection: Axis.horizontal,
                           children: width_val
                               .map((widthValue) => Center(
-                                      child: Container(
-                                    // width: constraints.maxWidth * widthValue/10,
-                                    height: constraints.maxHeight * widthValue,
                                     child: RawMaterialButton(
                                       onPressed: () => _multiWidth(widthValue),
                                       constraints: new BoxConstraints.tightFor(
@@ -309,7 +306,6 @@ class DrawScreen extends State<Drawing> {
                                       fillColor: new Color(0xffffffff),
                                       shape: new CircleBorder(
                                         side: new BorderSide(
-                                          
                                           color: widthValue == selectedWidth
                                               ? Color(0xf0000000)
                                               : const Color(0xFFD5D7DA),
@@ -317,7 +313,7 @@ class DrawScreen extends State<Drawing> {
                                         ),
                                       ),
                                     ),
-                                  )))
+                                  ))
                               .toList(growable: false),
                         ),
                       )
@@ -484,13 +480,10 @@ class DrawScreen extends State<Drawing> {
                                 children: color_val
                                     .map((colorValue) => Center(
                                             child: RawMaterialButton(
-                                          onPressed: () =>
-                                              _multiColor(colorValue),
-                                          constraints:
-                                              new BoxConstraints.tightFor(
+                                          onPressed: () =>_multiColor(colorValue),
+                                          constraints:new BoxConstraints.tightFor(
                                             width: constraints.maxWidth * .04,
-                                            height: constraints.maxHeight * .05,
-                                          ),
+                                            height: constraints.maxHeight * .05,),
                                           fillColor: new Color(colorValue),
                                           shape: new CircleBorder(
                                             side: new BorderSide(
@@ -507,26 +500,24 @@ class DrawScreen extends State<Drawing> {
                           : Container(),
                       visibilityWidth
                           ? new Expanded(
-                              // flex: 1,
                               child: new Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
+                                // scrollDirection: Axis.horizontal,
                                 children: width_val
                                     .map((widthValue) => Center(
-                                          child: new Container(
-                                            width: constraints.maxWidth * .04,
-                                            height: constraints.maxHeight * .05,
-                                            decoration: new BoxDecoration(
-                                                image: new DecorationImage(
-                                                    image: new AssetImage(
-                                                        'assets/dice_game/brush.png')),
-                                                color: Colors.white10,
-                                                shape: BoxShape.circle),
-                                            // child: new Text("$width_val"),
-                                            margin: new EdgeInsets.all(5.0),
-                                            child: new FlatButton(
-                                              onPressed: () =>
-                                                  _multiWidth(widthValue),
+                                          child: RawMaterialButton(
+                                            onPressed: () =>_multiWidth(widthValue),
+                                            constraints: new BoxConstraints.tightFor(
+                                              width: constraints.maxWidth * .04,
+                                              height:constraints.maxHeight * .05,
+                                            ),
+                                            fillColor: new Color(0xffffffff),
+                                            shape: new CircleBorder(
+                                              side: new BorderSide(
+                                                color: widthValue == selectedWidth? Color(0xf0000000) : const Color(0xFFD5D7DA),
+                                                width: widthValue,
+                                              ),
                                             ),
                                           ),
                                         ))
@@ -535,8 +526,6 @@ class DrawScreen extends State<Drawing> {
                             )
                           : Container(),
                     ]))
-                // ])
-                // ])
               ]);
             })
           : new SecondScreen(
