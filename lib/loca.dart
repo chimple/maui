@@ -19,7 +19,7 @@ class Loca {
     return Localizations.of<Loca>(context, Loca);
   }
 
-  String intl(String name) => Intl.message('Reflex', name: name);
+  String intl(String name) => Intl.message(name, name: name);
   String get title => Intl.message('Maui', name: 'title');
   String get chat => Intl.message('Chat', name: 'chat');
   String get game => Intl.message('Game', name: 'game');
