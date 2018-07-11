@@ -51,6 +51,7 @@ class TapWrongState extends State<TapWrong> {
  int _maxSize1=0;
  int arrayLength=0;
  int clickCnt = 0;
+ bool control=true;
   @override
   void initState() {
     super.initState();
@@ -143,16 +144,16 @@ class TapWrongState extends State<TapWrong> {
         text: text,
         index: index,
         status: status,
-        onPress: () {
+        onPress: !control?(){}:() {
           print("index                         $index");
           int j = 0;
-          setState(() {
+            control=false;
             proArray.addAll(arr1);
             proArray.removeAt(index);
             print('removed text from array ${arr1[index]}');
             print('removed array       $proArray');
             print('removed array l3en      ${proArray.length}');
-            print('word array       $word');
+            print('word array       $word'); 
             print('disp text   $_dispText');
 
             for (int i = 0; i < proArray.length; i++) {
@@ -171,10 +172,10 @@ class TapWrongState extends State<TapWrong> {
               numOFWrongElem++;
               print('array 1           $arr1');
 
-               new Future.delayed(const Duration(milliseconds: 150), () {
+               new Future.delayed(const Duration(milliseconds: 200), () {
                 setState(() {
                     //  _statusList.removeAt(index);
-                  
+                    control=true;
                   arr1.removeAt(index);
 
                  });
@@ -184,25 +185,28 @@ class TapWrongState extends State<TapWrong> {
               widget.onScore(2);
               widget.onProgress(num1 / others.length);
               if (numOFWrongElem == others.length) {
-                new Future.delayed(const Duration(milliseconds: 500), () {
+                new Future.delayed(const Duration(milliseconds: 700), () {
                   setState(() {
+                    control=true;
                     _isShowingFlashCard = true; // widget.onEnd();
                   });
                 });
                 //  widget.onEnd();
               }
             } else {
+              setState(() {
               _statusList[index] = Statuses.wrong;
+              });
               print('status array afdter clicking wrong     $_statusList');
-              new Future.delayed(const Duration(milliseconds: 500), () {
+              new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _statusList[index] = Statuses.right;
+                  control=true;
                 });
               });
             }
             proArray = [];
           });
-        });
   }
 
   @override
