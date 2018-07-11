@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
+import 'package:maui/loca.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -139,10 +140,10 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                 unselectedLabelColor: Colors.blue,
                 tabs: <Tab>[
                   new Tab(
-                    text: "Chat",
+                    text: Loca.of(context).chat,
                   ),
                   new Tab(
-                    text: "Game",
+                    text: Loca.of(context).game,
                   )
                 ],
               ),
