@@ -37,13 +37,12 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       duration: const Duration(seconds: 2),
     )..repeat();
     _imgController = new AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 500), vsync: this);
     animateImage =
-        new CurvedAnimation(parent: _imgController, curve: Curves.bounceInOut);
+        new CurvedAnimation(parent: _imgController, curve: Curves.ease);
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
-    _imgController.forward();
   }
 
   void _tabSelected() {
@@ -53,15 +52,28 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   }
 
   void _scrolling(){
-    // setState(() {
-      
-    //       _icon = new ShowIcon(
+    setState(() {
+          if(_scrollcontroller.offset == 0.0){
+            // _icon = new Container();
+            _imgController.reverse();
+          }
+          else{
+    _imgController.forward();
+            _icon = new ScaleTransition(
+                scale: animateImage,
+                          child: new ShowIcon(
+                      color: _myHandler.color,
+                      img: _myHandler.img,
+                    ),
+            );
+          }
+        });
+    // _icon = new ShowIcon(
     //                 color: _myHandler.color,
     //                 img: _myHandler.img,
     //               );
-    //     });
-    print("object");
-    print(_scrollcontroller.offset);
+    // print("object");
+    // print(_scrollcontroller.offset);
     
   }
 
@@ -187,19 +199,26 @@ class ShowIcon extends StatelessWidget {
   final String img;
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      // height: 10.0,
-      width: 60.0,
-      child: new Image(
-          image: AssetImage(img),
-          fit: BoxFit.fill,
-        ),
-      decoration: new BoxDecoration(
-        // color:  color,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
+    // return new Container(
+    //   // height: 10.0,
+    //   width: 60.0,
+    //   child: new Image.asset(
+    //                       img,
+    //                       scale: .8,
+    //                     ),
+    //   // new Image(
+    //   //     image: AssetImage(img),
+    //   //     fit: BoxFit.fill,
+    //   //   ),
+    //   decoration: new BoxDecoration(
+    //     // color:  color,
+    //     shape: BoxShape.circle,
+    //   ),
+    // );
+    return new Image.asset(
+                          img,
+                          scale: .3,
+                        );  }
 }
 
 class MyTabs {
