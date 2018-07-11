@@ -175,20 +175,18 @@ class TapWrongState extends State<TapWrong> {
                new Future.delayed(const Duration(milliseconds: 200), () {
                 setState(() {
                     //  _statusList.removeAt(index);
-                    control=true;
                   arr1.removeAt(index);
-
                  });
                });
-
+              
               print('array 1 after     $arr1');
               widget.onScore(2);
               widget.onProgress(num1 / others.length);
+              control=true;
               if (numOFWrongElem == others.length) {
                 new Future.delayed(const Duration(milliseconds: 700), () {
                   setState(() {
-                    control=true;
-                    _isShowingFlashCard = true; // widget.onEnd();
+                    _isShowingFlashCard = true;
                   });
                 });
                 //  widget.onEnd();
@@ -201,8 +199,8 @@ class TapWrongState extends State<TapWrong> {
               new Future.delayed(const Duration(milliseconds: 700), () {
                 setState(() {
                   _statusList[index] = Statuses.right;
-                  control=true;
                 });
+                  control=true;
               });
             }
             proArray = [];
@@ -244,6 +242,7 @@ class TapWrongState extends State<TapWrong> {
 
             setState(() {
               _isShowingFlashCard = false;
+              control=true; // widget.onEnd();
             });
           }));
     }
