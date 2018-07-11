@@ -9,8 +9,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Wordgrid extends StatefulWidget {
   Function onScore;
@@ -111,8 +110,8 @@ class WordgridState extends State<Wordgrid> {
     data.item1.forEach((e) {
       words = words + e;
     });
-    if(words[0]==words[1]&&words[0]==words[2]){
-      words=words[0];
+    if (words[0] == words[1] && words[0] == words[2]) {
+      words = words[0];
     }
     var rng = new Random();
     cdlist = [];
@@ -333,7 +332,7 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
-            widget.onScore((40~/ totalgame)- tries);
+            widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;
             new Future.delayed(const Duration(milliseconds: 350), () {
@@ -363,37 +362,37 @@ class WordgridState extends State<Wordgrid> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
-      double fullwidth = (_size * state.buttonWidth) + (_size * buttonPadding);
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      double fullwidth = (_size * buttonConfig.width) + (_size * buttonPadding);
       double removeallpaddingh = constraints.maxWidth - fullwidth;
       double startpointx = removeallpaddingh / 2;
       double removeallpaddingv = constraints.maxHeight - fullwidth;
       double startpointy = removeallpaddingv / 2;
-      double yaxis = startpointy + (state.buttonHeight);
-      double xaxis = startpointx + (state.buttonWidth / 2);
+      double yaxis = startpointy + (buttonConfig.height);
+      double xaxis = startpointx + (buttonConfig.width / 2);
       Offset startpoint = new Offset(xaxis, yaxis);
 
-      List<Offset> offsets1 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      List<Offset> offsets1 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       double ystart = yaxis;
       double xstart =
           (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets2 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+      List<Offset> offsets2 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
 
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets3 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      List<Offset> offsets3 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets4 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+      List<Offset> offsets4 = calculateOffsets(
+          buttonPadding, startpoint, _size, buttonConfig.width);
 
       List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
       var coloris = Theme.of(context).primaryColor;
@@ -434,7 +433,7 @@ class WordgridState extends State<Wordgrid> {
                     elevation: 4.0,
                     textStyle: new TextStyle(
                         color: Colors.white,
-                        fontSize: state.buttonFontSize / 1.3),
+                        fontSize: buttonConfig.fontSize / 1.3),
                     child: Center(
                         child: Padding(
                             padding: EdgeInsets.all(buttonPadding / 2.0),
