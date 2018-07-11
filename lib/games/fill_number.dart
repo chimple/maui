@@ -382,7 +382,7 @@ class MyFillnumberState extends State<Fillnumber> {
               _pointssend = [];
               start = false;
               tempindex = [];
-              // tries += 5;
+            
               clickAns = [];
               _Index.removeRange(0, _Index.length);
               for (var i = 0; i < _visibleflag.length; i++)

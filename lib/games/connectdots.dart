@@ -439,12 +439,14 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
             print('flaggggggggggggg     $flag');
              if(flag==0){
              print('on  endddd  ');
-              // widget.onScore(((40 - tries) ~/ totalgame));
-               widget.onScore(20);
+              widget.onScore(20);
+     
+              
              setState(() {
                     
                       
-            widget.onProgress(1.0);                      
+            widget.onProgress(1.0);         
+                       
     count1=0;
    forAns=[];
     count3=0;
