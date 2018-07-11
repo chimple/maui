@@ -13,6 +13,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/loca.dart';
 
 class SelectOpponentScreen extends StatefulWidget {
   final String gameName;
@@ -45,14 +46,13 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
 
   void _initData() async {
     _isLoading = true;
-    var user = AppStateContainer.of(context).state.loggedInUser;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');
     List<User> users;
     users = await UserRepo().getUsers();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     List<dynamic> messages;
     try {
-      messages =
-          await Flores().getLatestConversations(user.id, widget.gameName);
+      messages = await Flores().getLatestConversations(userId, widget.gameName);
     } on PlatformException {
       print('Failed getting messages');
     }
@@ -64,10 +64,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       _deviceId = prefs.getString('deviceId');
       _users = users;
       _messages = messages;
-      _localUsers.add(user);
       _users.forEach((u) {
-        if (u.id == user.id) {
-          //no op
+        if (u.id == userId) {
+          _localUsers.insert(0, u);
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
         } else if (messages.any((m) => u.id == m['userId'])) {
@@ -114,7 +113,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                               )),
                         ),
                         centerTitle: true,
-                        title: new Text(widget.gameName),
+                        title: new Text(Loca.of(context).intl(widget.gameName)),
                       )),
                   SliverToBoxAdapter(
                     child: new Column(
@@ -123,7 +122,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: secondColor,
-                            child: Text('Family')),
+                            child: Text(Loca.of(context).family)),
                       ],
                     ),
                   ),
@@ -146,7 +145,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: thirdColor,
-                            child: Text('Friends')),
+                            child: Text(Loca.of(context).friends)),
                       ],
                     ),
                   ),

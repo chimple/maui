@@ -25,8 +25,7 @@ class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
   String drawJson;
 
-  MyDrawPage( this.drawJson,
-      this.controller);
+  MyDrawPage(this.drawJson, this.controller);
 
   State<StatefulWidget> createState() {
     return new MyHomePageState(this.controller);
@@ -47,15 +46,13 @@ class DrawLineProperty {
 
 class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   List<DrawLineProperty> _drawLineProperty = [];
-  
-   
+
 //  List<Offset> _points = [];
   var color = new Color(0xff000000);
   var width = 4.0;
   DrawPadController _controller;
   MyHomePageState(this._controller);
   DrawPainting _currentPainter;
-
 
   void initState() {
     _controller._delegate = this;
@@ -66,7 +63,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   @override
   Widget build(BuildContext context) {
-     print("data of choice in drawww isss ${widget.drawJson}");
+    print("data of choice in drawww isss ${widget.drawJson}");
     // MediaQueryData media = MediaQuery.of(context);
     // print({"this is mediaaa2:": media.size});
 
@@ -214,16 +211,16 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
     var getLastPosition = drawList[drawList.length - 1]
         .position[drawList[drawList.length - 1].position.length - 1]
         .x;
+// return drawJsonVal;
 
-    return drawJsonVal;
-
-    // if (getLastPosition == null && isSendActive) {
+    if (getLastPosition == null && isSendActive) {
+      return drawJsonVal;
       // setState(() {
       //          widget.drawJson = drawJsonVal;
       //         //  print("data of choice isss ${widget.drawJson}");
       //       });
       // print("data of choice isss ${widget.choice}");
-    // }
+    }
   }
 
   List<Position> getAllPoints(List<DrawLineProperty> drawLineProperty) {
@@ -300,7 +297,6 @@ class DrawPainting extends CustomPainter {
 //        canvas.drawCircle(nextPixel, 8.0, paint);
       }
     }
-    
   }
 
   @override

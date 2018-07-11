@@ -6,8 +6,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
@@ -257,7 +256,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     colFlag = 0;
                     onScoreFlag = 1;
                     _turnByTurn();
-
                   });
                 }
                 if (matchRow == -1 && matchColumn == -1) {
@@ -270,13 +268,12 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 } else {
                   _copyQuestion.removeRange(0, _copyQuestion.length);
                 }
-              }//check for (Str1 1= Str2)
+              } //check for (Str1 1= Str2)
               else {
                 if (onScoreFlag != 1) {
                   setState(() {
                     widget.onScore(-1);
                     _ShakeCells[index] = ShakeCell.Right;
-
                   });
                 }
                 //print("this is wrongg");
@@ -325,7 +322,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
       var j = 0;
       return new Container(
@@ -339,7 +336,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     elevation: 4.0,
                     textStyle: new TextStyle(
                         color: Colors.orangeAccent,
-                        fontSize: state.buttonFontSize),
+                        fontSize: buttonConfig.fontSize),
                     child: new Container(
                         padding: EdgeInsets.all(buttonPadding),
                         child: new Center(
@@ -422,8 +419,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         _all.removeRange(0, _all.length);
         _letters.removeRange(0, _letters.length);
         _shuffledLetters.removeRange(0, _shuffledLetters.length);
-        print(
-            "iteration not chhanging.......::..${widget.iteration}");
+        print("iteration not chhanging.......::..${widget.iteration}");
         widget.onEnd();
       });
     });

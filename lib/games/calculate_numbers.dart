@@ -68,6 +68,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   Tuple4<int, String, int, int> _data;
   bool _isLoading = true;
   String _options;
+  bool _control=true;
   int _scoreCount = 0;
   List<int> _num1List = [];
   List<int> _num2List = [];
@@ -318,10 +319,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   }
 
   bool _final(String _text, String _gettingResult) {
-    print("coming to the final function");
     if (_text == '✔' && _gettingResult == _finalResult) {
+      print('nikkk         $_gettingResult   $_finalResult  $_scoreCount');
       if (_scoreCount == 0) {
-        print("coming to the score count section");
+        print("nikkk   ");
         widget.onScore(4);
         widget.onProgress(1.0);
         setState(() {
@@ -356,15 +357,15 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         text: text,
         height: _height,
         width: _width,
-        onPress: () {
+        onPress:!_control?(){print('preseddd 9090');}:() {
           switch (_operator) {
             case '+':
               if (_j1 > 0) {
-                print("coming to the double digit..");
-                print('initial _i value... $_i');
-                print('initial j value... $_j1');
-                print('_num1List first digit....${_num1List[_i]}');
-                print('_num2List first digit....${_num2List[_i]}');
+                // print("coming to the double digit..");
+                // print('initial _i value... $_i');
+                // print('initial j value... $_j1');
+                // print('_num1List first digit....${_num1List[_i]}');
+                // print('_num2List first digit....${_num2List[_i]}');
                 setState(() {
                   _outputList[_i] =
                       _removeZero(int.parse(_addText(text, _outputList[_i])))
@@ -372,16 +373,18 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   _outputList[_i] = _removeText(text, _outputList[_i]);
                   _flag[_i] = _rigltClick(text, _outputList[_i],
                       (_num1List[_i] + _num2List[_i] + cf[_i]));
-                  print('printing flag value....${_flag[_i]}');
+                //  print('printing flag value....${_flag[_i]}');
                 });
-                print('first output....${_outputList[_i]}');
-                print('complete list...${_outputList}');
-                if (text == '✔') {
+                // print('first output....${_outputList[_i]}');
+                // print('complete list...${_outputList}');
+                if (text == '✔' ) {
+                  print('hloo nikk pp');
                   if (_rigltClick(text, _outputList[_i],
                           (_num1List[_i] + _num2List[_i] + cf[_i])) ==
                       true) {
                     setState(() {
                       _shake[_i] = true;
+                      _control=true;
                       _carry[_i] = 1;
                       _s[_i] = true;
                     });
@@ -390,8 +393,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _outputList[_i] =
                             (int.parse(_outputList[_i]) % 10).toString();
                         cf[_i + 1] = 1;
-                        print(
-                            'printing _outputList+1 value ....$_outputList[_i+1]');
+                    //    print(
+                       //     'printing _outputList+1 value ....$_outputList[_i+1]');
                         _preValue = _outputList[_i] + _preValue;
                       });
                     } else {
@@ -402,7 +405,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   }
                   if (_carry[_i] == 1) {
                     setState(() {
-                      print('printing _i increment....');
+                  //    print('printing _i increment....');
                       _i++;
                       _j1--;
                       new Future.delayed(const Duration(milliseconds: 100), () {
@@ -417,11 +420,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       _score = _score > 0 ? _score - 1 : _score;
                       _shake[_i] = false;
+                      _control=false;
                       _wrong = _wrong + 1;
                     });
                     new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
+                        _control=true;
                         _outputList[_i] = ' ';
                       });
                     });
@@ -435,9 +440,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     _wrong = 0;
                   });
                 }
-                print('printing final value....$_preValue');
-                print(' at end _i value $_i');
-                print(' at end j value $_j1');
+                // print('printing final value....$_preValue');
+                // print(' at end _i value $_i');
+                // print(' at end j value $_j1');
               }
               if ((cf[calCount(_result) - 1] == 1 &&
                       _options == 'singleDigit') ||
@@ -448,13 +453,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   (cf[calCount(_result) - 1] == 1 &&
                       _options == 'doubleDigit' &&
                       (_num1digit2 + _num2digit2 + 1) >= 10)) {
-                print(
-                    "coming to check final carry is there or not...$_options");
+                // print(
+                //     "coming to check final carry is there or not...$_options");
                 setState(() {
-                  print('printing _i value in _carryFlag function...$_i');
+                //  print('printing _i value in _carryFlag function...$_i');
                   _outputList[_i] = '1';
                   cf[calCount(_result) - 1] = 0;
-                  print('printing output list...$_outputList');
+               //   print('printing output list...$_outputList');
                   _preValue = _outputList[_i] + _preValue;
                   _flag[_i] = true;
                   _s[_i] = true;
@@ -485,6 +490,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _flag[_i] = _rigltClick(text, _outputList[_i],
                             (_num1List[_i] - _num2List[_i] + cf[_i]));
                         _shake[_i] = true;
+                        _control=true;
                         _carry[_i] = 1;
                         _preValue = _outputList[_i] + _preValue;
                         _s[_i] = true;
@@ -501,6 +507,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _flag[_i] = _rigltClick(text, _outputList[_i],
                             ((_num1List[_i] + 10) - _num2List[_i] + cf[_i]));
                         _shake[_i] = true;
+                        _control=true;
                         _carry[_i] = 1;
                         cf[_i + 1] = -1;
                         _s[_i] = true;
@@ -510,12 +517,14 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       setState(() {
                         _numbershake[_i] = false;
                         _shake[_i] = false;
+                        _control=false;
                       });
                       new Future.delayed(const Duration(milliseconds: 1000),
                           () {
                         setState(() {
                           _numbershake[_i] = true;
                           _shake[_i] = true;
+                          _control=true;
                         });
                       });
                     }
@@ -536,11 +545,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     setState(() {
                       _score = _score > 0 ? _score - 1 : _score;
                       _shake[_i] = false;
+                      _control=false;
                       _wrong = _wrong + 1;
                     });
                     new Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _shake[_i] = true;
+                        _control=true;
                         _outputList[_i] = ' ';
                       });
                     });
@@ -572,6 +583,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     true) {
                   setState(() {
                     _shake[_i] = true;
+                    _control=true;
                     _carry[_i] = 1;
                     _s[_i] = true;
                     _preValue = _outputList[_i] + _preValue;
@@ -590,11 +602,13 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   setState(() {
                     _score = _score > 0 ? _score - 1 : _score;
                     _shake[_i] = false;
+                    _control=false;
                     _wrong = _wrong + 1;
                   });
                   new Future.delayed(const Duration(milliseconds: 1000), () {
                     setState(() {
                       _shake[_i] = true;
+                      _control=true;
                       _outputList[_i] = ' ';
                     });
                   });
@@ -686,8 +700,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         child: new CircularProgressIndicator(),
       );
     }
-
-
 //    if (_isShowingFlashCard) {
 //      return new FlashCard(
 //          text: _result.toString(),

@@ -21,9 +21,13 @@ dependencies:
   nima: 1.0.0
   flutter_local_notifications: 0.3.3
   badge: 0.0.2
+  intl: 0.15.6
+  intl_translation: 0.16.8
   flores:
     git:
       https://github.com/chimple/flores.git
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,13 +96,16 @@ flutter:
     - assets/dice_game/3.png
     - assets/dice_game/4.png
     - assets/dice_game/5.png
-    - assets/dice_game/6.png
+    - assets/dice_game/6.png  
+    - assets/dice_game/brush.png
+    - assets/dice_game/clear.png
+    - assets/dice_game/undo.png
+    - assets/dice_game/send.png
+    - assets/dice_game/paint.png
     - assets/dice_game/color_picker.png
     - assets/dice_game/color_brush.png
-    - assets/dice_game/dice1.gif
     - assets/dice_game/dice4.gif
     - assets/dice_game/tapme.png
-    - assets/dice_game/tapme1.png 
     - assets/games.png
     - assets/chat.png
     - assets/story.png
