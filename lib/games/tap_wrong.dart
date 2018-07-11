@@ -144,66 +144,69 @@ class TapWrongState extends State<TapWrong> {
         text: text,
         index: index,
         status: status,
-        onPress: !control?(){}:() {
-          print("index                         $index");
-          int j = 0;
-            control=false;
-            proArray.addAll(arr1);
-            proArray.removeAt(index);
-            print('removed text from array ${arr1[index]}');
-            print('removed array       $proArray');
-            print('removed array l3en      ${proArray.length}');
-            print('word array       $word'); 
-            print('disp text   $_dispText');
+        onPress: !control
+            ? () {}
+            : () {
+                print("index                         $index");
+                int j = 0;
+                control = false;
+                proArray.addAll(arr1);
+                proArray.removeAt(index);
+                print('removed text from array ${arr1[index]}');
+                print('removed array       $proArray');
+                print('removed array l3en      ${proArray.length}');
+                print('word array       $word');
+                print('disp text   $_dispText');
 
-            for (int i = 0; i < proArray.length; i++) {
-              if (word[j] == proArray[i]) {
-                j++;
-              }
-              if (j >= word.length) {
-                break;
-              }
-            }
+                for (int i = 0; i < proArray.length; i++) {
+                  if (word[j] == proArray[i]) {
+                    j++;
+                  }
+                  if (j >= word.length) {
+                    break;
+                  }
+                }
 
-            print('j is now     $j');
+                print('j is now     $j');
 
-            if (j >= word.length) {
-              num1++;
-              numOFWrongElem++;
-              print('array 1           $arr1');
+                if (j >= word.length) {
+                  num1++;
+                  numOFWrongElem++;
+                  print('array 1           $arr1');
 
-               new Future.delayed(const Duration(milliseconds: 200), () {
-                setState(() {
-                    //  _statusList.removeAt(index);
-                  arr1.removeAt(index);
-                 });
-               });
-              
-              print('array 1 after     $arr1');
-              widget.onScore(2);
-              widget.onProgress(num1 / others.length);
-              control=true;
-              if (numOFWrongElem == others.length) {
-                new Future.delayed(const Duration(milliseconds: 700), () {
-                  setState(() {
-                    _isShowingFlashCard = true;
+                  new Future.delayed(const Duration(milliseconds: 200), () {
+                    setState(() {
+                      //  _statusList.removeAt(index);
+                      arr1.removeAt(index);
+                    });
+                    control = true;
                   });
-                });
-                //  widget.onEnd();
-              }
-            } else {
-              setState(() {
-              _statusList[index] = Statuses.wrong;
+
+                  print('array 1 after     $arr1');
+                  widget.onScore(2);
+                  widget.onProgress(num1 / others.length);
+                  if (numOFWrongElem == others.length) {
+                    new Future.delayed(const Duration(milliseconds: 700), () {
+                      setState(() {
+                        _isShowingFlashCard = true; // widget.onEnd();
+                      });
+                    });
+                    //  widget.onEnd();
+                  }
+                } else {
+                  setState(() {
+                    _statusList[index] = Statuses.wrong;
+                  });
+                  print('status array afdter clicking wrong     $_statusList');
+                  new Future.delayed(const Duration(milliseconds: 700), () {
+                    setState(() {
+                      _statusList[index] = Statuses.right;
+                    });
+                    control = true;
+                  });
+                }
+                proArray = [];
               });
-              print('status array afdter clicking wrong     $_statusList');
-              new Future.delayed(const Duration(milliseconds: 700), () {
-                setState(() {
-                  _statusList[index] = Statuses.right;
-                });
-                  control=true;
-              });
-            }
-    });
   }
 
   @override
@@ -236,18 +239,18 @@ class TapWrongState extends State<TapWrong> {
             heightFactor:
                 constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
             child: new FlashCard(
-              image: _dispText,
-          text: _dispText,
-          onChecked: () {
-            widget.onEnd(); // _initBoard();
+                image: _dispText,
+                text: _dispText,
+                onChecked: () {
+                  widget.onEnd(); // _initBoard();
 
-            setState(() {
-              _isShowingFlashCard = false;
-              control=true; // widget.onEnd();
-            });
-          }));
-    }
-    int j = 0;
+                  setState(() {
+                    _isShowingFlashCard = false;
+                    control = true;
+                  });
+                }));
+      }
+      int j = 0;
 
       return Padding(
           padding:
