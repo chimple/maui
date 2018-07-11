@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen>
       var user = await new UserRepo().insertLocalUser(
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
     } else {
       print("false");
       controller.addStatusListener((status) {

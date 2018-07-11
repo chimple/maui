@@ -52,12 +52,15 @@ class _CameraScreenState extends State<CameraScreen> {
   /// Display the preview from the camera (or a message if the preview is not available).
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
-      return const Text(
-        'Tap a camera',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 24.0,
-          fontWeight: FontWeight.w900,
+      return RotatedBox(
+        quarterTurns: -1,
+        child: Text(
+          'Tap a camera',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.w900,
+          ),
         ),
       );
     } else {
