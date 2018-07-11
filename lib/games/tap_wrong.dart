@@ -177,9 +177,9 @@ class TapWrongState extends State<TapWrong> {
                   new Future.delayed(const Duration(milliseconds: 200), () {
                     setState(() {
                       //  _statusList.removeAt(index);
-                      control = true;
                       arr1.removeAt(index);
                     });
+                    control = true;
                   });
 
                   print('array 1 after     $arr1');
@@ -188,7 +188,6 @@ class TapWrongState extends State<TapWrong> {
                   if (numOFWrongElem == others.length) {
                     new Future.delayed(const Duration(milliseconds: 700), () {
                       setState(() {
-                        control = true;
                         _isShowingFlashCard = true; // widget.onEnd();
                       });
                     });
@@ -202,8 +201,8 @@ class TapWrongState extends State<TapWrong> {
                   new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
                       _statusList[index] = Statuses.right;
-                      control = true;
                     });
+                    control = true;
                   });
                 }
                 proArray = [];
@@ -247,6 +246,7 @@ class TapWrongState extends State<TapWrong> {
 
                   setState(() {
                     _isShowingFlashCard = false;
+                    control = true;
                   });
                 }));
       }
