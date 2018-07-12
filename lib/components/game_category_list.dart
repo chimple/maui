@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +8,6 @@ import 'package:maui/db/entity/game_category.dart';
 import 'expansionTile.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'user_item.dart';
-import 'package:maui/repos/concept_repo.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
@@ -63,47 +63,61 @@ class _GameCategoryList extends State<GameCategoryList> {
   static final List<Color> tileColors = [];
   int count = 0;
   List<int> conceptid = [];
-  List<int> unique = [];
-  List<String> name = [];
+  List<String> categories = [];
+  List<List<String>> name = [];
   Set<int> list;
   Set<int> list1;
   Set<String> list2;
-  List<String> listname = [
-    'Upper Case Letters',
-    'lower Case Letters',
-    'Upper Case Letters to Lower Case Letters',
-    'word with Upper Case Letters',
-    'word with lower Case Letters',
-    'concepts'
-  ];
-  List<Tuple3<int, int, String>> subGroup;
-  List<Tuple3<int, int, String>> subGroup1;
+  List<String> listname = [''];
+  Map<int, int> data;
+  List<int> four;
+   var concepts = Map<int, List<Tuple2<int, String>>>();
+  storeData(int gameId, int conId, String category) {
+    conceptid.add(conId);
+    categories.add(category);
+  }
+  
+
   @override
   void initState() {
     super.initState();
     int categoriesLength = widget.gameCategories.length;
     widget.gameCategories
-        .map((f) => unique.add(f.item1))
+        .map((f) => storeData(f.item1, f.item2, f.item3))
         .toList(growable: false);
-    widget.gameCategories
-        .map((f) => conceptid.add(f.item2))
-        .toList(growable: false);
-    widget.gameCategories.map((f) => name.add(f.item3)).toList(growable: false);
+   
+    widget.gameCategories.forEach((g) {
+      if(concepts[g.item2] == null) {
+        concepts[g.item2] = [Tuple2(g.item1, g.item3)];
+       
+      } else {
+        concepts[g.item2].add(Tuple2(g.item1, g.item3));
+       
+      }
+    });
+    print('concepts::::::::::::::::::::: $concepts');
+    
     list = Set.from(conceptid);
-    print("gameCategories:::::::::::::${widget.gameCategories}");
-    subGroup = widget.gameCategories.sublist(0, 6);
-    subGroup1 = widget.gameCategories.sublist(3, 30);
-    print("Length of categories::$list");
-    print("gameCategories================$subGroup");
+    //print('list is $conceptid');
+    var tmp = <int,List<int>>{};
 
-    print('list name is $listname');
-    for (int i = 0; i < categoriesLength + 1; i++) {
+  for(var val in conceptid) {
+    tmp.putIfAbsent(val, () => [], ).add(val);
+  }
+
+  int idx = 0;
+  var result = <int,List<int>>{};
+  for(var key in tmp.keys) {
+    idx++;
+    result[idx] = tmp[key];
+  }
+    for (int i = 0; i <= categoriesLength ; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
       count++;
     }
-    print(colorsCodes.length);
-    print(tileColors.length);
+    
+    print('result is $result');
   }
 
   @override
@@ -140,23 +154,26 @@ class _GameCategoryList extends State<GameCategoryList> {
                   alignment: Alignment.center,
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: subGroup
-                        .map((gameCategory) => Container(
+                    children: widget.gameCategories
+                        .map((gameCategorys) => Container(
                             color: tileColors[j++],
-                            child: gameCategory.item2 == 3 ||
-                                    gameCategory.item2 == 4 ||
-                                    gameCategory.item2 == 5
+                            child: gameCategorys.item2 == 4 ||
+                                    gameCategorys.item2 == 5 ||
+                                    gameCategorys.item2 == 3
                                 ? ExpansionTile(
-                                    title: new Text(
-                                      'A',
+                                    title: Center(
+                                        child: new Text(
+                                      gameCategorys.item3,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 34.0,
                                           fontWeight: FontWeight.w400),
-                                    ),
-                                    children: subGroup1
-                                        .map((gameCategory) => Container(
-                                              child: ListTile(
+                                    )),
+                                    children: widget.gameCategories
+                                        .map((gameCategory) => gameCategory
+                                                    .item2 ==
+                                                gameCategorys.item2
+                                            ? ListTile(
                                                 title: Text(gameCategory.item3),
                                                 onTap: () => goToGame(
                                                     context,
@@ -166,19 +183,23 @@ class _GameCategoryList extends State<GameCategoryList> {
                                                     widget.gameMode,
                                                     otherUser:
                                                         widget.otherUser),
-                                              ),
-                                            ))
+                                              )
+                                            : new Container())
                                         .toList(growable: false),
                                   )
                                 : FlatButton(
                                     onPressed: () => goToGame(
                                         context,
                                         widget.game,
-                                        gameCategory.item1,
+                                        gameCategorys.item1,
                                         widget.gameDisplay,
                                         widget.gameMode,
                                         otherUser: widget.otherUser),
-                                    child: Text(gameCategory.item3),
+                                    child: Text(gameCategorys.item3,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 34.0,
+                                            fontWeight: FontWeight.w400)),
                                   )))
                         .toList(growable: false),
                   ));
