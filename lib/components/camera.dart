@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
@@ -27,9 +28,13 @@ class _CameraScreenState extends State<CameraScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool onTakePicture = true;
-
+  Orientation ornt;
+  int mode = -1;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
         backgroundColor: Colors.black87,
         key: _scaffoldKey,
@@ -39,7 +44,7 @@ class _CameraScreenState extends State<CameraScreen> {
             onTakePicture
                 ? new Center(
                     child: RotatedBox(
-                        quarterTurns: 1, child: _cameraPreviewWidget()),
+                        quarterTurns: -1, child: _cameraPreviewWidget()),
                   )
                 : Container(
                     child: Center(child: Image.file(new File(imagePath)))),
@@ -53,7 +58,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
       return RotatedBox(
-        quarterTurns: -1,
+        quarterTurns: 1,
         child: Text(
           'Tap a camera',
           style: const TextStyle(
@@ -65,7 +70,7 @@ class _CameraScreenState extends State<CameraScreen> {
       );
     } else {
       return new AspectRatio(
-        aspectRatio: 1.6, //controller.value.aspectRatio,
+        aspectRatio: 1.7, //controller.value.aspectRatio,
         child: new CameraPreview(controller),
       );
     }
@@ -144,9 +149,9 @@ class _CameraScreenState extends State<CameraScreen> {
           onTakePicture = false;
         });
 //        if (filePath != null) showInSnackBar('Picture saved to $filePath');
-        var user = await new UserRepo()
-            .insertLocalUser(new User(image: filePath, currentLessonId: 1));
-        print("insert image path:: ${user.image}");
+        // var user = await new UserRepo()
+        //     .insertLocalUser(new User(image: filePath, currentLessonId: 1));
+        //print("insert image path:: ${user.image}");
         //AppStateContainer.of(context).setLoggedInUser(user);
         //Navigator.of(context).pop();
       }
@@ -186,16 +191,6 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-
-    // getApplicationDocumentsDirectory().then((Directory directory) {
-    //   dir = directory;
-    //   jsonFile = new File(dir.path + '/' + jsonName);
-    //   fileExist = jsonFile.existsSync();
-    //   // if (fileExist) {
-    //   //   String str = json.decode(jsonFile.readAsStringSync());
-    //   //   print("ssssssssssssssssss $str");
-    //   // }
-    // });
     initCamera();
   }
 

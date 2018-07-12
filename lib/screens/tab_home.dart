@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
@@ -23,29 +24,58 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     new MyTabs(img: "assets/games.png", color: Colors.orange[200]),
   ];
   MyTabs _myHandler;
+  Widget _icon = new Container();
   AnimationController _imgController, _bubbleController;
+  ScrollController _scrollcontroller;
   Animation<double> animateImage;
   TabController _controller;
   void initState() {
     super.initState();
+    _scrollcontroller = new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
+    _scrollcontroller.addListener(_scrolling);
     _bubbleController = new AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat();
     _imgController = new AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 500), vsync: this);
     animateImage =
-        new CurvedAnimation(parent: _imgController, curve: Curves.bounceInOut);
+        new CurvedAnimation(parent: _imgController, curve: Curves.ease);
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
-    _controller.addListener(_handleSelected);
-    _imgController.forward();
+    _controller.addListener(_tabSelected);
   }
 
-  void _handleSelected() {
+  void _tabSelected() {
     setState(() {
       _myHandler = _tabs[_controller.index];
     });
+  }
+
+  void _scrolling(){
+    setState(() {
+          if(_scrollcontroller.offset == 0.0){
+            // _icon = new Container();
+            _imgController.reverse();
+          }
+          else{
+    _imgController.forward();
+            _icon = new ScaleTransition(
+                scale: animateImage,
+                          child: new ShowIcon(
+                      color: _myHandler.color,
+                      img: _myHandler.img,
+                    ),
+            );
+          }
+        });
+    // _icon = new ShowIcon(
+    //                 color: _myHandler.color,
+    //                 img: _myHandler.img,
+    //               );
+    // print("object");
+    // print(_scrollcontroller.offset);
+    
   }
 
   buildCircle(double delay) {
@@ -67,15 +97,18 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _controller.removeListener(_handleSelected);
+    _controller.removeListener(_tabSelected);
     _controller.dispose();
     _imgController.dispose();
     _bubbleController.dispose();
+    _scrollcontroller.removeListener(_scrolling);
+    _scrollcontroller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
+    SystemChrome.setPreferredOrientations([]);
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),
@@ -83,16 +116,14 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
           onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
           child: new Image.asset('assets/koala_neutral.png')),
       body: new NestedScrollView(
+        controller: _scrollcontroller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             new SliverAppBar(
               backgroundColor: _myHandler.color,
               pinned: true,
               actions: <Widget>[
-                new ShowIcon(
-                    color: _myHandler.color,
-                    img: _myHandler.img,
-                  ),
+                _icon
               ],
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
@@ -170,19 +201,26 @@ class ShowIcon extends StatelessWidget {
   final String img;
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      // height: 10.0,
-      width: 60.0,
-      child: new Image(
-          image: AssetImage(img),
-          fit: BoxFit.fill,
-        ),
-      decoration: new BoxDecoration(
-        // color:  color,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
+    // return new Container(
+    //   // height: 10.0,
+    //   width: 60.0,
+    //   child: new Image.asset(
+    //                       img,
+    //                       scale: .8,
+    //                     ),
+    //   // new Image(
+    //   //     image: AssetImage(img),
+    //   //     fit: BoxFit.fill,
+    //   //   ),
+    //   decoration: new BoxDecoration(
+    //     // color:  color,
+    //     shape: BoxShape.circle,
+    //   ),
+    // );
+    return new Image.asset(
+                          img,
+                          scale: .3,
+                        );  }
 }
 
 class MyTabs {

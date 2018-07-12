@@ -121,14 +121,12 @@ class OptionState extends State<SecondScreen> {
                 widget.onEnd(toJsonMap(), false);
                        widget.navVal = 0;
                         });
-           
-           
-
             // widget.onEnd();
             // _initBoard();
             // Navigator.pop(context);
           } else {
-            widget.onScore(-5);
+            widget.onScore(0);
+            widget.onEnd(toJsonMap(), false);
           }
         });
   }
@@ -152,6 +150,10 @@ class OptionState extends State<SecondScreen> {
       Orientation orientation = MediaQuery.of(context).orientation;
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
+      final maxChars = (_ans != null
+        ? _ans.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
       var sizeOrientation =
           orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
@@ -173,7 +175,7 @@ class OptionState extends State<SecondScreen> {
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");
-      UnitButton.saveButtonSize(context, 6, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
 
       AppState state = AppStateContainer.of(context).state;
       return Scaffold(
@@ -197,84 +199,6 @@ class OptionState extends State<SecondScreen> {
                   )
                 ]));
     });
-  }
-}
-
-class QuestionText extends StatefulWidget {
-  final String _question;
-
-  QuestionText(this._question);
-
-  @override
-  State createState() => new QuestionTextState();
-}
-
-class QuestionTextState extends State<QuestionText>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _fontSizeAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {
-          print(2);
-        }));
-    _fontSizeAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _fontSizeAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(QuestionText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.reset();
-      _fontSizeAnimationController.forward();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
-    return new Material(
-      color: const Color(0xFF54cc70),
-      child: new Container(
-        height: ht * 0.22,
-        width: wd * 0.6,
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(25.0),
-          color: const Color(0xFFf8c43c),
-          border: new Border.all(
-            color: const Color(0xFF54cc70),
-          ),
-        ),
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              new Text(widget._question,
-                  style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: ht > wd ? ht * 0.06 : wd * 0.06,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic)),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
