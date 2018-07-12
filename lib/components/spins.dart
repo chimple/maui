@@ -44,9 +44,6 @@ class ArrowPainter extends CustomPainter {
 }
 
 class TextPainters extends CustomPainter {
-  // final LONG_TICK = 50.0;
-  // final SHORT_TICK = 4.0;
-
   TextPainters({
     this.maxString,
     this.maxChar,
@@ -80,11 +77,9 @@ class TextPainters extends CustomPainter {
       _const = -25.0;
     } else if (noOfSlice == 4) {
       _const = -21.0;
-    }
-    else if(noOfSlice==6){
-      _const=-15.0;
-    }
-    else if(noOfSlice==8){}
+    } else if (noOfSlice == 6) {
+      _const = -15.0;
+    } else if (noOfSlice == 8) {}
     int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
     _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
     // print("max len string w:: ${data}");
@@ -110,41 +105,41 @@ class TextPainters extends CustomPainter {
     path.lineTo(-2 * pi * size.width / 2 / 16, size.width / 2 - 20);
     path.close();
     int incr = 0;
-    if(data.isNotEmpty)
-    for (var i = 0; i < noOfSlice * 2; ++i) {
-      if (i % 2 == 0) {
-        canvas.drawLine(
-            new Offset(0.0, 0.0), new Offset(0.0, radius - 4.2), tickPaint);
-      } else { 
-        canvas.save();
-        canvas.translate(-0.0, -((size.width) / 3));
-        String _text = data[incr];
-        textPainter.text = new TextSpan(
-          text: _text,
-          style: new TextStyle(
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-            color: Colors.black,
-            fontFamily: 'BebasNeue',
-            fontSize: maxChar>1?_fontSize:22.0,
-          ),
-        );
-        incr++;
+    if (data.isNotEmpty)
+      for (var i = 0; i < noOfSlice * 2; ++i) {
+        if (i % 2 == 0) {
+          canvas.drawLine(
+              new Offset(0.0, 0.0), new Offset(0.0, radius - 4.2), tickPaint);
+        } else {
+          canvas.save();
+          canvas.translate(-0.0, -((size.width) / 3));
+          String _text = data[incr];
+          textPainter.text = new TextSpan(
+            text: _text,
+            style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+              color: Colors.black,
+              fontFamily: 'BebasNeue',
+              fontSize: maxChar > 1 ? _fontSize : 22.0,
+            ),
+          );
+          incr++;
 
-        textPainter.layout();
+          textPainter.layout();
 
-        canvas.rotate(-pi * 2);
-        textPainter.paint(
-          canvas,
-          new Offset(
-            -((3.00 * _text.length) * _baseLength) / (117.50),
-            -(size.height / 7.800 + _const),
-          ),
-        );
-        canvas.restore();
+          canvas.rotate(-pi * 2);
+          textPainter.paint(
+            canvas,
+            new Offset(
+              -((3.00 * _text.length) * _baseLength) / (117.50),
+              -(size.height / 7.800 + _const),
+            ),
+          );
+          canvas.restore();
+        }
+        canvas.rotate(2 * pi / (noOfSlice.toDouble() * 2));
       }
-      canvas.rotate(2 * pi / (noOfSlice.toDouble() * 2));
-    }
 
     canvas.restore();
   }
