@@ -7,6 +7,8 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import '../components/unit_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
 
 class Fillnumber extends StatefulWidget {
@@ -74,6 +76,7 @@ class MyFillnumberState extends State<Fillnumber> {
   List<int> _letters;
   String ssum = '';
   String nul1 = '';
+  String nulstring='';
   List<int> clickAns = [];
   List<Status> _statuses;
   List<Bgstatus> _Bgstatus;
@@ -201,7 +204,7 @@ class MyFillnumberState extends State<Fillnumber> {
           countline = 0;
         }
 
-        if (data == code && _visibleflag[index] == false && text != null) {
+        if (data == code && _visibleflag[index] == false&& text!=null) {
           if (lastclick == _size ||
               lastclick == _size + _size ||
               lastclick == _size + _size + _size) {
@@ -283,8 +286,8 @@ class MyFillnumberState extends State<Fillnumber> {
             });
             tempindex.removeRange(0, tempindex.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
-              widget.onScore(((40 - tries) ~/ totalgame));
-
+              // widget.onScore(((40 - tries) ~/ totalgame));
+              widget.onScore(5);
               count1 = count1 + 1;
               widget.onProgress((count1) / (9));
 
@@ -301,10 +304,14 @@ class MyFillnumberState extends State<Fillnumber> {
                   count = count + 1;
                 }
               });
+              ssum=nulstring;
               //this is you want to clear the ans value in it after some time it will disappear
-              setState(() {
-                ssum = '';
+             if(ssum==null){
+                 setState(() {
+                ssum = nulstring;
               });
+             }
+              print("hello all element is deleted that null not be added just blank............::$ssum............::$nulstring");
 
               _letters.removeWhere((value) => value == null);
               for (var i = 0; i < count; i++) {
@@ -353,7 +360,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 k = 0;
 
                 Ansr = 0;
-                ssum = '';
+                ssum = nulstring;
                 sum = 0;
                 clicks.removeRange(0, clicks.length);
                 _Index.removeRange(0, _Index.length);
@@ -375,12 +382,13 @@ class MyFillnumberState extends State<Fillnumber> {
 
             _val2.removeRange(0, _val2.length);
           } else {
+             widget.onScore(-1);
             setState(() {
-              widget.onScore(-1);
+               
               _pointssend = [];
               start = false;
               tempindex = [];
-              tries += 5;
+            
               clickAns = [];
               _Index.removeRange(0, _Index.length);
               for (var i = 0; i < _visibleflag.length; i++)
@@ -397,7 +405,7 @@ class MyFillnumberState extends State<Fillnumber> {
                   _visibleflag =
                       _letters.map((a) => false).toList(growable: false);
 
-                  ssum = '';
+                  ssum = nulstring;
                   sum = 0;
                 });
               });
@@ -438,7 +446,9 @@ class MyFillnumberState extends State<Fillnumber> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      AppState state = AppStateContainer.of(context).state;
+       final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      print("hello data is the ${state}");
 
       double fullwidth = (_size * buttonConfig.width) + (_size * buttonPadding);
       double removeallpaddingh = constraints.maxWidth - fullwidth;
@@ -456,8 +466,8 @@ class MyFillnumberState extends State<Fillnumber> {
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       Offset startpoint = new Offset(xaxis, yaxis);
 
-      List<Offset> offsets1 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
+      List<Offset> offsets1 =
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
       yaxis = yaxis + buttonConfig.width + buttonPadding;
       double y1 = yaxis;
       double ystart = y1 - y0;
@@ -467,31 +477,31 @@ class MyFillnumberState extends State<Fillnumber> {
           (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets2 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
+      List<Offset> offsets2 =
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
 
       yaxis = yaxis + buttonConfig.width + buttonPadding;
 
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets3 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
+      List<Offset> offsets3 =
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
       yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets4 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
+      List<Offset> offsets4 =
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
 
       List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
       // AppState state = AppStateContainer.of(context).state;
 
       var coloris = Theme.of(context).primaryColor;
-      if (ssum == null) {
+      if(ssum==null){
         setState(() {
-          ssum = '';
-        });
+                  ssum='';
+                });
       }
       return new Stack(
         // overflow: Overflow.visible,
@@ -511,7 +521,7 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Colors.white,
-                            fontSize: buttonConfig.fontSize,
+                            fontSize: buttonConfig.fontSize / 1.3,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
@@ -528,12 +538,13 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: buttonConfig.fontSize,
+                            fontSize:buttonConfig.fontSize / 1.3,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
                           child: new Center(
-                            child: new Text("$ssum",
+                            child: ssum==null?new Text("$nulstring"):
+                            new Text("$ssum",
                                 style: new TextStyle(fontSize: 35.0)),
                           ),
                         ))),
@@ -579,14 +590,16 @@ class MyFillnumberState extends State<Fillnumber> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else if (i == 1) {
+      } else if(i==1){
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
-      } else {
-        x = x0 + d + maxWidth + (maxWidth / 6);
+      }
+      else{
+         x = x0 + d + maxWidth+(maxWidth/6);
         x0 = x;
         y = y0;
+
       }
       offsets[i] = new Offset(x, y);
     }
