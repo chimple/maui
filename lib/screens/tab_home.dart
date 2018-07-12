@@ -108,7 +108,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    SystemChrome.setPreferredOrientations([]);
+   
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),
