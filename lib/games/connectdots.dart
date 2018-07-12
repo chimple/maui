@@ -11,6 +11,7 @@ import 'package:maui/components/Shaker.dart';
 import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Connectdots extends StatefulWidget {
   Function onScore;
@@ -428,21 +429,25 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            
               }
               else{
-               tries += 5;
+              //  tries += 5;
                 flag=1;
                 break;
               }
             }}
             else {flag=1;
-            tries += 5;
+            // tries += 5;
             }
             print('flaggggggggggggg     $flag');
              if(flag==0){
              print('on  endddd  ');
+              widget.onScore(20);
+     
+              
              setState(() {
                     
-                       widget.onScore(((40 - tries) ~/ totalgame));
-            widget.onProgress(1.0);                      
+                      
+            widget.onProgress(1.0);         
+                       
     count1=0;
    forAns=[];
     count3=0;
@@ -468,10 +473,10 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            }
            if(flag==1)
            {
-
+widget.onScore(-1);
              print("object....shanking thing is...:$_visibleflag");
              setState(() {
-               widget.onScore(-1);
+               
                forAns=[];
              
               for (var i = 0; i < _visibleflag.length; i++)
@@ -568,23 +573,24 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
 
 
       AppState state = AppStateContainer.of(context).state;
-      double fullwidth=(_size*state.buttonWidth)+(_size*buttonPadding);
+       final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      double fullwidth=(_size*buttonConfig.width)+(_size*buttonPadding);
       double removeallpaddingh=constraints.maxWidth-fullwidth;
       double startpointx=removeallpaddingh/2;
       double removeallpaddingv=constraints.maxHeight-fullwidth;
  double startpointy=removeallpaddingv/2;
 
-double yaxis=startpointy+(state.buttonHeight/2);
+double yaxis=startpointy+(buttonConfig.height/2);
 
-double xaxis=startpointx+(state.buttonWidth/2);
+double xaxis=startpointx+(buttonConfig.width/2);
 
 print("object..x axis start point is in.....:$xaxis.........$yaxis");
 print(".....maxheight of button...:$maxHeight........max height is :...$vPadding");
 print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
         Offset startpoint = new Offset(xaxis , yaxis);
 
-       List<Offset> offsets1 = calculateOffsets(buttonPadding, startpoint, _size,state.buttonWidth);
- yaxis=yaxis+state.buttonWidth+buttonPadding;
+       List<Offset> offsets1 = calculateOffsets(buttonPadding, startpoint, _size,buttonConfig.width);
+ yaxis=yaxis+buttonConfig.width+buttonPadding;
  double y1= yaxis;
 
  xaxis=xaxis;
@@ -593,23 +599,23 @@ print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
  double xstart=(xaxis+xaxis+(maxWidth/1.4))-(hPadding+buttonPadding);
 print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
          startpoint = new Offset(xaxis, yaxis );
-List<Offset> offsets2 = calculateOffsets(buttonPadding, startpoint, _size,state.buttonWidth);
+List<Offset> offsets2 = calculateOffsets(buttonPadding, startpoint, _size,buttonConfig.width);
 
- yaxis=yaxis+state.buttonWidth+buttonPadding;
+ yaxis=yaxis+buttonConfig.width+buttonPadding;
  
  xaxis=xaxis;
 print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
          startpoint = new Offset(xaxis, yaxis );
-List<Offset> offsets3 = calculateOffsets(buttonPadding, startpoint, _size,state.buttonWidth);
- yaxis=yaxis+state.buttonWidth+buttonPadding;
+List<Offset> offsets3 = calculateOffsets(buttonPadding, startpoint, _size,buttonConfig.width);
+ yaxis=yaxis+buttonConfig.width+buttonPadding;
  xaxis=xaxis;
 print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
          startpoint = new Offset(xaxis, yaxis );
-List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,state.buttonWidth);
+List<Offset> offsets4 = calculateOffsets(buttonPadding, startpoint, _size,buttonConfig.width);
 
  List<Offset> offsets=offsets1+offsets2+offsets3+offsets4;
-      print("object....startpointaxis is.....$startpointx");
-      print("object button height ....:${state.buttonHeight}.. button width.....:${state.buttonWidth}");
+      // print("object....startpointaxis is.....$startpointx");
+      // print("object button height ....:${state.buttonHeight}.. button width.....:${state.buttonWidth}");
        var coloris=Theme.of(context).primaryColor;
     return new Stack(
       children:[ 

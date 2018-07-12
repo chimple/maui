@@ -6,7 +6,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
-import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
 
@@ -34,32 +34,35 @@ class Crossword extends StatefulWidget {
 }
 
 class CrosswordState extends State<Crossword> {
- static var rand = new Random();
-  Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data=(rand.nextInt(2))==0?new Tuple2([
-          ['E', null, null, null, null],
-          ['A', null, null, null, null],
-          ['T', 'I', 'G', 'E', 'R'],
-          [null, null, null, null, 'A'],
-          [null, null, null, null, 'T']
-        ], [
-          new Tuple4('assets/apple.png', 0, 0, Direction.down),
-          new Tuple4('assets/apple.png', 2, 0, Direction.across),
-          new Tuple4('assets/apple.png', 2, 4, Direction.down),
-        ]):new Tuple2([
-      ['C', 'A', 'T', null, null, 'E'],
-      [null, 'N', null, null, null, 'G'],
-      [null, 'T', 'I', 'G', 'E', 'R'],
-      [null, null, 'B', null, null, 'E'],
-      [null, null, 'E', null, null, 'T'],
-      [null, 'O', 'X', 'E', 'N', null]
-    ], [
-      new Tuple4('assets/apple.png', 0, 0, Direction.across),
-      new Tuple4('assets/apple.png', 0, 1, Direction.down),
-      new Tuple4('assets/apple.png', 0, 5, Direction.down),
-      new Tuple4('assets/apple.png', 2, 1, Direction.across),
-      new Tuple4('assets/apple.png', 2, 2, Direction.down),
-      new Tuple4('assets/apple.png', 5, 1, Direction.across)
-    ]);
+  static var rand = new Random();
+  Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data =
+      (rand.nextInt(2)) == 0
+          ? new Tuple2([
+              ['E', null, null, null, null],
+              ['A', null, null, null, null],
+              ['T', 'I', 'G', 'E', 'R'],
+              [null, null, null, null, 'A'],
+              [null, null, null, null, 'T']
+            ], [
+              new Tuple4('assets/apple.png', 0, 0, Direction.down),
+              new Tuple4('assets/apple.png', 2, 0, Direction.across),
+              new Tuple4('assets/apple.png', 2, 4, Direction.down),
+            ])
+          : new Tuple2([
+              ['C', 'A', 'T', null, null, 'E'],
+              [null, 'N', null, null, null, 'G'],
+              [null, 'T', 'I', 'G', 'E', 'R'],
+              [null, null, 'B', null, null, 'E'],
+              [null, null, 'E', null, null, 'T'],
+              [null, 'O', 'X', 'E', 'N', null]
+            ], [
+              new Tuple4('assets/apple.png', 0, 0, Direction.across),
+              new Tuple4('assets/apple.png', 0, 1, Direction.down),
+              new Tuple4('assets/apple.png', 0, 5, Direction.down),
+              new Tuple4('assets/apple.png', 2, 1, Direction.across),
+              new Tuple4('assets/apple.png', 2, 2, Direction.down),
+              new Tuple4('assets/apple.png', 5, 1, Direction.across)
+            ]);
   List<String> _rightwords = [];
   List<String> _letters = [];
   List<String> _images = [];
@@ -85,7 +88,7 @@ class CrosswordState extends State<Crossword> {
     // _rightwords.removeRange(0, _rightwords.length);
     // _letters.removeRange(0, _letters.length);
     // _rightlen = 0;
-     correct = 0;
+    correct = 0;
     //  flag1 = 0;
     // _letters.removeRange(0, _letters.length);
     // _images.removeRange(0, _images.length);
@@ -94,9 +97,9 @@ class CrosswordState extends State<Crossword> {
     // _cols = 0;
     // j = 0;
     // k = 0;
-     keys = 0;
+    keys = 0;
     // l = 0;
-   // data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
+    // data = await fetchCrosswordData(widget.gameConfig.gameCategoryId);
     print('data camee $data');
     data.item1.forEach((e) {
       e.forEach((v) {
@@ -189,8 +192,8 @@ class CrosswordState extends State<Crossword> {
                 dragdata = dcindex;
                 dindex = int.parse(dragdata.substring(0, 3));
                 dcode = int.parse(dragdata.substring(4));
-                if (code == dcode) {  
-                  var c = 0;      
+                if (code == dcode) {
+                  var c = 0;
                   for (; c < _sortletters.length; c++) {
                     if (_rightwords[dindex - 100] == _sortletters[c] &&
                         index == _sortletters[++c] &&
@@ -257,7 +260,7 @@ class CrosswordState extends State<Crossword> {
       );
     }
     int j = 0;
-    int inc=0;
+    int inc = 0;
     int k = 100;
     int l = (_rows * _cols) - 1;
     return new LayoutBuilder(builder: (context, constraints) {
@@ -277,10 +280,9 @@ class CrosswordState extends State<Crossword> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
       //  keys = 0;
       j = 0;
-      inc=0;
+      inc = 0;
       k = 100;
       l = (_rows * _cols) - 1;
       print(
@@ -306,8 +308,8 @@ class CrosswordState extends State<Crossword> {
                                       .map((e) => Padding(
                                           padding:
                                               EdgeInsets.all(buttonPadding),
-                                          child: _buildItem(
-                                              inc, e, _flag[inc], _images[inc++])))
+                                          child: _buildItem(inc, e, _flag[inc],
+                                              _images[inc++])))
                                       .toList(growable: false)))),
                       new Padding(padding: new EdgeInsets.all(buttonPadding)),
                       new Container(
@@ -318,8 +320,8 @@ class CrosswordState extends State<Crossword> {
                               children: _rightwords
                                   .map((r) => Padding(
                                       padding: EdgeInsets.all(buttonPadding),
-                                      child:
-                                          _buildItem(k++, r, _flag[inc++], null)))
+                                      child: _buildItem(
+                                          k++, r, _flag[inc++], null)))
                                   .toList(growable: false)))
                     ])
               : new Row(
@@ -433,6 +435,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (widget.index < 100 && widget.color1 != 0) {
       return new ScaleTransition(
         scale: animation,
@@ -491,6 +494,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
             )),
         feedback: UnitButton(
           text: disptext,
+          maxHeight: buttonConfig.height,
+          maxWidth: buttonConfig.width,
+          fontSize: buttonConfig.fontSize,
         ),
       );
     } else {
