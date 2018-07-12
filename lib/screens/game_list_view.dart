@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
@@ -47,7 +46,7 @@ class GameListViewState extends State<GameListView> {
         color: color,
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
-      margin: EdgeInsets.all(size.width * .02),
+      margin: EdgeInsets.all(16.0),
       child: new InkWell(
         onTap: () => Navigator
                 .of(context)
@@ -57,37 +56,56 @@ class GameListViewState extends State<GameListView> {
               );
             })),
         key: new Key(gameName),
-        child: new Column(
+        child: new Stack(
           children: <Widget>[
-            new Expanded(
-                child: Align(
+            new Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new AssetImage(
+                      "assets/background_image/reflex_small.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            new Column(
+              children: <Widget>[
+                new Expanded(
                     child: _notifs[gameName] == null
-                        ? new Hero(
-                            tag: 'assets/hoodie/$gameName.png',
-                            child: Image.asset('assets/hoodie/$gameName.png',
-                                scale: 0.3),
-                          )
+                        ? new Column(children: <Widget>[
+                           new Row(
+                              children: <Widget>[
+                                new Container(
+                                  // height: size.height * 0.15,
+                                  width: size.width * 0.15,
+                                  child: new Hero(
+                                    tag: 'assets/hoodie/$gameName.png',
+                                    child: Image.asset(
+                                        'assets/hoodie/$gameName.png',
+                                        scale: 0.2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ])
                         : Badge(
                             value: '${_notifs[gameName]}',
                             child: Hero(
                               tag: 'assets/hoodie/$gameName.png',
-                              child: Image.asset('assets/hoodie/$gameName.png',
-                                  scale: 0.3),
-                            )))),
-            new Container(
-                padding: EdgeInsets.all(size.width * .01),
-                decoration: new BoxDecoration(
-                  color: Colors.black38,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: const Radius.circular(16.0),
-                      bottomRight: const Radius.circular(16.0)),
-                ),
-                child: new Center(
-                    child: new Text(
-                  Loca.of(context).intl(gameName),
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                  overflow: TextOverflow.ellipsis,
-                ))),
+                              child: Image.asset(
+                                  'assets/hoodie/$gameName.png',
+                                  scale: 0.6),
+                            ))),
+                new Container(
+                 
+                    child: new Container(
+                      // margin: EdgeInsets.only(left: size.width*.15),
+                        child: new Text(
+                      Loca.of(context).intl(gameName),
+                      style: new TextStyle(fontSize: size.height*.03, color: Colors.white),
+                      overflow: TextOverflow.ellipsis
+                    ))),
+              ],
+            ),
           ],
         ),
       ),

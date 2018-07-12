@@ -106,6 +106,8 @@ flutter:
     - assets/dice_game/color_brush.png
     - assets/dice_game/dice4.gif
     - assets/dice_game/tapme.png
+    - assets/background_image/reflex_small.png
+    - assets/background_image/reflex_big.png
     - assets/games.png
     - assets/chat.png
     - assets/story.png
