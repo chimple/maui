@@ -198,6 +198,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     super.dispose();
+    SystemChrome.setPreferredOrientations([]);
   }
 
   void initCamera() async {
