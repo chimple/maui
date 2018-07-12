@@ -17,6 +17,10 @@ class ScoreRepo {
     return await scoreDao.getScoreCountByUser(userId);
   }
 
+  Future<Map<String, List<Score>>> getScoreMapByUser(String userId) async {
+    return await scoreDao.getScoreMapByUser(userId);
+  }
+
   Future<Score> insert(Score score) async {
     return scoreDao.insert(score);
   }
