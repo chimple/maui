@@ -4,6 +4,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 
@@ -21,6 +22,7 @@ class UnitButton extends StatefulWidget {
   final double maxWidth;
   final double maxHeight;
   final double fontSize;
+  final bool forceUnitMode;
 
   UnitButton(
       {Key key,
@@ -30,6 +32,7 @@ class UnitButton extends StatefulWidget {
       this.showHelp = true,
       this.highlighted = false,
       this.primary = true,
+      this.forceUnitMode = false,
       this.bgImage,
       this.maxHeight,
       this.maxWidth,
@@ -44,23 +47,28 @@ class UnitButton extends StatefulWidget {
 
   static void saveButtonSize(
       BuildContext context, int maxChars, double maxWidth, double maxHeight) {
-    AppState state = AppStateContainer.of(context).state;
+    final container = ButtonStateContainer.of(context);
     final fontWidthFactor = maxChars == 1 ? 1.1 : 0.7;
     final fontSizeByWidth = maxWidth / (maxChars * fontWidthFactor);
     final fontSizeByHeight = maxHeight / 1.8;
-    state.buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
-    state.buttonRadius = min(maxWidth, maxHeight) / 8.0;
+    final buttonFontSize = min(fontSizeByHeight, fontSizeByWidth);
+    final buttonRadius = min(maxWidth, maxHeight) / 8.0;
 
-    state.buttonWidth = (maxChars == 1)
+    final buttonWidth = (maxChars == 1)
         ? min(maxWidth, maxHeight)
-        : state.buttonFontSize * maxChars * 0.7;
-    state.buttonHeight = (maxChars == 1)
+        : buttonFontSize * maxChars * 0.7;
+    final buttonHeight = (maxChars == 1)
         ? min(maxWidth, maxHeight)
         : min(maxHeight, maxWidth * 0.75);
     print(
-        'width: ${state.buttonWidth} height: ${state.buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
+        'width: ${buttonWidth} height: ${buttonHeight} maxWidth: ${maxWidth} maxHeight: ${maxHeight} maxChars: ${maxChars}');
     print(
-        'fontsize: ${state.buttonFontSize} fontSizeByWidth: ${fontSizeByWidth} fontSizeByHeight ${fontSizeByHeight}');
+        'fontsize: ${buttonFontSize} fontSizeByWidth: ${fontSizeByWidth} fontSizeByHeight ${fontSizeByHeight}');
+    container.updateButtonConfig(
+        fontSize: buttonFontSize,
+        width: buttonWidth,
+        height: buttonHeight,
+        radius: buttonRadius);
   }
 }
 
@@ -78,8 +86,9 @@ class _UnitButtonState extends State<UnitButton> {
 
   void _getData() async {
     _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
-    if ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
-        (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0)) {
+    if (!widget.forceUnitMode &&
+        ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
+            (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0))) {
       _unitMode = UnitMode.text;
     }
     setState(() => _isLoading = false);
@@ -100,11 +109,11 @@ class _UnitButtonState extends State<UnitButton> {
   }
 
   Widget _buildButton(BuildContext context) {
-    AppState state = AppStateContainer.of(context).state;
+    final buttonConfig = ButtonStateContainer.of(context)?.buttonConfig;
     return Container(
         constraints: BoxConstraints.tightFor(
-            height: widget.maxHeight ?? state.buttonHeight,
-            width: widget.maxWidth ?? state.buttonWidth),
+            height: widget.maxHeight ?? buttonConfig.height,
+            width: widget.maxWidth ?? buttonConfig.width),
         decoration: new BoxDecoration(
             image: widget.bgImage != null
                 ? new DecorationImage(
@@ -135,8 +144,8 @@ class _UnitButtonState extends State<UnitButton> {
                             : Colors.white,
                     width: 4.0),
                 borderRadius: BorderRadius
-                    .all(Radius.circular(state.buttonRadius ?? 8.0))),
-            child: _buildUnit(widget.fontSize ?? state.buttonFontSize)));
+                    .all(Radius.circular(buttonConfig?.radius ?? 8.0))),
+            child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)));
   }
 
   Widget _buildUnit(double fontSize) {

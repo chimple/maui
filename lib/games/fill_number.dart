@@ -9,6 +9,7 @@ import 'package:maui/components/Shaker.dart';
 import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 
 class Fillnumber extends StatefulWidget {
   Function onScore;
@@ -75,6 +76,7 @@ class MyFillnumberState extends State<Fillnumber> {
   List<int> _letters;
   String ssum = '';
   String nul1 = '';
+  String nulstring='';
   List<int> clickAns = [];
   List<Status> _statuses;
   List<Bgstatus> _Bgstatus;
@@ -284,8 +286,8 @@ class MyFillnumberState extends State<Fillnumber> {
             });
             tempindex.removeRange(0, tempindex.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
-              widget.onScore(((40 - tries) ~/ totalgame));
-
+              // widget.onScore(((40 - tries) ~/ totalgame));
+              widget.onScore(5);
               count1 = count1 + 1;
               widget.onProgress((count1) / (9));
 
@@ -302,10 +304,14 @@ class MyFillnumberState extends State<Fillnumber> {
                   count = count + 1;
                 }
               });
+              ssum=nulstring;
               //this is you want to clear the ans value in it after some time it will disappear
-              setState(() {
-                ssum = '';
+             if(ssum==null){
+                 setState(() {
+                ssum = nulstring;
               });
+             }
+              print("hello all element is deleted that null not be added just blank............::$ssum............::$nulstring");
 
               _letters.removeWhere((value) => value == null);
               for (var i = 0; i < count; i++) {
@@ -354,7 +360,7 @@ class MyFillnumberState extends State<Fillnumber> {
                 k = 0;
 
                 Ansr = 0;
-                ssum = '';
+                ssum = nulstring;
                 sum = 0;
                 clicks.removeRange(0, clicks.length);
                 _Index.removeRange(0, _Index.length);
@@ -376,12 +382,13 @@ class MyFillnumberState extends State<Fillnumber> {
 
             _val2.removeRange(0, _val2.length);
           } else {
+             widget.onScore(-1);
             setState(() {
-                widget.onScore(-1);
+               
               _pointssend = [];
               start = false;
               tempindex = [];
-              tries += 5;
+            
               clickAns = [];
               _Index.removeRange(0, _Index.length);
               for (var i = 0; i < _visibleflag.length; i++)
@@ -398,7 +405,7 @@ class MyFillnumberState extends State<Fillnumber> {
                   _visibleflag =
                       _letters.map((a) => false).toList(growable: false);
 
-                  ssum = '';
+                  ssum = nulstring;
                   sum = 0;
                 });
               });
@@ -440,17 +447,19 @@ class MyFillnumberState extends State<Fillnumber> {
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
+       final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      print("hello data is the ${state}");
 
-      double fullwidth = (_size * state.buttonWidth) + (_size * buttonPadding);
+      double fullwidth = (_size * buttonConfig.width) + (_size * buttonPadding);
       double removeallpaddingh = constraints.maxWidth - fullwidth;
       double startpointx = removeallpaddingh / 2;
       double removeallpaddingv = constraints.maxHeight - fullwidth;
       double startpointy = removeallpaddingv / 2;
 
       double yaxis =
-          startpointy + (state.buttonHeight) + (state.buttonHeight / 2);
+          startpointy + (buttonConfig.height) + (buttonConfig.height / 2);
       double y0 = yaxis;
-      double xaxis = startpointx + (state.buttonWidth / 2);
+      double xaxis = startpointx + (buttonConfig.width / 2);
       double x0 = xaxis;
       print(
           ".....maxheight of button...:$maxHeight........max height is :...$vPadding");
@@ -458,8 +467,8 @@ class MyFillnumberState extends State<Fillnumber> {
       Offset startpoint = new Offset(xaxis, yaxis);
 
       List<Offset> offsets1 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       double y1 = yaxis;
       double ystart = y1 - y0;
       xaxis = xaxis;
@@ -469,21 +478,21 @@ class MyFillnumberState extends State<Fillnumber> {
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
       List<Offset> offsets2 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
 
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
 
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
       List<Offset> offsets3 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
-      yaxis = yaxis + state.buttonWidth + buttonPadding;
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
+      yaxis = yaxis + buttonConfig.width + buttonPadding;
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
       List<Offset> offsets4 =
-          calculateOffsets(buttonPadding, startpoint, _size, state.buttonWidth);
+          calculateOffsets(buttonPadding, startpoint, _size, buttonConfig.width);
 
       List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
       // AppState state = AppStateContainer.of(context).state;
@@ -512,7 +521,7 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Colors.white,
-                            fontSize: state.buttonFontSize,
+                            fontSize: buttonConfig.fontSize / 1.3,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
@@ -529,12 +538,13 @@ class MyFillnumberState extends State<Fillnumber> {
                         elevation: 4.0,
                         textStyle: new TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: state.buttonFontSize,
+                            fontSize:buttonConfig.fontSize / 1.3,
                             letterSpacing: 8.0),
                         child: new Container(
                           padding: EdgeInsets.all(buttonPadding),
                           child: new Center(
-                            child: new Text("$ssum",
+                            child: ssum==null?new Text("$nulstring"):
+                            new Text("$ssum",
                                 style: new TextStyle(fontSize: 35.0)),
                           ),
                         ))),
