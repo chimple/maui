@@ -75,25 +75,25 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
 
   void _initBoard() async {
     print('_initBoard: ${widget.gameConfig.gameData}');
-    if (widget.gameConfig.gameData != null) {
-      print('initializing from: ${widget.gameConfig.gameData}');
-      fromJsonMap(widget.gameConfig.gameData);
-      setState(() => _isLoading = false);
-    } else {
-      _currentIndex = 0;
-      setState(() => _isLoading = true);
-      _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
-      _size = min(_maxSize, sqrt(_allLetters.length).floor());
-      _shuffledLetters = [];
-      for (var i = 0; i < _allLetters.length; i += _size * _size) {
-        _shuffledLetters.addAll(
-            _allLetters.skip(i).take(_size * _size).toList(growable: false)
-              ..shuffle());
-      }
-      _letters = _shuffledLetters.sublist(0, _size * _size);
-      _solvedLetters = [];
-      setState(() => _isLoading = false);
+//    if (widget.gameConfig.gameData != null) {
+//      print('initializing from: ${widget.gameConfig.gameData}');
+//      fromJsonMap(widget.gameConfig.gameData);
+//      setState(() => _isLoading = false);
+//    } else {
+    _currentIndex = 0;
+    setState(() => _isLoading = true);
+    _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
+    _size = min(_maxSize, sqrt(_allLetters.length).floor());
+    _shuffledLetters = [];
+    for (var i = 0; i < _allLetters.length; i += _size * _size) {
+      _shuffledLetters.addAll(
+          _allLetters.skip(i).take(_size * _size).toList(growable: false)
+            ..shuffle());
     }
+    _letters = _shuffledLetters.sublist(0, _size * _size);
+    _solvedLetters = [];
+    setState(() => _isLoading = false);
+//    }
   }
 
   Map<String, dynamic> toJsonMap() {
@@ -118,8 +118,8 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(Reflex oldWidget) {
-//    print(oldWidget.iteration);
-//    print(widget.iteration);
+    print('Reflex old iteration: ${oldWidget.iteration}');
+    print('Reflex new iteration: ${widget.iteration}');
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
 //      print(_allLetters);
@@ -150,7 +150,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
             new Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
                 _solvedLetters.insert(0, text);
-                widget.onEnd(toJsonMap(), false);
+//                widget.onEnd(toJsonMap(), false);
               });
             });
             if (_currentIndex >= _allLetters.length) {
@@ -290,6 +290,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print('MyButton.didUpdateWidget ${oldWidget.text} ${widget.text}');
     if (oldWidget.text == null && widget.text != null) {
       _displayText = widget.text;
       controller.forward();
@@ -301,7 +302,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("_MyButtonState.build");
+    print("_MyButtonState.build ${widget.text}");
     return new ScaleTransition(
         scale: animation,
         child: new UnitButton(
