@@ -85,13 +85,13 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
     print("user detail ?::: $user");
-    if (user == null)
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    else {
-      SystemChrome.setPreferredOrientations([]);
+    if (user == null) {
+      // SystemChrome.setPreferredOrientations([
+      //   DeviceOrientation.portraitUp,
+      //   DeviceOrientation.portraitDown,
+      //]);
+    } else {
+      //SystemChrome.setPreferredOrientations([]);
     }
 
     return (user != null)
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                             new Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(0.0),
                             ),
                             Shake(
                               animation: shakeAnimation,
