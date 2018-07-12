@@ -191,7 +191,13 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
+
     initCamera();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void initCamera() async {

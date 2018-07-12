@@ -35,13 +35,19 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _isLoading = true;
-
+    SystemChrome.setPreferredOrientations([]);
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
     shakeAnimation = new Tween(begin: -4.0, end: 4.0).animate(controller);
     controller.addStatusListener((status) {});
 
     _initData();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
   }
 
   @override
@@ -74,19 +80,20 @@ class _LoginScreenState extends State<LoginScreen>
     Navigator.of(context).pushNamed('/camera');
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Orientation ornt;
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    print("user detail ?::: $user");
+    if (user == null)
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    else {
+      SystemChrome.setPreferredOrientations([]);
+    }
+
     return (user != null)
         ? new TabHome()
         : new Scaffold(
@@ -204,6 +211,7 @@ class _LoginScreenState extends State<LoginScreen>
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
       //Navigator.of(context).pop();
+
     } else {
       print("false");
       controller.addStatusListener((status) {
