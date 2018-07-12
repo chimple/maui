@@ -24,9 +24,10 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   ];
   MyTabs _myHandler;
   Widget _icon = new Container();
-  AnimationController _imgController, _bubbleController;
+  Widget _icon1 = new Container();
+  AnimationController _imgController, _imgController1, _bubbleController;
   ScrollController _scrollcontroller;
-  Animation<double> animateImage;
+  Animation<double> animateImage, animateImage1;
   TabController _controller;
   void initState() {
     super.initState();
@@ -38,11 +39,19 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     )..repeat();
     _imgController = new AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
+    _imgController1 = new AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     animateImage =
         new CurvedAnimation(parent: _imgController, curve: Curves.ease);
+    animateImage1 =
+        new CurvedAnimation(parent: _imgController1, curve: Curves.ease);
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
+    _icon1 = new Image.asset(
+                            '${_myHandler.img}',
+                            scale: .3,
+                          );
   }
 
   void _tabSelected() {
@@ -55,9 +64,19 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     setState(() {
           if(_scrollcontroller.offset == 0.0){
             // _icon = new Container();
+            _imgController1.forward();
             _imgController.reverse();
+            
+            _icon1 = new ScaleTransition(
+              scale: animateImage1,
+                          child: new Image.asset(
+                            '${_myHandler.img}',
+                            scale: .3,
+                          ),
+            );
           }
           else{
+            _imgController1.reverse();
     _imgController.forward();
             _icon = new ScaleTransition(
                 scale: animateImage,
@@ -146,10 +165,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                     : new FittedBox(
                         fit: BoxFit.contain,
                         alignment: Alignment.center,
-                        child: new Image.asset(
-                          '${_myHandler.img}',
-                          scale: .3,
-                        ),
+                        child: _icon1
                       ),
                 // centerTitle: true,
               ),
