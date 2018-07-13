@@ -223,12 +223,17 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             child: new FlashCard(text: temp, onChecked: () {
               setState(() {
                 _isShowingFlashCard = false;
+                print('thiss    ${this._count}   ${_tableShuffledData.length}');
+                 if(this._count==_tableShuffledData.length-1){
+                  widget.onEnd();
+                }else{
                 this._count = this._count + 1;
                 int temp1 = _tableShuffledData[_count].item1;
                 String temp2 = _tableShuffledData[_count].item2;
                 int temp3 = _tableShuffledData[_count].item3;
                 _question = "$temp1 $temp2 $temp3";
                 _answer = _tableShuffledData[_count].item4;
+                }
               });
             }));
       }

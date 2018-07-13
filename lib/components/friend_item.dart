@@ -12,6 +12,7 @@ class FriendItem extends StatelessWidget {
   bool isFile;
   Function onTap;
   int numNotifs;
+  bool replaceWithHoodie;
   FriendItem(
       {Key key,
       @required this.id,
@@ -19,6 +20,7 @@ class FriendItem extends StatelessWidget {
       this.imageMemory,
       this.onTap,
       this.numNotifs = 0,
+      this.replaceWithHoodie = true,
       this.isFile = true})
       : super(key: key);
 
@@ -40,19 +42,65 @@ class FriendItem extends StatelessWidget {
   Widget _buildFriendItem(String id, User user) {
     return new InkWell(
         onTap: onTap,
-        child: new Container(
-            width: 120.0,
-            height: 120.0,
-            decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                    image: user.id == id
-                        ? new AssetImage('assets/koala_neutral.png')
-                        : isFile
-                            ? FileImage(File(imageUrl))
-                            : imageMemory != null
-                                ? MemoryImage(imageMemory)
-                                : AssetImage('assets/hoodie_bear.png'),
-                    fit: BoxFit.fill))));
+        child:new Stack(
+        children: <Widget>[
+
+             new Center(
+              child: new CircleAvatar(
+                radius: 80.0,
+//                maxRadius: 40.0,
+                backgroundImage:new AssetImage(
+                        "assets/chat_image/chat icon_01.png"),
+                  child: new Center(
+                          child:  RawMaterialButton(
+                            elevation: 20.0,
+
+                            shape: new CircleBorder(
+                              side: new BorderSide(
+                                color:Colors.black,
+                                width: 5.0,
+                              ),
+                            ),
+                      child:
+                      new CircleAvatar(
+                          radius: 50.0,
+
+                      child:   new Container(
+                            width: 100.0,
+                            height: 100.0,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+
+                                image: new DecorationImage(
+
+                                    image: replaceWithHoodie && user.id == id
+                                        ? new AssetImage('assets/koala_neutral.png')
+                                        : isFile
+                                        ? FileImage(File(imageUrl))
+                                        : imageMemory != null
+                                        ? MemoryImage(imageMemory)
+                                        : AssetImage('assets/hoodie_bear.png'),
+                                    fit: BoxFit.fill
+                                    )))),
+//                            child: new Container(
+//                                width: 100.0,
+//                                height: 100.0,
+//                        decoration: new BoxDecoration(
+//                              shape: BoxShape.circle,
+//
+//                              image: new DecorationImage(
+//                                  image: replaceWithHoodie && user.id == id
+//                                      ? new AssetImage('assets/koala_neutral.png')
+//                                      : isFile
+//                                      ? FileImage(File(imageUrl))
+//                                      : imageMemory != null
+//                                      ? MemoryImage(imageMemory)
+//                                      : AssetImage('assets/hoodie_bear.png'),
+//                                  fit: BoxFit.fill))),
+                          ),
+                  ),
+              )),
+
+        ],));
   }
 }
