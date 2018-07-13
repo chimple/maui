@@ -150,6 +150,10 @@ flutter:
     - assets/background_image/spin_wheel_small.png
     - assets/games.png
     - assets/chat.png
+    - assets/chatBig.png
+    - assets/chatSmall.png
+    - assets/gameBig.png
+    - assets/gameSmall.png
     - assets/story.png
     - assets/Shapes.png
     - assets/hoodie_fb.png
