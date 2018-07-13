@@ -105,20 +105,20 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                    backgroundColor: color,
-                    // pinned: true,
-                    expandedHeight: orientation == Orientation.portrait
-                        ? mediaSize.height * .22
-                        : mediaSize.width * .35,
-                    flexibleSpace: new FlexibleSpaceBar(
-                      background: new Stack(children: <Widget>[
-                        new Container(
-                          decoration: new BoxDecoration(
-                            image: new DecorationImage(
-                              image: new AssetImage(
-                                  "assets/background_image/reflex_big.png"),
-                              fit: BoxFit.fill,
-                            ),
+                      backgroundColor:color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .25 : mediaSize.height * .5,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: new Stack(
+                         
+                          children: <Widget>[
+                          new Container(
+                        decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage(
+                                "assets/background_image/${widget.gameName}_big.png"),
+                            fit: BoxFit.fill,
+                          )
                           ),
                         ),
                         Container(
