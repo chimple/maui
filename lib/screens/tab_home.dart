@@ -71,7 +71,6 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   void _scrolling(){
     setState(() {
           if(_scrollcontroller.offset == 0.0){
-            // _icon2 = new Container();
             _imgController1.forward();
             _imgController.reverse();
             
@@ -94,28 +93,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
             );
           }
         });
-    // _icon2 = new ShowIcon(
-    //                 color: _myHandler.color,
-    //                 img: _myHandler.img,
-    //               );
-    // print("object");
-    // print(_scrollcontroller.offset);
     
-  }
-
-  buildCircle(double delay) {
-    return new ScaleTransition(
-      scale: new TestTween(begin: .85, end: 1.5, delay: delay)
-          .animate(_bubbleController),
-      child: new Container(
-        height: 30.0,
-        width: 30.0,
-        decoration: new BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.grey[300],
-        ),
-      ),
-    );
   }
 
   @override
@@ -152,33 +130,15 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
               ],
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
-              centerTitle: true,
               expandedHeight: orientation == Orientation.portrait ? _size.height * .25 : _size.height * .5,
-              // centerTitle: true,
               forceElevated: innerBoxIsScrolled,
               flexibleSpace: new FlexibleSpaceBar(
                 background: 
-                // (_controller.indexIsChanging == true)
-                //     ? new Container(
-                //         width: 100.0,
-                //         height: 50.0,
-                //         color: Colors.black,
-                //         child: new Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           children: <Widget>[
-                //             buildCircle(.0),
-                //             buildCircle(.2),
-                //             buildCircle(.4),
-                //           ],
-                //         ),
-                //       )
-                //     : 
                     new FittedBox(
                         fit: BoxFit.contain,
                         alignment: Alignment.center,
                         child: _icon1
                       ),
-                // centerTitle: true,
               ),
               bottom: new TabBar(
                 isScrollable: false,
@@ -233,17 +193,4 @@ class MyTabs {
   final Color color;
   MyTabs({this.img1, this.img2, this.color});
 }
-
-class TestTween extends Tween<double> {
-  final double delay;
-
-  TestTween({double begin, double end, this.delay})
-      : super(begin: begin, end: end);
-
-  @override
-  double lerp(double t) {
-    return super.lerp((sin((t - delay) * 2 * PI) + 1) / 2);
-  }
-}
-
 
