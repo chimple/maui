@@ -44,7 +44,7 @@ class _CameraScreenState extends State<CameraScreen> {
             onTakePicture
                 ? new Center(
                     child: RotatedBox(
-                        quarterTurns: -1, child: _cameraPreviewWidget()),
+                        quarterTurns: 1, child: _cameraPreviewWidget()),
                   )
                 : Container(
                     child: Center(child: Image.file(new File(imagePath)))),
@@ -58,7 +58,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
       return RotatedBox(
-        quarterTurns: 1,
+        quarterTurns: -1,
         child: Text(
           'Tap a camera',
           style: const TextStyle(
@@ -125,7 +125,13 @@ class _CameraScreenState extends State<CameraScreen> {
                   color: Colors.black54,
                   iconSize: 30.0,
                   onPressed: () {
+                    imagePathStore = imagePath;
                     Navigator.of(context).pop();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => LoginScreen()),
+                    // );
+                    // Navigator.of(context).pop();
                   },
                   icon: Icon(Icons.done),
                 ),
@@ -155,7 +161,6 @@ class _CameraScreenState extends State<CameraScreen> {
         //AppStateContainer.of(context).setLoggedInUser(user);
         //Navigator.of(context).pop();
       }
-      imagePathStore = imagePath;
     });
   }
 
@@ -198,6 +203,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     super.dispose();
+    SystemChrome.setPreferredOrientations([]);
   }
 
   void initCamera() async {

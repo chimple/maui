@@ -113,6 +113,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _isLoading = false;
+    });
     controller1 =
         new AnimationController(duration: Duration(seconds: 2), vsync: this);
     controller = new AnimationController(
@@ -125,15 +128,18 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     controller1.forward();
     if (widget.gameConfig.level < 4) {
       print("level <4");
-      dataSize = 6;
+      dataSize = 4;
     } else if (widget.gameConfig.level < 6) {
       print("level <8");
       dataSize = 6;
     } else {
       print("level <10");
-      dataSize = 6;
+      dataSize = 8;
     }
     _initBoard();
+    setState(() {
+      _isLoading = true;
+    });
   }
 
   @override
@@ -339,6 +345,15 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     else if (dataSize == 2) compareTheangle2();
   }
 
+  void _compareAngle(int size, List<double> _lowerAngle,
+      List<double> _uperAngle, List<bool> _sliceBool) {
+    for (int j = 0; j < size; j++) {
+      if (_angleDiff >= _lowerAngle[j] &&
+          _angleDiff <= _uperAngle[j] &&
+          _sliceBool[j] == true) {}
+    }
+  }
+  // hard codes
   void compareTheangle8() {
     //0
     if (_angleDiff >= 2.0 && _angleDiff <= 43.0 && _slice[0] == true) {
@@ -439,38 +454,38 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[5] = false;
       _changeData(5, (11 * pi) / 6);
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
   void compareTheangle4() {
     //0
-    if (_angleDiff >= 2.0 && _angleDiff <= 87.0 && _slice[0] == true) {
+    if (_angleDiff >= 2.0 && _angleDiff <= 88.0 && _slice[0] == true) {
       print("Slice0::");
       _slice[0] = false;
       _changeData(0, pi / 4);
     } //1
-    else if (_angleDiff >= 92.0 && _angleDiff <= 177.0 && _slice[1] == true) {
+    else if (_angleDiff >= 92.0 && _angleDiff <= 178.0 && _slice[1] == true) {
       print("Slice1::");
 
       _slice[1] = false;
       _changeData(1, (pi / 4 + pi / 2));
     }
     //2
-    else if (_angleDiff >= 182.0 && _angleDiff <= 267.0 && _slice[2] == true) {
+    else if (_angleDiff >= 182.0 && _angleDiff <= 268.0 && _slice[2] == true) {
       print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, (pi / 4 + (pi / 2) * 2));
     }
     //3
-    else if (_angleDiff >= 272.0 && _angleDiff <= 357.0 && _slice[3] == true) {
+    else if (_angleDiff >= 272.0 && _angleDiff <= 358.0 && _slice[3] == true) {
       print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, (pi / 4 + (pi / 2) * 3));
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -488,7 +503,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       _changeData(1, pi / 2 + pi);
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -687,8 +702,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           height: 40.0,
           width: 40.0,
           child: new CircularProgressIndicator(
-            strokeWidth: 2.0,
-            backgroundColor: Colors.blue,
+            strokeWidth: 4.0,
+            backgroundColor: Colors.red,
+            value: 10.0,
           ),
         );
       }
