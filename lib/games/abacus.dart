@@ -302,6 +302,7 @@ class AbacusState extends State<Abacus> {
                 new Future.delayed(const Duration(milliseconds: 1500), () {
                  //  _letters.removeRange(0,_letters.length);
                   _letters1.removeRange(0,_letters1.length);
+                  
                 //   _allLetters1.removeRange(0, _allLetters1.length);  
                 //  for(int i=0;i<_size;i++){
                 //     _letters[i]='0';
