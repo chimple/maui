@@ -76,10 +76,12 @@ class TextPainters extends CustomPainter {
     if (noOfSlice == 2) {
       _const = -25.0;
     } else if (noOfSlice == 4) {
-      _const = -21.0;
+      _const = -16.0;
     } else if (noOfSlice == 6) {
-      _const = -15.0;
-    } else if (noOfSlice == 8) {}
+      _const = -8.0;
+    } else if (noOfSlice == 8) {
+      _const=-10.0;
+    }
     int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
     _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
     // print("max len string w:: ${data}");
@@ -94,7 +96,7 @@ class TextPainters extends CustomPainter {
     _baseLength = 2 * radius * sin(_radiun);
     // print("_angle :: $_angle");
     // print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize = _wFactor * (_baseLength * .3) / (maxChar);
+    _fontSize =  (_baseLength * .24) / (maxChar*_wFactor*.2);
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -121,7 +123,7 @@ class TextPainters extends CustomPainter {
               fontStyle: FontStyle.italic,
               color: Colors.black,
               fontFamily: 'BebasNeue',
-              fontSize: maxChar > 1 ? _fontSize : 22.0,
+              fontSize: maxChar > 1 ? _fontSize : _baseLength*.2,
             ),
           );
           incr++;
@@ -132,7 +134,7 @@ class TextPainters extends CustomPainter {
           textPainter.paint(
             canvas,
             new Offset(
-              -((3.00 * _text.length) * _baseLength) / (117.50),
+              -((3.50 * _text.length) * _baseLength) / (117.50)+_wLength*2,
               -(size.height / 7.800 + _const),
             ),
           );
@@ -200,17 +202,17 @@ class ImagePainter extends CustomPainter {
     if (noOfSlice == 4) {
       _imageOffset = 30.0;
       _imageSizeConst = 30.0;
-      _x = 18.0;
-      _y = 6.0;
+      _x = 4.00;
+      _y = 2.90;
     } else if (noOfSlice == 6) {
       _imageOffset = 20.0;
-      _x = 14.0;
-      _y = 10.0;
+      _x = 8.0;
+      _y = 4.0;
     } else if (noOfSlice == 8) {
       _imageOffset = 40.0;
       _imageSizeConst = 30.0;
-      _x = 17.0;
-      _y = 7.0;
+      _x = 10.0;
+      _y = 5.0;
     }
 
     //print("circle radisu:: $_incircleRadius");
@@ -223,9 +225,9 @@ class ImagePainter extends CustomPainter {
     int incr = 0;
     rect = ui.Offset((size.width / _x), size.width / _y) & new Size(0.0, 0.0);
 
-    imageSize = new Size(size.width * 2, size.width * 2);
+    imageSize = new Size(size.width*1.5 , size.width *1.5);
     sizes = applyBoxFit(boxfit, imageSize,
-        new Size(size.width / 2 * .50, size.width / 2 * .50));
+        new Size(size.width / 2 * .50+_incircleRadius*1.1, size.width / 2 * .50+_incircleRadius*1.1));
     inputSubrect =
         Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
     outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
