@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/score.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -13,7 +15,7 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
-  Map<String, int> _scores;
+  Map<String, List<Score>> _scores;
   @override
     void initState() {
       super.initState();
@@ -23,12 +25,13 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     void _initData() async {
     setState(() => _isLoading = true);
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-    Map<String, int> fetchData = await ScoreRepo().getScoreCountByUser(loggedInUser.id);
-    print("Fetched Data ${fetchData}");
+     Map<String, List<Score>> fetchData = await ScoreRepo().getScoreMapByUser(loggedInUser.id);
+     print("Fetched Dataaaaaaaaaaaaaaaaaaaaaaaaa ${fetchData}");
+    
     setState(() {
         _scores = fetchData;
         _isLoading = false;
-      });
+    });
     }
 
   @override
@@ -40,38 +43,126 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
         child: new CircularProgressIndicator(),
       );
     }
+    var user = AppStateContainer.of(context).state.loggedInUser;
     List<Widget> scoreWidgets = List<Widget>();
-    _scores.forEach((k, v) {
-      scoreWidgets.add(
-        new Container(
-          margin: const EdgeInsets.all(0.0),
-          color: SingleGame.gameColors[k][0],
-          child: ExpansionTile( 
-            leading: Image.asset('assets/hoodie/${k}.png',scale: 5.0,),
-            title: new Row(
-              children: <Widget>[
-                new Expanded(
-                  child: new Container(
-                    child: new Text('$k',textAlign: TextAlign.left, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
+
+    Widget scoreHistory(String myUser, String otherUser, int myScore, int otherScore, String game, int playedAt) {
+      if(otherScore == null) {
+        otherScore = 0;
+          return new Row(
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
+                child:new Container(
+                   decoration:  new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(40.0),
+                    border: new Border.all(
+                      width: 5.0,
+                      color: Colors.black
+                    )
+                  ),
+                child: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: new FileImage(new File(user.image)),
                   ),
                 ),
-                new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                  child: new Text('$v',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
-                )
-              ], 
-            ),
-            children: <Widget>[
-                new Text('Hello World!!'),
-                new Text('Hello World!!'),
-                new Text('Hello World!!'),
-                new Text('Hello World!!'),
-                new Text('Hello World!!'),
+              ),
+              Expanded(
+                child: new Container(
+                    child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                  ),
+              ),
             ],
-          ),
-        )
-      );
-    });
+          );
+      } else {
+          return new Row(
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
+                child:new Container(
+                   decoration:  new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(40.0),
+                    border: new Border.all(
+                      width: 5.0,
+                      color: Colors.black
+                    )
+                  ),
+                child: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: new FileImage(new File(user.image)),
+                  ),
+                ),
+              ),
+
+              new Expanded(
+                child: new Container(
+                  child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                ),
+              ),
+
+              new Expanded(
+                  child: new Container(
+                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                  child: myScore >= otherScore 
+                  ? myScore == otherScore 
+                        ?  new Text('Its a Tie...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                          :  new Text('You Won...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                  :  new Text('You Loose...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                ),
+              ),
+
+              new Container(
+                  child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                ),
+
+              new Container(
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
+                child:new Container(
+                   decoration:  new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(40.0),
+                    border: new Border.all(
+                      width: 5.0,
+                      color: Colors.black
+                    )
+                  ),
+                child: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: new FileImage(new File(user.image)),
+                  ),
+                ),
+              ),
+            ],
+          );
+      }
+    }
+
+    _scores.forEach((k,v){  
+        scoreWidgets.add(
+          new Container(
+            margin: const EdgeInsets.all(0.0),
+            color: SingleGame.gameColors[k][0],
+            child: ExpansionTile( 
+              leading: Image.asset('assets/hoodie/${k}.png',scale: 5.0,),
+              title: new Row(
+                children: <Widget>[
+                  new Expanded(
+                    child: new Container(
+                      child: new Text('$k',textAlign: TextAlign.left, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
+                    ),
+                  ),
+                  new Container(
+                    margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                    child: new Text('${v[0].myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
+                  )
+                ], 
+              ),
+              children: v.map((f){
+                return scoreHistory(f.myUser, f.otherUser, f.myScore, f.otherScore, f.game, f.playedAt);
+              }).toList(growable: false)
+            ),
+          )
+        );
+     });
     return new ListView(
       children: scoreWidgets
     );                  

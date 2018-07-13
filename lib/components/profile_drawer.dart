@@ -26,8 +26,6 @@ class ProfileDrawerState extends State<ProfileDrawer>
     super.dispose();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
@@ -36,16 +34,23 @@ class ProfileDrawerState extends State<ProfileDrawer>
         children: <Widget>[
           new UserAccountsDrawerHeader(
             currentAccountPicture: new Container(
+              decoration:  new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(40.0),
+                  border: new Border.all(
+                    width: 5.0,
+                    color: Colors.black
+                  )
+                ),
                 child: new CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage: new FileImage(new File(user.image)),
                   ),
                 ),
-            accountName: new Text('Sutara',
+            accountName: new Text('${user.name}',
                                     textAlign: TextAlign.left, 
                                     style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
                                     ),
-            accountEmail: new Text('Sutara@chimple.org',
+            accountEmail: new Text('${user.name}@Chimple.org',
                                     textAlign: TextAlign.left, 
                                     style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.indigo),
                                     ),
@@ -66,9 +71,18 @@ class ProfileDrawerIcon extends StatelessWidget {
 
     return new Container(
         child: new GestureDetector(
-      child: new CircleAvatar(
-        backgroundColor: Colors.white,
-        backgroundImage: new FileImage(new File(user.image),),
+      child: Container(
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.circular(30.0),
+            border: new Border.all(
+              width: 5.0,
+              color: Colors.black
+            )
+          ),
+          child: new CircleAvatar(
+            backgroundColor: Colors.white,
+            backgroundImage: new FileImage(new File(user.image),),
+        ),
       ),
       onTap: () {
         Scaffold.of(context).openDrawer();
