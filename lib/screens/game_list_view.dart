@@ -38,6 +38,7 @@ class GameListViewState extends State<GameListView> {
   Widget _buildButton(
       BuildContext context, String gameName, String displayName) {
     MediaQueryData media = MediaQuery.of(context);
+     Orientation orientation = MediaQuery.of(context).orientation;
     final colors = SingleGame.gameColors[gameName];
     final color = colors != null ? colors[0] : Colors.amber;
     var size = media.size;
@@ -46,7 +47,7 @@ class GameListViewState extends State<GameListView> {
         color: color,
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
-      margin: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(size.width * .02),
       child: new InkWell(
         onTap: () => Navigator
                 .of(context)
@@ -62,7 +63,7 @@ class GameListViewState extends State<GameListView> {
               decoration: new BoxDecoration(
                 image: new DecorationImage(
                   image: new AssetImage(
-                      "assets/background_image/reflex_small.png"),
+                      "assets/background_image/${gameName}_small.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,7 +77,7 @@ class GameListViewState extends State<GameListView> {
                               children: <Widget>[
                                 new Container(
                                   // height: size.height * 0.15,
-                                  width: size.width * 0.15,
+                                  width: orientation == Orientation.portrait ? size.width * 0.15 : size.width * 0.1,
                                   child: new Hero(
                                     tag: 'assets/hoodie/$gameName.png',
                                     child: Image.asset(

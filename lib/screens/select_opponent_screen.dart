@@ -106,7 +106,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                   new SliverAppBar(
                       backgroundColor:color,
                       // pinned: true,
-                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .22 : mediaSize.width * .35,
+                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .25 : mediaSize.height * .5,
                       flexibleSpace: new FlexibleSpaceBar(
                         background: new Stack(
                          
@@ -115,7 +115,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         decoration: new BoxDecoration(
                           image: new DecorationImage(
                             image: new AssetImage(
-                                "assets/background_image/reflex_big.png"),
+                                "assets/background_image/${widget.gameName}_big.png"),
                             fit: BoxFit.fill,
                           ),
                         ),
