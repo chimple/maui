@@ -35,24 +35,13 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _isLoading = true;
-    SystemChrome.setPreferredOrientations([]);
+
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
     shakeAnimation = new Tween(begin: -4.0, end: 4.0).animate(controller);
     controller.addStatusListener((status) {});
 
     _initData();
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([]);
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   _initData() async {
@@ -71,6 +60,17 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  @override
+  void didUpdateWidget(LoginScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
+  }
+
   getImage(BuildContext context) async {
 //    var _fileName = await ImagePicker.pickImage(
 //        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
@@ -85,14 +85,12 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
     print("user detail ?::: $user");
-    if (user == null) {
-      // SystemChrome.setPreferredOrientations([
-      //   DeviceOrientation.portraitUp,
-      //   DeviceOrientation.portraitDown,
-      //]);
-    } else {
-      //SystemChrome.setPreferredOrientations([]);
-    }
+    //if (user == null) {
+
+    //}
+    //  else {
+    //SystemChrome.setPreferredOrientations([]);
+    // }
 
     return (user != null)
         ? new TabHome()
@@ -115,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen>
                     : Container(
                         padding: const EdgeInsets.all(20.0),
                         child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             imagePathStore == null
                                 ? Center(
@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen>
                               animation: shakeAnimation,
                               child: Container(
                                 // margin: const EdgeInsets.only(top: 10.0),
-                                width: 130.0,
+                                width: 100.0,
                                 height: 50.0,
                                 child: new RaisedButton(
                                     splashColor: Colors.blueAccent,
@@ -211,7 +211,6 @@ class _LoginScreenState extends State<LoginScreen>
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
       //Navigator.of(context).pop();
-
     } else {
       print("false");
       controller.addStatusListener((status) {

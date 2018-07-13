@@ -454,7 +454,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[5] = false;
       _changeData(5, (11 * pi) / 6);
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -485,7 +485,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _slice[3] = false;
       _changeData(3, (pi / 4 + (pi / 2) * 3));
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -503,7 +503,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       _changeData(1, pi / 2 + pi);
     } else {
-      if (_angleDiff >= 2.0) _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 

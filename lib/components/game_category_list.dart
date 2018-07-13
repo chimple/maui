@@ -90,7 +90,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         new SliverAppBar(
             backgroundColor: color,
             pinned: true,
-            expandedHeight: orientation == Orientation.portrait  ? media.height * .22 : media.height * .5,
+            expandedHeight: orientation == Orientation.portrait  ? media.height * .25 : media.height * .5,
              title: new Text(Loca.of(context).intl(widget.game)),
             flexibleSpace: new FlexibleSpaceBar(
               background: new Stack(children: <Widget>[
@@ -98,7 +98,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                   decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new AssetImage(
-                          "assets/background_image/reflex_big.png"),
+                          "assets/background_image/${widget.game}_big.png"),
                       fit: BoxFit.fill,
                     ),
                   ),
