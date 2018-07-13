@@ -136,8 +136,8 @@ class GameListViewState extends State<GameListView> {
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return Container(
-      color: Colors.grey[300],
-      child: new GridView.count(
+      color: const Color(0xffFECE3D),
+          child: new GridView.count(
           key: new Key('Game_page'),
           primary: true,
           padding: const EdgeInsets.all(12.0),
