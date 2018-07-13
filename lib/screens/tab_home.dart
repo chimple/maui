@@ -20,12 +20,12 @@ class TabHome extends StatefulWidget {
 
 class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   final List<MyTabs> _tabs = [
-    new MyTabs(img: "assets/chat.png", color: Colors.teal[200]),
-    new MyTabs(img: "assets/games.png", color: Colors.orange[200]),
+    new MyTabs(img1: "assets/chatBig.png", img2: "assets/chatSmall.png", color: const Color(0xffFECE3D)),
+    new MyTabs(img1: "assets/gameBig.png", img2: "assets/gameSmall.png", color: const Color(0xff36C5E4)),
   ];
   MyTabs _myHandler;
-  Widget _icon = new Container();
   Widget _icon1 = new Container();
+  Widget _icon2 = new Container();
   AnimationController _imgController, _imgController1, _bubbleController;
   ScrollController _scrollcontroller;
   Animation<double> animateImage, animateImage1;
@@ -50,28 +50,35 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
     _icon1 = new Image.asset(
-                            '${_myHandler.img}',
+                            '${_myHandler.img1}',
                             scale: .3,
                           );
   }
 
   void _tabSelected() {
     setState(() {
+      // _icon1 = new Image.asset(
+      //                       '${_myHandler.img}',
+      //                       scale: .3,
+      //                     );
       _myHandler = _tabs[_controller.index];
+      //  _icon2 = new ShowIcon(
+      //                 img: _myHandler.img,
+      //               );
     });
   }
 
   void _scrolling(){
     setState(() {
           if(_scrollcontroller.offset == 0.0){
-            // _icon = new Container();
+            // _icon2 = new Container();
             _imgController1.forward();
             _imgController.reverse();
             
             _icon1 = new ScaleTransition(
               scale: animateImage1,
                           child: new Image.asset(
-                            '${_myHandler.img}',
+                            _myHandler.img1,
                             scale: .3,
                           ),
             );
@@ -79,16 +86,15 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
           else{
             _imgController1.reverse();
     _imgController.forward();
-            _icon = new ScaleTransition(
+            _icon2 = new ScaleTransition(
                 scale: animateImage,
                           child: new ShowIcon(
-                      color: _myHandler.color,
-                      img: _myHandler.img,
+                      img: _myHandler.img2,
                     ),
             );
           }
         });
-    // _icon = new ShowIcon(
+    // _icon2 = new ShowIcon(
     //                 color: _myHandler.color,
     //                 img: _myHandler.img,
     //               );
@@ -127,7 +133,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-   
+    Orientation orientation = media.orientation;
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),
@@ -139,32 +145,35 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             new SliverAppBar(
-              backgroundColor: _myHandler.color,
+              backgroundColor: const Color(0xffFC5E79),
               pinned: true,
               actions: <Widget>[
-                _icon
+                _icon2
               ],
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
-              expandedHeight: _size.height * .3,
+              centerTitle: true,
+              expandedHeight: orientation == Orientation.portrait ? _size.height * .25 : _size.height * .5,
               // centerTitle: true,
               forceElevated: innerBoxIsScrolled,
               flexibleSpace: new FlexibleSpaceBar(
-                background: (_controller.indexIsChanging == true)
-                    ? new Container(
-                        width: 100.0,
-                        height: 50.0,
-                        color: Colors.black,
-                        child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            buildCircle(.0),
-                            buildCircle(.2),
-                            buildCircle(.4),
-                          ],
-                        ),
-                      )
-                    : new FittedBox(
+                background: 
+                // (_controller.indexIsChanging == true)
+                //     ? new Container(
+                //         width: 100.0,
+                //         height: 50.0,
+                //         color: Colors.black,
+                //         child: new Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           children: <Widget>[
+                //             buildCircle(.0),
+                //             buildCircle(.2),
+                //             buildCircle(.4),
+                //           ],
+                //         ),
+                //       )
+                //     : 
+                    new FittedBox(
                         fit: BoxFit.contain,
                         alignment: Alignment.center,
                         child: _icon1
@@ -173,7 +182,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
               ),
               bottom: new TabBar(
                 isScrollable: false,
-                indicatorColor: Colors.black,
+                indicatorColor: Colors.white,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorWeight: 5.0,
                 labelColor: Colors.white,
@@ -182,7 +191,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal),
                 controller: _controller,
-                unselectedLabelColor: Colors.blue,
+                unselectedLabelColor: _myHandler.color,
                 tabs: <Tab>[
                   new Tab(
                     text: Loca.of(context).chat,
@@ -207,32 +216,11 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
 class ShowIcon extends StatelessWidget {
   ShowIcon({
     Key key,
-    Animation<double> animation,
-    AnimationController controller,
-    this.color,
     this.img,
   }) : super(key: key);
-
-  final Color color;
   final String img;
   @override
   Widget build(BuildContext context) {
-    // return new Container(
-    //   // height: 10.0,
-    //   width: 60.0,
-    //   child: new Image.asset(
-    //                       img,
-    //                       scale: .8,
-    //                     ),
-    //   // new Image(
-    //   //     image: AssetImage(img),
-    //   //     fit: BoxFit.fill,
-    //   //   ),
-    //   decoration: new BoxDecoration(
-    //     // color:  color,
-    //     shape: BoxShape.circle,
-    //   ),
-    // );
     return new Image.asset(
                           img,
                           scale: .3,
@@ -240,9 +228,10 @@ class ShowIcon extends StatelessWidget {
 }
 
 class MyTabs {
-  final String img;
+  final String img1;
+  final String img2;
   final Color color;
-  MyTabs({this.img, this.color});
+  MyTabs({this.img1, this.img2, this.color});
 }
 
 class TestTween extends Tween<double> {
