@@ -113,6 +113,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _isLoading = false;
+    });
     controller1 =
         new AnimationController(duration: Duration(seconds: 2), vsync: this);
     controller = new AnimationController(
@@ -134,12 +137,15 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dataSize = 8;
     }
     _initBoard();
+    setState(() {
+      _isLoading = true;
+    });
   }
 
   @override
   void didUpdateWidget(SpinWheel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.iteration != oldWidget.iteration) {
+    if (widget.iteration != oldWidget.iteration && widget.iteration != 2) {
       _indexOfContainerData = 0;
       _countGameEnd = 0;
 
@@ -169,8 +175,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
     print("mode question:: ${widget.gameConfig.questionUnitMode}");
     print("mode answer:: ${widget.gameConfig.answerUnitMode}");
+    print("all data:: $allData");
     allData.forEach((k, v) {
       _circleData.add(k);
+
       _smallCircleData.add(v);
     });
 
@@ -203,6 +211,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         });
       }
       _unitMode = UnitMode.image;
+    } else {
+      _maxString = _shuffleCircleData1[0];
+      for (int i = 1; i < dataSize; i++) {
+        if (_maxString.length < _shuffleCircleData1[i].length) {
+          _maxString = _shuffleCircleData1[i];
+        }
+      }
     }
 
     rotationPercent = 0.0;
@@ -213,12 +228,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
 
     _slice[index] = true;
-    _maxString = _shuffleCircleData1[0];
-    for (int i = 1; i < dataSize; i++) {
-      if (_maxString.length < _shuffleCircleData1[i].length) {
-        _maxString = _shuffleCircleData1[i];
-      }
-    }
     setState(() {
       _isLoading = false;
     });
@@ -336,14 +345,23 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     else if (dataSize == 2) compareTheangle2();
   }
 
+  void _compareAngle(int size, List<double> _lowerAngle,
+      List<double> _uperAngle, List<bool> _sliceBool) {
+    for (int j = 0; j < size; j++) {
+      if (_angleDiff >= _lowerAngle[j] &&
+          _angleDiff <= _uperAngle[j] &&
+          _sliceBool[j] == true) {}
+    }
+  }
+  // hard codes
   void compareTheangle8() {
     //0
-    if (_angleDiff >= 5.0 && _angleDiff <= 45.0 && _slice[0] == true) {
+    if (_angleDiff >= 2.0 && _angleDiff <= 43.0 && _slice[0] == true) {
       print("Slice0::");
       _slice[0] = false;
       _changeData(0, .375);
     } //1
-    else if (_angleDiff >= 50.0 && _angleDiff <= 90.0 && _slice[1] == true) {
+    else if (_angleDiff >= 47.0 && _angleDiff <= 88.0 && _slice[1] == true) {
       print("Slice1::");
 
       _slice[1] = false;
@@ -351,123 +369,123 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       _changeData(1, 1.125);
     }
     //2
-    else if (_angleDiff >= 95.0 && _angleDiff <= 135.0 && _slice[2] == true) {
+    else if (_angleDiff >= 92.0 && _angleDiff <= 133.0 && _slice[2] == true) {
       print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, 1.875);
     }
     //3
-    else if (_angleDiff >= 140.0 && _angleDiff <= 185.0 && _slice[3] == true) {
+    else if (_angleDiff >= 137.0 && _angleDiff <= 178.0 && _slice[3] == true) {
       print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, 2.75);
     }
     //4
-    else if (_angleDiff >= 190.0 && _angleDiff <= 230.0 && _slice[4] == true) {
+    else if (_angleDiff >= 182.0 && _angleDiff <= 223.0 && _slice[4] == true) {
       print("Slice4::");
 
       _slice[4] = false;
       _changeData(4, 3.5);
     }
     //5
-    else if (_angleDiff >= 235.0 && _angleDiff <= 275.0 && _slice[5] == true) {
+    else if (_angleDiff >= 227.0 && _angleDiff <= 268.0 && _slice[5] == true) {
       print("Slice5::");
 
       _slice[5] = false;
       _changeData(5, 4.25);
     }
     //6
-    else if (_angleDiff >= 280.0 && _angleDiff <= 320.0 && _slice[6] == true) {
+    else if (_angleDiff >= 274.0 && _angleDiff <= 313.0 && _slice[6] == true) {
       print("Slice6::");
 
       _slice[6] = false;
       _changeData(6, 5.1);
     }
     //7
-    else if (_angleDiff >= 320.0 && _angleDiff <= 365.0 && _slice[7] == true) {
+    else if (_angleDiff >= 317.0 && _angleDiff <= 358.0 && _slice[7] == true) {
       print("Slice7::");
       _slice[7] = false;
       _changeData(7, 5.9);
     } else {
-      _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
   void compareTheangle6() {
     //0
-    if (_angleDiff >= 5.0 && _angleDiff <= 60.0 && _slice[0] == true) {
+    if (_angleDiff >= 2.0 && _angleDiff <= 58.0 && _slice[0] == true) {
       print("Slice0::");
       _slice[0] = false;
       _changeData(0, pi / 6);
     } //1
-    else if (_angleDiff >= 65.0 && _angleDiff <= 120.0 && _slice[1] == true) {
+    else if (_angleDiff >= 62.0 && _angleDiff <= 118.0 && _slice[1] == true) {
       print("Slice1::");
 
       _slice[1] = false;
       _changeData(1, pi / 2);
     }
     //2
-    else if (_angleDiff >= 125.0 && _angleDiff <= 180.0 && _slice[2] == true) {
+    else if (_angleDiff >= 122.0 && _angleDiff <= 178.0 && _slice[2] == true) {
       print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, 5 * pi / 6);
     }
     //3
-    else if (_angleDiff >= 185.0 && _angleDiff <= 240.0 && _slice[3] == true) {
+    else if (_angleDiff >= 182.0 && _angleDiff <= 238.0 && _slice[3] == true) {
       print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, 7 * pi / 6);
     }
     //4
-    else if (_angleDiff >= 245.0 && _angleDiff <= 310.0 && _slice[4] == true) {
+    else if (_angleDiff >= 242.0 && _angleDiff <= 298.0 && _slice[4] == true) {
       print("Slice4::");
 
       _slice[4] = false;
       _changeData(4, 3 * pi / 2);
     }
     //5
-    else if (_angleDiff >= 315.0 && _angleDiff <= 360.0 && _slice[5] == true) {
+    else if (_angleDiff >= 302.0 && _angleDiff <= 358.0 && _slice[5] == true) {
       print("Slice5::");
 
       _slice[5] = false;
       _changeData(5, (11 * pi) / 6);
     } else {
-      _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
   void compareTheangle4() {
     //0
-    if (_angleDiff >= 5.0 && _angleDiff <= 90.0 && _slice[0] == true) {
+    if (_angleDiff >= 2.0 && _angleDiff <= 88.0 && _slice[0] == true) {
       print("Slice0::");
       _slice[0] = false;
       _changeData(0, pi / 4);
     } //1
-    else if (_angleDiff >= 95.0 && _angleDiff <= 180.0 && _slice[1] == true) {
+    else if (_angleDiff >= 92.0 && _angleDiff <= 178.0 && _slice[1] == true) {
       print("Slice1::");
 
       _slice[1] = false;
       _changeData(1, (pi / 4 + pi / 2));
     }
     //2
-    else if (_angleDiff >= 185.0 && _angleDiff <= 270.0 && _slice[2] == true) {
+    else if (_angleDiff >= 182.0 && _angleDiff <= 268.0 && _slice[2] == true) {
       print("Slice2::");
 
       _slice[2] = false;
       _changeData(2, (pi / 4 + (pi / 2) * 2));
     }
     //3
-    else if (_angleDiff >= 275.0 && _angleDiff <= 360.0 && _slice[3] == true) {
+    else if (_angleDiff >= 272.0 && _angleDiff <= 358.0 && _slice[3] == true) {
       print("Slice3::");
 
       _slice[3] = false;
       _changeData(3, (pi / 4 + (pi / 2) * 3));
     } else {
-      _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -485,7 +503,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       _changeData(1, pi / 2 + pi);
     } else {
-      _shake();
+      if (_angleDiff >= 1.0) _shake();
     }
   }
 
@@ -684,8 +702,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           height: 40.0,
           width: 40.0,
           child: new CircularProgressIndicator(
-            strokeWidth: 2.0,
-            backgroundColor: Colors.blue,
+            strokeWidth: 4.0,
+            backgroundColor: Colors.red,
+            value: 10.0,
           ),
         );
       }

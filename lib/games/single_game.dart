@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/nima.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
@@ -140,7 +141,7 @@ class SingleGame extends StatefulWidget {
   final String gameName;
   final GameConfig gameConfig;
   final Function onGameEnd;
-  final Function onScore;
+  final Function onScore; //TODO: Can be removed
   final GameMode gameMode;
   final bool isRotated;
   final Key key;
@@ -314,7 +315,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
-    print('oh2h: $oh2h');
     return WillPopScope(
       onWillPop: _onWillPop,
       child: new Theme(
@@ -331,8 +331,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 new Column(verticalDirection: VerticalDirection.up, children: <
                     Widget>[
                   new Expanded(
-                      child:
-                          SlideTransition(position: _animation, child: game)),
+                      child: SlideTransition(
+                          position: _animation,
+                          child: ButtonStateContainer(child: game))),
                   SizedBox(
                       height: media.size.height / 8.0,
                       child: Material(
@@ -433,7 +434,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       _cumulativeIncrement += incrementScore;
     });
     //for now we only pass myscore up to the head to head
-    if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
+    //if (widget.onScore != null) widget.onScore(widget.gameConfig.myScore);
   }
 
   _onProgress(double progress) {
@@ -590,7 +591,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
-        maxIterations = -1;
+        maxIterations = 1;
         return new Reflex(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -653,7 +654,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'drawing':
-        maxIterations = 2;
+        maxIterations = 1;
         return new Drawing(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,

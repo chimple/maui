@@ -10,6 +10,7 @@ import 'user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/loca.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -76,8 +77,10 @@ class _GameCategoryList extends State<GameCategoryList> {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     int j = 0;
     Size media = MediaQuery.of(context).size;
+    print("height and width of screen is ${media.width}....${media.height}");
     final _colors = SingleGame.gameColors[widget.game];
     final color = _colors != null ? _colors[0] : Colors.amber;
     return new CustomScrollView(
@@ -87,18 +90,32 @@ class _GameCategoryList extends State<GameCategoryList> {
         new SliverAppBar(
             backgroundColor: color,
             pinned: true,
-            expandedHeight: media.height * .37,
+            expandedHeight: orientation == Orientation.portrait  ? media.height * .25 : media.height * .5,
+             title: new Text(Loca.of(context).intl(widget.game)),
             flexibleSpace: new FlexibleSpaceBar(
-              background: new FittedBox(
-                child: new Hero(
-                    tag: 'assets/hoodie/${widget.game}.png',
-                    child: new Image.asset(
-                      'assets/hoodie/${widget.game}.png',
-                      scale: .8,
-                    )),
-              ),
-              centerTitle: true,
-              title: new Text(widget.game),
+              background: new Stack(children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new AssetImage(
+                          "assets/background_image/${widget.game}_big.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Center(
+                      child: new Hero(
+                        tag: 'assets/hoodie/${widget.game}.png',
+                        child: new Image.asset(
+                          'assets/hoodie/${widget.game}.png',
+                          scale: .4,
+                        ),
+                      ),
+                    ))
+              ]),
+              // centerTitle: true,
             )),
         new SliverList(
           delegate: new SliverChildListDelegate(new List<Widget>.generate(
@@ -128,7 +145,7 @@ class _GameCategoryList extends State<GameCategoryList> {
           )),
         ),
         new SliverToBoxAdapter(
-          child: new Container(height: 2.0, color: Colors.white),
+          child: new Container(height: 2.0, color: Colors.yellow),
         ),
       ],
     );

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:tuple/tuple.dart';
 import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import '../games/single_game.dart';
 
 class SecondScreen extends StatefulWidget {
-  String jsonVal;
+  int navVal;
   List choice;
+  String jsonVal;
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -22,6 +22,7 @@ class SecondScreen extends StatefulWidget {
   bool isRotated;
 
   SecondScreen(
+    this.navVal,
       this.choice,
       this.jsonVal,
       this.onScore,
@@ -39,9 +40,7 @@ class SecondScreen extends StatefulWidget {
 class OptionState extends State<SecondScreen> {
   bool _isLoading = true;
   List choice;
-  Tuple3<String, String, List<String>> _allques;
   int _size = 2;
-  // List<String> choice = ['Apple', 'Banana', 'Grape', 'Orange'];
   List<String> _ans = [];
   bool isCorrect;
   List<String> DrawData;
@@ -66,6 +65,7 @@ class OptionState extends State<SecondScreen> {
   }
 
   void _initBoard() async {
+    // widget.navVal = 0;
     setState(() => _isLoading = true);
     print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
@@ -107,21 +107,26 @@ class OptionState extends State<SecondScreen> {
   Widget _buildItem(int index, String text) {
     print("text issssssssss $text");
     print("choice if b issssssssss ${widget.choice}");
+    //  print("nav value iss ${widget.navVal}");
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
           if (text == widget.choice[1]) {
             print("hiii manuu");
-            widget.onScore(1);
+            print("hello rhis on end we are calling");
+            widget.onScore(10);
             widget.onProgress(1.0);
-            widget.onEnd(toJsonMap(),false);
-            
+             setState(() {
+                widget.onEnd(toJsonMap(), false);
+                       widget.navVal = 0;
+                        });
             // widget.onEnd();
-            _initBoard();
+            // _initBoard();
             // Navigator.pop(context);
           } else {
-            widget.onScore(-1);
+            widget.onScore(0);
+            widget.onEnd(toJsonMap(), false);
           }
         });
   }
@@ -145,12 +150,19 @@ class OptionState extends State<SecondScreen> {
       Orientation orientation = MediaQuery.of(context).orientation;
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
-      var sizeOrientation = orientation == Orientation.portrait ? (_size+.5) : (_size+2);
+      final maxChars = (_ans != null
+        ? _ans.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+      var sizeOrientation =
+          orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      double maxWidth = (constraints.maxWidth - hPadding * 2) /(sizeOrientation);
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / (sizeOrientation);
+      double maxWidth =
+          (constraints.maxWidth - hPadding * 2) / (sizeOrientation);
+      double maxHeight =
+          (constraints.maxHeight - vPadding * 2) / (sizeOrientation);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       print(
@@ -159,21 +171,20 @@ class OptionState extends State<SecondScreen> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
 
-      double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
+      // double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");
-      UnitButton.saveButtonSize(context, 6, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
 
       AppState state = AppStateContainer.of(context).state;
       return Scaffold(
-        appBar: AppBar(title: new Text("manu"),),
           body: orientation == Orientation.portrait
               ? Column(children: <Widget>[
                   new Container(
                       height: height > width ? height * 0.45 : height * .75,
                       width: width > height ? width * 0.6 : width * .95,
-                      child: new Drawing(widget.jsonVal)),
+                      child: new DrawJsonImage(widget.jsonVal)),
                   new Expanded(
                     child: _playerKeyBoard(context, buttonPadding),
                   ),
@@ -182,90 +193,12 @@ class OptionState extends State<SecondScreen> {
                   new Container(
                       height: height > width ? height * 0.5 : height * .5625,
                       width: width > height ? width * 0.45 : width,
-                      child: new Drawing(widget.jsonVal)),
+                      child: new DrawJsonImage(widget.jsonVal)),
                   Expanded(
                     child: _playerKeyBoard(context, buttonPadding),
                   )
                 ]));
     });
-  }
-}
-
-class QuestionText extends StatefulWidget {
-  final String _question;
-
-  QuestionText(this._question);
-
-  @override
-  State createState() => new QuestionTextState();
-}
-
-class QuestionTextState extends State<QuestionText>
-    with SingleTickerProviderStateMixin {
-  Animation<double> _fontSizeAnimation;
-  AnimationController _fontSizeAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _fontSizeAnimationController = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
-    _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.bounceOut);
-    _fontSizeAnimation.addListener(() => this.setState(() {
-          print(2);
-        }));
-    _fontSizeAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _fontSizeAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(QuestionText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget._question != widget._question) {
-      _fontSizeAnimationController.reset();
-      _fontSizeAnimationController.forward();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
-    return new Material(
-      color: const Color(0xFF54cc70),
-      child: new Container(
-        height: ht * 0.22,
-        width: wd * 0.6,
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(25.0),
-          color: const Color(0xFFf8c43c),
-          border: new Border.all(
-            color: const Color(0xFF54cc70),
-          ),
-        ),
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              new Text(widget._question,
-                  style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: ht > wd ? ht * 0.06 : wd * 0.06,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic)),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -338,16 +271,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 }
 
-class Drawing extends StatefulWidget {
+class DrawJsonImage extends StatefulWidget {
   String jsonVal;
 
-  Drawing(this.jsonVal);
+  DrawJsonImage(this.jsonVal);
 
   @override
-  State createState() => new MyHomePageState();
+  State<StatefulWidget> createState() => new MyHomePageState();
 }
 
-class MyHomePageState extends State<Drawing> {
+class MyHomePageState extends State<DrawJsonImage> {
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -361,8 +294,8 @@ class MyHomePageState extends State<Drawing> {
       child: new MyImagePage(widget.jsonVal),
     )));
   }
-}
 
+}
 class MyImagePage extends StatefulWidget {
   String jsonVal;
   MyImagePage(this.jsonVal);

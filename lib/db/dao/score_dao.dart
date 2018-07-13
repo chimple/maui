@@ -24,15 +24,44 @@ class ScoreDao {
 
   Future<Map<String, int>> getScoreCountByUser(String userId,
       {Database db}) async {
+    print('ScoreDao: $userId');
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Score.table,
-        columns: [Score.gameCol, 'sum(${Score.myScoreCol}'],
+        columns: [Score.gameCol, 'sum(${Score.myScoreCol})'],
         where: "${Score.myUserCol} = ?",
-        groupBy: '${Score.gameCol}');
+        groupBy: '${Score.gameCol}',
+        whereArgs: [userId]);
     Map<String, int> returnMap = Map<String, int>();
+    print('ScoreDao: $maps');
     maps.forEach(
-        (n) => returnMap[n[Score.gameCol]] = n['sum(${Score.myScoreCol}']);
+        (n) => returnMap[n[Score.gameCol]] = n['sum(${Score.myScoreCol})']);
     return returnMap;
+  }
+
+  Future<Map<String, List<Score>>> getScoreMapByUser(String userId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(Score.table,
+        columns: [
+          Score.myUserCol,
+          Score.otherUserCol,
+          Score.myScoreCol,
+          Score.otherScoreCol,
+          Score.gameCol,
+          Score.playedAtCol
+        ],
+        where: "${Score.myUserCol} = ?",
+        whereArgs: [userId]);
+    Map<String, List<Score>> scoreMap = Map<String, List<Score>>();
+    maps.forEach((s) {
+      Score score = Score.fromMap(s);
+      if (scoreMap[score.game] == null) {
+        scoreMap[score.game] = [score];
+      } else {
+        scoreMap[score.game].add(score);
+      }
+    });
+    return scoreMap;
   }
 
   Future<Score> insert(Score score, {Database db}) async {

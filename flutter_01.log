@@ -1,0 +1,110 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d all
+
+## exception
+
+TimeoutException: TimeoutException: Request to Dart VM Service timed out: _flutter.listViews({isolateId: isolates/559809033})
+
+```
+#0      VM.invokeRpcRaw (package:flutter_tools/src/vmservice.dart:793)
+<asynchronous suspension>
+#1      VM.invokeRpc (package:flutter_tools/src/vmservice.dart:810)
+<asynchronous suspension>
+#2      VM.refreshViews (package:flutter_tools/src/vmservice.dart:909)
+<asynchronous suspension>
+#3      FlutterDevice.refreshViews (package:flutter_tools/src/resident_runner.dart:85)
+<asynchronous suspension>
+#4      ResidentRunner.refreshViews (package:flutter_tools/src/resident_runner.dart:487)
+<asynchronous suspension>
+#5      HotRunner.attach (package:flutter_tools/src/run_hot.dart:146)
+<asynchronous suspension>
+#6      HotRunner.run (package:flutter_tools/src/run_hot.dart:226)
+<asynchronous suspension>
+#7      RunCommand.runCommand (package:flutter_tools/src/commands/run.dart:395)
+<asynchronous suspension>
+#8      FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:344)
+<asynchronous suspension>
+#9      FlutterCommand.run.<anonymous closure> (package:flutter_tools/src/runner/flutter_command.dart:279)
+<asynchronous suspension>
+#10     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:142)
+<asynchronous suspension>
+#11     _rootRun (dart:async/zone.dart:1126)
+#12     _CustomZone.run (dart:async/zone.dart:1023)
+#13     runZoned (dart:async/zone.dart:1501)
+#14     AppContext.run (package:flutter_tools/src/base/context.dart:141)
+<asynchronous suspension>
+#15     FlutterCommand.run (package:flutter_tools/src/runner/flutter_command.dart:270)
+#16     CommandRunner.runCommand (package:args/command_runner.dart:194)
+<asynchronous suspension>
+#17     FlutterCommandRunner.runCommand.<anonymous closure> (package:flutter_tools/src/runner/flutter_command_runner.dart:309)
+<asynchronous suspension>
+#18     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:142)
+<asynchronous suspension>
+#19     _rootRun (dart:async/zone.dart:1126)
+#20     _CustomZone.run (dart:async/zone.dart:1023)
+#21     runZoned (dart:async/zone.dart:1501)
+#22     AppContext.run (package:flutter_tools/src/base/context.dart:141)
+<asynchronous suspension>
+#23     FlutterCommandRunner.runCommand (package:flutter_tools/src/runner/flutter_command_runner.dart:265)
+<asynchronous suspension>
+#24     CommandRunner.run.<anonymous closure> (package:args/command_runner.dart:109)
+#25     new Future.sync (dart:async/future.dart:222)
+#26     CommandRunner.run (package:args/command_runner.dart:109)
+#27     FlutterCommandRunner.run (package:flutter_tools/src/runner/flutter_command_runner.dart:174)
+#28     run.<anonymous closure> (package:flutter_tools/runner.dart:59)
+<asynchronous suspension>
+#29     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:142)
+<asynchronous suspension>
+#30     _rootRun (dart:async/zone.dart:1126)
+#31     _CustomZone.run (dart:async/zone.dart:1023)
+#32     runZoned (dart:async/zone.dart:1501)
+#33     AppContext.run (package:flutter_tools/src/base/context.dart:141)
+<asynchronous suspension>
+#34     runInContext (package:flutter_tools/src/context_runner.dart:43)
+<asynchronous suspension>
+#35     run (package:flutter_tools/runner.dart:50)
+#36     main (package:flutter_tools/executable.dart:49)
+<asynchronous suspension>
+#37     main (file:///C:/git/flutter/packages/flutter_tools/bin/flutter_tools.dart:8)
+#38     _startIsolate.<anonymous closure> (dart:isolate-patch/dart:isolate/isolate_patch.dart:277)
+#39     _RawReceivePortImpl._handleMessage (dart:isolate-patch/dart:isolate/isolate_patch.dart:165)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, v0.5.1, on Microsoft Windows [Version 10.0.17134.165], locale en-IN)
+    • Flutter version 0.5.1 at C:\git\flutter
+    • Framework revision c7ea3ca377 (6 weeks ago), 2018-05-29 21:07:33 +0200
+    • Engine revision 1ed25ca7b7
+    • Dart version 2.0.0-dev.58.0.flutter-f981f09760
+
+[✓] Android toolchain - develop for Android devices (Android SDK 27.0.3)
+    • Android SDK at C:\Users\Smart User\AppData\Local\Android\Sdk
+    • Android NDK location not configured (optional; useful for native profiling support)
+    • Platform android-27, build-tools 27.0.3
+    • ANDROID_HOME = C:\Users\Smart User\AppData\Local\Android\Sdk
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1024-b02)
+    • All Android licenses accepted.
+
+[✓] Android Studio (version 3.1)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    • Flutter plugin version 23.2.2
+    • Dart plugin version 173.4700
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1024-b02)
+
+[!] VS Code, 64-bit edition (version 1.24.1)
+    • VS Code at C:\Program Files\Microsoft VS Code
+    • Flutter extension not installed; install from
+      https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter
+
+[✓] Connected devices (2 available)
+    • Pixel C                   • 6116002238    • android-arm64 • Android 8.1.0 (API 27)
+    • Android SDK built for x86 • emulator-5554 • android-x86   • Android 7.1.1 (API 25) (emulator)
+
+! Doctor found issues in 1 category.
+```

@@ -8,8 +8,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/casino_scroll_view.dart';
 import 'package:maui/components/casino_picker.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 
@@ -123,10 +122,10 @@ class _CasinoState extends State<Casino> {
       print("j = $j");
     }
 
-    AppState state = AppStateContainer.of(context).state;
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     return new Container(
-      height: state.buttonHeight * 2,
-      width: state.buttonWidth,
+      height: buttonConfig.height * 2,
+      width: buttonConfig.width,
       child: new CasinoPicker(
         diameterRatio: 1.0,
         key: new ValueKey(j),
@@ -146,7 +145,7 @@ class _CasinoState extends State<Casino> {
 
               if (givenWordList[i] == scrollingLetterList[index]) {
                 print("Letters matched");
-              
+
                 // new Future.delayed(const Duration(milliseconds: 50), () {
                 //   print("inside delay");
                 // });
@@ -241,7 +240,6 @@ class _CasinoState extends State<Casino> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
 
       return new Column(
         // direction: Axis.vertical,

@@ -12,6 +12,7 @@ class FriendItem extends StatelessWidget {
   bool isFile;
   Function onTap;
   int numNotifs;
+  bool replaceWithHoodie;
   FriendItem(
       {Key key,
       @required this.id,
@@ -19,6 +20,7 @@ class FriendItem extends StatelessWidget {
       this.imageMemory,
       this.onTap,
       this.numNotifs = 0,
+      this.replaceWithHoodie = true,
       this.isFile = true})
       : super(key: key);
 
@@ -46,7 +48,7 @@ class FriendItem extends StatelessWidget {
             decoration: new BoxDecoration(
                 shape: BoxShape.circle,
                 image: new DecorationImage(
-                    image: user.id == id
+                    image: replaceWithHoodie && user.id == id
                         ? new AssetImage('assets/koala_neutral.png')
                         : isFile
                             ? FileImage(File(imageUrl))

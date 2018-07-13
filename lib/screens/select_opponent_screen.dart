@@ -13,6 +13,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/loca.dart';
 
 class SelectOpponentScreen extends StatefulWidget {
   final String gameName;
@@ -85,6 +86,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    print(
+        "height and width of  opponent is ${mediaSize.width}....${mediaSize.height}");
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
@@ -101,21 +105,37 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                      backgroundColor: color,
-                      pinned: true,
-                      expandedHeight: mediaSize.height * .37,
+                      backgroundColor:color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .25 : mediaSize.height * .5,
                       flexibleSpace: new FlexibleSpaceBar(
-                        background: new FittedBox(
-                          child: new Hero(
-                              tag: 'assets/hoodie/${widget.gameName}.png',
-                              child: new Image.asset(
-                                'assets/hoodie/${widget.gameName}.png',
-                                scale: .8,
-                              )),
+                        background: new Stack(
+                         
+                          children: <Widget>[
+                          new Container(
+                        decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage(
+                                "assets/background_image/${widget.gameName}_big.png"),
+                            fit: BoxFit.fill,
+                          )
+                          ),
                         ),
-                        centerTitle: true,
-                        title: new Text(widget.gameName),
-                      )),
+                        Container(
+                            padding: EdgeInsets.only(bottom: 20.0),
+                            child: Center(
+                              child: new Hero(
+                                tag: 'assets/hoodie/${widget.gameName}.png',
+                                child: new Image.asset(
+                                  'assets/hoodie/${widget.gameName}.png',
+                                  scale: .4,
+                                ),
+                              ),
+                            ))
+                      ]),
+                    ),
+                    title: new Text(Loca.of(context).intl(widget.gameName)),
+                  ),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,7 +143,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: secondColor,
-                            child: Text('Family')),
+                            child: Text(Loca.of(context).family)),
                       ],
                     ),
                   ),
@@ -146,7 +166,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                         new Container(
                             padding: EdgeInsets.all(8.0),
                             color: thirdColor,
-                            child: Text('Friends')),
+                            child: Text(Loca.of(context).friends)),
                       ],
                     ),
                   ),
@@ -194,6 +214,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
 
   startGame(BuildContext context, User user) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+    Random random = Random();
     Navigator.of(context).push(MaterialPageRoute<Null>(
         builder: (BuildContext context) => GameCategoryListScreen(
               game: widget.gameName,
@@ -201,7 +222,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
               gameDisplay: user.id == loggedInUser.id
                   ? GameDisplay.single
                   : user.deviceId == _deviceId
-                      ? GameDisplay.localTurnByTurn
+                      ? random.nextBool()
+                          ? GameDisplay.localTurnByTurn
+                          : GameDisplay.myHeadToHead
                       : GameDisplay.networkTurnByTurn,
               otherUser: user,
             )));
@@ -241,6 +264,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
+      replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }

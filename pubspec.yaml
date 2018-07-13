@@ -21,9 +21,13 @@ dependencies:
   nima: 1.0.0
   flutter_local_notifications: 0.3.3
   badge: 0.0.2
+  intl: 0.15.6
+  intl_translation: 0.16.8
   flores:
     git:
       https://github.com/chimple/flores.git
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,13 +96,58 @@ flutter:
     - assets/dice_game/3.png
     - assets/dice_game/4.png
     - assets/dice_game/5.png
-    - assets/dice_game/6.png
+    - assets/dice_game/6.png  
+    - assets/dice_game/brush.png
+    - assets/dice_game/clear.png
+    - assets/dice_game/undo.png
+    - assets/dice_game/send.png
+    - assets/dice_game/paint.png
     - assets/dice_game/color_picker.png
     - assets/dice_game/color_brush.png
-    - assets/dice_game/dice1.gif
     - assets/dice_game/dice4.gif
     - assets/dice_game/tapme.png
-    - assets/dice_game/tapme1.png 
+    - assets/background_image/reflex_small.png
+    - assets/background_image/reflex_big.png
+    - assets/background_image/dice_big.png
+    - assets/background_image/dice_small.png
+    - assets/background_image/wordgrid_big.png
+    - assets/background_image/wordgrid_small.png
+    - assets/background_image/order_it_small.png
+    - assets/background_image/order_it_big.png
+    - assets/background_image/memory_small.png
+    - assets/background_image/memory_big.png
+    - assets/background_image/tap_home_big.png
+    - assets/background_image/tap_home_small.png
+    - assets/background_image/abacus_big.png
+    - assets/background_image/abacus_small.png
+    - assets/background_image/quiz_small.png
+    - assets/background_image/quiz_big.png
+    - assets/background_image/drawing_small.png
+    - assets/background_image/drawing_big.png
+    - assets/background_image/fill_in_the_blanks_big.png
+    - assets/background_image/fill_in_the_blanks_small.png
+    - assets/background_image/calculate_numbers_big.png
+    - assets/background_image/calculate_numbers_small.png
+    - assets/background_image/casino_small.png
+    - assets/background_image/casino_big.png
+    - assets/background_image/match_the_following_small.png
+    - assets/background_image/match_the_following_big.png
+    - assets/background_image/bingo_big.png
+    - assets/background_image/bingo_small.png
+    - assets/background_image/true_or_false_big.png
+    - assets/background_image/true_or_false_small.png
+    - assets/background_image/tables_small.png
+    - assets/background_image/tables_big.png
+    - assets/background_image/identify_small.png
+    - assets/background_image/identify_big.png
+    - assets/background_image/connect_the_dots_big.png
+    - assets/background_image/connect_the_dots_small.png
+    - assets/background_image/fill_number_big.png
+    - assets/background_image/fill_number_small.png
+    - assets/background_image/tap_wrong_big.png
+    - assets/background_image/tap_wrong_small.png
+    - assets/background_image/spin_wheel_big.png
+    - assets/background_image/spin_wheel_small.png
     - assets/games.png
     - assets/chat.png
     - assets/story.png
