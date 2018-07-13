@@ -44,7 +44,7 @@ class GameListViewState extends State<GameListView> {
     var size = media.size;
     return new Container(
       decoration: new BoxDecoration(
-        color: color,
+
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
       margin: EdgeInsets.all(size.width * .02),
@@ -59,15 +59,23 @@ class GameListViewState extends State<GameListView> {
         key: new Key(gameName),
         child: new Stack(
           children: <Widget>[
-            new Container(
+             new Material(
+              elevation:8.0,
+
+
+            child:new Container(
+
               decoration: new BoxDecoration(
+                color: color,
+
                 image: new DecorationImage(
                   image: new AssetImage(
                       "assets/background_image/${gameName}_small.png"),
                   fit: BoxFit.cover,
+
                 ),
               ),
-            ),
+            )),
             new Column(
               children: <Widget>[
                 new Expanded(
@@ -76,7 +84,14 @@ class GameListViewState extends State<GameListView> {
                             new Row(
                               children: <Widget>[
                                 new Container(
-                                  // height: size.height * 0.15,
+                                  // height: size.height * 0.15
+                                  //                             decoration: new BoxDecoration(
+                                  //                           color: Colors.black,
+                                  //                          boxShadow: [new BoxShadow(
+                                  //                        color: Colors.red,
+                                  //                      blurRadius: EdgeInsets.only(),
+                                  //)]
+                                  //                            ),
                                   width: orientation == Orientation.portrait
                                       ? size.width * 0.15
                                       : size.width * 0.1,
