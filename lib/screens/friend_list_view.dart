@@ -52,6 +52,7 @@ class _FriendListViewState extends State<FriendListView> {
     }
     return Container(
           color: Colors.lime,
+
           child: new GridView.count(
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
