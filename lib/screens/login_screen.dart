@@ -44,11 +44,6 @@ class _LoginScreenState extends State<LoginScreen>
     _initData();
   }
 
-  @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
   _initData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
@@ -65,6 +60,17 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  @override
+  void didUpdateWidget(LoginScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
+  }
+
   getImage(BuildContext context) async {
 //    var _fileName = await ImagePicker.pickImage(
 //        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
@@ -74,19 +80,18 @@ class _LoginScreenState extends State<LoginScreen>
     Navigator.of(context).pushNamed('/camera');
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Orientation ornt;
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    print("user detail ?::: $user");
+    //if (user == null) {
+
+    //}
+    //  else {
+    //SystemChrome.setPreferredOrientations([]);
+    // }
+
     return (user != null)
         ? new TabHome()
         : new Scaffold(
@@ -108,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen>
                     : Container(
                         padding: const EdgeInsets.all(20.0),
                         child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             imagePathStore == null
                                 ? Center(
@@ -160,13 +167,13 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                             new Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(0.0),
                             ),
                             Shake(
                               animation: shakeAnimation,
                               child: Container(
                                 // margin: const EdgeInsets.only(top: 10.0),
-                                width: 130.0,
+                                width: 100.0,
                                 height: 50.0,
                                 child: new RaisedButton(
                                     splashColor: Colors.blueAccent,

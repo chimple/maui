@@ -86,8 +86,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
-     Orientation orientation = MediaQuery.of(context).orientation;
-     print("height and width of  opponent is ${mediaSize.width}....${mediaSize.height}");
+    Orientation orientation = MediaQuery.of(context).orientation;
+    print(
+        "height and width of  opponent is ${mediaSize.width}....${mediaSize.height}");
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
@@ -117,25 +118,24 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                             image: new AssetImage(
                                 "assets/background_image/${widget.gameName}_big.png"),
                             fit: BoxFit.fill,
+                          )
                           ),
                         ),
-                          ),
-                          Container(
+                        Container(
                             padding: EdgeInsets.only(bottom: 20.0),
-                              child: Center(
-                                child: new Hero(
-                            tag: 'assets/hoodie/${widget.gameName}.png',
-                            child: new Image.asset(
-                                'assets/hoodie/${widget.gameName}.png',
-                                scale: .4,
-                            ),
-                          ),
-                              ))
-                        ]),
-                        
-                      ),
-                      title: new Text(Loca.of(context).intl(widget.gameName)),
-                      ),
+                            child: Center(
+                              child: new Hero(
+                                tag: 'assets/hoodie/${widget.gameName}.png',
+                                child: new Image.asset(
+                                  'assets/hoodie/${widget.gameName}.png',
+                                  scale: .4,
+                                ),
+                              ),
+                            ))
+                      ]),
+                    ),
+                    title: new Text(Loca.of(context).intl(widget.gameName)),
+                  ),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -264,8 +264,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
+      replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }
 }
-
