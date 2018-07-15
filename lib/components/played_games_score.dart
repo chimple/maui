@@ -16,6 +16,7 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, List<Score>> _scores;
+  int totalScore = 0;
   @override
     void initState() {
       super.initState();
@@ -47,6 +48,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     List<Widget> scoreWidgets = List<Widget>();
 
     Widget scoreHistory(String myUser, String otherUser, int myScore, int otherScore, String game, int playedAt) {
+      totalScore = 0;
       if(otherScore == null) {
         otherScore = 0;
           return new Row(
@@ -137,6 +139,11 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     }
 
     _scores.forEach((k,v){  
+
+      v.map((f){
+        totalScore = totalScore + f.myScore;
+      }).toList(growable: false);
+
         scoreWidgets.add(
           new Container(
             margin: const EdgeInsets.all(0.0),
@@ -152,7 +159,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                   ),
                   new Container(
                     margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                    child: new Text('${v[0].myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
+                    child: new Text('${totalScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),),
                   )
                 ], 
               ),
