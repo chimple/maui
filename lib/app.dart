@@ -44,16 +44,6 @@ class MauiApp extends StatelessWidget {
     print(path);
     if (path[0] != '') return null;
 
-    if (path[1] == 'chat' && path.length == 4) {
-      return new MaterialPageRoute<Null>(
-          settings: settings,
-          builder: (BuildContext context) => new ChatScreen(
-                myId: AppStateContainer.of(context).state.loggedInUser.id,
-                friendId: path[2],
-                friendImageUrl: path[3].replaceAll(new RegExp(r'&#x2F;'), '/'),
-              ));
-    }
-
     if (path[1] == 'categories' && path.length == 3) {
       return new MaterialPageRoute<Null>(
         settings: settings,
