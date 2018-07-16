@@ -58,7 +58,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -76,7 +76,6 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             ],
           );
       } else {
-        otherScore = 0;
           return new Row(
             children: <Widget>[
               new Container(
@@ -85,7 +84,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -98,7 +97,8 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
 
               new Expanded(
                 child: new Container(
-                  child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                  child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
+                      :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
                 ),
               ),
 
@@ -123,7 +123,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
