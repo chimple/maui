@@ -49,8 +49,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
 
     Widget scoreHistory(String myUser, String otherUser, int myScore, int otherScore, String game, int playedAt) {
       totalScore = 0;
-      if(otherScore == null) {
-        otherScore = 0;
+      if(otherUser == null) {
           return new Row(
             children: <Widget>[
               new Container(
@@ -77,6 +76,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             ],
           );
       } else {
+        otherScore = 0;
           return new Row(
             children: <Widget>[
               new Container(
