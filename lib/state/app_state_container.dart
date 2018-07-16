@@ -104,7 +104,7 @@ class _AppStateContainerControllerState
           MaterialPageRoute<Null>(
               builder: (BuildContext context) => new ChatScreen(
                   myId: state.loggedInUser.id,
-                  friendId: user.id,
+                  friend: user,
                   friendImageUrl: user.image)));
     }
   }

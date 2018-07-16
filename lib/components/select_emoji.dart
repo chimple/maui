@@ -1463,7 +1463,7 @@ class SelectEmoji extends StatelessWidget {
     return CategorizedScroller(
       onUserPress: onUserPress,
       items: emojis,
-      itemCrossAxisCount: 5,
+      itemCrossAxisCount: 3,
       buildItem: buildItem,
       buildIndexItem: buildIndexItem,
     );

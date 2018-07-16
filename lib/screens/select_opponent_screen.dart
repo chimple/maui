@@ -105,21 +105,20 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                      backgroundColor:color,
-                      // pinned: true,
-                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .25 : mediaSize.height * .5,
-                      flexibleSpace: new FlexibleSpaceBar(
-                        background: new Stack(
-                         
-                          children: <Widget>[
-                          new Container(
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
+                    backgroundColor: color,
+                    // pinned: true,
+                    expandedHeight: orientation == Orientation.portrait
+                        ? mediaSize.height * .25
+                        : mediaSize.height * .5,
+                    flexibleSpace: new FlexibleSpaceBar(
+                      background: new Stack(children: <Widget>[
+                        new Container(
+                          decoration: new BoxDecoration(
+                              image: new DecorationImage(
                             image: new AssetImage(
                                 "assets/background_image/${widget.gameName}_big.png"),
                             fit: BoxFit.fill,
-                          )
-                          ),
+                          )),
                         ),
                         Container(
                             padding: EdgeInsets.only(bottom: 20.0),
@@ -264,6 +263,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
+      color: user.color,
       replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
