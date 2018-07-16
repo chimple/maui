@@ -12,6 +12,7 @@ class UserDao {
           User.columnId,
           User.columnDeviceId,
           User.columnName,
+          User.columnColor,
           User.columnImage,
           User.columnCurrentLessonId
         ],
@@ -30,6 +31,7 @@ class UserDao {
           User.columnId,
           User.columnDeviceId,
           User.columnName,
+          User.columnColor,
           User.columnImage,
           User.columnCurrentLessonId
         ],
@@ -46,6 +48,7 @@ class UserDao {
           User.columnId,
           User.columnDeviceId,
           User.columnName,
+          User.columnColor,
           User.columnImage,
           User.columnCurrentLessonId
         ],
@@ -60,6 +63,7 @@ class UserDao {
       User.columnId,
       User.columnDeviceId,
       User.columnName,
+      User.columnColor,
       User.columnImage,
       User.columnCurrentLessonId
     ]);

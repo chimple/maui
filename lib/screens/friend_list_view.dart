@@ -51,28 +51,26 @@ class _FriendListViewState extends State<FriendListView> {
       ));
     }
     return Container(
-
-          color: const Color(0xff36C5E4),
-          child: new GridView.count(
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-          children: users.map((u) {
-            var notif = notifs.firstWhere((n) => n.userId == u.id,
-                orElse: () => Notif(userId: u.id, numNotifs: 0));
-            return FriendItem(
-                id: u.id,
-                imageUrl: u.image,
-                numNotifs: notif.numNotifs,
-                onTap: () => user.id == u.id
-                    ? Navigator.of(context).pushNamed('/chatbot')
-                    : Navigator.of(context).push(MaterialPageRoute<Null>(
-                        builder: (BuildContext context) => new ChatScreen(
-                            myId: user.id,
-                            friendId: u.id,
-                            friendImageUrl: u.image))));
-          }).toList(growable: false),
-        ),
+      color: const Color(0xff36C5E4),
+      child: new GridView.count(
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        crossAxisCount: media.size.height > media.size.width ? 3 : 4,
+        children: users.map((u) {
+          var notif = notifs.firstWhere((n) => n.userId == u.id,
+              orElse: () => Notif(userId: u.id, numNotifs: 0));
+          return FriendItem(
+              id: u.id,
+              imageUrl: u.image,
+              color: u.color,
+              numNotifs: notif.numNotifs,
+              onTap: () => user.id == u.id
+                  ? Navigator.of(context).pushNamed('/chatbot')
+                  : Navigator.of(context).push(MaterialPageRoute<Null>(
+                      builder: (BuildContext context) => new ChatScreen(
+                          myId: user.id, friend: u, friendImageUrl: u.image))));
+        }).toList(growable: false),
+      ),
     );
   }
 }

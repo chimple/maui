@@ -3,7 +3,7 @@ import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/components/categorized_scroller.dart';
 
 final Map<String, List<String>> Stickers = {
-  'assets/stickers/giraffe/1.png': [
+  'assets/stickers/giraffe/giraffe.png': [
     'assets/stickers/giraffe/1.png',
     'assets/stickers/giraffe/10.png',
     'assets/stickers/giraffe/11.png',
