@@ -1470,7 +1470,10 @@ class SelectEmoji extends StatelessWidget {
   }
 
   Widget buildItem(String text, bool enabled) {
-    return Text(text);
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+    );
   }
 
   Widget buildIndexItem(String text, bool enabled) {
