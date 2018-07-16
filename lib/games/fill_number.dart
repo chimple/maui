@@ -545,7 +545,7 @@ class MyFillnumberState extends State<Fillnumber> {
                           child: new Center(
                             child: ssum==null?new Text("$nulstring"):
                             new Text("$ssum",
-                                style: new TextStyle(fontSize: 35.0)),
+                                style: new TextStyle(fontSize: buttonConfig.fontSize /1.8)),
                           ),
                         ))),
                 new Padding(
