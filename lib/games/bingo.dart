@@ -70,7 +70,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   // stored index check
   var s = 0;
   var element;
-  List _Bingodata1 = [];
   var matchRow;
   var matchColumn;
   static int _maxSize = 2;
@@ -85,7 +84,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   var sum = 0;
   List _letters = [];
   var c=0;
-  //new List.generate(m, (_) => new List(n));
   var _referenceMatrix = new List.generate(_maxSize, (_) => new List(_maxSize));
 
   @override
@@ -173,11 +171,10 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     print(" count isssss $countData");
     ques = _copyQuestion[z];
     print("thia is a ques tio {$ques abd $z}");
-// print({"this questions :": _copyQuestion});
-// print({"this questions :": _all[z]});
-// print("this is a $question");
     print("this is a $ques");
-
+    countEnd == 0;
+    clickCounter=0;
+    onScoreFlag =0;
 // _shuffledLetters.removeRange(0, _shuffledLetters.length);
     for (var i = 0; i < _all.length; i += _maxSize * _maxSize) {
       _shuffledLetters.addAll(
@@ -193,8 +190,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     _ColmunCells =
         _letters.map((e) => ColmunCell.ColumnActive).toList(growable: false);
     _RowCells = _letters.map((e) => RowCell.Dance).toList(growable: false);
-// print({"reference size _ShakeCells.length": _ShakeCells});
-// print({"reference size _ShakeCells.length": _ColmunCells});
     setState(() => _isLoading = false);
   }
 
@@ -232,7 +227,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
           print(" staus is.......::$_statuses");
           if (str1 == str2 && onend!=true &&status == Status.Active) {
-            // print("comparring string in bingo game suddenly taking extra score ${c++}");
 
             widget.onScore(4);
             setState(() {
@@ -294,6 +288,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 rowFlag = 0;
                 colFlag = 0;
                 onScoreFlag = 1;
+
                 _turnByTurn();
               });
             }
@@ -308,22 +303,27 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
             } else {
               _copyQuestion.removeRange(0, _copyQuestion.length);
             }
-          } //check for (Str1 1= Str2)
+          }
           else {
-            if (onScoreFlag != 1 &&status == Status.Active && clickCounter > 0) {
 
+            print("this is my1 click $clickCounter");
+            print("this is my2 intial $countEnd");
+            if (onScoreFlag != 1 && status == Status.Active && clickCounter > 0 && c==0) {
+
+              print("this is my click $clickCounter");
+              print("this is my intial $countEnd");
               if(c==0){
-                widget.onScore(-1);
-                countEnd++;
-
                 setState(() {
+                  countEnd++;
+                  widget.onScore(-1);
                   _ShakeCells[index] = ShakeCell.Right;
+                  if(countEnd == 3){
+                    print("this is my count End $countEnd");
+                    countEnd=0;
+                    _turnByTurn();
+
+                  }
                 });
-                if(countEnd == 3){
-
-                  widget.onEnd();
-
-                }
                 //print("this is wrongg");
                 new Future.delayed(const Duration(milliseconds: 300), () {
                   setState(() {
@@ -461,7 +461,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       onend = true;
       print("this is when onend calling method was........ ");
       setState(() {
-        new Future.delayed(const Duration(milliseconds: 1700), () {
+        new Future.delayed(const Duration(milliseconds: 500), () {
 
 
           if (onend == true) {
@@ -515,7 +515,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
 // print("_MyButtonState.initState: ${widget.text}");
-    print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
+//    print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
@@ -574,7 +574,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-    print({"oldwidget data ": oldWidget.text});
+//    print({"oldwidget data ": oldWidget.text});
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
