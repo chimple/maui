@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/score.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/score_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class PlayedGamesScoreDisplay extends StatefulWidget {
@@ -16,6 +18,8 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, List<Score>> _scores;
+  User otherUsers;
+  String otherUserImage='';
   int totalScore = 0;
   @override
     void initState() {
@@ -34,6 +38,13 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
         _isLoading = false;
     });
     }
+
+  void _getOpponentImage(String otherUser) async {
+    otherUsers = await UserRepo().getUser(otherUser);
+    setState(() {
+          otherUserImage = otherUsers.image; 
+      });
+  }  
 
   @override
  Widget build(BuildContext context) {  
@@ -76,6 +87,8 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             ],
           );
       } else {
+        if(otherUserImage == '')
+        _getOpponentImage(otherUser);
           return new Row(
             children: <Widget>[
               new Container(
@@ -129,7 +142,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                   ),
                 child: new CircleAvatar(
                     backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
+                    backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
                   ),
                 ),
               ),
