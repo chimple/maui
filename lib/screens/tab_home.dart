@@ -49,22 +49,43 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _controller = new TabController(length: 2, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
+    // _imgController1.forward();
     _icon1 = new Image.asset(
-                            '${_myHandler.img1}',
+                            _myHandler.img1,
                             scale: .3,
                           );
   }
 
   void _tabSelected() {
     setState(() {
+      
+      _myHandler = _tabs[_controller.index];
       // _icon1 = new Image.asset(
-      //                       '${_myHandler.img}',
+      //                       '${_myHandler.img1}',
       //                       scale: .3,
       //                     );
-      _myHandler = _tabs[_controller.index];
-      //  _icon2 = new ShowIcon(
-      //                 img: _myHandler.img,
-      //               );
+      //  _icon2 = new Image.asset(
+      //                       '${_myHandler.img2}',
+      //                       scale: .3,
+      //                     );
+                          
+      if(_scrollcontroller.offset == 0.0){
+            // _imgController1.forward();
+            // _imgController.reverse();
+            
+            _icon1 = new Image.asset(
+                            _myHandler.img1,
+                            scale: .3,
+                          );
+          }
+          else{
+    //         _imgController1.reverse();
+    // _imgController.forward();
+            _icon2 = new Image.asset(
+                            _myHandler.img2,
+                            scale: .3,
+                          );
+          }
     });
   }
 
@@ -87,9 +108,10 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _imgController.forward();
             _icon2 = new ScaleTransition(
                 scale: animateImage,
-                          child: new ShowIcon(
-                      img: _myHandler.img2,
-                    ),
+                          child: new Image.asset(
+                            _myHandler.img2,
+                            scale: .3,
+                          ),
             );
           }
         });
@@ -173,19 +195,19 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   }
 }
 
-class ShowIcon extends StatelessWidget {
-  ShowIcon({
-    Key key,
-    this.img,
-  }) : super(key: key);
-  final String img;
-  @override
-  Widget build(BuildContext context) {
-    return new Image.asset(
-                          img,
-                          scale: .3,
-                        );  }
-}
+// class ShowIcon extends StatelessWidget {
+//   ShowIcon({
+//     Key key,
+//     this.img,
+//   }) : super(key: key);
+//   final String img;
+//   @override
+//   Widget build(BuildContext context) {
+//     return new Image.asset(
+//                           img,
+//                           scale: .3,
+//                         );  }
+// }
 
 class MyTabs {
   final String img1;
