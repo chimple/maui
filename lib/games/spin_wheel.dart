@@ -219,7 +219,16 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         }
       }
     }
+    for (int i = 0; i < _smallCircleData.length; i++) {
+      if (_smallCircleData[i] == _maxString) {
+        _wLength = 'w'.allMatches(_smallCircleData[i].toLowerCase()).length;
+        _mLength = 'm'.allMatches(_smallCircleData[i].toLowerCase()).length;
 
+        if (_wLength >= 1 || _mLength >= 1) {
+          _maxString = _smallCircleData[i];
+        }
+      }
+    }
     rotationPercent = 0.0;
     _text = _shuffleCircleData2[0];
 
@@ -353,6 +362,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           _sliceBool[j] == true) {}
     }
   }
+
   // hard codes
   void compareTheangle8() {
     //0
@@ -652,17 +662,19 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     return data1;
   }
 
+  int _wLength, _mLength;
   bool doShake = true;
   bool test = true;
-  List<String> mode = ['image', 'text'];
   Unit _unit;
   @override
   Widget build(BuildContext context) {
     double _sizeOfWheel;
     Size size2 = MediaQuery.of(context).size;
     // print("size of the screen:: $size2");
-
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    final bool isLandscape = orientation == Orientation.landscape;
     Size size1 = MediaQuery.of(context).size;
+    if (isLandscape) {}
     // final Orientation orientation = MediaQuery.of(context).orientation;
     //final bool isLanscape = orientation == Orientation.landscape;
     size1 = new Size(size1.height * .6, size1.height * .6);
@@ -672,6 +684,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         ? _smallCircleData.fold(
             1, (prev, element) => element.length > prev ? element.length : prev)
         : 1);
+
     return new LayoutBuilder(builder: (context, constraints) {
       // final bool isPortrait = orientation == Orientation.portrait;
       Size _size;
@@ -689,7 +702,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
       double maxWidth =
           (constraints.maxWidth - hPadding * 2) / 2.4; //- middle_spacing;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 1;
+      double maxHeight = (constraints.maxHeight - vPadding * 2) / 2;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
@@ -734,7 +747,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
           // new Expanded(flex: 1, child: new Text('')
           //),
           new Expanded(
-            flex: 6,
+            flex: 7,
             child: new Stack(
               children: <Widget>[
                 new Center(
