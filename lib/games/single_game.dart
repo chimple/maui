@@ -591,7 +591,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     switch (widget.gameName) {
       case 'reflex':
         playTime = 15000;
-        maxIterations = -1;
+        maxIterations = 1;
         return new Reflex(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
