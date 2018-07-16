@@ -131,6 +131,8 @@ flutter:
     - assets/background_image/calculate_numbers_small.png
     - assets/background_image/casino_small.png
     - assets/background_image/casino_big.png
+    - assets/background_image/guess_small.png
+    - assets/background_image/guess_big.png
     - assets/background_image/match_the_following_small.png
     - assets/background_image/match_the_following_big.png
     - assets/background_image/bingo_big.png
