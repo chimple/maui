@@ -32,8 +32,10 @@ class UserRepo {
   }
 
   Future<User> insertOrUpdateRemoteUser(
-      String userId, String deviceId, String base64Image) async {
+      String userId, String deviceId, String txnText) async {
     print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
+    final userInfo = txnText.split('*');
+    String base64Image = userInfo.last;
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     List<int> memoryImage;
     try {
@@ -50,6 +52,9 @@ class UserRepo {
           id: userId,
           deviceId: deviceId,
           image: imagePath,
+          name: userInfo.length > 1 ? userInfo[0] : null,
+          color:
+              userInfo.length > 2 ? int.tryParse(userInfo[1], radix: 16) : null,
           currentLessonId: 1));
     }
   }
@@ -67,7 +72,11 @@ class UserRepo {
     user.deviceId = deviceId;
     var config = File(user.image);
     var contents = await config.readAsBytes();
-    var enc = base64.encode(contents);
+    var enc = user.name +
+        '*' +
+        user.color.toRadixString(16) +
+        '*' +
+        base64.encode(contents);
     Flores().addUser(user.id, deviceId, enc);
     print('Added main user: $user');
     return await userDao.insert(user);
