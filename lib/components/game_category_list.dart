@@ -1,16 +1,16 @@
 import 'dart:math';
+import 'package:maui/db/entity/concept.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/db/entity/game_category.dart';
 import 'expansionTile.dart';
-import 'package:maui/screens/select_opponent_screen.dart';
-import 'user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/concept_repo.dart';
+import 'package:maui/screens/game_category_list_screen.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -18,6 +18,7 @@ class GameCategoryList extends StatefulWidget {
       @required this.gameCategories,
       @required this.game,
       @required this.gameMode,
+      @required this.concepts,
       @required this.gameDisplay,
       this.otherUser})
       : super(key: key);
@@ -27,6 +28,7 @@ class GameCategoryList extends StatefulWidget {
   GameMode gameMode;
   GameDisplay gameDisplay;
   User otherUser;
+  Map<int, Concept> concepts;
 }
 
 class GameCategoryData {
@@ -84,17 +86,9 @@ class _GameCategoryList extends State<GameCategoryList> {
   ];
   static final List<Color> tileColors = [];
   int count = 0;
+  bool isLoading = false;
   List<GameCategoryData> gameCategoryData;
   Map<int, List<GameCategoryData>> conceptIdMap;
-  List<String> categoriesName = [
-    '', //there no conceptId == 0
-    'Upper Case Letters', //1
-    'Upper Case to Lower Case Letters', //2
-    'Word Start With Small Letters', //3
-    'Concepts', //4
-    'Word Start With Capital Letters', //5
-    'Lower Case Letters', //6
-  ];
 
   @override
   void initState() {
@@ -102,16 +96,15 @@ class _GameCategoryList extends State<GameCategoryList> {
     gameCategoryData = widget.gameCategories.map((tuple3) {
       return new GameCategoryData(tuple3.item1, tuple3.item2, tuple3.item3);
     }).toList();
-   // print("gameCategoryData: ${gameCategoryData.length} $gameCategoryData");
     conceptIdMap = {};
     gameCategoryData.forEach((data) {
       conceptIdMap
           .putIfAbsent(data.conceptId, () => new List<GameCategoryData>())
           .add(data);
     });
-   // print("conceptIdMap: ${conceptIdMap.length}  ");
     conceptIdMap.forEach((key, value) {
       print("$key - ${value.length}");
+      print('value is $value');
     });
     int categoriesLength = widget.gameCategories.length;
     for (int i = 0; i < categoriesLength + 1; i++) {
@@ -123,9 +116,17 @@ class _GameCategoryList extends State<GameCategoryList> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return new Center(
+          child: new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      ));
+    }
     Orientation orientation = MediaQuery.of(context).orientation;
     Size media = MediaQuery.of(context).size;
-    int j=0;
+    int j = 0;
     return new CustomScrollView(
       primary: true,
       shrinkWrap: false,
@@ -144,7 +145,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                   decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new AssetImage(
-                       "assets/background_image/${widget.game}_big.png"),
+                          "assets/background_image/${widget.game}_big.png"),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -164,24 +165,22 @@ class _GameCategoryList extends State<GameCategoryList> {
               // centerTitle: true,
             )),
         new SliverList(
-            delegate: new SliverChildListDelegate(
-              _buildCategoriesButtons()
-              )
-              ),
+            delegate: new SliverChildListDelegate(_buildCategoriesButtons())),
         new SliverToBoxAdapter(
           child: new Container(height: 2.0, color: Colors.yellow),
         ),
       ],
     );
   }
-  
+
   List<Widget> _buildCategoriesButtons() {
     List<Widget> buttons = [];
     int colorIndex = 0;
-    conceptIdMap.forEach((conceptId, list) {
-      String mainCategoryName = categoriesName[conceptId];
+      conceptIdMap.forEach((conceptId, list) {
+      String mainCategoryName = widget.concepts[conceptId].name;
       if (list.length == 1) {
-              buttons.add(_buildButton(list.first.name, list.first.id,tileColors[colorIndex++]));
+        buttons.add(_buildButton(
+            mainCategoryName, list.first.id, tileColors[colorIndex++]));
       } else {
         buttons.add(Container(
           color: tileColors[colorIndex++],
@@ -198,7 +197,8 @@ class _GameCategoryList extends State<GameCategoryList> {
                           fontWeight: FontWeight.bold)),
                 )),
             children: list.map((gameCategoryData) {
-         return _buildButton("${   gameCategoryData.name}", gameCategoryData.id, tileColors[colorIndex-1]);
+              return _buildButton(gameCategoryData.name, gameCategoryData.id,
+                  tileColors[colorIndex - 1]);
             }).toList(),
           ),
         ));
@@ -219,8 +219,8 @@ class _GameCategoryList extends State<GameCategoryList> {
                     color: Colors.white,
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold))),
-        onTap: () => goToGame(
-            context, widget.game, gameCategoryId, widget.gameDisplay, widget.gameMode,
+        onTap: () => goToGame(context, widget.game, gameCategoryId,
+            widget.gameDisplay, widget.gameMode,
             otherUser: widget.otherUser),
       ),
     );
