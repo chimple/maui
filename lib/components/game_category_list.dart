@@ -175,18 +175,27 @@ class _GameCategoryList extends State<GameCategoryList> {
 
   List<Widget> _buildCategoriesButtons() {
     List<Widget> buttons = [];
-    int colorIndex = 0;
-      conceptIdMap.forEach((conceptId, list) {
+    int colorIndex = 5;
+    conceptIdMap.forEach((conceptId, list) {
       String mainCategoryName = widget.concepts[conceptId].name;
       if (list.length == 1) {
-        buttons.add(_buildButton(
-            mainCategoryName, list.first.id, tileColors[colorIndex++]));
+        buttons.add(Container(
+          color: tileColors[colorIndex++],
+          child: _buildButton(
+              mainCategoryName, list.first.id, tileColors[colorIndex++]),
+        ));
       } else {
         buttons.add(Container(
           color: tileColors[colorIndex++],
           child: new ExpansionTiles(
             title: Container(
-                height: 154.0,
+                decoration: const BoxDecoration(
+                  border: const Border(
+                    bottom: const BorderSide(
+                        width: 2.0, color: const Color(0xFFFFFFFFFF)),
+                  ),
+                ),
+                height: 150.0,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 64.0, 0.0, 0.0),
                   child: new Text(mainCategoryName,
@@ -210,8 +219,13 @@ class _GameCategoryList extends State<GameCategoryList> {
   Widget _buildButton(
       String mainCategoryName, int gameCategoryId, Color color) {
     return new Container(
-      height: 154.0,
-      color: color,
+      height: 150.0,
+      decoration: const BoxDecoration(
+        border: const Border(
+          bottom:
+              const BorderSide(width: 1.0, color: const Color(0xFFFFFFFFFF)),
+        ),
+      ),
       child: ListTile(
         title: new Container(
             child: Text(mainCategoryName,
