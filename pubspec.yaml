@@ -131,6 +131,8 @@ flutter:
     - assets/background_image/calculate_numbers_small.png
     - assets/background_image/casino_small.png
     - assets/background_image/casino_big.png
+    - assets/background_image/guess_small.png
+    - assets/background_image/guess_big.png
     - assets/background_image/match_the_following_small.png
     - assets/background_image/match_the_following_big.png
     - assets/background_image/bingo_big.png
@@ -1202,6 +1204,57 @@ flutter:
     - assets/dict/zoo.png
     - assets/dict/zucchini.png
     - assets/star_music.mp3
+    - assets/stickers/pig/pig.png
+    - assets/stickers/pig/8.png
+    - assets/stickers/pig/9.png
+    - assets/stickers/pig/14.png
+    - assets/stickers/pig/15.png
+    - assets/stickers/pig/16.png
+    - assets/stickers/pig/12.png
+    - assets/stickers/pig/13.png
+    - assets/stickers/pig/11.png
+    - assets/stickers/pig/10.png
+    - assets/stickers/pig/4.png
+    - assets/stickers/pig/5.png
+    - assets/stickers/pig/7.png
+    - assets/stickers/pig/6.png
+    - assets/stickers/pig/2.png
+    - assets/stickers/pig/3.png
+    - assets/stickers/pig/1.png
+    - assets/stickers/giraffe/giraffe.png
+    - assets/stickers/giraffe/8.png
+    - assets/stickers/giraffe/9.png
+    - assets/stickers/giraffe/14.png
+    - assets/stickers/giraffe/15.png
+    - assets/stickers/giraffe/16.png
+    - assets/stickers/giraffe/12.png
+    - assets/stickers/giraffe/13.png
+    - assets/stickers/giraffe/11.png
+    - assets/stickers/giraffe/10.png
+    - assets/stickers/giraffe/4.png
+    - assets/stickers/giraffe/5.png
+    - assets/stickers/giraffe/7.png
+    - assets/stickers/giraffe/6.png
+    - assets/stickers/giraffe/2.png
+    - assets/stickers/giraffe/3.png
+    - assets/stickers/giraffe/1.png
+    - assets/stickers/monkey/monkey.png
+    - assets/stickers/monkey/8.png
+    - assets/stickers/monkey/9.png
+    - assets/stickers/monkey/14.png
+    - assets/stickers/monkey/15.png
+    - assets/stickers/monkey/16.png
+    - assets/stickers/monkey/12.png
+    - assets/stickers/monkey/13.png
+    - assets/stickers/monkey/11.png
+    - assets/stickers/monkey/10.png
+    - assets/stickers/monkey/4.png
+    - assets/stickers/monkey/5.png
+    - assets/stickers/monkey/7.png
+    - assets/stickers/monkey/6.png
+    - assets/stickers/monkey/2.png
+    - assets/stickers/monkey/3.png
+    - assets/stickers/monkey/1.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
