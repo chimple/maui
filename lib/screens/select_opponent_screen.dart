@@ -46,13 +46,14 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
 
   void _initData() async {
     _isLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userId = prefs.getString('userId');
+    var user = AppStateContainer.of(context).state.loggedInUser;
     List<User> users;
     users = await UserRepo().getUsers();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     List<dynamic> messages;
     try {
-      messages = await Flores().getLatestConversations(userId, widget.gameName);
+      messages =
+          await Flores().getLatestConversations(user.id, widget.gameName);
     } on PlatformException {
       print('Failed getting messages');
     }
@@ -64,9 +65,10 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       _deviceId = prefs.getString('deviceId');
       _users = users;
       _messages = messages;
+      _localUsers.add(user);
       _users.forEach((u) {
-        if (u.id == userId) {
-          _localUsers.insert(0, u);
+        if (u.id == user.id) {
+          //no op
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
         } else if (messages.any((m) => u.id == m['userId'])) {
@@ -84,6 +86,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    print(
+        "height and width of  opponent is ${mediaSize.width}....${mediaSize.height}");
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
@@ -100,21 +105,37 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                      backgroundColor: color,
-                      pinned: true,
-                      expandedHeight: mediaSize.height * .37,
+                      backgroundColor:color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait  ? mediaSize.height * .25 : mediaSize.height * .5,
                       flexibleSpace: new FlexibleSpaceBar(
-                        background: new FittedBox(
-                          child: new Hero(
-                              tag: 'assets/hoodie/${widget.gameName}.png',
-                              child: new Image.asset(
-                                'assets/hoodie/${widget.gameName}.png',
-                                scale: .8,
-                              )),
+                        background: new Stack(
+                         
+                          children: <Widget>[
+                          new Container(
+                        decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: new AssetImage(
+                                "assets/background_image/${widget.gameName}_big.png"),
+                            fit: BoxFit.fill,
+                          )
+                          ),
                         ),
-                        centerTitle: true,
-                        title: new Text(Loca.of(context).intl(widget.gameName)),
-                      )),
+                        Container(
+                            padding: EdgeInsets.only(bottom: 20.0),
+                            child: Center(
+                              child: new Hero(
+                                tag: 'assets/hoodie/${widget.gameName}.png',
+                                child: new Image.asset(
+                                  'assets/hoodie/${widget.gameName}.png',
+                                  scale: .4,
+                                ),
+                              ),
+                            ))
+                      ]),
+                    ),
+                    title: new Text(Loca.of(context).intl(widget.gameName)),
+                  ),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -243,6 +264,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     return FriendItem(
       id: user.id,
       imageUrl: user.image,
+      replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }

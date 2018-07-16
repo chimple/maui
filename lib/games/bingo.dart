@@ -6,6 +6,8 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
 
 class Bingo extends StatefulWidget {
@@ -19,13 +21,13 @@ class Bingo extends StatefulWidget {
 
   Bingo(
       {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.onTurn,
-      this.gameConfig,
-      this.isRotated = false})
+        this.onScore,
+        this.onProgress,
+        this.onEnd,
+        this.iteration,
+        this.onTurn,
+        this.gameConfig,
+        this.isRotated = false})
       : super(key: key);
 
   @override
@@ -74,9 +76,11 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   var rowFlag = 0;
   var colFlag = 0;
   var onScoreFlag = 0;
+  var clickCounter = 0;
+  var countEnd = 0;
 
   /// datattaaaa
-
+  bool onend = false;
   bool _isLoading = true;
   var sum = 0;
   List _letters = [];
@@ -102,13 +106,35 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   @override
   void didUpdateWidget(Bingo oldWidget) {
     print(
-        "this is our preseent iteraion GOOOD SANDJFNDNF DJNFJDNF   ${widget.iteration}");
+        "this is our preseent iteraion GOOOD SANDJFNDNF DJNFJDNF ${widget.iteration}");
     if (oldWidget.iteration != widget.iteration) {
       print("old widget ${oldWidget.iteration}");
       print("new widget ${widget.iteration}");
       print(
           "this is my new data ${oldWidget.iteration} and ${widget.iteration}");
-
+      onend = false;
+      setState(() {
+        _statuses =
+            _letters.map((e) => Status.Active).toList(growable: false);
+        _ShakeCells =
+            _letters.map((e) => ShakeCell.Wrong).toList(growable: false);
+        _ColmunCells = _letters
+            .map((e) => ColmunCell.ColumnActive)
+            .toList(growable: false);
+        _RowCells =
+            _letters.map((e) => RowCell.Dance).toList(growable: false);
+        z = 0;
+        bingoCount = 0;
+        countData = 0;
+        onScoreFlag = 0;
+// widget.onEnd();
+        _copyQuestion.removeRange(0, _copyQuestion.length);
+        _copyQuestion1.removeRange(0, _copyQuestion1.length);
+        _all.removeRange(0, _all.length);
+        _letters.removeRange(0, _letters.length);
+        _shuffledLetters.removeRange(0, _shuffledLetters.length);
+        print("iteration not chhanging.......::..${widget.iteration}");
+      });
       _initBoard();
     }
   }
@@ -146,11 +172,11 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     print(" count isssss $countData");
     ques = _copyQuestion[z];
     print("thia is a ques tio {$ques abd $z}");
-//    print({"this questions :": _copyQuestion});
-//    print({"this questions :": _all[z]});
-//    print("this is a $question");
+// print({"this questions :": _copyQuestion});
+// print({"this questions :": _all[z]});
+// print("this is a $question");
     print("this is a $ques");
-//    _shuffledLetters.removeRange(0, _shuffledLetters.length);
+// _shuffledLetters.removeRange(0, _shuffledLetters.length);
     for (var i = 0; i < _all.length; i += _maxSize * _maxSize) {
       _shuffledLetters.addAll(
           _all.skip(i).take(_maxSize * _maxSize).toList(growable: false));
@@ -165,8 +191,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     _ColmunCells =
         _letters.map((e) => ColmunCell.ColumnActive).toList(growable: false);
     _RowCells = _letters.map((e) => RowCell.Dance).toList(growable: false);
-//    print({"reference size _ShakeCells.length": _ShakeCells});
-//    print({"reference size _ShakeCells.length": _ColmunCells});
+// print({"reference size _ShakeCells.length": _ShakeCells});
+// print({"reference size _ShakeCells.length": _ColmunCells});
     setState(() => _isLoading = false);
   }
 
@@ -180,6 +206,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       int maxChars,
       double maxWidth,
       double maxHeight) {
+    print("clicking button calling again and again we have fix");
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -192,112 +219,115 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
           print("text $text");
           if (status == Status.Active) {
             print("testing $text");
-            setState(() {
-              var str1 = _all.indexOf(text);
-              var str2 = _copyQuestion1.indexOf(ques);
 
-              if (str1 == str2) {
+            var str1 = _all.indexOf(text);
+            var str2 = _copyQuestion1.indexOf(ques);
+
+            if (str1 == str2 && onend!=true) {
+              print("comparring string in bingo game suddenly taking extra score");
+              setState(() {
+                widget.onScore(4);
+                _statuses[index] = Status.Visible;
+              });
+
+              int counter = 0;
+              for (int i = 0; i < _maxSize; i++) {
+                for (int j = 0; j < _maxSize; j++) {
+                  if (counter == index) {
+                    _referenceMatrix[i][j] = 1;
+                  }
+                  counter++;
+                }
+              }
+              print("checking where it is comming ");
+              matchRow = bingoHorizontalChecker();
+              matchColumn = bingoVerticalChecker();
+              if (-1 != matchRow) {
+                if (matchRow == 0 ||
+                    matchRow == 1 ||
+                    matchRow == 2 ||
+                    matchRow == 3 ||
+                    matchRow == 4 ||
+                    matchRow == 5) {
+                  rowFlag = 1;
+                  matchRow = _maxSize * matchRow;
+                  for (i = matchRow; i < _maxSize + matchRow; i++) {
+                    p2pcount = p2pcount + 1;
+                    setState(() {
+                      _RowCells[i] = RowCell.CurveRow;
+                      widget.onProgress(2 / 1);
+                    });
+                  }
+                }
+              }
+              print("where it is comming .... ");
+              if (-1 != matchColumn) {
+                if (matchColumn == 0 ||
+                    matchColumn == 1 ||
+                    matchColumn == 2 ||
+                    matchColumn == 3 ||
+                    matchColumn == 4 ||
+                    matchColumn == 5) {
+                  rowFlag = 1;
+                  for (i = matchColumn; i < _maxSize * _maxSize; i++) {
+                    setState(() {
+                      print("this is great");
+                      _ColmunCells[i] = ColmunCell.CurveColumn;
+                      i = i + _maxSize - 1;
+                      widget.onProgress(2 / 1);
+                    });
+                  }
+                }
+              }
+              if (rowFlag == 1 || colFlag == 1) {
                 setState(() {
-                  _statuses[index] = Status.Visible;
-                  widget.onScore(4);
-                });
-
-                int counter = 0;
-                for (int i = 0; i < _maxSize; i++) {
-                  for (int j = 0; j < _maxSize; j++) {
-                    if (counter == index) {
-                      _referenceMatrix[i][j] = 1;
-                    }
-                    counter++;
-                  }
-                }
-
-                matchRow = bingoHorizontalChecker();
-                matchColumn = bingoVerticalChecker();
-                if (-1 != matchRow) {
-                  if (matchRow == 0 ||
-                      matchRow == 1 ||
-                      matchRow == 2 ||
-                      matchRow == 3 ||
-                      matchRow == 4 ||
-                      matchRow == 5) {
-                    rowFlag = 1;
-                    matchRow = _maxSize * matchRow;
-                    for (i = matchRow; i < _maxSize + matchRow; i++) {
-                      p2pcount = p2pcount + 1;
-                      setState(() {
-                        _RowCells[i] = RowCell.CurveRow;
-                        widget.onProgress(2 / 1);
-                      });
-                    }
-                  }
-                }
-                if (-1 != matchColumn) {
-                  if (matchColumn == 0 ||
-                      matchColumn == 1 ||
-                      matchColumn == 2 ||
-                      matchColumn == 3 ||
-                      matchColumn == 4 ||
-                      matchColumn == 5) {
-                    colFlag = 1;
-                    for (i = matchColumn; i < _maxSize * _maxSize; i++) {
-                      setState(() {
-                        print("this is great");
-                        _ColmunCells[i] = ColmunCell.CurveColumn;
-                        i = i + _maxSize - 1;
-                        widget.onProgress(2 / 1);
-                      });
-                    }
-                  }
-                }
-                if (rowFlag == 1 || colFlag == 1) {
-                  setState(() {
-                    rowFlag = 0;
-                    colFlag = 0;
-                    onScoreFlag = 1;
-                    _turnByTurn();
-                  });
-                }
-                if (matchRow == -1 && matchColumn == -1) {
-                  if (z <= _maxSize * _maxSize - 1) {
-                    _copyQuestion.removeWhere((val) => val == ques);
-                    ques = _copyQuestion[z];
-                    print("this is a deleted copyquestion $ques");
-                    print("this is a length copyquestion ${_copyQuestion[z]}");
-                  }
-                } else {
-                  _copyQuestion.removeRange(0, _copyQuestion.length);
-                }
-              } //check for (Str1 1= Str2)
-              else {
-                if (onScoreFlag != 1) {
-                  setState(() {
-                    widget.onScore(-1);
-                    _ShakeCells[index] = ShakeCell.Right;
-                  });
-                }
-                //print("this is wrongg");
-                new Future.delayed(const Duration(milliseconds: 300), () {
-                  setState(() {
-                    _ShakeCells[index] = ShakeCell.Wrong;
-                    if (matchColumn == -1 && matchRow == -1) {
-                      final _random = new Random();
-                      var element =
-                          _copyQuestion[_random.nextInt(_copyQuestion.length)];
-                      ques = element;
-                      print("this is a elemet of removed $ques");
-                    }
-                  });
+                  rowFlag = 0;
+                  colFlag = 0;
+                  onScoreFlag = 1;
+                  _turnByTurn();
                 });
               }
-            });
+              if (matchRow == -1 && matchColumn == -1) {
+                if (z <= _maxSize * _maxSize - 1) {
+                  _copyQuestion.removeWhere((val) => val == ques);
+                  ques = _copyQuestion[z];
+                  print("this is a deleted copyquestion $ques");
+                  print("this is a length copyquestion ${_copyQuestion[z]}");
+                }
+
+              } else {
+                _copyQuestion.removeRange(0, _copyQuestion.length);
+              }
+            } //check for (Str1 1= Str2)
+            else {
+              if (onScoreFlag != 1) {
+                setState(() {
+                  widget.onScore(-1);
+                  _ShakeCells[index] = ShakeCell.Right;
+                });
+              }
+              //print("this is wrongg");
+              new Future.delayed(const Duration(milliseconds: 300), () {
+                setState(() {
+                  _ShakeCells[index] = ShakeCell.Wrong;
+                  if (matchColumn == -1 && matchRow == -1) {
+                    final _random = new Random();
+                    var element =
+                    _copyQuestion[_random.nextInt(_copyQuestion.length)];
+                    ques = element;
+                    print("this is a elemet of removed $ques");
+                  }
+                });
+              });
+            }
+
           }
         });
   }
 
   @override
   Widget build(BuildContext context) {
-//    print("MyTableState.build");
+// print("MyTableState.build");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
     if (_isLoading) {
@@ -306,7 +336,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     }
     final maxChars = (_letters != null
         ? _letters.fold(
-            1, (prev, element) => element.length > prev ? element.length : prev)
+        1, (prev, element) => element.length > prev ? element.length : prev)
         : 1);
     print("$maxChars");
     return new LayoutBuilder(builder: (context, constraints) {
@@ -355,17 +385,17 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       cols: _maxSize,
                       children: _letters
                           .map((e) => Padding(
-                              padding: EdgeInsets.all(buttonPadding),
-                              child: _buildItem(
-                                  j,
-                                  e,
-                                  _statuses[j],
-                                  _ShakeCells[j],
-                                  _ColmunCells[j],
-                                  _RowCells[j++],
-                                  maxChars,
-                                  maxWidth,
-                                  maxHeight)))
+                          padding: EdgeInsets.all(buttonPadding),
+                          child: _buildItem(
+                              j,
+                              e,
+                              _statuses[j],
+                              _ShakeCells[j],
+                              _ColmunCells[j],
+                              _RowCells[j++],
+                              maxChars,
+                              maxWidth,
+                              maxHeight)))
                           .toList(growable: false),
                     ))),
           ],
@@ -375,7 +405,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   }
 
   int bingoHorizontalChecker() {
-//    print({"the reference matrix value is : ": _referenceMatrix});
+// print({"the reference matrix value is : ": _referenceMatrix});
     for (int i = 0; i < _referenceMatrix.length; i++) {
       bool bingo = true;
       for (int j = 0; j < _referenceMatrix.length; j++) {
@@ -391,7 +421,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   }
 
   int bingoVerticalChecker() {
-//    print({"the reference matrix value is : ": _referenceMatrix});
+// print({"the reference matrix value is : ": _referenceMatrix});
     for (int j = 0; j < _referenceMatrix.length; j++) {
       bool bingo = true;
       for (int i = 0; i < _referenceMatrix.length; i++) {
@@ -407,38 +437,35 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   }
 
   void _turnByTurn() {
-    new Future.delayed(const Duration(milliseconds: 1700), () {
+    if (onend == false) {
+      onend = true;
+      print("this is when onend calling method was........ ");
       setState(() {
-        z = 0;
-        bingoCount = 0;
-        countData = 0;
-        onScoreFlag = 0;
-//                      widget.onEnd();
-        _copyQuestion.removeRange(0, _copyQuestion.length);
-        _copyQuestion1.removeRange(0, _copyQuestion1.length);
-        _all.removeRange(0, _all.length);
-        _letters.removeRange(0, _letters.length);
-        _shuffledLetters.removeRange(0, _shuffledLetters.length);
-        print("iteration not chhanging.......::..${widget.iteration}");
-        widget.onEnd();
+        new Future.delayed(const Duration(milliseconds: 1700), () {
+
+
+          if (onend == true) {
+            widget.onEnd();
+          }
+        });
       });
-    });
+    }
   }
 }
 
 class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
-      this.text,
-      this.onPress,
-      this.status,
-      this.tile,
-      this.Ctile,
-      this.Rtile,
-      this.unitMode, //question unit mode
-      this.maxChars,
-      this.maxWidth,
-      this.maxHeight})
+        this.text,
+        this.onPress,
+        this.status,
+        this.tile,
+        this.Ctile,
+        this.Rtile,
+        this.unitMode, //question unit mode
+        this.maxChars,
+        this.maxWidth,
+        this.maxHeight})
       : super(key: key);
 
   final String text;
@@ -467,7 +494,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   initState() {
     super.initState();
-//    print("_MyButtonState.initState: ${widget.text}");
+// print("_MyButtonState.initState: ${widget.text}");
     print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
     _displayText = widget.text;
     controller = new AnimationController(
@@ -477,7 +504,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 10), vsync: this);
 
     animationRight =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller2 = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controller.addStatusListener((state) {});
@@ -543,11 +570,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-//    print({"this is 123 kiran data": widget.Rtile});
-//    print({"this is 123 kiran column":widget.Ctile});
+// print({"this is 123 kiran data": widget.Rtile});
+// print({"this is 123 kiran column":widget.Ctile});
     return new ScaleTransition(
         scale: widget.Ctile == ColmunCell.CurveColumn ||
-                widget.Rtile == RowCell.CurveRow
+            widget.Rtile == RowCell.CurveRow
             ? animationDance
             : animationRight,
         child: new Shake(
@@ -561,7 +588,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     text: _displayText,
                     highlighted: widget.status == Status.Visible ? true : false,
                     disabled: widget.Ctile == ColmunCell.CurveColumn ||
-                            widget.Rtile == RowCell.CurveRow
+                        widget.Rtile == RowCell.CurveRow
                         ? true
                         : false,
                     unitMode: widget.unitMode))));

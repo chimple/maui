@@ -74,9 +74,8 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
   void _initState() async {
     _user = AppStateContainer.of(context).state.loggedInUser;
-    _lessonUnits = await new LessonUnitRepo()
-// .getLessonUnitsByLessonId(4);
-        .getLessonUnitsByLessonId(_user.currentLessonId);
+    _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
+//        .getLessonUnitsByLessonId(_user.currentLessonId);
     _lesson = await new LessonRepo().getLesson(_user.currentLessonId);
     _displayNextChat(null);
   }

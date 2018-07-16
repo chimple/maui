@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
@@ -39,12 +38,13 @@ class GameListViewState extends State<GameListView> {
   Widget _buildButton(
       BuildContext context, String gameName, String displayName) {
     MediaQueryData media = MediaQuery.of(context);
+    Orientation orientation = MediaQuery.of(context).orientation;
     final colors = SingleGame.gameColors[gameName];
     final color = colors != null ? colors[0] : Colors.amber;
     var size = media.size;
     return new Container(
       decoration: new BoxDecoration(
-        color: color,
+
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
       margin: EdgeInsets.all(size.width * .02),
@@ -57,37 +57,71 @@ class GameListViewState extends State<GameListView> {
               );
             })),
         key: new Key(gameName),
-        child: new Column(
+        child: new Stack(
           children: <Widget>[
-            new Expanded(
-                child: Align(
+             new Material(
+              elevation:8.0,
+
+
+            child:new Container(
+
+              decoration: new BoxDecoration(
+                color: color,
+
+                image: new DecorationImage(
+                  image: new AssetImage(
+                      "assets/background_image/${gameName}_small.png"),
+                  fit: BoxFit.cover,
+
+                ),
+              ),
+            )),
+            new Column(
+              children: <Widget>[
+                new Expanded(
                     child: _notifs[gameName] == null
-                        ? new Hero(
-                            tag: 'assets/hoodie/$gameName.png',
-                            child: Image.asset('assets/hoodie/$gameName.png',
-                                scale: 0.3),
-                          )
+                        ? new Column(children: <Widget>[
+                            new Row(
+                              children: <Widget>[
+                                new Container(
+                                  // height: size.height * 0.15
+                                  //                             decoration: new BoxDecoration(
+                                  //                           color: Colors.black,
+                                  //                          boxShadow: [new BoxShadow(
+                                  //                        color: Colors.red,
+                                  //                      blurRadius: EdgeInsets.only(),
+                                  //)]
+                                  //                            ),
+                                  width: orientation == Orientation.portrait
+                                      ? size.width * 0.15
+                                      : size.width * 0.1,
+                                  child: new Hero(
+                                    tag: 'assets/hoodie/$gameName.png',
+                                    child: Image.asset(
+                                        'assets/hoodie/$gameName.png',
+                                        scale: 0.2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ])
                         : Badge(
                             value: '${_notifs[gameName]}',
                             child: Hero(
                               tag: 'assets/hoodie/$gameName.png',
                               child: Image.asset('assets/hoodie/$gameName.png',
-                                  scale: 0.3),
-                            )))),
-            new Container(
-                padding: EdgeInsets.all(size.width * .01),
-                decoration: new BoxDecoration(
-                  color: Colors.black38,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: const Radius.circular(16.0),
-                      bottomRight: const Radius.circular(16.0)),
-                ),
-                child: new Center(
-                    child: new Text(
-                  Loca.of(context).intl(gameName),
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                  overflow: TextOverflow.ellipsis,
-                ))),
+                                  scale: 0.6),
+                            ))),
+                new Container(
+                    child: new Container(
+                        // margin: EdgeInsets.only(left: size.width*.15),
+                        child: new Text(Loca.of(context).intl(gameName),
+                            style: new TextStyle(
+                                fontSize: size.height * .03,
+                                color: Colors.white),
+                            overflow: TextOverflow.ellipsis))),
+              ],
+            ),
           ],
         ),
       ),
@@ -102,7 +136,7 @@ class GameListViewState extends State<GameListView> {
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return Container(
-      color: Colors.grey[300],
+      color: const Color(0xffFECE3D),
           child: new GridView.count(
           key: new Key('Game_page'),
           primary: true,
@@ -114,9 +148,7 @@ class GameListViewState extends State<GameListView> {
             _buildButton(context, 'reflex', 'Reflex'),
             _buildButton(context, 'order_it', 'Order It'),
             _buildButton(context, 'memory', 'Memory'),
-            _buildButton(context, 'draw_challenge', 'draw_challenge'),
             _buildButton(context, 'abacus', 'Abacus'),
-            _buildButton(context, 'crossword', 'Crossword'),
             _buildButton(context, 'drawing', 'drawing'),
             _buildButton(context, 'fill_in_the_blanks', 'Fill In The Blanks'),
             _buildButton(context, 'calculate_numbers', 'Calculate'),
@@ -126,20 +158,22 @@ class GameListViewState extends State<GameListView> {
             _buildButton(context, 'true_or_false', 'True Or False'),
             _buildButton(context, 'tables', 'Tables'),
             _buildButton(context, 'identify', 'identify'),
-            _buildButton(context, 'picture_sentence', 'Picture Sentence'),
             _buildButton(context, 'fill_number', 'Fill Number'),
             _buildButton(context, 'quiz', 'Quiz'),
             _buildButton(context, 'connect_the_dots', 'Connect The Dots'),
             _buildButton(context, 'tap_home', 'Tap Home'),
             _buildButton(context, 'tap_wrong', 'Tap Wrong'),
             _buildButton(context, 'guess', 'guess'),
-            _buildButton(context, 'clue_game', 'Clue'),
             _buildButton(context, 'wordgrid', 'Word Grid'),
             _buildButton(context, 'spin_wheel', 'Spin The Wheel'),
-            _buildButton(context, 'first_word', 'First Word'),
-            _buildButton(context, 'friend_word', 'Friend Word'),
             _buildButton(context, 'dice', 'Dice'),
             _buildButton(context, 'circle_word', 'Circle Word'),
+            _buildButton(context, 'first_word', 'First Word'),
+            _buildButton(context, 'friend_word', 'Friend Word'),
+            _buildButton(context, 'picture_sentence', 'Picture Sentence'),
+            _buildButton(context, 'crossword', 'Crossword'),
+            _buildButton(context, 'draw_challenge', 'draw_challenge'),
+            _buildButton(context, 'clue_game', 'Clue'),
           ]),
     );
   }

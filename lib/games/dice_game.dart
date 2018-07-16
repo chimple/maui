@@ -163,12 +163,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             setState(() {
               myData[index] = '';
             });
-          } else {
+          } else if(dice_tries.length == 2) {
             _shake[index] = 1;
             new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
                 _shake[index] = 0;
                 widget.onScore(-1);
+              });
+            });
+          }
+          else {
+            _shake[index] = 1;
+            new Future.delayed(const Duration(milliseconds: 600), () {
+              setState(() {
+                _shake[index] = 0;
               });
             });
           }

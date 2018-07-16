@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'dart:io';
-
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/Shaker.dart';
@@ -10,9 +9,9 @@ import 'package:maui/components/user_list.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'tab_home.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -44,11 +43,6 @@ class _LoginScreenState extends State<LoginScreen>
     _initData();
   }
 
-  @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
   _initData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
@@ -65,6 +59,17 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  @override
+  void didUpdateWidget(LoginScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
+  }
+
   getImage(BuildContext context) async {
 //    var _fileName = await ImagePicker.pickImage(
 //        source: ImageSource.camera, maxHeight: 128.0, maxWidth: 128.0);
@@ -74,19 +79,22 @@ class _LoginScreenState extends State<LoginScreen>
     Navigator.of(context).pushNamed('/camera');
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  String imagePath;
+  bool displaImage = true;
+  Future getImageOriganl() async {
+    String image = await ImagePick.pickImage(source: ImageSrc.camera);
+    print("image path $image");
+    setState(() {
+      imagePath = image;
+      displaImage = false;
+    });
   }
 
   Orientation ornt;
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    print("user detail ?::: $user");
     return (user != null)
         ? new TabHome()
         : new Scaffold(
@@ -108,20 +116,23 @@ class _LoginScreenState extends State<LoginScreen>
                     : Container(
                         padding: const EdgeInsets.all(20.0),
                         child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            imagePathStore == null
+                            imagePath == null
                                 ? Center(
                                     child: Container(
                                       height: 130.0,
                                       width: 130.0,
                                       child: RaisedButton(
+                                        splashColor: Colors.blue,
                                         color: Colors.white,
                                         shape: CircleBorder(
                                             side: BorderSide(
                                                 width: 3.0,
                                                 color: new Color(0xff4C5C9E))),
-                                        onPressed: () => getImage(context),
+                                        onPressed: getImageOriganl,
                                         child: new IconTheme(
                                           data: IconThemeData(
                                               size: 70.0,
@@ -131,16 +142,19 @@ class _LoginScreenState extends State<LoginScreen>
                                       ),
                                     ),
                                   )
-                                : new Container(
-                                    width: 130.0,
-                                    height: 130.0,
-                                    decoration: new BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: new DecorationImage(
-                                          image: new FileImage(
-                                              new File(imagePathStore)),
-                                          fit: BoxFit.fill,
-                                        ))),
+                                : InkWell(
+                                    onTap: getImageOriganl,
+                                    child: new Container(
+                                        width: 130.0,
+                                        height: 130.0,
+                                        decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: new DecorationImage(
+                                              image: new FileImage(
+                                                  new File(imagePath)),
+                                              fit: BoxFit.fill,
+                                            ))),
+                                  ),
                             new TextField(
                               autocorrect: false,
                               onSubmitted: _submit(userName),
@@ -160,13 +174,13 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                             new Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(0.0),
                             ),
                             Shake(
                               animation: shakeAnimation,
                               child: Container(
                                 // margin: const EdgeInsets.only(top: 10.0),
-                                width: 130.0,
+                                width: 100.0,
                                 height: 50.0,
                                 child: new RaisedButton(
                                     splashColor: Colors.blueAccent,
@@ -199,9 +213,9 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tabSreen() async {
-    if (imagePathStore != null && userName != '' && userName != null) {
+    if (imagePath != null && userName != '' && userName != null) {
       var user = await new UserRepo().insertLocalUser(
-          new User(image: imagePathStore, currentLessonId: 1, name: userName));
+          new User(image: imagePath, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
       //Navigator.of(context).pop();
     } else {
@@ -218,5 +232,42 @@ class _LoginScreenState extends State<LoginScreen>
         controller.stop();
       });
     }
+  }
+}
+
+enum ImageSrc {
+  camera,
+  galery,
+}
+
+class ImagePick {
+  static const MethodChannel _channel =
+      const MethodChannel('plugins.flutter.io/image_picker');
+  static Future<String> pickImage({
+    @required ImageSrc source,
+    double maxWidth,
+    double maxHeight,
+  }) async {
+    assert(source != null);
+
+    List<CameraDescription> cameras;
+    if (maxWidth != null && maxWidth < 0) {
+      print("camera sdede $cameras");
+      throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
+    }
+
+    if (maxHeight != null && maxHeight < 0) {
+      throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
+    }
+    final String path = await _channel.invokeMethod(
+      'pickImage',
+      <String, dynamic>{
+        'source': source.index,
+        'maxWidth': maxWidth,
+        'maxHeight': maxHeight,
+      },
+    );
+
+    return path == null ? null : path;
   }
 }
