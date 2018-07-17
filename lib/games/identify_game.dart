@@ -60,6 +60,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   @override
   void initState() {
     super.initState();
+    // _renderChoice("text",900.0, 400.0, Orientation.landscape, 0.0, 0.0);
     _initBoard();
     print(">>>>>>>>>initstate.>>>$_decoded");
     _imgController = new AnimationController(

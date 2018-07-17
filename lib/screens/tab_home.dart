@@ -77,6 +77,8 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                             _myHandler.img1,
                             scale: .3,
                           );
+
+            _icon2 = new Container();
           }
           else{
     //         _imgController1.reverse();
@@ -85,6 +87,8 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
                             _myHandler.img2,
                             scale: .3,
                           );
+
+            _icon1 =  new Container();
           }
     });
   }
