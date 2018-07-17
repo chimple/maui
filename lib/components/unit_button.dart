@@ -152,9 +152,7 @@ class _UnitButtonState extends State<UnitButton> {
     if (_unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (_unitMode == UnitMode.image) {
-      return _isLoading
-          ? new Container()
-          : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png');
+      return _isLoading ? new Container() : new Image.asset(_unit.image);
     }
     return Center(
         child: Text(widget.text,
