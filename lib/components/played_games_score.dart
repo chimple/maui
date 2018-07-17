@@ -31,7 +31,6 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     setState(() => _isLoading = true);
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
      Map<String, List<Score>> fetchData = await ScoreRepo().getScoreMapByUser(loggedInUser.id);
-     print("Fetched Dataaaaaaaaaaaaaaaaaaaaaaaaa ${fetchData}");
     
     setState(() {
         _scores = fetchData;
@@ -62,10 +61,12 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
       totalScore = 0;
       if(otherUser == null) {
           return new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
                 child:new Container(
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 5.0),
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
@@ -80,7 +81,8 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                 ),
               ),
               Expanded(
-                child: new Container(
+                  child: new Container(
+                    margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 25.0),
                     child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
                   ),
               ),
@@ -90,6 +92,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
         if(otherUserImage == '')
         _getOpponentImage(otherUser);
           return new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
@@ -108,23 +111,19 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                 ),
               ),
 
-              new Expanded(
-                child: new Container(
-                  child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
-                      :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
-                ),
+              new Container(
+                child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
+                    :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
               ),
 
-              new Expanded(
-                  child: new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                  child: myScore >= otherScore 
-                  ? myScore == otherScore 
-                        ?  new Text('Its a Tie...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                          :  new Text('You Won...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                  :  new Text('You Loose...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+              new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 5.0),
+              child: myScore >= otherScore 
+              ? myScore == otherScore 
+                    ?  new Text('Its a Tie',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                      :  new Text('You Won',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+              :  new Text('You Loose',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
                 ),
-              ),
 
               new Container(
                   child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
