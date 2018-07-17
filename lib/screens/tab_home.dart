@@ -9,7 +9,6 @@ import 'package:maui/loca.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
-
   TabHome({Key key}) : super(key: key);
 
   @override
@@ -20,8 +19,14 @@ class TabHome extends StatefulWidget {
 
 class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   final List<MyTabs> _tabs = [
-    new MyTabs(img1: "assets/chatBig.png", img2: "assets/chatSmall.png", color: const Color(0xffFECE3D)),
-    new MyTabs(img1: "assets/gameBig.png", img2: "assets/gameSmall.png", color: const Color(0xff36C5E4)),
+    new MyTabs(
+        img1: "assets/chatBig.png",
+        img2: "assets/chatSmall.png",
+        color: const Color(0xffFECE3D)),
+    new MyTabs(
+        img1: "assets/gameBig.png",
+        img2: "assets/gameSmall.png",
+        color: const Color(0xff36C5E4)),
   ];
   MyTabs _myHandler;
   Widget _icon1 = new Container();
@@ -32,7 +37,9 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   TabController _controller;
   void initState() {
     super.initState();
-    _scrollcontroller = new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
+    print('TabHomeState: initState');
+    _scrollcontroller =
+        new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
     _scrollcontroller.addListener(_scrolling);
     _bubbleController = new AnimationController(
       vsync: this,
@@ -51,14 +58,13 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _controller.addListener(_tabSelected);
     // _imgController1.forward();
     _icon1 = new Image.asset(
-                            _myHandler.img1,
-                            scale: .3,
-                          );
+      _myHandler.img1,
+      scale: .3,
+    );
   }
 
   void _tabSelected() {
     setState(() {
-      
       _myHandler = _tabs[_controller.index];
       // _icon1 = new Image.asset(
       //                       '${_myHandler.img1}',
@@ -68,54 +74,51 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       //                       '${_myHandler.img2}',
       //                       scale: .3,
       //                     );
-                          
-      if(_scrollcontroller.offset == 0.0){
-            // _imgController1.forward();
-            // _imgController.reverse();
-            
-            _icon1 = new Image.asset(
-                            _myHandler.img1,
-                            scale: .3,
-                          );
-          }
-          else{
-    //         _imgController1.reverse();
-    // _imgController.forward();
-            _icon2 = new Image.asset(
-                            _myHandler.img2,
-                            scale: .3,
-                          );
-          }
+
+      if (_scrollcontroller.offset == 0.0) {
+        // _imgController1.forward();
+        // _imgController.reverse();
+
+        _icon1 = new Image.asset(
+          _myHandler.img1,
+          scale: .3,
+        );
+      } else {
+        //         _imgController1.reverse();
+        // _imgController.forward();
+        _icon2 = new Image.asset(
+          _myHandler.img2,
+          scale: .3,
+        );
+      }
     });
   }
 
-  void _scrolling(){
+  void _scrolling() {
     setState(() {
-          if(_scrollcontroller.offset == 0.0){
-            _imgController1.forward();
-            _imgController.reverse();
-            
-            _icon1 = new ScaleTransition(
-              scale: animateImage1,
-                          child: new Image.asset(
-                            _myHandler.img1,
-                            scale: .3,
-                          ),
-            );
-          }
-          else{
-            _imgController1.reverse();
-    _imgController.forward();
-            _icon2 = new ScaleTransition(
-                scale: animateImage,
-                          child: new Image.asset(
-                            _myHandler.img2,
-                            scale: .3,
-                          ),
-            );
-          }
-        });
-    
+      if (_scrollcontroller.offset == 0.0) {
+        _imgController1.forward();
+        _imgController.reverse();
+
+        _icon1 = new ScaleTransition(
+          scale: animateImage1,
+          child: new Image.asset(
+            _myHandler.img1,
+            scale: .3,
+          ),
+        );
+      } else {
+        _imgController1.reverse();
+        _imgController.forward();
+        _icon2 = new ScaleTransition(
+          scale: animateImage,
+          child: new Image.asset(
+            _myHandler.img2,
+            scale: .3,
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -147,20 +150,18 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
             new SliverAppBar(
               backgroundColor: const Color(0xffFC5E79),
               pinned: true,
-              actions: <Widget>[
-                _icon2
-              ],
+              actions: <Widget>[_icon2],
               leading: new ProfileDrawerIcon(),
               title: new Text(Loca.of(context).title),
-              expandedHeight: orientation == Orientation.portrait ? _size.height * .25 : _size.height * .5,
+              expandedHeight: orientation == Orientation.portrait
+                  ? _size.height * .25
+                  : _size.height * .5,
               forceElevated: innerBoxIsScrolled,
               flexibleSpace: new FlexibleSpaceBar(
-                background: 
-                    new FittedBox(
-                        fit: BoxFit.contain,
-                        alignment: Alignment.center,
-                        child: _icon1
-                      ),
+                background: new FittedBox(
+                    fit: BoxFit.contain,
+                    alignment: Alignment.center,
+                    child: _icon1),
               ),
               bottom: new TabBar(
                 isScrollable: false,
@@ -215,4 +216,3 @@ class MyTabs {
   final Color color;
   MyTabs({this.img1, this.img2, this.color});
 }
-
