@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/score.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/score_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class PlayedGamesScoreDisplay extends StatefulWidget {
@@ -16,6 +18,8 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, List<Score>> _scores;
+  User otherUsers;
+  String otherUserImage='';
   int totalScore = 0;
   @override
     void initState() {
@@ -34,6 +38,13 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
         _isLoading = false;
     });
     }
+
+  void _getOpponentImage(String otherUser) async {
+    otherUsers = await UserRepo().getUser(otherUser);
+    setState(() {
+          otherUserImage = otherUsers.image; 
+      });
+  }  
 
   @override
  Widget build(BuildContext context) {  
@@ -58,7 +69,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -76,7 +87,8 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             ],
           );
       } else {
-        otherScore = 0;
+        if(otherUserImage == '')
+        _getOpponentImage(otherUser);
           return new Row(
             children: <Widget>[
               new Container(
@@ -85,7 +97,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -98,7 +110,8 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
 
               new Expanded(
                 child: new Container(
-                  child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                  child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
+                      :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
                 ),
               ),
 
@@ -123,13 +136,13 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
                 child: new CircleAvatar(
                     backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
+                    backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
                   ),
                 ),
               ),

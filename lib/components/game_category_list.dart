@@ -176,29 +176,30 @@ class _GameCategoryList extends State<GameCategoryList> {
   List<Widget> _buildCategoriesButtons() {
     List<Widget> buttons = [];
     int colorIndex = 0;
-      conceptIdMap.forEach((conceptId, list) {
+    conceptIdMap.forEach((conceptId, list) {
       String mainCategoryName = widget.concepts[conceptId].name;
       if (list.length == 1) {
-        buttons.add(_buildButton(
+        buttons.add(_buildButtonCategory(
             mainCategoryName, list.first.id, tileColors[colorIndex++]));
       } else {
         buttons.add(Container(
           color: tileColors[colorIndex++],
           child: new ExpansionTiles(
             title: Container(
-                height: 154.0,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 64.0, 0.0, 0.0),
-                  child: new Text(mainCategoryName,
-                      style: TextStyle(
-                          letterSpacing: 2.0,
-                          color: Colors.white,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold)),
-                )),
+              height: 154.0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                child: new Text(mainCategoryName,
+                    style: TextStyle(
+                        letterSpacing: 2.0,
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
             children: list.map((gameCategoryData) {
-              return _buildButton(gameCategoryData.name, gameCategoryData.id,
-                  tileColors[colorIndex - 1]);
+              return _buildButtonchildren(gameCategoryData.name,
+                  gameCategoryData.id, tileColors[colorIndex - 1]);
             }).toList(),
           ),
         ));
@@ -207,18 +208,46 @@ class _GameCategoryList extends State<GameCategoryList> {
     return buttons;
   }
 
-  Widget _buildButton(
+  Widget _buildButtonchildren(
+      String mainCategoryName, int gameCategoryId, Color color) {
+    return new Container(
+        height: 154.0,
+        color: color,
+        child: Container(
+          decoration: BoxDecoration(
+              border: BorderDirectional(
+                  bottom: BorderSide(width: 2.0, color: Colors.black.withOpacity(0.2)))),
+          child: ListTile(
+            title: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+              child: Text(mainCategoryName,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold)),
+            ),
+            onTap: () => goToGame(context, widget.game, gameCategoryId,
+                widget.gameDisplay, widget.gameMode,
+                otherUser: widget.otherUser),
+          ),
+        ));
+  }
+
+  Widget _buildButtonCategory(
       String mainCategoryName, int gameCategoryId, Color color) {
     return new Container(
       height: 154.0,
       color: color,
       child: ListTile(
         title: new Container(
-            child: Text(mainCategoryName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold))),
+            child: Padding(
+          padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+          child: Text(mainCategoryName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold)),
+        )),
         onTap: () => goToGame(context, widget.game, gameCategoryId,
             widget.gameDisplay, widget.gameMode,
             otherUser: widget.otherUser),
