@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
@@ -9,11 +10,22 @@ import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'components/camera.dart';
+import 'loca.dart';
 
 class MauiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      localizationsDelegates: [
+        const LocaDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        const FallbackMaterialLocalisationsDelegate()
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('sw', ''),
+      ],
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -32,16 +44,6 @@ class MauiApp extends StatelessWidget {
     print(path);
     if (path[0] != '') return null;
 
-    if (path[1] == 'chat' && path.length == 4) {
-      return new MaterialPageRoute<Null>(
-          settings: settings,
-          builder: (BuildContext context) => new ChatScreen(
-                myId: AppStateContainer.of(context).state.loggedInUser.id,
-                friendId: path[2],
-                friendImageUrl: path[3].replaceAll(new RegExp(r'&#x2F;'), '/'),
-              ));
-    }
-
     if (path[1] == 'categories' && path.length == 3) {
       return new MaterialPageRoute<Null>(
         settings: settings,
@@ -53,10 +55,13 @@ class MauiApp extends StatelessWidget {
     if (path[1] == 'games' && path.length == 6) {
       int gameCategoryId = int.parse(path[4], onError: (source) => null);
       Random random = new Random();
+      final textMode = random.nextBool();
       var gameConfig = new GameConfig(
           gameCategoryId: gameCategoryId,
-          questionUnitMode: UnitMode.values[random.nextInt(3)],
-          answerUnitMode: UnitMode.values[random.nextInt(3)],
+          questionUnitMode:
+              textMode ? UnitMode.text : UnitMode.values[random.nextInt(5) % 3],
+          answerUnitMode:
+              textMode ? UnitMode.values[random.nextInt(5) % 3] : UnitMode.text,
           level: random.nextInt(10) + 1);
 
       switch (path[5]) {

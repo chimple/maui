@@ -8,8 +8,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 
 class Abacus extends StatefulWidget {
@@ -62,7 +61,7 @@ class AbacusState extends State<Abacus> {
   final List<String> _allLetters1 = ['', '', '', '', '', ''];
   List flags = [];
   var u = 1;
- 
+
   var finalans = 0;
   int count = 0;
   var maxcount = 0;
@@ -76,6 +75,9 @@ class AbacusState extends State<Abacus> {
   }
 
   void _initBoard() async {
+    // _letters.removeRange(0,_letters.length);
+    //               _letters1.removeRange(0,_letters1.length);
+    //               _allLetters1.removeRange(0, _allLetters1.length);  
     setState(() => _isLoading = true);
     data = await fetchMathData(widget.gameConfig.gameCategoryId);
     print('data is $data');
@@ -99,6 +101,7 @@ class AbacusState extends State<Abacus> {
           .addAll(_allLetters.skip(0).take(_size).toList(growable: true));
     }
     print(_shuffledLetters);
+    
     _letters = _shuffledLetters.sublist(0, _shuffledLetters.length);
     quest = data.item1;
     result = 0;
@@ -112,6 +115,7 @@ class AbacusState extends State<Abacus> {
     var x = data.item1;
     var y = data.item2;
     var z = data.item3;
+    count=0;
     for (var i = 0; i < _size; i++) {
       _letters[i] = count.toString();
     }
@@ -124,7 +128,8 @@ class AbacusState extends State<Abacus> {
     setState(() => _isLoading = false);
     //print(' data from database${fetchMathData(1)}');
   }
- @override
+
+  @override
   void didUpdateWidget(Abacus oldWidget) {
     print(oldWidget.iteration);
     print(widget.iteration);
@@ -132,14 +137,16 @@ class AbacusState extends State<Abacus> {
       _initBoard();
     }
   }
-  Widget _buildItem(int index, String text, int stat, String flag, double scrnHeight,double scrnWidth ) {
+
+  Widget _buildItem(int index, String text, int stat, String flag,
+      double scrnHeight, double scrnWidth) {
     Size size = MediaQuery.of(context).size;
     final TextEditingController t1 = new TextEditingController(text: text);
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
         scrnHeight: scrnHeight,
-        scrnWidth:scrnWidth,
+        scrnWidth: scrnWidth,
         index: index,
         screenSize: size.width,
         colorflag: stat,
@@ -156,7 +163,8 @@ class AbacusState extends State<Abacus> {
 
             print("...............$index,$_Index,$u");
 
-            if (result == finalans && status[4] == 0) {} else {
+            if (result == finalans && status[4] == 0) {
+            } else {
               for (var i = 0; i < _size; i++) {
                 if (_Index[0] % _size == i) {
                   if (Check[0] == '1' && _Index[0] + _size >= _letters.length) {
@@ -217,11 +225,11 @@ class AbacusState extends State<Abacus> {
                     } else {}
                   } else if (Check[0] == '1' &&
                       _letters[_Index[0] + _size] == '1' &&
-                      _Index[0] == i) {} else if (Check[0] ==
-                          '1' &&
+                      _Index[0] == i) {
+                  } else if (Check[0] == '1' &&
                       _letters[_Index[0] + _size] == '') {
                     flags[_Index[0] + (3 * _size)] = '0';
-                     flags[_Index[0]]='0';
+                    flags[_Index[0]] = '0';
                     _letters[_Index[0]] = '';
                     _letters[_Index[0] + (3 * _size)] = '1';
 
@@ -256,9 +264,9 @@ class AbacusState extends State<Abacus> {
                     });
                   } else if (Check[0] == '1' &&
                       _letters[_Index[0] - _size] == '') {
-                     flags[_Index[0]]='1';
+                    flags[_Index[0]] = '1';
                     flags[_Index[0] - (3 * _size)] = '1';
-                     
+
                     _letters[_Index[0]] = '';
                     _letters[_Index[0] - (3 * _size)] = '1';
                     result = result + pow(10, (_size - 1 - i));
@@ -280,20 +288,30 @@ class AbacusState extends State<Abacus> {
                 }
               }
             }
-            if (result == quest) {
+            if (result == quest && status[4] != 0) {
               quest = finalans;
               status[2] = 0;
               status[0] = 1;
               widget.onScore(5);
-              widget.onProgress(u++/2);
+              widget.onProgress(u++ / 2);
               if (result == finalans) {
-                
                 _letters1[4] = finalans.toString();
                 status[2] = 1;
                 status[4] = 0;
-               
+
                 new Future.delayed(const Duration(milliseconds: 1500), () {
+                 //  _letters.removeRange(0,_letters.length);
+                  _letters1.removeRange(0,_letters1.length);
+                  
+                //   _allLetters1.removeRange(0, _allLetters1.length);  
+                //  for(int i=0;i<_size;i++){
+                //     _letters[i]='0';
+                //   }
+                  status=[0,1,1,1,1];
+                 
                   widget.onEnd();
+                  
+                           
                 });
               }
             }
@@ -322,9 +340,9 @@ class AbacusState extends State<Abacus> {
 
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
-     final vPadding = pow(constraints.maxHeight / 150.0, 2);
-        double scrnHeight= constraints.maxHeight;
-        double scrnWidth=constraints.maxWidth;
+      final vPadding = pow(constraints.maxHeight / 150.0, 2);
+      double scrnHeight = constraints.maxHeight;
+      double scrnWidth = constraints.maxWidth;
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       double maxHeight = (constraints.maxHeight - size.height / 8.0) / (14);
 
@@ -333,7 +351,7 @@ class AbacusState extends State<Abacus> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 4, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
+      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
       int k = 100;
       int j = 0;
@@ -352,37 +370,39 @@ class AbacusState extends State<Abacus> {
               cols: 5,
               children: _letters1
                   .map((e) => Padding(
-                        padding:  EdgeInsets.symmetric( horizontal: hPadding),
-                        child: _buildItem(k, e, status[k++ - 100], flags[1],scrnHeight,scrnWidth)))
+                      padding: EdgeInsets.symmetric(horizontal: hPadding),
+                      child: _buildItem(k, e, status[k++ - 100], flags[1],
+                          scrnHeight, scrnWidth)))
                   .toList(growable: false),
             ),
           ),
-         new Expanded(
-              child:new Container(
+          new Expanded(
+              child: new Container(
                   decoration: const BoxDecoration(
-    border: const Border(
-      top: const BorderSide(width: 3.0, color: Colors.red),
-      left: const BorderSide(width: 3.0, color:  Colors.red),
-      right: const BorderSide(width: 3.0, color:  Colors.red),
-      bottom: const BorderSide(width: 3.0, color:  Colors.red),
-    ),
-  ),
-              child: new ResponsiveGridView(
-            padding: 0.0,
-            // mainAxisSpacing: 0.0,
-            // crossAxisSpacing: 0.0,
-            rows: 14,
-            cols: _size,
-            children: _letters
-                .map((e) =>Padding(
-                        padding:  EdgeInsets.symmetric( horizontal: hPadding),
-                        child: SizedBox(
-                      width: state.buttonWidth,
-                      height: state.buttonHeight,
-                      child: _buildItem(j, e, status[1], flags[j++],scrnHeight,scrnWidth),
-                    )))
-                .toList(growable: false),
-          ))),
+                    border: const Border(
+                      top: const BorderSide(width: 3.0, color: Colors.red),
+                      left: const BorderSide(width: 3.0, color: Colors.red),
+                      right: const BorderSide(width: 3.0, color: Colors.red),
+                      bottom: const BorderSide(width: 3.0, color: Colors.red),
+                    ),
+                  ),
+                  child: new ResponsiveGridView(
+                    padding: 0.0,
+                    // mainAxisSpacing: 0.0,
+                    // crossAxisSpacing: 0.0,
+                    rows: 14,
+                    cols: _size,
+                    children: _letters
+                        .map((e) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: hPadding),
+                            child: SizedBox(
+                              width: buttonConfig.width,
+                              height: buttonConfig.height,
+                              child: _buildItem(j, e, status[1], flags[j++],
+                                  scrnHeight, scrnWidth),
+                            )))
+                        .toList(growable: false),
+                  ))),
         ],
       );
     });
@@ -452,10 +472,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String let = '';
   var val = 0;
   var f = 0;
-   var tt = 0.0;
+  var tt = 0.0;
   initState() {
     super.initState();
- if (widget.scrnHeight > widget.scrnWidth )
+    if (widget.scrnHeight > widget.scrnWidth)
       tt = widget.scrnWidth;
     else
       tt = widget.scrnHeight;
@@ -466,24 +486,22 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     // animation1 = new CurvedAnimation(parent: controller1, curve: Curves.easeIn);
-    animation1 = new Tween(begin: -tt/ 10, end: 00.0)
-        .animate(controller1)
-          ..addStatusListener((state) {
-            print("$state:${animation.value}");
+    animation1 = new Tween(begin: -tt / 10, end: 00.0).animate(controller1)
+      ..addStatusListener((state) {
+        print("$state:${animation.value}");
 
-            if (state == AnimationStatus.dismissed) {
-              controller1.forward();
-            }
-          });
-    animation =
-        new Tween(begin: tt/ 10, end: 00.0).animate(controller)
-          ..addStatusListener((state) {
-            print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+          controller1.forward();
+        }
+      });
+    animation = new Tween(begin: tt / 10, end: 00.0).animate(controller)
+      ..addStatusListener((state) {
+        print("$state:${animation.value}");
 
-            if (state == AnimationStatus.dismissed) {
-              controller.forward();
-            }
-          });
+        if (state == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
 
     controller.forward();
     controller1.forward();
@@ -512,28 +530,23 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     super.dispose();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-   
+
     print("_MyButtonState.build");
 
     if (widget.index >= 100) {
-
       return new UnitButton(
         text: widget.text,
-        highlighted:widget.colorflag!=0?false:true ,
+        highlighted: widget.colorflag != 0 ? false : true,
         showHelp: false,
       );
-     
-    }else if (widget.index < widget.size) {
+    } else if (widget.index < widget.size) {
       return new UnitButton(
         text: widget.text,
-        
         showHelp: false,
       );
-     
     } else {
       return new Center(
           child: new Container(
@@ -542,22 +555,21 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
         child:
             new Stack(alignment: const Alignment(0.0, 0.0), children: <Widget>[
-        new Container(
+          new Container(
             //  height: 4000.0,
             width: tt / 140,
             color: Colors.red[400],
-            ), 
+          ),
           //new Column(
-         
-          new Shake(
-              animation: widget.flag == '1' ? animation : animation1,
-              // child: new Draggable(
-              //   affinity: Axis.vertical,
-            //    onDragStarted: () => widget.onac(widget.index),
-                child: new GestureDetector(
 
-                    onVerticalDragEnd: (dynamic)=>widget.onac(widget.index),
-                    child: new Container(
+          new Shake(
+            animation: widget.flag == '1' ? animation : animation1,
+            // child: new Draggable(
+            //   affinity: Axis.vertical,
+            //    onDragStarted: () => widget.onac(widget.index),
+            child: new GestureDetector(
+                onVerticalDragEnd: (dynamic) => widget.onac(widget.index),
+                child: new Container(
                   margin: new EdgeInsets.only(top: 5.0),
                   // height: 10.0,
                   //  width: 10.0,
@@ -567,13 +579,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                           shape: BoxShape.circle,
                         )
                       : new BoxDecoration(),
-
                 )),
-               // feedback: new Container(),
-                //   onDragStarted: ()=>widget.onac(widget.index),
-             ),
-            
-                    ]),
+            // feedback: new Container(),
+            //   onDragStarted: ()=>widget.onac(widget.index),
+          ),
+        ]),
       ));
     }
   }

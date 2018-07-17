@@ -11,7 +11,7 @@ void main() async {
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());
   }
-  runApp(new AppStateContainerController(
+  runApp(new AppStateContainer(
     child: new MauiApp(),
   ));
 }

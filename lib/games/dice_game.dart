@@ -70,7 +70,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     _initBoard();
     animation = new AnimationController(
       vsync: this,
-      duration: new Duration(milliseconds: 400),
+      duration: new Duration(milliseconds: 600),
     );
     animation.addListener(() {
       this.setState(() {});
@@ -155,8 +155,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             print("Current index is ${myData.length}");
             widget.onScore(2);
             widget.onProgress(_currentIndex / myData.length);
-            randomLogic(myData);
-            widget.onEnd(toJsonMap(), false);
+            getExistingDataForScore(myData);
             resetDice();
             sum = 0;
             sub = 0;
@@ -164,12 +163,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             setState(() {
               myData[index] = '';
             });
-          } else {
+          } else if(dice_tries.length == 2) {
             _shake[index] = 1;
-            new Future.delayed(const Duration(milliseconds: 800), () {
+            new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
                 _shake[index] = 0;
                 widget.onScore(-1);
+              });
+            });
+          }
+          else {
+            _shake[index] = 1;
+            new Future.delayed(const Duration(milliseconds: 600), () {
+              setState(() {
+                _shake[index] = 0;
               });
             });
           }
@@ -230,8 +237,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
   }
 
   String randomLogic(List<String> data) {
-    // final _random = new Random();
-    // String dElement = diceData[_random.nextInt(diceData.length)];
     List<int> existingData = getExistingDataInInt(data);
     int randomExistingValue =
         existingData[new Random().nextInt(existingData.length)];
@@ -269,11 +274,21 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     for (int i = 0; i < data.length; i++) {
       if (data[i] != '') existingData.add(int.parse(data[i]));
     }
-    if (existingData.length != 0)
       return existingData;
-    else
-      return widget.onEnd(toJsonMap(), true);
   }
+
+   getExistingDataForScore(List<String> myData) {
+                List<int> existingData1 = [];
+                for (int i = 0; i < myData.length; i++) {
+                  if (myData[i] != '') existingData1.add(int.parse(myData[i]));
+                }
+                  if(existingData1.length <= 1){
+                    widget.onEnd(toJsonMap(), true);
+                  }
+                  else{
+                    widget.onEnd(toJsonMap(), false);
+                  }
+              }
 
   displayLabel(String dElement) {
     _myCounter = dElement;
@@ -299,9 +314,9 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       var dval;
 
       if (_myCounter != " ") {
-        dval = _myCounter;
+        dval = _myCounter+'.png';
       } else {
-        dval = "tapme";
+        dval = "tapto_play.gif";
       }
 
       print("data in player1 data $myData");
@@ -321,15 +336,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
               new Container(
                   height: media.size.height > media.size.width
                       ? constraints.maxHeight * .08
-                      : constraints.maxHeight * .08,
+                      : constraints.maxHeight * .11,
                   width: media.size.height < media.size.width
-                      ? constraints.maxWidth * .1
+                      ? constraints.maxWidth * .15
                       : constraints.maxWidth * .2,
-                  color: Colors.red,
+                  // color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    shape: BoxShape.rectangle,
+                    border: new Border.all(color: Colors.black, width: 2.0)
+                  ),
                   child: new Center(
                       child: new Text("$_counter",
                           style: new TextStyle(
-                              color: Colors.black, fontSize: 25.0)))),
+                              color: Colors.black,fontWeight: FontWeight.w700 , fontSize: constraints.maxHeight*.06)))),
               new InkWell(
                   onTap: _randomVal,
                   child: new Container(
@@ -342,8 +362,8 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                     child: new Image(
                         image: new AssetImage(
                       animation.isAnimating
-                          ? 'assets/dice_game/dice1.gif'
-                          : 'assets/dice_game/$dval.png',
+                          ? 'assets/dice_game/dice_play.gif'
+                          : 'assets/dice_game/$dval',
                     )),
                   )),
             ],
@@ -359,15 +379,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
 
   popup() {
     print({"poped up dice value is  ": dice_tries});
+    MediaQueryData media = MediaQuery.of(context);
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
           // title: new Text('Dicegame'),
-          content: new Image(
-              image: new AssetImage(
-            'assets/hoodie/dice_sad.png',
-          )),
+          content: Container(
+            height: media.size.height * .2,
+            width: media.size.width * .2,
+            child: new Image(
+                image: new AssetImage(
+              'assets/hoodie/dice_sad.png',
+            )),
+          ),
         );
       },
     );

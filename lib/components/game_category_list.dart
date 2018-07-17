@@ -1,15 +1,16 @@
 import 'dart:math';
+import 'package:maui/db/entity/concept.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:maui/db/entity/game_category.dart';
 import 'expansionTile.dart';
-import 'package:maui/screens/select_opponent_screen.dart';
-import 'user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/loca.dart';
+import 'package:maui/repos/concept_repo.dart';
+import 'package:maui/screens/game_category_list_screen.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -17,15 +18,40 @@ class GameCategoryList extends StatefulWidget {
       @required this.gameCategories,
       @required this.game,
       @required this.gameMode,
+      @required this.concepts,
       @required this.gameDisplay,
       this.otherUser})
       : super(key: key);
   State<StatefulWidget> createState() => new _GameCategoryList();
-  final List<Tuple2<int, String>> gameCategories;
+  final List<Tuple3<int, int, String>> gameCategories;
   final String game;
   GameMode gameMode;
   GameDisplay gameDisplay;
   User otherUser;
+  Map<int, Concept> concepts;
+}
+
+class GameCategoryData {
+  int id;
+  int conceptId;
+  String name;
+  GameCategoryData(this.id, this.conceptId, this.name);
+  @override
+  String toString() {
+    return '{id: $id, conceptId: $conceptId, name: $name}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GameCategoryData &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          conceptId == other.conceptId &&
+          name == other.name;
+
+  @override
+  int get hashCode => id.hashCode ^ conceptId.hashCode ^ name.hashCode;
 }
 
 class _GameCategoryList extends State<GameCategoryList> {
@@ -60,77 +86,172 @@ class _GameCategoryList extends State<GameCategoryList> {
   ];
   static final List<Color> tileColors = [];
   int count = 0;
+  bool isLoading = false;
+  List<GameCategoryData> gameCategoryData;
+  Map<int, List<GameCategoryData>> conceptIdMap;
+
   @override
   void initState() {
     super.initState();
+    gameCategoryData = widget.gameCategories.map((tuple3) {
+      return new GameCategoryData(tuple3.item1, tuple3.item2, tuple3.item3);
+    }).toList();
+    conceptIdMap = {};
+    gameCategoryData.forEach((data) {
+      conceptIdMap
+          .putIfAbsent(data.conceptId, () => new List<GameCategoryData>())
+          .add(data);
+    });
+    conceptIdMap.forEach((key, value) {
+      print("$key - ${value.length}");
+      print('value is $value');
+    });
     int categoriesLength = widget.gameCategories.length;
-    print("Length of categories::$categoriesLength");
     for (int i = 0; i < categoriesLength + 1; i++) {
       if (count == 26) count = 0;
       tileColors.add(colorsCodes[count]);
       count++;
     }
-    print(colorsCodes.length);
-    print(tileColors.length);
   }
 
   @override
   Widget build(BuildContext context) {
-    int j = 0;
+    if (isLoading) {
+      return new Center(
+          child: new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      ));
+    }
+    Orientation orientation = MediaQuery.of(context).orientation;
     Size media = MediaQuery.of(context).size;
-    final _colors = SingleGame.gameColors[widget.game];
-    final color = _colors != null ? _colors[0] : Colors.amber;
+    int j = 0;
     return new CustomScrollView(
       primary: true,
       shrinkWrap: false,
       slivers: <Widget>[
         new SliverAppBar(
-            backgroundColor: color,
+            backgroundColor:
+                SingleGame.gameColors[widget.game][0] ?? Colors.amber,
             pinned: true,
-            expandedHeight: media.height * .37,
+            expandedHeight: orientation == Orientation.portrait
+                ? media.height * .25
+                : media.height * .5,
+            title: new Text(Loca.of(context).intl(widget.game)),
             flexibleSpace: new FlexibleSpaceBar(
-              background: new FittedBox(
-                child: new Hero(
-                    tag: 'assets/hoodie/${widget.game}.png',
-                    child: new Image.asset(
-                      'assets/hoodie/${widget.game}.png',
-                      scale: .8,
-                    )),
-              ),
-              centerTitle: true,
-              title: new Text(widget.game),
+              background: new Stack(children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new AssetImage(
+                          "assets/background_image/${widget.game}_big.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Center(
+                      child: new Hero(
+                        tag: 'assets/hoodie/${widget.game}.png',
+                        child: new Image.asset(
+                          'assets/hoodie/${widget.game}.png',
+                          scale: .4,
+                        ),
+                      ),
+                    ))
+              ]),
+              // centerTitle: true,
             )),
         new SliverList(
-          delegate: new SliverChildListDelegate(new List<Widget>.generate(
-            1,
-            (int index1) {
-              return new Container(
-                  alignment: Alignment.center,
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: widget.gameCategories
-                        .map((gameCategory) => Container(
-                              color: tileColors[j++],
-                              child: FlatButton(
-                                onPressed: () => goToGame(
-                                    context,
-                                    widget.game,
-                                    gameCategory.item1,
-                                    widget.gameDisplay,
-                                    widget.gameMode,
-                                    otherUser: widget.otherUser),
-                                child: Text(gameCategory.item2),
-                              ),
-                            ))
-                        .toList(growable: false),
-                  ));
-            },
-          )),
-        ),
+            delegate: new SliverChildListDelegate(_buildCategoriesButtons())),
         new SliverToBoxAdapter(
-          child: new Container(height: 2.0, color: Colors.white),
+          child: new Container(height: 2.0, color: Colors.yellow),
         ),
       ],
+    );
+  }
+
+  List<Widget> _buildCategoriesButtons() {
+    List<Widget> buttons = [];
+    int colorIndex = 0;
+    conceptIdMap.forEach((conceptId, list) {
+      String mainCategoryName = widget.concepts[conceptId].name;
+      if (list.length == 1) {
+        buttons.add(_buildButtonCategory(
+            mainCategoryName, list.first.id, tileColors[colorIndex++]));
+      } else {
+        buttons.add(Container(
+          color: tileColors[colorIndex++],
+          child: new ExpansionTiles(
+            title: Container(
+              height: 154.0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                child: new Text(mainCategoryName,
+                    style: TextStyle(
+                        letterSpacing: 2.0,
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+            children: list.map((gameCategoryData) {
+              return _buildButtonchildren(gameCategoryData.name,
+                  gameCategoryData.id, tileColors[colorIndex - 1]);
+            }).toList(),
+          ),
+        ));
+      }
+    });
+    return buttons;
+  }
+
+  Widget _buildButtonchildren(
+      String mainCategoryName, int gameCategoryId, Color color) {
+    return new Container(
+        height: 154.0,
+        color: color,
+        child: Container(
+          decoration: BoxDecoration(
+              border: BorderDirectional(
+                  bottom: BorderSide(width: 2.0, color: Colors.black.withOpacity(0.2)))),
+          child: ListTile(
+            title: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+              child: Text(mainCategoryName,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold)),
+            ),
+            onTap: () => goToGame(context, widget.game, gameCategoryId,
+                widget.gameDisplay, widget.gameMode,
+                otherUser: widget.otherUser),
+          ),
+        ));
+  }
+
+  Widget _buildButtonCategory(
+      String mainCategoryName, int gameCategoryId, Color color) {
+    return new Container(
+      height: 154.0,
+      color: color,
+      child: ListTile(
+        title: new Container(
+            child: Padding(
+          padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+          child: Text(mainCategoryName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold)),
+        )),
+        onTap: () => goToGame(context, widget.game, gameCategoryId,
+            widget.gameDisplay, widget.gameMode,
+            otherUser: widget.otherUser),
+      ),
     );
   }
 

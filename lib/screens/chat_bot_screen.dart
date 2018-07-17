@@ -17,6 +17,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/instruction_card.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/chat_bot_data.dart';
 
 enum ChatItemType { card, text, game, image, audio }
 enum ChatMode { teach, conversation, quiz }
@@ -73,9 +74,8 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
   void _initState() async {
     _user = AppStateContainer.of(context).state.loggedInUser;
-    _lessonUnits = await new LessonUnitRepo()
-// .getLessonUnitsByLessonId(4);
-        .getLessonUnitsByLessonId(_user.currentLessonId);
+    _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
+//        .getLessonUnitsByLessonId(_user.currentLessonId);
     _lesson = await new LessonRepo().getLesson(_user.currentLessonId);
     _displayNextChat(null);
   }
@@ -170,13 +170,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 ? Container()
                 : TextChoice(
                     onSubmit: _handleSubmitted,
-                    texts: [
-                      'Hello',
-                      'What is your name?',
-                      'Where do you live?',
-                      'What is your favorite book?',
-                      'What is your favorite color?'
-                    ],
+                    texts: getPossibleReplies(_chatItems[0].content, 5),
                   )
           ],
         ),

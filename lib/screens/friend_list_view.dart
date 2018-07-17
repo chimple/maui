@@ -6,6 +6,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/db/entity/notif.dart';
 import 'package:maui/screens/chat_screen.dart';
 
 class FriendListView extends StatefulWidget {
@@ -18,22 +19,30 @@ class FriendListView extends StatefulWidget {
 }
 
 class _FriendListViewState extends State<FriendListView> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
     _initData();
   }
 
   void _initData() async {
     await AppStateContainer.of(context).getUsers();
+    _isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-    var users = AppStateContainer.of(context).users;
+    var appUsers = AppStateContainer.of(context).users;
+    print('FriendListView.users $appUsers');
+    var users = [user];
+    if (appUsers != null) users.addAll(appUsers);
+    var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
-    if (users == null) {
+    if (_isLoading) {
       return new Center(
           child: new SizedBox(
         width: 20.0,
@@ -41,22 +50,27 @@ class _FriendListViewState extends State<FriendListView> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return GridView.count(
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      crossAxisCount: media.size.height > media.size.width ? 3 : 4,
-      children: users.map((u) {
-        return FriendItem(
-            id: u.id,
-            imageUrl: u.image,
-            onTap: () => user.id == u.id
-                ? Navigator.of(context).pushNamed('/chatbot')
-                : Navigator.of(context).push(MaterialPageRoute<Null>(
-                    builder: (BuildContext context) => new ChatScreen(
-                        myId: user.id,
-                        friendId: u.id,
-                        friendImageUrl: u.image))));
-      }).toList(growable: false),
+    return Container(
+      color: const Color(0xff36C5E4),
+      child: new GridView.count(
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        crossAxisCount: media.size.height > media.size.width ? 3 : 4,
+        children: users.map((u) {
+          var notif = notifs.firstWhere((n) => n.userId == u.id,
+              orElse: () => Notif(userId: u.id, numNotifs: 0));
+          return FriendItem(
+              id: u.id,
+              imageUrl: u.image,
+              color: u.color,
+              numNotifs: notif.numNotifs,
+              onTap: () => user.id == u.id
+                  ? Navigator.of(context).pushNamed('/chatbot')
+                  : Navigator.of(context).push(MaterialPageRoute<Null>(
+                      builder: (BuildContext context) => new ChatScreen(
+                          myId: user.id, friend: u, friendImageUrl: u.image))));
+        }).toList(growable: false),
+      ),
     );
   }
 }

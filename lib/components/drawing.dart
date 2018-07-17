@@ -1,17 +1,13 @@
-import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'draw_convert.dart';
 import 'dart:convert';
-import '../components/SecondScreen.dart';
 
 class DrawPadController {
   _DrawPadDelegate _delegate;
 
   void clear() => _delegate?.clear();
-  send() => _delegate?.send();
+  String send() => _delegate?.send();
   multiColor(colorValue) => _delegate?.multiColor(colorValue);
   multiWidth(widthValue) => _delegate?.multiWidth(widthValue);
   undo() => _delegate?.undo();
@@ -19,7 +15,7 @@ class DrawPadController {
 
 abstract class _DrawPadDelegate {
   void clear();
-  send();
+  String send();
   multiColor(colorValue);
   multiWidth(widthValue);
   undo();
@@ -27,8 +23,9 @@ abstract class _DrawPadDelegate {
 
 class MyDrawPage extends StatefulWidget {
   DrawPadController controller;
+  String drawJson;
 
-  MyDrawPage(this.controller, {Key key}) : super(key: key);
+  MyDrawPage(this.drawJson, this.controller);
 
   State<StatefulWidget> createState() {
     return new MyHomePageState(this.controller);
@@ -49,9 +46,10 @@ class DrawLineProperty {
 
 class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
   List<DrawLineProperty> _drawLineProperty = [];
+
 //  List<Offset> _points = [];
   var color = new Color(0xff000000);
-  var width = 8.0;
+  var width = 4.0;
   DrawPadController _controller;
   MyHomePageState(this._controller);
   DrawPainting _currentPainter;
@@ -65,6 +63,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
   @override
   Widget build(BuildContext context) {
+    print("data of choice in drawww isss ${widget.drawJson}");
     // MediaQueryData media = MediaQuery.of(context);
     // print({"this is mediaaa2:": media.size});
 
@@ -72,10 +71,10 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       var _height = constraints.maxHeight;
       var _width = constraints.maxWidth;
       _currentPainter = new DrawPainting(_drawLineProperty, _height, _width);
-      print({"this is drawing area height :": constraints.maxHeight});
-      print({"this is drawing area width :": constraints.maxWidth});
+      // print({"this is drawing area height :": constraints.maxHeight});
+      // print({"this is drawing area width :": constraints.maxWidth});
 
-      print({"this is constraints of drawing component": constraints});
+      // print({"this is constraints of drawing component": constraints});
       //, color, width);
 
       return new Container(
@@ -92,9 +91,9 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
                   Position convertedIntoPercentage = new Position(
                       localPosition.dx / _width, localPosition.dy / _height);
-                  print({
-                    "convert into percentage is : ": convertedIntoPercentage
-                  });
+                  // print({
+                  //   "convert into percentage is : ": convertedIntoPercentage
+                  // });
                   double tolerence = 0.06;
                   if (_drawLineProperty.length < 1) {
                     _drawLineProperty = new List.from(_drawLineProperty)
@@ -113,8 +112,8 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                         _drawLineProperty = new List.from(_drawLineProperty)
                           ..add(new DrawLineProperty(
                               convertedIntoPercentage, color, width));
-                        print(
-                            {"the value is added ....": "point is tolerable"});
+                        // print(
+                        //     {"the value is added ....": "point is tolerable"});
                       }
                     } else {
                       _drawLineProperty = new List.from(_drawLineProperty)
@@ -155,16 +154,14 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
           _drawLineProperty.removeAt(i);
         } else {
           _drawLineProperty.removeLast();
-          if(_drawLineProperty.length == 1)
-            _drawLineProperty.clear();
+          if (_drawLineProperty.length == 1) _drawLineProperty.clear();
           break;
         }
       }
-
     });
   }
 
-  void send() {
+  String send() {
     List<DrawLineProperty> drawLinePropertyArray = _drawLineProperty;
 
     var colorRef = drawLinePropertyArray[0]._color.value;
@@ -178,8 +175,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       if (current._color.value == colorRef && current._width == widthRef) {
         if (current._position != null) {
           position.add(new Position(current._position.x, current._position.y));
-        }
-        else
+        } else
           position.add(new Position(null, null));
       } else if (current._color.value != colorRef ||
           current._width != widthRef) {
@@ -205,19 +201,25 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
 
     CanvasProperty canvasProperty = new CanvasProperty(drawList);
 
-    final drawJson = _encode(canvasProperty);
-    print({"the drawJson is : ": drawJson.toString()});
+    final drawJsonVal = _encode(canvasProperty);
+    // print({"the drawJson is : ": drawJsonVal.toString()});
 
 //    var decode = json.decode(drawJson);
 //    print({"the object is : ": decode});
 //    var _output = decode;
 
-    var getLastPosition = drawList[drawList.length-1].position[drawList[drawList.length-1].position.length-1].x;
+    var getLastPosition = drawList[drawList.length - 1]
+        .position[drawList[drawList.length - 1].position.length - 1]
+        .x;
+// return drawJsonVal;
 
-    if(getLastPosition == null && isSendActive){
-      Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new SecondScreen(drawJson)));
-
+    if (getLastPosition == null && isSendActive) {
+      return drawJsonVal;
+      // setState(() {
+      //          widget.drawJson = drawJsonVal;
+      //         //  print("data of choice isss ${widget.drawJson}");
+      //       });
+      // print("data of choice isss ${widget.choice}");
     }
   }
 
@@ -241,7 +243,6 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
       width = widthValue;
     });
   }
-
 }
 
 class DrawPainting extends CustomPainter {
@@ -274,7 +275,7 @@ class DrawPainting extends CustomPainter {
     print({"size of paint is in draw is ": size});
     for (int i = 0; i < drawLineProperty.length - 1; i++) {
       if (drawLineProperty[i]._position != null &&
-          drawLineProperty[i + 1]._position != null  &&
+          drawLineProperty[i + 1]._position != null &&
           (drawLineProperty[i]._position.x * _width >= 0 &&
               drawLineProperty[i]._position.y * _height >= 0 &&
               drawLineProperty[i]._position.x * _width < size.width &&

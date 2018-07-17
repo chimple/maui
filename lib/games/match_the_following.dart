@@ -10,7 +10,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
 import '../components/shaker.dart';
- 
+
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -157,7 +157,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
       _status2.clear();
       _status3.clear();
       _status4.clear();
-       leftIsTapped = 0;
+      leftIsTapped = 0;
       _initBoard();
     }
   }
@@ -271,13 +271,10 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
         onPress: () {
           indexText2 = _lettersRight.indexOf(text);
           _rightSideText = text;
-          if (_statusColorChange[indexLeftButton] != Status.Shake)
-          
-          if(_status4[index] !=1)
-          {
-             match(index);
+          if (_statusColorChange[indexLeftButton] !=
+              Status.Shake) if (_status4[index] != 1) {
+            match(index);
           }
-         
         });
   }
 
@@ -285,8 +282,9 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1 &&
             leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-      correct++;
       widget.onScore(1);
+      correct++;
+
       widget.onProgress(correct / _numButtons);
 
       setState(() {
@@ -327,7 +325,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (_wrongAttem >= correct - _constant &&
         _wrongAttem == _numButtons - _constant1) {
       widget.onScore(-correct);
-       new Future.delayed(const Duration(milliseconds: 0), () {
+      new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
@@ -345,8 +343,8 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
 
     if (correct == _numButtons) {
-      widget.onScore(-_wrongAttem);
-      new Future.delayed(const Duration(milliseconds: 0), () {
+      //widget.onScore(-_wrongAttem);
+      new Future.delayed(const Duration(milliseconds: 300), () {
         _leftSideletters.clear();
         _rightSideLetters.clear();
         _shuffledLetters.clear();
@@ -398,16 +396,10 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String _displayText;
-  AnimationController controller,
-      controllerstatus2,
-      dumpController,
-      radiusCntroller,
-      controllerPress;
-  Animation animationInvisible,
-      animationstatus2,
-      noAimation,
-      dumpAnimation,
-      buttonPress;
+  AnimationController controller, controllerstatus2;
+
+  Animation animationInvisible, animationstatus2, noAimation;
+
   Animation<BorderRadius> borderRadius;
   initState() {
     super.initState();
@@ -417,17 +409,10 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initStateData() {
     super.initState();
     _displayText = widget.text;
-    //print("button key :: ${widget.key}");
-    controllerPress = new AnimationController(
-        duration: new Duration(milliseconds: 300), vsync: this);
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
+
     controllerstatus2 = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
-    animationInvisible = new CurvedAnimation(
-        parent: controller,
-        curve: new Interval(0.0, 1.0, curve: Curves.easeInOut));
-    buttonPress = new Tween(begin: .98, end: 0.94).animate(controllerPress);
+
     animationstatus2 = new Tween(
       begin: 3.0,
       end: -3.0,
@@ -436,26 +421,13 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       begin: 0.0,
       end: 0.0,
     ).animate(controllerstatus2);
-    controller.addStatusListener((state) {
-      if (state == AnimationStatus.completed) {
-        setState(() => _displayText = widget.text);
-      }
-    });
-    controller.forward();
+
     status2();
   }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == widget.text) {
-      controllerPress.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controllerPress.reverse();
-        } else if (status == AnimationStatus.dismissed) {}
-      });
-    }
-    controllerPress.forward();
   }
 
   void status2() {
@@ -472,8 +444,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   void dispose() {
     controllerstatus2.dispose();
-    controller.dispose();
-    controllerPress.dispose();
+
     super.dispose();
   }
 
@@ -496,33 +467,3 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         ));
   }
 }
-
-// class Shake extends AnimatedWidget {
-//   const Shake({
-//     Key key,
-//     Animation<double> animation,
-//     this.child,
-//   }) : super(key: key, listenable: animation);
-
-//   final Widget child;
-
-//   Animation<double> get animation => listenable;
-//   double get translate {
-//     final double t = animation.value;
-//     const double status2Delta = 2.0;
-//     if (t <= 1) {
-//       return pi * t / 45;
-//     } else {
-//       return 0.0;
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Transform.rotate(
-//       // transform: new Matrix4.rotationY(translateX),
-//       child: child,
-//       angle: translate,
-//     );
-//   }
-// }

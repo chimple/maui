@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/flash_card.dart';
-import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
 
@@ -38,12 +38,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   bool _isShowingFlashCard = false;
   var keys = 0;
   int _size;
-  int scoretrack = 0;
   String dragdata;
   List<String> dragBoxData, _holdDataOfDragBox, shuffleData, dragBoxDataStore;
   List<String> dropTargetData;
   List<Tuple2<String, String>> _fillData;
-  List<String> ref;
+  List _correct = [];
   List<int> _flag = new List();
   String fruit = ' ';
   int indexOfDragText, indexOfTarget;
@@ -53,20 +52,18 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     _initFillBlanks();
   }
 
-  List<String> shufflelist;
-  int newprogress = 0;
   int count = 0;
   int dragcount = 0;
   int progres = 0;
   int space = 0;
-  
   @override
   void didUpdateWidget(FillInTheBlanks oldWidget) {
-         super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
-             _initFillBlanks();
+      _initFillBlanks();
     }
   }
+
   void _initFillBlanks() async {
     count = 0;
     progres = 0;
@@ -104,9 +101,16 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isNotEmpty) count++;
     }
+    for (int i = 0; i < dragBoxData.length; i++) {
+      if (dropTargetData[i].isEmpty) {
+        _correct.add(dragBoxData[i]);
+        _correct.add(i);
+      }
+    }
     for (int j = 0; j < dropTargetData.length; j++) {
       if (dropTargetData[j].isEmpty) dropTargetData[j] = '_';
     }
+
     space = dragBoxData.length - count;
     dragBoxData.shuffle();
     setState(() => _isLoading = false);
@@ -126,42 +130,33 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
           dindex = int.parse(dragdata.substring(0, 3));
           dcode = int.parse(dragdata.substring(4));
           if (code == dcode) {
-            if (dropTargetData[index] == '_') {
-              if (_holdDataOfDragBox[index] == data) {
+            var i = 0;
+            for (; i < _correct.length; i++) {
+              if (dragBoxData[dindex - 100] == _correct[i] &&
+                  index == _correct[++i] &&
+                  dropTargetData[index] == '_') {
                 flag1 = 1;
-                progres++;
-                widget.onProgress(progres / space);
-                dropTargetData[index] = _holdDataOfDragBox[indexOfDragText];
-              } else {
-                if (dropTargetData[index] == '_') {
-                  dragcount++;
-                  if (scoretrack > 0) {
-                    scoretrack = scoretrack - 1;
-                    widget.onScore(-1);
-                  } else {
-                    widget.onScore(0);
-                  }
-                }
+                break;
               }
-              if (progres == space) {
-                scoretrack = scoretrack + 4;
-                widget.onScore(4);
-                new Future.delayed(const Duration(milliseconds: 400), () {
-                  setState(() {
-                    _isShowingFlashCard = true;
-                  });
-                });
-              }
+            }
+            if (flag1 == 1) {
+              print('correct');
+              progres++;
+              widget.onProgress(progres / space);
+              dropTargetData[index] = _correct[--i];
             } else {
               if (dropTargetData[index] == '_') {
                 dragcount++;
-                if (scoretrack > 0) {
-                  scoretrack = scoretrack - 1;
-                  widget.onScore(-1);
-                } else {
-                  widget.onScore(0);
-                }
+                widget.onScore(-1);
               }
+            }
+            if (progres == space) {
+              widget.onScore(4);
+              new Future.delayed(const Duration(milliseconds: 400), () {
+                setState(() {
+                  _isShowingFlashCard = true;
+                });
+              });
             }
             if (dragcount == space + 2) {
               new Future.delayed(const Duration(milliseconds: 700), () {
@@ -170,7 +165,6 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
                 });
               });
             }
-
             setState(() {
               if (dropTargetData[index] == '_') {
                 if (flag1 == 0) {
@@ -212,13 +206,11 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         isRotated: widget.isRotated,
         keys: keys++,
         onDrag: () {
-          setState(() {
-                    });
+          setState(() {});
           data = text;
           indexOfDragText = _holdDataOfDragBox.indexOf(text);
         });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -240,62 +232,56 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             });
           });
     }
-    print("space is $space");
     if (space == 0) {
       setState(() {
         _initFillBlanks();
       });
     }
-
-    MediaQueryData media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      double maxWidth =0.0 ,maxHeight =0.0; 
+      double maxWidth = 0.0, maxHeight = 0.0;
       maxWidth = (constraints.maxWidth - hPadding * 2) / _size;
       maxHeight = (constraints.maxHeight - vPadding * 2) / _size;
       var j = 0, k = 100, h = 0, a = 0;
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      AppState state = AppStateContainer.of(context).state;
-
       return new Flex(
-         direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Expanded(
-              flex: 1,
-              child: new Container(
-                color: new Color(0xffffa3bc8b),
-                child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: dropTargetData.length,
-                  maxAspectRatio: 1.0,
-                  children: dropTargetData
-                      .map((e) => Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: droptarget(j++, e, _flag[h++])))
-                      .toList(growable: false),
-                ),
+        direction: Axis.vertical,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Expanded(
+            flex: 1,
+            child: new Container(
+              color: new Color(0xffffa3bc8b),
+              child: new ResponsiveGridView(
+                rows: 1,
+                cols: dropTargetData.length,
+                maxAspectRatio: 1.0,
+                children: dropTargetData
+                    .map((e) => Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: droptarget(j++, e, _flag[h++])))
+                    .toList(growable: false),
               ),
             ),
-            new Expanded(
-              flex: 2,
-              child: new ResponsiveGridView(
-                  rows: 1,
-                  cols: dragBoxData.length,
-                  maxAspectRatio: 1.0,
-                  padding: 10.0,
-                  children: dragBoxData
-                      .map((e) => Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: dragbox(k++, e, _flag[a++])))
-                      .toList(growable: false)),
-            ),
-          ],
+          ),
+          new Expanded(
+            flex: 2,
+            child: new ResponsiveGridView(
+                rows: 1,
+                cols: dragBoxData.length,
+                maxAspectRatio: 1.0,
+                padding: 10.0,
+                children: dragBoxData
+                    .map((e) => Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: dragbox(k++, e, _flag[a++])))
+                    .toList(growable: false)),
+          ),
+        ],
       );
     });
   }
@@ -315,7 +301,6 @@ class MyButton extends StatefulWidget {
       this.isRotated = false,
       this.keys})
       : super(key: key);
-
   var index;
   final int color1;
   final int flag;
@@ -372,11 +357,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    int portf = 0;
-    MediaQueryData media = MediaQuery.of(context);
-    if (media.size.height < media.size.width) {
-      portf = 1;
-    }
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     widget.keys++;
     if (widget.index < 100) {
       return new Shake(
@@ -416,6 +397,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               angle: 0.2,
               child: new UnitButton(
                 text: widget.text,
+                maxHeight: buttonConfig.height,
+                maxWidth: buttonConfig.width,
+                fontSize: buttonConfig.fontSize,
               ),
             )),
       );
