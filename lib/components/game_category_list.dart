@@ -175,47 +175,17 @@ class _GameCategoryList extends State<GameCategoryList> {
 
   List<Widget> _buildCategoriesButtons() {
     List<Widget> buttons = [];
-<<<<<<< HEAD
-    int colorIndex = 5;
-    conceptIdMap.forEach((conceptId, list) {
-      String mainCategoryName = widget.concepts[conceptId].name;
-      if (list.length == 1) {
-        buttons.add(Container(
-          color: tileColors[colorIndex++],
-          child: _buildButton(
-              mainCategoryName, list.first.id, tileColors[colorIndex++]),
-        ));
-=======
     int colorIndex = 0;
     conceptIdMap.forEach((conceptId, list) {
       String mainCategoryName = widget.concepts[conceptId].name;
       if (list.length == 1) {
         buttons.add(_buildButtonCategory(
             mainCategoryName, list.first.id, tileColors[colorIndex++]));
->>>>>>> refs/remotes/origin/master
       } else {
         buttons.add(Container(
           color: tileColors[colorIndex++],
           child: new ExpansionTiles(
             title: Container(
-<<<<<<< HEAD
-                decoration: const BoxDecoration(
-                  border: const Border(
-                    bottom: const BorderSide(
-                        width: 2.0, color: const Color(0xFFFFFFFFFF)),
-                  ),
-                ),
-                height: 150.0,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 64.0, 0.0, 0.0),
-                  child: new Text(mainCategoryName,
-                      style: TextStyle(
-                          letterSpacing: 2.0,
-                          color: Colors.white,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold)),
-                )),
-=======
               height: 154.0,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
@@ -227,7 +197,6 @@ class _GameCategoryList extends State<GameCategoryList> {
                         fontWeight: FontWeight.bold)),
               ),
             ),
->>>>>>> refs/remotes/origin/master
             children: list.map((gameCategoryData) {
               return _buildButtonchildren(gameCategoryData.name,
                   gameCategoryData.id, tileColors[colorIndex - 1]);
