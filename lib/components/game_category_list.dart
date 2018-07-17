@@ -247,7 +247,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         child: Container(
           decoration: BoxDecoration(
               border: BorderDirectional(
-                  bottom: BorderSide(width: 1.0, color: Colors.white))),
+                  bottom: BorderSide(width: 2.0, color: Colors.black.withOpacity(0.2)))),
           child: ListTile(
             title: Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
