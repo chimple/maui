@@ -96,7 +96,7 @@ class TextPainters extends CustomPainter {
     _baseLength = 2 * radius * sin(_radiun);
     // print("_angle :: $_angle");
     // print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize =  (_baseLength * .24) / (maxChar*_wFactor*.2);
+    _fontSize =  (_baseLength * .21) / (maxChar*_wFactor*.2);
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -134,8 +134,8 @@ class TextPainters extends CustomPainter {
           textPainter.paint(
             canvas,
             new Offset(
-              -((3.50 * _text.length) * _baseLength) / (117.50)+_wLength*2,
-              -(size.height / 7.800 + _const),
+              -((7.7 * _text.length) * _baseLength) / (117.50)+_wLength*2,
+              -(size.height / 7.500 + _const),
             ),
           );
           canvas.restore();
@@ -202,17 +202,17 @@ class ImagePainter extends CustomPainter {
     if (noOfSlice == 4) {
       _imageOffset = 30.0;
       _imageSizeConst = 30.0;
-      _x = 4.00;
-      _y = 2.90;
+      _x = 8.60;
+      _y = 4.10;
     } else if (noOfSlice == 6) {
       _imageOffset = 20.0;
-      _x = 8.0;
-      _y = 4.0;
+      _x = 10.60;
+      _y = 5.60;
     } else if (noOfSlice == 8) {
       _imageOffset = 40.0;
       _imageSizeConst = 30.0;
-      _x = 10.0;
-      _y = 5.0;
+      _x = 12.90;
+      _y = 6.60;
     }
 
     //print("circle radisu:: $_incircleRadius");
@@ -227,7 +227,7 @@ class ImagePainter extends CustomPainter {
 
     imageSize = new Size(size.width*1.5 , size.width *1.5);
     sizes = applyBoxFit(boxfit, imageSize,
-        new Size(size.width / 2 * .50+_incircleRadius*1.1, size.width / 2 * .50+_incircleRadius*1.1));
+        new Size(size.width / 2 * .50+_incircleRadius*.6, size.width / 2 * .50+_incircleRadius*.6));
     inputSubrect =
         Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
     outputSubrect = Alignment.center.inscribe(sizes.destination, rect);

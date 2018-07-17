@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/score.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/score_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class PlayedGamesScoreDisplay extends StatefulWidget {
@@ -16,6 +18,8 @@ class PlayedGamesScoreDisplay extends StatefulWidget {
 class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, List<Score>> _scores;
+  User otherUsers;
+  String otherUserImage='';
   int totalScore = 0;
   @override
     void initState() {
@@ -27,13 +31,19 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     setState(() => _isLoading = true);
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
      Map<String, List<Score>> fetchData = await ScoreRepo().getScoreMapByUser(loggedInUser.id);
-     print("Fetched Dataaaaaaaaaaaaaaaaaaaaaaaaa ${fetchData}");
     
     setState(() {
         _scores = fetchData;
         _isLoading = false;
     });
     }
+
+  void _getOpponentImage(String otherUser) async {
+    otherUsers = await UserRepo().getUser(otherUser);
+    setState(() {
+          otherUserImage = otherUsers.image; 
+      });
+  }  
 
   @override
  Widget build(BuildContext context) {  
@@ -51,14 +61,16 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
       totalScore = 0;
       if(otherUser == null) {
           return new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
                 child:new Container(
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 5.0),
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -69,15 +81,18 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                 ),
               ),
               Expanded(
-                child: new Container(
+                  child: new Container(
+                    margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 25.0),
                     child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
                   ),
               ),
             ],
           );
       } else {
-        otherScore = 0;
+        if(otherUserImage == '')
+        _getOpponentImage(otherUser);
           return new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
@@ -85,7 +100,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
@@ -96,22 +111,19 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                 ),
               ),
 
-              new Expanded(
-                child: new Container(
-                  child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
-                ),
+              new Container(
+                child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
+                    :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
               ),
 
-              new Expanded(
-                  child: new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                  child: myScore >= otherScore 
-                  ? myScore == otherScore 
-                        ?  new Text('Its a Tie...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                          :  new Text('You Won...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                  :  new Text('You Loose...!!',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+              new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 5.0),
+              child: myScore >= otherScore 
+              ? myScore == otherScore 
+                    ?  new Text('Its a Tie',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                      :  new Text('You Won',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+              :  new Text('You Loose',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
                 ),
-              ),
 
               new Container(
                   child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
@@ -123,13 +135,13 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
-                      width: 5.0,
+                      width: 3.0,
                       color: Colors.black
                     )
                   ),
                 child: new CircleAvatar(
                     backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
+                    backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
                   ),
                 ),
               ),
