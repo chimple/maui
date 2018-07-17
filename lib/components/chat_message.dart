@@ -43,12 +43,8 @@ class ChatMessage extends StatelessWidget {
                   child: new CircleAvatar(backgroundImage: image),
                 ),
                 new Flexible(
-                    child: new Card(
-                  color: Theme.of(context).accentColor,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
                   child: child,
-                )),
+                ),
               ],
             )
           : new Row(
@@ -56,12 +52,8 @@ class ChatMessage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 new Flexible(
-                    child: Card(
-                  color: Colors.white,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
                   child: child,
-                )),
+                ),
                 new Container(
                   margin: const EdgeInsets.only(left: 16.0),
                   child: new CircleAvatar(backgroundImage: image),
