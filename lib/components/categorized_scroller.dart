@@ -60,36 +60,39 @@ class CategorizedScrollerState extends State<CategorizedScroller> {
       children: <Widget>[
         Expanded(
             flex: widget.itemCrossAxisCount * 2,
-            child: CustomScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                slivers: widget.items.keys
-                    .map((e) => SliverGrid(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: widget.itemCrossAxisCount),
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: InkWell(
-                                  onTap: () => widget
-                                      .onUserPress(widget.items[e][index]),
-                                  child: widget.buildItem(
-                                      widget.items[e][index], true)),
-                            );
-                          }, childCount: widget.items[e].length),
-                        ))
-                    .toList(growable: false))),
+            child: Container(
+              color: Color(0XFFF4F4F4),
+              child: CustomScrollView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  slivers: widget.items.keys
+                      .map((e) => SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: widget.itemCrossAxisCount),
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              return Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(4.0),
+                                child: InkWell(
+                                    onTap: () => widget
+                                        .onUserPress(widget.items[e][index]),
+                                    child: widget.buildItem(
+                                        widget.items[e][index], true)),
+                              );
+                            }, childCount: widget.items[e].length),
+                          ))
+                      .toList(growable: false)),
+            )),
         Expanded(
             flex: 1,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
               children: _itemRange
                   .map((e) => Container(
                         color: e.item1 == highlightedItem
-                            ? Colors.black12
+                            ? Color(0XFFF4F4F4)
                             : Colors.transparent,
                         child: InkWell(
                             onTap: () {

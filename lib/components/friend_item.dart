@@ -59,7 +59,7 @@ class FriendItem extends StatelessWidget {
                   shape: new CircleBorder(
                     side: new BorderSide(
                       color: Color(color),
-                      width: 5.0,
+                      width: 4.0,
                     ),
                   ),
                   child: new CircleAvatar(
