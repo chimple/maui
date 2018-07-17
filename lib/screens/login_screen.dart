@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushNamed('/tab');
+      Navigator.of(context).pushReplacementNamed('/tab');
     }
     var users = await UserRepo().getLocalUsers();
 
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen>
       var user = await new UserRepo().insertLocalUser(
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
-      //Navigator.of(context).pop(false);
+      Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");
       controller.addStatusListener((status) {
