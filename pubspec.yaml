@@ -105,8 +105,8 @@ flutter:
     - assets/dice_game/paint.png
     - assets/dice_game/color_picker.png
     - assets/dice_game/color_brush.png
-    - assets/dice_game/dice4.gif
-    - assets/dice_game/tapme.png
+    - assets/dice_game/dice_play.gif
+    - assets/dice_game/tapto_play.gif
     - assets/background_image/reflex_small.png
     - assets/background_image/reflex_big.png
     - assets/background_image/dice_big.png
@@ -131,6 +131,8 @@ flutter:
     - assets/background_image/calculate_numbers_small.png
     - assets/background_image/casino_small.png
     - assets/background_image/casino_big.png
+    - assets/background_image/guess_small.png
+    - assets/background_image/guess_big.png
     - assets/background_image/match_the_following_small.png
     - assets/background_image/match_the_following_big.png
     - assets/background_image/bingo_big.png
@@ -1219,6 +1221,7 @@ flutter:
     - assets/stickers/pig/2.png
     - assets/stickers/pig/3.png
     - assets/stickers/pig/1.png
+    - assets/stickers/giraffe/giraffe.png
     - assets/stickers/giraffe/8.png
     - assets/stickers/giraffe/9.png
     - assets/stickers/giraffe/14.png

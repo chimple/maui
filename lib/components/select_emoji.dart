@@ -1463,14 +1463,17 @@ class SelectEmoji extends StatelessWidget {
     return CategorizedScroller(
       onUserPress: onUserPress,
       items: emojis,
-      itemCrossAxisCount: 5,
+      itemCrossAxisCount: 3,
       buildItem: buildItem,
       buildIndexItem: buildIndexItem,
     );
   }
 
   Widget buildItem(String text, bool enabled) {
-    return Text(text);
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+    );
   }
 
   Widget buildIndexItem(String text, bool enabled) {
