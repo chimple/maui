@@ -4,11 +4,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/user_repo.dart';
-import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/login_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
 String imagePathStore;
 String userNameStore;
@@ -23,18 +20,18 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   List<CameraDescription> cameras;
   CameraController controller;
-  String imagePath;
+  String imagePath = '';
   String _deviceId;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  bool onTakePicture = true;
+  bool onTakePicture = true, onTakePicture1 = false;
   Orientation ornt;
   int mode = -1;
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    final bool isLandscape = orientation == Orientation.landscape;
+
     return Scaffold(
         backgroundColor: Colors.black87,
         key: _scaffoldKey,
@@ -47,9 +44,16 @@ class _CameraScreenState extends State<CameraScreen> {
                         quarterTurns: 1, child: _cameraPreviewWidget()),
                   )
                 : Container(
-                    child: Center(child: Image.file(new File(imagePath)))),
+                    child: imagePath != ''
+                        ? Center(
+                            child: onTakePicture1
+                                ? null
+                                : Image.file(new File(imagePath)))
+                        : new Container()),
             Container(
-                height: 80.0, child: Center(child: _captureControlRowWidget())),
+                color: Colors.black87,
+                height: 120.0,
+                child: Center(child: _captureControlRowWidget())),
           ],
         ));
   }
@@ -69,8 +73,10 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       );
     } else {
-      return new AspectRatio(
-        aspectRatio: 1.7, //controller.value.aspectRatio,
+      return new Container(
+        height: double.infinity,
+        width: double.infinity,
+        //aspectRatio: 1.6, //controller.value.aspectRatio,
         child: new CameraPreview(controller),
       );
     }
@@ -79,64 +85,105 @@ class _CameraScreenState extends State<CameraScreen> {
   /// Display the control bar with buttons to take pictures and record videos.
   Widget _captureControlRowWidget() {
     if (onTakePicture)
-      return CircleAvatar(
-        radius: 50.0,
-        backgroundColor: Colors.white,
-        child: Center(
-          child: new IconButton(
-            iconSize: 30.0,
-            splashColor: Colors.white,
-            icon: const Icon(Icons.camera_alt),
-            color: Colors.blue,
-            onPressed: controller != null &&
-                    controller.value.isInitialized &&
-                    !controller.value.isRecordingVideo
-                ? onTakePictureButtonPressed
-                : null,
-          ),
-        ),
-      );
-    else
-      return new Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 50.0,
-              child: new IconButton(
-                color: Colors.black54,
-                iconSize: 30.0,
-                onPressed: () {
-                  setState(() {
-                    onTakePicture = true;
-                  });
-                },
-                icon: Icon(Icons.arrow_back),
-              )),
-          new Padding(
-            padding: new EdgeInsets.all(20.0),
+            radius: 30.0,
+            backgroundColor: Colors.white,
+            child: Center(
+              child: Transform.rotate(
+                angle: .8,
+                child: new IconButton(
+                    iconSize: 30.0,
+                    splashColor: Colors.white,
+                    icon: const Icon(
+                      Icons.add,
+                    ),
+                    color: Colors.blue,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      imagePathStore = null;
+                    }),
+              ),
+            ),
           ),
           CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 50.0,
-              child: Center(
-                child: new IconButton(
-                  color: Colors.black54,
-                  iconSize: 30.0,
-                  onPressed: () {
-                    imagePathStore = imagePath;
-                    Navigator.of(context).pop();
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                    // );
-                    // Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.done),
+            radius: 30.0,
+            backgroundColor: Colors.white,
+            child: Center(
+              child: new IconButton(
+                iconSize: 30.0,
+                splashColor: Colors.white,
+                icon: const Icon(
+                  Icons.camera_alt,
                 ),
-              )),
+                color: Colors.blue,
+                onPressed: controller != null &&
+                        controller.value.isInitialized &&
+                        !controller.value.isRecordingVideo
+                    ? onTakePictureButtonPressed
+                    : null,
+              ),
+            ),
+          ),
         ],
+      );
+    else if (onTakePicture1) {
+      return new Container(
+        color: Colors.black12,
+      );
+    } else
+      return Container(
+        height: 120.0,
+        color: Colors.black54,
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 30.0,
+                child: Transform.rotate(
+                  angle: .80,
+                  child: new IconButton(
+                    color: Colors.black54,
+                    iconSize: 30.0,
+                    onPressed: () {
+                      setState(() {
+                        imagePathStore = '';
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                        ]);
+                        onTakePicture = true;
+                        onTakePicture1 = true;
+                      });
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                )),
+            CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 30.0,
+                child: Center(
+                  child: new IconButton(
+                    color: Colors.black54,
+                    iconSize: 30.0,
+                    onPressed: () {
+                      imagePathStore = imagePath;
+                      Navigator.of(context).pop();
+                      // Navigator.pushReplacementNamed(context, '/login_screen');
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => LoginScreen()),
+                      // );
+                      //Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.done),
+                  ),
+                )),
+          ],
+        ),
       );
   }
 
@@ -148,18 +195,21 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void onTakePictureButtonPressed() {
+    SystemChrome.setPreferredOrientations([]);
+    setState(() {
+      onTakePicture1 = true;
+      onTakePicture = false;
+    });
     takePicture().then((String filePath) async {
       if (mounted) {
-        setState(() {
-          imagePath = filePath;
-          onTakePicture = false;
+        Future.delayed(Duration(milliseconds: 300), () {
+          setState(() {
+            imagePath = filePath;
+            imagePathStore = imagePath;
+            onTakePicture = false;
+            onTakePicture1 = false;
+          });
         });
-//        if (filePath != null) showInSnackBar('Picture saved to $filePath');
-        // var user = await new UserRepo()
-        //     .insertLocalUser(new User(image: filePath, currentLessonId: 1));
-        //print("insert image path:: ${user.image}");
-        //AppStateContainer.of(context).setLoggedInUser(user);
-        //Navigator.of(context).pop();
       }
     });
   }
@@ -196,7 +246,6 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-
     initCamera();
   }
 
@@ -207,7 +256,11 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void initCamera() async {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     cameras = await availableCameras();
+    print("print camera lenafa$cameras");
     controller = new CameraController(cameras[1], ResolutionPreset.medium);
 
     // If the controller is updated then update the UI.
@@ -227,6 +280,7 @@ class _CameraScreenState extends State<CameraScreen> {
     if (mounted) {
       setState(() {});
     }
+    print("contloafasfsa ${controller.value.aspectRatio}");
   }
 }
 
