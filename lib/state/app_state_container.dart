@@ -15,19 +15,23 @@ import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/db/entity/notif.dart';
 
-class AppStateContainerController extends StatefulWidget {
+class AppStateContainer extends StatefulWidget {
   final AppState state;
   final Widget child;
 
-  AppStateContainerController({this.child, this.state});
+  AppStateContainer({this.child, this.state});
+
+  static AppStateContainerState of(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(_InheritedAppStateContainer)
+            as _InheritedAppStateContainer)
+        ?.data;
+  }
 
   @override
-  _AppStateContainerControllerState createState() =>
-      new _AppStateContainerControllerState();
+  AppStateContainerState createState() => new AppStateContainerState();
 }
 
-class _AppStateContainerControllerState
-    extends State<AppStateContainerController> {
+class AppStateContainerState extends State<AppStateContainer> {
   static const platform = const MethodChannel('org.sutara.maui/rivescript');
 
   AppState state;
@@ -51,7 +55,7 @@ class _AppStateContainerControllerState
     }
     Flores().initialize((Map<dynamic, dynamic> message) {
       print('Flores received message: $message');
-      _onReceiveMessage(message);
+      onReceiveMessage(message);
     });
     _initAudioPlayer();
     var initializationSettingsAndroid =
@@ -74,7 +78,7 @@ class _AppStateContainerControllerState
     });
   }
 
-  Future _showNotification(
+  Future showNotification(
       String userId, String title, String body, String payload) async {
     User user = await UserRepo().getUser(userId);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
@@ -104,12 +108,12 @@ class _AppStateContainerControllerState
           MaterialPageRoute<Null>(
               builder: (BuildContext context) => new ChatScreen(
                   myId: state.loggedInUser.id,
-                  friendId: user.id,
+                  friend: user,
                   friendImageUrl: user.image)));
     }
   }
 
-  void _play(String fileName) async {
+  void play(String fileName) async {
     try {
       await platform.invokeMethod(
           'speak', <String, dynamic>{'text': fileName.toLowerCase()});
@@ -125,7 +129,7 @@ class _AppStateContainerControllerState
 //    }
   }
 
-  void _display(BuildContext context, String fileName) {
+  void display(BuildContext context, String fileName) {
     if (isShowingFlashCard) {
       showDialog(
           context: context,
@@ -141,7 +145,7 @@ class _AppStateContainerControllerState
     isShowingFlashCard = false;
   }
 
-  void _beginChat(String fId) async {
+  void beginChat(String fId) async {
     List<dynamic> msgs;
     friendId = fId;
     activity = 'chat';
@@ -159,7 +163,7 @@ class _AppStateContainerControllerState
     });
   }
 
-  void _endChat() {
+  void endChat() {
     setState(() {
       friendId = '';
       activity = '';
@@ -167,16 +171,16 @@ class _AppStateContainerControllerState
     });
   }
 
-  void _addChat(String message) async {
+  void addChat(String message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
 
     await Flores()
         .addMessage(state.loggedInUser.id, friendId, 'chat', message, true, '');
-    _beginChat(friendId);
+    beginChat(friendId);
   }
 
-  void _onReceiveMessage(Map<dynamic, dynamic> message) async {
+  void onReceiveMessage(Map<dynamic, dynamic> message) async {
     print(
         '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
     if (!(message['userId'] == friendId &&
@@ -188,27 +192,27 @@ class _AppStateContainerControllerState
       await UserRepo().insertOrUpdateRemoteUser(
           message['userId'], message['deviceId'], message['message']);
       if (activity == 'friends') {
-        _getUsers();
+        getUsers();
       }
     } else if (message['recipientUserId'] == state.loggedInUser.id) {
       NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
-        _showNotification(
+        showNotification(
             message['userId'],
             message['messageType'],
             message['message'],
             message['messageType'] + ':' + message['userId']);
         if (message['userId'] == friendId && activity == 'chat') {
-          _beginChat(friendId);
+          beginChat(friendId);
         }
       } else {
-        _showNotification(message['userId'], message['messageType'], '',
+        showNotification(message['userId'], message['messageType'], '',
             message['messageType'] + ':' + message['userId']);
       }
     }
   }
 
-  void _getUsers() async {
+  void getUsers() async {
     activity = 'friends';
     final userList = await UserRepo().getRemoteUsers();
     final notifList = await NotifRepo().getNotifsByType('chat');
@@ -220,26 +224,13 @@ class _AppStateContainerControllerState
 
   @override
   Widget build(BuildContext context) {
-    return new AppStateContainer(
-      state: state,
-      messages: messages,
-      friendId: friendId,
-      activity: activity,
-      users: users,
-      notifs: notifs,
-      getUsers: _getUsers,
-      setLoggedInUser: _setLoggedInUser,
-      play: _play,
-      display: _display,
-      beginChat: _beginChat,
-      endChat: _endChat,
-      addChat: _addChat,
-      onReceiveMessage: _onReceiveMessage,
+    return new _InheritedAppStateContainer(
+      data: this,
       child: widget.child,
     );
   }
 
-  _setLoggedInUser(User user) async {
+  setLoggedInUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     prefs.setString('userId', user.id);
@@ -259,47 +250,12 @@ class _AppStateContainerControllerState
   }
 }
 
-class AppStateContainer extends InheritedWidget {
-  final AppState state;
-  List<dynamic> messages;
-  String activity;
-  String friendId;
-  List<User> users;
-  List<Notif> notifs;
-  final Function() getUsers;
-  final Function(User user) setLoggedInUser;
-  final Function(String string) play;
-  final Function(BuildContext context, String string) display;
-  final Function(String friendId) beginChat;
-  final Function() endChat;
-  final Function(String message) addChat;
-  final Function(Map<dynamic, dynamic> message) onReceiveMessage;
+class _InheritedAppStateContainer extends InheritedWidget {
+  final AppStateContainerState data;
 
-  AppStateContainer({
-    Key key,
-    @required this.state,
-    @required this.messages,
-    @required this.friendId,
-    @required this.activity,
-    @required this.users,
-    @required this.notifs,
-    @required this.getUsers,
-    @required this.setLoggedInUser,
-    @required this.play,
-    @required this.display,
-    @required this.beginChat,
-    @required this.endChat,
-    @required this.addChat,
-    @required this.onReceiveMessage,
-    @required Widget child,
-  })  : assert(state != null),
-        super(key: key, child: child);
+  _InheritedAppStateContainer(
+      {Key key, @required this.data, @required Widget child})
+      : super(key: key, child: child);
 
-  static AppStateContainer of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(AppStateContainer);
-  }
-
-  @override
-  bool updateShouldNotify(AppStateContainer old) =>
-      state != old.state || messages != old.messages || users != old.users;
+  bool updateShouldNotify(_InheritedAppStateContainer old) => true;
 }

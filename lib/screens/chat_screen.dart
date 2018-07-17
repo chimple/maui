@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -11,6 +11,10 @@ import 'package:maui/components/chat_message.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/components/select_emoji.dart';
 import 'package:maui/components/select_sticker.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/components/instruction_card.dart';
+import 'package:maui/components/unit_button.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flores/flores.dart';
 
@@ -18,14 +22,19 @@ enum InputType { hidden, keyboard, emoji, sticker }
 
 typedef void OnUserPress(String text);
 
+final stickerPrefix = '*s:';
+final cardPrefix = '*c:';
+final imagePrefix = '*i:';
+final audioPrefix = '*a:';
+
 class ChatScreen extends StatefulWidget {
   final String myId;
-  final String friendId;
+  final User friend;
   final String friendImageUrl;
   ChatScreen(
       {Key key,
       @required this.myId,
-      @required this.friendId,
+      @required this.friend,
       @required this.friendImageUrl})
       : super(key: key);
 
@@ -47,17 +56,13 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    final chatId = widget.friendId.compareTo(widget.myId) < 0
-        ? 'chat_${widget.friendId}_${widget.myId}'
-        : 'chat_${widget.myId}_${widget.friendId}';
-    print(chatId);
     _focusNode = FocusNode();
     _focusNode.addListener(_onFocusChange);
     _initMessages();
   }
 
   void _initMessages() async {
-    await AppStateContainer.of(context).beginChat(widget.friendId);
+    await AppStateContainer.of(context).beginChat(widget.friend.id);
   }
 
   @override
@@ -77,64 +82,121 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     AnimationController controller = AnimationController(vsync: this);
     Animation<double> animation =
         new CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Friendlychat"),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-      ),
-      body: messages == null
-          ? Center(
-              child: new SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: new CircularProgressIndicator(),
-            ))
-          : Column(children: <Widget>[
-              new Flexible(
-                  child: ListView(
-                reverse: true,
-                padding: EdgeInsets.all(8.0),
-                children: messages.map((message) {
-                  return message['userId'] == myId
-                      ? ChatMessage(
+    return Theme(
+      data: ThemeData(
+          primaryColor: Color(widget.friend.color),
+          accentColor: Color(userColors[widget.friend.color]),
+          textTheme: TextTheme(body1: TextStyle(fontSize: 24.0))),
+      child: new Scaffold(
+        backgroundColor: Color(widget.friend.color),
+        appBar: new AppBar(
+          backgroundColor: Color(userColors[widget.friend.color]),
+          title: new Text(widget.friend.name ?? ''),
+          elevation:
+              Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+        ),
+        body: messages == null
+            ? Center(
+                child: new SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: new CircularProgressIndicator(),
+              ))
+            : GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _inputType = InputType.hidden;
+                  });
+                },
+                child: Column(children: <Widget>[
+                  new Flexible(
+                      child: ListView(
+                    reverse: true,
+                    padding: EdgeInsets.all(8.0),
+                    children: messages.map((message) {
+                      return ChatMessage(
                           animation: animation,
-                          side: Side.right,
-                          imageFile: myImage,
+                          side: message['userId'] == myId
+                              ? Side.right
+                              : Side.left,
+                          imageFile: message['userId'] == myId
+                              ? myImage
+                              : widget.friendImageUrl,
                           child: new Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: _buildMessage(
                               message['message'],
-                              Side.right,
+                              message['userId'] == myId
+                                  ? Side.right
+                                  : Side.left,
                             ),
-                          ))
-                      : ChatMessage(
-                          animation: animation,
-                          side: Side.left,
-                          imageFile: widget.friendImageUrl,
-                          child: new Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _buildMessage(message['message'], Side.left),
                           ));
-                }).toList(growable: false),
-              )),
-              new Divider(height: 1.0),
-              _buildTextComposer(),
-            ]),
-      bottomNavigationBar: _inputType == InputType.keyboard
-          ? null
-          : BottomAppBar(
-              child: FractionallySizedBox(
-                  heightFactor: 0.3, child: _buildBottomBar(_inputType))),
+                    }).toList(growable: false),
+                  )),
+                  new Divider(height: 1.0),
+                  _buildTextComposer(),
+                ]),
+              ),
+        bottomNavigationBar:
+            _inputType == InputType.keyboard || _inputType == InputType.hidden
+                ? null
+                : BottomAppBar(
+                    child: FractionallySizedBox(
+                        heightFactor: 0.3, child: _buildBottomBar(_inputType))),
+      ),
     );
   }
 
   Widget _buildMessage(String text, Side side) {
-    if (text.startsWith('*s:')) {
+    MediaQueryData media = MediaQuery.of(context);
+    final size = min(media.size.height, media.size.width) / 2;
+    if (text.startsWith(stickerPrefix)) {
       return Image.asset(text.substring(3));
+    } else if (text.startsWith(cardPrefix)) {
+      final contents = text.substring(3).split(cardPrefix);
+      var cards = [
+        new SizedBox(
+            width: size,
+            height: size,
+            child: InstructionCard(text: contents[0]))
+      ];
+      if (contents.length > 1 && contents[0] != contents[1]) {
+        cards.add(new SizedBox(
+            width: size,
+            height: size,
+            child: InstructionCard(text: contents[1])));
+      }
+      return media.size.height > media.size.width
+          ? Column(children: cards)
+          : Row(children: cards);
+    } else if (text.startsWith(imagePrefix)) {
+      return new UnitButton(
+        text: text.substring(3),
+        unitMode: UnitMode.image,
+        maxHeight: size,
+        maxWidth: size,
+        fontSize: 24.0,
+      );
+    } else if (text.startsWith(audioPrefix)) {
+      return new UnitButton(
+        text: text.substring(3),
+        unitMode: UnitMode.audio,
+        maxHeight: size,
+        maxWidth: size,
+        fontSize: 24.0,
+      );
     } else {
-      return Text(text,
-          style: TextStyle(
-              color: side == Side.right ? Colors.black : Colors.white));
+      return Card(
+          color:
+              side == Side.left ? Theme.of(context).accentColor : Colors.white,
+          shape: new RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(text,
+                style: TextStyle(
+                    color: side == Side.right ? Colors.black : Colors.white)),
+          ));
     }
   }
 
@@ -161,7 +223,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _addSticker(String text) {
-    _sendMessage(text: '*s:$text');
+    _sendMessage(text: '$stickerPrefix$text');
   }
 
   void _onFocusChange() {
@@ -179,59 +241,66 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     } else {
       _focusNode.unfocus();
     }
-    return Column(
-      children: <Widget>[
-        new Row(children: <Widget>[
-          _buildTypeSelector(InputType.keyboard, Icons.keyboard),
-          _buildTypeSelector(InputType.emoji, Icons.face),
-          _buildTypeSelector(InputType.sticker, Icons.format_paint),
-          new Flexible(
-            child: new TextField(
-              maxLength: null,
-              keyboardType: TextInputType.multiline,
-              controller: _textController,
-              focusNode: _focusNode,
-              onChanged: (String text) {
-                setState(() {
-                  _isComposing = text.trim().isNotEmpty;
-                });
-              },
-              onSubmitted: _handleSubmitted,
-              decoration:
-                  new InputDecoration.collapsed(hintText: "Send a message"),
-            ),
-          ),
-          new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: Theme.of(context).platform == TargetPlatform.iOS
-                  ? new CupertinoButton(
-                      child: new Text("Send"),
-                      onPressed: _isComposing
-                          ? () => _handleSubmitted(_textController.text)
-                          : null,
-                    )
-                  : new IconButton(
-                      icon: new Icon(Icons.send),
-                      onPressed: _isComposing
-                          ? () => _handleSubmitted(_textController.text)
-                          : null,
-                    )),
-        ]),
-      ],
+    return IconTheme(
+      data: IconThemeData(color: Color(widget.friend.color)),
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            new Row(children: <Widget>[
+              _buildTypeSelector(InputType.keyboard, Icons.keyboard),
+              _buildTypeSelector(InputType.emoji, Icons.face),
+              _buildTypeSelector(InputType.sticker, Icons.format_paint),
+              new Flexible(
+                child: new TextField(
+                  maxLength: null,
+                  keyboardType: TextInputType.multiline,
+                  controller: _textController,
+                  focusNode: _focusNode,
+                  onChanged: (String text) {
+                    setState(() {
+                      _isComposing = text.trim().isNotEmpty;
+                    });
+                  },
+                  onSubmitted: _handleSubmitted,
+                  decoration:
+                      new InputDecoration.collapsed(hintText: "Send a message"),
+                ),
+              ),
+              new Container(
+                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Theme.of(context).platform == TargetPlatform.iOS
+                      ? new CupertinoButton(
+                          child: new Text("Send"),
+                          onPressed: _isComposing
+                              ? () => _handleSubmitted(_textController.text)
+                              : null,
+                        )
+                      : new IconButton(
+                          icon: new Icon(Icons.send),
+                          onPressed: _isComposing
+                              ? () => _handleSubmitted(_textController.text)
+                              : null,
+                        )),
+            ]),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildTypeSelector(InputType inputType, IconData iconData) {
-    return new IconButton(
-        icon: Icon(iconData),
-        color: _inputType == inputType
-//                ? Theme.of(context).accentColor
-//                : Theme.of(context).primaryColor,
-            ? Colors.green
-            : Colors.red,
-        onPressed: () => setState(() {
-              _inputType = inputType;
-            }));
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: new InkWell(
+          child: Icon(iconData,
+              color: _inputType == inputType
+                  ? Color(widget.friend.color)
+                  : Color(userColors[widget.friend.color])),
+          onTap: () => setState(() {
+                _inputType = inputType;
+              })),
+    );
   }
 
   Future<Null> _handleSubmitted(String text) async {
