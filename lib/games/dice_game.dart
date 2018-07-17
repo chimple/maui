@@ -314,9 +314,9 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       var dval;
 
       if (_myCounter != " ") {
-        dval = _myCounter;
+        dval = _myCounter+'.png';
       } else {
-        dval = "tapme";
+        dval = "tapto_play.gif";
       }
 
       print("data in player1 data $myData");
@@ -340,11 +340,16 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                   width: media.size.height < media.size.width
                       ? constraints.maxWidth * .15
                       : constraints.maxWidth * .2,
-                  color: Colors.red,
+                  // color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    shape: BoxShape.rectangle,
+                    border: new Border.all(color: Colors.black, width: 2.0)
+                  ),
                   child: new Center(
                       child: new Text("$_counter",
                           style: new TextStyle(
-                              color: Colors.black, fontSize: 25.0)))),
+                              color: Colors.black,fontWeight: FontWeight.w700 , fontSize: constraints.maxHeight*.06)))),
               new InkWell(
                   onTap: _randomVal,
                   child: new Container(
@@ -357,8 +362,8 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                     child: new Image(
                         image: new AssetImage(
                       animation.isAnimating
-                          ? 'assets/dice_game/dice4.gif'
-                          : 'assets/dice_game/$dval.png',
+                          ? 'assets/dice_game/dice_play.gif'
+                          : 'assets/dice_game/$dval',
                     )),
                   )),
             ],
