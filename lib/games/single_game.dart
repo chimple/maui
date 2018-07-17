@@ -490,16 +490,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       if (maxIterations > 0) {
         //since we have already switched amICurrentPlayer, test for reverse condition
-        if (!widget.gameConfig.amICurrentPlayer) {
-          if (widget.gameConfig.myIteration >= maxIterations &&
-              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
-//            _onGameEnd(context, gameData: gameData);
-            widget.gameConfig.isGameOver = true;
-        } else {
-          if (widget.gameConfig.otherIteration >= maxIterations &&
-              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
-//            _onGameEnd(context);
-            widget.gameConfig.isGameOver = true;
+//        if (!widget.gameConfig.amICurrentPlayer) {
+//          if (widget.gameConfig.myIteration >= maxIterations &&
+//              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
+////            _onGameEnd(context, gameData: gameData);
+//            widget.gameConfig.isGameOver = true;
+//        } else {
+//          if (widget.gameConfig.otherIteration >= maxIterations &&
+//              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
+////            _onGameEnd(context);
+//            widget.gameConfig.isGameOver = true;
+//        }
+        if (widget.gameConfig.myIteration >= maxIterations &&
+            widget.gameConfig.otherIteration >= maxIterations) {
+          widget.gameConfig.isGameOver = true;
         }
       } else {
         if (end) {
