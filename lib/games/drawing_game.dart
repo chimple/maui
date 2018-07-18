@@ -104,7 +104,6 @@ class DrawScreen extends State<Drawing> {
     if (widget.iteration != oldWidget.iteration) {
       print(
           "both the iterartin is old...${oldWidget.iteration}.........new ${widget.iteration}");
-
       if (navVal == 0) {
         navVal = widget.iteration;
       } else {
@@ -182,7 +181,7 @@ class DrawScreen extends State<Drawing> {
                       child: UnitButton(
                         text: '${questionImg}',
                         primary: true,
-                        unitMode: UnitMode.image,
+                        unitMode:  UnitMode.image,
                       )),
                 ),
                 new FittedBox(
@@ -441,14 +440,14 @@ class DrawScreen extends State<Drawing> {
                       new Expanded(
                         flex: 2,
                         child: new Container(
-                      // image: assetsImage,
-                      width: constraints.maxWidth * 0.3,
-                      height: constraints.maxHeight * 0.3,
-                      child: UnitButton(
-                        text: '${questionImg}',
-                        primary: true,
-                        unitMode: widget.gameConfig.questionUnitMode,
-                      )),
+                            // image: assetsImage,
+                            width: constraints.maxWidth * 0.3,
+                            height: constraints.maxHeight * 0.3,
+                            child: UnitButton(
+                              text: '${questionImg}',
+                              primary: true,
+                              unitMode: widget.gameConfig.questionUnitMode,
+                            )),
                       ),
                       new FittedBox(
                           child: new Container(
@@ -681,7 +680,7 @@ class DrawScreen extends State<Drawing> {
               ]);
             })
           : new SecondScreen(
-            ans,
+              ans,
               navVal,
               choice,
               drawJson,
