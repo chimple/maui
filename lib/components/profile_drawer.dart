@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/played_games_score.dart';
 import 'package:maui/components/videoplayer.dart';
 import 'package:maui/state/app_state_container.dart';
-
+import 'package:maui/screens/login_screen.dart';
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -71,18 +71,25 @@ class ProfileDrawerState extends State<ProfileDrawer>
                 )
               ],
             currentAccountPicture: new Container(
-              decoration:  new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(40.0),
-                  border: new Border.all(
-                    width: 5.0,
-                    color: Colors.black
-                  )
-                ),
-                child: new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
-                  ),
-                ),
+                  child: new GestureDetector(
+                    child: Container(
+                        decoration: new BoxDecoration(
+                          borderRadius: new BorderRadius.circular(40.0),
+                          border: new Border.all(
+                            width: 3.0,
+                            color: Colors.black
+                          )
+                        ),
+                        child: new CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage: new FileImage(new File(user.image),),
+                      ),
+                    ),
+                    onTap: () {
+                      //Navigate to Camera Screen
+                      print("Hello World..!!");
+                    },
+                )),
             accountName: new Text('${user.name}',
                                     textAlign: TextAlign.left, 
                                     style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
@@ -117,7 +124,7 @@ class ProfileDrawerIcon extends StatelessWidget {
           decoration: new BoxDecoration(
             borderRadius: new BorderRadius.circular(30.0),
             border: new Border.all(
-              width: 5.0,
+              width: 3.0,
               color: Colors.black
             )
           ),

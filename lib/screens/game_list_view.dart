@@ -106,6 +106,13 @@ class GameListViewState extends State<GameListView> {
                             ),
                           ])
                         : Badge(
+                          color: Colors.red,
+                          textStyle: const TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.white
+                          ),
+                          borderSize: 5.0,
+                          borderColor: Colors.red,
                             value: '${_notifs[gameName]}',
                             child: Hero(
                               tag: 'assets/hoodie/$gameName.png',

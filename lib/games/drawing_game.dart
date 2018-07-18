@@ -295,26 +295,71 @@ class DrawScreen extends State<Drawing> {
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           // scrollDirection: Axis.horizontal,
-                          children: width_val
-                              .map((widthValue) => Center(
-                                    child: RawMaterialButton(
-                                      onPressed: () => _multiWidth(widthValue),
-                                      constraints: new BoxConstraints.tightFor(
-                                        width: constraints.maxWidth * .05,
-                                        height: constraints.maxHeight * .07,
-                                      ),
-                                      fillColor: new Color(0xffffffff),
-                                      shape: new CircleBorder(
-                                        side: new BorderSide(
-                                          color: widthValue == selectedWidth
-                                              ? Color(0xf0000000)
-                                              : const Color(0xFFD5D7DA),
-                                          width: widthValue,
-                                        ),
-                                      ),
-                                    ),
-                                  ))
-                              .toList(growable: false),
+                          children: <Widget>[
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(2.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .03,
+                                height: constraints.maxHeight * .07,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 2.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(4.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .04,
+                                height: constraints.maxHeight * .07,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 4.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(6.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .048,
+                                height: constraints.maxHeight * .07,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 6.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),RawMaterialButton(
+                              onPressed: () => _multiWidth(8.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .055,
+                                height: constraints.maxHeight * .07,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 8.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     : new Container(),
@@ -480,10 +525,13 @@ class DrawScreen extends State<Drawing> {
                                 children: color_val
                                     .map((colorValue) => Center(
                                             child: RawMaterialButton(
-                                          onPressed: () =>_multiColor(colorValue),
-                                          constraints:new BoxConstraints.tightFor(
+                                          onPressed: () =>
+                                              _multiColor(colorValue),
+                                          constraints:
+                                              new BoxConstraints.tightFor(
                                             width: constraints.maxWidth * .04,
-                                            height: constraints.maxHeight * .05,),
+                                            height: constraints.maxHeight * .05,
+                                          ),
                                           fillColor: new Color(colorValue),
                                           shape: new CircleBorder(
                                             side: new BorderSide(
@@ -501,28 +549,74 @@ class DrawScreen extends State<Drawing> {
                       visibilityWidth
                           ? new Expanded(
                               child: new Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                // scrollDirection: Axis.horizontal,
-                                children: width_val
-                                    .map((widthValue) => Center(
-                                          child: RawMaterialButton(
-                                            onPressed: () =>_multiWidth(widthValue),
-                                            constraints: new BoxConstraints.tightFor(
-                                              width: constraints.maxWidth * .04,
-                                              height:constraints.maxHeight * .05,
-                                            ),
-                                            fillColor: new Color(0xffffffff),
-                                            shape: new CircleBorder(
-                                              side: new BorderSide(
-                                                color: widthValue == selectedWidth? Color(0xf0000000) : const Color(0xFFD5D7DA),
-                                                width: widthValue,
-                                              ),
-                                            ),
-                                          ),
-                                        ))
-                                    .toList(growable: false),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(2.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .04,
+                                height: constraints.maxHeight * .035,
                               ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 2.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(4.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .04,
+                                height: constraints.maxHeight * .04,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 4.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            RawMaterialButton(
+                              onPressed: () => _multiWidth(6.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .04,
+                                height: constraints.maxHeight * .045,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 6.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),RawMaterialButton(
+                              onPressed: () => _multiWidth(8.0),
+                              constraints: new BoxConstraints.tightFor(
+                                width: constraints.maxWidth * .04,
+                                height: constraints.maxHeight * .05,
+                              ),
+                              fillColor: new Color(0xf0000000),
+                              shape: new CircleBorder(
+                                side: new BorderSide(
+                                  color: 8.0 == selectedWidth
+                                      ? Color(0xff76ff03)
+                                      : const Color(0xFFD5D7DA),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                             )
                           : Container(),
                     ]))
