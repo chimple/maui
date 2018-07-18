@@ -72,7 +72,7 @@ class FriendItem extends StatelessWidget {
                               image: new DecorationImage(
                                   image: replaceWithHoodie && user.id == id
                                       ? new AssetImage(
-                                          'assets/koala_neutral.png')
+                                          'assets/chat_Bot_Icon.png')
                                       : isFile
                                           ? FileImage(File(imageUrl))
                                           : imageMemory != null

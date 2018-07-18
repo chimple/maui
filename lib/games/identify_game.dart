@@ -60,6 +60,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   @override
   void initState() {
     super.initState();
+    // _renderChoice("text",900.0, 400.0, Orientation.landscape, 0.0, 0.0);
     _initBoard();
     print(">>>>>>>>>initstate.>>>$_decoded");
     _imgController = new AnimationController(
@@ -281,33 +282,33 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     return partsName;
   }
 
-  _onTapDown(BuildContext context, TapDownDetails down) {
-    // print(start.globalPosition.toString());
-    RenderBox getBox = context.findRenderObject();
-    var local = getBox.globalToLocal(down.globalPosition);
-    print(local.dx.toString() + "|" + local.dy.toString());
-  }
+  // _onTapDown(BuildContext context, TapDownDetails down) {
+  //   // print(start.globalPosition.toString());
+  //   RenderBox getBox = context.findRenderObject();
+  //   var local = getBox.globalToLocal(down.globalPosition);
+  //   print(local.dx.toString() + "|" + local.dy.toString());
+  // }
 
-  _onTapUp(BuildContext context, TapUpDetails up) {
-    // print(update.globalPosition.toString());
-    RenderBox getBox = context.findRenderObject();
-    var local = getBox.globalToLocal(up.globalPosition);
-    print(local.dx.toString() + "|" + local.dy.toString());
-  }
+  // _onTapUp(BuildContext context, TapUpDetails up) {
+  //   // print(update.globalPosition.toString());
+  //   RenderBox getBox = context.findRenderObject();
+  //   var local = getBox.globalToLocal(up.globalPosition);
+  //   print(local.dx.toString() + "|" + local.dy.toString());
+  // }
 
-  _onDragStart(BuildContext context, DragStartDetails start) {
-    // print(start.globalPosition.toString());
-    RenderBox getBox = context.findRenderObject();
-    var local = getBox.globalToLocal(start.globalPosition);
-    print(local.dx.toString() + "|" + local.dy.toString());
-  }
+  // _onDragStart(BuildContext context, DragStartDetails start) {
+  //   // print(start.globalPosition.toString());
+  //   RenderBox getBox = context.findRenderObject();
+  //   var local = getBox.globalToLocal(start.globalPosition);
+  //   print(local.dx.toString() + "|" + local.dy.toString());
+  // }
 
-  _onDragUpdate(BuildContext context, DragUpdateDetails update) {
-    // print(update.globalPosition.toString());
-    RenderBox getBox = context.findRenderObject();
-    var local = getBox.globalToLocal(update.globalPosition);
-    print(local.dx.toString() + "|" + local.dy.toString());
-  }
+  // _onDragUpdate(BuildContext context, DragUpdateDetails update) {
+  //   // print(update.globalPosition.toString());
+  //   RenderBox getBox = context.findRenderObject();
+  //   var local = getBox.globalToLocal(update.globalPosition);
+  //   print(local.dx.toString() + "|" + local.dy.toString());
+  // }
 
   void toAnimateFunction() {
     animation.addStatusListener((AnimationStatus status) {
@@ -366,9 +367,20 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
         .toInt();
 
     return new Container(
-      width: maxWidth / cols,
-      height: maxHeight / r,
-      color: Theme.of(context).buttonColor,
+      margin: new EdgeInsets.all(4.0),
+      decoration: new BoxDecoration(
+        borderRadius: new BorderRadius.all(const Radius.elliptical(16.0, 16.0)),
+        color: Color(0xffEDEDED),
+        boxShadow: [new BoxShadow(
+          color: Colors.black87,
+          // blurRadius: 4.0
+          // spreadRadius: 4.0
+          offset: Offset(2.0, 2.0)
+        )]
+      ),
+      width: maxWidth / cols - 8.0,
+      height: maxHeight / r - 8.0,
+      // color: Theme.of(context).buttonColor,
       child: new ScaleTransition(
         scale: shakeAnimation,
         child: new Draggable(
@@ -514,7 +526,9 @@ class AnimatedFeedback extends AnimatedWidget {
           style: new TextStyle(
             color: Colors.black,
             decoration: TextDecoration.none,
-            fontSize: width * 0.05,
+            decorationColor: Colors.black87,
+            fontSize: width * 0.04,
+            fontWeight: FontWeight.bold
           ),
         ),
       ),
