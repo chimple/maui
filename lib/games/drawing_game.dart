@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/state/button_state_container.dart';
 import 'package:tuple/tuple.dart';
 import '../components/drawing.dart';
 import 'package:maui/repos/game_data.dart';
 import '../components/SecondScreen.dart';
+import 'dart:math';
 
 class Drawing extends StatefulWidget {
   Function onScore;
@@ -31,12 +34,16 @@ class Drawing extends StatefulWidget {
 
 class DrawScreen extends State<Drawing> {
   DrawPadController _padController = new DrawPadController();
-  bool visibilityColor = false;
+  bool visibilityColor = true;
   bool visibilityWidth = false;
   bool _isLoading = true;
   int navVal = 0;
   List<String> choice = [];
-  Tuple2<String, List<String>> drawingData;
+  Tuple3<String, String, List<String>> drawingData;
+  //  int _size = 2;
+  String questionImg;
+  String ans;
+  List<String> ch;
   var ansimage;
   int selectedColor = 0xff000000;
   double selectedWidth = 2.0;
@@ -73,10 +80,21 @@ class DrawScreen extends State<Drawing> {
       DrawData = [drawJson];
       ReceiveData = [];
     }
-    drawingData = await fetchDrawingData(widget.gameCategoryId);
-    choice = drawingData.item2;
-    ansimage = choice[0];
-    print('gameData: ${widget.gameConfig.gameData}');
+    choice = [];
+    drawingData =
+        await fetchMultipleChoiceData(widget.gameConfig.gameCategoryId, 3);
+    questionImg = drawingData.item1;
+    ans = drawingData.item2;
+    ch = drawingData.item3;
+    for (var x = 0; x < ch.length; x++) {
+      choice.add(ch[x]);
+    }
+    choice.add(ans);
+    print("My Choices - $choice");
+
+    choice.shuffle();
+    // _size = min(2, sqrt(choice.length).floor());
+    // print('gameData: ${widget.gameConfig.gameData}');
     setState(() => _isLoading = false);
   }
 
@@ -111,7 +129,7 @@ class DrawScreen extends State<Drawing> {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     MediaQueryData media = MediaQuery.of(context);
-    var assetsImage = new AssetImage('assets/dict/${choice[1]}.png');
+    // var assetsImage = new AssetImage('assets/dict/${questionImg}.png');
     List<int> color_val = [
       0xff76ff03,
       0xffffff00,
@@ -123,13 +141,11 @@ class DrawScreen extends State<Drawing> {
       0xff000000,
       0xffc62828
     ];
-    List<double> width_val = [
-      2.0,
-      4.0,
-      6.0,
-      8.0,
-    ];
     int roundColor;
+    final maxChars = (choice != null
+        ? choice.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
 
     if (selectedColor == 0xff000000)
       roundColor = 0xff00e676;
@@ -142,19 +158,38 @@ class DrawScreen extends State<Drawing> {
       print("navigatin to $navVal");
       return navVal == 0
           ? new LayoutBuilder(builder: (context, constraints) {
+              final hPadding = pow(constraints.maxWidth / 150.0, 2);
+              final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+              double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
+              double maxHeight =
+                  (constraints.maxHeight - vPadding * 2) / (2 + 1);
+
+              final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+              maxWidth -= buttonPadding * 2;
+              maxHeight -= buttonPadding * 2;
+              UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+              final buttonConfig =
+                  ButtonStateContainer.of(context).buttonConfig;
               print({"this is constraints": "potrait"});
               return new Flex(direction: Axis.vertical, children: <Widget>[
                 new FittedBox(
-                  child: new Image(
-                      image: assetsImage,
+                  child: new Container(
+                      // image: assetsImage,
                       width: constraints.maxWidth * 0.5,
-                      height: constraints.maxHeight * 0.2),
+                      height: constraints.maxHeight * 0.2,
+                      child: UnitButton(
+                        text: '${questionImg}',
+                        primary: true,
+                        unitMode: UnitMode.image,
+                      )),
                 ),
                 new FittedBox(
                   child: new Container(
-                      width: constraints.maxWidth,
-                      height: constraints.maxHeight * 0.08,
-                      child: new Text('${choice[1].toUpperCase()}',
+                      // width: constraints.maxWidth,
+                      // height: constraints.maxHeight * 0.08,
+                      child: new Text('${questionImg}',
                           key: new Key('imgtext'),
                           textAlign: TextAlign.center,
                           style: new TextStyle(
@@ -343,7 +378,8 @@ class DrawScreen extends State<Drawing> {
                                   width: 2.0,
                                 ),
                               ),
-                            ),RawMaterialButton(
+                            ),
+                            RawMaterialButton(
                               onPressed: () => _multiWidth(8.0),
                               constraints: new BoxConstraints.tightFor(
                                 width: constraints.maxWidth * .055,
@@ -366,6 +402,7 @@ class DrawScreen extends State<Drawing> {
               ]);
             })
           : new SecondScreen(
+              ans,
               navVal,
               choice,
               drawJson,
@@ -382,6 +419,20 @@ class DrawScreen extends State<Drawing> {
       return navVal == 0
           ? new LayoutBuilder(builder: (context, constraints) {
               print({"this is constraints": constraints});
+              final hPadding = pow(constraints.maxWidth / 150.0, 2);
+              final vPadding = pow(constraints.maxHeight / 150.0, 2);
+
+              double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
+              double maxHeight =
+                  (constraints.maxHeight - vPadding * 2) / (2 + 1);
+
+              final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+
+              maxWidth -= buttonPadding * 2;
+              maxHeight -= buttonPadding * 2;
+              UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+              final buttonConfig =
+                  ButtonStateContainer.of(context).buttonConfig;
 
               return new Flex(direction: Axis.horizontal, children: <Widget>[
                 new Expanded(
@@ -389,16 +440,21 @@ class DrawScreen extends State<Drawing> {
                     child: new Column(children: <Widget>[
                       new Expanded(
                         flex: 2,
-                        child: new Image(
-                            image: assetsImage,
-                            width: constraints.maxWidth * 0.3,
-                            height: constraints.maxHeight * 0.3),
+                        child: new Container(
+                      // image: assetsImage,
+                      width: constraints.maxWidth * 0.3,
+                      height: constraints.maxHeight * 0.3,
+                      child: UnitButton(
+                        text: '${questionImg}',
+                        primary: true,
+                        unitMode: widget.gameConfig.questionUnitMode,
+                      )),
                       ),
                       new FittedBox(
                           child: new Container(
                               width: constraints.maxWidth * 0.3,
                               height: constraints.maxHeight * 0.1,
-                              child: new Text("${choice[1].toUpperCase()}",
+                              child: new Text("${questionImg}",
                                   textAlign: TextAlign.center,
                                   style: new TextStyle(
                                       fontSize: constraints.maxHeight * 0.1,
@@ -549,80 +605,83 @@ class DrawScreen extends State<Drawing> {
                       visibilityWidth
                           ? new Expanded(
                               child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          // scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            RawMaterialButton(
-                              onPressed: () => _multiWidth(2.0),
-                              constraints: new BoxConstraints.tightFor(
-                                width: constraints.maxWidth * .04,
-                                height: constraints.maxHeight * .035,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                // scrollDirection: Axis.horizontal,
+                                children: <Widget>[
+                                  RawMaterialButton(
+                                    onPressed: () => _multiWidth(2.0),
+                                    constraints: new BoxConstraints.tightFor(
+                                      width: constraints.maxWidth * .04,
+                                      height: constraints.maxHeight * .035,
+                                    ),
+                                    fillColor: new Color(0xf0000000),
+                                    shape: new CircleBorder(
+                                      side: new BorderSide(
+                                        color: 2.0 == selectedWidth
+                                            ? Color(0xff76ff03)
+                                            : const Color(0xFFD5D7DA),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  RawMaterialButton(
+                                    onPressed: () => _multiWidth(4.0),
+                                    constraints: new BoxConstraints.tightFor(
+                                      width: constraints.maxWidth * .04,
+                                      height: constraints.maxHeight * .04,
+                                    ),
+                                    fillColor: new Color(0xf0000000),
+                                    shape: new CircleBorder(
+                                      side: new BorderSide(
+                                        color: 4.0 == selectedWidth
+                                            ? Color(0xff76ff03)
+                                            : const Color(0xFFD5D7DA),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  RawMaterialButton(
+                                    onPressed: () => _multiWidth(6.0),
+                                    constraints: new BoxConstraints.tightFor(
+                                      width: constraints.maxWidth * .04,
+                                      height: constraints.maxHeight * .045,
+                                    ),
+                                    fillColor: new Color(0xf0000000),
+                                    shape: new CircleBorder(
+                                      side: new BorderSide(
+                                        color: 6.0 == selectedWidth
+                                            ? Color(0xff76ff03)
+                                            : const Color(0xFFD5D7DA),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  RawMaterialButton(
+                                    onPressed: () => _multiWidth(8.0),
+                                    constraints: new BoxConstraints.tightFor(
+                                      width: constraints.maxWidth * .04,
+                                      height: constraints.maxHeight * .05,
+                                    ),
+                                    fillColor: new Color(0xf0000000),
+                                    shape: new CircleBorder(
+                                      side: new BorderSide(
+                                        color: 8.0 == selectedWidth
+                                            ? Color(0xff76ff03)
+                                            : const Color(0xFFD5D7DA),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              fillColor: new Color(0xf0000000),
-                              shape: new CircleBorder(
-                                side: new BorderSide(
-                                  color: 2.0 == selectedWidth
-                                      ? Color(0xff76ff03)
-                                      : const Color(0xFFD5D7DA),
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),
-                            RawMaterialButton(
-                              onPressed: () => _multiWidth(4.0),
-                              constraints: new BoxConstraints.tightFor(
-                                width: constraints.maxWidth * .04,
-                                height: constraints.maxHeight * .04,
-                              ),
-                              fillColor: new Color(0xf0000000),
-                              shape: new CircleBorder(
-                                side: new BorderSide(
-                                  color: 4.0 == selectedWidth
-                                      ? Color(0xff76ff03)
-                                      : const Color(0xFFD5D7DA),
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),
-                            RawMaterialButton(
-                              onPressed: () => _multiWidth(6.0),
-                              constraints: new BoxConstraints.tightFor(
-                                width: constraints.maxWidth * .04,
-                                height: constraints.maxHeight * .045,
-                              ),
-                              fillColor: new Color(0xf0000000),
-                              shape: new CircleBorder(
-                                side: new BorderSide(
-                                  color: 6.0 == selectedWidth
-                                      ? Color(0xff76ff03)
-                                      : const Color(0xFFD5D7DA),
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),RawMaterialButton(
-                              onPressed: () => _multiWidth(8.0),
-                              constraints: new BoxConstraints.tightFor(
-                                width: constraints.maxWidth * .04,
-                                height: constraints.maxHeight * .05,
-                              ),
-                              fillColor: new Color(0xf0000000),
-                              shape: new CircleBorder(
-                                side: new BorderSide(
-                                  color: 8.0 == selectedWidth
-                                      ? Color(0xff76ff03)
-                                      : const Color(0xFFD5D7DA),
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                             )
                           : Container(),
                     ]))
               ]);
             })
           : new SecondScreen(
+            ans,
               navVal,
               choice,
               drawJson,

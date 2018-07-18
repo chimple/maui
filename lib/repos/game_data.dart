@@ -772,43 +772,43 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
   }
   return null;
 }
-Future<Tuple2<String, List<String>>> fetchDrawingData(
-    int categoryId) async {
-  var rand = new Random();
-  var startNum = rand.nextInt(max(0, 8));
-  switch (startNum) {
-    case 0:
-      return new Tuple2("fruits name",
-          ['banana', 'apple', 'grape', 'ball']);
-      break;
-    case 1:
-      return new Tuple2("nature",
-          ['bat', 'grape', 'rat', 'cat']);
-      break;
-    case 2:
-      return new Tuple2("Colors",
-          ['book', 'chair', 'table', 'pen']);
-      break;
-    case 3:
-      return new Tuple2(
-          "animals .", ['milk', 'cow', 'snake', 'grass']);
-      break;
-    case 4:
-      return new Tuple2("vegitables",
-          ['onion', 'carrot', 'tomoto', 'chilli']);
-      break;
-    case 5:
-      return new Tuple2(
-          "wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
-      break;
-    case 6:
-      return new Tuple2("vehicles",
-          ['bus', 'car', 'bike', 'train']);
-      break;
-    case 7:
-      return new Tuple2("flowers",
-          ['rose', 'television', 'home', 'jasmin']);
-      break;
-  }
-  return null;
-}
+// Future<Tuple2<String, List<String>>> fetchDrawingData(
+//     int categoryId) async {
+//   var rand = new Random();
+//   var startNum = rand.nextInt(max(0, 8));
+//   switch (startNum) {
+//     case 0:
+//       return new Tuple2("fruits name",
+//           ['banana', 'apple', 'grape', 'ball']);
+//       break;
+//     case 1:
+//       return new Tuple2("nature",
+//           ['bat', 'grape', 'rat', 'cat']);
+//       break;
+//     case 2:
+//       return new Tuple2("Colors",
+//           ['book', 'chair', 'table', 'pen']);
+//       break;
+//     case 3:
+//       return new Tuple2(
+//           "animals .", ['milk', 'cow', 'snake', 'grass']);
+//       break;
+//     case 4:
+//       return new Tuple2("vegitables",
+//           ['onion', 'carrot', 'tomoto', 'chilli']);
+//       break;
+//     case 5:
+//       return new Tuple2(
+//           "wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
+//       break;
+//     case 6:
+//       return new Tuple2("vehicles",
+//           ['bus', 'car', 'bike', 'train']);
+//       break;
+//     case 7:
+//       return new Tuple2("flowers",
+//           ['rose', 'television', 'home', 'jasmin']);
+//       break;
+//   }
+//   return null;
+// }
