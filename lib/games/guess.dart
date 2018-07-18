@@ -5,88 +5,9 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/loca.dart';
 
 /// A widget that ensures it is always visible when focused.
-class EnsureVisibleWhenFocused extends StatefulWidget {
-  const EnsureVisibleWhenFocused({
-    Key key,
-    @required this.child,
-    @required this.focusNode,
-    this.curve: Curves.ease,
-    this.duration: const Duration(milliseconds: 100),
-  }) : super(key: key);
-
-  /// The node we will monitor to determine if the child is focused
-  final FocusNode focusNode;
-
-  /// The child widget that we are wrapping
-  final Widget child;
-
-  /// The curve we will use to scroll ourselves into view.
-  ///
-  /// Defaults to Curves.ease.
-  final Curve curve;
-
-  /// The duration we will use to scroll ourselves into view
-  ///
-  /// Defaults to 100 milliseconds.
-  final Duration duration;
-
-  EnsureVisibleWhenFocusedState createState() =>
-      new EnsureVisibleWhenFocusedState();
-}
-
-class EnsureVisibleWhenFocusedState extends State<EnsureVisibleWhenFocused> {
-  @override
-  void initState() {
-    super.initState();
-    widget.focusNode.addListener(_ensureVisible);
-  }
-
-  @override
-  void dispose() {
-    widget.focusNode.removeListener(_ensureVisible);
-    super.dispose();
-  }
-
-  Future<Null> _ensureVisible() async {
-    // Wait for the keyboard to come into view
-    // TODO: position doesn't seem to notify listeners when metrics change,
-    // perhaps a NotificationListener around the scrollable could avoid
-    // the need insert a delay here.
-    await new Future.delayed(const Duration(milliseconds: 300));
-
-    if (!widget.focusNode.hasFocus) return;
-
-    final RenderObject object = context.findRenderObject();
-    final RenderAbstractViewport viewport = RenderAbstractViewport.of(object);
-    assert(viewport != null);
-
-    ScrollableState scrollableState = Scrollable.of(context);
-    assert(scrollableState != null);
-
-    ScrollPosition position = scrollableState.position;
-    double alignment;
-    if (position.pixels > viewport.getOffsetToReveal(object, 0.0)) {
-      // Move down to the top of the viewport
-      alignment = 0.0;
-    } else if (position.pixels < viewport.getOffsetToReveal(object, 1.0)) {
-      // Move up to the bottom of the viewport
-      alignment = 1.0;
-    } else {
-      // No scrolling is necessary to reveal the child
-      return;
-    }
-    position.ensureVisible(
-      object,
-      alignment: alignment,
-      duration: widget.duration,
-      curve: widget.curve,
-    );
-  }
-
-  Widget build(BuildContext context) => widget.child;
-}
 
 Map _decoded;
 
@@ -285,6 +206,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // _renderChoice("text", 0.0, 0.0, 900.0, 400.0, Orientation.landscape);
     _initBoard();
     _focusnode.addListener(_focusChange);
 
@@ -431,7 +353,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                       decoration: new InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: "Type image",
+                        hintText: Loca.of(context).hint,
                         hintStyle: new TextStyle(
                             color: Colors.blueGrey,
                             fontSize: orientation == Orientation.portrait
@@ -464,7 +386,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
                   child: new IconButton(
                     // color: Colors.blue,
-                    key: new Key("checking"),
+                    // key: new Key("checking"),
                     // padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
                     icon: new Center(
                         child: new Icon(Icons.check,

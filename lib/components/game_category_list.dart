@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/concept.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:meta/meta.dart';
@@ -9,8 +10,6 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/repos/concept_repo.dart';
-import 'package:maui/screens/game_category_list_screen.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -89,6 +88,8 @@ class _GameCategoryList extends State<GameCategoryList> {
   bool isLoading = false;
   List<GameCategoryData> gameCategoryData;
   Map<int, List<GameCategoryData>> conceptIdMap;
+  //hold globalKey for current expandedTile
+  GlobalKey<ControlledExpansionTileState> currentExpandedTile;
 
   @override
   void initState() {
@@ -182,9 +183,22 @@ class _GameCategoryList extends State<GameCategoryList> {
         buttons.add(_buildButtonCategory(
             mainCategoryName, list.first.id, tileColors[colorIndex++]));
       } else {
+        GlobalKey<ControlledExpansionTileState> expansionKey =
+            new GlobalObjectKey("tile-$conceptId");
         buttons.add(Container(
           color: tileColors[colorIndex++],
-          child: new ExpansionTiles(
+          child: new ControlledExpansionTile(
+            key: expansionKey,
+            onExpansionChanged: (bool value) {
+              if (value) {
+                if (currentExpandedTile != null) {
+                  currentExpandedTile.currentState?.handleTap();
+                }
+                currentExpandedTile = expansionKey;
+              } else {
+                currentExpandedTile = null;
+              }
+            },
             title: Container(
               height: 154.0,
               child: Padding(
@@ -216,7 +230,8 @@ class _GameCategoryList extends State<GameCategoryList> {
         child: Container(
           decoration: BoxDecoration(
               border: BorderDirectional(
-                  bottom: BorderSide(width: 2.0, color: Colors.black.withOpacity(0.2)))),
+                  bottom: BorderSide(
+                      width: 2.0, color: Colors.black.withOpacity(0.2)))),
           child: ListTile(
             title: Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
