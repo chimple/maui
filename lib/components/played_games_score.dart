@@ -61,33 +61,39 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     Widget scoreHistory(String myUser, String otherUser, int myScore, int otherScore, String game, int playedAt) {
       totalScore = 0;
       if(otherUser == null) {
-          return new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 30.0),
-                child:new Container(
-                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 20.0),
-                   decoration:  new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(40.0),
-                    border: new Border.all(
-                      width: 3.0,
-                      color: Colors.black
-                    )
-                  ),
-                child: new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
+          return Container(
+            decoration: BoxDecoration(
+              border: BorderDirectional(
+              bottom: BorderSide(
+              width: 2.0, color: Colors.black.withOpacity(0.2)))),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Container(
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 30.0),
+                  child:new Container(
+                    margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 20.0),
+                     decoration:  new BoxDecoration(
+                      borderRadius: new BorderRadius.circular(40.0),
+                      border: new Border.all(
+                        width: 3.0,
+                        color: Colors.black
+                      )
+                    ),
+                  child: new CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: new FileImage(new File(user.image)),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                  child: new Container(
-                    margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 25.0),
-                    child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
-                  ),
-              ),
-            ],
+                Expanded(
+                    child: new Container(
+                      margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 25.0),
+                      child: new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                    ),
+                ),
+              ],
+            ),
           );
       } else {
          otherUserImage = _getOpponentImage(otherUser);
@@ -95,61 +101,67 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
           otherUserImagePath = k;
             print('Opponent Image Path $otherUserImagePath');
           });
-          return new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
-                child:new Container(
-                   decoration:  new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(40.0),
-                    border: new Border.all(
-                      width: 3.0,
-                      color: Colors.black
-                    )
+          return Container(
+            decoration: BoxDecoration(
+              border: BorderDirectional(
+              bottom: BorderSide(
+              width: 2.0, color: Colors.black.withOpacity(0.2)))),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Container(
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 10.0),
+                  child:new Container(
+                     decoration:  new BoxDecoration(
+                      borderRadius: new BorderRadius.circular(40.0),
+                      border: new Border.all(
+                        width: 3.0,
+                        color: Colors.black
+                      )
+                    ),
+                  child: new CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: new FileImage(new File(user.image)),
+                    ),
                   ),
-                child: new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: new FileImage(new File(user.image)),
+                ),
+
+                new Container(
+                  child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
+                      :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                ),
+
+                new Container(
+                margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                child: myScore >= otherScore 
+                ? myScore == otherScore 
+                      ?  new Text('Its a Tie',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                        :  new Text('You Won',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
+                :  new Text('You Loose',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
                   ),
-                ),
-              ),
 
-              new Container(
-                child: otherScore == null ? new Text('0',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),)
-                    :new Text('${myScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
-              ),
+                new Container(
+                    child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
+                  ),
 
-              new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 5.0),
-              child: myScore >= otherScore 
-              ? myScore == otherScore 
-                    ?  new Text('Its a Tie',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                      :  new Text('You Won',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-              :  new Text('You Loose',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),) 
-                ),
-
-              new Container(
-                  child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
-                ),
-
-              // new Container(
-              //   margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
-              //   child:new Container(
-              //      decoration:  new BoxDecoration(
-              //       borderRadius: new BorderRadius.circular(40.0),
-              //       border: new Border.all(
-              //         width: 3.0,
-              //         color: Colors.black
-              //       )
-              //     ),
-              //   child: new CircleAvatar(
-              //       backgroundColor: Colors.white,
-              //       backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
-              //     ),
-              //   ),
-              // ),
-            ],
+                // new Container(
+                //   margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
+                //   child:new Container(
+                //      decoration:  new BoxDecoration(
+                //       borderRadius: new BorderRadius.circular(40.0),
+                //       border: new Border.all(
+                //         width: 3.0,
+                //         color: Colors.black
+                //       )
+                //     ),
+                //   child: new CircleAvatar(
+                //       backgroundColor: Colors.white,
+                //       backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           );
       }
     }
