@@ -314,13 +314,14 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               print("this is my intial $countEnd");
               if(c==0){
                 setState(() {
-                  countEnd++;
+
                   widget.onScore(-1);
+                  countEnd++;
                   _ShakeCells[index] = ShakeCell.Right;
                   if(countEnd == 3){
                     print("this is my count End $countEnd");
                     countEnd=0;
-                    _turnByTurn();
+                    widget.onEnd();
 
                   }
                 });
@@ -515,7 +516,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
 // print("_MyButtonState.initState: ${widget.text}");
-//    print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
+// print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
@@ -574,7 +575,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-//    print({"oldwidget data ": oldWidget.text});
+// print({"oldwidget data ": oldWidget.text});
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
