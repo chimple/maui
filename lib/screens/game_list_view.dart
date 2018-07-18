@@ -61,14 +61,16 @@ class GameListViewState extends State<GameListView> {
           children: <Widget>[
              new Material(
               elevation:8.0,
+                 borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
 
 
             child:new Container(
 
               decoration: new BoxDecoration(
                 color: color,
-
+                borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
                 image: new DecorationImage(
+
                   image: new AssetImage(
                       "assets/background_image/${gameName}_small.png"),
                   fit: BoxFit.cover,
@@ -106,18 +108,36 @@ class GameListViewState extends State<GameListView> {
                             ),
                           ])
                         : Badge(
+                            positionRight: size.width,
                             value: '${_notifs[gameName]}',
-                            child: Hero(
-                              tag: 'assets/hoodie/$gameName.png',
-                              child: Image.asset('assets/hoodie/$gameName.png',
-                                  scale: 0.6),
-                            ))),
+                            child:    new Material(
+                                elevation:8.0,
+                                borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
+
+
+                                child:new Container(
+
+                                  decoration: new BoxDecoration(
+                                    color: color,
+                                    borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
+                                    image: new DecorationImage(
+
+                                      image: new AssetImage(
+                                          "assets/background_image/${gameName}_small.png"),
+                                      fit: BoxFit.cover,
+
+                                    ),
+                                  ),
+                                )),)),
                 new Container(
                     child: new Container(
+//                      padding: EdgeInsets.only(left:size.width * 0.1),
                         // margin: EdgeInsets.only(left: size.width*.15),
                         child: new Text(Loca.of(context).intl(gameName),
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
                             style: new TextStyle(
-                                fontSize: size.height * .03,
+                                fontSize: size.height * .04,
                                 color: Colors.white),
                             overflow: TextOverflow.ellipsis))),
               ],
@@ -140,7 +160,7 @@ class GameListViewState extends State<GameListView> {
           child: new GridView.count(
           key: new Key('Game_page'),
           primary: true,
-          padding: const EdgeInsets.all(12.0),
+//          padding: const EdgeInsets.all(.0),
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 3 : 4,
