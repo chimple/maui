@@ -49,7 +49,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   FocusNode _focusNode;
   bool _isComposing = false;
-  InputType _inputType = InputType.keyboard;
+  InputType _inputType = InputType.choices;
 //  DatabaseReference _reference;
 //  List<dynamic> _messages;
   static final chatMessageType = 'chat';

@@ -279,7 +279,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   void getUsers() async {
     activity = 'friends';
     final userList = await UserRepo().getRemoteUsers();
-    final botUser = await UserRepo().getUser('sister');
+    final botUser = await UserRepo().getUser(User.botId);
     userList.insert(0, botUser);
     final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
