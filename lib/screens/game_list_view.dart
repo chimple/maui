@@ -108,7 +108,6 @@ class GameListViewState extends State<GameListView> {
                             ),
                           ])
                         : Badge(
-                            positionRight: size.width,
                             value: '${_notifs[gameName]}',
                             child:    new Material(
                                 elevation:8.0,
