@@ -124,17 +124,18 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     _controller.removeListener(_tabSelected);
     _controller.dispose();
     _imgController.dispose();
     _bubbleController.dispose();
     _scrollcontroller.removeListener(_scrolling);
     _scrollcontroller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('TabHomeState:build');
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = media.orientation;
     var _size = media.size;
