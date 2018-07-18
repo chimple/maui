@@ -38,6 +38,7 @@ class User {
   static const columnColor = 'color';
   static const columnImage = 'image';
   static const columnCurrentLessonId = 'currentLessonId';
+  static const botId = 'sister';
 
   String id;
   String deviceId;

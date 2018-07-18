@@ -56,6 +56,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
           await Flores().getLatestConversations(user.id, widget.gameName);
     } on PlatformException {
       print('Failed getting messages');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
     }
 
     print('_initData: $messages');

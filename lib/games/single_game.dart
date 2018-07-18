@@ -512,13 +512,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         }
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
-        await Flores().addMessage(
-            widget.gameConfig.myUser.id,
-            widget.gameConfig.otherUser.id,
-            widget.gameName,
-            widget.gameConfig.toJson(),
-            true,
-            widget.gameConfig.sessionId ?? Uuid().v4());
+        try {
+          await Flores().addMessage(
+              widget.gameConfig.myUser.id,
+              widget.gameConfig.otherUser.id,
+              widget.gameName,
+              widget.gameConfig.toJson(),
+              true,
+              widget.gameConfig.sessionId ?? Uuid().v4());
+        } on PlatformException {
+          print('Flores: Failed addMessage');
+        } catch (e, s) {
+          print('Exception details:\n $e');
+          print('Stack trace:\n $s');
+        }
       }
       if (widget.gameConfig.isGameOver) {
         _onGameEnd(context, gameData: gameData);
@@ -551,13 +558,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       {Map<String, dynamic> gameData, bool ack = false}) async {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-      await Flores().addMessage(
-          widget.gameConfig.myUser.id,
-          widget.gameConfig.otherUser.id,
-          widget.gameName,
-          widget.gameConfig.toJson(),
-          false,
-          widget.gameConfig.sessionId ?? Uuid().v4());
+      try {
+        await Flores().addMessage(
+            widget.gameConfig.myUser.id,
+            widget.gameConfig.otherUser.id,
+            widget.gameName,
+            widget.gameConfig.toJson(),
+            false,
+            widget.gameConfig.sessionId ?? Uuid().v4());
+      } on PlatformException {
+        print('Failed getting messages');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
     }
     ScoreRepo().insert(Score(
         myUser: widget.gameConfig.myUser.id,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +11,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/repos/lesson_repo.dart';
+import 'package:maui/repos/lesson_unit_repo.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/db/entity/notif.dart';
+import 'package:maui/db/entity/lesson_unit.dart';
+import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/repos/chat_bot_data.dart';
+
+enum ChatMode { teach, conversation, quiz }
 
 class AppStateContainer extends StatefulWidget {
   final AppState state;
@@ -36,6 +44,7 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   AppState state;
   List<dynamic> messages;
+  List<dynamic> botMessages;
   String activity;
   String friendId;
   List<User> users;
@@ -44,19 +53,36 @@ class AppStateContainerState extends State<AppStateContainer> {
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  List<LessonUnit> _lessonUnits;
+  Lesson _lesson;
+  int _lessonUnitIndex = 0;
+  List<LessonUnit> _toQuiz;
+  List<LessonUnit> _toTeach;
+  int _currentTeachUnit;
+  int _currentQuizUnit;
+  ChatMode _currentMode = ChatMode.conversation;
+  String _expectedAnswer;
 
   @override
   void initState() {
     super.initState();
+    print('AppStateContainer: main initState');
     if (widget.state != null) {
       state = widget.state;
     } else {
       state = new AppState();
     }
-    Flores().initialize((Map<dynamic, dynamic> message) {
-      print('Flores received message: $message');
-      onReceiveMessage(message);
-    });
+    try {
+      Flores().initialize((Map<dynamic, dynamic> message) {
+        print('Flores received message: $message');
+        onReceiveMessage(message);
+      });
+    } on PlatformException {
+      print('Flores: Failed initialize');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
+    }
     _initAudioPlayer();
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
@@ -66,6 +92,22 @@ class AppStateContainerState extends State<AppStateContainer> {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         selectNotification: onSelectNotification);
+    botMessages = List<dynamic>();
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('AppStateContainer:didChangeDependencies');
+  }
+
+  @override
+  void didUpdateWidget(AppStateContainer oldWidget) {
+    print('AppStateContainer:didUpdateWidget');
+  }
+
+  @override
+  void reassemble() {
+    print('AppStateContainer:reassemble');
   }
 
   void _initAudioPlayer() {
@@ -149,18 +191,27 @@ class AppStateContainerState extends State<AppStateContainer> {
     List<dynamic> msgs;
     friendId = fId;
     activity = 'chat';
-    try {
-      msgs = await Flores()
-          .getConversations(state.loggedInUser.id, friendId, 'chat');
-    } on PlatformException {
-      print('Failed getting messages');
+    if (fId == User.botId) {
+      setState(() {
+        messages = botMessages;
+      });
+    } else {
+      try {
+        msgs = await Flores()
+            .getConversations(state.loggedInUser.id, friendId, 'chat');
+      } on PlatformException {
+        print('Failed getting messages');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
+      print('_fetchMessages: $msgs');
+      msgs ??= List<Map<String, String>>();
+      await NotifRepo().delete(fId, 'chat');
+      setState(() {
+        messages = msgs.reversed.toList(growable: true);
+      });
     }
-    print('_fetchMessages: $msgs');
-    msgs ??= List<Map<String, String>>();
-    await NotifRepo().delete(fId, 'chat');
-    setState(() {
-      messages = msgs.reversed.toList(growable: true);
-    });
   }
 
   void endChat() {
@@ -172,11 +223,24 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void addChat(String message) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final deviceId = prefs.getString('deviceId');
-
-    await Flores()
-        .addMessage(state.loggedInUser.id, friendId, 'chat', message, true, '');
+    if (friendId == User.botId) {
+      botMessages
+          .insert(0, {'userId': state.loggedInUser.id, 'message': message});
+      print('insert $message');
+      final msg = await _respondToChat(message);
+      print('insert $msg');
+      botMessages.insert(0, msg);
+    } else {
+      try {
+        await Flores().addMessage(
+            state.loggedInUser.id, friendId, 'chat', message, true, '');
+      } on PlatformException {
+        print('Flores: Failed addChat');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
+    }
     beginChat(friendId);
   }
 
@@ -215,11 +279,110 @@ class AppStateContainerState extends State<AppStateContainer> {
   void getUsers() async {
     activity = 'friends';
     final userList = await UserRepo().getRemoteUsers();
+    final botUser = await UserRepo().getUser('sister');
+    userList.insert(0, botUser);
     final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
       notifs = notifList;
     });
+  }
+
+  Future<Map<String, dynamic>> _respondToChat(String message) async {
+    if (message == 'Let us learn') {
+      _currentMode = ChatMode.teach;
+    } else if (message == 'Let us chat') {
+      _currentMode = ChatMode.conversation;
+    } else if (_currentMode == ChatMode.quiz) {
+      if (message.startsWith('*')) message = message.substring(3);
+      if (message != _expectedAnswer) {
+        _toTeach.add(_toQuiz[_currentQuizUnit]);
+      }
+      _currentQuizUnit = (_currentQuizUnit + 1) % _toQuiz.length;
+      if (_currentQuizUnit == 0) {
+        _currentMode = ChatMode.teach;
+        _currentTeachUnit = 0;
+      }
+    } else if (_currentMode == ChatMode.teach) {
+      _currentTeachUnit = (_currentTeachUnit + 1) % _toTeach.length;
+      if (_currentTeachUnit == 0) {
+        _currentMode = ChatMode.quiz;
+        _toQuiz = List.from(_toTeach)..shuffle();
+        _toTeach = [];
+        _currentQuizUnit = 0;
+      }
+    }
+    switch (_currentMode) {
+      case ChatMode.conversation:
+        String reply = getPossibleReplies(message, 1).first;
+        List<String> possibleReplies = getPossibleReplies(reply, 4);
+        possibleReplies.insert(0, 'Let us learn');
+        return {
+          'userId': User.botId,
+          'message': reply,
+          'choices': possibleReplies
+        };
+      case ChatMode.teach:
+        LessonUnit lessonUnit;
+        if (_toTeach == null || _toTeach.isEmpty) {
+          if (_lessonUnitIndex >= _lessonUnits.length) {
+            state.loggedInUser.currentLessonId++;
+            await UserRepo().update(state.loggedInUser);
+            _lessonUnits = await new LessonUnitRepo()
+                .getLessonUnitsByLessonId(state.loggedInUser.currentLessonId);
+            _lessonUnitIndex = 0;
+          }
+          _toTeach = _lessonUnits.skip(_lessonUnitIndex).take(4).toList();
+          _lessonUnitIndex += 4;
+          _currentTeachUnit = 0;
+        }
+        String msg = '$cardPrefix${_toTeach[_currentTeachUnit].subjectUnitId}';
+        if (_toTeach[_currentTeachUnit].objectUnitId != null &&
+            _toTeach[_currentTeachUnit].objectUnitId.isNotEmpty)
+          msg += '$cardPrefix${_toTeach[_currentTeachUnit].objectUnitId}';
+        return {
+          'userId': User.botId,
+          'message': msg,
+          'choices': ['OK', '👍', '😀', 'Let us chat']
+        };
+      case ChatMode.quiz:
+        String question;
+        List<String> choices;
+        print(_lesson);
+        if (_lesson.conceptId == 3 || _lesson.conceptId == 5) {
+          question = _toQuiz[_currentQuizUnit].objectUnitId;
+          _expectedAnswer = question;
+          List<LessonUnit> lessonUnits =
+              List.from(_lessonUnits, growable: false)..shuffle();
+          print(lessonUnits);
+          choices = lessonUnits
+              .where((l) => l.objectUnitId != _expectedAnswer)
+              .take(3)
+              .map((l) => l.objectUnitId)
+              .toList();
+          print(choices);
+        } else {
+          question = _toQuiz[_currentQuizUnit].objectUnitId?.length > 0
+              ? _toQuiz[_currentQuizUnit].objectUnitId
+              : _toQuiz[_currentQuizUnit].subjectUnitId;
+          _expectedAnswer = _toQuiz[_currentQuizUnit].subjectUnitId;
+          List<LessonUnit> lessonUnits =
+              List.from(_lessonUnits, growable: false)..shuffle();
+          choices = lessonUnits
+              .where((l) => l.subjectUnitId != _expectedAnswer)
+              .take(3)
+              .map((l) =>
+                  l.objectUnitId?.length > 0 ? l.objectUnitId : l.subjectUnitId)
+              .toList();
+        }
+        choices.insert(new Random().nextInt(choices.length), _expectedAnswer);
+        return {
+          'userId': User.botId,
+          'message': question,
+          'choices':
+              choices.map((c) => '$imagePrefix$c').toList(growable: false)
+        };
+    }
   }
 
   @override
@@ -235,9 +398,26 @@ class AppStateContainerState extends State<AppStateContainer> {
     final deviceId = prefs.getString('deviceId');
     prefs.setString('userId', user.id);
     if (user != null) {
-      Flores().loggedInUser(user.id, deviceId);
+      try {
+        Flores().loggedInUser(user.id, deviceId);
+      } on PlatformException {
+        print('Flores: Failed loggedInUser');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
     }
-    Flores().start();
+    try {
+      Flores().start();
+    } on PlatformException {
+      print('Flores: Failed start');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
+    }
+    _lessonUnits = await new LessonUnitRepo()
+        .getLessonUnitsByLessonId(user.currentLessonId);
+    _lesson = await new LessonRepo().getLesson(user.currentLessonId);
     setState(() {
       state = new AppState(loggedInUser: user);
     });

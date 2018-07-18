@@ -1,7 +1,8 @@
 import 'dart:math';
 
 Map<String, List<String>> reply = {
-  'How are you?': ['Doing fine', 'Doing good', 'Not OK'],
+  'Hi': ['Hello', 'How do you do?', 'Jolly good', 'How are you?'],
+  'How do you do?': ['Doing fine', 'Doing good', 'Not OK'],
   'Where is your friend?': [
     'My friend has not come',
     'My friend is angry at me',
@@ -17,6 +18,7 @@ Map<String, List<String>> reply = {
 
 List<String> oneLiners = [
   'Hello',
+  'How are you?',
   'What is your name?',
   'Where do you live?',
   'What is your favorite book?',
@@ -29,7 +31,8 @@ List<String> oneLiners = [
 List<String> getPossibleReplies(String currentChat, int num) {
   print('getPossibleReplies: $currentChat ${reply[currentChat]}');
   print(reply['You can call me Hoodie.']);
-  List<String> possibleReplies = reply[currentChat] ?? List<String>();
+  List<String> possibleReplies = reply[currentChat] ?? List<String>()
+    ..shuffle();
   if (possibleReplies.length < num) {
     var rand = new Random();
     Set<String> set = Set<String>();
@@ -37,6 +40,10 @@ List<String> getPossibleReplies(String currentChat, int num) {
       set.add(oneLiners[rand.nextInt(oneLiners.length)]);
     }
     set.forEach((r) => possibleReplies.add(r));
+  } else if (possibleReplies.length > num) {
+    while (possibleReplies.length > num) {
+      possibleReplies.removeLast();
+    }
   }
   return possibleReplies;
 }

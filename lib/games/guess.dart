@@ -45,8 +45,8 @@ class EnsureVisibleWhenFocusedState extends State<EnsureVisibleWhenFocused> {
 
   @override
   void dispose() {
-    super.dispose();
     widget.focusNode.removeListener(_ensureVisible);
+    super.dispose();
   }
 
   Future<Null> _ensureVisible() async {
@@ -339,7 +339,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _imgController.dispose();
     _textController.dispose();
     controller.dispose();
@@ -349,6 +348,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     _focusnode.unfocus();
     _focusnode.removeListener(_focusChange);
     _scroll.dispose();
+    super.dispose();
   }
 
   @override
