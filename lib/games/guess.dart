@@ -5,6 +5,7 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/loca.dart';
 
 /// A widget that ensures it is always visible when focused.
 
@@ -353,7 +354,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                       decoration: new InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: "Type image",
+                        hintText: Loca.of(context).hint,
                         hintStyle: new TextStyle(
                             color: Colors.blueGrey,
                             fontSize: orientation == Orientation.portrait
@@ -386,7 +387,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
                   child: new IconButton(
                     // color: Colors.blue,
-                    key: new Key("checking"),
+                    // key: new Key("checking"),
                     // padding: new EdgeInsets.fromLTRB(0.0, 19.0, 0.0, 19.0),
                     icon: new Center(
                         child: new Icon(Icons.check,

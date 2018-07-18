@@ -10,6 +10,7 @@ import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
 import 'lesson_repo.dart';
 import 'unit_repo.dart';
+import 'package:maui/loca.dart';
 
 enum Category { letter, number }
 
