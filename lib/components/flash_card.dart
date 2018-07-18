@@ -32,7 +32,8 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void _getData() async {
-    _unit = await new UnitRepo().getUnit(widget.text);
+    print('FlashCard getting unit: ${widget.text}');
+    _unit = await new UnitRepo().getUnit(widget.text.trim().toLowerCase());
     setState(() => _isLoading = false);
   }
 
@@ -62,6 +63,7 @@ class _FlashCardState extends State<FlashCard> {
       print("anuj");
       print(widget.text.indexOf("1"));
       print(_containsNum);
+      print('Unit: $_unit');
 
       return new Card(
           color: bgColor,
@@ -104,8 +106,9 @@ class _FlashCardState extends State<FlashCard> {
                                             fontSize:
                                                 constraints.maxHeight * 0.11,
                                             fontWeight: FontWeight.bold)))
-                                : new Image.asset(
-                                    'assets/dict/${(widget.text.toLowerCase()).trim()}.png'))),
+                                : _unit == null
+                                    ? CircularProgressIndicator()
+                                    : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: widget.onChecked,
