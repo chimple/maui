@@ -19,8 +19,10 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   bool _isLoading = false;
   Map<String, List<Score>> _scores;
   User otherUsers;
-  String otherUserImage='';
+  Future<String> otherUserImage;
   int totalScore = 0;
+  String otherUserImagePath;
+  User otherUserDetails;
   @override
     void initState() {
       super.initState();
@@ -31,19 +33,18 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
     setState(() => _isLoading = true);
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
      Map<String, List<Score>> fetchData = await ScoreRepo().getScoreMapByUser(loggedInUser.id);
-    
+    print("Fetched Data ${fetchData}");
     setState(() {
         _scores = fetchData;
         _isLoading = false;
     });
     }
 
-  void _getOpponentImage(String otherUser) async {
-    otherUsers = await UserRepo().getUser(otherUser);
-    setState(() {
-          otherUserImage = otherUsers.image; 
-      });
-  }  
+  Future<String> _getOpponentImage(String otherUser) async {
+    print("OtherUser Id: ${otherUser}");
+    otherUserDetails = await UserRepo().getUser(otherUser);
+    return otherUserDetails.image;
+  }
 
   @override
  Widget build(BuildContext context) {  
@@ -64,9 +65,9 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
+                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 30.0),
                 child:new Container(
-                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 5.0),
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 20.0),
                    decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
                     border: new Border.all(
@@ -89,8 +90,11 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
             ],
           );
       } else {
-        if(otherUserImage == '')
-        _getOpponentImage(otherUser);
+         otherUserImage = _getOpponentImage(otherUser);
+          otherUserImage.then((k) {
+          otherUserImagePath = k;
+            print('Opponent Image Path $otherUserImagePath');
+          });
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -129,22 +133,22 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
                   child: new Text('${otherScore}',style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),), 
                 ),
 
-              new Container(
-                margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
-                child:new Container(
-                   decoration:  new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(40.0),
-                    border: new Border.all(
-                      width: 3.0,
-                      color: Colors.black
-                    )
-                  ),
-                child: new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
-                  ),
-                ),
-              ),
+              // new Container(
+              //   margin: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 10.0),
+              //   child:new Container(
+              //      decoration:  new BoxDecoration(
+              //       borderRadius: new BorderRadius.circular(40.0),
+              //       border: new Border.all(
+              //         width: 3.0,
+              //         color: Colors.black
+              //       )
+              //     ),
+              //   child: new CircleAvatar(
+              //       backgroundColor: Colors.white,
+              //       backgroundImage: otherUserImage == '' ? null : new FileImage(new File(otherUserImage)),
+              //     ),
+              //   ),
+              // ),
             ],
           );
       }

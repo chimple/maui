@@ -74,23 +74,28 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       //                       '${_myHandler.img2}',
       //                       scale: .3,
       //                     );
+                          
+      if(_scrollcontroller.offset == 0.0){
+            // _imgController1.forward();
+            // _imgController.reverse();
+            
+            _icon1 = new Image.asset(
+                            _myHandler.img1,
+                            scale: .3,
+                          );
 
-      if (_scrollcontroller.offset == 0.0) {
-        // _imgController1.forward();
-        // _imgController.reverse();
+            _icon2 = new Container();
+          }
+          else{
+    //         _imgController1.reverse();
+    // _imgController.forward();
+            _icon2 = new Image.asset(
+                            _myHandler.img2,
+                            scale: .3,
+                          );
 
-        _icon1 = new Image.asset(
-          _myHandler.img1,
-          scale: .3,
-        );
-      } else {
-        //         _imgController1.reverse();
-        // _imgController.forward();
-        _icon2 = new Image.asset(
-          _myHandler.img2,
-          scale: .3,
-        );
-      }
+            _icon1 =  new Container();
+          }
     });
   }
 
@@ -141,9 +146,18 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),
-      floatingActionButton: new FloatingActionButton(
-          onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-          child: new Image.asset('assets/koala_neutral.png')),
+      floatingActionButton: Container(
+        height: 100.0,
+        width: 100.0,
+        decoration: new BoxDecoration(
+          shape: BoxShape.circle,
+
+        ),
+              child: new FloatingActionButton(
+          mini: false,
+            onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
+            child: new Image.asset('assets/chat_Bot_Icon.png')),
+      ),
       body: new NestedScrollView(
         controller: _scrollcontroller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
