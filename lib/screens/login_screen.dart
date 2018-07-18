@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/camera.dart';
-import 'package:maui/components/user_list.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'tab_home.dart';
 
@@ -30,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen>
   bool _isLoading = false, fileExist = false;
   Animation shakeAnimation;
   AnimationController controller;
+  CameraDescription camera;
   @override
   void initState() {
     super.initState();
@@ -39,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen>
         duration: new Duration(milliseconds: 50), vsync: this);
     shakeAnimation = new Tween(begin: -4.0, end: 4.0).animate(controller);
     controller.addStatusListener((status) {});
-
     _initData();
   }
 
@@ -49,10 +46,10 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       AppStateContainer.of(context).setLoggedInUser(user);
-
-      Navigator.of(context).pushNamed('/tab');
+      Navigator.of(context).pushReplacementNamed('/tab');
     }
     var users = await UserRepo().getLocalUsers();
+
     setState(() {
       _users = users;
       _isLoading = false;
@@ -79,16 +76,17 @@ class _LoginScreenState extends State<LoginScreen>
     Navigator.of(context).pushNamed('/camera');
   }
 
-  String imagePath;
-  bool displaImage = true;
-  Future getImageOriganl() async {
-    String image = await ImagePick.pickImage(source: ImageSrc.camera);
-    print("image path $image");
-    setState(() {
-      imagePath = image;
-      displaImage = false;
-    });
-  }
+  // String imagePath;
+  // bool displaImage = true;
+  // // call this method for android camera
+  // Future getImageOriganl() async {
+  //   String image = await ImagePick.pickImage(source: ImageSrc.camera);
+  //   print("image path $image");
+  //   setState(() {
+  //     imagePath = image;
+  //     displaImage = false;
+  //   });
+  // }
 
   Orientation ornt;
   @override
@@ -120,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen>
                           mainAxisSize: MainAxisSize.max,
                           // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            imagePath == null
+                            imagePathStore == null
                                 ? Center(
                                     child: Container(
                                       height: 130.0,
@@ -132,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen>
                                             side: BorderSide(
                                                 width: 3.0,
                                                 color: new Color(0xff4C5C9E))),
-                                        onPressed: getImageOriganl,
+                                        onPressed: () => getImage(context),
                                         child: new IconTheme(
                                           data: IconThemeData(
                                               size: 70.0,
@@ -143,15 +141,15 @@ class _LoginScreenState extends State<LoginScreen>
                                     ),
                                   )
                                 : InkWell(
-                                    onTap: getImageOriganl,
+                                    onTap: () => getImage(context),
                                     child: new Container(
                                         width: 130.0,
                                         height: 130.0,
                                         decoration: new BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: new DecorationImage(
-                                              image: new FileImage(
-                                                  new File(imagePath)),
+                                              image: FileImage(
+                                                  File(imagePathStore)),
                                               fit: BoxFit.fill,
                                             ))),
                                   ),
@@ -173,13 +171,9 @@ class _LoginScreenState extends State<LoginScreen>
                                 hintText: 'Write Your Name...',
                               ),
                             ),
-                            new Padding(
-                              padding: const EdgeInsets.all(0.0),
-                            ),
                             Shake(
                               animation: shakeAnimation,
                               child: Container(
-                                // margin: const EdgeInsets.only(top: 10.0),
                                 width: 100.0,
                                 height: 50.0,
                                 child: new RaisedButton(
@@ -206,18 +200,18 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   _submit(String name) {
-    print('call on submit $name');
+    print('called on submit $name');
     setState(() {
       userName = name;
     });
   }
 
   void tabSreen() async {
-    if (imagePath != null && userName != '' && userName != null) {
+    if (imagePathStore != '' && userName != '' && userName != null) {
       var user = await new UserRepo().insertLocalUser(
-          new User(image: imagePath, currentLessonId: 1, name: userName));
+          new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
-      //Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");
       controller.addStatusListener((status) {
@@ -235,39 +229,41 @@ class _LoginScreenState extends State<LoginScreen>
   }
 }
 
-enum ImageSrc {
-  camera,
-  galery,
-}
+// enum ImageSrc {
+//   camera,
+//   galery,
+// }
 
-class ImagePick {
-  static const MethodChannel _channel =
-      const MethodChannel('plugins.flutter.io/image_picker');
-  static Future<String> pickImage({
-    @required ImageSrc source,
-    double maxWidth,
-    double maxHeight,
-  }) async {
-    assert(source != null);
+// class ImagePick {
+//   static MethodChannel _channel = const MethodChannel(
+//     'plugins.flutter.io/image_picker',
+//   );
+//   static Future<String> pickImage({
+//     @required ImageSrc source,
+//     double maxWidth,
+//     double maxHeight,
+//   }) async {
+//     assert(source != null);
 
-    List<CameraDescription> cameras;
-    if (maxWidth != null && maxWidth < 0) {
-      print("camera sdede $cameras");
-      throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
-    }
+//     List<CameraDescription> cameras;
+//     if (maxWidth != null && maxWidth < 0) {
+//       print("camera sdede $cameras");
+//       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
+//     }
 
-    if (maxHeight != null && maxHeight < 0) {
-      throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
-    }
-    final String path = await _channel.invokeMethod(
-      'pickImage',
-      <String, dynamic>{
-        'source': source.index,
-        'maxWidth': maxWidth,
-        'maxHeight': maxHeight,
-      },
-    );
+//     if (maxHeight != null && maxHeight < 0) {
+//       throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
+//     }
+//     final String path = await _channel.invokeMethod(
+//       'pickImage',
+//       <String, dynamic>{
+//         //'cameraName': cameras[0],
+//         'source': source.index,
+//         'maxWidth': maxWidth,
+//         'maxHeight': maxHeight,
+//       },
+//     );
 
-    return path == null ? null : path;
-  }
-}
+//     return path == null ? null : path;
+//   }
+// }
