@@ -36,7 +36,14 @@ class FriendItem extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: new Center(
           child: numNotifs > 0
-              ? Badge(value: '$numNotifs', child: _buildFriendItem(id, user))
+              ? Badge(
+                  color: Colors.red,
+                  textStyle:
+                      const TextStyle(fontSize: 30.0, color: Colors.white),
+                  borderSize: 5.0,
+                  borderColor: Colors.red,
+                  value: '$numNotifs',
+                  child: _buildFriendItem(id, user))
               : _buildFriendItem(id, user),
         ));
   }
