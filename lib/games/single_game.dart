@@ -170,7 +170,7 @@ class SingleGame extends StatefulWidget {
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
     'fill_in_the_blanks': [
       Color(0xFFDD6154),
-      Color(0xFFa3bc8b),
+      Color(0xFFffb300),
       Color(0xFF9A66CC)
     ],
     'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
@@ -179,7 +179,7 @@ class SingleGame extends StatefulWidget {
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
     'match_the_following': [
       Color(0xFFDD4785),
-      Color(0xFFEFEFEF),
+      Color(0xFF9b671b),
       Color(0xFFf99b67)
     ],
     'memory': [Color(0xFFFF7676), Color(0xFFffffca), Color(0xFF896EDB)],
