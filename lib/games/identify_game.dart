@@ -43,7 +43,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   void _initBoard() async {
     setState(() => _isLoading = true);
 
-    _decoded = await json.decode(await fetchIdentifyData());
+    _decoded = await json.decode(await fetchData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         for (var i = 0; i < _decoded["number"]; i++) {
@@ -142,6 +142,7 @@ class _IdentifyGameState extends State<IdentifyGame>
     return new DragBox(
       onScore: widget.onScore,
       onEnd: widget.onEnd,
+      onProgress: widget.onProgress,
       render: _renderChoice,
       maxHeight: maxHeight,
       maxWidth: maxWidth,
@@ -244,10 +245,12 @@ class DragBox extends StatefulWidget {
   Function render;
   Function onScore;
   Function onEnd;
+  Function onProgress;
   Orientation orientation;
 
   DragBox(
       {this.onEnd,
+      this.onProgress,
       this.onScore,
       this.maxHeight,
       this.maxWidth,
@@ -275,13 +278,13 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   Function render;
   Orientation orientation;
 
-  List<String> _buildPartsList() {
-    List<String> partsName = [];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
-    return partsName;
-  }
+  // List<String> _buildPartsList() {
+  //   List<String> partsName = [];
+  //   for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+  //     partsName.add((_decoded["parts"] as List)[i]["name"]);
+  //   }
+  //   return partsName;
+  // }
 
   // _onTapDown(BuildContext context, TapDownDetails down) {
   //   // print(start.globalPosition.toString());
@@ -329,7 +332,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _length = _buildPartsList().length;
+    // _length = _buildPartsList().length;
+    _length = _decoded["number"];
 
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 800), vsync: this);
@@ -389,21 +393,21 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
           dragAnchor: DragAnchor.child,
           maxSimultaneousDrags: 1,
           key: widget.key,
-          data: (_flag1 == 0) ? "" : part["name"],
+          data: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
           child: new AnimatedDrag(
             cols: cols,
             height: maxHeight,
             width: maxWidth,
             animation: (_flag == 0) ? noanimation : animation,
             draggableColor: Theme.of(context).buttonColor,
-            draggableText: (_flag1 == 0) ? "" : part["name"],
+            draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
           ),
           feedback: new AnimatedFeedback(
               height: maxHeight,
               width: maxWidth,
               animation: animation,
               draggableColor: Theme.of(context).disabledColor,
-              draggableText: (_flag1 == 0) ? "" : part["name"]),
+              draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"])),
           onDraggableCanceled: (velocity, offset) {
             // RenderBox box = context.findRenderObject();
             // offset = box.globalToLocal(offset);
@@ -439,7 +443,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             if (((offset.dy - y1) <
                     (((rh * part["data"]["y"]) + h1) +
                         (rh * part["data"]["height"]) / 2)) &&
-                ((offset.dy - 1) >
+                ((offset.dy - y1) >
                     (((rh * part["data"]["y"]) + h1) -
                         (rh * part["data"]["height"]) / 2)) &&
                 ((offset.dx + x1) <
@@ -448,7 +452,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 ((offset.dx + x1) >
                     (((rw * part["data"]["x"]) + w1) -
                         (rw * part["data"]["width"]) / 2))) {
-              render(part["name"], maxHeight, maxWidth, orientation,
+              render(Loca.of(context).intl(part["name"]), maxHeight, maxWidth, orientation,
                   w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
               print("These are the system offest of y and x");
               print(offset.dx);
@@ -473,6 +477,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
               print(offset.dy);
               print(y1);
               widget.onScore(1);
+              widget.onProgress((1+(_decoded["number"] - _length))/_decoded["number"]);
               _length = _length - 1;
               print(_length);
               setState(() {
