@@ -67,7 +67,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         duration: const Duration(milliseconds: 800), vsync: this);
 
     _buttonAnimation = new CurvedAnimation(
-        parent: buttoncontroller, curve: Curves.bounceInOut);
+        parent: buttoncontroller, curve: Curves.easeOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
     // _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
@@ -114,7 +114,7 @@ class _ScoreScreenState extends State<ScoreScreen>
       }
     }
 
-    new Future.delayed(Duration(milliseconds: 2000), () {
+    new Future.delayed(Duration(milliseconds: 50), () {
       buttoncontroller.forward();
     });
 
@@ -130,6 +130,8 @@ class _ScoreScreenState extends State<ScoreScreen>
     // TODO: implement dispose
     _controllers.forEach((f) => f.dispose());
     controller.dispose();
+    buttoncontroller.dispose();
+
     sparklesAnimationController.dispose();
     super.dispose();
   }
@@ -163,7 +165,7 @@ class _ScoreScreenState extends State<ScoreScreen>
     List<Widget> tablestars2 = new List<Widget>();
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
-    final textcolor = _colors[1] ==  Color(0xFFFAFAFA) ? Colors.black : _colors[1];
+    final textcolor = _colors[1] ==  Color(0xFFFAFAFA) || _colors[1] ==  Color(0xFFFFF1B8) || _colors[1] ==  Color(0xFF9b671b) ||_colors[1] ==  Color(0xFF75F2F2)  ? Colors.black : _colors[1];
 
     print(
         "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
@@ -198,7 +200,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         Widget getScoreButton() {
           var stackChildren = <Widget>[];
           firstAngle = _sparklesAngle;
-          sparkleRadius = (sparklesAnimationController.value * 25) ;
+          sparkleRadius = (sparklesAnimationController.value * .25) ;
           sparklesOpacity = (1 - sparklesAnimation.value);
 
           for(int i = 0;i < 5; ++i) {
@@ -325,16 +327,15 @@ class _ScoreScreenState extends State<ScoreScreen>
                 new Stack(
                   alignment: AlignmentDirectional.center,
                   children: <Widget>[
-                    
                     new Padding(
                       padding: new EdgeInsets.all(ht > wd ? ht * 0.02 : wd * 0.025),
                       child: new Container(
                       decoration: new BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.red,
                   borderRadius: new BorderRadius.circular(20.0),
                   border: new Border.all(
                     width: 6.0,
-                    color: Colors.white,
+                    color: Colors.red,
                   ),
                 ),
                       child: new Row(
@@ -459,7 +460,20 @@ class _ScoreScreenState extends State<ScoreScreen>
                 // ),
 
 
-                new Container(color: Colors.white, child: new Padding(
+                new Container(
+                  height:ht *.2,
+                    decoration: new BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
+                  image: new DecorationImage(
+
+                    image: new AssetImage(
+                        "assets/background_gif/Win_loop.gif"),
+                    fit: BoxFit.cover,
+
+                  ),
+                ),
+                    child: new Padding(
                   padding: new EdgeInsets.only(right: 20.0),
                   child: new Stack(
                     alignment: FractionalOffset.center,

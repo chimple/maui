@@ -9,7 +9,6 @@ import 'package:maui/loca.dart';
 
 /// A widget that ensures it is always visible when focused.
 
-
 Map _decoded;
 
 class GuessIt extends StatefulWidget {
@@ -262,7 +261,6 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _imgController.dispose();
     _textController.dispose();
     controller.dispose();
@@ -272,6 +270,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     _focusnode.unfocus();
     _focusnode.removeListener(_focusChange);
     _scroll.dispose();
+    super.dispose();
   }
 
   @override

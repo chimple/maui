@@ -69,7 +69,7 @@ class _FlashCardState extends State<FlashCard> {
           color: bgColor,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.all(
-                  Radius.circular(constraints.maxHeight * 0.02))),
+                  Radius.circular(constraints.maxHeight * 0.08))),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
@@ -92,8 +92,8 @@ class _FlashCardState extends State<FlashCard> {
                     new Expanded(
                         child: new SizedBox(
                             height: constraints.maxHeight > constraints.maxWidth
-                                ? constraints.maxHeight * 0.4
-                                : constraints.maxWidth * 0.3,
+                                ? constraints.maxHeight * 0.03
+                                : constraints.maxWidth * 0.07,
                             width: constraints.maxHeight > constraints.maxWidth
                                 ? constraints.maxWidth * 0.9
                                 : constraints.maxHeight * 0.5,
