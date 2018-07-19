@@ -4,6 +4,7 @@ import 'package:maui/games/single_game.dart';
 import '../components/orderable_stack.dart';
 import '../components/orderable.dart';
 import '../repos/game_data.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class OrderIt extends StatefulWidget {
   Function onScore;
@@ -30,6 +31,7 @@ class OrderIt extends StatefulWidget {
 }
 
 class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   int _size = 12;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -151,6 +153,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
 
     if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag == 0) {
       flag = 1;
+      play.right();
       new Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           widget.onScore(_maxSize);

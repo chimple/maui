@@ -11,7 +11,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/unit_button.dart';
-
+import 'package:maui/components/gameaudio.dart';
 import '../components/responsive_grid_view.dart';
 
 class Circleword extends StatefulWidget {
@@ -42,6 +42,7 @@ enum Status1 { Active, Visible, Disappear }
 enum ShakeCell1 { Right, InActive, Dance, CurveRow }
 
 class CirclewordState extends State<Circleword> {
+  GameAudio play=new GameAudio();
   var score = 0;
 
   String word = '';
@@ -272,6 +273,7 @@ class CirclewordState extends State<Circleword> {
           // words = "$words" + "$word" + " , ";
 
           indexstore = [];
+          play.right();
           widget.onScore(score);
                  if(_solvedLetters.length==_letters.length){
                   

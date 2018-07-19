@@ -55,6 +55,9 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/right.wav
+    - assets/wrong.wav
+    - assets/tap.wav
     - assets/demo_video/video.mp4
     - assets/database.db
     - assets/solo.nima
