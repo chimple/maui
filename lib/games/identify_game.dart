@@ -389,21 +389,21 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             dragAnchor: DragAnchor.child,
             maxSimultaneousDrags: 1,
             key: widget.key,
-            data: (_flag1 == 0) ? "" : part["name"],
+            data: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
             child: new AnimatedDrag(
               cols: cols,
               height: maxHeight,
               width: maxWidth,
               animation: (_flag == 0) ? noanimation : animation,
               draggableColor: Theme.of(context).buttonColor,
-              draggableText: (_flag1 == 0) ? "" : part["name"],
+              draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
             ),
             feedback: new AnimatedFeedback(
                 height: maxHeight,
                 width: maxWidth,
                 animation: animation,
                 draggableColor: Theme.of(context).disabledColor,
-                draggableText: (_flag1 == 0) ? "" : part["name"]),
+                draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"])),
             onDraggableCanceled: (velocity, offset) {
               // RenderBox box = context.findRenderObject();
               // offset = box.globalToLocal(offset);
@@ -448,7 +448,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                   ((offset.dx + x1) >
                       (((rw * part["data"]["x"]) + w1) -
                           (rw * part["data"]["width"]) / 2))) {
-                render(part["name"], maxHeight, maxWidth, orientation,
+                render(Loca.of(context).intl(part["name"]), maxHeight, maxWidth, orientation,
                     w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
                 print("These are the system offest of y and x");
                 print(offset.dx);
