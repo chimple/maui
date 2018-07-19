@@ -25,7 +25,6 @@ class GameCategoryRepo {
     'crossword',
     'picture_sentence',
     'clue_game',
-    'drawing',
     'identify'
   ];
 
