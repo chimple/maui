@@ -282,7 +282,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1 &&
             leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-      widget.onScore(1);
+      widget.onScore(4);
       correct++;
 
       widget.onProgress(correct / _numButtons);

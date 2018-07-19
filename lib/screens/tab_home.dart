@@ -74,28 +74,27 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       //                       '${_myHandler.img2}',
       //                       scale: .3,
       //                     );
-                          
-      if(_scrollcontroller.offset == 0.0){
-            // _imgController1.forward();
-            // _imgController.reverse();
-            
-            _icon1 = new Image.asset(
-                            _myHandler.img1,
-                            scale: .3,
-                          );
 
-            _icon2 = new Container();
-          }
-          else{
-    //         _imgController1.reverse();
-    // _imgController.forward();
-            _icon2 = new Image.asset(
-                            _myHandler.img2,
-                            scale: .3,
-                          );
+      if (_scrollcontroller.offset == 0.0) {
+        // _imgController1.forward();
+        // _imgController.reverse();
 
-            _icon1 =  new Container();
-          }
+        _icon1 = new Image.asset(
+          _myHandler.img1,
+          scale: .3,
+        );
+
+        _icon2 = new Container();
+      } else {
+        //         _imgController1.reverse();
+        // _imgController.forward();
+        _icon2 = new Image.asset(
+          _myHandler.img2,
+          scale: .3,
+        );
+
+        _icon1 = new Container();
+      }
     });
   }
 
@@ -151,12 +150,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
         width: 100.0,
         decoration: new BoxDecoration(
           shape: BoxShape.circle,
-
         ),
-              child: new FloatingActionButton(
-          mini: false,
-            onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-            child: new Image.asset('assets/chat_Bot_Icon.png')),
       ),
       body: new NestedScrollView(
         controller: _scrollcontroller,

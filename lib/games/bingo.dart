@@ -126,7 +126,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         bingoCount = 0;
         countData = 0;
         onScoreFlag = 0;
-// widget.onEnd();
+        countEnd == 0;
+        clickCounter=0;
+        onScoreFlag =0;
         _copyQuestion.removeRange(0, _copyQuestion.length);
         _copyQuestion1.removeRange(0, _copyQuestion1.length);
         _all.removeRange(0, _all.length);
@@ -172,9 +174,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     ques = _copyQuestion[z];
     print("thia is a ques tio {$ques abd $z}");
     print("this is a $ques");
-    countEnd == 0;
-    clickCounter=0;
-    onScoreFlag =0;
+
 // _shuffledLetters.removeRange(0, _shuffledLetters.length);
     for (var i = 0; i < _all.length; i += _maxSize * _maxSize) {
       _shuffledLetters.addAll(
@@ -213,7 +213,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         tile: tile,
         Ctile: Ctile,
         Rtile: Rtile,
-        unitMode: widget.gameConfig.answerUnitMode, //question unit mode
+        unitMode: widget.gameConfig.questionUnitMode, //question unit mode
         onPress: () {
           print("text $text");
 
@@ -314,13 +314,14 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               print("this is my intial $countEnd");
               if(c==0){
                 setState(() {
-                  countEnd++;
+
                   widget.onScore(-1);
+                  countEnd++;
                   _ShakeCells[index] = ShakeCell.Right;
                   if(countEnd == 3){
                     print("this is my count End $countEnd");
                     countEnd=0;
-                    _turnByTurn();
+                    widget.onEnd();
 
                   }
                 });
@@ -515,7 +516,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
 // print("_MyButtonState.initState: ${widget.text}");
-//    print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
+// print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
@@ -574,7 +575,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-//    print({"oldwidget data ": oldWidget.text});
+// print({"oldwidget data ": oldWidget.text});
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
