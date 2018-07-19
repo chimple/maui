@@ -11,6 +11,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -35,6 +36,7 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
+  GameAudio play=new GameAudio();
   int _selectedItemIndex;
   List<List<String>> data;
 
@@ -173,6 +175,7 @@ class _CasinoState extends State<Casino> {
           print("count = $count");
           if (const IterableEquality().equals(finalList, finalGivenWordList) &&
               count >= givenWordList.length) {
+                play.right();
             new Future.delayed(const Duration(milliseconds: 1000), () {
               widget.onScore(5);
               widget.onProgress(1.0);
@@ -216,17 +219,6 @@ class _CasinoState extends State<Casino> {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: givenWord,
-          onChecked: () {
-            widget.onEnd();
-            // _initLetters();
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
 
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
@@ -240,7 +232,23 @@ class _CasinoState extends State<Casino> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-
+      if (_isShowingFlashCard) {
+        return FractionallySizedBox(
+          widthFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.65,
+          heightFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.9,
+          child: new FlashCard(
+              text: givenWord,
+              onChecked: () {
+                widget.onEnd();
+                // _initLetters();
+                setState(() {
+                  _isShowingFlashCard = false;
+                });
+              }),
+        );
+      }
       return new Column(
         // direction: Axis.vertical,
         crossAxisAlignment: CrossAxisAlignment.stretch,

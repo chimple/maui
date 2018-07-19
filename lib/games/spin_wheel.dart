@@ -15,6 +15,7 @@ import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
 import 'package:maui/components/unit_button.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
+import 'package:maui/components/gameaudio.dart';
 
 class SpinWheel extends StatefulWidget {
   Function onScore;
@@ -42,6 +43,7 @@ class SpinWheel extends StatefulWidget {
 }
 
 class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   List<Color> _wheelColor = [
     Color(0XFFD1F2EB),
     Color(0XFFD1F2EB),
@@ -59,9 +61,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     Color(0XFFFFFFFF),
   ];
   List<String> _circleData = [],
-      _smallCircleData = [],
-      _shuffleCircleData1 = [],
-      _shuffleCircleData2 = [];
+      _unitButtonData = [],
+      _circleShuffledData = [],
+      _unitButtonShuffledData = [];
 
   Map<String, String> _data = {
     'CHEEK': 'CHEEK',
@@ -91,10 +93,15 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
 
   Animation shakeAnimate, noAnimation, animatoin;
   AnimationController controller, controller1;
-
+  String _text = '', s1 = 'assets/dict/', s2 = '.png';
+  final GlobalKey<AnimatedCircularChartState> _chartKey =
+      new GlobalKey<AnimatedCircularChartState>();
+  List<ui.Image> images = new List<ui.Image>();
+  List<String> _imageData = [];
+  Unit _unit;
+  UnitMode _unitMode;
   double rotationPercent = 0.0, rotationPercent1 = 0.0, angleDiff;
-
-  bool _isLoading = true;
+  bool test = true, doShake = true, _isLoading = true;
   var _angleDiffAntiCockWise = 0.0,
       onDragCordUpdated,
       onDragCordStarted,
@@ -104,12 +111,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       dragUpdate = 0.0,
       _angleDiff,
       gameEndFlag = true;
-  UnitMode _unitMode;
-  int _indexOfContainerData = 0, dataSize, _countGameEnd = 0;
-  String _text = '', s1 = 'assets/dict/', s2 = '.png';
-  final GlobalKey<AnimatedCircularChartState> _chartKey =
-      new GlobalKey<AnimatedCircularChartState>();
-  List<ui.Image> images = new List<ui.Image>();
+
+  int _indexOfContainerData = 0, dataSize, _countGameEnd = 0, _wmCount;
   @override
   void initState() {
     super.initState();
@@ -128,13 +131,13 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     controller1.forward();
     if (widget.gameConfig.level < 4) {
       print("level <4");
-      dataSize = 4;
+      dataSize = 6;
     } else if (widget.gameConfig.level < 6) {
       print("level <8");
       dataSize = 6;
     } else {
       print("level <10");
-      dataSize = 8;
+      dataSize = 6;
     }
     _initBoard();
     setState(() {
@@ -148,14 +151,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     if (widget.iteration != oldWidget.iteration && widget.iteration != 2) {
       _indexOfContainerData = 0;
       _countGameEnd = 0;
-
       dragEnd = 0.0;
       angleDiff = 0.0;
       _circleData.clear();
-      _smallCircleData.clear();
-      _shuffleCircleData1.clear();
-      _shuffleCircleData2.clear();
+      _unitButtonData.clear();
+      _circleShuffledData.clear();
+      _unitButtonShuffledData.clear();
       images.clear();
+      _imageData.clear();
       controller1.forward();
       gameEndFlag = true;
       _initBoard();
@@ -163,7 +166,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
   }
 
-  bool _imageFound = true;
+  bool _imageNotFound = true;
   int _activeIndex;
   String _maxString = '';
   void _initBoard() async {
@@ -178,63 +181,65 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     print("all data:: $allData");
     allData.forEach((k, v) {
       _circleData.add(k);
-
-      _smallCircleData.add(v);
+      _unitButtonData.add(v);
     });
 
-    _shuffleCircleData1 = _circleData.sublist(0, dataSize);
-    _shuffleCircleData2 = _smallCircleData.sublist(0, dataSize);
-    _shuffleCircleData1.shuffle();
-    _shuffleCircleData2.shuffle();
+    _circleShuffledData = _circleData.sublist(0, dataSize);
+    _unitButtonShuffledData = _unitButtonData.sublist(0, dataSize);
+    _circleShuffledData.shuffle();
+    _unitButtonShuffledData.shuffle();
 
     if (widget.gameConfig.answerUnitMode == UnitMode.image) {
       for (int i = 0; i < dataSize; i++) {
         _unit =
-            await new UnitRepo().getUnit(_shuffleCircleData1[i].toLowerCase());
-        // print(_unit);
+            await new UnitRepo().getUnit(_circleShuffledData[i].toLowerCase());
         if ((widget.gameConfig.answerUnitMode == UnitMode.audio &&
                 (_unit.sound?.length ?? 0) == 0) ||
             (widget.gameConfig.answerUnitMode == UnitMode.image &&
                 (_unit.image?.length ?? 0) == 0)) {
           _unitMode = UnitMode.text;
-          _imageFound = false;
+          _imageNotFound = false;
           break;
+        } else {
+          _imageData.add(_unit.image);
         }
       }
     }
-    if (_imageFound && widget.gameConfig.answerUnitMode == UnitMode.image) {
+    if (_imageNotFound && widget.gameConfig.answerUnitMode == UnitMode.image) {
       for (int i = 0; i < dataSize; i++) {
-        String _image = s1 + _shuffleCircleData1[i].toLowerCase() + s2;
-        // print("image url:: $_image");
+        String _image = _imageData[i];
         load(_image).then((j) {
           images.add(j);
         });
       }
       _unitMode = UnitMode.image;
     } else {
-      _maxString = _shuffleCircleData1[0];
+      _maxString = _circleShuffledData[0];
       for (int i = 1; i < dataSize; i++) {
-        if (_maxString.length < _shuffleCircleData1[i].length) {
-          _maxString = _shuffleCircleData1[i];
+        if (_maxString.length < _circleShuffledData[i].length) {
+          _maxString = _circleShuffledData[i];
         }
       }
     }
-    for (int i = 0; i < _smallCircleData.length; i++) {
-      if (_smallCircleData[i] == _maxString) {
-        _wLength = 'w'.allMatches(_smallCircleData[i].toLowerCase()).length;
-        _mLength = 'm'.allMatches(_smallCircleData[i].toLowerCase()).length;
+    for (int i = 0; i < dataSize; i++) {
+      if (_circleShuffledData[i].length == _maxString.length) {
+        _wmCount = 'w'.allMatches(_circleShuffledData[i].toLowerCase()).length;
+        _wmCount = _wmCount >=
+                'm'.allMatches(_circleShuffledData[i].toLowerCase()).length
+            ? _wmCount
+            : 'm'.allMatches(_circleShuffledData[i].toLowerCase()).length;
 
-        if (_wLength >= 1 || _mLength >= 1) {
-          _maxString = _smallCircleData[i];
+        if (_wmCount > 0) {
+          _maxString = _circleShuffledData[i];
         }
       }
     }
     rotationPercent = 0.0;
-    _text = _shuffleCircleData2[0];
+    _text = _unitButtonShuffledData[0];
 
-    _activeIndex = _smallCircleData.indexOf(_text);
+    _activeIndex = _unitButtonData.indexOf(_text);
 
-    int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+    int index = _circleShuffledData.indexOf(_circleData[_activeIndex]);
 
     _slice[index] = true;
     setState(() {
@@ -243,7 +248,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
   }
 
   Future<ui.Image> load(String asset) async {
-    //print("print asset value:: $asset");
     ByteData data = await rootBundle.load(asset);
     ui.Codec codec = await ui.instantiateImageCodec(
       data.buffer.asUint8List(),
@@ -535,7 +539,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         angleDiff = 0.0;
         controller.stop();
       });
-      if (gameEndFlag) widget.onScore(-1);
+      if (gameEndFlag) {
+        play.wrong();
+        widget.onScore(-1);
+      }
     });
   }
 
@@ -553,10 +560,10 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         dragEnd = 0.0;
         rotationPercent = 0.0;
         angleDiff = 0.0;
-        _text = _shuffleCircleData2[++_indexOfContainerData];
-        _activeIndex = _smallCircleData.indexOf(_text);
+        _text = _unitButtonShuffledData[++_indexOfContainerData];
+        _activeIndex = _unitButtonData.indexOf(_text);
         //print("index of samll circle: ${_circleData[_activeIndex]}");
-        int index = _shuffleCircleData1.indexOf(_circleData[_activeIndex]);
+        int index = _circleShuffledData.indexOf(_circleData[_activeIndex]);
         _slice[index] = true;
         _chartKey.currentState.updateData(data);
       });
@@ -570,6 +577,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     _countGameEnd++;
     //print("game count $_countGameEnd");
+    play.right();
     widget.onScore(4);
   }
 
@@ -662,10 +670,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     return data1;
   }
 
-  int _wLength, _mLength;
-  bool doShake = true;
-  bool test = true;
-  Unit _unit;
   @override
   Widget build(BuildContext context) {
     double _sizeOfWheel;
@@ -680,8 +684,8 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     size1 = new Size(size1.height * .6, size1.height * .6);
     size2 = new Size(size2.height * .6, size2.height * .6);
 
-    var maxChars = (_smallCircleData != null
-        ? _smallCircleData.fold(
+    var maxChars = (_unitButtonData != null
+        ? _unitButtonData.fold(
             1, (prev, element) => element.length > prev ? element.length : prev)
         : 1);
 
@@ -701,7 +705,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
       double maxWidth =
-          (constraints.maxWidth - hPadding * 2) / 2.4; //- middle_spacing;
+          (constraints.maxWidth - hPadding * 2) / 2.1; //- middle_spacing;
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 2;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
@@ -712,14 +716,14 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       // AppState state = AppStateContainer.of(context).state;
       if (_isLoading) {
         return Container(
-          height: 40.0,
-          width: 40.0,
-          child: new CircularProgressIndicator(
-            strokeWidth: 4.0,
-            backgroundColor: Colors.red,
-            value: 10.0,
+            child: Center(
+                child: Text(
+          'Loading...',
+          style: TextStyle(
+            color: Colors.green,
+            fontSize: 24.0,
           ),
-        );
+        )));
       }
       return new Column(
         //direction: Axis.vertical,
@@ -801,10 +805,11 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
                             child: new CustomPaint(
                               painter: (_unitMode != UnitMode.image)
                                   ? TextPainters(
+                                      wmCount: _wmCount,
                                       maxChar: maxChars,
                                       noOfSlice: dataSize,
                                       rotation: rotationPercent,
-                                      data: _shuffleCircleData1,
+                                      data: _circleShuffledData,
                                       maxString: _maxString,
                                     )
                                   : ImagePainter(

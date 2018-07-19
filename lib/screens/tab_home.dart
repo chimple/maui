@@ -6,6 +6,7 @@ import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/state/app_state_container.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -74,28 +75,27 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
       //                       '${_myHandler.img2}',
       //                       scale: .3,
       //                     );
-                          
-      if(_scrollcontroller.offset == 0.0){
-            // _imgController1.forward();
-            // _imgController.reverse();
-            
-            _icon1 = new Image.asset(
-                            _myHandler.img1,
-                            scale: .3,
-                          );
 
-            _icon2 = new Container();
-          }
-          else{
-    //         _imgController1.reverse();
-    // _imgController.forward();
-            _icon2 = new Image.asset(
-                            _myHandler.img2,
-                            scale: .3,
-                          );
+      if (_scrollcontroller.offset == 0.0) {
+        // _imgController1.forward();
+        // _imgController.reverse();
 
-            _icon1 =  new Container();
-          }
+        _icon1 = new Image.asset(
+          _myHandler.img1,
+          scale: .3,
+        );
+
+        _icon2 = new Container();
+      } else {
+        //         _imgController1.reverse();
+        // _imgController.forward();
+        _icon2 = new Image.asset(
+          _myHandler.img2,
+          scale: .3,
+        );
+
+        _icon1 = new Container();
+      }
     });
   }
 
@@ -140,74 +140,75 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var user = AppStateContainer.of(context).state.loggedInUser;
     print('TabHomeState:build');
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = media.orientation;
     var _size = media.size;
-    return new Scaffold(
-      drawer: new ProfileDrawer(),
-      floatingActionButton: Container(
-        height: 100.0,
-        width: 100.0,
-        decoration: new BoxDecoration(
-          shape: BoxShape.circle,
-
+    if (user == null)
+      return Container(
+        color: Colors.white,
+      );
+    else
+      return new Scaffold(
+        drawer: new ProfileDrawer(),
+        floatingActionButton: Container(
+          height: 100.0,
+          width: 100.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+          ),
         ),
-              child: new FloatingActionButton(
-          mini: false,
-            onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-            child: new Image.asset('assets/chat_Bot_Icon.png')),
-      ),
-      body: new NestedScrollView(
-        controller: _scrollcontroller,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            new SliverAppBar(
-              backgroundColor: const Color(0xffFC5E79),
-              pinned: true,
-              actions: <Widget>[_icon2],
-              leading: new ProfileDrawerIcon(),
-              title: new Text(Loca.of(context).title),
-              expandedHeight: orientation == Orientation.portrait
-                  ? _size.height * .25
-                  : _size.height * .5,
-              forceElevated: innerBoxIsScrolled,
-              flexibleSpace: new FlexibleSpaceBar(
-                background: new FittedBox(
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                    child: _icon1),
+        body: new NestedScrollView(
+          controller: _scrollcontroller,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              new SliverAppBar(
+                backgroundColor: const Color(0xffFC5E79),
+                pinned: true,
+                actions: <Widget>[_icon2],
+                leading: new ProfileDrawerIcon(),
+                title: new Text(Loca.of(context).title),
+                expandedHeight: orientation == Orientation.portrait
+                    ? _size.height * .25
+                    : _size.height * .5,
+                forceElevated: innerBoxIsScrolled,
+                flexibleSpace: new FlexibleSpaceBar(
+                  background: new FittedBox(
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                      child: _icon1),
+                ),
+                bottom: new TabBar(
+                  isScrollable: false,
+                  indicatorColor: Colors.white,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 5.0,
+                  labelColor: Colors.white,
+                  labelStyle: new TextStyle(
+                      fontSize: _size.height * 0.3 * 0.07,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal),
+                  controller: _controller,
+                  unselectedLabelColor: _myHandler.color,
+                  tabs: <Tab>[
+                    new Tab(
+                      text: Loca.of(context).chat,
+                    ),
+                    new Tab(
+                      text: Loca.of(context).game,
+                    )
+                  ],
+                ),
               ),
-              bottom: new TabBar(
-                isScrollable: false,
-                indicatorColor: Colors.white,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorWeight: 5.0,
-                labelColor: Colors.white,
-                labelStyle: new TextStyle(
-                    fontSize: _size.height * 0.3 * 0.07,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.normal),
-                controller: _controller,
-                unselectedLabelColor: _myHandler.color,
-                tabs: <Tab>[
-                  new Tab(
-                    text: Loca.of(context).chat,
-                  ),
-                  new Tab(
-                    text: Loca.of(context).game,
-                  )
-                ],
-              ),
-            ),
-          ];
-        },
-        body: new TabBarView(
-          controller: _controller,
-          children: <Widget>[new FriendListView(), new GameListView()],
+            ];
+          },
+          body: new TabBarView(
+            controller: _controller,
+            children: <Widget>[new FriendListView(), new GameListView()],
+          ),
         ),
-      ),
-    );
+      );
   }
 }
 

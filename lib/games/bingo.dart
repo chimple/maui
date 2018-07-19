@@ -9,6 +9,7 @@ import 'package:maui/components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
@@ -40,6 +41,7 @@ enum ColmunCell { ColumnActive, CurveColumn }
 enum RowCell { Dance, CurveRow }
 
 class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
+ GameAudio play=new GameAudio();
   Map<String, String> _Bingodata;
   List<String> _all = [];
 
@@ -126,7 +128,9 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         bingoCount = 0;
         countData = 0;
         onScoreFlag = 0;
-// widget.onEnd();
+        countEnd == 0;
+        clickCounter=0;
+        onScoreFlag =0;
         _copyQuestion.removeRange(0, _copyQuestion.length);
         _copyQuestion1.removeRange(0, _copyQuestion1.length);
         _all.removeRange(0, _all.length);
@@ -172,9 +176,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     ques = _copyQuestion[z];
     print("thia is a ques tio {$ques abd $z}");
     print("this is a $ques");
-    countEnd == 0;
-    clickCounter=0;
-    onScoreFlag =0;
+
 // _shuffledLetters.removeRange(0, _shuffledLetters.length);
     for (var i = 0; i < _all.length; i += _maxSize * _maxSize) {
       _shuffledLetters.addAll(
@@ -213,7 +215,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         tile: tile,
         Ctile: Ctile,
         Rtile: Rtile,
-        unitMode: widget.gameConfig.answerUnitMode, //question unit mode
+        unitMode: widget.gameConfig.questionUnitMode, //question unit mode
         onPress: () {
           print("text $text");
 
@@ -227,7 +229,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
           print(" staus is.......::$_statuses");
           if (str1 == str2 && onend!=true &&status == Status.Active) {
-
+            play.right();
             widget.onScore(4);
             setState(() {
               _statuses[index] = Status.Visible;
@@ -314,7 +316,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               print("this is my intial $countEnd");
               if(c==0){
                 setState(() {
-
+                  play.wrong();
                   widget.onScore(-1);
                   countEnd++;
                   _ShakeCells[index] = ShakeCell.Right;
