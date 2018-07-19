@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:maui/components/videoplayer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -134,6 +135,37 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                       ]),
                     ),
                     title: new Text(Loca.of(context).intl(widget.gameName)),
+                      actions: <Widget>[
+                             Padding(
+                               padding: const EdgeInsets.all(1.0),
+                               child: GestureDetector(
+                                 
+                  onTap: (){  button3(context);
+                  print("valueme incresing");
+                  },
+                  
+                  child: Container(
+                      height: 60.0,
+                      width: 60.0,
+                      // margin: EdgeInsets.only(left: 190.0),
+                     decoration:  new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(40.0),
+                    color: Colors.red
+                   
+                    
+                ),
+                    child: new Center(
+                      child: Icon(
+                       
+                         Icons.play_arrow,
+                         size: 40.0,
+                            
+                      ),
+                    ),
+                  ),
+                ),
+                             )
+                      ]
                   ),
                   SliverToBoxAdapter(
                     child: new Column(
@@ -267,5 +299,10 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
+  }
+
+  void button3(BuildContext context) {
+     print("Button 1");
+  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new VideoApp()));
   }
 }
