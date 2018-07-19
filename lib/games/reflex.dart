@@ -10,6 +10,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Reflex extends StatefulWidget {
   Function onScore;
@@ -36,6 +37,7 @@ class Reflex extends StatefulWidget {
 }
 
 class ReflexState extends State<Reflex> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -145,6 +147,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
                       : null;
               _currentIndex++;
             });
+            play.right();
             widget.onScore(1);
             widget.onProgress(_currentIndex / _allLetters.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
@@ -159,6 +162,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
               });
             }
           } else {
+            play.wrong();
             widget.onScore(-1);
           }
         });

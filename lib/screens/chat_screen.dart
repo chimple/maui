@@ -19,6 +19,7 @@ import 'package:maui/components/select_text_choice.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/loca.dart';
 
 enum InputType { hidden, keyboard, emoji, sticker, choices }
 
@@ -283,8 +284,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     });
                   },
                   onSubmitted: _handleSubmitted,
-                  decoration:
-                      new InputDecoration.collapsed(hintText: "Send a message"),
+                  decoration: new InputDecoration.collapsed(
+                      hintText: Loca().sendAMessage),
                 ),
               ),
               new Container(

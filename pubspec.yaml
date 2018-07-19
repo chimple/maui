@@ -24,6 +24,7 @@ dependencies:
   badge: 0.0.2
   intl: 0.15.6
   intl_translation: 0.16.8
+  simple_permissions: 0.1.5
   flores:
     git:
       https://github.com/chimple/flores.git
@@ -54,6 +55,9 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/right.wav
+    - assets/wrong.wav
+    - assets/tap.wav
     - assets/demo_video/video.mp4
     - assets/database.db
     - assets/solo.nima
@@ -1349,6 +1353,41 @@ flutter:
     - assets/stickers/monkey/2.png
     - assets/stickers/monkey/3.png
     - assets/stickers/monkey/1.png
+    - assets/stickers/doggie/doggie.png
+    - assets/stickers/doggie/8.png
+    - assets/stickers/doggie/9.png
+    - assets/stickers/doggie/14.png
+    - assets/stickers/doggie/15.png
+    - assets/stickers/doggie/16.png
+    - assets/stickers/doggie/12.png
+    - assets/stickers/doggie/13.png
+    - assets/stickers/doggie/11.png
+    - assets/stickers/doggie/10.png
+    - assets/stickers/doggie/4.png
+    - assets/stickers/doggie/5.png
+    - assets/stickers/doggie/7.png
+    - assets/stickers/doggie/6.png
+    - assets/stickers/doggie/2.png
+    - assets/stickers/doggie/3.png
+    - assets/stickers/doggie/1.png
+    - assets/stickers/carpie/carpie.png
+    - assets/stickers/carpie/8.png
+    - assets/stickers/carpie/9.png
+    - assets/stickers/carpie/14.png
+    - assets/stickers/carpie/15.png
+    - assets/stickers/carpie/16.png
+    - assets/stickers/carpie/12.png
+    - assets/stickers/carpie/13.png
+    - assets/stickers/carpie/11.png
+    - assets/stickers/carpie/10.png
+    - assets/stickers/carpie/4.png
+    - assets/stickers/carpie/5.png
+    - assets/stickers/carpie/7.png
+    - assets/stickers/carpie/6.png
+    - assets/stickers/carpie/2.png
+    - assets/stickers/carpie/3.png
+    - assets/stickers/carpie/1.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
