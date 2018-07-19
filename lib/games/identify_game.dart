@@ -43,7 +43,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   void _initBoard() async {
     setState(() => _isLoading = true);
 
-    _decoded = await json.decode(await fetchIdentifyData());
+    _decoded = await json.decode(await fetchData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         for (var i = 0; i < _decoded["number"]; i++) {
@@ -142,6 +142,7 @@ class _IdentifyGameState extends State<IdentifyGame>
     return new DragBox(
       onScore: widget.onScore,
       onEnd: widget.onEnd,
+      onProgress: widget.onProgress,
       render: _renderChoice,
       maxHeight: maxHeight,
       maxWidth: maxWidth,
@@ -168,11 +169,11 @@ class _IdentifyGameState extends State<IdentifyGame>
 
   @override
   void dispose() {
-    super.dispose();
     _imgController.dispose();
     for (var i = 0; i < _decoded["number"]; i++) {
       _textControllers[i].dispose();
     }
+    super.dispose();
   }
 
   @override
@@ -217,7 +218,7 @@ class _IdentifyGameState extends State<IdentifyGame>
                         height: (constraint.maxHeight) * 3 / 4,
                         width: constraint.maxWidth,
                         orientation: orientation),
-                    new Stack(  
+                    new Stack(
                       children: _createTextPaint(context),
                     ),
                   ],
@@ -244,10 +245,12 @@ class DragBox extends StatefulWidget {
   Function render;
   Function onScore;
   Function onEnd;
+  Function onProgress;
   Orientation orientation;
 
   DragBox(
       {this.onEnd,
+      this.onProgress,
       this.onScore,
       this.maxHeight,
       this.maxWidth,
@@ -275,13 +278,13 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   Function render;
   Orientation orientation;
 
-  List<String> _buildPartsList() {
-    List<String> partsName = [];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
-    return partsName;
-  }
+  // List<String> _buildPartsList() {
+  //   List<String> partsName = [];
+  //   for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+  //     partsName.add((_decoded["parts"] as List)[i]["name"]);
+  //   }
+  //   return partsName;
+  // }
 
   // _onTapDown(BuildContext context, TapDownDetails down) {
   //   // print(start.globalPosition.toString());
@@ -329,7 +332,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _length = _buildPartsList().length;
+    // _length = _buildPartsList().length;
+    _length = _decoded["number"];
 
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 800), vsync: this);
@@ -385,118 +389,118 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
       child: new ScaleTransition(
         scale: shakeAnimation,
         child: new Draggable(
-            // feedbackOffset: Offset.zero,
-            dragAnchor: DragAnchor.child,
-            maxSimultaneousDrags: 1,
-            key: widget.key,
-            data: (_flag1 == 0) ? "" : part["name"],
-            child: new AnimatedDrag(
-              cols: cols,
+          // feedbackOffset: Offset.zero,
+          dragAnchor: DragAnchor.child,
+          maxSimultaneousDrags: 1,
+          key: widget.key,
+          data: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
+          child: new AnimatedDrag(
+            cols: cols,
+            height: maxHeight,
+            width: maxWidth,
+            animation: (_flag == 0) ? noanimation : animation,
+            draggableColor: Theme.of(context).buttonColor,
+            draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
+          ),
+          feedback: new AnimatedFeedback(
               height: maxHeight,
               width: maxWidth,
-              animation: (_flag == 0) ? noanimation : animation,
-              draggableColor: Theme.of(context).buttonColor,
-              draggableText: (_flag1 == 0) ? "" : part["name"],
-            ),
-            feedback: new AnimatedFeedback(
-                height: maxHeight,
-                width: maxWidth,
-                animation: animation,
-                draggableColor: Theme.of(context).disabledColor,
-                draggableText: (_flag1 == 0) ? "" : part["name"]),
-            onDraggableCanceled: (velocity, offset) {
-              // RenderBox box = context.findRenderObject();
-              // offset = box.globalToLocal(offset);
-              // velocity = Velocity(pixelsPerSecond: Offset(50.0, 50.0));
+              animation: animation,
+              draggableColor: Theme.of(context).disabledColor,
+              draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"])),
+          onDraggableCanceled: (velocity, offset) {
+            // RenderBox box = context.findRenderObject();
+            // offset = box.globalToLocal(offset);
+            // velocity = Velocity(pixelsPerSecond: Offset(50.0, 50.0));
 
-              print(velocity);
-              Size media = MediaQuery.of(context).size;
-              double h, w, h1, w1, x1, y1, rh, rw, headerSize;
-              headerSize = media.height - 4 * (maxHeight);
-              print(orientation);
-              if (orientation == Orientation.portrait) {
-                h = ((9 * 3 * maxHeight * 3) / (40));
-                w = ((4 * maxWidth) / 5);
-                x1 = 90.0;
-                y1 = 120.0;
-              } else {
-                h = ((49 * 3 * maxHeight * 3) / (200));
-                w = ((maxWidth) / 2);
-                x1 = 100.0;
-                y1 = 90.0;
-              }
-              h1 = ((maxHeight * 3) - h) / 2;
-              w1 = (maxWidth - w) / 2;
-              print(h1);
-              print(w1);
-              rh = h / _decoded["height"];
-              rw = w / _decoded["width"];
-              if (true) {
-                print(">>>>>");
-                print(offset.dx);
-                print(offset.dy);
-              }
-              if (((offset.dy - y1) <
-                      (((rh * part["data"]["y"]) + h1) +
-                          (rh * part["data"]["height"]) / 2)) &&
-                  ((offset.dy - 1) >
-                      (((rh * part["data"]["y"]) + h1) -
-                          (rh * part["data"]["height"]) / 2)) &&
-                  ((offset.dx + x1) <
-                      (((rw * part["data"]["x"]) + w1) +
-                          (rw * part["data"]["width"]) / 2)) &&
-                  ((offset.dx + x1) >
-                      (((rw * part["data"]["x"]) + w1) -
-                          (rw * part["data"]["width"]) / 2))) {
-                render(part["name"], maxHeight, maxWidth, orientation,
-                    w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
-                print("These are the system offest of y and x");
-                print(offset.dx);
-                print(offset.dy);
-                print("range in x");
-                print((((rw * part["data"]["x"]) + w1) -
-                    (rw * part["data"]["width"]) / 2));
-                print((((rw * part["data"]["x"]) + w1) +
-                    (rw * part["data"]["width"]) / 2));
-                print("range in y");
-                print((((rh * part["data"]["y"]) + h1) -
-                    (rh * part["data"]["height"]) / 2));
-                print((((rh * part["data"]["y"]) + h1) +
-                    (rh * part["data"]["height"]) / 2));
-                print("centre given cordis");
-                print(h1 + (rh * part["data"]["y"]));
-                print(w1 + (rw * part["data"]["x"]));
-                print("done coredis");
-                print(headerSize);
-                print(maxHeight * 4);
-                print(media.height);
-                print(offset.dy);
-                print(y1);
-                widget.onScore(1);
-                _length = _length - 1;
-                print(_length);
+            print(velocity);
+            Size media = MediaQuery.of(context).size;
+            double h, w, h1, w1, x1, y1, rh, rw, headerSize;
+            headerSize = media.height - 4 * (maxHeight);
+            print(orientation);
+            if (orientation == Orientation.portrait) {
+              h = ((9 * 3 * maxHeight * 3) / (40));
+              w = ((4 * maxWidth) / 5);
+              x1 = 90.0;
+              y1 = 120.0;
+            } else {
+              h = ((49 * 3 * maxHeight * 3) / (200));
+              w = ((maxWidth) / 2);
+              x1 = 100.0;
+              y1 = 90.0;
+            }
+            h1 = ((maxHeight * 3) - h) / 2;
+            w1 = (maxWidth - w) / 2;
+            print(h1);
+            print(w1);
+            rh = h / _decoded["height"];
+            rw = w / _decoded["width"];
+            if (true) {
+              print(">>>>>");
+              print(offset.dx);
+              print(offset.dy);
+            }
+            if (((offset.dy - y1) <
+                    (((rh * part["data"]["y"]) + h1) +
+                        (rh * part["data"]["height"]) / 2)) &&
+                ((offset.dy - y1) >
+                    (((rh * part["data"]["y"]) + h1) -
+                        (rh * part["data"]["height"]) / 2)) &&
+                ((offset.dx + x1) <
+                    (((rw * part["data"]["x"]) + w1) +
+                        (rw * part["data"]["width"]) / 2)) &&
+                ((offset.dx + x1) >
+                    (((rw * part["data"]["x"]) + w1) -
+                        (rw * part["data"]["width"]) / 2))) {
+              render(Loca.of(context).intl(part["name"]), maxHeight, maxWidth, orientation,
+                  w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
+              print("These are the system offest of y and x");
+              print(offset.dx);
+              print(offset.dy);
+              print("range in x");
+              print((((rw * part["data"]["x"]) + w1) -
+                  (rw * part["data"]["width"]) / 2));
+              print((((rw * part["data"]["x"]) + w1) +
+                  (rw * part["data"]["width"]) / 2));
+              print("range in y");
+              print((((rh * part["data"]["y"]) + h1) -
+                  (rh * part["data"]["height"]) / 2));
+              print((((rh * part["data"]["y"]) + h1) +
+                  (rh * part["data"]["height"]) / 2));
+              print("centre given cordis");
+              print(h1 + (rh * part["data"]["y"]));
+              print(w1 + (rw * part["data"]["x"]));
+              print("done coredis");
+              print(headerSize);
+              print(maxHeight * 4);
+              print(media.height);
+              print(offset.dy);
+              print(y1);
+              widget.onScore(1);
+              widget.onProgress((1+(_decoded["number"] - _length))/_decoded["number"]);
+              _length = _length - 1;
+              print(_length);
+              setState(() {
+                _flag1 = 0;
+              });
+              new Future.delayed(const Duration(milliseconds: 1000), () {
+                if (_length == 0) {
+                  widget.onEnd();
+                }
+              });
+            } else {
+              widget.onScore(-1);
+              _flag = 1;
+              toAnimateFunction();
+              new Future.delayed(const Duration(milliseconds: 1000), () {
                 setState(() {
-                  _flag1 = 0;
+                  _flag = 0;
                 });
-                new Future.delayed(const Duration(milliseconds: 1000), () {
-                  if (_length == 0) {
-                    widget.onEnd();
-                  }
-                });
-              }
-              else {
-                widget.onScore(-1);
-                _flag = 1;
-                toAnimateFunction();
-                new Future.delayed(const Duration(milliseconds: 1000), () {
-                  setState(() {
-                    _flag = 0;
-                  });
-                  controller.stop();
-                });
-              }
-            },
-          ),
+                controller.stop();
+              });
+            }
+          },
+        ),
       ),
     );
   }

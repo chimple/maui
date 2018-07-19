@@ -15,10 +15,12 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/components/instruction_card.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/select_text_choice.dart';
+import 'package:maui/repos/chat_bot_data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flores/flores.dart';
 
-enum InputType { hidden, keyboard, emoji, sticker }
+enum InputType { hidden, keyboard, emoji, sticker, choices }
 
 typedef void OnUserPress(String text);
 
@@ -47,11 +49,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   FocusNode _focusNode;
   bool _isComposing = false;
-  InputType _inputType = InputType.keyboard;
+  InputType _inputType = InputType.choices;
 //  DatabaseReference _reference;
 //  List<dynamic> _messages;
   static final chatMessageType = 'chat';
   bool _isLoading = true;
+  AppStateContainerState appStateContainerState;
 
   @override
   void initState() {
@@ -67,17 +70,24 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    AppStateContainer.of(context).endChat();
+    appStateContainerState.endChat();
     _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final myId = AppStateContainer.of(context).state.loggedInUser.id;
-    final myImage = AppStateContainer.of(context).state.loggedInUser.image;
-    var messages = AppStateContainer.of(context).messages;
+    appStateContainerState = AppStateContainer.of(context);
+    final myId = appStateContainerState.state.loggedInUser.id;
+    final myImage = appStateContainerState.state.loggedInUser.image;
+    var messages = appStateContainerState.messages;
     print('chat_screen $messages');
+    var latestMessage = Map<String, dynamic>();
+    try {
+      latestMessage = messages.first;
+    } catch (e) {
+      print(e);
+    }
 
     AnimationController controller = AnimationController(vsync: this);
     Animation<double> animation =
@@ -142,7 +152,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 ? null
                 : BottomAppBar(
                     child: FractionallySizedBox(
-                        heightFactor: 0.3, child: _buildBottomBar(_inputType))),
+                        heightFactor: 0.3,
+                        child: _buildBottomBar(_inputType, latestMessage))),
       ),
     );
   }
@@ -200,7 +211,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     }
   }
 
-  Widget _buildBottomBar(InputType inputType) {
+  Widget _buildBottomBar(InputType inputType, Map<String, dynamic> message) {
+    print('ChatScreen._buildBottomBar');
     switch (inputType) {
       case InputType.emoji:
         return SelectEmoji(
@@ -212,6 +224,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           onUserPress: _addSticker,
         );
         break;
+      case InputType.choices:
+        return SelectTextChoice(
+            onUserPress: _addTextChoice, texts: message['choices']);
     }
   }
 
@@ -220,6 +235,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _isComposing = true;
     });
+  }
+
+  void _addTextChoice(String text) {
+    _sendMessage(text: text);
   }
 
   void _addSticker(String text) {
@@ -248,6 +267,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             new Row(children: <Widget>[
+              _buildTypeSelector(InputType.choices, Icons.apps),
               _buildTypeSelector(InputType.keyboard, Icons.keyboard),
               _buildTypeSelector(InputType.emoji, Icons.face),
               _buildTypeSelector(InputType.sticker, Icons.format_paint),
@@ -295,8 +315,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       child: new InkWell(
           child: Icon(iconData,
               color: _inputType == inputType
-                  ? Color(widget.friend.color)
-                  : Color(userColors[widget.friend.color])),
+                  ? Color(userColors[widget.friend.color])
+                  : Color(widget.friend.color)),
           onTap: () => setState(() {
                 _inputType = inputType;
               })),

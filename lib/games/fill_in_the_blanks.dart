@@ -222,16 +222,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new CircularProgressIndicator(),
       );
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: fruit,
-          onChecked: () {
-            widget.onEnd();
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
+  
     if (space == 0) {
       setState(() {
         _initFillBlanks();
@@ -248,6 +239,24 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+        if (_isShowingFlashCard) {
+       return FractionallySizedBox(
+            widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.75,
+        child: new FlashCard(
+            text: fruit,
+            onChecked: () {
+              widget.onEnd();
+              setState(() {
+                _isShowingFlashCard = false;
+              });
+            }),
+      );
+    }
+
+
       return new Flex(
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.center,

@@ -27,9 +27,9 @@ class _HoodieState extends State<Hoodie> {
 
   @override
   void dispose() {
-    super.dispose();
     _happyController?.dispose();
     _sadController?.dispose();
+    super.dispose();
   }
 
   @override
