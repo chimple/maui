@@ -331,11 +331,11 @@ class _ScoreScreenState extends State<ScoreScreen>
                       padding: new EdgeInsets.all(ht > wd ? ht * 0.02 : wd * 0.025),
                       child: new Container(
                       decoration: new BoxDecoration(
-                        color: Colors.red,
-                  borderRadius: new BorderRadius.circular(20.0),
+                        color: Colors.white,
+                  borderRadius: new BorderRadius.circular(50.0),
                   border: new Border.all(
                     width: 6.0,
-                    color: Colors.red,
+                    color: Colors.white,
                   ),
                 ),
                       child: new Row(

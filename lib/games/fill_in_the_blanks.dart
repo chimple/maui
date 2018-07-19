@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -32,6 +33,7 @@ class FillInTheBlanks extends StatefulWidget {
 }
 
 class FillInTheBlanksState extends State<FillInTheBlanks> {
+  GameAudio play=new GameAudio();
   bool _isLoading = true;
   var flag1 = 0;
   int code, dcode, dindex;
@@ -147,10 +149,12 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             } else {
               if (dropTargetData[index] == '_') {
                 dragcount++;
+                play.wrong();
                 widget.onScore(-1);
               }
             }
             if (progres == space) {
+              play.right();
               widget.onScore(4);
               new Future.delayed(const Duration(milliseconds: 400), () {
                 setState(() {
@@ -222,16 +226,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new CircularProgressIndicator(),
       );
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: fruit,
-          onChecked: () {
-            widget.onEnd();
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
+  
     if (space == 0) {
       setState(() {
         _initFillBlanks();
@@ -248,6 +243,24 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+        if (_isShowingFlashCard) {
+       return FractionallySizedBox(
+            widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.75,
+        child: new FlashCard(
+            text: fruit,
+            onChecked: () {
+              widget.onEnd();
+              setState(() {
+                _isShowingFlashCard = false;
+              });
+            }),
+      );
+    }
+
+
       return new Flex(
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.center,
