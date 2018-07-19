@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
+import 'expansionTile.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -23,6 +24,7 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
   int totalScore = 0;
   String otherUserImagePath;
   User otherUserDetails;
+  GlobalKey<ControlledExpansionTileState> currentExpandedTile;
   @override
     void initState() {
       super.initState();
@@ -172,13 +174,26 @@ class PlayedGamesScoreDisplayState extends State<PlayedGamesScoreDisplay> {
         totalScore = totalScore + f.myScore;
       }).toList(growable: false);
 
+      GlobalKey<ControlledExpansionTileState> expansionKey =
+            new GlobalObjectKey("tile-$k");
         scoreWidgets.add(
           new Container(
             margin: const EdgeInsets.all(0.0),
             color: SingleGame.gameColors[k][0],
-            child: ExpansionTile( 
-              leading: Image.asset('assets/hoodie/${k}.png',scale: 5.0,),
-              title: new Row(
+            child: ControlledExpansionTile( 
+                    key: expansionKey,
+      onExpansionChanged: (bool value) {
+                          if (value) {
+                            if (currentExpandedTile != null) {
+                              currentExpandedTile.currentState?.handleTap();
+                            }
+                            currentExpandedTile = expansionKey;
+                          } else {
+                            currentExpandedTile = null;
+                          }
+                        },
+             leading: Image.asset('assets/hoodie/${k}.png',scale: 5.0,),
+               title: new Row(
                 children: <Widget>[
                   new Expanded(
                     child: new Container(
