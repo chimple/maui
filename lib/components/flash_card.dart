@@ -69,7 +69,7 @@ class _FlashCardState extends State<FlashCard> {
           color: bgColor,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.all(
-                  Radius.circular(constraints.maxHeight * 0.02))),
+                  Radius.circular(constraints.maxHeight * 0.08))),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
@@ -87,15 +87,15 @@ class _FlashCardState extends State<FlashCard> {
                     new IconButton(
                         icon: new Icon(Icons.arrow_left),
                         onPressed: widget.onChecked,
-                        iconSize: constraints.maxHeight * 0.12,
+                        iconSize: constraints.maxHeight * 0.2,
                         color: Colors.white),
                     new Expanded(
                         child: new SizedBox(
                             height: constraints.maxHeight > constraints.maxWidth
-                                ? constraints.maxHeight * 0.4
-                                : constraints.maxWidth * 0.3,
+                                ? constraints.maxHeight * 0.2
+                                : constraints.maxWidth * 0.2,
                             width: constraints.maxHeight > constraints.maxWidth
-                                ? constraints.maxWidth * 0.9
+                                ? constraints.maxWidth * 0.5
                                 : constraints.maxHeight * 0.5,
                             child: _containsNum
                                 ? new Container(
@@ -112,7 +112,7 @@ class _FlashCardState extends State<FlashCard> {
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: widget.onChecked,
-                      iconSize: constraints.maxHeight * 0.12,
+                      iconSize: constraints.maxHeight * 0.2,
                       color: Colors.white,
                     )
                   ],
@@ -133,7 +133,7 @@ class _FlashCardState extends State<FlashCard> {
                                 fontSize: constraints.maxHeight * 0.1,
                                 fontWeight: FontWeight.bold)))
                     : new Container(
-                        height: constraints.maxHeight * 0.2,
+                        height: constraints.maxHeight * 0.1,
                         width: constraints.maxWidth * 0.9,
                         alignment: const Alignment(0.0, 0.0),
                         margin:
@@ -147,7 +147,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: new Text(_unit?.name ?? widget.text,
                             style: new TextStyle(
                                 color: Colors.white,
-                                fontSize: constraints.maxHeight * 0.1,
+                                fontSize: constraints.maxHeight * 0.085,
                                 fontWeight: FontWeight.bold)))
               ]));
     });

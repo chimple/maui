@@ -10,6 +10,7 @@ import 'game_category_repo.dart';
 import 'lesson_unit_repo.dart';
 import 'lesson_repo.dart';
 import 'unit_repo.dart';
+import 'package:maui/loca.dart';
 
 enum Category { letter, number }
 
@@ -41,11 +42,11 @@ Future<Tuple2<String, List<String>>> fetchSequenceDataForCategory(
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
   var maxNumber = 10;
-  switch (category?.name) {
-    case '0-9':
+  switch (category?.id) {
+    case 42:
       maxNumber = 10;
       break;
-    case '0-99':
+    case 43:
       maxNumber = 100;
       break;
   }
@@ -163,51 +164,51 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
-    switch (category?.name) {
-      case 'Single digit addition without carryover':
+    switch (category?.id) {
+      case 7:
         var firstNum = rand.nextInt(8) + 1;
         var secondNum = rand.nextInt(9 - firstNum) + 1;
         var sum = firstNum + secondNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Single digit addition with carryover':
+      case 8:
         var firstNum = rand.nextInt(9) + 1;
         var sum = rand.nextInt(firstNum) + 10;
         var secondNum = sum - firstNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Double digit addition without carryover':
+      case 9:
         var firstNum = rand.nextInt(98) + 1;
         var secondNum = rand.nextInt(99 - firstNum) + 1;
         var sum = firstNum + secondNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Double digit addition with carryover':
+      case 10:
         //TODO: no carry over at all
         var firstNum = rand.nextInt(98) + 1;
         var sum = rand.nextInt(firstNum) + 100;
         var secondNum = sum - firstNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Triple digit addition without carryover':
+      case 11:
         var firstNum = rand.nextInt(998) + 1;
         var secondNum = rand.nextInt(999 - firstNum) + 1;
         var sum = firstNum + secondNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Triple digit addition with carryover':
+      case 12:
         var firstNum = rand.nextInt(998) + 1;
         var sum = rand.nextInt(firstNum) + 1000;
         var secondNum = sum - firstNum;
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
-      case 'Single digit subtraction without borrow':
+      case 13:
         var firstNum = rand.nextInt(8) + 2;
         var secondNum = rand.nextInt(firstNum - 1) + 1;
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
-      case 'Double digit subtraction without borrow':
+      case 15:
         var firstNumTens = rand.nextInt(9) + 1;
         var firstNumUnits = rand.nextInt(9) + 1;
         var firstNum = firstNumTens * 10 + firstNumUnits;
@@ -217,7 +218,7 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
-      case 'Double digit subtraction with borrow':
+      case 16:
         var firstNumTens = rand.nextInt(8) + 2;
         var firstNumUnits = rand.nextInt(8) + 1;
         var firstNum = firstNumTens * 10 + firstNumUnits;
@@ -228,7 +229,7 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
-      case 'Triple digit subtraction without borrow':
+      case 17:
         var firstNumHundreds = rand.nextInt(9) + 1;
         var firstNumTens = rand.nextInt(9) + 1;
         var firstNumUnits = rand.nextInt(9) + 1;
@@ -242,7 +243,7 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
-      case 'Triple digit subtraction with borrow':
+      case 18:
         var firstNumHundreds = rand.nextInt(8) + 2;
         var firstNumTens = rand.nextInt(8) + 1;
         var firstNumUnits = rand.nextInt(8) + 1;
@@ -257,19 +258,19 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var sum = firstNum - secondNum;
         return new Tuple4(firstNum, '-', secondNum, sum);
         break;
-      case 'Single digit multiplication':
+      case 19:
         var firstNum = rand.nextInt(9) + 1;
         var secondNum = rand.nextInt(9) + 1;
         var product = firstNum * secondNum;
         return new Tuple4(firstNum, '*', secondNum, product);
         break;
-      case 'Single digit with double digit multiplication':
+      case 20:
         var firstNum = rand.nextInt(9) + 1;
         var secondNum = rand.nextInt(90) + 10;
         var product = firstNum * secondNum;
         return new Tuple4(firstNum, '*', secondNum, product);
         break;
-      case 'Double digit multiplication':
+      case 21:
         var firstNum = rand.nextInt(90) + 10;
         var secondNum = rand.nextInt(90) + 10;
         var product = firstNum * secondNum;
@@ -284,16 +285,12 @@ Future<List<Tuple4<int, String, int, int>>> fetchTablesData(
     int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
-    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
-    var rand = new Random();
-    if (category?.name.endsWith('Tables')) {
-      var number = int.parse(category.name.substring(0, 1));
-      var table = <Tuple4<int, String, int, int>>[];
-      for (var i = 1; i <= 10; i++) {
-        table.add(new Tuple4(number, 'X', i, number * i));
-      }
-      return table;
+    var number = gameCategory.conceptId - 21; //22 is for 1 mult table
+    var table = <Tuple4<int, String, int, int>>[];
+    for (var i = 1; i <= 10; i++) {
+      table.add(new Tuple4(number, 'X', i, number * i));
     }
+    return table;
   }
   return null;
 }
@@ -353,26 +350,22 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
       new Tuple4('assets/apple.png', 2, 2, Direction.down),
       new Tuple4('assets/apple.png', 5, 1, Direction.across)
     ]);
-   }
-    return null;
+  }
+  return null;
 }
-Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
 
-var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
 
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
-   
-  
 
-  var rand = new Random();
-  var startNum = rand.nextInt(max(0, 3));
-  print(" ......random number is... $startNum");
-  switch (startNum) {
-    case 0:
-      return new Tuple2([
-        
-          
+    var rand = new Random();
+    var startNum = rand.nextInt(max(0, 3));
+    print(" ......random number is... $startNum");
+    switch (startNum) {
+      case 0:
+        return new Tuple2([
           ' actings',
           'casing',
           'cast',
@@ -386,169 +379,162 @@ var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
           'at',
           'tas',
           'as',
-          	
-"GEN",	
-"GET",	
-"GIE",	
-"GIN",	
-"GIS",	
-"GIT",	
-"ING",	
-"NAG",	
-"NEG",	
-"SAG",	
-"SEG",	
-"SIG",	
-"TAG",	
-"TEG",	
-"TIG",	
-"AIN",	
-"AIS",	
-"AIT",		
-"ANI",	
-"ANS",	
-"ANT",	
-"ASS",	
-"ATE",	
-"ATS",	
-"EAN",	
-"EAS",	
-"EAT",	
-"ENS",	
-"ESS",	
-"EST",	
-"ETA",	
-"INS",	
-"ITA",	
-"ITS",	
-"NAE",	
-"NAS",	
-"NAT",	
-
-
-"ETAS",	
-"ETNA",	
-"ISNA",	
-"ITAS",	
-"NAES",	
-"NATS",	
-"NEAT",	
-"NESS",	
-"NEST",	
-"NETS",	
-"NIES",	
-"NITE",	
-"NITS",	
-"SAIN",	
-"SAIS",
-"SANE",
-"SANS",
-"SANT",
-"SATE",	
+          "GEN",
+          "GET",
+          "GIE",
+          "GIN",
+          "GIS",
+          "GIT",
+          "ING",
+          "NAG",
+          "NEG",
+          "SAG",
+          "SEG",
+          "SIG",
+          "TAG",
+          "TEG",
+          "TIG",
+          "AIN",
+          "AIS",
+          "AIT",
+          "ANI",
+          "ANS",
+          "ANT",
+          "ASS",
+          "ATE",
+          "ATS",
+          "EAN",
+          "EAS",
+          "EAT",
+          "ENS",
+          "ESS",
+          "EST",
+          "ETA",
+          "INS",
+          "ITA",
+          "ITS",
+          "NAE",
+          "NAS",
+          "NAT",
+          "ETAS",
+          "ETNA",
+          "ISNA",
+          "ITAS",
+          "NAES",
+          "NATS",
+          "NEAT",
+          "NESS",
+          "NEST",
+          "NETS",
+          "NIES",
+          "NITE",
+          "NITS",
+          "SAIN",
+          "SAIS",
+          "SANE",
+          "SANS",
+          "SANT",
+          "SATE",
           'ats'
-        
-      ],'catseings');
-      break;
-    case 1:
-      return new Tuple2(
-        [
-'puces',
-'ceps',
-'cups',
-'cusp',
-'pecs',
-'puce',
-'scup',
-'spec',
-'cep',
-'cup',
-'pec',
-'cues',
-'ecus',
-'spue',
-'supe',
-'cue',
-'ecu',
-'pes',
-'pus',
-'esc',
-'sup',
-'ups',
-'pe',
-'up',
-'sue',
-'use',
-'us'],
-       'upsce');
-      break;
-  
-    case 2:
-      return new Tuple2(
-        [
+        ], 'catseings');
+        break;
+      case 1:
+        return new Tuple2([
+          'puces',
+          'ceps',
+          'cups',
+          'cusp',
+          'pecs',
+          'puce',
+          'scup',
+          'spec',
+          'cep',
+          'cup',
+          'pec',
+          'cues',
+          'ecus',
+          'spue',
+          'supe',
+          'cue',
+          'ecu',
+          'pes',
+          'pus',
+          'esc',
+          'sup',
+          'ups',
+          'pe',
+          'up',
+          'sue',
+          'use',
+          'us'
+        ], 'upsce');
+        break;
+
+      case 2:
+        return new Tuple2([
           'ashet',
-'haets',
-'haste',
-'hates',
-'heats',
-'eath',
-'eths',
-'haes',
-'haet',
-'hast',
-'hate',
-'hats',
-'heat',
-'hest',
-'hets',
-'shat',
-'shea',
-'shet',
-'tash',
-'thae',
-'ahs',
-'ash',
-'eth',
-'hae',
-'has',
-'hat',
-'hes',
-'het',
-'sha',
-'she',
-'the',
-'he',
-'ates',
-'east',
-'eats',
-'etas',
-'sate',
-'seat',
-'taes',
-'tase',
-'teas',
-'ate',
-'ats',
-'eas',
-'eat',
-'est',
-'sae',
-'sat',
-'sea',
-'set',
-'tae',
-'tas',
-'tea',
-'tes',
-'as',
-'at',
-'st',
-'te'
-        ],
-       'hates');
-      break;
+          'haets',
+          'haste',
+          'hates',
+          'heats',
+          'eath',
+          'eths',
+          'haes',
+          'haet',
+          'hast',
+          'hate',
+          'hats',
+          'heat',
+          'hest',
+          'hets',
+          'shat',
+          'shea',
+          'shet',
+          'tash',
+          'thae',
+          'ahs',
+          'ash',
+          'eth',
+          'hae',
+          'has',
+          'hat',
+          'hes',
+          'het',
+          'sha',
+          'she',
+          'the',
+          'he',
+          'ates',
+          'east',
+          'eats',
+          'etas',
+          'sate',
+          'seat',
+          'taes',
+          'tase',
+          'teas',
+          'ate',
+          'ats',
+          'eas',
+          'eat',
+          'est',
+          'sae',
+          'sat',
+          'sea',
+          'set',
+          'tae',
+          'tas',
+          'tea',
+          'tes',
+          'as',
+          'at',
+          'st',
+          'te'
+        ], 'hates');
+        break;
+    }
+    return null;
   }
-   return null;
-}
 }
 
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
@@ -622,8 +608,8 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
-    switch (category?.name) {
-      case '0-9':
+    switch (category?.id) {
+      case 42:
         var startNum = rand.nextInt(max(0, 9 - maxLength));
         List<String> consecutive = new List<String>();
         for (int i = startNum; i < startNum + maxLength; i++) {
@@ -641,7 +627,7 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
         }
         return new Tuple2(consecutive, other);
         break;
-      case '0-99':
+      case 43:
         var startNum = rand.nextInt(max(0, 99 - maxLength));
         List<String> consecutive = new List<String>();
         for (int i = startNum; i < startNum + maxLength; i++) {
@@ -682,23 +668,24 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
 }
 
 
-Future<String> fetchIdentifyData() async {
-    // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
-    List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
-    gameViews.shuffle();
-    String s = gameViews[0];
-    return await rootBundle.loadString("assets/$s.json");
+
+Future<String> fetchData() async {
+  List<String> gameViews = [
+    "Colors",
+    "Flowers",
+    "HouseItems",
+    "Birds",
+    "Animals",
+    "Body",
+    "Scene",
+    "Shapes",
+    "Clothes",
+    "Fruits"
+  ];
+  gameViews.shuffle();
+  String s = gameViews[0];
+  return await rootBundle.loadString("assets/$s.json");
 }
-
-Future<String> fetchGuessData() async {
-  // List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Work", "Birds", "Animals", "Body", "Boy", "Scene", "Shapes", "BedRoom", "Hospital", "Clothes", "Fruits"];
-  List<String> gameViews = ["Colors", "Flowers", "HouseItems", "Birds", "Animals", "Body", "Scene", "Shapes", "Clothes", "Fruits"];
-    gameViews.shuffle();
-    String s = gameViews[0];
-    return await rootBundle.loadString("assets/$s.json");
-}
-
-
 
 Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     int categoryId) async {
@@ -709,7 +696,7 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
     'juice': ['jui', 'ce'],
   };
   Map<String, List<String>> travel = {
-    'cycle' : ['cyc','le'],
+    'cycle': ['cyc', 'le'],
     'train': ['tr', 'ain'],
     'aeroplane': ['aero', 'plane'],
   };
@@ -732,6 +719,7 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   completer.complete(value);
   return completer.future;
 }
+
 Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
     int categoryId) async {
   var rand = new Random();
@@ -772,42 +760,34 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
   }
   return null;
 }
-Future<Tuple2<String, List<String>>> fetchDrawingData(
-    int categoryId) async {
+
+Future<Tuple2<String, List<String>>> fetchDrawingData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 8));
   switch (startNum) {
     case 0:
-      return new Tuple2("fruits name",
-          ['banana', 'apple', 'grape', 'ball']);
+      return new Tuple2("fruits name", ['banana', 'apple', 'grape', 'ball']);
       break;
     case 1:
-      return new Tuple2("nature",
-          ['bat', 'grape', 'rat', 'cat']);
+      return new Tuple2("nature", ['bat', 'grape', 'rat', 'cat']);
       break;
     case 2:
-      return new Tuple2("Colors",
-          ['book', 'chair', 'table', 'pen']);
+      return new Tuple2("Colors", ['book', 'chair', 'table', 'pen']);
       break;
     case 3:
-      return new Tuple2(
-          "animals .", ['milk', 'cow', 'snake', 'grass']);
+      return new Tuple2("animals .", ['milk', 'cow', 'snake', 'grass']);
       break;
     case 4:
-      return new Tuple2("vegitables",
-          ['onion', 'carrot', 'tomoto', 'chilli']);
+      return new Tuple2("vegitables", ['onion', 'carrot', 'tomoto', 'chilli']);
       break;
     case 5:
-      return new Tuple2(
-          "wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
+      return new Tuple2("wild animals", ['lion', 'tiger', 'cheetah', 'monkey']);
       break;
     case 6:
-      return new Tuple2("vehicles",
-          ['bus', 'car', 'bike', 'train']);
+      return new Tuple2("vehicles", ['bus', 'car', 'bike', 'train']);
       break;
     case 7:
-      return new Tuple2("flowers",
-          ['rose', 'television', 'home', 'jasmin']);
+      return new Tuple2("flowers", ['rose', 'television', 'home', 'jasmin']);
       break;
   }
   return null;

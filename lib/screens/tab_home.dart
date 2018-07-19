@@ -83,6 +83,8 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
           _myHandler.img1,
           scale: .3,
         );
+
+        _icon2 = new Container();
       } else {
         //         _imgController1.reverse();
         // _imgController.forward();
@@ -90,6 +92,8 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
           _myHandler.img2,
           scale: .3,
         );
+
+        _icon1 = new Container();
       }
     });
   }
@@ -141,9 +145,13 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     var _size = media.size;
     return new Scaffold(
       drawer: new ProfileDrawer(),
-      floatingActionButton: new FloatingActionButton(
-          onPressed: () => Navigator.of(context).pushNamed('/chatbot'),
-          child: new Image.asset('assets/koala_neutral.png')),
+      floatingActionButton: Container(
+        height: 100.0,
+        width: 100.0,
+        decoration: new BoxDecoration(
+          shape: BoxShape.circle,
+        ),
+      ),
       body: new NestedScrollView(
         controller: _scrollcontroller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {

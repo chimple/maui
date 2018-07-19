@@ -35,11 +35,9 @@ class _FriendListViewState extends State<FriendListView> {
 
   @override
   Widget build(BuildContext context) {
-    var user = AppStateContainer.of(context).state.loggedInUser;
-    var appUsers = AppStateContainer.of(context).users;
-    print('FriendListView.users $appUsers');
-    var users = [user];
-    if (appUsers != null) users.addAll(appUsers);
+    final user = AppStateContainer.of(context).state.loggedInUser;
+    var users = AppStateContainer.of(context).users;
+    print('FriendListView.users $users');
     var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
@@ -64,11 +62,9 @@ class _FriendListViewState extends State<FriendListView> {
               imageUrl: u.image,
               color: u.color,
               numNotifs: notif.numNotifs,
-              onTap: () => user.id == u.id
-                  ? Navigator.of(context).pushNamed('/chatbot')
-                  : Navigator.of(context).push(MaterialPageRoute<Null>(
-                      builder: (BuildContext context) => new ChatScreen(
-                          myId: user.id, friend: u, friendImageUrl: u.image))));
+              onTap: () => Navigator.of(context).push(MaterialPageRoute<Null>(
+                  builder: (BuildContext context) => new ChatScreen(
+                      myId: user.id, friend: u, friendImageUrl: u.image))));
         }).toList(growable: false),
       ),
     );

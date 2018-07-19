@@ -34,6 +34,7 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  video_player: "^0.5.4"
   build_runner: ^0.7.6
   json_serializable: ^0.3.2
 # For information on the generic Dart part of this file, see the
@@ -53,6 +54,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/demo_video/video.mp4
     - assets/database.db
     - assets/solo.nima
     - assets/solo.png
@@ -90,6 +92,7 @@ flutter:
     - assets/Hospital.png
     - assets/Animals.png
     - assets/BedRoom.png
+    - assets/chat_Bot_Icon.png
     - assets/Birds.png
     - assets/apple.ogg
     - assets/dice_game/1.png
@@ -151,6 +154,7 @@ flutter:
     - assets/background_image/tap_wrong_small.png
     - assets/background_image/spin_wheel_big.png
     - assets/background_image/spin_wheel_small.png
+    - assets/background_gif/Win_loop.gif
     - assets/chat_image/chat icon_01.png
     - assets/games.png
     - assets/chat.png
