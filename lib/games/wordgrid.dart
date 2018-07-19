@@ -399,9 +399,9 @@ class WordgridState extends State<Wordgrid> {
       if (_isShowingFlashCard) {
         return FractionallySizedBox(
             widthFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.65,
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
             heightFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.9,
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
             child: new FlashCard(
                 text: words,
                 image: words,
@@ -471,6 +471,8 @@ class WordgridState extends State<Wordgrid> {
 
   List<Offset> calculateOffsets(
       double d, Offset startpoint, int size, double maxWidth) {
+    // double angle = 2 * pi / amount;
+    // double alpha = 0.0;
     double centeraxis = maxWidth / 4;
     double x0 = startpoint.dx;
     double y0 = startpoint.dy;
@@ -482,10 +484,16 @@ class WordgridState extends State<Wordgrid> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else {
+      } else if(i==1){
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
+      }
+      else{
+         x = x0 + d + maxWidth+(maxWidth/6);
+        x0 = x;
+        y = y0;
+
       }
       offsets[i] = new Offset(x, y);
     }
