@@ -6,6 +6,7 @@ import 'dart:convert';
 import '../components/shaker.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 
 Map _decoded;
@@ -31,6 +32,7 @@ class GuessIt extends StatefulWidget {
 }
 
 class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
+   GameAudio play=new GameAudio();
   List<AnimationController> _textAnimationControllers =
       new List<AnimationController>();
   List<Animation<double>> _animateText = new List<Animation<double>>();
@@ -129,6 +131,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
       print(partsName);
       print(_guess);
       _textController.text = '';
+      play.right();
       widget.onScore(1);
       widget.onProgress((1+(_decoded["number"] - partsName.length))/_decoded["number"]);
       partsName.remove(_guess);
@@ -151,6 +154,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         }
       });
     } else {
+      play.wrong();
       widget.onScore(-1);
       print("this is th elist of parts $partsName");
       this.setState(() {

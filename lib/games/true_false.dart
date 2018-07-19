@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class TrueFalseGame extends StatefulWidget {
   Function onScore;
@@ -35,6 +36,7 @@ class TrueFalseGame extends StatefulWidget {
 enum Status { Active, Right, Wrong }
 
 class TrueFalseGameState extends State<TrueFalseGame> {
+  GameAudio play=new GameAudio();
   bool _isLoading = true;
 
   Tuple3<String, String, bool> _allques;
@@ -81,6 +83,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
         onPress: () {
           if (text == ans) {
             scoretrack = scoretrack + 4;
+            play.right();
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
@@ -94,7 +97,7 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 _statuses[index] = Status.Active;
               });
             });
-
+            play.wrong();
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
