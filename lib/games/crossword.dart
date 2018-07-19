@@ -9,6 +9,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;
@@ -34,6 +35,7 @@ class Crossword extends StatefulWidget {
 }
 
 class CrosswordState extends State<Crossword> {
+  GameAudio play=new GameAudio();
   static var rand = new Random();
   Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>> data =
       (rand.nextInt(2)) == 0
@@ -207,6 +209,7 @@ class CrosswordState extends State<Crossword> {
                       _rightwords[dindex - 100] += '.';
                       _letters[index] = _sortletters[--c];
                       correct++;
+                      play.right();
                       widget.onScore(((1 / _rightlen) * 40).toInt());
                       widget.onProgress(correct / _rightlen);
                       print('progress $correct $_rightlen ');
@@ -235,6 +238,7 @@ class CrosswordState extends State<Crossword> {
                       _flag[index] = 1;
                       _letters[index] = _rightwords[dindex - 100];
                     });
+                    play.wrong();
                     new Future.delayed(const Duration(milliseconds: 700), () {
                       setState(() {
                         widget.onScore(-((1 / _rightlen) * 20).toInt());

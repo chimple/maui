@@ -9,6 +9,7 @@ import 'package:maui/components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Bingo extends StatefulWidget {
   Function onScore;
@@ -40,6 +41,7 @@ enum ColmunCell { ColumnActive, CurveColumn }
 enum RowCell { Dance, CurveRow }
 
 class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
+ GameAudio play=new GameAudio();
   Map<String, String> _Bingodata;
   List<String> _all = [];
 
@@ -227,7 +229,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
           print(" staus is.......::$_statuses");
           if (str1 == str2 && onend!=true &&status == Status.Active) {
-
+            play.right();
             widget.onScore(4);
             setState(() {
               _statuses[index] = Status.Visible;
@@ -314,7 +316,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
               print("this is my intial $countEnd");
               if(c==0){
                 setState(() {
-
+                  play.wrong();
                   widget.onScore(-1);
                   countEnd++;
                   _ShakeCells[index] = ShakeCell.Right;
