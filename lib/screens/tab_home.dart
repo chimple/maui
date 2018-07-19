@@ -6,6 +6,7 @@ import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/log_repo.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
