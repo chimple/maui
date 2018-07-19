@@ -252,12 +252,7 @@ class _GameCategoryList extends State<GameCategoryList> {
       String mainCategoryName, int gameCategoryId, Color color) {
     return new Container(
       height: 150.0,
-      decoration: const BoxDecoration(
-        border: const Border(
-          bottom:
-              const BorderSide(width: 1.0, color: const Color(0xFFFFFFFFFF)),
-        ),
-      ),
+     color: color,
       child: ListTile(
         title: new Container(
             child: Padding(
