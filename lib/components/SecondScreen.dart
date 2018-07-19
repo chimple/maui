@@ -144,10 +144,16 @@ class OptionState extends State<SecondScreen> {
       Orientation orientation = MediaQuery.of(context).orientation;
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
+      var maxCharLength;
       final maxChars = (_ans != null
           ? _ans.fold(1,
               (prev, element) => element.length > prev ? element.length : prev)
           : 1);
+          if(maxChars == 1){
+            maxCharLength = 3;
+          } else{
+            maxCharLength = maxChars;
+          }
       var sizeOrientation =
           orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
@@ -169,7 +175,7 @@ class OptionState extends State<SecondScreen> {
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, maxCharLength, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
       return Scaffold(
           body: orientation == Orientation.portrait

@@ -7,6 +7,7 @@ import '../components/drawing.dart';
 import 'package:maui/repos/game_data.dart';
 import '../components/SecondScreen.dart';
 import 'dart:math';
+import 'package:maui/components/flash_card.dart';
 
 class Drawing extends StatefulWidget {
   Function onScore;
@@ -93,8 +94,6 @@ class DrawScreen extends State<Drawing> {
     print("My Choices - $choice");
 
     choice.shuffle();
-    // _size = min(2, sqrt(choice.length).floor());
-    // print('gameData: ${widget.gameConfig.gameData}');
     setState(() => _isLoading = false);
   }
 
@@ -159,29 +158,34 @@ class DrawScreen extends State<Drawing> {
           ? new LayoutBuilder(builder: (context, constraints) {
               final hPadding = pow(constraints.maxWidth / 150.0, 2);
               final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
               double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
               double maxHeight =
                   (constraints.maxHeight - vPadding * 2) / (2 + 1);
-
               final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
               maxWidth -= buttonPadding * 2;
               maxHeight -= buttonPadding * 2;
               UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
               final buttonConfig =
                   ButtonStateContainer.of(context).buttonConfig;
               print({"this is constraints": "potrait"});
+              print("unit image issss: ${questionImg}");
+
+              print("the data of image is....");
               return new Flex(direction: Axis.vertical, children: <Widget>[
-                new FittedBox(
+                new LimitedBox(
+                //   maxHeight: maxHeight,
+                // maxWidth: maxWidth,
                   child: new Container(
-                      // image: assetsImage,
-                      width: constraints.maxWidth * 0.5,
-                      height: constraints.maxHeight * 0.2,
-                      child: UnitButton(
-                        text: '${questionImg}',
-                        primary: true,
-                        unitMode:  UnitMode.image,
+                      padding: EdgeInsets.all(2.0),
+                      child: Center(
+                        child: UnitButton(
+                          maxWidth: constraints.maxWidth * 0.5,
+                          maxHeight: constraints.maxHeight * 0.2,
+                          text: '${questionImg}',
+                          primary: true,
+                          // bgImage: '${questionImg}',
+                          unitMode: UnitMode.image,
+                        ),
                       )),
                 ),
                 new FittedBox(
@@ -437,17 +441,18 @@ class DrawScreen extends State<Drawing> {
                 new Expanded(
                     flex: 2,
                     child: new Column(children: <Widget>[
-                      new Expanded(
-                        flex: 2,
+                      new LimitedBox(
+                        // flex: 2,
                         child: new Container(
                             // image: assetsImage,
-                            width: constraints.maxWidth * 0.3,
-                            height: constraints.maxHeight * 0.3,
+                            // width: constraints.maxWidth * 0.3,
+                            // height: constraints.maxHeight * 0.3,
                             child: UnitButton(
-                              text: '${questionImg}',
+                              text: '$questionImg',
                               primary: true,
-                              unitMode: widget.gameConfig.questionUnitMode,
-                            )),
+                              unitMode: UnitMode.image,
+                            )
+                            ),
                       ),
                       new FittedBox(
                           child: new Container(
