@@ -20,6 +20,7 @@ import 'package:maui/db/entity/notif.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/repos/chat_bot_data.dart';
+import 'package:maui/repos/log_repo.dart';
 
 enum ChatMode { teach, conversation, quiz }
 
@@ -223,6 +224,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void addChat(String message) async {
+    writeLog('chat,${state.loggedInUser.id},${friendId},$message');
     if (friendId == User.botId) {
       botMessages
           .insert(0, {'userId': state.loggedInUser.id, 'message': message});

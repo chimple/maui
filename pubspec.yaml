@@ -24,6 +24,7 @@ dependencies:
   badge: 0.0.2
   intl: 0.15.6
   intl_translation: 0.16.8
+  simple_permissions: 0.1.5
   flores:
     git:
       https://github.com/chimple/flores.git

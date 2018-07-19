@@ -14,6 +14,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_permissions/simple_permissions.dart';
+import 'loca.dart';
 
 class AppDatabase {
   static final AppDatabase _appDatabase = new AppDatabase._internal();
@@ -183,5 +185,8 @@ class AppDatabase {
     fetchConsecutiveData(47, 12, 4).then((d) => print(d));
     fetchSequenceData(1, 8).then((s) => print(s));
     fetchSequenceData(57, 12).then((s) => print(s));
+
+    await SimplePermissions.requestPermission(Permission.WriteExternalStorage);
+    await SimplePermissions.requestPermission(Permission.ReadExternalStorage);
   }
 }
