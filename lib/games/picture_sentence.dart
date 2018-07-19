@@ -14,6 +14,7 @@ import 'package:flutter/animation.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
@@ -42,6 +43,7 @@ class PictureSentence extends StatefulWidget {
 enum Status { Active, Right, Wrong }
 
 class PictureSentenceState extends State<PictureSentence> {
+  GameAudio play=new GameAudio();
   bool _isLoading = true;
   var keys = 0;
   int _size = 2;
@@ -101,11 +103,13 @@ class PictureSentenceState extends State<PictureSentence> {
             output1 = ans[0];
             print(" inside condition ans[0] >>>>> ${ans[0]}");
             scoretrack = scoretrack + 4;
+            play.right();
             widget.onScore(4);
             widget.onProgress(1.0);
           } else if (text == ans[1] && output1 != "") {
             output2 = ans[1];
             scoretrack = scoretrack + 4;
+            play.right();
             widget.onScore(4);
             widget.onProgress(1.0);
             new Future.delayed(const Duration(milliseconds: 800), () {
@@ -123,8 +127,10 @@ class PictureSentenceState extends State<PictureSentence> {
             });
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
+              play.wrong();
               widget.onScore(-1);
             } else {
+              play.wrong();
               widget.onScore(0);
             }
           }

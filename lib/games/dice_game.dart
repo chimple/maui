@@ -8,6 +8,7 @@ import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Dice extends StatefulWidget {
   Function onScore;
@@ -34,6 +35,7 @@ class Dice extends StatefulWidget {
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   List<String> myData;
   List<String> otherData;
 
@@ -153,6 +155,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           if (btnVal == sum || btnVal == sub) {
             _currentIndex++;
             print("Current index is ${myData.length}");
+            play.right();
             widget.onScore(2);
             widget.onProgress(_currentIndex / myData.length);
             getExistingDataForScore(myData);
@@ -165,6 +168,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             });
           } else if(dice_tries.length == 2) {
             _shake[index] = 1;
+            play.wrong();
             new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
                 _shake[index] = 0;

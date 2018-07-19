@@ -10,6 +10,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Wordgrid extends StatefulWidget {
   Function onScore;
@@ -36,6 +37,7 @@ enum Status { Draggable, First, Dragtarget }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class WordgridState extends State<Wordgrid> {
+  GameAudio play=new GameAudio();
   int _maxSize;
   int _otherSize;
   int totalgame = 2;
@@ -315,6 +317,7 @@ class WordgridState extends State<Wordgrid> {
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
+                play.wrong();
               widget.onScore(-4);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
@@ -332,6 +335,7 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
+            play.right();
             widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;

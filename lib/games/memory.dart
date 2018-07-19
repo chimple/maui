@@ -9,6 +9,7 @@ import '../components/responsive_grid_view.dart';
 import '../components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/components/gameaudio.dart';
 
  bool initialVisibility = false;
 
@@ -38,6 +39,7 @@ enum Status { Hidden, Visible, Disappear }
 enum ShakeCell { Right, Wrong }
 
 class MemoryState extends State<Memory> {
+  GameAudio play=new GameAudio();
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters = [];
@@ -176,7 +178,7 @@ class MemoryState extends State<Memory> {
                   _clickCnt = 0;
                 });
               });
-
+               play.right();
               _matched++;
               widget.onScore(2);
               widget.onProgress((_progressCnt) / ((_size * _size) / 2));
