@@ -44,7 +44,6 @@ class GameListViewState extends State<GameListView> {
     var size = media.size;
     return new Container(
       decoration: new BoxDecoration(
-
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
       margin: EdgeInsets.all(size.width * .02),
@@ -59,25 +58,22 @@ class GameListViewState extends State<GameListView> {
         key: new Key(gameName),
         child: new Stack(
           children: <Widget>[
-             new Material(
-              elevation:8.0,
-                 borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-
-
-            child:new Container(
-
-              decoration: new BoxDecoration(
-                color: color,
-                borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-                image: new DecorationImage(
-
-                  image: new AssetImage(
-                      "assets/background_image/${gameName}_small.png"),
-                  fit: BoxFit.cover,
-
-                ),
-              ),
-            )),
+            new Material(
+                elevation: 8.0,
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(16.0)),
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    color: color,
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(16.0)),
+                    image: new DecorationImage(
+                      image: new AssetImage(
+                          "assets/background_image/${gameName}_small.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )),
             new Column(
               children: <Widget>[
                 new Expanded(
@@ -86,14 +82,6 @@ class GameListViewState extends State<GameListView> {
                             new Row(
                               children: <Widget>[
                                 new Container(
-                                  // height: size.height * 0.15
-                                  //                             decoration: new BoxDecoration(
-                                  //                           color: Colors.black,
-                                  //                          boxShadow: [new BoxShadow(
-                                  //                        color: Colors.red,
-                                  //                      blurRadius: EdgeInsets.only(),
-                                  //)]
-                                  //                            ),
                                   width: orientation == Orientation.portrait
                                       ? size.width * 0.15
                                       : size.width * 0.1,
@@ -109,25 +97,23 @@ class GameListViewState extends State<GameListView> {
                           ])
                         : Badge(
                             value: '${_notifs[gameName]}',
-                            child:    new Material(
-                                elevation:8.0,
-                                borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-
-
-                                child:new Container(
-
-                                  decoration: new BoxDecoration(
-                                    color: color,
-                                    borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-                                    image: new DecorationImage(
-
-                                      image: new AssetImage(
-                                          "assets/background_image/${gameName}_small.png"),
-                                      fit: BoxFit.cover,
-
+                            child: new Column(children: <Widget>[
+                              new Row(
+                                children: <Widget>[
+                                  new Container(
+                                    width: orientation == Orientation.portrait
+                                        ? size.width * 0.15
+                                        : size.width * 0.1,
+                                    child: new Hero(
+                                      tag: 'assets/hoodie/$gameName.png',
+                                      child: Image.asset(
+                                          'assets/hoodie/$gameName.png',
+                                          scale: 0.2),
                                     ),
                                   ),
-                                )),)),
+                                ],
+                              ),
+                            ]))),
                 new Container(
                     child: new Container(
 //                      padding: EdgeInsets.only(left:size.width * 0.1),
@@ -156,7 +142,7 @@ class GameListViewState extends State<GameListView> {
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return Container(
       color: const Color(0xffFECE3D),
-          child: new GridView.count(
+      child: new GridView.count(
           key: new Key('Game_page'),
           primary: true,
 //          padding: const EdgeInsets.all(.0),
