@@ -544,11 +544,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
                                   if (flag == true) {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    print(" hi ");
+                                    Navigator
+                                        .of(context)
+                                        .popUntil(ModalRoute.withName('/tab'));
                                   }
                                 }),
                             IconButton(
@@ -557,10 +555,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
                                   if (flag == true) {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    print(" forwAARS ");
+                                    Navigator
+                                        .of(context)
+                                        .popUntil(ModalRoute.withName('/tab'));
                                   }
                                 }),
                           ],

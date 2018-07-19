@@ -54,39 +54,38 @@ class FriendItem extends StatelessWidget {
         child: new Stack(
           children: <Widget>[
             new Center(
-                child: new CircleAvatar(
-              radius: 80.0,
-//                maxRadius: 40.0,
-              backgroundImage:
-                  new AssetImage("assets/chat_image/chat icon_01.png"),
-              child: new Center(
-                child: RawMaterialButton(
-                  elevation: 20.0,
+                child: Image.asset(
+              "assets/chat_image/friend_background.png",
+              color: Color(color),
+              colorBlendMode: BlendMode.xor,
+            )),
+            new Center(
+              child: RawMaterialButton(
+                elevation: 20.0,
 
-                  shape: new CircleBorder(
-                    side: new BorderSide(
-                      color: Color(color),
-                      width: 4.0,
-                    ),
+                shape: new CircleBorder(
+                  side: new BorderSide(
+                    color: Color(color),
+                    width: 4.0,
                   ),
-                  child: new CircleAvatar(
-                      radius: 50.0,
-                      child: new Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  image: replaceWithHoodie && user.id == id
-                                      ? new AssetImage(
-                                          'assets/chat_Bot_Icon.png')
-                                      : isFile
-                                          ? FileImage(File(imageUrl))
-                                          : imageMemory != null
-                                              ? MemoryImage(imageMemory)
-                                              : AssetImage(
-                                                  'assets/hoodie_bear.png'),
-                                  fit: BoxFit.fill)))),
+                ),
+                child: new CircleAvatar(
+                    radius: 50.0,
+                    child: new Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                                image: replaceWithHoodie && user.id == id
+                                    ? new AssetImage('assets/chat_Bot_Icon.png')
+                                    : isFile
+                                        ? FileImage(File(imageUrl))
+                                        : imageMemory != null
+                                            ? MemoryImage(imageMemory)
+                                            : AssetImage(
+                                                'assets/hoodie_bear.png'),
+                                fit: BoxFit.fill)))),
 //                            child: new Container(
 //                                width: 100.0,
 //                                height: 100.0,
@@ -102,9 +101,8 @@ class FriendItem extends StatelessWidget {
 //                                      ? MemoryImage(imageMemory)
 //                                      : AssetImage('assets/hoodie_bear.png'),
 //                                  fit: BoxFit.fill))),
-                ),
               ),
-            )),
+            ),
           ],
         ));
   }
