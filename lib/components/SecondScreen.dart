@@ -8,6 +8,7 @@ import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import '../games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class SecondScreen extends StatefulWidget {
   int navVal;
@@ -38,6 +39,7 @@ class SecondScreen extends StatefulWidget {
 }
 
 class OptionState extends State<SecondScreen> {
+   GameAudio play=new GameAudio();
   bool _isLoading = true;
   List choice;
   int _size = 2;
@@ -115,6 +117,7 @@ class OptionState extends State<SecondScreen> {
           if (text == widget.choice[1]) {
             print("hiii manuu");
             print("hello rhis on end we are calling");
+            play.right();
             widget.onScore(10);
             widget.onProgress(1.0);
              setState(() {
@@ -125,6 +128,7 @@ class OptionState extends State<SecondScreen> {
             // _initBoard();
             // Navigator.pop(context);
           } else {
+            play.wrong();
             widget.onScore(0);
             widget.onEnd(toJsonMap(), false);
           }
