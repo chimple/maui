@@ -84,14 +84,22 @@ class _UnitButtonState extends State<UnitButton> {
     _getData();
   }
 
+  @override
+  void didUpdateWidget(UnitButton oldWidget) {
+    if (widget.text != oldWidget.text) {
+      _getData();
+    }
+  }
+
   void _getData() async {
+    _isLoading = true;
     _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
     if (!widget.forceUnitMode &&
         ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
             (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0))) {
       _unitMode = UnitMode.text;
     }
-    setState(() => _isLoading = false);
+    if (mounted) setState(() => _isLoading = false);
   }
 
   @override

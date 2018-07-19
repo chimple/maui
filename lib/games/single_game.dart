@@ -170,7 +170,7 @@ class SingleGame extends StatefulWidget {
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
     'fill_in_the_blanks': [
       Color(0xFFDD6154),
-      Color(0xFFa3bc8b),
+      Color(0xFFffb300),
       Color(0xFF9A66CC)
     ],
     'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
@@ -179,7 +179,7 @@ class SingleGame extends StatefulWidget {
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
     'match_the_following': [
       Color(0xFFDD4785),
-      Color(0xFFEFEFEF),
+      Color(0xFF9b671b),
       Color(0xFFf99b67)
     ],
     'memory': [Color(0xFFFF7676), Color(0xFFffffca), Color(0xFF896EDB)],
@@ -512,13 +512,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         }
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
-        await Flores().addMessage(
-            widget.gameConfig.myUser.id,
-            widget.gameConfig.otherUser.id,
-            widget.gameName,
-            widget.gameConfig.toJson(),
-            true,
-            widget.gameConfig.sessionId ?? Uuid().v4());
+        try {
+          await Flores().addMessage(
+              widget.gameConfig.myUser.id,
+              widget.gameConfig.otherUser.id,
+              widget.gameName,
+              widget.gameConfig.toJson(),
+              true,
+              widget.gameConfig.sessionId ?? Uuid().v4());
+        } on PlatformException {
+          print('Flores: Failed addMessage');
+        } catch (e, s) {
+          print('Exception details:\n $e');
+          print('Stack trace:\n $s');
+        }
       }
       if (widget.gameConfig.isGameOver) {
         _onGameEnd(context, gameData: gameData);
@@ -551,13 +558,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       {Map<String, dynamic> gameData, bool ack = false}) async {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-      await Flores().addMessage(
-          widget.gameConfig.myUser.id,
-          widget.gameConfig.otherUser.id,
-          widget.gameName,
-          widget.gameConfig.toJson(),
-          false,
-          widget.gameConfig.sessionId ?? Uuid().v4());
+      try {
+        await Flores().addMessage(
+            widget.gameConfig.myUser.id,
+            widget.gameConfig.otherUser.id,
+            widget.gameName,
+            widget.gameConfig.toJson(),
+            false,
+            widget.gameConfig.sessionId ?? Uuid().v4());
+      } on PlatformException {
+        print('Failed getting messages');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
     }
     ScoreRepo().insert(Score(
         myUser: widget.gameConfig.myUser.id,

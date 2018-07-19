@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -47,6 +45,7 @@ class TextPainters extends CustomPainter {
   TextPainters({
     this.maxString,
     this.maxChar,
+    this.wmCount,
     @required this.noOfSlice,
     @required this.data,
     this.rotation = 0.0,
@@ -59,44 +58,50 @@ class TextPainters extends CustomPainter {
     tickPaint.strokeWidth = 2.5;
   }
   final int noOfSlice;
-  final int maxChar;
+  final int maxChar, wmCount;
   List<String> data = [];
 
   final rotation, tickPaint, textStyle;
   final textPainter;
   final String maxString;
-  double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
+  double _angle,
+      _radiun,
+      radius,
+      _baseLength,
+      _fontSize,
+      _wmFactor,
+      _lengthOfString,
+      _const = 0.0,
+      _constX = .1;
   @override
   void paint(Canvas canvas, Size size) {
     double _uperCaseConstant = 0.0;
-    if (maxString.toUpperCase() == maxString.toUpperCase()) {
-      _uperCaseConstant = 8.0;
-    }
-    double _const = 0.0;
+    if (maxString.toUpperCase() == maxString) {
+      // _uperCaseConstant = 50.0;
+
+      if (noOfSlice == 4) {
+        _constX = .39;
+        _uperCaseConstant = 60.0;
+      } else if (noOfSlice == 6) {
+      } else if (noOfSlice == 8) {}
+    } else {}
     if (noOfSlice == 2) {
-      _const = -25.0;
+      _const = -23.0;
     } else if (noOfSlice == 4) {
       _const = -16.0;
+      _uperCaseConstant=30.0;
     } else if (noOfSlice == 6) {
       _const = -8.0;
     } else if (noOfSlice == 8) {
-      _const=-10.0;
-    }
-    int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
-    _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
-    // print("max len string w:: ${data}");
-    if (_wLength > 0) {
-      _wFactor = 2.5 / _wLength.toDouble();
-    } else {
-      _wFactor = 1.5;
+      _const = -10.0;
     }
     radius = size.width / 2;
     _angle = 360 / (noOfSlice * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
-    // print("_angle :: $_angle");
-    // print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize =  (_baseLength * .21) / (maxChar*_wFactor*.2);
+    _fontSize = ((_baseLength * .8) / maxChar) - wmCount * 1.2;
+    //  _fontSize = (_baseLength * .21) / (maxChar * _wmFactor * .2);
+    _lengthOfString = (_fontSize * noOfSlice) - wmCount * 1.2;
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -113,6 +118,12 @@ class TextPainters extends CustomPainter {
           canvas.drawLine(
               new Offset(0.0, 0.0), new Offset(0.0, radius - 4.2), tickPaint);
         } else {
+          double _offset =
+              size.width / 14 + 4 * data[incr].length + _uperCaseConstant+wmCount*4.2;
+              if(maxChar==1)
+              {
+                _offset=size.height/12;
+              }
           canvas.save();
           canvas.translate(-0.0, -((size.width) / 3));
           String _text = data[incr];
@@ -123,26 +134,27 @@ class TextPainters extends CustomPainter {
               fontStyle: FontStyle.italic,
               color: Colors.black,
               fontFamily: 'BebasNeue',
-              fontSize: maxChar > 1 ? _fontSize : _baseLength*.2,
+              fontSize: maxChar > 1 ? _fontSize : _baseLength * .2,
             ),
           );
-          incr++;
+
+          print("ofsetr asdA ${_offset}");
 
           textPainter.layout();
-
           canvas.rotate(-pi * 2);
           textPainter.paint(
             canvas,
             new Offset(
-              -((7.7 * _text.length) * _baseLength) / (117.50)+_wLength*2,
+              -(_offset),
               -(size.height / 7.500 + _const),
             ),
           );
+
+          incr++;
           canvas.restore();
         }
         canvas.rotate(2 * pi / (noOfSlice.toDouble() * 2));
       }
-
     canvas.restore();
   }
 
@@ -170,17 +182,14 @@ class ImagePainter extends CustomPainter {
     tickPaint.strokeWidth = 2.5;
   }
   final int noOfSlice;
-  //final path;
   final tickPaint;
-  double rotation = 0.0;
-
   final BoxFit boxfit;
-
   ui.ImageByteFormat img;
   ui.Rect rect, inputSubrect, outputSubrect;
   Size imageSize;
   FittedSizes sizes;
   double radius,
+      rotation = 0.0,
       _x,
       _y,
       _angle,
@@ -225,9 +234,12 @@ class ImagePainter extends CustomPainter {
     int incr = 0;
     rect = ui.Offset((size.width / _x), size.width / _y) & new Size(0.0, 0.0);
 
-    imageSize = new Size(size.width*1.5 , size.width *1.5);
-    sizes = applyBoxFit(boxfit, imageSize,
-        new Size(size.width / 2 * .50+_incircleRadius*.6, size.width / 2 * .50+_incircleRadius*.6));
+    imageSize = new Size(size.width * 1.5, size.width * 1.5);
+    sizes = applyBoxFit(
+        boxfit,
+        imageSize,
+        new Size(size.width / 2 * .50 + _incircleRadius * .8,
+            size.width / 2 * .50 + _incircleRadius * .8));
     inputSubrect =
         Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
     outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
