@@ -21,6 +21,7 @@ import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/log_repo.dart';
+import 'package:maui/loca.dart';
 
 enum ChatMode { teach, conversation, quiz }
 
@@ -291,9 +292,9 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   Future<Map<String, dynamic>> _respondToChat(String message) async {
-    if (message == 'Let us learn') {
+    if (message == Loca().letUsLearn) {
       _currentMode = ChatMode.teach;
-    } else if (message == 'Let us chat') {
+    } else if (message == Loca().letUsChat) {
       _currentMode = ChatMode.conversation;
     } else if (_currentMode == ChatMode.quiz) {
       if (message.startsWith('*')) message = message.substring(3);
@@ -318,7 +319,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       case ChatMode.conversation:
         String reply = getPossibleReplies(message, 1).first;
         List<String> possibleReplies = getPossibleReplies(reply, 4);
-        possibleReplies.insert(0, 'Let us learn');
+        possibleReplies.insert(0, Loca().letUsLearn);
         return {
           'userId': User.botId,
           'message': reply,
@@ -345,7 +346,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         return {
           'userId': User.botId,
           'message': msg,
-          'choices': ['OK', '👍', '😀', 'Let us chat']
+          'choices': [Loca().ok, '👍', '😀', Loca().letUsChat]
         };
       case ChatMode.quiz:
         String question;

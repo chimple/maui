@@ -7,6 +7,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/log_repo.dart';
+import 'package:maui/loca.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -237,8 +238,10 @@ class _ScoreScreenState extends State<ScoreScreen>
               child: new Center(
                   child: new Text(
                 myScore > otherScore
-                    ? "You Won"
-                    : myScore == otherScore ? "Tie" : "You Loose",
+                    ? Loca.of(context).youWon
+                    : myScore == otherScore
+                        ? Loca.of(context).tie
+                        : Loca.of(context).youLoose,
                 style: new TextStyle(
                     color: textcolor,
                     fontWeight: FontWeight.bold,
@@ -318,8 +321,8 @@ class _ScoreScreenState extends State<ScoreScreen>
                         ? new Container(
                             child: new Text(
                                 widget.isGameOver == true
-                                    ? "Game Over"
-                                    : "Waiting for Turn",
+                                    ? Loca.of(context).gameOver
+                                    : Loca.of(context).waitingForTurn,
                                 style: new TextStyle(
                                     fontSize: ht > wd ? wd * 0.06 : wd * 0.05,
                                     fontWeight: FontWeight.bold,
@@ -393,8 +396,10 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     ? new Container(
                                         child: new Text(
                                             widget.isGameOver == true
-                                                ? " Game Over "
-                                                : " Waiting for Turn ",
+                                                ? Loca.of(context).gameOver
+                                                : Loca
+                                                    .of(context)
+                                                    .waitingForTurn,
                                             style: new TextStyle(
                                                 fontSize: ht > wd
                                                     ? ht * 0.01
@@ -449,7 +454,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     ),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: new Text("V/S ",
+                                  child: new Text(Loca.of(context).vs,
                                       style: new TextStyle(
                                           fontSize:
                                               ht > wd ? ht * 0.03 : wd * 0.03,
