@@ -77,7 +77,15 @@ class UserRepo {
         user.color.toRadixString(16) +
         '*' +
         base64.encode(contents);
-    Flores().addUser(user.id, deviceId, enc);
+    try {
+      Flores().addUser(user.id, deviceId, enc);
+    } on PlatformException {
+      print('Flores: Failed addUser');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
+    }
+
     print('Added main user: $user');
     return await userDao.insert(user);
   }

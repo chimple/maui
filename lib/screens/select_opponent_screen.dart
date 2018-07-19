@@ -57,6 +57,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
           await Flores().getLatestConversations(user.id, widget.gameName);
     } on PlatformException {
       print('Failed getting messages');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
     }
 
     print('_initData: $messages');
@@ -68,7 +71,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       _messages = messages;
       _localUsers.add(user);
       _users.forEach((u) {
-        if (u.id == user.id) {
+        if (u.id == user.id || u.id == User.botId) {
           //no op
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);

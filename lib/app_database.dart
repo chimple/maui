@@ -75,6 +75,13 @@ class AppDatabase {
           .asUint8List(imageData4.offsetInBytes, imageData4.lengthInBytes);
       await new File(imagePath4).writeAsBytes(imageBytes4);
 
+      String imagePath5 = join(documentsDirectory.path, "chat_Bot_Icon.png");
+      ByteData imageData5 =
+          await rootBundle.load(join("assets", "chat_Bot_Icon.png"));
+      List<int> imageBytes5 = imageData5.buffer
+          .asUint8List(imageData5.offsetInBytes, imageData5.lengthInBytes);
+      await new File(imagePath5).writeAsBytes(imageBytes5);
+
       String audioPath = join(documentsDirectory.path, "apple.ogg");
       ByteData audioData = await rootBundle.load(join("assets", "apple.ogg"));
       List<int> audioBytes = audioData.buffer
@@ -117,6 +124,13 @@ class AppDatabase {
           name: 'Best Friend',
           image: imagePath4,
           deviceId: 'other_device',
+          currentLessonId: 1));
+
+      await new UserDao().insert(new User(
+          id: 'bot',
+          name: 'Friend',
+          image: imagePath5,
+          deviceId: deviceId,
           currentLessonId: 1));
 
       await new UserDao().getUsers().then((u) => print(u));

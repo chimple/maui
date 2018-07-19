@@ -146,7 +146,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                   decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new AssetImage(
-                          "assets/background_image/${widget.game}_big.png"),
+                          "assets/background_image/reflex_big.png"),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -251,8 +251,8 @@ class _GameCategoryList extends State<GameCategoryList> {
   Widget _buildButtonCategory(
       String mainCategoryName, int gameCategoryId, Color color) {
     return new Container(
-      height: 154.0,
-      color: color,
+      height: 150.0,
+     color: color,
       child: ListTile(
         title: new Container(
             child: Padding(
