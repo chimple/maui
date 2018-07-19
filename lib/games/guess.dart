@@ -126,12 +126,12 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     w1 = (width - w) / 2;
     if (partsName.indexOf(_guess) != -1) {
       int i = 0;
-      partsName.remove(_guess);
       print(partsName);
       print(_guess);
       _textController.text = '';
       widget.onScore(1);
-
+      widget.onProgress((1+(_decoded["number"] - partsName.length))/_decoded["number"]);
+      partsName.remove(_guess);
       while (i < _length) {
         print(i);
         if (_guess == _decoded["parts"][i]["name"]) {
@@ -171,7 +171,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    _decoded = await json.decode(await fetchGuessData());
+    _decoded = await json.decode(await fetchData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         for (var i = 0; i < _decoded["number"]; i++) {
