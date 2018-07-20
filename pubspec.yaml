@@ -60,6 +60,7 @@ flutter:
     
     - assets/tap.wav
     - assets/demo_video/video.mp4
+    - assets/demo_video/tutorial.mp4
     - assets/demo_video/bingo.mp4
     - assets/demo_video/abacus.mp4
     - assets/demo_video/calculate_numbers.mp4
