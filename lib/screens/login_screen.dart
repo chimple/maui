@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
+    print('LoginScreen: initState');
     _isLoading = true;
 
     controller = new AnimationController(
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen>
     final userId = prefs.getString('userId');
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
-      AppStateContainer.of(context).setLoggedInUser(user);
+      await AppStateContainer.of(context).setLoggedInUser(user);
       Navigator.of(context).pushReplacementNamed('/tab');
     }
     var users = await UserRepo().getLocalUsers();

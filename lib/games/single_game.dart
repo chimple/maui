@@ -47,6 +47,8 @@ import 'package:flores/flores.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/log_repo.dart';
+import 'package:maui/loca.dart';
 
 enum GameMode { timed, iterations }
 
@@ -265,6 +267,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       await NotifRepo()
           .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
     }
+    writeLog('game,${widget.gameName},${widget.gameConfig}');
   }
 
   @override
@@ -282,7 +285,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           builder: (context) => new AlertDialog(
                 title: Center(
                     child: new Text(
-                 'Exit?',
+                  Loca.of(context).exitq,
                   style: TextStyle(
                       color: Colors.blue,
                       fontStyle: FontStyle.normal,
@@ -684,7 +687,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
             iteration: widget.gameConfig.myIteration +
-                widget.gameConfig.otherIteration);
+                widget.gameConfig.otherIteration,
+              gameConfig: widget.gameConfig);
         break;
       case 'abacus':
         playTime = 15000;

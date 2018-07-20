@@ -92,11 +92,12 @@ class Loca {
   String get chamomile => Intl.message('chamomile', name: 'chamomile');
   String get candle => Intl.message('candle', name: 'candle');
   String get toaster => Intl.message('toaster', name: 'toaster');
-  String get teddy_bear => Intl.message('teddy bear', name: 'teddy bear');
+  String get teddy_bear => Intl.message('teddy bear', name: 'teddy_bear');
   String get bulb => Intl.message('bulb', name: 'bulb');
   String get sofa => Intl.message('sofa', name: 'sofa');
   String get headphones => Intl.message('headphones', name: 'headphones');
-  String get microwave_oven => Intl.message('microwave oven', name: 'microwave oven');
+  String get microwave_oven =>
+      Intl.message('microwave oven', name: 'microwave_oven');
   String get carpet => Intl.message('carpet', name: 'carpet');
   String get watch => Intl.message('watch', name: 'watch');
   String get clock => Intl.message('clock', name: 'clock');
@@ -111,15 +112,15 @@ class Loca {
   String get duck => Intl.message('duck', name: 'duck');
   String get dove => Intl.message('dove', name: 'dove');
   String get face => Intl.message('face', name: 'face');
-  String get upper_body => Intl.message('upper body', name: 'upper body');
-  String get right_and => Intl.message('right hand', name: 'right hand');
-  String get left_hand => Intl.message('left hand', name: 'left hand');
-  String get right_palm => Intl.message('right palm', name: 'right palm');
-  String get left_palm => Intl.message('left palm', name: 'left palm');
-  String get right_leg => Intl.message('right leg', name: 'right leg');
-  String get left_leg => Intl.message('left leg', name: 'left leg');
-  String get right_foot => Intl.message('right foot', name: 'right foot');
-  String get left_foot => Intl.message('left foot', name: 'left foot');
+  String get upper_body => Intl.message('upper body', name: 'upper_body');
+  String get right_hand => Intl.message('right hand', name: 'right_hand');
+  String get left_hand => Intl.message('left hand', name: 'left_hand');
+  String get right_palm => Intl.message('right palm', name: 'right_palm');
+  String get left_palm => Intl.message('left palm', name: 'left_palm');
+  String get right_leg => Intl.message('right leg', name: 'right_leg');
+  String get left_leg => Intl.message('left leg', name: 'left_leg');
+  String get right_foot => Intl.message('right foot', name: 'right_foot');
+  String get left_foot => Intl.message('left foot', name: 'left_foot');
   String get cloud => Intl.message('cloud', name: 'cloud');
   String get sun => Intl.message('sun', name: 'sun');
   String get tree => Intl.message('tree', name: 'tree');
@@ -160,6 +161,26 @@ class Loca {
   String get watermelon => Intl.message('watermelon', name: 'watermelon');
   String get mango => Intl.message('mango', name: 'mango');
   String get banana => Intl.message('banana', name: 'banana');
+  String get sister => Intl.message('Sister', name: 'sister');
+  String get brother => Intl.message('Brother', name: 'brother');
+  String get mother => Intl.message('Mother', name: 'mother');
+  String get father => Intl.message('Father', name: 'father');
+  String get friend => Intl.message('Friend', name: 'friend');
+  String get hi => Intl.message('Hi', name: 'hi');
+  String get hello => Intl.message('Hello', name: 'hello');
+  String get letUsLearn => Intl.message('Let us learn', name: 'letUsLearn');
+  String get letUsChat => Intl.message('Let us chat', name: 'letUsChat');
+  String get ok => Intl.message('OK', name: 'ok');
+  String get sendAMessage =>
+      Intl.message('Send a message', name: 'sendAMessage');
+  String get exitq => Intl.message('Exit?', name: 'exitq');
+  String get youWon => Intl.message('You Won', name: 'youWon');
+  String get tie => Intl.message('Tie', name: 'tie');
+  String get youLoose => Intl.message('You Loose', name: 'youLoose');
+  String get gameOver => Intl.message('Game Over', name: 'gameOver');
+  String get waitingForTurn =>
+      Intl.message('Waiting for Turn', name: 'waitingForTurn');
+  String get vs => Intl.message('V/S ', name: 'vs');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {
