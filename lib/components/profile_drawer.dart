@@ -100,8 +100,10 @@ class ProfileDrawerState extends State<ProfileDrawer>
 
   void button3(BuildContext context) {
     print("Button 1");
+    String tutorial = "tutorial";
+    final gamename = tutorial;
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp()));
+        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
   }
 }
 
