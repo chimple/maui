@@ -11,6 +11,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -35,6 +36,7 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
+  GameAudio play=new GameAudio();
   int _selectedItemIndex;
   List<List<String>> data;
 
@@ -173,6 +175,7 @@ class _CasinoState extends State<Casino> {
           print("count = $count");
           if (const IterableEquality().equals(finalList, finalGivenWordList) &&
               count >= givenWordList.length) {
+                play.right();
             new Future.delayed(const Duration(milliseconds: 1000), () {
               widget.onScore(5);
               widget.onProgress(1.0);

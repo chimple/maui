@@ -14,7 +14,6 @@ class GameCategoryListScreen extends StatefulWidget {
   GameMode gameMode;
   GameDisplay gameDisplay;
   User otherUser;
-  
 
   GameCategoryListScreen(
       {Key key,
@@ -31,11 +30,10 @@ class GameCategoryListScreen extends StatefulWidget {
 }
 
 class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
-  List<Tuple3<int, int, String>> _gameCategories;
+  List<Tuple4<int, int, String>> _gameCategories;
   List<Concept> _concepts;
   Map<int, Concept> _conceptMap;
   bool _isLoading = false;
-  
 
   @override
   void initState() {
@@ -46,16 +44,16 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         .then((gameCategories) async {
       if (gameCategories.isEmpty) {
         if (widget.game == "identify") {
-          gameCategories = <Tuple3<int, int, String>>[
-            new Tuple3<int, int, String>(1, 1, 'Modes'),
+          gameCategories = <Tuple4<int, int, String, int>>[
+            new Tuple4<int, int, String, int>(1, 1, 'Modes', 1),
           ];
         } else if (widget.game == "drawing") {
-          gameCategories = <Tuple3<int, int, String>>[
-            new Tuple3<int, int, String>(2, 1, 'Draw')
+          gameCategories = <Tuple4<int, int, String, int>>[
+            new Tuple4<int, int, String, int>(2, 1, 'Draw', 1)
           ];
         } else {
-          gameCategories = <Tuple3<int, int, String>>[
-            new Tuple3<int, int, String>(1, 1, 'Todo Placeholder')
+          gameCategories = <Tuple4<int, int, String, int>>[
+            new Tuple4<int, int, String, int>(1, 1, 'Todo Placeholder', 1)
           ];
         }
         //   gameCategories = <Tuple2<int, String>>[
@@ -63,9 +61,9 @@ class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
         // ];
       }
 
-     List<Concept> concepts = await ConceptRepo.conceptDao.getConcepts();
-     Map<int, Concept> conceptMap = Map<int, Concept>();
-     concepts.forEach((c) => conceptMap[c.id] = c);
+      List<Concept> concepts = await ConceptRepo.conceptDao.getConcepts();
+      Map<int, Concept> conceptMap = Map<int, Concept>();
+      concepts.forEach((c) => conceptMap[c.id] = c);
       setState(() {
         _gameCategories = gameCategories;
         _isLoading = false;

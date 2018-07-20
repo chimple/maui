@@ -5,6 +5,8 @@ import 'package:flutter/animation.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 Map _decoded;
 int _length = 0;
@@ -14,6 +16,7 @@ class IdentifyGame extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
 
   IdentifyGame(
@@ -22,6 +25,7 @@ class IdentifyGame extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -43,7 +47,7 @@ class _IdentifyGameState extends State<IdentifyGame>
   void _initBoard() async {
     setState(() => _isLoading = true);
 
-    _decoded = await json.decode(await fetchIdentifyData());
+    _decoded = await json.decode(await fetchData());
     new Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         for (var i = 0; i < _decoded["number"]; i++) {
@@ -142,6 +146,8 @@ class _IdentifyGameState extends State<IdentifyGame>
     return new DragBox(
       onScore: widget.onScore,
       onEnd: widget.onEnd,
+      onProgress: widget.onProgress,
+      gameConfig: widget.gameConfig,
       render: _renderChoice,
       maxHeight: maxHeight,
       maxWidth: maxWidth,
@@ -243,12 +249,16 @@ class DragBox extends StatefulWidget {
   int cols;
   Function render;
   Function onScore;
+  GameConfig gameConfig;
   Function onEnd;
+  Function onProgress;
   Orientation orientation;
 
   DragBox(
       {this.onEnd,
+      this.onProgress,
       this.onScore,
+      this.gameConfig,
       this.maxHeight,
       this.maxWidth,
       this.cols,
@@ -263,6 +273,7 @@ class DragBox extends StatefulWidget {
 }
 
 class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   AnimationController controller, shakeController;
   Animation<double> animation, shakeAnimation, noanimation;
 
@@ -274,14 +285,15 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   int cols;
   Function render;
   Orientation orientation;
+  GameConfig gameConfig;
 
-  List<String> _buildPartsList() {
-    List<String> partsName = [];
-    for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
-      partsName.add((_decoded["parts"] as List)[i]["name"]);
-    }
-    return partsName;
-  }
+  // List<String> _buildPartsList() {
+  //   List<String> partsName = [];
+  //   for (var i = 0; i < (_decoded["parts"] as List).length; i++) {
+  //     partsName.add((_decoded["parts"] as List)[i]["name"]);
+  //   }
+  //   return partsName;
+  // }
 
   // _onTapDown(BuildContext context, TapDownDetails down) {
   //   // print(start.globalPosition.toString());
@@ -329,7 +341,8 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _length = _buildPartsList().length;
+    // _length = _buildPartsList().length;
+    _length = _decoded["number"];
 
     shakeController = new AnimationController(
         duration: new Duration(milliseconds: 800), vsync: this);
@@ -350,6 +363,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     render = widget.render;
     cols = widget.cols;
     orientation = widget.orientation;
+    gameConfig = widget.gameConfig;
 
     toAnimateButton();
   }
@@ -389,21 +403,21 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
           dragAnchor: DragAnchor.child,
           maxSimultaneousDrags: 1,
           key: widget.key,
-          data: (_flag1 == 0) ? "" : part["name"],
+          data: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
           child: new AnimatedDrag(
             cols: cols,
             height: maxHeight,
             width: maxWidth,
             animation: (_flag == 0) ? noanimation : animation,
             draggableColor: Theme.of(context).buttonColor,
-            draggableText: (_flag1 == 0) ? "" : part["name"],
+            draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"]),
           ),
           feedback: new AnimatedFeedback(
               height: maxHeight,
               width: maxWidth,
               animation: animation,
               draggableColor: Theme.of(context).disabledColor,
-              draggableText: (_flag1 == 0) ? "" : part["name"]),
+              draggableText: (_flag1 == 0) ? "" : Loca.of(context).intl(part["name"])),
           onDraggableCanceled: (velocity, offset) {
             // RenderBox box = context.findRenderObject();
             // offset = box.globalToLocal(offset);
@@ -415,11 +429,30 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             headerSize = media.height - 4 * (maxHeight);
             print(orientation);
             if (orientation == Orientation.portrait) {
+              // if ((gameConfig.gameDisplay == GameDisplay.myHeadToHead || gameConfig.gameDisplay == GameDisplay.otherHeadToHead )) {
+              //   print(">>>>>inside the ORientation portrait function for checking how the game config working<<<<<<");
+              //   print(offset);
+              //   print(offset.dy + 40.0);
+              //   x1 = 130.0;
+              // } else {
+              // x1 = 90.0;
+              // y1 = 120.0;
+              // }
               h = ((9 * 3 * maxHeight * 3) / (40));
               w = ((4 * maxWidth) / 5);
               x1 = 90.0;
               y1 = 120.0;
             } else {
+              // if ((gameConfig.gameDisplay == GameDisplay.myHeadToHead || gameConfig.gameDisplay == GameDisplay.otherHeadToHead )) {
+              //   print(">>>>>inside the Orientation landscape function for checking how the game config working<<<<<<");
+              //   print(offset);
+              //   print(offset.dy + 40.0);
+              //   x1 = 140.0;
+              // y1 = 90.0;
+              // } else {
+              // x1 = 100.0;
+              // y1 = 90.0;
+              // }
               h = ((49 * 3 * maxHeight * 3) / (200));
               w = ((maxWidth) / 2);
               x1 = 100.0;
@@ -439,7 +472,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             if (((offset.dy - y1) <
                     (((rh * part["data"]["y"]) + h1) +
                         (rh * part["data"]["height"]) / 2)) &&
-                ((offset.dy - 1) >
+                ((offset.dy - y1) >
                     (((rh * part["data"]["y"]) + h1) -
                         (rh * part["data"]["height"]) / 2)) &&
                 ((offset.dx + x1) <
@@ -448,7 +481,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 ((offset.dx + x1) >
                     (((rw * part["data"]["x"]) + w1) -
                         (rw * part["data"]["width"]) / 2))) {
-              render(part["name"], maxHeight, maxWidth, orientation,
+              render(Loca.of(context).intl(part["name"]), maxHeight, maxWidth, orientation,
                   w1 + (rw * part["data"]["x"]), h1 + (rh * part["data"]["y"]));
               print("These are the system offest of y and x");
               print(offset.dx);
@@ -472,7 +505,9 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
               print(media.height);
               print(offset.dy);
               print(y1);
+              play.right();
               widget.onScore(1);
+              widget.onProgress((1+(_decoded["number"] - _length))/_decoded["number"]);
               _length = _length - 1;
               print(_length);
               setState(() {
@@ -484,6 +519,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 }
               });
             } else {
+              play.wrong();
               widget.onScore(-1);
               _flag = 1;
               toAnimateFunction();

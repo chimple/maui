@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class TapHome extends StatefulWidget {
   Function onScore;
@@ -27,6 +28,7 @@ class TapHome extends StatefulWidget {
 }
 
 class _TapState extends State<TapHome> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   Animation _animation, _animationTimer, _screenAnim;
   AnimationController _animationController,
       _animTimerController,
@@ -128,6 +130,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   void _clickText() {
     if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
+      play.right();
       widget.onScore(4);
       widget.onProgress(1.0);
       setState(() {
@@ -137,9 +140,10 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
 
       _screenController.forward(from: 0.0);
     } else {
-      if(score > 0)
+      if(score > 0){
+        play.wrong();
         widget.onScore(-1);
-
+      }
       setState(() {
         count = count + 1;
         score = score > 0 ? score - 1 : score;

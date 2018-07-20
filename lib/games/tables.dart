@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Tables extends StatefulWidget {
   Function onScore;
@@ -27,6 +28,7 @@ class Tables extends StatefulWidget {
 }
 
 class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   final int _size = 3;
   String _question = "";
   String _result = "";
@@ -123,6 +125,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             }
 
             if (int.parse(_result) == _answer) {
+              play.right();
               widget.onScore(4);
               widget.onProgress((_count + 1) / _tableShuffledData.length);
               setState(() {
@@ -141,6 +144,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             else {
               if(score > 0) {
                 print("Score $score");
+                play.wrong();
                 widget.onScore(-1);
               }
               _myAnim();
@@ -218,8 +222,10 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       if (_isShowingFlashCard) {
         String temp  = _question + " = " +  _answer.toString();
         return  FractionallySizedBox(
-            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
             child: new FlashCard(text: temp, onChecked: () {
               setState(() {
                 _isShowingFlashCard = false;

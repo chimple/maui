@@ -58,6 +58,8 @@ class _FlashCardState extends State<FlashCard> {
         child: new CircularProgressIndicator(),
       );
     }
+    bool noImage = (_unit?.image?.length ?? 0) == 0;
+
     return new LayoutBuilder(builder: (context, constraints) {
       Color bgColor = Theme.of(context).accentColor;
       print("anuj");
@@ -87,15 +89,15 @@ class _FlashCardState extends State<FlashCard> {
                     new IconButton(
                         icon: new Icon(Icons.arrow_left),
                         onPressed: widget.onChecked,
-                        iconSize: constraints.maxHeight * 0.12,
+                        iconSize: constraints.maxHeight * 0.2,
                         color: Colors.white),
                     new Expanded(
                         child: new SizedBox(
                             height: constraints.maxHeight > constraints.maxWidth
-                                ? constraints.maxHeight * 0.03
-                                : constraints.maxWidth * 0.07,
+                                ? constraints.maxHeight * 0.2
+                                : constraints.maxWidth * 0.2,
                             width: constraints.maxHeight > constraints.maxWidth
-                                ? constraints.maxWidth * 0.9
+                                ? constraints.maxWidth * 0.5
                                 : constraints.maxHeight * 0.5,
                             child: _containsNum
                                 ? new Container(
@@ -106,18 +108,27 @@ class _FlashCardState extends State<FlashCard> {
                                             fontSize:
                                                 constraints.maxHeight * 0.11,
                                             fontWeight: FontWeight.bold)))
-                                : _unit == null
-                                    ? CircularProgressIndicator()
+                                : noImage
+                                    ? new Container(
+                                    alignment: const Alignment(0.0, 0.0),
+                                    child: new Text(widget.text,
+                                        style: new TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                constraints.maxHeight * 0.11,
+                                            fontWeight: FontWeight.bold)))
                                     : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: widget.onChecked,
-                      iconSize: constraints.maxHeight * 0.12,
+                      iconSize: constraints.maxHeight * 0.2,
                       color: Colors.white,
                     )
                   ],
                 ),
-                _containsNum
+
+                
+                noImage
                     ? new Container(
                         alignment: const Alignment(0.0, 0.0),
                         margin:
@@ -133,7 +144,7 @@ class _FlashCardState extends State<FlashCard> {
                                 fontSize: constraints.maxHeight * 0.1,
                                 fontWeight: FontWeight.bold)))
                     : new Container(
-                        height: constraints.maxHeight * 0.2,
+                        height: constraints.maxHeight * 0.1,
                         width: constraints.maxWidth * 0.9,
                         alignment: const Alignment(0.0, 0.0),
                         margin:
@@ -147,7 +158,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: new Text(_unit?.name ?? widget.text,
                             style: new TextStyle(
                                 color: Colors.white,
-                                fontSize: constraints.maxHeight * 0.1,
+                                fontSize: constraints.maxHeight * 0.085,
                                 fontWeight: FontWeight.bold)))
               ]));
     });

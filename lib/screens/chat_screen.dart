@@ -19,6 +19,7 @@ import 'package:maui/components/select_text_choice.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flores/flores.dart';
+import 'package:maui/loca.dart';
 
 enum InputType { hidden, keyboard, emoji, sticker, choices }
 
@@ -270,8 +271,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               _buildTypeSelector(InputType.choices, Icons.apps),
               _buildTypeSelector(InputType.keyboard, Icons.keyboard),
               _buildTypeSelector(InputType.emoji, Icons.face),
-              _buildTypeSelector(InputType.sticker, Icons.format_paint),
-              new Flexible(
+              _buildTypeSelector(InputType.sticker, Icons.format_paint)
+            ]),
+            Row(children: <Widget>[
+              Flexible(
                 child: new TextField(
                   maxLength: null,
                   keyboardType: TextInputType.multiline,
@@ -283,11 +286,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     });
                   },
                   onSubmitted: _handleSubmitted,
-                  decoration:
-                      new InputDecoration.collapsed(hintText: "Send a message"),
+                  decoration: new InputDecoration.collapsed(
+                      hintText: Loca().sendAMessage),
                 ),
               ),
-              new Container(
+              Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: Theme.of(context).platform == TargetPlatform.iOS
                       ? new CupertinoButton(
@@ -312,12 +315,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget _buildTypeSelector(InputType inputType, IconData iconData) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: new InkWell(
-          child: Icon(iconData,
+      child: new IconButton(
+          icon: Icon(iconData,
               color: _inputType == inputType
                   ? Color(userColors[widget.friend.color])
                   : Color(widget.friend.color)),
-          onTap: () => setState(() {
+          onPressed: () => setState(() {
                 _inputType = inputType;
               })),
     );

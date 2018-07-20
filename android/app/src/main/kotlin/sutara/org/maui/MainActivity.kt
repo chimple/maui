@@ -6,6 +6,7 @@ import java.io.OutputStream
 import java.io.FileOutputStream
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.content.Intent
 import java.util.Locale
 
 import io.flutter.app.FlutterActivity
@@ -77,6 +78,22 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       println("TTS Initilization Failed!")
     }
 
+  }
+
+  override fun onResume() {
+    super.onResume()
+    val intent = Intent()
+    intent.setClassName("org.chimple.bali", "org.chimple.bali.service.TollBroadcastReceiver")
+    intent.putExtra("onResume", "sutara.org.maui")
+    sendBroadcast(intent)
+  }
+
+  override fun onPause() {
+    super.onPause()
+    val intent = Intent()
+    intent.setClassName("org.chimple.bali", "org.chimple.bali.service.TollBroadcastReceiver")
+    intent.putExtra("onPause", "sutara.org.maui")
+    sendBroadcast(intent)
   }
 
   public override fun onDestroy() {

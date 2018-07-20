@@ -10,6 +10,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Wordgrid extends StatefulWidget {
   Function onScore;
@@ -36,6 +37,7 @@ enum Status { Draggable, First, Dragtarget }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class WordgridState extends State<Wordgrid> {
+  GameAudio play=new GameAudio();
   int _maxSize;
   int _otherSize;
   int totalgame = 2;
@@ -315,6 +317,7 @@ class WordgridState extends State<Wordgrid> {
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
+                play.wrong();
               widget.onScore(-4);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
@@ -332,6 +335,10 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
+            play.right();
+            if(((40 ~/ totalgame) - tries) <1){
+              widget.onScore(4);
+            }else
             widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;
@@ -399,9 +406,9 @@ class WordgridState extends State<Wordgrid> {
       if (_isShowingFlashCard) {
         return FractionallySizedBox(
             widthFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.65,
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
             heightFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.9,
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
             child: new FlashCard(
                 text: words,
                 image: words,
@@ -471,6 +478,8 @@ class WordgridState extends State<Wordgrid> {
 
   List<Offset> calculateOffsets(
       double d, Offset startpoint, int size, double maxWidth) {
+    // double angle = 2 * pi / amount;
+    // double alpha = 0.0;
     double centeraxis = maxWidth / 4;
     double x0 = startpoint.dx;
     double y0 = startpoint.dy;
@@ -482,10 +491,16 @@ class WordgridState extends State<Wordgrid> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else {
+      } else if(i==1){
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
+      }
+      else{
+         x = x0 + d + maxWidth+(maxWidth/6);
+        x0 = x;
+        y = y0;
+
       }
       offsets[i] = new Offset(x, y);
     }

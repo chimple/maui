@@ -35,6 +35,9 @@ class ProfileDrawerState extends State<ProfileDrawer>
       child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              color:  new Color(0xffF0557F),
+            ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -49,14 +52,10 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   child: new Container(
                     decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(100.0),
-                      border: new Border.all(
-                        width: 5.0,
-                      ),
+                    
                     ),
                     child: new Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                      ),
+                      child:Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),
@@ -89,14 +88,7 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            accountEmail: new Text(
-              '${user.name}@Chimple.org',
-              textAlign: TextAlign.left,
-              style: new TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo),
-            ),
+            accountEmail: new Text(' '),
           ),
           new Expanded(
             child: new PlayedGamesScoreDisplay(),
