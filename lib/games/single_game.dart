@@ -48,7 +48,6 @@ import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/repos/log_repo.dart';
-import 'package:maui/loca.dart';
 
 enum GameMode { timed, iterations }
 
@@ -279,41 +278,77 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<bool> _onWillPop() {
-    return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-                title: Center(
-                    child: new Text(
-                  Loca.of(context).exitq,
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold),
-                )),
-                actions: <Widget>[
+  Widget alertDialog(BuildContext context) {
+    var colors = SingleGame.gameColors[widget.gameName];
+    return Center(
+        child: Material(
+      type: MaterialType.transparency,
+      child: new Container(
+          width: 350.0,
+          height: 200.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+          ),
+          child: new Container(
+              child: new Column(
+            children: <Widget>[
+              new Padding(
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              new Text(
+                'Exit?',
+                style: TextStyle(
+                    color: colors[1],
+                    fontStyle: FontStyle.normal,
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              new Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                  ),
                   Container(
+                    margin: EdgeInsets.only(top: 40.0),
                     width: 130.0,
                     decoration: BoxDecoration(
-                        color: Colors.orangeAccent,
-                        borderRadius: BorderRadius.circular(10.0)),
+                      color: colors[0],
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xFF919191),
+                          spreadRadius: 1.0,
+                          offset: const Offset(0.0, 6.0),
+                        )
+                      ],
+                    ),
                     child: Center(
                       child: IconButton(
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomStart,
                           onPressed: () => Navigator.of(context).pop(false),
-                          icon: Icon(Icons.thumb_down, color: Colors.white)),
+                          icon: Icon(Icons.close, color: Colors.white)),
                     ),
                   ),
                   new Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.only(right: 70.0),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top: 40.0),
                     width: 130.0,
                     decoration: BoxDecoration(
-                        color: Colors.orangeAccent,
-                        borderRadius: BorderRadius.circular(10.0)),
+                      color: colors[0],
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xFF919191),
+                          spreadRadius: 1.0,
+                          offset: const Offset(0.0, 6.0),
+                        )
+                      ],
+                    ),
                     child: Center(
                       child: IconButton(
                           iconSize: 40.0,
@@ -321,11 +356,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           onPressed: () => Navigator
                               .of(context)
                               .popUntil(ModalRoute.withName('/tab')),
-                          icon: Icon(Icons.thumb_up, color: Colors.white)),
+                          icon: Icon(Icons.check, color: Colors.white)),
                     ),
                   ),
                 ],
-              ),
+              )
+            ],
+          ))),
+    ));
+  }
+
+  Future<bool> _onWillPop() {
+    return showDialog(
+          context: context,
+          builder: alertDialog,
         ) ??
         false;
   }
@@ -687,8 +731,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             isRotated: widget.isRotated,
             iteration: widget.gameConfig.myIteration +
-                widget.gameConfig.otherIteration,
-              gameConfig: widget.gameConfig);
+                widget.gameConfig.otherIteration);
         break;
       case 'abacus':
         playTime = 15000;
