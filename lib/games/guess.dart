@@ -137,7 +137,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
       partsName.remove(_guess);
       while (i < _length) {
         print(i);
-        if (_guess == Loca.of(context).intl((_decoded["parts"][i]["name"]))) {
+        if (_guess == _decoded["parts"][i]["name"]) {
           y = rh * _decoded["parts"][i]["data"]["y"];
           x = rw * _decoded["parts"][i]["data"]["x"];
 
@@ -191,8 +191,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
           _inputBoxController.forward();
         });
         for (var i = 0; i < _length; i++) {
-          // partsName.add((_decoded["parts"] as List)[i]["name"]);
-          partsName.add(Loca.of(context).intl(((_decoded["parts"] as List)[i]["name"])));
+          partsName.add((_decoded["parts"] as List)[i]["name"]);
         }
         _isLoading = false;
       });
@@ -373,8 +372,7 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                         //     fontSize: (constraint.maxHeight / 4) * 0.1),
                       ),
                       onChanged: (String str) {
-                        // _guess = str.toLowerCase();
-                        _guess = Loca.of(context).intl((str.toLowerCase())) ;
+                        _guess = str.toLowerCase();
                         print(_guess);
                       },
                     ),
