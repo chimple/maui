@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:maui/loca.dart';
 
 String imagePathStore;
 String userNameStore;
@@ -64,7 +65,7 @@ class _CameraScreenState extends State<CameraScreen> {
       return RotatedBox(
         quarterTurns: -1,
         child: Text(
-          'Tap a camera',
+          Loca.of(context).tapACamera,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 24.0,

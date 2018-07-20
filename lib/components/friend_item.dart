@@ -8,6 +8,7 @@ import 'package:meta/meta.dart';
 class FriendItem extends StatelessWidget {
   String id;
   String imageUrl;
+  String name;
   int color;
   List<int> imageMemory;
   bool isFile;
@@ -18,6 +19,7 @@ class FriendItem extends StatelessWidget {
       {Key key,
       @required this.id,
       this.color = 0xFF48AECC,
+      this.name,
       this.imageUrl,
       this.imageMemory,
       this.onTap,
@@ -33,9 +35,11 @@ class FriendItem extends StatelessWidget {
 
     final encImageUrl = imageUrl.replaceAll(new RegExp(r'/'), '&#x2F;');
     return new Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: new Center(
-          child: numNotifs > 0
+        padding: const EdgeInsets.all(0.0),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[ numNotifs > 0
               ? Badge(
                   color: Colors.red,
                   textStyle:
@@ -45,16 +49,14 @@ class FriendItem extends StatelessWidget {
                   value: '$numNotifs',
                   child: _buildFriendItem(id, user))
               : _buildFriendItem(id, user),
-        ));
+              new Text(name, style: new TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),),
+        ],));
   }
 
   Widget _buildFriendItem(String id, User user) {
     return new InkWell(
         onTap: onTap,
-        child: new Stack(
-          children: <Widget>[
-            new Center(
-                child: new CircleAvatar(
+        child: new CircleAvatar(
               radius: 80.0,
 //                maxRadius: 40.0,
               backgroundImage:
@@ -104,8 +106,6 @@ class FriendItem extends StatelessWidget {
 //                                  fit: BoxFit.fill))),
                 ),
               ),
-            )),
-          ],
-        ));
+            ),);
   }
 }

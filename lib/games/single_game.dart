@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/progress_circle.dart';
@@ -48,6 +49,8 @@ import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/repos/log_repo.dart';
+import 'package:maui/repos/game_category_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 
 enum GameMode { timed, iterations }
 
@@ -655,6 +658,21 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         otherScore: widget.gameConfig.otherScore,
         game: widget.gameName,
         playedAt: DateTime.now().millisecondsSinceEpoch));
+    writeLog(
+        'score,${widget.gameName},${widget.gameConfig.gameCategoryId},${widget.gameConfig.myUser.id},${widget.gameConfig.otherUser?.id},${widget.gameConfig.myScore},${widget.gameConfig.otherScore}');
+    var lessonId = await new GameCategoryRepo().getLessonIdByGameCategoryId(
+        widget.gameName, widget.gameConfig.gameCategoryId);
+    if (lessonId != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var numPlays = prefs.getInt('lessonId$lessonId') ?? 0;
+      if (++numPlays >= 3) {
+        AppStateContainer.of(context).state.loggedInUser.currentLessonId++;
+        await UserRepo()
+            .update(AppStateContainer.of(context).state.loggedInUser);
+      }
+      prefs.setInt('lessonId$lessonId', numPlays);
+    }
+
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {
