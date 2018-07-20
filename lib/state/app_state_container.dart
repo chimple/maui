@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flores/flores.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -158,10 +160,27 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void play(String fileName) async {
+    fileName = fileName.toLowerCase();
     try {
-      await platform.invokeMethod(
-          'speak', <String, dynamic>{'text': fileName.toLowerCase()});
-    } on PlatformException catch (e) {}
+      final directory = await getApplicationDocumentsDirectory();
+      final path = directory.path;
+      final file = new File('$path/$fileName.ogg');
+      print('Playing ${file.path}');
+      if (await file.exists()) {
+        await _audioPlayer.play(file.path, isLocal: true);
+      } else {
+        await file.writeAsBytes(
+            (await rootBundle.load('assets/dict/$fileName.ogg'))
+                .buffer
+                .asUint8List());
+        await _audioPlayer.play(file.path, isLocal: true);
+      }
+    } catch (e) {
+      try {
+        await platform
+            .invokeMethod('speak', <String, dynamic>{'text': fileName});
+      } on PlatformException catch (e) {}
+    }
 
 //    if (!_isPlaying) {
 //      Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -331,10 +350,12 @@ class AppStateContainerState extends State<AppStateContainer> {
         LessonUnit lessonUnit;
         if (_toTeach == null || _toTeach.isEmpty) {
           if (_lessonUnitIndex >= _lessonUnits.length) {
-            state.loggedInUser.currentLessonId++;
-            await UserRepo().update(state.loggedInUser);
-            _lessonUnits = await new LessonUnitRepo()
-                .getLessonUnitsByLessonId(state.loggedInUser.currentLessonId);
+            if (state.loggedInUser.currentLessonId < Lesson.maxLessonId) {
+              state.loggedInUser.currentLessonId++;
+              await UserRepo().update(state.loggedInUser);
+              _lessonUnits = await new LessonUnitRepo()
+                  .getLessonUnitsByLessonId(state.loggedInUser.currentLessonId);
+            }
             _lessonUnitIndex = 0;
           }
           _toTeach = _lessonUnits.skip(_lessonUnitIndex).take(4).toList();
@@ -420,9 +441,11 @@ class AppStateContainerState extends State<AppStateContainer> {
       print('Exception details:\n $e');
       print('Stack trace:\n $s');
     }
-    _lessonUnits = await new LessonUnitRepo()
-        .getLessonUnitsByLessonId(user.currentLessonId);
-    _lesson = await new LessonRepo().getLesson(user.currentLessonId);
+    _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
+    _lesson = await new LessonRepo().getLesson(56);
+//    _lessonUnits = await new LessonUnitRepo()
+//        .getLessonUnitsByLessonId(user.currentLessonId);
+//    _lesson = await new LessonRepo().getLesson(user.currentLessonId);
     setState(() {
       state = new AppState(loggedInUser: user);
     });
