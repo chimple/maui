@@ -3,6 +3,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:meta/meta.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FlashCard extends StatefulWidget {
   final String text;
@@ -19,6 +20,7 @@ class FlashCard extends StatefulWidget {
 }
 
 class _FlashCardState extends State<FlashCard> {
+  GameAudio play=new GameAudio();
   Unit _unit;
   bool _isLoading = true;
   bool _containsNum = false;
@@ -80,15 +82,19 @@ class _FlashCardState extends State<FlashCard> {
                     icon: new Icon(Icons.volume_up),
                     iconSize: constraints.maxHeight * 0.18,
                     color: Colors.white,
-                    onPressed: () =>
-                        AppStateContainer.of(context).play(widget.text)),
+                    onPressed: () {
+                        play.tap();
+                        AppStateContainer.of(context).play(widget.text);}),
                 new Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     new IconButton(
                         icon: new Icon(Icons.arrow_left),
-                        onPressed: widget.onChecked,
+                        onPressed: (){
+                          play.tap();
+                          widget.onChecked;
+                        },
                         iconSize: constraints.maxHeight * 0.2,
                         color: Colors.white),
                     new Expanded(
@@ -120,7 +126,10 @@ class _FlashCardState extends State<FlashCard> {
                                     : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
-                      onPressed: widget.onChecked,
+                      onPressed: (){
+                        play.tap();
+                        widget.onChecked;
+                      },
                       iconSize: constraints.maxHeight * 0.2,
                       color: Colors.white,
                     )
