@@ -43,7 +43,7 @@ class AppStateContainer extends StatefulWidget {
 
 class AppStateContainerState extends State<AppStateContainer> {
   static const platform = const MethodChannel('org.sutara.maui/rivescript');
-
+  static const maxChats = 100;
   AppState state;
   List<dynamic> messages;
   List<dynamic> botMessages;
@@ -227,6 +227,8 @@ class AppStateContainerState extends State<AppStateContainer> {
   void addChat(String message) async {
     writeLog('chat,${state.loggedInUser.id},${friendId},$message');
     if (friendId == User.botId) {
+      if (botMessages.length > maxChats * 2)
+        botMessages.removeRange(maxChats, botMessages.length);
       botMessages
           .insert(0, {'userId': state.loggedInUser.id, 'message': message});
       print('insert $message');

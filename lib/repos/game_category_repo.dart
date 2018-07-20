@@ -5,6 +5,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/db/dao/game_category_dao.dart';
 import 'package:maui/db/dao/lesson_dao.dart';
+import 'package:maui/db/entity/lesson.dart';
 
 class GameCategoryRepo {
   static final GameCategoryDao gameCategoryDao = new GameCategoryDao();
@@ -32,24 +33,34 @@ class GameCategoryRepo {
 
   const GameCategoryRepo();
 
-  Future<List<Tuple3<int, int, String>>> getGameCategoriesByGame(
+  Future<List<Tuple4<int, int, String, int>>> getGameCategoriesByGame(
       String game) async {
     if (mathGames.contains(game)) {
       var gameCategories = await gameCategoryDao.getGameCategoriesByGame(game);
       return gameCategories
-          .map((g) => new Tuple3(g.id, g.conceptId, g.name))
+          .map((g) => new Tuple4(g.id, g.conceptId, g.name, g.lessonId))
           .toList(growable: false);
     } else if (orderedGames.contains(game)) {
       var lessons = await lessonDao.getLessonsByHasOrder(1);
       return lessons
-          .map((l) => new Tuple3(l.id, l.conceptId, l.title))
+          .map((l) => new Tuple4(l.id, l.conceptId, l.title, l.id))
           .toList(growable: false);
     } else {
       var lessons = await lessonDao.getLessons();
       return lessons
-          .map((l) => new Tuple3(l.id, l.conceptId, l.title))
+          .map((l) => new Tuple4(l.id, l.conceptId, l.title, l.id))
           .toList(growable: false);
     }
+  }
+
+  Future<int> getLessonIdByGameCategoryId(
+      String game, int gameCategoryId) async {
+    var lessonId = gameCategoryId;
+    if (mathGames.contains(game)) {
+      var gameCategory = await gameCategoryDao.getGameCategory(gameCategoryId);
+      lessonId = gameCategory?.lessonId;
+    }
+    return lessonId;
   }
 
   Future<GameCategory> getGameCategory(int gameCategoryId) async {
