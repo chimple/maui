@@ -130,8 +130,6 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller.forward();
     sparklesAnimationController.forward(from: 0.0);
     _sparklesAngle = random.nextDouble() * (2 * pi);
-    writeLog(
-        'score,${widget.gameName},${widget.myUser},${widget.otherUser},${widget.myScore},${widget.otherScore},${widget.isGameOver}');
   }
 
   @override
