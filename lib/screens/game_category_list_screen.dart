@@ -30,7 +30,7 @@ class GameCategoryListScreen extends StatefulWidget {
 }
 
 class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
-  List<Tuple4<int, int, String>> _gameCategories;
+  List<Tuple4<int, int, String,int>> _gameCategories;
   List<Concept> _concepts;
   Map<int, Concept> _conceptMap;
   bool _isLoading = false;
