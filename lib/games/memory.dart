@@ -196,6 +196,7 @@ class MemoryState extends State<Memory> {
               print("Pressed Statuses2: ${_statuses}");
               print("Matched");
             } else {
+              play.wrong();
               new Future.delayed(const Duration(milliseconds: 50), () {
                 setState(() {
                   _shaker[_pressedTileIndex] = ShakeCell.Wrong;

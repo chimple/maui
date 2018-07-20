@@ -5,6 +5,7 @@ import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:badge/badge.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class GameListView extends StatefulWidget {
   const GameListView({Key key}) : super(key: key);
@@ -20,6 +21,7 @@ class GameListView extends StatefulWidget {
 }
 
 class GameListViewState extends State<GameListView> {
+  GameAudio play=new GameAudio();
   Map<String, int> _notifs = Map<String, int>();
 
   @override
@@ -48,13 +50,16 @@ class GameListViewState extends State<GameListView> {
       ),
       margin: EdgeInsets.all(size.width * .02),
       child: new InkWell(
-        onTap: () => Navigator
-                .of(context)
-                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return SelectOpponentScreen(
-                gameName: gameName,
-              );
-            })),
+        onTap: () {
+          play.tap();
+          Navigator
+              .of(context)
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return SelectOpponentScreen(
+              gameName: gameName,
+            );
+          }));
+        },
         key: new Key(gameName),
         child: new Stack(
           children: <Widget>[
