@@ -44,6 +44,7 @@ class _VideoAppState extends State<VideoApp> {
     //   'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4',
     // )
       ..addListener(() {
+        
         final bool isPlaying = _controller.value.isPlaying;
         if (isPlaying != _isPlaying) {
           setState(() {
@@ -168,6 +169,8 @@ class _VideoAppState extends State<VideoApp> {
                       onTap:(){  
                         play.tap();
                         print("hello");
+
+                        _controller.dispose();
 _controller.pause();
                         Navigator.of(context).pop();
                       
