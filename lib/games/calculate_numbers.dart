@@ -8,6 +8,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class CalculateTheNumbers extends StatefulWidget {
   Function onScore;
@@ -32,6 +33,7 @@ class CalculateTheNumbers extends StatefulWidget {
 
 class _CalculateTheNumbersState extends State<CalculateTheNumbers>
     with TickerProviderStateMixin {
+      GameAudio play=new GameAudio();
   final List<String> _allNumbers = [
     '1',
     '2',
@@ -323,6 +325,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       print('nikkk         $_gettingResult   $_finalResult  $_scoreCount');
       if (_scoreCount == 0) {
         print("nikkk   ");
+        play.right();
         widget.onScore(4);
         widget.onProgress(1.0);
         setState(() {
@@ -415,7 +418,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       });
                     });
                   } else {
-                    if (_score > 0) widget.onScore(-1);
+                    if (_score > 0) {
+                      play.wrong();
+                    widget.onScore(-1);}
 
                     setState(() {
                       _score = _score > 0 ? _score - 1 : _score;
@@ -541,7 +546,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                       });
                     });
                   } else {
-                    if (_score > 0) widget.onScore(-1);
+                    if (_score > 0) {play.wrong();widget.onScore(-1);}
                     setState(() {
                       _score = _score > 0 ? _score - 1 : _score;
                       _shake[_i] = false;
@@ -598,7 +603,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     });
                   }
                 } else {
-                  if (_score > 0) widget.onScore(-1);
+                  if (_score > 0) {
+                    play.wrong();
+                  widget.onScore(-1);
+                  }
                   setState(() {
                     _score = _score > 0 ? _score - 1 : _score;
                     _shake[_i] = false;
@@ -715,8 +723,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
             return  FractionallySizedBox(
-                widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-                heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+              widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
                 child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
                   setState(() {
                     _isShowingFlashCard = false;

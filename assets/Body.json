@@ -14,7 +14,7 @@
             }
         },
         {
-            "name": "upper body",
+            "name": "upper_body",
             "data": {
                 "height": 142.0,
                 "width": 86.0,
@@ -23,7 +23,7 @@
             }
         },
         {
-            "name": "right hand",
+            "name": "right_hand",
             "data": {
                 "height": 63.0,
                 "width": 114.0,
@@ -32,7 +32,7 @@
             }
         },
         {
-            "name": "left hand",
+            "name": "left_hand",
             "data": {
                 "height": 60.0,
                 "width": 119.0,
@@ -41,7 +41,7 @@
             }
         },
         {
-            "name": "right palm",
+            "name": "right_palm",
             "data": {
                 "height": 52.0,
                 "width": 55.0,
@@ -50,7 +50,7 @@
             }
         },
         {
-            "name": "left palm",
+            "name": "left_palm",
             "data": {
                 "height": 51.0,
                 "width": 58.0,
@@ -59,7 +59,7 @@
             }
         },
         {
-            "name": "right leg",
+            "name": "right_leg",
             "data": {
                 "height": 175.0,
                 "width": 57.0,
@@ -68,7 +68,7 @@
             }
         },
         {
-            "name": "left leg",
+            "name": "left_leg",
             "data": {
                 "height": 173.0,
                 "width": 59.0,
@@ -77,7 +77,7 @@
             }
         },
         {
-            "name": "right foot",
+            "name": "right_foot",
             "data": {
                 "height": 39.0,
                 "width": 53.0,
@@ -86,7 +86,7 @@
             }
         },
         {
-            "name": "left foot",
+            "name": "left_foot",
             "data": {
                 "height": 39.0,
                 "width": 55.0,

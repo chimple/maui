@@ -4,6 +4,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FirstWord extends StatefulWidget {
   Function onScore;
@@ -30,6 +31,7 @@ class FirstWord extends StatefulWidget {
 enum Statuses { right, wrong }
 
 class FirstWordState extends State<FirstWord> {
+  GameAudio play=new GameAudio();
   final TextEditingController _textController = new TextEditingController();
   Tuple2<List<String>, String> data;
   String _dispText = '';
@@ -67,6 +69,7 @@ class FirstWordState extends State<FirstWord> {
     if (text.toLowerCase() == randomWord) {
       _dispText1 = 'CORRECT';
       _textController.clear();
+      play.right();
       widget.onScore(5);
       new Future.delayed(const Duration(milliseconds: 500), () {
         setState(() {
