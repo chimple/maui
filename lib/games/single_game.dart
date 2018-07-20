@@ -51,6 +51,7 @@ import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/repos/log_repo.dart';
 import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/components/gameaudio.dart';
 
 enum GameMode { timed, iterations }
 
@@ -218,6 +219,7 @@ class SingleGame extends StatefulWidget {
 }
 
 class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
+ GameAudio play=new GameAudio();
   double _myProgress = 0.0;
   double _otherProgress = 0.0;
   int maxIterations = 2;
@@ -331,7 +333,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                       child: IconButton(
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomStart,
-                          onPressed: () => Navigator.of(context).pop(false),
+                          onPressed: (){
+                            play.tap();
+                            Navigator.of(context).pop(false);},
                           icon: Icon(Icons.close, color: Colors.white)),
                     ),
                   ),
@@ -356,9 +360,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                       child: IconButton(
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomEnd,
-                          onPressed: () => Navigator
+                          onPressed: () {
+                          play.tap();
+                          Navigator
                               .of(context)
-                              .popUntil(ModalRoute.withName('/tab')),
+                              .popUntil(ModalRoute.withName('/tab'));},
                           icon: Icon(Icons.check, color: Colors.white)),
                     ),
                   ),
@@ -451,6 +457,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
+                                            play.tap();
                                             _onWillPop();
                                           },
                                         ))
