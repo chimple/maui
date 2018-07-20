@@ -160,6 +160,8 @@ flutter:
     - assets/background_image/spin_wheel_small.png
     - assets/background_gif/Win_loop.gif
     - assets/chat_image/chat icon_01.png
+    - assets/chat_image/chat icon_04.png
+    - assets/chat_image/chat icon_03.png
     - assets/chat_image/friend_background.png
     - assets/games.png
     - assets/chat.png
