@@ -15,6 +15,7 @@ import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class SelectOpponentScreen extends StatefulWidget {
   final String gameName;
@@ -29,6 +30,7 @@ class SelectOpponentScreen extends StatefulWidget {
 }
 
 class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
+  GameAudio play=new GameAudio();
   List<User> _users;
   List<dynamic> _messages;
   List<User> _localUsers = [];
@@ -143,6 +145,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           padding: const EdgeInsets.all(1.0),
                           child: GestureDetector(
                             onTap: () {
+                              play.tap();
                               button3(context);
                               print("valueme incresing");
                             },
@@ -238,6 +241,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   startGame(BuildContext context, User user) {
+    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Random random = Random();
     Navigator.of(context).push(MaterialPageRoute<Null>(
@@ -256,6 +260,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   goToMyTurn(BuildContext context, User user) {
+    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
     Navigator
