@@ -12,6 +12,7 @@ import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Connectdots extends StatefulWidget {
   Function onScore;
@@ -37,7 +38,7 @@ enum Status {Active, Visible, Disappear,Draggable,Dragtarget,First}
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class ConnectdotsState extends State<Connectdots> {
-
+GameAudio play=new GameAudio();
   var  i=0;
   
   //var count=0;
@@ -440,6 +441,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
             print('flaggggggggggggg     $flag');
              if(flag==0){
              print('on  endddd  ');
+             play.right();
               widget.onScore(20);
      
               
@@ -473,6 +475,7 @@ todnumbers.forEach((e){e.forEach((v){_todnumber.add(v);});});
            }
            if(flag==1)
            {
+             play.wrong();
 widget.onScore(-1);
              print("object....shanking thing is...:$_visibleflag");
              setState(() {
