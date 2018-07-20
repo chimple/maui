@@ -181,6 +181,11 @@ class Loca {
   String get waitingForTurn =>
       Intl.message('Waiting for Turn', name: 'waitingForTurn');
   String get vs => Intl.message('V/S ', name: 'vs');
+  String get tapACamera => Intl.message('Tap a camera', name: 'tapACamera');
+  String get enterYourDetails =>
+      Intl.message('Enter your details', name: 'enterYourDetails');
+  String get writeYourName =>
+      Intl.message('Write your name...', name: 'writeYourName');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {

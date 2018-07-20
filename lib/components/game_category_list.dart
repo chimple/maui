@@ -248,12 +248,13 @@ class _GameCategoryList extends State<GameCategoryList> {
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold)),
             ),
-            onTap: () => lessonId >
-                    AppStateContainer
-                        .of(context)
-                        .state
-                        .loggedInUser
-                        .currentLessonId
+            onTap: () => lessonId != null &&
+                    lessonId >
+                        AppStateContainer
+                            .of(context)
+                            .state
+                            .loggedInUser
+                            .currentLessonId
                 ? null
                 : goToGame(context, widget.game, gameCategoryId,
                     widget.gameDisplay, widget.gameMode,
@@ -277,8 +278,13 @@ class _GameCategoryList extends State<GameCategoryList> {
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold)),
         )),
-        onTap: () => lessonId >
-                AppStateContainer.of(context).state.loggedInUser.currentLessonId
+        onTap: () => lessonId != null &&
+                lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
             ? null
             : goToGame(context, widget.game, gameCategoryId, widget.gameDisplay,
                 widget.gameMode,
