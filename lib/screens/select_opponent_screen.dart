@@ -109,67 +109,58 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                    backgroundColor: color,
-                    // pinned: true,
-                    expandedHeight: orientation == Orientation.portrait
-                        ? mediaSize.height * .25
-                        : mediaSize.height * .5,
-                    flexibleSpace: new FlexibleSpaceBar(
-                      background: new Stack(children: <Widget>[
-                        new Container(
-                          decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                            image: new AssetImage(
-                                "assets/background_image/${widget.gameName}_big.png"),
-                            fit: BoxFit.fill,
-                          )),
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                            child: Center(
-                              child: new Hero(
-                                tag: 'assets/hoodie/${widget.gameName}.png',
-                                child: new Image.asset(
-                                  'assets/hoodie/${widget.gameName}.png',
-                                  scale: .4,
+                      backgroundColor: color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait
+                          ? mediaSize.height * .25
+                          : mediaSize.height * .5,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: new Stack(children: <Widget>[
+                          new Container(
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                              image: new AssetImage(
+                                  "assets/background_image/${widget.gameName}_big.png"),
+                              fit: BoxFit.fill,
+                            )),
+                          ),
+                          Container(
+                              padding: EdgeInsets.only(bottom: 20.0),
+                              child: Center(
+                                child: new Hero(
+                                  tag: 'assets/hoodie/${widget.gameName}.png',
+                                  child: new Image.asset(
+                                    'assets/hoodie/${widget.gameName}.png',
+                                    scale: .4,
+                                  ),
                                 ),
-                              ),
-                            ))
-                      ]),
-                    ),
-                    title: new Text(Loca.of(context).intl(widget.gameName)),
-                      actions: <Widget>[
-                             Padding(
-                               padding: const EdgeInsets.all(1.0),
-                               child: GestureDetector(
-                                 
-                  onTap: (){  button3(context);
-                  print("valueme incresing");
-                  },
-                  
-                  child: Container(
-                      height: 60.0,
-                      width: 60.0,
-                      // margin: EdgeInsets.only(left: 190.0),
-                     decoration:  new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(40.0),
-                    color: Colors.red
-                   
-                    
-                ),
-                    child: new Center(
-                      child: Icon(
-                       
-                         Icons.play_arrow,
-                         size: 40.0,
-                            
+                              ))
+                        ]),
                       ),
-                    ),
-                  ),
-                ),
-                             )
-                      ]
-                  ),
+                      title: new Text(Loca.of(context).intl(widget.gameName)),
+                      actions: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              button3(context);
+                              print("valueme incresing");
+                            },
+                            child: Container(
+                              height: 60.0,
+                              width: 60.0,
+                              // margin: EdgeInsets.only(left: 190.0),
+                              decoration: new BoxDecoration(
+                                borderRadius: new BorderRadius.circular(40.0),
+                                // color: Colors.red
+                              ),
+                              child: new Center(
+                                child: Image.asset('assets/videohelp.png'),
+                              ),
+                            ),
+                          ),
+                        )
+                      ]),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -297,6 +288,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
     return FriendItem(
       id: user.id,
+      name: user.name,
       imageUrl: user.image,
       color: user.color,
       replaceWithHoodie: false,
@@ -305,7 +297,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   void button3(BuildContext context) {
-     print("Button 1");
-  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new VideoApp()));
+    print("Button 1");
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new VideoApp()));
   }
 }

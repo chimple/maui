@@ -59,6 +59,7 @@ flutter:
     - assets/wrong.wav
     - assets/tap.wav
     - assets/demo_video/video.mp4
+    - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
     - assets/solo.png
@@ -571,6 +572,7 @@ flutter:
     - assets/dict/elephant.png
     - assets/dict/elfu.png
     - assets/dict/elimu.png
+    - assets/dict/embe.png
     - assets/dict/employers.png
     - assets/dict/employment.png
     - assets/dict/enemy.png
@@ -1295,6 +1297,9 @@ flutter:
     - assets/dict/young.png
     - assets/dict/youth.png
     - assets/dict/yowe.png
+    - assets/dict/yeye.png
+    - assets/dict/yeyote.png
+    - assets/dict/yote.png
     - assets/dict/zahanati.png
     - assets/dict/zaidi.png
     - assets/dict/zana.png
@@ -1302,6 +1307,54 @@ flutter:
     - assets/dict/zero.png
     - assets/dict/ziada.png
     - assets/dict/zoezi.png
+    - assets/dict/A.png
+    - assets/dict/B.png
+    - assets/dict/C.png
+    - assets/dict/D.png
+    - assets/dict/E.png
+    - assets/dict/F.png
+    - assets/dict/G.png
+    - assets/dict/H.png
+    - assets/dict/I.png
+    - assets/dict/J.png
+    - assets/dict/K.png
+    - assets/dict/L.png
+    - assets/dict/M.png
+    - assets/dict/N.png
+    - assets/dict/O.png
+    - assets/dict/P.png
+    - assets/dict/R.png
+    - assets/dict/S.png
+    - assets/dict/T.png
+    - assets/dict/U.png
+    - assets/dict/V.png
+    - assets/dict/W.png
+    - assets/dict/Y.png
+    - assets/dict/Z.png
+    - assets/dict/lowercase_a.png
+    - assets/dict/lowercase_b.png
+    - assets/dict/lowercase_c.png
+    - assets/dict/lowercase_d.png
+    - assets/dict/lowercase_e.png
+    - assets/dict/lowercase_f.png
+    - assets/dict/lowercase_g.png
+    - assets/dict/lowercase_h.png
+    - assets/dict/lowercase_i.png
+    - assets/dict/lowercase_j.png
+    - assets/dict/lowercase_k.png
+    - assets/dict/lowercase_l.png
+    - assets/dict/lowercase_m.png
+    - assets/dict/lowercase_n.png
+    - assets/dict/lowercase_o.png
+    - assets/dict/lowercase_p.png
+    - assets/dict/lowercase_r.png
+    - assets/dict/lowercase_s.png
+    - assets/dict/lowercase_t.png
+    - assets/dict/lowercase_u.png
+    - assets/dict/lowercase_v.png
+    - assets/dict/lowercase_w.png
+    - assets/dict/lowercase_y.png
+    - assets/dict/lowercase_z.png
     - assets/star_music.mp3
     - assets/stickers/pig/pig.png
     - assets/stickers/pig/8.png

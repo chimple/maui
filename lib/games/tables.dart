@@ -222,8 +222,10 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       if (_isShowingFlashCard) {
         String temp  = _question + " = " +  _answer.toString();
         return  FractionallySizedBox(
-            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+            widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
             child: new FlashCard(text: temp, onChecked: () {
               setState(() {
                 _isShowingFlashCard = false;
