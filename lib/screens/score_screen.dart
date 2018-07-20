@@ -10,6 +10,7 @@ import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -38,6 +39,7 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
+      GameAudio play=new GameAudio();
   AnimationController controller, buttoncontroller, sparklesAnimationController;
 
   List<AnimationController> _controllers = new List<AnimationController>();
@@ -130,17 +132,8 @@ class _ScoreScreenState extends State<ScoreScreen>
     _sparklesAngle = random.nextDouble() * (2 * pi);
     writeLog(
         'score,${widget.gameName},${widget.myUser},${widget.otherUser},${widget.myScore},${widget.otherScore},${widget.isGameOver}');
-    changeCurrentId();
   }
-void changeCurrentId()async{
-  var loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-  int curentId=loggedInUser.currentLessonId+1;
-  var user = await new UserRepo().insertLocalUser(
-      new User(image:loggedInUser.image,currentLessonId: curentId,name: loggedInUser.name));
-  AppStateContainer.of(context).setLoggedInUser(user);
-  final id= AppStateContainer.of(context).state.loggedInUser;
-  print("after change currentId ${id.currentLessonId}");
-}
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -554,6 +547,7 @@ void changeCurrentId()async{
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  play.tap();
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
@@ -565,6 +559,7 @@ void changeCurrentId()async{
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  play.tap();
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
