@@ -58,6 +58,12 @@ class _VideoAppState extends State<VideoApp> {
       });
    print("hello data i have to check..rrrrrrrr.::${widget.gamename}");
   }
+  @override
+  void dispose() {
+      // TODO: implement dispose
+      _controller.dispose();
+      super.dispose();
+    }
 
   @override
   Widget build(BuildContext context){
