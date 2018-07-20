@@ -59,6 +59,7 @@ flutter:
     - assets/wrong.wav
     - assets/tap.wav
     - assets/demo_video/video.mp4
+    - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
     - assets/solo.png
