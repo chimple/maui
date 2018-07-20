@@ -5,7 +5,7 @@
     "number": 10,
     "parts": [
         {
-            "name": "air conditioner",
+            "name": "air_conditioner",
             "data": {
                 "height": 255.0,
                 "width": 948.0,
