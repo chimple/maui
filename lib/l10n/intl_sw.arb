@@ -733,5 +733,20 @@
   "@vs": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+     "tapACamera": "Bomba kamera",
+     "@tapACamera": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "enterYourDetails": "Ingiza jina lako",
+     "@enterYourDetails": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "writeYourName": "Andika jina lako...",
+     "@writeYourName": {
+       "type": "text",
+       "placeholders": {}
+     }
 }
