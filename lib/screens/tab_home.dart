@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +18,8 @@ class TabHome extends StatefulWidget {
   }
 }
 
-class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
+class TabHomeState extends State<TabHome>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   final List<MyTabs> _tabs = [
     new MyTabs(
         img1: "assets/chatBig.png",
@@ -39,6 +40,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     print('TabHomeState: initState');
+    WidgetsBinding.instance.addObserver(this);
     _scrollcontroller =
         new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
     _scrollcontroller.addListener(_scrolling);
@@ -128,7 +130,7 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
     _controller.removeListener(_tabSelected);
     _controller.dispose();
     _imgController.dispose();
@@ -136,6 +138,11 @@ class TabHomeState extends State<TabHome> with TickerProviderStateMixin {
     _scrollcontroller.removeListener(_scrolling);
     _scrollcontroller.dispose();
     super.dispose();
+  }
+
+  @override
+  Future<bool> didPopRoute() {
+    return new Future<bool>.value(true);
   }
 
   @override

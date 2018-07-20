@@ -62,6 +62,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   void didUpdateWidget(FillInTheBlanks oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _correct.clear();
       _initFillBlanks();
     }
   }

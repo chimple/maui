@@ -92,6 +92,24 @@ final Map<String, List<String>> Stickers = {
     'assets/stickers/doggie/7.png',
     'assets/stickers/doggie/8.png',
     'assets/stickers/doggie/9.png',
+  ],
+  'assets/stickers/emoguy/happy.png': [
+    'assets/stickers/emoguy/angry.png',
+    'assets/stickers/emoguy/cold.png',
+    'assets/stickers/emoguy/cry.png',
+    'assets/stickers/emoguy/happy.png',
+    'assets/stickers/emoguy/irritated.png',
+    'assets/stickers/emoguy/laughing.png',
+    'assets/stickers/emoguy/love.png',
+    'assets/stickers/emoguy/playing.png',
+    'assets/stickers/emoguy/relaxed.png',
+    'assets/stickers/emoguy/sad.png',
+    'assets/stickers/emoguy/scared.png',
+    'assets/stickers/emoguy/sleeping.png',
+    'assets/stickers/emoguy/thumbsdown.png',
+    'assets/stickers/emoguy/thumbsup.png',
+    'assets/stickers/emoguy/workout.png',
+    'assets/stickers/emoguy/yummy.png'
   ]
 };
 
