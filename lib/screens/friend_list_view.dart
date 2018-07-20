@@ -61,6 +61,7 @@ class _FriendListViewState extends State<FriendListView> {
               orElse: () => Notif(userId: u.id, numNotifs: 0));
           return FriendItem(
               id: u.id,
+              name: u.name,
               imageUrl: u.image,
               color: u.color,
               numNotifs: notif.numNotifs,
