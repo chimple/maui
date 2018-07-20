@@ -29,7 +29,6 @@ class ClueGame extends StatefulWidget {
 }
 
 class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   AnimationController controller;
   Animation<double> animation, noanimation;
   int _flag = 0;
@@ -133,7 +132,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         _result = 'you Type Drink';
         count++;
         flag = 1;
-        play.right();
         widget.onScore(4);
         widget.onProgress(count / 12);
         if (count == 12) {
@@ -159,7 +157,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         _result = 'you Type Travel';
         count++;
         flag = 1;
-        play.right();
         widget.onScore(4);
         widget.onProgress(count / 12);
         if (count == 12) {
@@ -185,7 +182,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         _result = 'you Type Red Fruit';
         count++;
         flag = 1;
-        play.right();
         widget.onScore(4);
         widget.onProgress(count / 12);
         if (count == 12) {
@@ -211,7 +207,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         _result = 'you Type black Pet';
         count++;
         flag = 1;
-        play.right();
         widget.onScore(4);
         widget.onProgress(count / 12);
         if (count == 12) {
@@ -237,7 +232,6 @@ class _ClueGameState extends State<ClueGame> with TickerProviderStateMixin {
         flag = 1;
       });
       toAnimateFunction();
-      play.wrong();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         setState(() {
           _flag = 0;

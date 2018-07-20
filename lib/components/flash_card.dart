@@ -20,7 +20,6 @@ class FlashCard extends StatefulWidget {
 }
 
 class _FlashCardState extends State<FlashCard> {
-  GameAudio play=new GameAudio();
   Unit _unit;
   bool _isLoading = true;
   bool _containsNum = false;
@@ -83,16 +82,15 @@ class _FlashCardState extends State<FlashCard> {
                     iconSize: constraints.maxHeight * 0.18,
                     color: Colors.white,
                     onPressed: () {
-                        play.tap();
-                        AppStateContainer.of(context).play(widget.text);}),
+                      AppStateContainer.of(context).playWord(widget.text);
+                    }),
                 new Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     new IconButton(
                         icon: new Icon(Icons.arrow_left),
-                        onPressed: (){
-                          play.tap();
+                        onPressed: () {
                           widget.onChecked();
                         },
                         iconSize: constraints.maxHeight * 0.2,
@@ -116,18 +114,18 @@ class _FlashCardState extends State<FlashCard> {
                                             fontWeight: FontWeight.bold)))
                                 : noImage
                                     ? new Container(
-                                    alignment: const Alignment(0.0, 0.0),
-                                    child: new Text(widget.text,
-                                        style: new TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                constraints.maxHeight * 0.11,
-                                            fontWeight: FontWeight.bold)))
+                                        alignment: const Alignment(0.0, 0.0),
+                                        child: new Text(widget.text,
+                                            style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                    constraints.maxHeight *
+                                                        0.11,
+                                                fontWeight: FontWeight.bold)))
                                     : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
-                      onPressed: (){
-                        play.tap();
+                      onPressed: () {
                         widget.onChecked();
                       },
                       iconSize: constraints.maxHeight * 0.2,
@@ -135,8 +133,6 @@ class _FlashCardState extends State<FlashCard> {
                     )
                   ],
                 ),
-
-                
                 noImage
                     ? new Container(
                         alignment: const Alignment(0.0, 0.0),

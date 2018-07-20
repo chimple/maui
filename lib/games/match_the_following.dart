@@ -43,7 +43,6 @@ enum DisableStatus { Active, Deactivate }
 
 class _MatchTheFollowingState extends State<MatchTheFollowing>
     with SingleTickerProviderStateMixin {
-       GameAudio play=new GameAudio();
   final double middle_spacing = 50.0;
   int c = 0;
   int start = 0, increament = 0;
@@ -284,7 +283,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1 &&
             leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-          play.right();
       widget.onScore(4);
       correct++;
 
@@ -298,7 +296,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     } else {
       //leftSideTextIndex = -1;
       if (leftIsTapped == 1) {
-        play.wrong();
         widget.onScore(-1);
         try {
           setState(() {
@@ -328,7 +325,6 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     }
     if (_wrongAttem >= correct - _constant &&
         _wrongAttem == _numButtons - _constant1) {
-          play.wrong();
       widget.onScore(-correct);
       new Future.delayed(const Duration(milliseconds: 0), () {
         _leftSideletters.clear();

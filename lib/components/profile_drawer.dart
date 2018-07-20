@@ -15,7 +15,6 @@ class ProfileDrawer extends StatefulWidget {
 
 class ProfileDrawerState extends State<ProfileDrawer>
     with SingleTickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   TabController controller;
 
   @override
@@ -33,18 +32,17 @@ class ProfileDrawerState extends State<ProfileDrawer>
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
-  //  play.tap();
+    //  play.tap();
     return new Drawer(
       child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
             decoration: BoxDecoration(
-              color:  new Color(0xffF0557F),
+              color: new Color(0xffF0557F),
             ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: () {
-                  play.tap();
                   button3(context);
                   print("valueme incresing");
                 },
@@ -56,16 +54,14 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   child: new Container(
                     decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(100.0),
-                    
                     ),
                     child: new Center(
-                      child:Image.asset('assets/videohelp.png'),
+                      child: Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),
               )
             ],
-            
             currentAccountPicture: new Container(
                 child: new GestureDetector(
               child: Container(
@@ -80,7 +76,6 @@ class ProfileDrawerState extends State<ProfileDrawer>
                 ),
               ),
               onTap: () {
-                play.tap();
                 //Navigate to Camera Screen
                 print("Hello World..!!");
               },
@@ -105,14 +100,12 @@ class ProfileDrawerState extends State<ProfileDrawer>
 
   void button3(BuildContext context) {
     print("Button 1");
-    play.tap();
     Navigator.of(context).push(new MaterialPageRoute(
         builder: (BuildContext context) => new VideoApp()));
   }
 }
 
 class ProfileDrawerIcon extends StatelessWidget {
-  GameAudio play=new GameAudio();
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
@@ -131,7 +124,6 @@ class ProfileDrawerIcon extends StatelessWidget {
         ),
       ),
       onTap: () {
-        play.tap();
         Scaffold.of(context).openDrawer();
       },
     ));
