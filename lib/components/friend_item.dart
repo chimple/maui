@@ -58,7 +58,7 @@ class FriendItem extends StatelessWidget {
               radius: 80.0,
 //                maxRadius: 40.0,
               backgroundImage:
-                  new AssetImage("assets/chat_image/chat icon_01.png"),
+                  new AssetImage("assets/chat_image/chat icon_04.png"),
               child: new Center(
                 child: RawMaterialButton(
                   elevation: 20.0,
