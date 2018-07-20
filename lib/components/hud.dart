@@ -78,10 +78,10 @@ class Hud extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           new Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: Text(
               '$score',
-              style: new TextStyle(fontSize: fontSize, color: foregroundColor),
+              style: new TextStyle(fontSize: height*0.6, color: foregroundColor),
             ),
           )
         ],
