@@ -49,14 +49,10 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   child: new Container(
                     decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(100.0),
-                      border: new Border.all(
-                        width: 5.0,
-                      ),
+                    
                     ),
                     child: new Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                      ),
+                      child:Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),

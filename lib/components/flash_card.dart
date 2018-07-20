@@ -58,6 +58,8 @@ class _FlashCardState extends State<FlashCard> {
         child: new CircularProgressIndicator(),
       );
     }
+    bool noImage = (_unit?.image?.length ?? 0) == 0;
+
     return new LayoutBuilder(builder: (context, constraints) {
       Color bgColor = Theme.of(context).accentColor;
       print("anuj");
@@ -106,8 +108,15 @@ class _FlashCardState extends State<FlashCard> {
                                             fontSize:
                                                 constraints.maxHeight * 0.11,
                                             fontWeight: FontWeight.bold)))
-                                : _unit == null
-                                    ? CircularProgressIndicator()
+                                : noImage
+                                    ? new Container(
+                                    alignment: const Alignment(0.0, 0.0),
+                                    child: new Text(widget.text,
+                                        style: new TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                constraints.maxHeight * 0.11,
+                                            fontWeight: FontWeight.bold)))
                                     : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
@@ -117,7 +126,9 @@ class _FlashCardState extends State<FlashCard> {
                     )
                   ],
                 ),
-                _containsNum
+
+                
+                noImage
                     ? new Container(
                         alignment: const Alignment(0.0, 0.0),
                         margin:

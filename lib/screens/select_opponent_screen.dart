@@ -153,17 +153,12 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                       // margin: EdgeInsets.only(left: 190.0),
                      decoration:  new BoxDecoration(
                     borderRadius: new BorderRadius.circular(40.0),
-                    color: Colors.red
+                    // color: Colors.red
                    
                     
                 ),
                     child: new Center(
-                      child: Icon(
-                       
-                         Icons.play_arrow,
-                         size: 40.0,
-                            
-                      ),
+                      child: Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),

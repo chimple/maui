@@ -715,8 +715,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
             return  FractionallySizedBox(
-                widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-                heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+              widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
                 child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
                   setState(() {
                     _isShowingFlashCard = false;

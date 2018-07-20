@@ -55,6 +55,7 @@ flutter:
 
   assets:
     - assets/demo_video/video.mp4
+    - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
     - assets/solo.png
