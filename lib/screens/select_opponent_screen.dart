@@ -99,7 +99,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
     final thirdColor = _colors != null ? _colors[2] : Colors.amber;
-
+    final gamename=widget.gameName;
     return Scaffold(
         body: (_isLoading)
             ? new Center(
@@ -133,6 +133,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                                   tag: 'assets/hoodie/${widget.gameName}.png',
                                   child: new Image.asset(
                                     'assets/hoodie/${widget.gameName}.png',
+                                    
                                     scale: .4,
                                   ),
                                 ),
@@ -146,7 +147,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           child: GestureDetector(
                             onTap: () {
                               play.tap();
-                              button3(context);
+                              button3(context,gamename);
                               print("valueme incresing");
                             },
                             child: Container(
@@ -301,9 +302,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     );
   }
 
-  void button3(BuildContext context) {
+  void button3(BuildContext context, String gamename) {
     print("Button 1");
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp()));
+        builder: (BuildContext context) => new VideoApp(gamename:gamename)));
   }
 }

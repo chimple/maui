@@ -2,24 +2,44 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter/material.dart';
+import 'package:maui/components/nima.dart';
+import 'package:maui/components/user_item.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:badge/badge.dart';
+import 'package:maui/components/friend_item.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/screens/select_opponent_screen.dart';
+import 'package:flores/flores.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/components/gameaudio.dart';
-
 // void main() => runApp(VideoApp());
 
 class VideoApp extends StatefulWidget {
+    final String gamename;
+  final int gameCategoryId;
+  const VideoApp({Key key, this.gamename, this.gameCategoryId})
+      : super(key: key);
   @override
   _VideoAppState createState() => _VideoAppState();
 }
 
 class _VideoAppState extends State<VideoApp> {
   GameAudio play=new GameAudio();
+  
   VideoPlayerController _controller;
   bool _isPlaying = false;
 
   @override
   void initState(){
     super.initState();
-    _controller = VideoPlayerController.asset("assets/demo_video/video.mp4")
+    print("hello data i have to check...::${widget.gamename}");
+    final name=widget.gamename;
+    _controller = VideoPlayerController.asset("assets/demo_video/$name.mp4")
     //  VideoPlayerController.network(
     //   'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4',
     // )
@@ -35,6 +55,7 @@ class _VideoAppState extends State<VideoApp> {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
+   print("hello data i have to check..rrrrrrrr.::${widget.gamename}");
   }
 
   @override
@@ -95,7 +116,8 @@ class _VideoAppState extends State<VideoApp> {
                           height:media.size.height/2,
                           width: media.size.width/1.5,
                           child: AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
+
+                              aspectRatio: 16/9,
                               child: VideoPlayer(_controller),
                             ),
                         ),
