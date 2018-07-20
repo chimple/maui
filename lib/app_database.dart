@@ -14,6 +14,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_permissions/simple_permissions.dart';
+import 'loca.dart';
 
 class AppDatabase {
   static final AppDatabase _appDatabase = new AppDatabase._internal();
@@ -93,42 +95,42 @@ class AppDatabase {
 
       await new UserDao().insert(new User(
           id: 'sister',
-          name: 'Sister',
+          name: Loca().sister,
           image: imagePath,
           deviceId: deviceId,
           currentLessonId: 56));
 
       await new UserDao().insert(new User(
           id: 'brother',
-          name: 'Brother',
+          name: Loca().brother,
           image: imagePath1,
           deviceId: deviceId,
           currentLessonId: 1));
 
       await new UserDao().insert(new User(
           id: 'mother',
-          name: 'Mother',
+          name: Loca().mother,
           image: imagePath3,
           deviceId: deviceId,
           currentLessonId: 1));
 
       await new UserDao().insert(new User(
           id: 'father',
-          name: 'Father',
+          name: Loca().father,
           image: imagePath2,
           deviceId: deviceId,
           currentLessonId: 1));
 
-      await new UserDao().insert(new User(
-          id: 'best_friend',
-          name: 'Best Friend',
-          image: imagePath4,
-          deviceId: 'other_device',
-          currentLessonId: 1));
+//      await new UserDao().insert(new User(
+//          id: 'best_friend',
+//          name: 'Best Friend',
+//          image: imagePath4,
+//          deviceId: 'other_device',
+//          currentLessonId: 1));
 
       await new UserDao().insert(new User(
           id: 'bot',
-          name: 'Friend',
+          name: Loca().friend,
           image: imagePath5,
           deviceId: deviceId,
           currentLessonId: 1));
@@ -139,49 +141,52 @@ class AppDatabase {
     }
 
     didInit = true;
-    new UnitDao().getUnit('a').then((r) => print(r));
-    new LessonDao().getLesson(1).then((r) => print(r));
-    new LessonDao().getLessonBySeq(1).then((r) => print(r));
-    new LessonDao()
-        .getLessonsBelowSeqAndByConceptId(100, [3, 5]).then((r) => print(r));
-    new LessonUnitDao().getLessonUnitsByLessonId(1).then((r) => print(r));
-    new LessonUnitDao()
-        .getLessonUnitsBelowSeqAndByConceptId(100, 3)
-        .then((r) => print(r));
-    new LessonUnitDao().getEagerLessonUnitsByLessonId(1).then((r) => print(r));
-    new LessonUnitDao()
-        .getEagerLessonUnitsBelowSeqAndByConceptId(100, 3)
-        .then((r) => print(r));
-    fetchPairData(57, 16).then((p) => print(p));
-    fetchTrueOrFalse(56).then((t) => print(t));
-    fetchRollingData(56, 5).then((r) => print(r));
-    fetchWordWithBlanksData(56).then((c) => print(c));
-    fetchMathData(1).then((m) => print(m));
-    fetchMathData(2).then((m) => print(m));
-    fetchMathData(3).then((m) => print(m));
-    fetchMathData(4).then((m) => print(m));
-    fetchMathData(5).then((m) => print(m));
-    fetchMathData(6).then((m) => print(m));
-    fetchMathData(7).then((m) => print(m));
-    fetchMathData(8).then((m) => print(m));
-    fetchMathData(9).then((m) => print(m));
-    fetchMathData(10).then((m) => print(m));
-    fetchMathData(11).then((m) => print(m));
-    fetchMathData(12).then((m) => print(m));
-    fetchTablesData(21).then((m) => print(m));
-    fetchFillNumberData(39, 4).then((f) => print(f));
-    fetchCrosswordData(1).then((c) => print(c));
-    fetchCirclewrdData(1).then((e) => print(e));
+//    new UnitDao().getUnit('a').then((r) => print(r));
+//    new LessonDao().getLesson(1).then((r) => print(r));
+//    new LessonDao().getLessonBySeq(1).then((r) => print(r));
+//    new LessonDao()
+//        .getLessonsBelowSeqAndByConceptId(100, [3, 5]).then((r) => print(r));
+//    new LessonUnitDao().getLessonUnitsByLessonId(1).then((r) => print(r));
+//    new LessonUnitDao()
+//        .getLessonUnitsBelowSeqAndByConceptId(100, 3)
+//        .then((r) => print(r));
+//    new LessonUnitDao().getEagerLessonUnitsByLessonId(1).then((r) => print(r));
+//    new LessonUnitDao()
+//        .getEagerLessonUnitsBelowSeqAndByConceptId(100, 3)
+//        .then((r) => print(r));
+//    fetchPairData(57, 16).then((p) => print(p));
+//    fetchTrueOrFalse(56).then((t) => print(t));
+//    fetchRollingData(56, 5).then((r) => print(r));
+//    fetchWordWithBlanksData(56).then((c) => print(c));
+//    fetchMathData(1).then((m) => print(m));
+//    fetchMathData(2).then((m) => print(m));
+//    fetchMathData(3).then((m) => print(m));
+//    fetchMathData(4).then((m) => print(m));
+//    fetchMathData(5).then((m) => print(m));
+//    fetchMathData(6).then((m) => print(m));
+//    fetchMathData(7).then((m) => print(m));
+//    fetchMathData(8).then((m) => print(m));
+//    fetchMathData(9).then((m) => print(m));
+//    fetchMathData(10).then((m) => print(m));
+//    fetchMathData(11).then((m) => print(m));
+//    fetchMathData(12).then((m) => print(m));
+//    fetchTablesData(21).then((m) => print(m));
+//    fetchFillNumberData(39, 4).then((f) => print(f));
+//    fetchCrosswordData(1).then((c) => print(c));
+//    fetchCirclewrdData(1).then((e) => print(e));
+//
+//    fetchMultipleChoiceData(1, 3).then((m) => print(m));
+//    fetchMultipleChoiceData(4, 6).then((m) => print(m));
+//    fetchMultipleChoiceData(56, 6).then((m) => print(m));
+//    fetchWordData(56, 10, 3).then((m) => print(m));
+//    fetchWordData(4, 8, 5).then((m) => print(m));
+//    fetchConsecutiveData(46, 6, 3)
+//        .then((d) => print('fetchConsecutiveData: ${d.toString()}'));
+//    fetchConsecutiveData(47, 12, 4).then((d) => print(d));
+//    fetchSequenceData(1, 8).then((s) => print(s));
+//    fetchSequenceData(57, 12).then((s) => print(s));
 
-    fetchMultipleChoiceData(1, 3).then((m) => print(m));
-    fetchMultipleChoiceData(4, 6).then((m) => print(m));
-    fetchMultipleChoiceData(56, 6).then((m) => print(m));
-    fetchWordData(56, 10, 3).then((m) => print(m));
-    fetchWordData(4, 8, 5).then((m) => print(m));
-    fetchConsecutiveData(46, 6, 3)
-        .then((d) => print('fetchConsecutiveData: ${d.toString()}'));
-    fetchConsecutiveData(47, 12, 4).then((d) => print(d));
-    fetchSequenceData(1, 8).then((s) => print(s));
-    fetchSequenceData(57, 12).then((s) => print(s));
+    await SimplePermissions.requestPermission(Permission.WriteExternalStorage);
+    await SimplePermissions.requestPermission(Permission.ReadExternalStorage);
   }
 }

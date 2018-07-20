@@ -47,6 +47,8 @@ import 'package:flores/flores.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/log_repo.dart';
+import 'package:maui/loca.dart';
 
 enum GameMode { timed, iterations }
 
@@ -265,6 +267,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       await NotifRepo()
           .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
     }
+    writeLog('game,${widget.gameName},${widget.gameConfig}');
   }
 
   @override
@@ -280,18 +283,46 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     return showDialog(
           context: context,
           builder: (context) => new AlertDialog(
-                title: new Text('Do you want to exit?'),
-                content: new Text('You will lose your progress'),
+                title: Center(
+                    child: new Text(
+                  Loca.of(context).exitq,
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold),
+                )),
                 actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: new Text('No'),
+                  Container(
+                    width: 130.0,
+                    decoration: BoxDecoration(
+                        color: Colors.orangeAccent,
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Center(
+                      child: IconButton(
+                          iconSize: 40.0,
+                          alignment: AlignmentDirectional.bottomStart,
+                          onPressed: () => Navigator.of(context).pop(false),
+                          icon: Icon(Icons.thumb_down, color: Colors.white)),
+                    ),
                   ),
-                  new FlatButton(
-                    onPressed: () => Navigator
-                        .of(context)
-                        .popUntil(ModalRoute.withName('/tab')),
-                    child: new Text('Yes'),
+                  new Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  ),
+                  Container(
+                    width: 130.0,
+                    decoration: BoxDecoration(
+                        color: Colors.orangeAccent,
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Center(
+                      child: IconButton(
+                          iconSize: 40.0,
+                          alignment: AlignmentDirectional.bottomEnd,
+                          onPressed: () => Navigator
+                              .of(context)
+                              .popUntil(ModalRoute.withName('/tab')),
+                          icon: Icon(Icons.thumb_up, color: Colors.white)),
+                    ),
                   ),
                 ],
               ),

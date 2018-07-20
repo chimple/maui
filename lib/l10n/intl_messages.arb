@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-07-10T15:58:27.590273",
+  "@@last_modified": "2018-07-19T18:33:55.014503",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -90,6 +90,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "hint": "Type image",
+  "@hint": {
+    "type": "text",
+    "placeholders": {}
+  },
   "picture_sentence": "Picture Sentence",
   "@picture_sentence": {
     "type": "text",
@@ -167,6 +172,566 @@
   },
   "friends": "Friends",
   "@friends": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "owl": "owl",
+  "@owl": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "giraffe": "giraffe",
+  "@giraffe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rabbit": "rabbit",
+  "@rabbit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dog": "dog",
+  "@dog": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cat": "cat",
+  "@cat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "monkey": "monkey",
+  "@monkey": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bear": "bear",
+  "@bear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "frog": "frog",
+  "@frog": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "red": "red",
+  "@red": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yellow": "yellow",
+  "@yellow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orange": "orange",
+  "@orange": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "blue": "blue",
+  "@blue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "green": "green",
+  "@green": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pink": "pink",
+  "@pink": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cyan": "cyan",
+  "@cyan": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "purple": "purple",
+  "@purple": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brown": "brown",
+  "@brown": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "maroon": "maroon",
+  "@maroon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tulip": "tulip",
+  "@tulip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hibiscus": "hibiscus",
+  "@hibiscus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lotus": "lotus",
+  "@lotus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orchid": "orchid",
+  "@orchid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "daffodil": "daffodil",
+  "@daffodil": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "jasmine": "jasmine",
+  "@jasmine": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lavender": "lavender",
+  "@lavender": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sunflower": "sunflower",
+  "@sunflower": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rose": "rose",
+  "@rose": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chamomile": "chamomile",
+  "@chamomile": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "candle": "candle",
+  "@candle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "toaster": "toaster",
+  "@toaster": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "teddy_bear": "teddy bear",
+  "@teddy_bear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bulb": "bulb",
+  "@bulb": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sofa": "sofa",
+  "@sofa": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "headphones": "headphones",
+  "@headphones": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "microwave_oven": "microwave oven",
+  "@microwave_oven": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "carpet": "carpet",
+  "@carpet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "watch": "watch",
+  "@watch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "clock": "clock",
+  "@clock": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "eagle": "eagle",
+  "@eagle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "kingfisher": "kingfisher",
+  "@kingfisher": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "parrot": "parrot",
+  "@parrot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bat": "bat",
+  "@bat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "peacock": "peacock",
+  "@peacock": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "swan": "swan",
+  "@swan": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rooster": "rooster",
+  "@rooster": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "duck": "duck",
+  "@duck": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dove": "dove",
+  "@dove": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "face": "face",
+  "@face": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "upper_body": "upper body",
+  "@upper_body": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_hand": "right hand",
+  "@right_hand": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_hand": "left hand",
+  "@left_hand": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_palm": "right palm",
+  "@right_palm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_palm": "left palm",
+  "@left_palm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_leg": "right leg",
+  "@right_leg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_leg": "left leg",
+  "@left_leg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_foot": "right foot",
+  "@right_foot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_foot": "left foot",
+  "@left_foot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cloud": "cloud",
+  "@cloud": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sun": "sun",
+  "@sun": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tree": "tree",
+  "@tree": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "leaf": "leaf",
+  "@leaf": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ant": "ant",
+  "@ant": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "grass": "grass",
+  "@grass": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stones": "stones",
+  "@stones": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pot": "pot",
+  "@pot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hexagon": "hexagon",
+  "@hexagon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "square": "square",
+  "@square": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "star": "star",
+  "@star": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "triangle": "triangle",
+  "@triangle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "diamond": "diamond",
+  "@diamond": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rectangle": "rectangle",
+  "@rectangle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rhombus": "rhombus",
+  "@rhombus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "oval": "oval",
+  "@oval": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pentagon": "pentagon",
+  "@pentagon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trapezoid": "trapezoid",
+  "@trapezoid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bow": "bow",
+  "@bow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "suit": "suit",
+  "@suit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "jacket": "jacket",
+  "@jacket": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dress": "dress",
+  "@dress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "heels": "heels",
+  "@heels": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shoes": "shoes",
+  "@shoes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "backpack": "backpack",
+  "@backpack": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "glasses": "glasses",
+  "@glasses": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hat": "hat",
+  "@hat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coat": "coat",
+  "@coat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "strawberry": "strawberry",
+  "@strawberry": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "apple": "apple",
+  "@apple": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cherry": "cherry",
+  "@cherry": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "grapes": "grapes",
+  "@grapes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "citrus": "citrus",
+  "@citrus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pear": "pear",
+  "@pear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "watermelon": "watermelon",
+  "@watermelon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mango": "mango",
+  "@mango": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "banana": "banana",
+  "@banana": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sister": "Sister",
+  "@sister": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brother": "Brother",
+  "@brother": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mother": "Mother",
+  "@mother": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "father": "Father",
+  "@father": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "friend": "Friend",
+  "@friend": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hi": "Hi",
+  "@hi": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "Hello",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "letUsLearn": "Let us learn",
+  "@letUsLearn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "letUsChat": "Let us chat",
+  "@letUsChat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ok": "OK",
+  "@ok": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendAMessage": "Send a message",
+  "@sendAMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exitq": "Exit?",
+  "@exitq": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youWon": "You Won",
+  "@youWon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tie": "Tie",
+  "@tie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youLoose": "You Loose",
+  "@youLoose": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "gameOver": "Game Over",
+  "@gameOver": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "waitingForTurn": "Waiting for Turn",
+  "@waitingForTurn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "vs": "V/S ",
+  "@vs": {
     "type": "text",
     "placeholders": {}
   }
