@@ -15,6 +15,7 @@ import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class SelectOpponentScreen extends StatefulWidget {
   final String gameName;
@@ -29,6 +30,7 @@ class SelectOpponentScreen extends StatefulWidget {
 }
 
 class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
+  GameAudio play=new GameAudio();
   List<User> _users;
   List<dynamic> _messages;
   List<User> _localUsers = [];
@@ -109,62 +111,59 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                    backgroundColor: color,
-                    // pinned: true,
-                    expandedHeight: orientation == Orientation.portrait
-                        ? mediaSize.height * .25
-                        : mediaSize.height * .5,
-                    flexibleSpace: new FlexibleSpaceBar(
-                      background: new Stack(children: <Widget>[
-                        new Container(
-                          decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                            image: new AssetImage(
-                                "assets/background_image/${widget.gameName}_big.png"),
-                            fit: BoxFit.fill,
-                          )),
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                            child: Center(
-                              child: new Hero(
-                                tag: 'assets/hoodie/${widget.gameName}.png',
-                                child: new Image.asset(
-                                  'assets/hoodie/${widget.gameName}.png',
-                                  scale: .4,
+                      backgroundColor: color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait
+                          ? mediaSize.height * .25
+                          : mediaSize.height * .5,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: new Stack(children: <Widget>[
+                          new Container(
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                              image: new AssetImage(
+                                  "assets/background_image/${widget.gameName}_big.png"),
+                              fit: BoxFit.fill,
+                            )),
+                          ),
+                          Container(
+                              padding: EdgeInsets.only(bottom: 20.0),
+                              child: Center(
+                                child: new Hero(
+                                  tag: 'assets/hoodie/${widget.gameName}.png',
+                                  child: new Image.asset(
+                                    'assets/hoodie/${widget.gameName}.png',
+                                    scale: .4,
+                                  ),
                                 ),
-                              ),
-                            ))
-                      ]),
-                    ),
-                    title: new Text(Loca.of(context).intl(widget.gameName)),
+                              ))
+                        ]),
+                      ),
+                      title: new Text(Loca.of(context).intl(widget.gameName)),
                       actions: <Widget>[
-                             Padding(
-                               padding: const EdgeInsets.all(1.0),
-                               child: GestureDetector(
-                                 
-                  onTap: (){  button3(context);
-                  print("valueme incresing");
-                  },
-                  
-                  child: Container(
-                      height: 60.0,
-                      width: 60.0,
-                      // margin: EdgeInsets.only(left: 190.0),
-                     decoration:  new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(40.0),
-                    // color: Colors.red
-                   
-                    
-                ),
-                    child: new Center(
-                      child: Image.asset('assets/videohelp.png'),
-                    ),
-                  ),
-                ),
-                             )
-                      ]
-                  ),
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              play.tap();
+                              button3(context);
+                              print("valueme incresing");
+                            },
+                            child: Container(
+                              height: 60.0,
+                              width: 60.0,
+                              // margin: EdgeInsets.only(left: 190.0),
+                              decoration: new BoxDecoration(
+                                borderRadius: new BorderRadius.circular(40.0),
+                                // color: Colors.red
+                              ),
+                              child: new Center(
+                                child: Image.asset('assets/videohelp.png'),
+                              ),
+                            ),
+                          ),
+                        )
+                      ]),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -242,6 +241,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   startGame(BuildContext context, User user) {
+    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Random random = Random();
     Navigator.of(context).push(MaterialPageRoute<Null>(
@@ -260,6 +260,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   goToMyTurn(BuildContext context, User user) {
+    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
     Navigator
@@ -292,6 +293,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
     return FriendItem(
       id: user.id,
+      name: user.name,
       imageUrl: user.image,
       color: user.color,
       replaceWithHoodie: false,
@@ -300,7 +302,8 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   void button3(BuildContext context) {
-     print("Button 1");
-  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new VideoApp()));
+    print("Button 1");
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new VideoApp()));
   }
 }

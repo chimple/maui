@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:maui/components/gameaudio.dart';
 
 // void main() => runApp(VideoApp());
 
@@ -11,6 +12,7 @@ class VideoApp extends StatefulWidget {
 }
 
 class _VideoAppState extends State<VideoApp> {
+  GameAudio play=new GameAudio();
   VideoPlayerController _controller;
   bool _isPlaying = false;
 
@@ -142,6 +144,7 @@ class _VideoAppState extends State<VideoApp> {
                   
                     child: GestureDetector(
                       onTap:(){  
+                        play.tap();
                         print("hello");
 _controller.pause();
                         Navigator.of(context).pop();

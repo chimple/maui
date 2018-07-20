@@ -10,6 +10,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -57,6 +58,7 @@ class GameCategoryData {
 }
 
 class _GameCategoryList extends State<GameCategoryList> {
+  GameAudio play=new GameAudio();
   static final List<Color> colorsCodes = [
     Color(0XFF48AECC),
     Color(0XFFE66796),
@@ -248,16 +250,34 @@ class _GameCategoryList extends State<GameCategoryList> {
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold)),
             ),
-            onTap: () => lessonId >
+             trailing: lessonId != null && lessonId >
                     AppStateContainer
                         .of(context)
                         .state
                         .loggedInUser
                         .currentLessonId
+                ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                  child: new Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                )
+                : new Text(''),
+            onTap: (){
+              play.tap();
+              lessonId != null &&
+                    lessonId >
+                        AppStateContainer
+                            .of(context)
+                            .state
+                            .loggedInUser
+                            .currentLessonId
                 ? null
                 : goToGame(context, widget.game, gameCategoryId,
                     widget.gameDisplay, widget.gameMode,
-                    otherUser: widget.otherUser),
+                    otherUser: widget.otherUser);},
           ),
         ));
   }
@@ -277,12 +297,34 @@ class _GameCategoryList extends State<GameCategoryList> {
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold)),
         )),
-        onTap: () => lessonId >
-                AppStateContainer.of(context).state.loggedInUser.currentLessonId
+         trailing: lessonId != null && lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
+                ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                  child: new Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                )
+                : new Text(''),
+        onTap: (){
+          play.tap();
+          lessonId != null &&
+                lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
             ? null
             : goToGame(context, widget.game, gameCategoryId, widget.gameDisplay,
                 widget.gameMode,
-                otherUser: widget.otherUser),
+                otherUser: widget.otherUser);},
       ),
     );
   }

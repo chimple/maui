@@ -23,7 +23,7 @@
             }
         },
         {
-            "name": "teddy bear",
+            "name": "teddy_bear",
             "data": {
                 "height": 340.0,
                 "width": 269.0,
@@ -59,7 +59,7 @@
             }
         },
         {
-            "name": "microwave oven",
+            "name": "microwave_oven",
             "data": {
                 "height": 264.0,
                 "width": 321.0,

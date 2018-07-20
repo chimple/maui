@@ -10,6 +10,8 @@ import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'tab_home.dart';
+import 'package:maui/components/gameaudio.dart';
+import 'package:maui/loca.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
+      GameAudio play=new GameAudio();
   List<User> _users;
   var user;
   dynamic decode;
@@ -101,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen>
                 ? null
                 : new AppBar(
                     backgroundColor: new Color(0xff4C5C9E),
-                    title: new Text('Create Account'),
+                    title: new Text(Loca.of(context).enterYourDetails),
                   ),
             body: _isLoading
                 ? new SizedBox(
@@ -169,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         style: BorderStyle.solid,
                                         width: 100.0,
                                         color: const Color(0xff4C5C9E))),
-                                hintText: 'Write Your Name...',
+                                hintText: Loca.of(context).writeYourName,
                               ),
                             ),
                             Shake(
@@ -212,6 +215,7 @@ class _LoginScreenState extends State<LoginScreen>
       var user = await new UserRepo().insertLocalUser(
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
+      play.tap();
       Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");

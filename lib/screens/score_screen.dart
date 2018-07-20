@@ -8,6 +8,9 @@ import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -36,6 +39,7 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
+      GameAudio play=new GameAudio();
   AnimationController controller, buttoncontroller, sparklesAnimationController;
 
   List<AnimationController> _controllers = new List<AnimationController>();
@@ -126,8 +130,6 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller.forward();
     sparklesAnimationController.forward(from: 0.0);
     _sparklesAngle = random.nextDouble() * (2 * pi);
-    writeLog(
-        'score,${widget.gameName},${widget.myUser},${widget.otherUser},${widget.myScore},${widget.otherScore},${widget.isGameOver}');
   }
 
   @override
@@ -543,6 +545,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  play.tap();
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
@@ -554,6 +557,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  play.tap();
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
