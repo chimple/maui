@@ -51,10 +51,10 @@ class FriendItem extends StatelessWidget {
                     child: _buildFriendItem(id, user))
                 : _buildFriendItem(id, user),
             new Text(
-              name,
-              textAlign: TextAlign.right,
-              textDirection: TextDirection.rtl,
-              overflow: TextOverflow.ellipsis,
+              name ?? '',
+              // textAlign: TextAlign.right,
+              // textDirection: TextDirection.rtl,
+              // overflow: TextOverflow.ellipsis,
               style: new TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,
