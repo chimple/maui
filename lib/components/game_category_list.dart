@@ -248,6 +248,21 @@ class _GameCategoryList extends State<GameCategoryList> {
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold)),
             ),
+             trailing: lessonId != null && lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
+                ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                  child: new Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                )
+                : new Text(''),
             onTap: () => lessonId != null &&
                     lessonId >
                         AppStateContainer
@@ -278,6 +293,21 @@ class _GameCategoryList extends State<GameCategoryList> {
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold)),
         )),
+         trailing: lessonId != null && lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
+                ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                  child: new Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                )
+                : new Text(''),
         onTap: () => lessonId != null &&
                 lessonId >
                     AppStateContainer

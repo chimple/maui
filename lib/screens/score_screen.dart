@@ -6,7 +6,10 @@ import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -125,8 +128,19 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller.forward();
     sparklesAnimationController.forward(from: 0.0);
     _sparklesAngle = random.nextDouble() * (2 * pi);
+    writeLog(
+        'score,${widget.gameName},${widget.myUser},${widget.otherUser},${widget.myScore},${widget.otherScore},${widget.isGameOver}');
+    changeCurrentId();
   }
-
+void changeCurrentId()async{
+  var loggedInUser = AppStateContainer.of(context).state.loggedInUser;
+  int curentId=loggedInUser.currentLessonId+1;
+  var user = await new UserRepo().insertLocalUser(
+      new User(image:loggedInUser.image,currentLessonId: curentId,name: loggedInUser.name));
+  AppStateContainer.of(context).setLoggedInUser(user);
+  final id= AppStateContainer.of(context).state.loggedInUser;
+  print("after change currentId ${id.currentLessonId}");
+}
   @override
   void dispose() {
     // TODO: implement dispose
