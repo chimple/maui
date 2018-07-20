@@ -57,8 +57,32 @@ flutter:
   assets:
     - assets/right.wav
     - assets/wrong.wav
+    
     - assets/tap.wav
     - assets/demo_video/video.mp4
+    - assets/demo_video/tutorial.mp4
+    - assets/demo_video/bingo.mp4
+    - assets/demo_video/abacus.mp4
+    - assets/demo_video/calculate_numbers.mp4
+    - assets/demo_video/casino.mp4
+    - assets/demo_video/connect_the_dots.mp4
+    - assets/demo_video/dice.mp4
+    - assets/demo_video/drawing.mp4
+    - assets/demo_video/fill_in_the_blanks.mp4
+    - assets/demo_video/fill_number.mp4
+    - assets/demo_video/guess.mp4
+    - assets/demo_video/identify.mp4
+    - assets/demo_video/match_the_following.mp4
+    - assets/demo_video/memory.mp4
+    - assets/demo_video/order_it.mp4
+    - assets/demo_video/quiz.mp4
+    - assets/demo_video/reflex.mp4
+    - assets/demo_video/spin_wheel.mp4
+    - assets/demo_video/tables.mp4
+    - assets/demo_video/tap_home.mp4
+    - assets/demo_video/tap_wrong.mp4
+    - assets/demo_video/true_or_false.mp4
+    - assets/demo_video/wordgrid.mp4
     - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
