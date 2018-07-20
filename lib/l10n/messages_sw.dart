@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dress" : MessageLookupByLibrary.simpleMessage("Gauni"),
     "duck" : MessageLookupByLibrary.simpleMessage("bata"),
     "eagle" : MessageLookupByLibrary.simpleMessage("tai"),
+    "enterYourDetails" : MessageLookupByLibrary.simpleMessage("Ingiza jina lako"),
     "exitq" : MessageLookupByLibrary.simpleMessage("Toka"),
     "face" : MessageLookupByLibrary.simpleMessage("uso"),
     "family" : MessageLookupByLibrary.simpleMessage("Familia"),
@@ -146,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sunflower" : MessageLookupByLibrary.simpleMessage("alizeti"),
     "swan" : MessageLookupByLibrary.simpleMessage("Bata maji"),
     "tables" : MessageLookupByLibrary.simpleMessage("Majedwali"),
+    "tapACamera" : MessageLookupByLibrary.simpleMessage("Bomba kamera"),
     "tap_home" : MessageLookupByLibrary.simpleMessage("Gusa Nyumbani"),
     "tap_wrong" : MessageLookupByLibrary.simpleMessage("Gusa isiyo sahihi"),
     "teddy_bear" : MessageLookupByLibrary.simpleMessage("Dubu"),
@@ -163,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "watch" : MessageLookupByLibrary.simpleMessage("Saa"),
     "watermelon" : MessageLookupByLibrary.simpleMessage("Tikiti maji"),
     "wordgrid" : MessageLookupByLibrary.simpleMessage("Mchezo wa kupanga Maneno"),
+    "writeYourName" : MessageLookupByLibrary.simpleMessage("Andika jina lako..."),
     "yellow" : MessageLookupByLibrary.simpleMessage("njano"),
     "youLoose" : MessageLookupByLibrary.simpleMessage("Umeshindwa"),
     "youWon" : MessageLookupByLibrary.simpleMessage("Umeshinda")

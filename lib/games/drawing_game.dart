@@ -69,12 +69,14 @@ class DrawScreen extends State<Drawing> {
   void initState() {
     super.initState();
     _initBoard();
+    
   }
 
   void _initBoard() async {
     // navVal=0;
     setState(() => _isLoading = true);
-    // print('gameData manuuuuuuuuuu : ${widget.gameConfig.gameData}');
+    
+    print('score data manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
       fromJsonMap(widget.gameConfig.gameData);
     } else {
@@ -444,9 +446,7 @@ class DrawScreen extends State<Drawing> {
                       new LimitedBox(
                         // flex: 2,
                         child: new Container(
-                            // image: assetsImage,
-                            // width: constraints.maxWidth * 0.3,
-                            // height: constraints.maxHeight * 0.3,
+                          padding: EdgeInsets.only(top: 3.0,left: 3.0),
                             child: UnitButton(
                               text: '$questionImg',
                               primary: true,

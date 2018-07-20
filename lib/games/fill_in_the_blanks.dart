@@ -249,7 +249,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             widthFactor:
                 constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
             heightFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.75,
+                constraints.maxHeight > constraints.maxWidth ? 0.6 : 0.75,
         child: new FlashCard(
             text: fruit,
             onChecked: () {

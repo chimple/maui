@@ -161,7 +161,7 @@ class MyFillnumberState extends State<Fillnumber> {
       vflag: vflag,
       code: code,
       onStart: () {
-        if (!start) {
+        if (!start &&text!=null) {
           setState(() {
             print('nikkkkkkkkkkkkkk');
             temp = index;
@@ -548,7 +548,7 @@ class MyFillnumberState extends State<Fillnumber> {
                           padding: EdgeInsets.all(buttonPadding),
                           child: new Center(
                             child: ssum==null?new Text("$nulstring"):
-                            new Text("$ssum",
+                            new Text(ssum,
                                 style: new TextStyle(fontSize: buttonConfig.fontSize /1.8)),
                           ),
                         ))),
