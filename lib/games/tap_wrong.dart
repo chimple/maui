@@ -9,6 +9,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class TapWrong extends StatefulWidget {
   Function onScore;
@@ -35,6 +36,7 @@ class TapWrong extends StatefulWidget {
 enum Statuses { right, wrong }
 
 class TapWrongState extends State<TapWrong> {
+  GameAudio play=new GameAudio();
   String _dispText = '';
   int num1;
   int numOFWrongElem;
@@ -183,6 +185,7 @@ class TapWrongState extends State<TapWrong> {
                   });
 
                   print('array 1 after     $arr1');
+                  play.right();
                   widget.onScore(2);
                   widget.onProgress(num1 / others.length);
                   if (numOFWrongElem == others.length) {

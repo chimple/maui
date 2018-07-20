@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/progress_circle.dart';
@@ -47,6 +48,9 @@ import 'package:flores/flores.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/log_repo.dart';
+import 'package:maui/repos/game_category_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 
 enum GameMode { timed, iterations }
 
@@ -265,6 +269,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       await NotifRepo()
           .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
     }
+    writeLog('game,${widget.gameName},${widget.gameConfig}');
   }
 
   @override
@@ -276,25 +281,98 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Widget alertDialog(BuildContext context) {
+    var colors = SingleGame.gameColors[widget.gameName];
+    return Center(
+        child: Material(
+      type: MaterialType.transparency,
+      child: new Container(
+          width: 350.0,
+          height: 200.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+          ),
+          child: new Container(
+              child: new Column(
+            children: <Widget>[
+              new Padding(
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              new Text(
+                'Exit?',
+                style: TextStyle(
+                    color: colors[1],
+                    fontStyle: FontStyle.normal,
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              new Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 40.0),
+                    width: 130.0,
+                    decoration: BoxDecoration(
+                      color: colors[0],
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xFF919191),
+                          spreadRadius: 1.0,
+                          offset: const Offset(0.0, 6.0),
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: IconButton(
+                          iconSize: 40.0,
+                          alignment: AlignmentDirectional.bottomStart,
+                          onPressed: () => Navigator.of(context).pop(false),
+                          icon: Icon(Icons.close, color: Colors.white)),
+                    ),
+                  ),
+                  new Padding(
+                    padding: EdgeInsets.only(right: 70.0),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 40.0),
+                    width: 130.0,
+                    decoration: BoxDecoration(
+                      color: colors[0],
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xFF919191),
+                          spreadRadius: 1.0,
+                          offset: const Offset(0.0, 6.0),
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: IconButton(
+                          iconSize: 40.0,
+                          alignment: AlignmentDirectional.bottomEnd,
+                          onPressed: () => Navigator
+                              .of(context)
+                              .popUntil(ModalRoute.withName('/tab')),
+                          icon: Icon(Icons.check, color: Colors.white)),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ))),
+    ));
+  }
+
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
-          builder: (context) => new AlertDialog(
-                title: new Text('Do you want to exit?'),
-                content: new Text('You will lose your progress'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: new Text('No'),
-                  ),
-                  new FlatButton(
-                    onPressed: () => Navigator
-                        .of(context)
-                        .popUntil(ModalRoute.withName('/tab')),
-                    child: new Text('Yes'),
-                  ),
-                ],
-              ),
+          builder: alertDialog,
         ) ??
         false;
   }
@@ -580,6 +658,21 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         otherScore: widget.gameConfig.otherScore,
         game: widget.gameName,
         playedAt: DateTime.now().millisecondsSinceEpoch));
+    writeLog(
+        'score,${widget.gameName},${widget.gameConfig.gameCategoryId},${widget.gameConfig.myUser.id},${widget.gameConfig.otherUser?.id},${widget.gameConfig.myScore},${widget.gameConfig.otherScore}');
+    var lessonId = await new GameCategoryRepo().getLessonIdByGameCategoryId(
+        widget.gameName, widget.gameConfig.gameCategoryId);
+    if (lessonId != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var numPlays = prefs.getInt('lessonId$lessonId') ?? 0;
+      if (++numPlays >= 3) {
+        AppStateContainer.of(context).state.loggedInUser.currentLessonId++;
+        await UserRepo()
+            .update(AppStateContainer.of(context).state.loggedInUser);
+      }
+      prefs.setInt('lessonId$lessonId', numPlays);
+    }
+
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {

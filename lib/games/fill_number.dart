@@ -10,6 +10,7 @@ import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Fillnumber extends StatefulWidget {
   Function onScore;
@@ -37,6 +38,7 @@ enum Status { Active, Visible, Disappear, Draggable, Dragtarget, First }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class MyFillnumberState extends State<Fillnumber> {
+  GameAudio play=new GameAudio();
   List<Offset> _points = [];
   var sum = 0,
       Ansum = 0,
@@ -285,6 +287,7 @@ class MyFillnumberState extends State<Fillnumber> {
               _pointssend.removeRange(0, _pointssend.length);
             });
             tempindex.removeRange(0, tempindex.length);
+            play.right();
             new Future.delayed(const Duration(milliseconds: 250), () {
               // widget.onScore(((40 - tries) ~/ totalgame));
               widget.onScore(5);
@@ -382,6 +385,7 @@ class MyFillnumberState extends State<Fillnumber> {
 
             _val2.removeRange(0, _val2.length);
           } else {
+            play.wrong();
              widget.onScore(-1);
             setState(() {
                

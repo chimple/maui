@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -32,6 +33,7 @@ class FillInTheBlanks extends StatefulWidget {
 }
 
 class FillInTheBlanksState extends State<FillInTheBlanks> {
+  GameAudio play=new GameAudio();
   bool _isLoading = true;
   var flag1 = 0;
   int code, dcode, dindex;
@@ -60,6 +62,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   void didUpdateWidget(FillInTheBlanks oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _correct.clear();
       _initFillBlanks();
     }
   }
@@ -147,10 +150,12 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
             } else {
               if (dropTargetData[index] == '_') {
                 dragcount++;
+                play.wrong();
                 widget.onScore(-1);
               }
             }
             if (progres == space) {
+              play.right();
               widget.onScore(4);
               new Future.delayed(const Duration(milliseconds: 400), () {
                 setState(() {

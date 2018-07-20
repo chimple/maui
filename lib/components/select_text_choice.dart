@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/loca.dart';
 
 class SelectTextChoice extends StatelessWidget {
   final OnUserPress onUserPress;
@@ -13,7 +14,7 @@ class SelectTextChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> displayChoices = List.from(texts ?? ['Hi', 'Hello']);
+    List<String> displayChoices = List.from(texts ?? [Loca().hi, Loca().hello]);
     if (answer != null) {
       displayChoices.add(answer);
       displayChoices.shuffle();

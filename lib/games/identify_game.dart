@@ -5,6 +5,8 @@ import 'package:flutter/animation.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 Map _decoded;
 int _length = 0;
@@ -14,6 +16,7 @@ class IdentifyGame extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   int iteration;
+  GameConfig gameConfig;
   bool isRotated;
 
   IdentifyGame(
@@ -22,6 +25,7 @@ class IdentifyGame extends StatefulWidget {
       this.onProgress,
       this.onEnd,
       this.iteration,
+      this.gameConfig,
       this.isRotated = false})
       : super(key: key);
 
@@ -143,6 +147,7 @@ class _IdentifyGameState extends State<IdentifyGame>
       onScore: widget.onScore,
       onEnd: widget.onEnd,
       onProgress: widget.onProgress,
+      gameConfig: widget.gameConfig,
       render: _renderChoice,
       maxHeight: maxHeight,
       maxWidth: maxWidth,
@@ -244,6 +249,7 @@ class DragBox extends StatefulWidget {
   int cols;
   Function render;
   Function onScore;
+  GameConfig gameConfig;
   Function onEnd;
   Function onProgress;
   Orientation orientation;
@@ -252,6 +258,7 @@ class DragBox extends StatefulWidget {
       {this.onEnd,
       this.onProgress,
       this.onScore,
+      this.gameConfig,
       this.maxHeight,
       this.maxWidth,
       this.cols,
@@ -266,6 +273,7 @@ class DragBox extends StatefulWidget {
 }
 
 class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
+  GameAudio play=new GameAudio();
   AnimationController controller, shakeController;
   Animation<double> animation, shakeAnimation, noanimation;
 
@@ -277,6 +285,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
   int cols;
   Function render;
   Orientation orientation;
+  GameConfig gameConfig;
 
   // List<String> _buildPartsList() {
   //   List<String> partsName = [];
@@ -354,6 +363,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
     render = widget.render;
     cols = widget.cols;
     orientation = widget.orientation;
+    gameConfig = widget.gameConfig;
 
     toAnimateButton();
   }
@@ -419,11 +429,30 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
             headerSize = media.height - 4 * (maxHeight);
             print(orientation);
             if (orientation == Orientation.portrait) {
+              // if ((gameConfig.gameDisplay == GameDisplay.myHeadToHead || gameConfig.gameDisplay == GameDisplay.otherHeadToHead )) {
+              //   print(">>>>>inside the ORientation portrait function for checking how the game config working<<<<<<");
+              //   print(offset);
+              //   print(offset.dy + 40.0);
+              //   x1 = 130.0;
+              // } else {
+              // x1 = 90.0;
+              // y1 = 120.0;
+              // }
               h = ((9 * 3 * maxHeight * 3) / (40));
               w = ((4 * maxWidth) / 5);
               x1 = 90.0;
               y1 = 120.0;
             } else {
+              // if ((gameConfig.gameDisplay == GameDisplay.myHeadToHead || gameConfig.gameDisplay == GameDisplay.otherHeadToHead )) {
+              //   print(">>>>>inside the Orientation landscape function for checking how the game config working<<<<<<");
+              //   print(offset);
+              //   print(offset.dy + 40.0);
+              //   x1 = 140.0;
+              // y1 = 90.0;
+              // } else {
+              // x1 = 100.0;
+              // y1 = 90.0;
+              // }
               h = ((49 * 3 * maxHeight * 3) / (200));
               w = ((maxWidth) / 2);
               x1 = 100.0;
@@ -476,6 +505,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
               print(media.height);
               print(offset.dy);
               print(y1);
+              play.right();
               widget.onScore(1);
               widget.onProgress((1+(_decoded["number"] - _length))/_decoded["number"]);
               _length = _length - 1;
@@ -489,6 +519,7 @@ class DragBoxState extends State<DragBox> with TickerProviderStateMixin {
                 }
               });
             } else {
+              play.wrong();
               widget.onScore(-1);
               _flag = 1;
               toAnimateFunction();

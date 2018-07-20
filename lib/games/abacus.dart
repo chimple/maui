@@ -10,6 +10,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Abacus extends StatefulWidget {
   Function onScore;
@@ -34,6 +35,7 @@ class Abacus extends StatefulWidget {
 }
 
 class AbacusState extends State<Abacus> {
+  GameAudio play=new GameAudio();
   var quest = 0;
   var result = 0;
   var sum = 0;
@@ -292,6 +294,7 @@ class AbacusState extends State<Abacus> {
               quest = finalans;
               status[2] = 0;
               status[0] = 1;
+              play.right();
               widget.onScore(5);
               widget.onProgress(u++ / 2);
               if (result == finalans) {
