@@ -93,7 +93,7 @@ class _FlashCardState extends State<FlashCard> {
                         icon: new Icon(Icons.arrow_left),
                         onPressed: (){
                           play.tap();
-                          widget.onChecked;
+                          widget.onChecked();
                         },
                         iconSize: constraints.maxHeight * 0.2,
                         color: Colors.white),
@@ -128,7 +128,7 @@ class _FlashCardState extends State<FlashCard> {
                       icon: new Icon(Icons.arrow_right),
                       onPressed: (){
                         play.tap();
-                        widget.onChecked;
+                        widget.onChecked();
                       },
                       iconSize: constraints.maxHeight * 0.2,
                       color: Colors.white,
