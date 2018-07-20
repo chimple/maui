@@ -336,6 +336,9 @@ class WordgridState extends State<Wordgrid> {
             });
           } else {
             play.right();
+            if(((40 ~/ totalgame) - tries) <1){
+              widget.onScore(4);
+            }else
             widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;
