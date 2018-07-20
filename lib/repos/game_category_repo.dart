@@ -5,6 +5,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/db/dao/game_category_dao.dart';
 import 'package:maui/db/dao/lesson_dao.dart';
+import 'package:maui/db/entity/lesson.dart';
 
 class GameCategoryRepo {
   static final GameCategoryDao gameCategoryDao = new GameCategoryDao();
@@ -50,6 +51,16 @@ class GameCategoryRepo {
           .map((l) => new Tuple4(l.id, l.conceptId, l.title, l.id))
           .toList(growable: false);
     }
+  }
+
+  Future<int> getLessonIdByGameCategoryId(
+      String game, int gameCategoryId) async {
+    var lessonId = gameCategoryId;
+    if (mathGames.contains(game)) {
+      var gameCategory = await gameCategoryDao.getGameCategory(gameCategoryId);
+      lessonId = gameCategory?.lessonId;
+    }
+    return lessonId;
   }
 
   Future<GameCategory> getGameCategory(int gameCategoryId) async {

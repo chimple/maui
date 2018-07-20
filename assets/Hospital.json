@@ -5,7 +5,7 @@
     "number": 12,
     "parts": [
         {
-            "name": "x-ray",
+            "name": "x_ray",
             "data": {
                 "height": 120.032,
                 "width": 184.249,
@@ -14,7 +14,7 @@
             }
         },
         {
-            "name": "heart rate monitor",
+            "name": "heart_rate_monitor",
             "data": {
                 "height": 51.15,
                 "width": 85.672 ,
@@ -50,7 +50,7 @@
             }
         },
         {
-            "name": "wheel chair",
+            "name": "wheel_chair",
             "data": {
                 "height": 187.768,
                 "width": 145.747,
