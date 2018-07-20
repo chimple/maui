@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dress" : MessageLookupByLibrary.simpleMessage("dress"),
     "duck" : MessageLookupByLibrary.simpleMessage("duck"),
     "eagle" : MessageLookupByLibrary.simpleMessage("eagle"),
+    "enterYourDetails" : MessageLookupByLibrary.simpleMessage("Enter your details"),
     "exitq" : MessageLookupByLibrary.simpleMessage("Exit?"),
     "face" : MessageLookupByLibrary.simpleMessage("face"),
     "family" : MessageLookupByLibrary.simpleMessage("Family"),
@@ -146,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sunflower" : MessageLookupByLibrary.simpleMessage("sunflower"),
     "swan" : MessageLookupByLibrary.simpleMessage("swan"),
     "tables" : MessageLookupByLibrary.simpleMessage("Tables"),
+    "tapACamera" : MessageLookupByLibrary.simpleMessage("Tap a camera"),
     "tap_home" : MessageLookupByLibrary.simpleMessage("Tap Home"),
     "tap_wrong" : MessageLookupByLibrary.simpleMessage("Tap Wrong"),
     "teddy_bear" : MessageLookupByLibrary.simpleMessage("teddy bear"),
@@ -163,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "watch" : MessageLookupByLibrary.simpleMessage("watch"),
     "watermelon" : MessageLookupByLibrary.simpleMessage("watermelon"),
     "wordgrid" : MessageLookupByLibrary.simpleMessage("Word Grid"),
+    "writeYourName" : MessageLookupByLibrary.simpleMessage("Write your name..."),
     "yellow" : MessageLookupByLibrary.simpleMessage("yellow"),
     "youLoose" : MessageLookupByLibrary.simpleMessage("You Loose"),
     "youWon" : MessageLookupByLibrary.simpleMessage("You Won")

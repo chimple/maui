@@ -102,7 +102,7 @@ class GameListViewState extends State<GameListView> {
                           ])
                         : Badge(
                             value: '${_notifs[gameName]}',
-                            child: new Column(children: <Widget>[
+                            child:  new Column(children: <Widget>[
                               new Row(
                                 children: <Widget>[
                                   new Container(
