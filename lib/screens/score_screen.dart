@@ -6,7 +6,10 @@ import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:maui/components/gameaudio.dart';
 
 class ScoreScreen extends StatefulWidget {

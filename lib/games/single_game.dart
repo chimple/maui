@@ -52,6 +52,7 @@ import 'package:maui/repos/log_repo.dart';
 import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/components/gameaudio.dart';
+import 'package:maui/db/entity/lesson.dart';
 
 enum GameMode { timed, iterations }
 
@@ -672,7 +673,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     if (lessonId != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var numPlays = prefs.getInt('lessonId$lessonId') ?? 0;
-      if (++numPlays >= 3) {
+      if (++numPlays >= 3 &&
+          AppStateContainer.of(context).state.loggedInUser.currentLessonId <
+              Lesson.maxLessonId) {
         AppStateContainer.of(context).state.loggedInUser.currentLessonId++;
         await UserRepo()
             .update(AppStateContainer.of(context).state.loggedInUser);

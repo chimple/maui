@@ -19,6 +19,8 @@ CREATE TABLE $table (
   int seq;
   int hasOrder;
 
+  static const maxLessonId = 90;
+
   Lesson({this.id, this.title, this.conceptId, this.seq, this.hasOrder});
 
   Map<String, dynamic> toMap() {
