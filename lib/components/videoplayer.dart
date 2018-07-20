@@ -176,7 +176,6 @@ class _VideoAppState extends State<VideoApp> {
                         play.tap();
                         print("hello");
 
-                        _controller.dispose();
 _controller.pause();
                         Navigator.of(context).pop();
                       
