@@ -329,7 +329,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomStart,
                           onPressed: () => Navigator.of(context).pop(false),
-                          icon: Icon(Icons.thumb_down, color: Colors.white)),
+                          icon: Icon(Icons.close, color: Colors.white)),
                     ),
                   ),
                   new Padding(
@@ -356,7 +356,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           onPressed: () => Navigator
                               .of(context)
                               .popUntil(ModalRoute.withName('/tab')),
-                          icon: Icon(Icons.thumb_up, color: Colors.white)),
+                          icon: Icon(Icons.check, color: Colors.white)),
                     ),
                   ),
                 ],
