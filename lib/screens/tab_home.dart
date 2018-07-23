@@ -7,6 +7,7 @@ import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -31,6 +32,7 @@ class TabHomeState extends State<TabHome>
         color: const Color(0xff36C5E4)),
   ];
   MyTabs _myHandler;
+  var control = true;
   Widget _icon1 = new Container();
   Widget _icon2 = new Container();
   AnimationController _imgController, _imgController1, _bubbleController;
@@ -67,6 +69,14 @@ class TabHomeState extends State<TabHome>
   }
 
   void _tabSelected() {
+    if (control) {
+      control = false;
+      new Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          control = true;
+        });
+      });
+    }
     setState(() {
       _myHandler = _tabs[_controller.index];
       // _icon1 = new Image.asset(

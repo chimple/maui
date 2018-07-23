@@ -37,7 +37,6 @@ enum Status { Draggable, First, Dragtarget }
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class WordgridState extends State<Wordgrid> {
-  GameAudio play=new GameAudio();
   int _maxSize;
   int _otherSize;
   int totalgame = 2;
@@ -317,7 +316,6 @@ class WordgridState extends State<Wordgrid> {
             setState(() {
               for (var i = 0; i < _visibleflag.length; i++)
                 _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.Right : i;
-                play.wrong();
               widget.onScore(-4);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
@@ -335,11 +333,10 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
-            play.right();
-            if(((40 ~/ totalgame) - tries) <1){
+            if (((40 ~/ totalgame) - tries) < 1) {
               widget.onScore(4);
-            }else
-            widget.onScore((40 ~/ totalgame) - tries);
+            } else
+              widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;
             new Future.delayed(const Duration(milliseconds: 350), () {
@@ -491,16 +488,14 @@ class WordgridState extends State<Wordgrid> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else if(i==1){
+      } else if (i == 1) {
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
-      }
-      else{
-         x = x0 + d + maxWidth+(maxWidth/6);
+      } else {
+        x = x0 + d + maxWidth + (maxWidth / 6);
         x0 = x;
         y = y0;
-
       }
       offsets[i] = new Offset(x, y);
     }

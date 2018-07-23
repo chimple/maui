@@ -4,6 +4,7 @@ import 'package:maui/components/played_games_score.dart';
 import 'package:maui/components/videoplayer.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/login_screen.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -31,12 +32,13 @@ class ProfileDrawerState extends State<ProfileDrawer>
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
+    //  play.tap();
     return new Drawer(
       child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
             decoration: BoxDecoration(
-              color:  new Color(0xffF0557F),
+              color: new Color(0xffF0557F),
             ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
@@ -52,16 +54,14 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   child: new Container(
                     decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(100.0),
-                    
                     ),
                     child: new Center(
-                      child:Image.asset('assets/videohelp.png'),
+                      child: Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),
               )
             ],
-            
             currentAccountPicture: new Container(
                 child: new GestureDetector(
               child: Container(
@@ -100,8 +100,10 @@ class ProfileDrawerState extends State<ProfileDrawer>
 
   void button3(BuildContext context) {
     print("Button 1");
+    String tutorial = "tutorial";
+    final gamename = tutorial;
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp()));
+        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
   }
 }
 

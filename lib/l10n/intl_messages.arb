@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-07-19T18:33:55.014503",
+  "@@last_modified": "2018-07-20T15:58:24.905184",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -732,6 +732,21 @@
   },
   "vs": "V/S ",
   "@vs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapACamera": "Tap a camera",
+  "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterYourDetails": "Enter your details",
+  "@enterYourDetails": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "writeYourName": "Write your name...",
+  "@writeYourName": {
     "type": "text",
     "placeholders": {}
   }

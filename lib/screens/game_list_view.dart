@@ -5,6 +5,7 @@ import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:badge/badge.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class GameListView extends StatefulWidget {
   const GameListView({Key key}) : super(key: key);
@@ -48,13 +49,15 @@ class GameListViewState extends State<GameListView> {
       ),
       margin: EdgeInsets.all(size.width * .02),
       child: new InkWell(
-        onTap: () => Navigator
-                .of(context)
-                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return SelectOpponentScreen(
-                gameName: gameName,
-              );
-            })),
+        onTap: () {
+          Navigator
+              .of(context)
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return SelectOpponentScreen(
+              gameName: gameName,
+            );
+          }));
+        },
         key: new Key(gameName),
         child: new Stack(
           children: <Widget>[
@@ -153,7 +156,7 @@ class GameListViewState extends State<GameListView> {
             _buildButton(context, 'reflex', 'Reflex'),
             _buildButton(context, 'order_it', 'Order It'),
             _buildButton(context, 'memory', 'Memory'),
-            _buildButton(context, 'abacus', 'Abacus'),
+//            _buildButton(context, 'abacus', 'Abacus'),
             _buildButton(context, 'drawing', 'drawing'),
             _buildButton(context, 'fill_in_the_blanks', 'Fill In The Blanks'),
             _buildButton(context, 'calculate_numbers', 'Calculate'),

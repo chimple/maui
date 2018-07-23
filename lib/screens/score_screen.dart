@@ -2,12 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:maui/components/nima.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -57,6 +60,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   Random random;
   var currentAngle, sparklesWidget, firstAngle, sparkleRadius, sparklesOpacity;
   var keys = 0;
+  var _cumulativeIncrement = 0;
 
   @override
   void initState() {
@@ -126,8 +130,6 @@ class _ScoreScreenState extends State<ScoreScreen>
     controller.forward();
     sparklesAnimationController.forward(from: 0.0);
     _sparklesAngle = random.nextDouble() * (2 * pi);
-    writeLog(
-        'score,${widget.gameName},${widget.myUser},${widget.otherUser},${widget.myScore},${widget.otherScore},${widget.isGameOver}');
   }
 
   @override
@@ -197,6 +199,11 @@ class _ScoreScreenState extends State<ScoreScreen>
             new UserItem(user: otherUser),
             new Text('$otherScore')
           ]));
+    }
+    if (myScore < otherScore) {
+      _cumulativeIncrement -= 1;
+    } else if (myScore == otherScore || myScore > otherScore) {
+      _cumulativeIncrement += 1;
     }
 
     return WillPopScope(
@@ -289,11 +296,18 @@ class _ScoreScreenState extends State<ScoreScreen>
                 new ScaleTransition(
                   scale: _characterAnimation,
                   child: new Container(
-                    height: ht > wd ? ht * 0.15 : wd * 0.13,
-                    child: new Image(
-                      image: new AssetImage("assets/hoodie/$gameName.png"),
-                    ),
-                  ),
+                      height: ht > wd ? ht * 0.15 : wd * 0.13,
+                      child: Nima(
+                          name: widget.gameName,
+                          score: _cumulativeIncrement,
+                          tag: gameDisplay != GameDisplay.myHeadToHead
+                              ? 'assets/hoodie/${widget.gameName}.png'
+                              : 'other.png')
+//                    new Image(
+//                      image: new AssetImage("assets/hoodie/$gameName.png"),
+//                    ),
+
+                      ),
                 ),
 
                 new Row(
@@ -517,8 +531,10 @@ class _ScoreScreenState extends State<ScoreScreen>
                       borderRadius:
                           const BorderRadius.all(const Radius.circular(5.0)),
                       image: new DecorationImage(
-                        image: new AssetImage(
-                            "assets/background_gif/Win_loop.gif"),
+                        image: myScore > otherScore
+                            ? new AssetImage(
+                                "assets/background_gif/Win_loop.gif")
+                            : new AssetImage("other.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -543,6 +559,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  AppStateContainer
+                                      .of(context)
+                                      .play('_audiotap.mp3');
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
@@ -554,6 +573,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  AppStateContainer
+                                      .of(context)
+                                      .play('_audiotap.mp3');
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
