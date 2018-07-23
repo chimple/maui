@@ -220,7 +220,6 @@ class SingleGame extends StatefulWidget {
 }
 
 class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
- GameAudio play=new GameAudio();
   double _myProgress = 0.0;
   double _otherProgress = 0.0;
   int maxIterations = 2;
@@ -334,9 +333,10 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                       child: IconButton(
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomStart,
-                          onPressed: (){
-                            play.tap();
-                            Navigator.of(context).pop(false);},
+                          onPressed: () {
+                            AppStateContainer.of(context).play('_audiotap.mp3');
+                            Navigator.of(context).pop(false);
+                          },
                           icon: Icon(Icons.close, color: Colors.white)),
                     ),
                   ),
@@ -362,10 +362,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           iconSize: 40.0,
                           alignment: AlignmentDirectional.bottomEnd,
                           onPressed: () {
-                          play.tap();
-                          Navigator
-                              .of(context)
-                              .popUntil(ModalRoute.withName('/tab'));},
+                            AppStateContainer.of(context).play('_audiotap.mp3');
+                            Navigator
+                                .of(context)
+                                .popUntil(ModalRoute.withName('/tab'));
+                          },
                           icon: Icon(Icons.check, color: Colors.white)),
                     ),
                   ),
@@ -458,7 +459,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
-                                            play.tap();
+                                            AppStateContainer
+                                                .of(context)
+                                                .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
                                         ))

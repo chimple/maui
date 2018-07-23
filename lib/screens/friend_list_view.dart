@@ -20,7 +20,6 @@ class FriendListView extends StatefulWidget {
 }
 
 class _FriendListViewState extends State<FriendListView> {
-  GameAudio play = new GameAudio();
   bool _isLoading = false;
 
   @override
@@ -66,7 +65,6 @@ class _FriendListViewState extends State<FriendListView> {
               color: u.color,
               numNotifs: notif.numNotifs,
               onTap: () {
-                play.tap();
                 Navigator.of(context).push(MaterialPageRoute<Null>(
                     builder: (BuildContext context) => new ChatScreen(
                         myId: user.id, friend: u, friendImageUrl: u.image)));

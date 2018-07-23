@@ -11,7 +11,6 @@ import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:maui/components/gameaudio.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -40,7 +39,6 @@ class ScoreScreen extends StatefulWidget {
 
 class _ScoreScreenState extends State<ScoreScreen>
     with TickerProviderStateMixin {
-      GameAudio play=new GameAudio();
   AnimationController controller, buttoncontroller, sparklesAnimationController;
 
   List<AnimationController> _controllers = new List<AnimationController>();
@@ -202,10 +200,9 @@ class _ScoreScreenState extends State<ScoreScreen>
             new Text('$otherScore')
           ]));
     }
-    if(myScore< otherScore){
+    if (myScore < otherScore) {
       _cumulativeIncrement -= 1;
-    }else if(myScore == otherScore || myScore > otherScore){
-
+    } else if (myScore == otherScore || myScore > otherScore) {
       _cumulativeIncrement += 1;
     }
 
@@ -299,18 +296,18 @@ class _ScoreScreenState extends State<ScoreScreen>
                 new ScaleTransition(
                   scale: _characterAnimation,
                   child: new Container(
-                    height: ht > wd ? ht * 0.15 : wd * 0.13,
-                    child: Nima(
-                        name: widget.gameName,
-                        score: _cumulativeIncrement,
-                        tag: gameDisplay != GameDisplay.myHeadToHead
-                            ? 'assets/hoodie/${widget.gameName}.png'
-                            : 'other.png')
+                      height: ht > wd ? ht * 0.15 : wd * 0.13,
+                      child: Nima(
+                          name: widget.gameName,
+                          score: _cumulativeIncrement,
+                          tag: gameDisplay != GameDisplay.myHeadToHead
+                              ? 'assets/hoodie/${widget.gameName}.png'
+                              : 'other.png')
 //                    new Image(
 //                      image: new AssetImage("assets/hoodie/$gameName.png"),
 //                    ),
 
-                  ),
+                      ),
                 ),
 
                 new Row(
@@ -530,17 +527,17 @@ class _ScoreScreenState extends State<ScoreScreen>
                 new Container(
                     height: ht * .2,
                     decoration: new BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
-                  image: new DecorationImage(
-
-                    image:myScore > otherScore ? new AssetImage(
-                        "assets/background_gif/Win_loop.gif"): new AssetImage(
-                        "other.png"),
-                    fit: BoxFit.cover,
-
-                  ),
-                ),
+                      color: Colors.transparent,
+                      borderRadius:
+                          const BorderRadius.all(const Radius.circular(5.0)),
+                      image: new DecorationImage(
+                        image: myScore > otherScore
+                            ? new AssetImage(
+                                "assets/background_gif/Win_loop.gif")
+                            : new AssetImage("other.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     child: new Padding(
                         padding: new EdgeInsets.only(right: 20.0),
                         child: new Stack(
@@ -562,7 +559,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
-                                  play.tap();
+                                  AppStateContainer
+                                      .of(context)
+                                      .play('_audiotap.mp3');
                                   if (flag == true) {
                                     Navigator
                                         .of(context)
@@ -574,7 +573,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
-                                  play.tap();
+                                  AppStateContainer
+                                      .of(context)
+                                      .play('_audiotap.mp3');
                                   if (flag == true) {
                                     Navigator
                                         .of(context)

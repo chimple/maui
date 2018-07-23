@@ -21,7 +21,6 @@ class TabHome extends StatefulWidget {
 
 class TabHomeState extends State<TabHome>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-      GameAudio play=new GameAudio();
   final List<MyTabs> _tabs = [
     new MyTabs(
         img1: "assets/chatBig.png",
@@ -33,7 +32,7 @@ class TabHomeState extends State<TabHome>
         color: const Color(0xff36C5E4)),
   ];
   MyTabs _myHandler;
-  var control=true;
+  var control = true;
   Widget _icon1 = new Container();
   Widget _icon2 = new Container();
   AnimationController _imgController, _imgController1, _bubbleController;
@@ -70,17 +69,15 @@ class TabHomeState extends State<TabHome>
   }
 
   void _tabSelected() {
- if(control){
-   play.tap();
-   control=false;
-  new Future.delayed(const Duration(milliseconds: 500), () {
-              setState(() {
-               control = true;
-              });
-            });
- }
+    if (control) {
+      control = false;
+      new Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          control = true;
+        });
+      });
+    }
     setState(() {
-        
       _myHandler = _tabs[_controller.index];
       // _icon1 = new Image.asset(
       //                       '${_myHandler.img1}',
@@ -92,7 +89,6 @@ class TabHomeState extends State<TabHome>
       //                     );
 
       if (_scrollcontroller.offset == 0.0) {
-        
         // _imgController1.forward();
         // _imgController.reverse();
 
@@ -103,7 +99,6 @@ class TabHomeState extends State<TabHome>
 
         _icon2 = new Container();
       } else {
-        
         //         _imgController1.reverse();
         // _imgController.forward();
         _icon2 = new Image.asset(
@@ -114,7 +109,6 @@ class TabHomeState extends State<TabHome>
         _icon1 = new Container();
       }
     });
-
   }
 
   void _scrolling() {

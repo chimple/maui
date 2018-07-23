@@ -37,7 +37,6 @@ class Reflex extends StatefulWidget {
 }
 
 class ReflexState extends State<Reflex> with TickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   int _size = 4;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -147,7 +146,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
                       : null;
               _currentIndex++;
             });
-            play.right();
+            AppStateContainer.of(context).play('_audioright.mp3');
             widget.onScore(1);
             widget.onProgress(_currentIndex / _allLetters.length);
             new Future.delayed(const Duration(milliseconds: 250), () {
@@ -162,7 +161,7 @@ class ReflexState extends State<Reflex> with TickerProviderStateMixin {
               });
             }
           } else {
-            play.wrong();
+            AppStateContainer.of(context).play('_audiowrong.mp3');
             widget.onScore(-1);
           }
         });
