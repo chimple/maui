@@ -36,7 +36,6 @@ class TapWrong extends StatefulWidget {
 enum Statuses { right, wrong }
 
 class TapWrongState extends State<TapWrong> {
-  GameAudio play=new GameAudio();
   String _dispText = '';
   int num1;
   int numOFWrongElem;
@@ -185,7 +184,6 @@ class TapWrongState extends State<TapWrong> {
                   });
 
                   print('array 1 after     $arr1');
-                  play.right();
                   widget.onScore(2);
                   widget.onProgress(num1 / others.length);
                   if (numOFWrongElem == others.length) {
@@ -359,7 +357,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new Shake(
             animation: widget.status == Statuses.wrong ? animation1 : animation,
             child: new UnitButton(
-              onPress:  widget.status == Statuses.wrong ? (){}:widget.onPress ,
+              onPress: widget.status == Statuses.wrong ? () {} : widget.onPress,
               text: widget.text,
               unitMode: UnitMode.text,
             )));

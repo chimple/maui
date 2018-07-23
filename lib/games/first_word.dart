@@ -31,7 +31,6 @@ class FirstWord extends StatefulWidget {
 enum Statuses { right, wrong }
 
 class FirstWordState extends State<FirstWord> {
-  GameAudio play=new GameAudio();
   final TextEditingController _textController = new TextEditingController();
   Tuple2<List<String>, String> data;
   String _dispText = '';
@@ -50,12 +49,12 @@ class FirstWordState extends State<FirstWord> {
   }
 
   void _initBoard() async {
-        print("hello data is not comming here");
+    print("hello data is not comming here");
     _dispText1 = '';
     _category = '';
     _catList = [];
     setState(() => _isLoading = true);
-   data = await fetchFirstWordData(widget.gameConfig.gameCategoryId);
+    data = await fetchFirstWordData(widget.gameConfig.gameCategoryId);
     print('nikkk   ${data.item1}   ${data.item2}');
     _category = data.item2;
     _catList = data.item1;
@@ -69,7 +68,6 @@ class FirstWordState extends State<FirstWord> {
     if (text.toLowerCase() == randomWord) {
       _dispText1 = 'CORRECT';
       _textController.clear();
-      play.right();
       widget.onScore(5);
       new Future.delayed(const Duration(milliseconds: 500), () {
         setState(() {
@@ -93,7 +91,7 @@ class FirstWordState extends State<FirstWord> {
 
   @override
   Widget build(BuildContext context) {
-     if (_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -104,7 +102,7 @@ class FirstWordState extends State<FirstWord> {
     print('width      ${size.width}');
     int j = 0;
     int i = 0;
-   
+
     return new Column(children: <Widget>[
       new Container(
           padding: new EdgeInsets.all(size.width / 10),

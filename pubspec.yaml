@@ -57,8 +57,32 @@ flutter:
   assets:
     - assets/right.wav
     - assets/wrong.wav
+    
     - assets/tap.wav
     - assets/demo_video/video.mp4
+    - assets/demo_video/tutorial.mp4
+    - assets/demo_video/bingo.mp4
+    - assets/demo_video/abacus.mp4
+    - assets/demo_video/calculate_numbers.mp4
+    - assets/demo_video/casino.mp4
+    - assets/demo_video/connect_the_dots.mp4
+    - assets/demo_video/dice.mp4
+    - assets/demo_video/drawing.mp4
+    - assets/demo_video/fill_in_the_blanks.mp4
+    - assets/demo_video/fill_number.mp4
+    - assets/demo_video/guess.mp4
+    - assets/demo_video/identify.mp4
+    - assets/demo_video/match_the_following.mp4
+    - assets/demo_video/memory.mp4
+    - assets/demo_video/order_it.mp4
+    - assets/demo_video/quiz.mp4
+    - assets/demo_video/reflex.mp4
+    - assets/demo_video/spin_wheel.mp4
+    - assets/demo_video/tables.mp4
+    - assets/demo_video/tap_home.mp4
+    - assets/demo_video/tap_wrong.mp4
+    - assets/demo_video/true_or_false.mp4
+    - assets/demo_video/wordgrid.mp4
     - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
@@ -2078,22 +2102,23 @@ flutter:
     - assets/stickers/carpie/2.png
     - assets/stickers/carpie/3.png
     - assets/stickers/carpie/1.png
-    - assets/stickers/emoguy/angry.png
-    - assets/stickers/emoguy/cold.png
-    - assets/stickers/emoguy/cry.png
     - assets/stickers/emoguy/happy.png
-    - assets/stickers/emoguy/irritated.png
-    - assets/stickers/emoguy/laughing.png
-    - assets/stickers/emoguy/love.png
-    - assets/stickers/emoguy/playing.png
-    - assets/stickers/emoguy/relaxed.png
-    - assets/stickers/emoguy/sad.png
-    - assets/stickers/emoguy/scared.png
-    - assets/stickers/emoguy/sleeping.png
-    - assets/stickers/emoguy/thumbsdown.png
-    - assets/stickers/emoguy/thumbsup.png
-    - assets/stickers/emoguy/workout.png
-    - assets/stickers/emoguy/yummy.png
+    - assets/stickers/emoguy/angry.gif
+    - assets/stickers/emoguy/cold.gif
+    - assets/stickers/emoguy/cry.gif
+    - assets/stickers/emoguy/happy.gif
+    - assets/stickers/emoguy/irritated.gif
+    - assets/stickers/emoguy/laughing.gif
+    - assets/stickers/emoguy/love.gif
+    - assets/stickers/emoguy/playing.gif
+    - assets/stickers/emoguy/relaxed.gif
+    - assets/stickers/emoguy/sad.gif
+    - assets/stickers/emoguy/scared.gif
+    - assets/stickers/emoguy/sleeping.gif
+    - assets/stickers/emoguy/thumbsdown.gif
+    - assets/stickers/emoguy/thumbup.gif
+    - assets/stickers/emoguy/workingout.gif
+    - assets/stickers/emoguy/yummy.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

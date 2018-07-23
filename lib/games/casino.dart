@@ -36,7 +36,6 @@ class Casino extends StatefulWidget {
 }
 
 class _CasinoState extends State<Casino> {
-  GameAudio play=new GameAudio();
   int _selectedItemIndex;
   List<List<String>> data;
 
@@ -175,7 +174,6 @@ class _CasinoState extends State<Casino> {
           print("count = $count");
           if (const IterableEquality().equals(finalList, finalGivenWordList) &&
               count >= givenWordList.length) {
-                play.right();
             new Future.delayed(const Duration(milliseconds: 1000), () {
               widget.onScore(5);
               widget.onProgress(1.0);
