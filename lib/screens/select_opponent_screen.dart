@@ -30,7 +30,6 @@ class SelectOpponentScreen extends StatefulWidget {
 }
 
 class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
-  GameAudio play=new GameAudio();
   List<User> _users;
   List<dynamic> _messages;
   List<User> _localUsers = [];
@@ -99,7 +98,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
     final thirdColor = _colors != null ? _colors[2] : Colors.amber;
-    final gamename=widget.gameName;
+    final gamename = widget.gameName;
     return Scaffold(
         body: (_isLoading)
             ? new Center(
@@ -133,7 +132,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                                   tag: 'assets/hoodie/${widget.gameName}.png',
                                   child: new Image.asset(
                                     'assets/hoodie/${widget.gameName}.png',
-                                    
                                     scale: .4,
                                   ),
                                 ),
@@ -146,8 +144,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           padding: const EdgeInsets.all(1.0),
                           child: GestureDetector(
                             onTap: () {
-                              play.tap();
-                              button3(context,gamename);
+                              button3(context, gamename);
                               print("valueme incresing");
                             },
                             child: Container(
@@ -242,7 +239,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   startGame(BuildContext context, User user) {
-    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Random random = Random();
     Navigator.of(context).push(MaterialPageRoute<Null>(
@@ -261,7 +257,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   goToMyTurn(BuildContext context, User user) {
-    play.tap();
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
     Navigator
@@ -305,6 +300,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   void button3(BuildContext context, String gamename) {
     print("Button 1");
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp(gamename:gamename)));
+        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
   }
 }

@@ -24,7 +24,7 @@ class SecondScreen extends StatefulWidget {
   bool isRotated;
 
   SecondScreen(
-    this.ans,
+      this.ans,
       this.navVal,
       this.choice,
       this.jsonVal,
@@ -41,7 +41,6 @@ class SecondScreen extends StatefulWidget {
 }
 
 class OptionState extends State<SecondScreen> {
-   GameAudio play=new GameAudio();
   bool _isLoading = true;
   List choice;
   int _size = 2;
@@ -119,7 +118,6 @@ class OptionState extends State<SecondScreen> {
           if (text == widget.ans) {
             print("hiii manuu");
             print("hello rhis on end we are calling");
-            play.right();
             widget.onScore(10);
             widget.onProgress(1.0);
             setState(() {
@@ -127,7 +125,6 @@ class OptionState extends State<SecondScreen> {
               widget.navVal = 0;
             });
           } else {
-            play.wrong();
             widget.onScore(0);
             widget.onEnd(toJsonMap(), false);
           }
@@ -153,11 +150,11 @@ class OptionState extends State<SecondScreen> {
           ? _ans.fold(1,
               (prev, element) => element.length > prev ? element.length : prev)
           : 1);
-          if(maxChars == 1){
-            maxCharLength = 3;
-          } else{
-            maxCharLength = maxChars;
-          }
+      if (maxChars == 1) {
+        maxCharLength = 3;
+      } else {
+        maxCharLength = maxChars;
+      }
       var sizeOrientation =
           orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
