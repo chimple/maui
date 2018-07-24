@@ -10,6 +10,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Wordgrid extends StatefulWidget {
   Function onScore;
@@ -332,7 +333,10 @@ class WordgridState extends State<Wordgrid> {
               });
             });
           } else {
-            widget.onScore((40 ~/ totalgame) - tries);
+            if (((40 ~/ totalgame) - tries) < 1) {
+              widget.onScore(4);
+            } else
+              widget.onScore((40 ~/ totalgame) - tries);
             widget.onProgress(1.0);
             endflag = 1;
             new Future.delayed(const Duration(milliseconds: 350), () {
@@ -484,16 +488,14 @@ class WordgridState extends State<Wordgrid> {
       if (i == 0) {
         x = x0;
         y = y0;
-      } else if(i==1){
+      } else if (i == 1) {
         x = x0 + d + maxWidth;
         x0 = x;
         y = y0;
-      }
-      else{
-         x = x0 + d + maxWidth+(maxWidth/6);
+      } else {
+        x = x0 + d + maxWidth + (maxWidth / 6);
         x0 = x;
         y = y0;
-
       }
       offsets[i] = new Offset(x, y);
     }

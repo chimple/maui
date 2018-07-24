@@ -10,6 +10,8 @@ import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'tab_home.dart';
+import 'package:maui/components/gameaudio.dart';
+import 'package:maui/loca.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -31,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
+    print('LoginScreen: initState');
     _isLoading = true;
 
     controller = new AnimationController(
@@ -45,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen>
     final userId = prefs.getString('userId');
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
-      AppStateContainer.of(context).setLoggedInUser(user);
+      await AppStateContainer.of(context).setLoggedInUser(user);
       Navigator.of(context).pushReplacementNamed('/tab');
     }
     var users = await UserRepo().getLocalUsers();
@@ -100,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen>
                 ? null
                 : new AppBar(
                     backgroundColor: new Color(0xff4C5C9E),
-                    title: new Text('Create Account'),
+                    title: new Text(Loca.of(context).enterYourDetails),
                   ),
             body: _isLoading
                 ? new SizedBox(
@@ -168,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         style: BorderStyle.solid,
                                         width: 100.0,
                                         color: const Color(0xff4C5C9E))),
-                                hintText: 'Write Your Name...',
+                                hintText: Loca.of(context).writeYourName,
                               ),
                             ),
                             Shake(

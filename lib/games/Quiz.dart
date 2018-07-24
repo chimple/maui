@@ -10,6 +10,7 @@ import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Quiz extends StatefulWidget {
   Function onScore;

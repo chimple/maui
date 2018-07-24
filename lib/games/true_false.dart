@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class TrueFalseGame extends StatefulWidget {
   Function onScore;
@@ -94,7 +95,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
                 _statuses[index] = Status.Active;
               });
             });
-
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);

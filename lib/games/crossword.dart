@@ -9,6 +9,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Crossword extends StatefulWidget {
   Function onScore;

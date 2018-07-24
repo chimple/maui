@@ -15,6 +15,7 @@ import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
 import 'package:maui/components/unit_button.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
+import 'package:maui/components/gameaudio.dart';
 
 class SpinWheel extends StatefulWidget {
   Function onScore;
@@ -537,7 +538,9 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         angleDiff = 0.0;
         controller.stop();
       });
-      if (gameEndFlag) widget.onScore(-1);
+      if (gameEndFlag) {
+        widget.onScore(-1);
+      }
     });
   }
 

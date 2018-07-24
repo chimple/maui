@@ -68,7 +68,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   Tuple4<int, String, int, int> _data;
   bool _isLoading = true;
   String _options;
-  bool _control=true;
+  bool _control = true;
   int _scoreCount = 0;
   List<int> _num1List = [];
   List<int> _num2List = [];
@@ -357,276 +357,299 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         text: text,
         height: _height,
         width: _width,
-        onPress:!_control?(){print('preseddd 9090');}:() {
-          switch (_operator) {
-            case '+':
-              if (_j1 > 0) {
-                // print("coming to the double digit..");
-                // print('initial _i value... $_i');
-                // print('initial j value... $_j1');
-                // print('_num1List first digit....${_num1List[_i]}');
-                // print('_num2List first digit....${_num2List[_i]}');
-                setState(() {
-                  _outputList[_i] =
-                      _removeZero(int.parse(_addText(text, _outputList[_i])))
-                          .toString();
-                  _outputList[_i] = _removeText(text, _outputList[_i]);
-                  _flag[_i] = _rigltClick(text, _outputList[_i],
-                      (_num1List[_i] + _num2List[_i] + cf[_i]));
-                //  print('printing flag value....${_flag[_i]}');
-                });
-                // print('first output....${_outputList[_i]}');
-                // print('complete list...${_outputList}');
-                if (text == '✔' ) {
-                  print('hloo nikk pp');
-                  if (_rigltClick(text, _outputList[_i],
-                          (_num1List[_i] + _num2List[_i] + cf[_i])) ==
-                      true) {
-                    setState(() {
-                      _shake[_i] = true;
-                      _control=true;
-                      _carry[_i] = 1;
-                      _s[_i] = true;
-                    });
-                    if (_outputList[_i].length > 1) {
+        onPress: !_control
+            ? () {
+                print('preseddd 9090');
+              }
+            : () {
+                switch (_operator) {
+                  case '+':
+                    if (_j1 > 0) {
+                      // print("coming to the double digit..");
+                      // print('initial _i value... $_i');
+                      // print('initial j value... $_j1');
+                      // print('_num1List first digit....${_num1List[_i]}');
+                      // print('_num2List first digit....${_num2List[_i]}');
                       setState(() {
-                        _outputList[_i] =
-                            (int.parse(_outputList[_i]) % 10).toString();
-                        cf[_i + 1] = 1;
-                    //    print(
-                       //     'printing _outputList+1 value ....$_outputList[_i+1]');
-                        _preValue = _outputList[_i] + _preValue;
+                        _outputList[_i] = _removeZero(
+                                int.parse(_addText(text, _outputList[_i])))
+                            .toString();
+                        _outputList[_i] = _removeText(text, _outputList[_i]);
+                        _flag[_i] = _rigltClick(text, _outputList[_i],
+                            (_num1List[_i] + _num2List[_i] + cf[_i]));
+                        //  print('printing flag value....${_flag[_i]}');
                       });
-                    } else {
-                      setState(() {
-                        _preValue = _outputList[_i] + _preValue;
-                      });
-                    }
-                  }
-                  if (_carry[_i] == 1) {
-                    setState(() {
-                  //    print('printing _i increment....');
-                      _i++;
-                      _j1--;
-                      new Future.delayed(const Duration(milliseconds: 100), () {
-                        setState(() {
-                          _s[_i - 1] = false;
-                        });
-                      });
-                    });
-                  } else {
-                    if (_score > 0) widget.onScore(-1);
+                      // print('first output....${_outputList[_i]}');
+                      // print('complete list...${_outputList}');
+                      if (text == '✔') {
+                        print('hloo nikk pp');
+                        if (_rigltClick(text, _outputList[_i],
+                                (_num1List[_i] + _num2List[_i] + cf[_i])) ==
+                            true) {
+                          setState(() {
+                            _shake[_i] = true;
+                            _control = true;
+                            _carry[_i] = 1;
+                            _s[_i] = true;
+                          });
+                          if (_outputList[_i].length > 1) {
+                            setState(() {
+                              _outputList[_i] =
+                                  (int.parse(_outputList[_i]) % 10).toString();
+                              cf[_i + 1] = 1;
+                              //    print(
+                              //     'printing _outputList+1 value ....$_outputList[_i+1]');
+                              _preValue = _outputList[_i] + _preValue;
+                            });
+                          } else {
+                            setState(() {
+                              _preValue = _outputList[_i] + _preValue;
+                            });
+                          }
+                        }
+                        if (_carry[_i] == 1) {
+                          setState(() {
+                            //    print('printing _i increment....');
+                            _i++;
+                            _j1--;
+                            new Future.delayed(
+                                const Duration(milliseconds: 100), () {
+                              setState(() {
+                                _s[_i - 1] = false;
+                              });
+                            });
+                          });
+                        } else {
+                          if (_score > 0) {
+                            widget.onScore(-1);
+                          }
 
-                    setState(() {
-                      _score = _score > 0 ? _score - 1 : _score;
-                      _shake[_i] = false;
-                      _control=false;
-                      _wrong = _wrong + 1;
-                    });
-                    new Future.delayed(const Duration(milliseconds: 1000), () {
-                      setState(() {
-                        _shake[_i] = true;
-                        _control=true;
-                        _outputList[_i] = ' ';
-                      });
-                    });
-                  }
-                }
-                if ((_options == 'singleDigit' && _wrong == 4) ||
-                    _options == 'doubleDigit' && _wrong == 5 ||
-                    _options == 'tripleDigit' && _wrong == 6) {
-                  setState(() {
-                    _isShowingFlashCard = true;
-                    _wrong = 0;
-                  });
-                }
-                // print('printing final value....$_preValue');
-                // print(' at end _i value $_i');
-                // print(' at end j value $_j1');
-              }
-              if ((cf[calCount(_result) - 1] == 1 &&
-                      _options == 'singleDigit') ||
-                  (cf[calCount(_result) - 1] == 1 &&
-                      _options == 'tripleDigit' &&
-                      _outputList.length == calCount(_result) &&
-                      (_num1digit3 + _num2digit3 + 1) >= 10) ||
-                  (cf[calCount(_result) - 1] == 1 &&
-                      _options == 'doubleDigit' &&
-                      (_num1digit2 + _num2digit2 + 1) >= 10)) {
-                // print(
-                //     "coming to check final carry is there or not...$_options");
-                setState(() {
-                //  print('printing _i value in _carryFlag function...$_i');
-                  _outputList[_i] = '1';
-                  cf[calCount(_result) - 1] = 0;
-               //   print('printing output list...$_outputList');
-                  _preValue = _outputList[_i] + _preValue;
-                  _flag[_i] = true;
-                  _s[_i] = true;
-                });
-                new Future.delayed(const Duration(milliseconds: 100), () {
-                  setState(() {
-                    _s[_i] = false;
-                  });
-                });
-              }
-              _final(text, _preValue);
-              break;
-            case '-':
-              if (_j1 > 0 && _carry[_i] == 0) {
-                setState(() {
-                  _outputList[_i] =
-                      _removeZero(int.parse(_addText(text, _outputList[_i])))
-                          .toString();
-                  _outputList[_i] = _removeText(text, _outputList[_i]);
-                });
-                if (text == '✔') {
-                  if (_num1List[_i] > _num2List[_i] ||
-                      _num1List[_i] == _num2List[_i]) {
-                    if (_rigltClick(text, _outputList[_i],
-                            (_num1List[_i] - _num2List[_i] + cf[_i])) ==
-                        true) {
-                      setState(() {
-                        _flag[_i] = _rigltClick(text, _outputList[_i],
-                            (_num1List[_i] - _num2List[_i] + cf[_i]));
-                        _shake[_i] = true;
-                        _control=true;
-                        _carry[_i] = 1;
-                        _preValue = _outputList[_i] + _preValue;
-                        _s[_i] = true;
-                      });
-                    }
-                  } else {
-                    setState(() {
-                      _barrowFlag[_i] = true;
-                    });
-                    if (_rigltClick(text, _outputList[_i],
-                            ((_num1List[_i] + 10) - _num2List[_i] + cf[_i])) ==
-                        true) {
-                      setState(() {
-                        _flag[_i] = _rigltClick(text, _outputList[_i],
-                            ((_num1List[_i] + 10) - _num2List[_i] + cf[_i]));
-                        _shake[_i] = true;
-                        _control=true;
-                        _carry[_i] = 1;
-                        cf[_i + 1] = -1;
-                        _s[_i] = true;
-                        _preValue = _outputList[_i] + _preValue;
-                      });
-                    } else {
-                      setState(() {
-                        _numbershake[_i] = false;
-                        _shake[_i] = false;
-                        _control=false;
-                      });
-                      new Future.delayed(const Duration(milliseconds: 1000),
-                          () {
+                          setState(() {
+                            _score = _score > 0 ? _score - 1 : _score;
+                            _shake[_i] = false;
+                            _control = false;
+                            _wrong = _wrong + 1;
+                          });
+                          new Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            setState(() {
+                              _shake[_i] = true;
+                              _control = true;
+                              _outputList[_i] = ' ';
+                            });
+                          });
+                        }
+                      }
+                      if ((_options == 'singleDigit' && _wrong == 4) ||
+                          _options == 'doubleDigit' && _wrong == 5 ||
+                          _options == 'tripleDigit' && _wrong == 6) {
                         setState(() {
-                          _numbershake[_i] = true;
-                          _shake[_i] = true;
-                          _control=true;
+                          _isShowingFlashCard = true;
+                          _wrong = 0;
                         });
-                      });
+                      }
+                      // print('printing final value....$_preValue');
+                      // print(' at end _i value $_i');
+                      // print(' at end j value $_j1');
                     }
-                  }
-                  if (_flag[_i] == true) {
-                    setState(() {
-                      _i++;
-                      _j1--;
-                      print('printing j value after decrement...$_j1');
+                    if ((cf[calCount(_result) - 1] == 1 &&
+                            _options == 'singleDigit') ||
+                        (cf[calCount(_result) - 1] == 1 &&
+                            _options == 'tripleDigit' &&
+                            _outputList.length == calCount(_result) &&
+                            (_num1digit3 + _num2digit3 + 1) >= 10) ||
+                        (cf[calCount(_result) - 1] == 1 &&
+                            _options == 'doubleDigit' &&
+                            (_num1digit2 + _num2digit2 + 1) >= 10)) {
+                      // print(
+                      //     "coming to check final carry is there or not...$_options");
+                      setState(() {
+                        //  print('printing _i value in _carryFlag function...$_i');
+                        _outputList[_i] = '1';
+                        cf[calCount(_result) - 1] = 0;
+                        //   print('printing output list...$_outputList');
+                        _preValue = _outputList[_i] + _preValue;
+                        _flag[_i] = true;
+                        _s[_i] = true;
+                      });
                       new Future.delayed(const Duration(milliseconds: 100), () {
                         setState(() {
-                          _s[_i - 1] = false;
+                          _s[_i] = false;
                         });
                       });
-                    });
-                  } else {
-                    if (_score > 0) widget.onScore(-1);
-                    setState(() {
-                      _score = _score > 0 ? _score - 1 : _score;
-                      _shake[_i] = false;
-                      _control=false;
-                      _wrong = _wrong + 1;
-                    });
-                    new Future.delayed(const Duration(milliseconds: 1000), () {
+                    }
+                    _final(text, _preValue);
+                    break;
+                  case '-':
+                    if (_j1 > 0 && _carry[_i] == 0) {
                       setState(() {
-                        _shake[_i] = true;
-                        _control=true;
-                        _outputList[_i] = ' ';
+                        _outputList[_i] = _removeZero(
+                                int.parse(_addText(text, _outputList[_i])))
+                            .toString();
+                        _outputList[_i] = _removeText(text, _outputList[_i]);
                       });
+                      if (text == '✔') {
+                        if (_num1List[_i] > _num2List[_i] ||
+                            _num1List[_i] == _num2List[_i]) {
+                          if (_rigltClick(text, _outputList[_i],
+                                  (_num1List[_i] - _num2List[_i] + cf[_i])) ==
+                              true) {
+                            setState(() {
+                              _flag[_i] = _rigltClick(text, _outputList[_i],
+                                  (_num1List[_i] - _num2List[_i] + cf[_i]));
+                              _shake[_i] = true;
+                              _control = true;
+                              _carry[_i] = 1;
+                              _preValue = _outputList[_i] + _preValue;
+                              _s[_i] = true;
+                            });
+                          }
+                        } else {
+                          setState(() {
+                            _barrowFlag[_i] = true;
+                          });
+                          if (_rigltClick(
+                                  text,
+                                  _outputList[_i],
+                                  ((_num1List[_i] + 10) -
+                                      _num2List[_i] +
+                                      cf[_i])) ==
+                              true) {
+                            setState(() {
+                              _flag[_i] = _rigltClick(
+                                  text,
+                                  _outputList[_i],
+                                  ((_num1List[_i] + 10) -
+                                      _num2List[_i] +
+                                      cf[_i]));
+                              _shake[_i] = true;
+                              _control = true;
+                              _carry[_i] = 1;
+                              cf[_i + 1] = -1;
+                              _s[_i] = true;
+                              _preValue = _outputList[_i] + _preValue;
+                            });
+                          } else {
+                            setState(() {
+                              _numbershake[_i] = false;
+                              _shake[_i] = false;
+                              _control = false;
+                            });
+                            new Future.delayed(
+                                const Duration(milliseconds: 1000), () {
+                              setState(() {
+                                _numbershake[_i] = true;
+                                _shake[_i] = true;
+                                _control = true;
+                              });
+                            });
+                          }
+                        }
+                        if (_flag[_i] == true) {
+                          setState(() {
+                            _i++;
+                            _j1--;
+                            print('printing j value after decrement...$_j1');
+                            new Future.delayed(
+                                const Duration(milliseconds: 100), () {
+                              setState(() {
+                                _s[_i - 1] = false;
+                              });
+                            });
+                          });
+                        } else {
+                          if (_score > 0) {
+                            widget.onScore(-1);
+                          }
+                          setState(() {
+                            _score = _score > 0 ? _score - 1 : _score;
+                            _shake[_i] = false;
+                            _control = false;
+                            _wrong = _wrong + 1;
+                          });
+                          new Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            setState(() {
+                              _shake[_i] = true;
+                              _control = true;
+                              _outputList[_i] = ' ';
+                            });
+                          });
+                        }
+                      }
+                      if ((_options == 'singleDigit' && _wrong == 4) ||
+                          _options == 'doubleDigit' && _wrong == 5 ||
+                          _options == 'tripleDigit' && _wrong == 6) {
+                        setState(() {
+                          _isShowingFlashCard = true;
+                          _wrong = 0;
+                        });
+                      }
+                    }
+                    _final(text, _preValue);
+                    break;
+                  case '*':
+                    setState(() {
+                      _outputList[_i] = _removeZero(
+                              int.parse(_addText(text, _outputList[_i])))
+                          .toString();
+                      _outputList[_i] = _removeText(text, _outputList[_i]);
+                      _flag[_i] = _rigltClick(text, _outputList[_i],
+                          (_num1List[_i] * _num2List[_i]));
                     });
-                  }
+                    if (text == '✔') {
+                      if (_rigltClick(text, _outputList[_i],
+                              (_num1List[_i] * _num2List[_i])) ==
+                          true) {
+                        setState(() {
+                          _shake[_i] = true;
+                          _control = true;
+                          _carry[_i] = 1;
+                          _s[_i] = true;
+                          _preValue = _outputList[_i] + _preValue;
+                        });
+                        if (_outputList[_i].length > 1) {
+                          setState(() {
+                            _outputList[_i] =
+                                (int.parse(_outputList[_i]) % 10).toString();
+                            _outputList[_i + 1] = (_result ~/ 10).toString();
+                            _flag[_i + 1] = true;
+                            _s[_i + 1] = true;
+                          });
+                        }
+                      } else {
+                        if (_score > 0) {
+                          widget.onScore(-1);
+                        }
+                        setState(() {
+                          _score = _score > 0 ? _score - 1 : _score;
+                          _shake[_i] = false;
+                          _control = false;
+                          _wrong = _wrong + 1;
+                        });
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          setState(() {
+                            _shake[_i] = true;
+                            _control = true;
+                            _outputList[_i] = ' ';
+                          });
+                        });
+                      }
+                      new Future.delayed(const Duration(milliseconds: 100), () {
+                        setState(() {
+                          _s[_i] = false;
+                          _s[_i + 1] = false;
+                        });
+                      });
+                    }
+                    if ((_options == 'singleDigit' && _wrong == 4)) {
+                      _isShowingFlashCard = true;
+                      _wrong = 0;
+                    }
+                    _final(text, _preValue);
                 }
-                if ((_options == 'singleDigit' && _wrong == 4) ||
-                    _options == 'doubleDigit' && _wrong == 5 ||
-                    _options == 'tripleDigit' && _wrong == 6) {
-                  setState(() {
-                    _isShowingFlashCard = true;
-                    _wrong = 0;
-                  });
-                }
-              }
-              _final(text, _preValue);
-              break;
-            case '*':
-              setState(() {
-                _outputList[_i] =
-                    _removeZero(int.parse(_addText(text, _outputList[_i])))
-                        .toString();
-                _outputList[_i] = _removeText(text, _outputList[_i]);
-                _flag[_i] = _rigltClick(
-                    text, _outputList[_i], (_num1List[_i] * _num2List[_i]));
               });
-              if (text == '✔') {
-                if (_rigltClick(text, _outputList[_i],
-                        (_num1List[_i] * _num2List[_i])) ==
-                    true) {
-                  setState(() {
-                    _shake[_i] = true;
-                    _control=true;
-                    _carry[_i] = 1;
-                    _s[_i] = true;
-                    _preValue = _outputList[_i] + _preValue;
-                  });
-                  if (_outputList[_i].length > 1) {
-                    setState(() {
-                      _outputList[_i] =
-                          (int.parse(_outputList[_i]) % 10).toString();
-                      _outputList[_i + 1] = (_result ~/ 10).toString();
-                      _flag[_i + 1] = true;
-                      _s[_i + 1] = true;
-                    });
-                  }
-                } else {
-                  if (_score > 0) widget.onScore(-1);
-                  setState(() {
-                    _score = _score > 0 ? _score - 1 : _score;
-                    _shake[_i] = false;
-                    _control=false;
-                    _wrong = _wrong + 1;
-                  });
-                  new Future.delayed(const Duration(milliseconds: 1000), () {
-                    setState(() {
-                      _shake[_i] = true;
-                      _control=true;
-                      _outputList[_i] = ' ';
-                    });
-                  });
-                }
-                new Future.delayed(const Duration(milliseconds: 100), () {
-                  setState(() {
-                    _s[_i] = false;
-                    _s[_i + 1] = false;
-                  });
-                });
-              }
-              if ((_options == 'singleDigit' && _wrong == 4)) {
-                _isShowingFlashCard = true;
-                _wrong = 0;
-              }
-              _final(text, _preValue);
-          }
-        });
   }
 
   Widget displayContainer(double _height, String num, int carry, Key _key,
@@ -637,7 +660,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       decoration: new BoxDecoration(
         color: clr,
         shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.all(new Radius.circular(_height*0.02)),
+        borderRadius: new BorderRadius.all(new Radius.circular(_height * 0.02)),
         border: new Border.all(color: clrBorder, width: _height * 0.0075),
       ),
       key: _key,
@@ -665,7 +688,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
             color: _flag == true ? Colors.green : Colors.white,
             border: new Border.all(
                 color: new Color(0xFF6D3A6A), width: _height * 0.0075),
-            borderRadius: new BorderRadius.all(new Radius.circular(_height*0.02)),
+            borderRadius:
+                new BorderRadius.all(new Radius.circular(_height * 0.02)),
           ),
           child: new Center(
               child: new Text(output,
@@ -714,15 +738,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
-            return  FractionallySizedBox(
-                widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-                heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
-                  setState(() {
-                    _isShowingFlashCard = false;
-                    _initBoard();
-                  });
-                }));
+            return FractionallySizedBox(
+                widthFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+                heightFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
+                child: new FlashCard(
+                    text: _result.toString(),
+                    image: 'assets/apple.png',
+                    onChecked: () {
+                      setState(() {
+                        _isShowingFlashCard = false;
+                        _initBoard();
+                      });
+                    }));
           }
           return new Container(
             //  color: new Color(0xFFff80ab),
@@ -735,7 +764,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxWidth*0.4
+                          ? constraints.maxWidth * 0.4
                           : constraints.maxHeight * 0.25,
                       left: constraints.maxWidth > constraints.maxHeight
                           ? constraints.maxWidth * 0.4
@@ -884,12 +913,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 //                        bottom: constraints.maxWidth > constraints.maxHeight
 //                            ? constraints.maxHeight * 0.06
 //                            : constraints.maxWidth * 0.06,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05
-)
-,
+                        top: constraints.maxWidth > constraints.maxHeight
+                            ? constraints.maxHeight * 0.06
+                            : constraints.maxWidth * 0.05),
                     child: new Container(
-                        child:
-                        displayTable(constraints.maxHeight,
+                        child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'singleDigit')),
                   ),
                 ),
@@ -901,15 +929,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'doubleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
-            return  FractionallySizedBox(
-                widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-                heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
-                  setState(() {
-                    _isShowingFlashCard = false;
-                    _initBoard();
-                  });
-                }));
+            return FractionallySizedBox(
+                widthFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+                heightFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+                child: new FlashCard(
+                    text: _result.toString(),
+                    image: 'assets/apple.png',
+                    onChecked: () {
+                      setState(() {
+                        _isShowingFlashCard = false;
+                        _initBoard();
+                      });
+                    }));
           }
           return new Container(
             // color: new Color(0xFFff80ab),
@@ -922,10 +955,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxWidth*0.35
+                          ? constraints.maxWidth * 0.35
                           : constraints.maxHeight * 0.19,
                       left: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxWidth*0.35
+                          ? constraints.maxWidth * 0.35
                           : constraints.maxHeight * 0.19,
                       top: constraints.maxHeight * 0.015),
                   child: new Table(
@@ -960,7 +993,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(constraints.maxHeight *0.02)),
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -1002,7 +1036,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           width:
                                               constraints.maxHeight * 0.0075),
                                       borderRadius: new BorderRadius.all(
-                                          new Radius.circular(constraints.maxHeight *0.02)),
+                                          new Radius.circular(
+                                              constraints.maxHeight * 0.02)),
                                     ),
                                     child: new Center(
                                       child: new Text(
@@ -1098,7 +1133,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                          new Radius.circular(constraints.maxHeight *0.02),
+                                          new Radius.circular(
+                                              constraints.maxHeight * 0.02),
                                         ),
                                       ),
                                       child: new Center(
@@ -1248,7 +1284,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 //                        bottom: constraints.maxWidth > constraints.maxHeight
 //                            ? constraints.maxHeight * 0.06
 //                            : constraints.maxWidth * 0.07,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05),
+                        top: constraints.maxWidth > constraints.maxHeight
+                            ? constraints.maxHeight * 0.06
+                            : constraints.maxWidth * 0.05),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'doubleDigit')),
@@ -1265,15 +1303,20 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       case 'tripleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
           if (_isShowingFlashCard) {
-            return  FractionallySizedBox(
-                widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-                heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-                child: new FlashCard(text: _result.toString(), image: 'assets/apple.png', onChecked: () {
-                  setState(() {
-                    _isShowingFlashCard = false;
-                    _initBoard();
-                  });
-                }));
+            return FractionallySizedBox(
+                widthFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
+                heightFactor:
+                    constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
+                child: new FlashCard(
+                    text: _result.toString(),
+                    image: 'assets/apple.png',
+                    onChecked: () {
+                      setState(() {
+                        _isShowingFlashCard = false;
+                        _initBoard();
+                      });
+                    }));
           }
           return new Container(
             // color: new Color(0xFFff80ab),
@@ -1286,10 +1329,10 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                   color: new Color(0xFFff80ab),
                   padding: new EdgeInsets.only(
                       right: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxWidth*0.3
+                          ? constraints.maxWidth * 0.3
                           : constraints.maxWidth * 0.18,
                       left: constraints.maxWidth > constraints.maxHeight
-                          ? constraints.maxWidth*0.3
+                          ? constraints.maxWidth * 0.3
                           : constraints.maxHeight * 0.18,
                       top: constraints.maxWidth * 0.015),
                   child: new Table(
@@ -1324,7 +1367,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(constraints.maxHeight *0.02)),
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -1368,7 +1412,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                           width:
                                               constraints.maxHeight * 0.0075),
                                       borderRadius: new BorderRadius.all(
-                                          new Radius.circular(constraints.maxHeight *0.02)),
+                                          new Radius.circular(
+                                              constraints.maxHeight * 0.02)),
                                     ),
                                     child: new Center(
                                       child: new Text(
@@ -1415,7 +1460,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                         color: new Color(0xFFEAE8E4),
                                         width: constraints.maxHeight * 0.0075),
                                     borderRadius: new BorderRadius.all(
-                                        new Radius.circular(constraints.maxHeight *0.02)),
+                                        new Radius.circular(
+                                            constraints.maxHeight * 0.02)),
                                   ),
                                   child: new Center(
                                     child: new Text(
@@ -1514,7 +1560,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                            new Radius.circular(constraints.maxHeight *0.02)),
+                                            new Radius.circular(
+                                                constraints.maxHeight * 0.02)),
                                       ),
                                       child: new Center(
                                           child: new Text('$_num1digit2',
@@ -1580,7 +1627,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                                             width:
                                                 constraints.maxHeight * 0.0075),
                                         borderRadius: new BorderRadius.all(
-                                            new Radius.circular(constraints.maxHeight *0.02)),
+                                            new Radius.circular(
+                                                constraints.maxHeight * 0.02)),
                                       ),
                                       child: new Center(
                                           child: new Text('$_num1digit1',
@@ -1764,7 +1812,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 //                        bottom: constraints.maxWidth > constraints.maxHeight
 //                            ? constraints.maxHeight * 0.06
 //                            : constraints.maxWidth * 0.07,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.06:constraints.maxWidth*0.05),
+                        top: constraints.maxWidth > constraints.maxHeight
+                            ? constraints.maxHeight * 0.06
+                            : constraints.maxWidth * 0.05),
                     child: new Container(
                         child: displayTable(constraints.maxHeight,
                             constraints.maxWidth, 'tripleDigit')),
@@ -1846,7 +1896,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new TableCell(
         child: new Padding(
-            padding:new EdgeInsets.all( widget.height * 0.008 ),
+            padding: new EdgeInsets.all(widget.height * 0.008),
             child: new RaisedButton(
                 splashColor: Theme.of(context).primaryColor,
                 highlightColor: Theme.of(context).primaryColor,
@@ -1855,22 +1905,34 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.blueAccent,
-                        width:widget.height * 0.0075),
-                    borderRadius:
-                    new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
+                        color: _displayText == '✖'
+                            ? Colors.red
+                            : _displayText == '✔'
+                                ? Colors.green
+                                : Colors.blueAccent,
+                        width: widget.height * 0.0075),
+                    borderRadius: new BorderRadius.all(
+                        new Radius.circular(widget.height * 0.020))),
                 child: new Center(
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: Colors.black,
+                          color: _displayText == '✖'
+                              ? Colors.red
+                              : _displayText == '✔'
+                                  ? Colors.green
+                                  : Colors.black,
                           fontSize: _displayText == '✖' || _displayText == '✔'
-                              ? widget.height>widget.width? widget.height * 0.037:widget.width*0.017
-                              :  widget.height>widget.width? widget.height * 0.045:widget.width*0.02,
+                              ? widget.height > widget.width
+                                  ? widget.height * 0.037
+                                  : widget.width * 0.017
+                              : widget.height > widget.width
+                                  ? widget.height * 0.045
+                                  : widget.width * 0.02,
                           fontWeight: FontWeight.bold)),
                 )))
-      // )
-    );
+        // )
+        );
   }
 //   Widget build(BuildContext context) {
 // //    print("_MyButtonState.build");

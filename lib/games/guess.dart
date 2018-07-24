@@ -6,7 +6,7 @@ import 'dart:convert';
 import '../components/shaker.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/loca.dart';
-
+import 'package:maui/components/gameaudio.dart';
 
 Map _decoded;
 
@@ -111,7 +111,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  void _validate(BuildContext context ,double height, double width, Orientation orientation) {
+  void _validate(BuildContext context, double height, double width,
+      Orientation orientation) {
     double h1, w1, h, w, rh, rw, x, y;
     if (orientation == Orientation.portrait) {
       h = (height * 3 * 9) / 40;
@@ -130,7 +131,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
       print(_guess);
       _textController.text = '';
       widget.onScore(1);
-      widget.onProgress((1+(_decoded["number"] - partsName.length))/_decoded["number"]);
+      widget.onProgress(
+          (1 + (_decoded["number"] - partsName.length)) / _decoded["number"]);
       partsName.remove(_guess);
       while (i < _length) {
         print(i);
@@ -144,7 +146,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
         }
       }
       // _renderChoice(_guess, (w1 + x), (h1 + y), height, width, orientation);
-      _renderChoice(Loca.of(context).intl(_guess), (w1 + x), (h1 + y), height, width, orientation);
+      _renderChoice(Loca.of(context).intl(_guess), (w1 + x), (h1 + y), height,
+          width, orientation);
       new Future.delayed(const Duration(milliseconds: 1000), () {
         if (partsName.isEmpty) {
           widget.onEnd();
@@ -392,8 +395,8 @@ class _GuessItState extends State<GuessIt> with TickerProviderStateMixin {
                         child: new Icon(Icons.check,
                             color: Colors.black,
                             size: (constraint.maxHeight / 4) * 0.4)),
-                    onPressed: () => _validate(context,
-                        constraint.maxHeight, constraint.maxWidth, orientation),
+                    onPressed: () => _validate(context, constraint.maxHeight,
+                        constraint.maxWidth, orientation),
                   ),
                 ),
               ),

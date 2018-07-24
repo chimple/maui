@@ -4,6 +4,7 @@ import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FirstWord extends StatefulWidget {
   Function onScore;
@@ -48,12 +49,12 @@ class FirstWordState extends State<FirstWord> {
   }
 
   void _initBoard() async {
-        print("hello data is not comming here");
+    print("hello data is not comming here");
     _dispText1 = '';
     _category = '';
     _catList = [];
     setState(() => _isLoading = true);
-   data = await fetchFirstWordData(widget.gameConfig.gameCategoryId);
+    data = await fetchFirstWordData(widget.gameConfig.gameCategoryId);
     print('nikkk   ${data.item1}   ${data.item2}');
     _category = data.item2;
     _catList = data.item1;
@@ -90,7 +91,7 @@ class FirstWordState extends State<FirstWord> {
 
   @override
   Widget build(BuildContext context) {
-     if (_isLoading) {
+    if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -101,7 +102,7 @@ class FirstWordState extends State<FirstWord> {
     print('width      ${size.width}');
     int j = 0;
     int i = 0;
-   
+
     return new Column(children: <Widget>[
       new Container(
           padding: new EdgeInsets.all(size.width / 10),

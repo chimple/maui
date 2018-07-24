@@ -11,6 +11,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;

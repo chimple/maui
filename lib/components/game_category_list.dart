@@ -10,6 +10,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class GameCategoryList extends StatefulWidget {
   GameCategoryList(
@@ -22,7 +23,7 @@ class GameCategoryList extends StatefulWidget {
       this.otherUser})
       : super(key: key);
   State<StatefulWidget> createState() => new _GameCategoryList();
-  final List<Tuple3<int, int, String>> gameCategories;
+  final List<Tuple4<int, int, String, int>> gameCategories;
   final String game;
   GameMode gameMode;
   GameDisplay gameDisplay;
@@ -34,10 +35,11 @@ class GameCategoryData {
   int id;
   int conceptId;
   String name;
-  GameCategoryData(this.id, this.conceptId, this.name);
+  int lessonId;
+  GameCategoryData(this.id, this.conceptId, this.name, this.lessonId);
   @override
   String toString() {
-    return '{id: $id, conceptId: $conceptId, name: $name}';
+    return '{id: $id, conceptId: $conceptId, name: $name, lessonId: $lessonId}';
   }
 
   @override
@@ -46,11 +48,13 @@ class GameCategoryData {
       other is GameCategoryData &&
           runtimeType == other.runtimeType &&
           id == other.id &&
+          lessonId == other.lessonId &&
           conceptId == other.conceptId &&
           name == other.name;
 
   @override
-  int get hashCode => id.hashCode ^ conceptId.hashCode ^ name.hashCode;
+  int get hashCode =>
+      id.hashCode ^ conceptId.hashCode ^ lessonId.hashCode ^ name.hashCode;
 }
 
 class _GameCategoryList extends State<GameCategoryList> {
@@ -94,8 +98,9 @@ class _GameCategoryList extends State<GameCategoryList> {
   @override
   void initState() {
     super.initState();
-    gameCategoryData = widget.gameCategories.map((tuple3) {
-      return new GameCategoryData(tuple3.item1, tuple3.item2, tuple3.item3);
+    gameCategoryData = widget.gameCategories.map((tuple4) {
+      return new GameCategoryData(
+          tuple4.item1, tuple4.item2, tuple4.item3, tuple4.item4);
     }).toList();
     conceptIdMap = {};
     gameCategoryData.forEach((data) {
@@ -180,8 +185,8 @@ class _GameCategoryList extends State<GameCategoryList> {
     conceptIdMap.forEach((conceptId, list) {
       String mainCategoryName = widget.concepts[conceptId].name;
       if (list.length == 1) {
-        buttons.add(_buildButtonCategory(
-            mainCategoryName, list.first.id, tileColors[colorIndex++]));
+        buttons.add(_buildButtonCategory(mainCategoryName, list.first.id,
+            tileColors[colorIndex++], list.first.lessonId));
       } else {
         GlobalKey<ControlledExpansionTileState> expansionKey =
             new GlobalObjectKey("tile-$conceptId");
@@ -212,8 +217,11 @@ class _GameCategoryList extends State<GameCategoryList> {
               ),
             ),
             children: list.map((gameCategoryData) {
-              return _buildButtonchildren(gameCategoryData.name,
-                  gameCategoryData.id, tileColors[colorIndex - 1]);
+              return _buildButtonchildren(
+                  gameCategoryData.name,
+                  gameCategoryData.id,
+                  tileColors[colorIndex - 1],
+                  gameCategoryData.lessonId);
             }).toList(),
           ),
         ));
@@ -223,7 +231,7 @@ class _GameCategoryList extends State<GameCategoryList> {
   }
 
   Widget _buildButtonchildren(
-      String mainCategoryName, int gameCategoryId, Color color) {
+      String mainCategoryName, int gameCategoryId, Color color, int lessonId) {
     return new Container(
         height: 154.0,
         color: color,
@@ -241,18 +249,44 @@ class _GameCategoryList extends State<GameCategoryList> {
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold)),
             ),
-            onTap: () => goToGame(context, widget.game, gameCategoryId,
-                widget.gameDisplay, widget.gameMode,
-                otherUser: widget.otherUser),
+            trailing: lessonId != null &&
+                    lessonId >
+                        AppStateContainer
+                            .of(context)
+                            .state
+                            .loggedInUser
+                            .currentLessonId
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                    child: new Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                  )
+                : new Text(''),
+            onTap: () {
+              lessonId != null &&
+                      lessonId >
+                          AppStateContainer
+                              .of(context)
+                              .state
+                              .loggedInUser
+                              .currentLessonId
+                  ? null
+                  : goToGame(context, widget.game, gameCategoryId,
+                      widget.gameDisplay, widget.gameMode,
+                      otherUser: widget.otherUser);
+            },
           ),
         ));
   }
 
   Widget _buildButtonCategory(
-      String mainCategoryName, int gameCategoryId, Color color) {
+      String mainCategoryName, int gameCategoryId, Color color, int lessonId) {
     return new Container(
       height: 150.0,
-     color: color,
+      color: color,
       child: ListTile(
         title: new Container(
             child: Padding(
@@ -263,9 +297,35 @@ class _GameCategoryList extends State<GameCategoryList> {
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold)),
         )),
-        onTap: () => goToGame(context, widget.game, gameCategoryId,
-            widget.gameDisplay, widget.gameMode,
-            otherUser: widget.otherUser),
+        trailing: lessonId != null &&
+                lessonId >
+                    AppStateContainer
+                        .of(context)
+                        .state
+                        .loggedInUser
+                        .currentLessonId
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+                child: new Icon(
+                  Icons.lock,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+              )
+            : new Text(''),
+        onTap: () {
+          lessonId != null &&
+                  lessonId >
+                      AppStateContainer
+                          .of(context)
+                          .state
+                          .loggedInUser
+                          .currentLessonId
+              ? null
+              : goToGame(context, widget.game, gameCategoryId,
+                  widget.gameDisplay, widget.gameMode,
+                  otherUser: widget.otherUser);
+        },
       ),
     );
   }

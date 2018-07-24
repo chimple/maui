@@ -8,8 +8,10 @@ import '../components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import '../games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class SecondScreen extends StatefulWidget {
+  String ans;
   int navVal;
   List choice;
   String jsonVal;
@@ -22,7 +24,8 @@ class SecondScreen extends StatefulWidget {
   bool isRotated;
 
   SecondScreen(
-    this.navVal,
+      this.ans,
+      this.navVal,
       this.choice,
       this.jsonVal,
       this.onScore,
@@ -112,18 +115,15 @@ class OptionState extends State<SecondScreen> {
         key: new ValueKey<int>(index),
         text: text,
         onPress: () {
-          if (text == widget.choice[1]) {
+          if (text == widget.ans) {
             print("hiii manuu");
             print("hello rhis on end we are calling");
             widget.onScore(10);
             widget.onProgress(1.0);
-             setState(() {
-                widget.onEnd(toJsonMap(), false);
-                       widget.navVal = 0;
-                        });
-            // widget.onEnd();
-            // _initBoard();
-            // Navigator.pop(context);
+            setState(() {
+              widget.onEnd(toJsonMap(), false);
+              widget.navVal = 0;
+            });
           } else {
             widget.onScore(0);
             widget.onEnd(toJsonMap(), false);
@@ -133,10 +133,6 @@ class OptionState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    double ht = media.height;
-    double wd = media.width;
-
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -145,15 +141,20 @@ class OptionState extends State<SecondScreen> {
       );
     }
 
-    int j = 0;
     return new LayoutBuilder(builder: (context, constraints) {
       Orientation orientation = MediaQuery.of(context).orientation;
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
+      var maxCharLength;
       final maxChars = (_ans != null
-        ? _ans.fold(
-            1, (prev, element) => element.length > prev ? element.length : prev)
-        : 1);
+          ? _ans.fold(1,
+              (prev, element) => element.length > prev ? element.length : prev)
+          : 1);
+      if (maxChars == 1) {
+        maxCharLength = 3;
+      } else {
+        maxCharLength = maxChars;
+      }
       var sizeOrientation =
           orientation == Orientation.portrait ? (_size + .2) : (_size + 1.5);
       print("this is where the its comming full");
@@ -175,8 +176,7 @@ class OptionState extends State<SecondScreen> {
 
       double buttonarea = maxWidth * maxHeight;
       print("object....buttonarea .......:$buttonarea");
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-
+      UnitButton.saveButtonSize(context, maxCharLength, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
       return Scaffold(
           body: orientation == Orientation.portrait
@@ -294,8 +294,8 @@ class MyHomePageState extends State<DrawJsonImage> {
       child: new MyImagePage(widget.jsonVal),
     )));
   }
-
 }
+
 class MyImagePage extends StatefulWidget {
   String jsonVal;
   MyImagePage(this.jsonVal);

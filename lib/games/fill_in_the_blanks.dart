@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -60,6 +61,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   void didUpdateWidget(FillInTheBlanks oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _correct.clear();
       _initFillBlanks();
     }
   }
@@ -222,7 +224,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new CircularProgressIndicator(),
       );
     }
-  
+
     if (space == 0) {
       setState(() {
         _initFillBlanks();
@@ -239,23 +241,22 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-        if (_isShowingFlashCard) {
-       return FractionallySizedBox(
-            widthFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
-            heightFactor:
-                constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.75,
-        child: new FlashCard(
-            text: fruit,
-            onChecked: () {
-              widget.onEnd();
-              setState(() {
-                _isShowingFlashCard = false;
-              });
-            }),
-      );
-    }
-
+      if (_isShowingFlashCard) {
+        return FractionallySizedBox(
+          widthFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
+          heightFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.6 : 0.75,
+          child: new FlashCard(
+              text: fruit,
+              onChecked: () {
+                widget.onEnd();
+                setState(() {
+                  _isShowingFlashCard = false;
+                });
+              }),
+        );
+      }
 
       return new Flex(
         direction: Axis.vertical,

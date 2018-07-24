@@ -4,6 +4,7 @@ import 'package:maui/components/played_games_score.dart';
 import 'package:maui/components/videoplayer.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/login_screen.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class ProfileDrawer extends StatefulWidget {
   @override
@@ -31,10 +32,14 @@ class ProfileDrawerState extends State<ProfileDrawer>
   @override
   Widget build(BuildContext context) {
     var user = AppStateContainer.of(context).state.loggedInUser;
+    //  play.tap();
     return new Drawer(
       child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              color: new Color(0xffF0557F),
+            ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -49,20 +54,14 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   child: new Container(
                     decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(100.0),
-                      border: new Border.all(
-                        width: 5.0,
-                      ),
                     ),
                     child: new Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                      ),
+                      child: Image.asset('assets/videohelp.png'),
                     ),
                   ),
                 ),
               )
             ],
-            
             currentAccountPicture: new Container(
                 child: new GestureDetector(
               child: Container(
@@ -89,14 +88,7 @@ class ProfileDrawerState extends State<ProfileDrawer>
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            accountEmail: new Text(
-              '${user.name}@Chimple.org',
-              textAlign: TextAlign.left,
-              style: new TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo),
-            ),
+            accountEmail: new Text(' '),
           ),
           new Expanded(
             child: new PlayedGamesScoreDisplay(),
@@ -108,8 +100,10 @@ class ProfileDrawerState extends State<ProfileDrawer>
 
   void button3(BuildContext context) {
     print("Button 1");
+    String tutorial = "tutorial";
+    final gamename = tutorial;
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp()));
+        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
   }
 }
 

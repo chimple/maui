@@ -1,6 +1,6 @@
 import 'dart:math';
 
-Map<String, List<String>> reply = {
+final Map<String, List<String>> replySwa = {
   'Mbona una furaha?': [
     'Nacheza',
     'Nakula',
@@ -153,7 +153,7 @@ Map<String, List<String>> reply = {
   'Umeamka saa ngap leo?': ['Mapema', 'Muda si mrefu', 'Asubuhi', 'Mchana'],
 };
 
-List<String> oneLiners = [
+final List<String> oneLinersSwa = [
   'Mbona una furaha?',
   'Mbona una huzuni?',
   'Mbona una cheka?',
@@ -201,8 +201,235 @@ List<String> oneLiners = [
   'umeamka saa ngap leo?'
 ];
 
+final Map<String, List<String>> replyEng = {
+  'What makes you happy?': [
+    'Playing',
+    'Eating',
+    'Sleeping',
+    'Talking with friends'
+  ],
+  'What makes you sad?': ['Crying', 'Falling down', 'Darkness', 'Fighting'],
+  'What makes you laugh?': [
+    'Listening to jokes',
+    'Seeing funny things',
+    'Tickling',
+    'Funny faces'
+  ],
+  'How old are you?': ['I don’t know', 'As old as you'],
+  'How old is your mom?': ['I don’t know', 'As old as your mom'],
+  'How old is your dad?': ['I don’t know', 'As old as your dad'],
+  'Who is your best friend?': ['You', 'My sister', 'My brother', 'My friend'],
+  'What are you good at?': ['Jumping', 'Running', 'Reading', 'Writing'],
+  'What are you not good at?': [
+    'Drawing',
+    'Climbing',
+    'Counting',
+    'Staying quiet'
+  ],
+  'What did you do today?': [
+    'I woke up',
+    'I brushed my teeth',
+    'I had my bath',
+    'I wore my clothes'
+  ],
+  'What is your favourite food?': ['Rice', 'Chapati', 'Porridge', 'Fish'],
+  'What is your favourite song?': [
+    'Any happy song',
+    'A fast song',
+    'A song about the moon',
+    'A song about my friend'
+  ],
+  'What is your favourite colour?': ['Red', 'Blue', 'Green', 'Yellow'],
+  'What is your favourite toy?': ['Horse', 'Girl Doll', 'Boy Doll', 'Giraffe'],
+  'What is your favourite fruit?': ['Banana', 'Orange', 'Mango', 'Pineapple'],
+  'What is your favourite animal?': ['Zebra', 'Elephant', 'Hippo', 'Giraffe'],
+  'What does dad do for work?': [
+    'Farmer',
+    'Carpenter',
+    'Factory worker',
+    'Miner'
+  ],
+  'What does mom do for work?': ['Farmer', 'Nurse', 'House wife', 'Cook'],
+  'Where do you live?': [
+    'In our house',
+    'Far from here',
+    'Nearby',
+    'Over there'
+  ],
+  'Where is your favourite place to go?': [
+    'The mountains',
+    'The ocean',
+    'The city',
+    'The river'
+  ],
+  'What is your favourite time of the day?': [
+    'Morning',
+    'Afternoon',
+    'Evening',
+    'Night'
+  ],
+  'What makes a good friend?': [
+    'Kindness',
+    'Affection',
+    'Playfulness',
+    'Loyalty'
+  ],
+  'What is your favourite word?': ['Food', 'Sleep', 'Play', 'Talk'],
+  'What is the funniest thing you can think of?': [
+    'A joke',
+    'My dad snoring',
+    'A book',
+    'My stomach growling'
+  ],
+  'What do you like best about your sister?': [
+    'Looks after me',
+    'Affectionate',
+    'Caring',
+    'Plays with me'
+  ],
+  'What do you like best about your brother?': [
+    'Plays with me',
+    'Teaches me',
+    'Protects me',
+    'Tells me stories'
+  ],
+  'Do you have a brother?': ['Yes', 'No'],
+  'Do you have a sister?': ['Yes', 'No'],
+  'If you could go anywhere, where would you go?': [
+    'All over the world',
+    'The city',
+    'A ship',
+    'A school'
+  ],
+  'What do you think your first job will be?': [
+    'Doctor',
+    'Engineer',
+    'Officer',
+    'Policeman'
+  ],
+  'What do you admire the most?': [
+    'Honesty',
+    'Cleanliness',
+    'Respect',
+    'Loyalty'
+  ],
+  'What do you like most about reading?': [
+    'I can learn anything',
+    'I can go to school',
+    'I can teach my sister',
+    'I will be respected'
+  ],
+  'What is your idea of a perfect day?': [
+    'Sleeping all day',
+    'Playing with my friends',
+    'Going in the bus',
+    'Going to the fair'
+  ],
+  'What do you want to be when you grow up?': [
+    'Pilot',
+    'Driver',
+    'Teacher',
+    'Shopkeeper'
+  ],
+  'What scares you the most?': [
+    'Darkness',
+    'Hunger',
+    'Loud voices',
+    'Fighting'
+  ],
+  'What is the nicest thing a friend has done to you?': [
+    'Gave me food',
+    'Played with me',
+    'Took me home',
+    'Studied with me'
+  ],
+  'What is the first thing you can remember?': [
+    'My mother',
+    'My father',
+    'Our House',
+    'Our Village'
+  ],
+  'What have you learnt today?': ['Reading', 'Writing', 'Counting', 'Stories'],
+  'How are you?': ['I am good', 'All right', 'Not too good', 'Super'],
+  'How do you feel?': ['Happy', 'Sad', 'Excited', 'Angry'],
+  'Who made you smile today?': [
+    'My friend',
+    'My father',
+    'My mother',
+    'My grand father'
+  ],
+  'Who does your best friend remind you of?': [
+    'My father',
+    'Hippo',
+    'Gorilla',
+    'Myself'
+  ],
+  'What do you like in your village?': [
+    'The houses',
+    'The people',
+    'The shops',
+    'My friends'
+  ],
+  'What is your favourite game?': [
+    'Football',
+    'Jumping rope',
+    'Catching ball',
+    'Flying kite'
+  ],
+  'When did you wake up today?': ['Early', 'Late', 'Morning', 'Afternoon']
+};
+
+final List<String> oneLinersEng = [
+  'What makes you happy?',
+  'What makes you sad?',
+  'What makes you laugh?',
+  'How old are you?',
+  'How old is your mom?',
+  'How old is your dad?',
+  'Who is your best friend?',
+  'What are you good at?',
+  'What are you not good at?',
+  'What did you do today?',
+  'What is your favourite food?',
+  'What is your favourite song?',
+  'What is your favourite colour?',
+  'What is your favourite toy?',
+  'What is your favourite fruit?',
+  'What is your favourite animal?',
+  'What does dad do for work?',
+  'What does mom do for work?',
+  'Where do you live?',
+  'Where is your favourite place to go?',
+  'What is your favourite time of the day?',
+  'What makes a good friend?',
+  'What is your favourite word?',
+  'What is the funniest thing you can think of?',
+  'What do you like best about your sister?',
+  'What do you like best about your brother?',
+  'Do you have a brother?',
+  'Do you have a sister?',
+  'If you could go anywhere, where would you go?',
+  'What do you think your first job will be?',
+  'What do you admire the most?',
+  'What do you like most about reading?',
+  'What is your idea of a perfect day?',
+  'What do you want to be when you grow up?',
+  'What scares you the most?',
+  'What is the nicest thing a friend has done to you?',
+  'What is the first thing you can remember?',
+  'What have you learnt today?',
+  'How are you?',
+  'How do you feel?',
+  'Who made you smile today?',
+  'Who does your best friend remind you of?',
+  'What do you like in your village?',
+  'What is your favourite game?',
+  'When did you wake up today?'
+];
+
 List<String> getPossibleReplies(String currentChat, int num) {
-  print('getPossibleReplies: $currentChat ${reply[currentChat]}');
+  final reply = replyEng;
+  final oneLiners = oneLinersEng;
   List<String> possibleReplies = reply[currentChat] ?? List<String>()
     ..shuffle();
   if (possibleReplies.length < num) {

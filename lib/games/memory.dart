@@ -9,8 +9,9 @@ import '../components/responsive_grid_view.dart';
 import '../components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
+import 'package:maui/components/gameaudio.dart';
 
- bool initialVisibility = false;
+bool initialVisibility = false;
 
 class Memory extends StatefulWidget {
   Function onScore;
@@ -77,7 +78,12 @@ class MemoryState extends State<Memory> {
     print("Statuses Before Emtying  _stauses: ${_statuses}");
     setState(() => _isLoading = true);
     _data = await fetchPairData(widget.gameConfig.gameCategoryId, _maxSize);
-    if(_data.length == 2 || _data.length == 3 || _data.length == 4 || _data.length == 5 || _data.length == 6 || _data.length == 7) {
+    if (_data.length == 2 ||
+        _data.length == 3 ||
+        _data.length == 4 ||
+        _data.length == 5 ||
+        _data.length == 6 ||
+        _data.length == 7) {
       _maxSize = 2;
     }
     print("Rajesh-Data-initBoardCall: ${_data}");
@@ -107,7 +113,7 @@ class MemoryState extends State<Memory> {
     _shaker = [];
     _shaker = _letters.map((a) => ShakeCell.Right).toList(growable: false);
     setState(() => _isLoading = false);
-  }      
+  }
 
   @override
   void didUpdateWidget(Memory oldWidget) {
@@ -117,13 +123,14 @@ class MemoryState extends State<Memory> {
     if (widget.iteration != oldWidget.iteration) {
       initialVisibility = true;
       _allLetters.clear();
-      _letters.clear();  
+      _letters.clear();
       _initBoard();
       print("Rajesh-Data-didUpdateWidget${_allLetters}");
     }
   }
 
-  Widget _buildItem(int index, String text, int maxChars, double maxWidth, double maxHeight, Status status, ShakeCell shaker) {
+  Widget _buildItem(int index, String text, int maxChars, double maxWidth,
+      double maxHeight, Status status, ShakeCell shaker) {
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -138,14 +145,17 @@ class MemoryState extends State<Memory> {
           print("_size Size ${_size}");
           print("initialVisibility ${initialVisibility}");
 
-          if(initialVisibility == true) return;
-      
+          if (initialVisibility == true) return;
+
           if (_statuses[index] == Status.Disappear) return;
 
-          int numOfVisible = _statuses.fold(0, (prev, element) => element == Status.Visible ? prev + 1 : prev);
+          int numOfVisible = _statuses.fold(0,
+              (prev, element) => element == Status.Visible ? prev + 1 : prev);
 
-          if (_pressedTileIndex == index || _statuses[index] == Status.Visible || numOfVisible >= 2 || _clickCnt > 2) 
-            return;
+          if (_pressedTileIndex == index ||
+              _statuses[index] == Status.Visible ||
+              numOfVisible >= 2 ||
+              _clickCnt > 2) return;
 
           _clickCnt++;
 
@@ -176,7 +186,6 @@ class MemoryState extends State<Memory> {
                   _clickCnt = 0;
                 });
               });
-
               _matched++;
               widget.onScore(2);
               widget.onProgress((_progressCnt) / ((_size * _size) / 2));
@@ -188,7 +197,7 @@ class MemoryState extends State<Memory> {
                 _progressCnt = 1;
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   print("Rajesh Game-End");
-                  widget.onEnd();        
+                  widget.onEnd();
                 });
               }
               print("Pressed Statuses2: ${_statuses}");
@@ -270,23 +279,30 @@ class MemoryState extends State<Memory> {
       AppState state = AppStateContainer.of(context).state;
 
       return new Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: vPadding, horizontal: hPadding),
-                  child: ResponsiveGridView(
-                    rows: _size,
-                    cols: _size,
-                    children: _letters
-                        .map((e) => Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(j, e, maxChars,  maxWidth, maxHeight, _statuses[j], _shaker[j++])))
-                        .toList(growable: false),
-                  ));
+          padding:
+              EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+          child: ResponsiveGridView(
+            rows: _size,
+            cols: _size,
+            children: _letters
+                .map((e) => Padding(
+                    padding: EdgeInsets.all(buttonPadding),
+                    child: _buildItem(j, e, maxChars, maxWidth, maxHeight,
+                        _statuses[j], _shaker[j++])))
+                .toList(growable: false),
+          ));
     });
   }
 }
 
 class MyButton extends StatefulWidget {
-  MyButton({Key key, this.text, this.status, this.shaker, this.unitMode, this.onPress})
+  MyButton(
+      {Key key,
+      this.text,
+      this.status,
+      this.shaker,
+      this.unitMode,
+      this.onPress})
       : super(key: key);
 
   final String text;
@@ -316,26 +332,27 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     flipController = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
     noAnimation = new Tween(begin: 0.0, end: 0.0).animate(shakeController);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
-      ..addStatusListener((state) {
-        print("$state:${animation.value}");
-        if (state == AnimationStatus.dismissed) {
-          print('dismissed');
-          if (widget.text != null) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
+    animation =
+        new CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
+          ..addStatusListener((state) {
+            print("$state:${animation.value}");
+            if (state == AnimationStatus.dismissed) {
+              print('dismissed');
+              if (widget.text != null) {
+                setState(() => _displayText = widget.text);
+                controller.forward();
+              }
+            }
+          });
+
+    initialVisibility = true;
+    controller.forward().then((f) {
+      flipController.forward();
+      new Future.delayed(const Duration(milliseconds: 2000), () {
+        flipController.reverse();
+        initialVisibility = false;
       });
-        
-        initialVisibility = true;
-        controller.forward().then((f) {
-          flipController.forward();
-        new Future.delayed(const Duration(milliseconds: 2000), () { 
-          flipController.reverse();
-          initialVisibility = false;
-        });
-      });
+    });
 
     shakeAnimation = new Tween(begin: -6.0, end: 4.0).animate(shakeController);
     _myAnim();
@@ -364,7 +381,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     print("_MyButtonState.didUpdateWidget: ${oldWidget.text} ${widget.text} ");
-     print("Rajesh");
+    print("Rajesh");
     if (oldWidget.text == null && widget.text != null) {
       flipController.reverse();
       print("Rajesh1");

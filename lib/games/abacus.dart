@@ -10,6 +10,7 @@ import 'package:tuple/tuple.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Abacus extends StatefulWidget {
   Function onScore;
@@ -77,7 +78,7 @@ class AbacusState extends State<Abacus> {
   void _initBoard() async {
     // _letters.removeRange(0,_letters.length);
     //               _letters1.removeRange(0,_letters1.length);
-    //               _allLetters1.removeRange(0, _allLetters1.length);  
+    //               _allLetters1.removeRange(0, _allLetters1.length);
     setState(() => _isLoading = true);
     data = await fetchMathData(widget.gameConfig.gameCategoryId);
     print('data is $data');
@@ -101,7 +102,7 @@ class AbacusState extends State<Abacus> {
           .addAll(_allLetters.skip(0).take(_size).toList(growable: true));
     }
     print(_shuffledLetters);
-    
+
     _letters = _shuffledLetters.sublist(0, _shuffledLetters.length);
     quest = data.item1;
     result = 0;
@@ -115,7 +116,7 @@ class AbacusState extends State<Abacus> {
     var x = data.item1;
     var y = data.item2;
     var z = data.item3;
-    count=0;
+    count = 0;
     for (var i = 0; i < _size; i++) {
       _letters[i] = count.toString();
     }
@@ -300,18 +301,16 @@ class AbacusState extends State<Abacus> {
                 status[4] = 0;
 
                 new Future.delayed(const Duration(milliseconds: 1500), () {
-                 //  _letters.removeRange(0,_letters.length);
-                  _letters1.removeRange(0,_letters1.length);
-                  
-                //   _allLetters1.removeRange(0, _allLetters1.length);  
-                //  for(int i=0;i<_size;i++){
-                //     _letters[i]='0';
-                //   }
-                  status=[0,1,1,1,1];
-                 
+                  //  _letters.removeRange(0,_letters.length);
+                  _letters1.removeRange(0, _letters1.length);
+
+                  //   _allLetters1.removeRange(0, _allLetters1.length);
+                  //  for(int i=0;i<_size;i++){
+                  //     _letters[i]='0';
+                  //   }
+                  status = [0, 1, 1, 1, 1];
+
                   widget.onEnd();
-                  
-                           
                 });
               }
             }
