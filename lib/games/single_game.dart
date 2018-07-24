@@ -365,7 +365,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           child: IconButton(
                             iconSize: 40.0,
                             alignment: AlignmentDirectional.bottomStart,
-                            icon: Icon(Icons.close, color: Colors.white),
+                            icon: Icon(Icons.check, color: Colors.white),
                             onPressed: null,
                           ),
                         ),
