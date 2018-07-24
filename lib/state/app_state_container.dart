@@ -164,32 +164,40 @@ class AppStateContainerState extends State<AppStateContainer> {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
-      final file = new File('$path/$fileName.ogg');
+      final file = new File('$path/$fileName');
       print('Playing ${file.path}');
       if (await file.exists()) {
         await _audioPlayer.play(file.path, isLocal: true);
       } else {
         await file.writeAsBytes(
-            (await rootBundle.load('assets/dict/$fileName.ogg'))
-                .buffer
-                .asUint8List());
+            (await rootBundle.load('assets/$fileName')).buffer.asUint8List());
+        await _audioPlayer.play(file.path, isLocal: true);
+      }
+    } catch (e) {
+      print('Failed playing $fileName: $e');
+    }
+  }
+
+  void playWord(String word) async {
+    word = word.toLowerCase();
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final path = directory.path;
+      final file = new File('$path/$word.ogg');
+      print('Playing ${file.path}');
+      if (await file.exists()) {
+        await _audioPlayer.play(file.path, isLocal: true);
+      } else {
+        await file.writeAsBytes((await rootBundle.load('assets/dict/$word.ogg'))
+            .buffer
+            .asUint8List());
         await _audioPlayer.play(file.path, isLocal: true);
       }
     } catch (e) {
       try {
-        await platform
-            .invokeMethod('speak', <String, dynamic>{'text': fileName});
+        await platform.invokeMethod('speak', <String, dynamic>{'text': word});
       } on PlatformException catch (e) {}
     }
-
-//    if (!_isPlaying) {
-//      Directory documentsDirectory = await getApplicationDocumentsDirectory();
-//      final result = await _audioPlayer
-//          .play(join(documentsDirectory.path, 'apple.ogg'), isLocal: true);
-//      if (result == 1) {
-//        _isPlaying = true;
-//      }
-//    }
   }
 
   void display(BuildContext context, String fileName) {

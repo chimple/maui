@@ -107,7 +107,7 @@ class _UnitButtonState extends State<UnitButton> {
     return widget.showHelp
         ? new GestureDetector(
             onLongPress: () {
-              AppStateContainer.of(context).play(widget.text.toLowerCase());
+              AppStateContainer.of(context).playWord(widget.text.toLowerCase());
               if (_unit != null && _unitMode != UnitMode.audio) {
                 AppStateContainer.of(context).display(context, widget.text);
               }

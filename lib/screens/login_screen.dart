@@ -22,7 +22,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-      GameAudio play=new GameAudio();
   List<User> _users;
   var user;
   dynamic decode;
@@ -215,7 +214,6 @@ class _LoginScreenState extends State<LoginScreen>
       var user = await new UserRepo().insertLocalUser(
           new User(image: imagePathStore, currentLessonId: 1, name: userName));
       AppStateContainer.of(context).setLoggedInUser(user);
-      play.tap();
       Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");

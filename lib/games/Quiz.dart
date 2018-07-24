@@ -37,7 +37,6 @@ class Quiz extends StatefulWidget {
 enum Status { Active, Right, Wrong }
 
 class QuizState extends State<Quiz> {
-   GameAudio play=new GameAudio();
   bool _isLoading = true;
   var keys = 0;
   Tuple3<String, String, List<String>> _allques;
@@ -96,7 +95,6 @@ class QuizState extends State<Quiz> {
         onPress: () {
           if (text == ans) {
             scoretrack = scoretrack + 4;
-            play.right();
             widget.onScore(4);
             widget.onProgress(1.0);
             widget.onEnd();
@@ -110,7 +108,6 @@ class QuizState extends State<Quiz> {
                 _statuses[index] = Status.Active;
               });
             });
-            play.wrong();
             if (scoretrack > 0) {
               scoretrack = scoretrack - 1;
               widget.onScore(-1);
