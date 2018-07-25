@@ -123,7 +123,7 @@ class _CasinoPickerState extends State<CasinoPicker> {
       child: new IgnorePointer(
         child: new Container(
           decoration: const BoxDecoration(
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
             gradient: const LinearGradient(
               colors: const <Color>[
                 const Color(0xFFFFFFFF),
@@ -165,8 +165,8 @@ class _CasinoPickerState extends State<CasinoPicker> {
           new Container(
             decoration: const BoxDecoration(
                 border: const Border(
-                  top: const BorderSide(width: 0.0, color: _kHighlighterBorder),
-                  bottom: const BorderSide(width: 0.0, color: _kHighlighterBorder),
+                  top: const BorderSide(width: 1.0, color: _kHighlighterBorder),
+                  bottom: const BorderSide(width: 2.0, color: _kHighlighterBorder),
                 )
             ),
             constraints: new BoxConstraints.expand(height: widget.itemExtent),
