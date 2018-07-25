@@ -1,40 +1,40 @@
-class SubCategory{
+class Subcategory {
   static const table = 'subcategory';
-  static const category_idCol = 'category_id';
-  static const sub_category_idCol = 'sub_category_id';
+  static const categoryIdCol = 'category_id';
+  static const idCol = 'id';
   static const orderCol = ' order';
 
-  String category_id;
-  String sub_category_id;
+  String categoryId;
+  String id;
   int order;
 
-  SubCategory({this.category_id, this.sub_category_id, this.order});
+  Subcategory({this.categoryId, this.id, this.order});
 
-  Map<String, dynamic> toMap(){
-    return{category_idCol: category_id, sub_category_idCol: sub_category_id, orderCol: order};
+  Map<String, dynamic> toMap() {
+    return {categoryIdCol: categoryId, idCol: id, orderCol: order};
   }
 
-  SubCategory.fromMap(Map<String, dynamic>map): this(
-    category_id: map[category_idCol],
-    sub_category_id: map[sub_category_idCol],
-    order: map[orderCol]
-  );
+  Subcategory.fromMap(Map<String, dynamic> map)
+      : this(
+            categoryId: map[categoryIdCol],
+            id: map[idCol],
+            order: map[orderCol]);
 
   @override
-    // TODO: implement hashCode
-    int get hashCode => category_id.hashCode ^ sub_category_id.hashCode ^ order.hashCode;
+  // TODO: implement hashCode
+  int get hashCode => categoryId.hashCode ^ id.hashCode ^ order.hashCode;
 
- @override
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SubCategory &&
+      other is Subcategory &&
           runtimeType == other.runtimeType &&
-          category_id == other.category_id &&
-          sub_category_id == other.sub_category_id &&
+          categoryId == other.categoryId &&
+          id == other.id &&
           order == other.order;
 
   @override
   String toString() {
-    return 'Category{category_id: $category_id, sub_category_id: $sub_category_id, order: $order}';
+    return 'Category{categoryId: $categoryId, id: $id, order: $order}';
   }
 }

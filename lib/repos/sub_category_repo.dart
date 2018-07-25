@@ -8,7 +8,7 @@ class SubCategoryRepo {
 
   const SubCategoryRepo();
 
-  Future<SubCategory> getCategory(String id) async {
+  Future<Subcategory> getCategory(String id) async {
     return subCategoryDao.getSubCategory(id);
   }
 }
