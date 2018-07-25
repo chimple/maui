@@ -169,12 +169,13 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
         var firstNum = rand.nextInt(8) + 1;
         var secondNum = rand.nextInt(9 - firstNum) + 1;
         var sum = firstNum + secondNum;
-        if(sum>7){
-        if(rand.nextInt(2)==1){
-         firstNum = rand.nextInt(2) + 1;
-         secondNum = rand.nextInt(3)+1;
-         sum=firstNum + secondNum;
-         }}
+        if (sum > 7) {
+          if (rand.nextInt(2) == 1) {
+            firstNum = rand.nextInt(2) + 1;
+            secondNum = rand.nextInt(3) + 1;
+            sum = firstNum + secondNum;
+          }
+        }
         return new Tuple4(firstNum, '+', secondNum, sum);
         break;
       case 8:
@@ -673,8 +674,6 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   return null;
 }
 
-
-
 Future<String> fetchData() async {
   List<String> gameViews = [
     "Colors",
@@ -798,4 +797,3 @@ Future<Tuple2<String, List<String>>> fetchDrawingData(int categoryId) async {
   }
   return null;
 }
-
