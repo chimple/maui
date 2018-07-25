@@ -21,7 +21,6 @@ class GameListView extends StatefulWidget {
 }
 
 class GameListViewState extends State<GameListView> {
-  GameAudio play=new GameAudio();
   Map<String, int> _notifs = Map<String, int>();
 
   @override
@@ -51,7 +50,6 @@ class GameListViewState extends State<GameListView> {
       margin: EdgeInsets.all(size.width * .02),
       child: new InkWell(
         onTap: () {
-          play.tap();
           Navigator
               .of(context)
               .push(MaterialPageRoute<void>(builder: (BuildContext context) {
@@ -158,7 +156,7 @@ class GameListViewState extends State<GameListView> {
             _buildButton(context, 'reflex', 'Reflex'),
             _buildButton(context, 'order_it', 'Order It'),
             _buildButton(context, 'memory', 'Memory'),
-            _buildButton(context, 'abacus', 'Abacus'),
+//            _buildButton(context, 'abacus', 'Abacus'),
             _buildButton(context, 'drawing', 'drawing'),
             _buildButton(context, 'fill_in_the_blanks', 'Fill In The Blanks'),
             _buildButton(context, 'calculate_numbers', 'Calculate'),

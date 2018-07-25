@@ -31,7 +31,6 @@ class OrderIt extends StatefulWidget {
 }
 
 class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   int _size = 12;
   int _maxSize = 4;
   List<String> _allLetters;
@@ -46,7 +45,6 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     print('OrderItState:initState');
-   
 
     if (widget.gameConfig.level < 4) {
       _maxSize = 5;
@@ -59,16 +57,17 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
   }
 
   void _initBoard() async {
-   controller = new AnimationController(duration: new Duration(milliseconds: 800), vsync: this);
-   animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-    ..addStatusListener((state) {
-      print("$state:${animation.value}");
-      if (state == AnimationStatus.dismissed) {
-        print('dismissed');
-      }
-    });
+    controller = new AnimationController(
+        duration: new Duration(milliseconds: 800), vsync: this);
+    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
+      ..addStatusListener((state) {
+        print("$state:${animation.value}");
+        if (state == AnimationStatus.dismissed) {
+          print('dismissed');
+        }
+      });
     controller.forward();
-
+    flag = 0;
     setState(() => _isLoading = true);
     _allLetters = [];
     _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
@@ -85,7 +84,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     setState(() => _isLoading = false);
   }
 
-   @override
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
@@ -96,7 +95,6 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      flag = 0;
     }
   }
 
@@ -119,7 +117,8 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     Size gSize = MediaQuery.of(context).size;
     print("Rajesh MediaQuery: ${gSize}");
     return new LayoutBuilder(builder: (context, constraints) {
-      print("Rajesh patil Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
+      print(
+          "Rajesh patil Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return new Container(
         child:
             new Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -151,9 +150,9 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     print("Rajesh Patil OrderPreview: ${orderNotifier.value}");
     print("Rajesh Patil flag: $flag");
 
-    if ((orderNotifier.value.compareTo(_letters.toString()) == 0) && flag == 0) {
+    if ((orderNotifier.value.compareTo(_letters.toString()) == 0) &&
+        flag == 0) {
       flag = 1;
-      play.right();
       new Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           widget.onScore(_maxSize);

@@ -35,7 +35,6 @@ class Dice extends StatefulWidget {
 enum ShakeCell { Right, InActive, Dance, CurveRow }
 
 class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   List<String> myData;
   List<String> otherData;
 
@@ -155,7 +154,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
           if (btnVal == sum || btnVal == sub) {
             _currentIndex++;
             print("Current index is ${myData.length}");
-            play.right();
             widget.onScore(2);
             widget.onProgress(_currentIndex / myData.length);
             getExistingDataForScore(myData);
@@ -166,17 +164,15 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
             setState(() {
               myData[index] = '';
             });
-          } else if(dice_tries.length == 2) {
+          } else if (dice_tries.length == 2) {
             _shake[index] = 1;
-            play.wrong();
             new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
                 _shake[index] = 0;
                 widget.onScore(-1);
               });
             });
-          }
-          else {
+          } else {
             _shake[index] = 1;
             new Future.delayed(const Duration(milliseconds: 600), () {
               setState(() {
@@ -278,21 +274,20 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     for (int i = 0; i < data.length; i++) {
       if (data[i] != '') existingData.add(int.parse(data[i]));
     }
-      return existingData;
+    return existingData;
   }
 
-   getExistingDataForScore(List<String> myData) {
-                List<int> existingData1 = [];
-                for (int i = 0; i < myData.length; i++) {
-                  if (myData[i] != '') existingData1.add(int.parse(myData[i]));
-                }
-                  if(existingData1.length <= 1){
-                    widget.onEnd(toJsonMap(), true);
-                  }
-                  else{
-                    widget.onEnd(toJsonMap(), false);
-                  }
-              }
+  getExistingDataForScore(List<String> myData) {
+    List<int> existingData1 = [];
+    for (int i = 0; i < myData.length; i++) {
+      if (myData[i] != '') existingData1.add(int.parse(myData[i]));
+    }
+    if (existingData1.length <= 1) {
+      widget.onEnd(toJsonMap(), true);
+    } else {
+      widget.onEnd(toJsonMap(), false);
+    }
+  }
 
   displayLabel(String dElement) {
     _myCounter = dElement;
@@ -318,7 +313,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
       var dval;
 
       if (_myCounter != " ") {
-        dval = _myCounter+'.png';
+        dval = _myCounter + '.png';
       } else {
         dval = "tapto_play.gif";
       }
@@ -346,14 +341,15 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
                       : constraints.maxWidth * .2,
                   // color: Colors.red,
                   decoration: BoxDecoration(
-                    color: Colors.blue[200],
-                    shape: BoxShape.rectangle,
-                    border: new Border.all(color: Colors.black, width: 2.0)
-                  ),
+                      color: Colors.blue[200],
+                      shape: BoxShape.rectangle,
+                      border: new Border.all(color: Colors.black, width: 2.0)),
                   child: new Center(
                       child: new Text("$_counter",
                           style: new TextStyle(
-                              color: Colors.black,fontWeight: FontWeight.w700 , fontSize: constraints.maxHeight*.06)))),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: constraints.maxHeight * .06)))),
               new InkWell(
                   onTap: _randomVal,
                   child: new Container(

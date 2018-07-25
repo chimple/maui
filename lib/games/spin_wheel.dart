@@ -43,7 +43,6 @@ class SpinWheel extends StatefulWidget {
 }
 
 class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
-  GameAudio play=new GameAudio();
   List<Color> _wheelColor = [
     Color(0XFFD1F2EB),
     Color(0XFFD1F2EB),
@@ -540,7 +539,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         controller.stop();
       });
       if (gameEndFlag) {
-        play.wrong();
         widget.onScore(-1);
       }
     });
@@ -577,7 +575,6 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
     }
     _countGameEnd++;
     //print("game count $_countGameEnd");
-    play.right();
     widget.onScore(4);
   }
 

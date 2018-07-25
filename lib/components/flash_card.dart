@@ -3,6 +3,7 @@ import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:meta/meta.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FlashCard extends StatefulWidget {
   final String text;
@@ -80,15 +81,18 @@ class _FlashCardState extends State<FlashCard> {
                     icon: new Icon(Icons.volume_up),
                     iconSize: constraints.maxHeight * 0.18,
                     color: Colors.white,
-                    onPressed: () =>
-                        AppStateContainer.of(context).play(widget.text)),
+                    onPressed: () {
+                      AppStateContainer.of(context).playWord(widget.text);
+                    }),
                 new Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     new IconButton(
                         icon: new Icon(Icons.arrow_left),
-                        onPressed: widget.onChecked,
+                        onPressed: () {
+                          widget.onChecked();
+                        },
                         iconSize: constraints.maxHeight * 0.2,
                         color: Colors.white),
                     new Expanded(
@@ -110,24 +114,25 @@ class _FlashCardState extends State<FlashCard> {
                                             fontWeight: FontWeight.bold)))
                                 : noImage
                                     ? new Container(
-                                    alignment: const Alignment(0.0, 0.0),
-                                    child: new Text(widget.text,
-                                        style: new TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                constraints.maxHeight * 0.11,
-                                            fontWeight: FontWeight.bold)))
+                                        alignment: const Alignment(0.0, 0.0),
+                                        child: new Text(widget.text,
+                                            style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                    constraints.maxHeight *
+                                                        0.11,
+                                                fontWeight: FontWeight.bold)))
                                     : Image.asset(_unit.image))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
-                      onPressed: widget.onChecked,
+                      onPressed: () {
+                        widget.onChecked();
+                      },
                       iconSize: constraints.maxHeight * 0.2,
                       color: Colors.white,
                     )
                   ],
                 ),
-
-                
                 noImage
                     ? new Container(
                         alignment: const Alignment(0.0, 0.0),

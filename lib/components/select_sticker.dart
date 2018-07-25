@@ -3,6 +3,24 @@ import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/components/categorized_scroller.dart';
 
 final Map<String, List<String>> Stickers = {
+  'assets/stickers/emoguy/happy.png': [
+    'assets/stickers/emoguy/angry.gif',
+    'assets/stickers/emoguy/cold.gif',
+    'assets/stickers/emoguy/cry.gif',
+    'assets/stickers/emoguy/happy.gif',
+    'assets/stickers/emoguy/irritated.gif',
+    'assets/stickers/emoguy/laughing.gif',
+    'assets/stickers/emoguy/love.gif',
+    'assets/stickers/emoguy/playing.gif',
+    'assets/stickers/emoguy/relaxed.gif',
+    'assets/stickers/emoguy/sad.gif',
+    'assets/stickers/emoguy/scared.gif',
+    'assets/stickers/emoguy/sleeping.gif',
+    'assets/stickers/emoguy/thumbsdown.gif',
+    'assets/stickers/emoguy/thumbup.gif',
+    'assets/stickers/emoguy/workingout.gif',
+    'assets/stickers/emoguy/yummy.gif'
+  ],
   'assets/stickers/giraffe/giraffe.png': [
     'assets/stickers/giraffe/1.png',
     'assets/stickers/giraffe/10.png',
@@ -93,24 +111,6 @@ final Map<String, List<String>> Stickers = {
     'assets/stickers/doggie/8.png',
     'assets/stickers/doggie/9.png',
   ],
-  'assets/stickers/emoguy/happy.png': [
-    'assets/stickers/emoguy/angry.png',
-    'assets/stickers/emoguy/cold.png',
-    'assets/stickers/emoguy/cry.png',
-    'assets/stickers/emoguy/happy.png',
-    'assets/stickers/emoguy/irritated.png',
-    'assets/stickers/emoguy/laughing.png',
-    'assets/stickers/emoguy/love.png',
-    'assets/stickers/emoguy/playing.png',
-    'assets/stickers/emoguy/relaxed.png',
-    'assets/stickers/emoguy/sad.png',
-    'assets/stickers/emoguy/scared.png',
-    'assets/stickers/emoguy/sleeping.png',
-    'assets/stickers/emoguy/thumbsdown.png',
-    'assets/stickers/emoguy/thumbsup.png',
-    'assets/stickers/emoguy/workout.png',
-    'assets/stickers/emoguy/yummy.png'
-  ]
 };
 
 class SelectSticker extends StatelessWidget {

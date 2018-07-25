@@ -42,7 +42,6 @@ enum Status1 { Active, Visible, Disappear }
 enum ShakeCell1 { Right, InActive, Dance, CurveRow }
 
 class CirclewordState extends State<Circleword> {
-  GameAudio play=new GameAudio();
   var score = 0;
 
   String word = '';
@@ -51,8 +50,8 @@ class CirclewordState extends State<Circleword> {
   List<ShakeCell> _shakecell;
   List<ShakeCell1> _shakecell1;
   List<Status> _statuses;
-   List<Status1> _statuses1;
- List<String> _solvedLetters = [];
+  List<Status1> _statuses1;
+  List<String> _solvedLetters = [];
   List<String> _letters1;
   bool _isLoading = true;
   List<String> wordata;
@@ -85,11 +84,10 @@ class CirclewordState extends State<Circleword> {
     _shakecell =
         _letters.map((e) => ShakeCell.InActive).toList(growable: false);
     setState(() => _isLoading = false);
-     _shakecell1 =
+    _shakecell1 =
         _letters.map((e) => ShakeCell1.InActive).toList(growable: false);
     setState(() => _isLoading = false);
-     _statuses1 = _letters.map((a) => Status1.Active).toList(growable: false);
-
+    _statuses1 = _letters.map((a) => Status1.Active).toList(growable: false);
   }
 
   @override
@@ -105,9 +103,9 @@ class CirclewordState extends State<Circleword> {
   @override
   Widget build(BuildContext context) {
     var rand = new Random();
-  var startNum = rand.nextInt(max(1, 10));
+    var startNum = rand.nextInt(max(1, 10));
 
-  print("random number generated in dart.... upto 10...::$startNum");
+    print("random number generated in dart.... upto 10...::$startNum");
     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new SizedBox(
@@ -118,7 +116,7 @@ class CirclewordState extends State<Circleword> {
     }
 
     var j = 0;
-    var k=0;
+    var k = 0;
 
     return new LayoutBuilder(builder: (context, constraints) {
       double circleSize = constraints.maxHeight / 2;
@@ -126,7 +124,7 @@ class CirclewordState extends State<Circleword> {
       print(
           "in layout builde hieght would be ...::..${constraints.maxHeight}..........$circleSize");
       print("width of layout builder is...........${constraints.maxWidth}");
-      
+
       List<Widget> widgets = new List();
       double hi = constraints.maxHeight / 4;
       Offset circleCenter = new Offset(hi, hi);
@@ -142,7 +140,7 @@ class CirclewordState extends State<Circleword> {
       } else if (_letters.length >= 5) {
         dradius = _letters.length + 1.0 + 0.5;
       }
-    var textsizeis= (circleSize / dradius)/3;
+      var textsizeis = (circleSize / dradius) / 3;
       List<Offset> offsets2 = calculateOffsets(0.0, circleCenter, 1);
 
       print(" ......offstes is.... $offsets2");
@@ -160,25 +158,24 @@ class CirclewordState extends State<Circleword> {
           Colors.teal, circleSize / dradius, _statuses[j], _shakecell[j++])));
       double potl = 180.0;
       double landl = 140.0;
-      double subwidthp =(media.size.width/2)*.4;
-      double subwidthl=(media.size.width/2)*.25;
+      double subwidthp = (media.size.width / 2) * .4;
+      double subwidthl = (media.size.width / 2) * .25;
 
       double lposition = _height > _width ? potl : landl;
-      double sizeofsub=_height > _width ?subwidthp:subwidthl;
+      double sizeofsub = _height > _width ? subwidthp : subwidthl;
 
-    //  final hPadding = pow(constraints.maxWidth / 150.0, 2);
-    //   final vPadding = pow(constraints.maxHeight / 150.0, 2);
+      //  final hPadding = pow(constraints.maxWidth / 150.0, 2);
+      //   final vPadding = pow(constraints.maxHeight / 150.0, 2);
 
-    //   double maxWidth = (constraints.maxWidth - hPadding * 2) ;
-    //   double maxHeight = (constraints.maxHeight - vPadding * 2) ;
+      //   double maxWidth = (constraints.maxWidth - hPadding * 2) ;
+      //   double maxHeight = (constraints.maxHeight - vPadding * 2) ;
 
-    //   final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      //   final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
-    //   maxWidth -= buttonPadding * 2;
-    //   maxHeight -= buttonPadding * 2;
-    //   UnitButton.saveButtonSize(context, 10, maxWidth, maxHeight);
-    //   AppState state = AppStateContainer.of(context).state;
-
+      //   maxWidth -= buttonPadding * 2;
+      //   maxHeight -= buttonPadding * 2;
+      //   UnitButton.saveButtonSize(context, 10, maxWidth, maxHeight);
+      //   AppState state = AppStateContainer.of(context).state;
 
       print(".........solved letters is....$_solvedLetters");
       return new Container(
@@ -197,12 +194,14 @@ class CirclewordState extends State<Circleword> {
               new Center(
                 child: new Container(
                   width: sizeofsub,
-                  height: (media.size.height/2)*.1,
-                  margin: new EdgeInsets.only( top: 5.0,),
+                  height: (media.size.height / 2) * .1,
+                  margin: new EdgeInsets.only(
+                    top: 5.0,
+                  ),
                   child: new RaisedButton(
-                     shape: new RoundedRectangleBorder(
-                   borderRadius:
-                       new BorderRadius.all(new Radius.circular(8.0))),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                            new BorderRadius.all(new Radius.circular(8.0))),
                     onPressed: () => method(),
                     child: new Text("submit"),
                   ),
@@ -216,20 +215,17 @@ class CirclewordState extends State<Circleword> {
               //         style:
               //             new TextStyle(color: Colors.black, fontSize: 25.0))),
 
-          
-
               new ResponsiveGridView(
-              
-                    rows: 3,
-                    cols: 3,
-                    maxAspectRatio: 1.0,
-                    children: _solvedLetters
-                       .map((e) =>new  Padding(
-                                padding: EdgeInsets.all(6.0),
-                                child: _buildItem1(k, e, _shakecell1[k],_statuses1[k++])
-                      ))
-                      .toList(growable: false),
-                )
+                rows: 3,
+                cols: 3,
+                maxAspectRatio: 1.0,
+                children: _solvedLetters
+                    .map((e) => new Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child:
+                            _buildItem1(k, e, _shakecell1[k], _statuses1[k++])))
+                    .toList(growable: false),
+              )
             ]),
       );
     });
@@ -261,7 +257,7 @@ class CirclewordState extends State<Circleword> {
     var mflag = 0;
     print("hello ");
     score = word.length;
-  print(" all indexs value is $indexstore");
+    print(" all indexs value is $indexstore");
     wordata.forEach((e) {
       if (e.compareTo('$word') == 0) {
         mflag = 1;
@@ -269,28 +265,21 @@ class CirclewordState extends State<Circleword> {
           wordata.remove(e);
           _solvedLetters.add(word);
           print("object.........solved letters are..::$_solvedLetters");
-          word='';
+          word = '';
           // words = "$words" + "$word" + " , ";
 
           indexstore = [];
-          play.right();
           widget.onScore(score);
-                 if(_solvedLetters.length==_letters.length){
-                  
-      setState(() {
-                 new Future.delayed(const Duration(milliseconds: 250),
-                            () {
-                              
-                              // indexstore =[];
+          if (_solvedLetters.length == _letters.length) {
+            setState(() {
+              new Future.delayed(const Duration(milliseconds: 250), () {
+                // indexstore =[];
 
-                         _solvedLetters.removeRange(0, _solvedLetters.length);
-                          widget.onEnd();
-                            
-                            
-                        });
+                _solvedLetters.removeRange(0, _solvedLetters.length);
+                widget.onEnd();
+              });
             });
-     
-    }
+          }
           _statuses =
               _letters.map((a) => Status.Active).toList(growable: false);
           _shakecell =
@@ -301,22 +290,19 @@ class CirclewordState extends State<Circleword> {
     if (mflag == 0) {
       indexstore.forEach((e) {
         setState(() {
-          _shakecell[e]=ShakeCell.Right;
-          
-
-      
+          _shakecell[e] = ShakeCell.Right;
         });
       });
-          _solvedLetters.forEach((e) {
-      if (e.compareTo('$word') == 0) {
-           setState(() {
-               var i= _solvedLetters.indexOf(word);
-       _shakecell1[i]=ShakeCell1.Right;
+      _solvedLetters.forEach((e) {
+        if (e.compareTo('$word') == 0) {
+          setState(() {
+            var i = _solvedLetters.indexOf(word);
+            _shakecell1[i] = ShakeCell1.Right;
 
-        _statuses1[i] = Status1.Visible;
-            });
-      }});
-     
+            _statuses1[i] = Status1.Visible;
+          });
+        }
+      });
 
       print("shanlke cells of tile is $_shakecell");
       new Future.delayed(const Duration(milliseconds: 800), () {
@@ -326,16 +312,15 @@ class CirclewordState extends State<Circleword> {
               _letters.map((a) => ShakeCell.InActive).toList(growable: false);
           _statuses =
               _letters.map((a) => Status.Active).toList(growable: false);
-               _shakecell1 =
+          _shakecell1 =
               _letters.map((a) => ShakeCell1.InActive).toList(growable: false);
-               _statuses1 =
+          _statuses1 =
               _letters.map((a) => Status1.Active).toList(growable: false);
         });
       });
 
       word = '';
     }
- 
   }
 
   Widget _buildItem(Offset offset, int i, String text, MaterialColor teal,
@@ -350,66 +335,64 @@ class CirclewordState extends State<Circleword> {
         tile: tile,
         onPress: () {
           print("object..offsets is...:$offset");
-      
-          if(status==Status.Active){
-          if (flag == 0) {
-            setState(() {
-              indexstore.add(i);
-              _statuses[i] = Status.Visible;
-              //  _shakecell[i]=ShakeCell.Right;
-            });
-            word = text;
-            flag = 1;
-          } else {
-            setState(() {
-              indexstore.add(i);
-              _statuses[i] = Status.Visible;
-              // _shakecell[i]=ShakeCell.Right;
-            });
-            print("text inside opress is..... $text");
-            print(" index....... $i");
 
-            word = "$word" + "$text";
-            print("object... word is... $word");
+          if (status == Status.Active) {
+            if (flag == 0) {
+              setState(() {
+                indexstore.add(i);
+                _statuses[i] = Status.Visible;
+                //  _shakecell[i]=ShakeCell.Right;
+              });
+              word = text;
+              flag = 1;
+            } else {
+              setState(() {
+                indexstore.add(i);
+                _statuses[i] = Status.Visible;
+                // _shakecell[i]=ShakeCell.Right;
+              });
+              print("text inside opress is..... $text");
+              print(" index....... $i");
+
+              word = "$word" + "$text";
+              print("object... word is... $word");
+            }
+          } else if (indexstore.last == i) {
+            setState(() {
+              _statuses[i] = Status.Active;
+
+              word = word.replaceRange(word.length - 1, word.length, '');
+              indexstore.removeLast();
+            });
           }
-        }
-        else if(indexstore.last==i){
-         
-          setState(() {
-             _statuses[i]=Status.Active;
-
-                      word=word.replaceRange(word.length-1, word.length,'');
-                      indexstore.removeLast();
-                    });
-
-        }
         });
   }
 
-  _buildItem1(int index, String text, ShakeCell1 tile,Status1 status) {
+  _buildItem1(int index, String text, ShakeCell1 tile, Status1 status) {
     print("the text off the solvedltters is....$text");
     return new MyButton(
-        key:new  ValueKey<int>(index),
-        index:index,
-        text: text,
-         tile: tile,
-         status:status,
+      key: new ValueKey<int>(index),
+      index: index,
+      text: text,
+      tile: tile,
+      status: status,
     );
-      
   }
 }
+
 class MyButton extends StatefulWidget {
-  MyButton({Key key, 
-  this.text,
-   this.index,
-   this.tile,
-   this.status,
+  MyButton({
+    Key key,
+    this.text,
+    this.index,
+    this.tile,
+    this.status,
   }) : super(key: key);
 
   final String text;
   int index;
   Status1 status;
-   ShakeCell1 tile;
+  ShakeCell1 tile;
 //     final Offset offset;
 //  final DraggableCanceledCallback onCancel;
 //   final DragTargetWillAccept onwill;
@@ -420,6 +403,7 @@ class MyButton extends StatefulWidget {
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
+
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   // AnimationController controller, controller1;
   // Animation<double> animation, animation1;
@@ -427,7 +411,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   String newtext = '';
   var f = 0;
   var i = 0;
-AnimationController controller, controller1;
+  AnimationController controller, controller1;
   Animation<double> animationRight, animation, animationWrong, animationDance;
   initState() {
     super.initState();
@@ -475,46 +459,42 @@ AnimationController controller, controller1;
   void dispose() {
     controller.dispose();
     controller1.dispose();
-  
+
     super.dispose();
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     print("_MyButtonState.build");
- MediaQueryData media = MediaQuery.of(context);
-    int _color =0xFF5F9EA0;
-
+    MediaQueryData media = MediaQuery.of(context);
+    int _color = 0xFF5F9EA0;
 
     //  if (widget.tile==ShakeCell.Right) {
     //   _color = 0xFFff0000; // red
     // }
 
-      return new ScaleTransition(
-          scale: animation,
-          child: new Shake(
-   animation: widget.tile == ShakeCell1.Right
-                ? animationWrong
-                : animationRight,
-            child: new Container(
-              margin: EdgeInsets.only(top: 5.0),
-              height: (media.size.height/2)*.15,
-              width: (media.size.width/2)*.4,
-              child: new RaisedButton(
-               onPressed: () => {},
-       
-               color: widget.status == Status1.Visible
-                   ? new Color(0xFFffffff)
-                   : Theme.of(context).primaryColor,
-               shape: new RoundedRectangleBorder(
-                   borderRadius:
-                       new BorderRadius.all(new Radius.circular(8.0))),
-               child: new Text("${widget.text}",
-               key: new Key(widget.index.toString()+"but"),
-                   style:
-                       new TextStyle(color: Colors.black, fontSize: 14.0))),
-            ),
-          ) );
+    return new ScaleTransition(
+        scale: animation,
+        child: new Shake(
+          animation:
+              widget.tile == ShakeCell1.Right ? animationWrong : animationRight,
+          child: new Container(
+            margin: EdgeInsets.only(top: 5.0),
+            height: (media.size.height / 2) * .15,
+            width: (media.size.width / 2) * .4,
+            child: new RaisedButton(
+                onPressed: () => {},
+                color: widget.status == Status1.Visible
+                    ? new Color(0xFFffffff)
+                    : Theme.of(context).primaryColor,
+                shape: new RoundedRectangleBorder(
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(8.0))),
+                child: new Text("${widget.text}",
+                    key: new Key(widget.index.toString() + "but"),
+                    style: new TextStyle(color: Colors.black, fontSize: 14.0))),
+          ),
+        ));
   }
 }
 
@@ -608,10 +588,11 @@ class _PositionCircleState extends State<PositionCircle>
             widget.tile == ShakeCell.Right ? animationWrong : animationRight,
         child: new RawMaterialButton(
           shape: const CircleBorder(side: BorderSide.none),
-           elevation: widget.status == Status.Visible ? 10.0 : 0.0,
+          elevation: widget.status == Status.Visible ? 10.0 : 0.0,
           onPressed: () => widget.onPress(),
-          fillColor:
-              widget.status == Status.Visible ? Colors.white : Theme.of(context).primaryColor,
+          fillColor: widget.status == Status.Visible
+              ? Colors.white
+              : Theme.of(context).primaryColor,
           splashColor: Colors.yellow,
           child: new Text(widget.text,
               style: new TextStyle(color: Colors.black, fontSize: 24.0)),

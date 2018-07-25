@@ -51,6 +51,8 @@ import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/repos/log_repo.dart';
 import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/components/gameaudio.dart';
+import 'package:maui/db/entity/lesson.dart';
 
 enum GameMode { timed, iterations }
 
@@ -314,54 +316,66 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                     padding: EdgeInsets.only(right: 10.0),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 40.0),
-                    width: 130.0,
-                    decoration: BoxDecoration(
-                      color: colors[0],
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Color(0xFF919191),
-                          spreadRadius: 1.0,
-                          offset: const Offset(0.0, 6.0),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: IconButton(
-                          iconSize: 40.0,
-                          alignment: AlignmentDirectional.bottomStart,
-                          onPressed: () => Navigator.of(context).pop(false),
-                          icon: Icon(Icons.close, color: Colors.white)),
-                    ),
-                  ),
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator.of(context).pop(false);
+                        },
+                      )),
                   new Padding(
                     padding: EdgeInsets.only(right: 70.0),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 40.0),
-                    width: 130.0,
-                    decoration: BoxDecoration(
-                      color: colors[0],
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Color(0xFF919191),
-                          spreadRadius: 1.0,
-                          offset: const Offset(0.0, 6.0),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: IconButton(
-                          iconSize: 40.0,
-                          alignment: AlignmentDirectional.bottomEnd,
-                          onPressed: () => Navigator
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.check, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator
                               .of(context)
-                              .popUntil(ModalRoute.withName('/tab')),
-                          icon: Icon(Icons.check, color: Colors.white)),
-                    ),
-                  ),
+                              .popUntil(ModalRoute.withName('/tab'));
+                        },
+                      )),
                 ],
               )
             ],
@@ -451,6 +465,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
+                                            AppStateContainer
+                                                .of(context)
+                                                .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
                                         ))
@@ -665,7 +682,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     if (lessonId != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var numPlays = prefs.getInt('lessonId$lessonId') ?? 0;
-      if (++numPlays >= 3) {
+      if (++numPlays >= 3 &&
+          AppStateContainer.of(context).state.loggedInUser.currentLessonId <
+              Lesson.maxLessonId) {
         AppStateContainer.of(context).state.loggedInUser.currentLessonId++;
         await UserRepo()
             .update(AppStateContainer.of(context).state.loggedInUser);
