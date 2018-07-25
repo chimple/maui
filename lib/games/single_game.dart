@@ -316,60 +316,66 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                     padding: EdgeInsets.only(right: 10.0),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 40.0),
-                    width: 130.0,
-                    decoration: BoxDecoration(
-                      color: colors[0],
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Color(0xFF919191),
-                          spreadRadius: 1.0,
-                          offset: const Offset(0.0, 6.0),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: IconButton(
-                          iconSize: 40.0,
-                          alignment: AlignmentDirectional.bottomStart,
-                          onPressed: () {
-                            AppStateContainer.of(context).play('_audiotap.mp3');
-                            Navigator.of(context).pop(false);
-                          },
-                          icon: Icon(Icons.close, color: Colors.white)),
-                    ),
-                  ),
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator.of(context).pop(false);
+                        },
+                      )),
                   new Padding(
                     padding: EdgeInsets.only(right: 70.0),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 40.0),
-                    width: 130.0,
-                    decoration: BoxDecoration(
-                      color: colors[0],
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Color(0xFF919191),
-                          spreadRadius: 1.0,
-                          offset: const Offset(0.0, 6.0),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: IconButton(
-                          iconSize: 40.0,
-                          alignment: AlignmentDirectional.bottomEnd,
-                          onPressed: () {
-                            AppStateContainer.of(context).play('_audiotap.mp3');
-                            Navigator
-                                .of(context)
-                                .popUntil(ModalRoute.withName('/tab'));
-                          },
-                          icon: Icon(Icons.check, color: Colors.white)),
-                    ),
-                  ),
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.check, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator
+                              .of(context)
+                              .popUntil(ModalRoute.withName('/tab'));
+                        },
+                      )),
                 ],
               )
             ],
