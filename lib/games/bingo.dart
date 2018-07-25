@@ -121,19 +121,19 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
             .map((e) => ColmunCell.ColumnActive)
             .toList(growable: false);
         _RowCells = _letters.map((e) => RowCell.Dance).toList(growable: false);
-        z = 0;
-        bingoCount = 0;
-        countData = 0;
-        onScoreFlag = 0;
-        countEnd == 0;
-        clickCounter = 0;
-        onScoreFlag = 0;
-        _copyQuestion.removeRange(0, _copyQuestion.length);
-        _copyQuestion1.removeRange(0, _copyQuestion1.length);
-        _all.removeRange(0, _all.length);
-        _letters.removeRange(0, _letters.length);
-        _shuffledLetters.removeRange(0, _shuffledLetters.length);
-        print("iteration not chhanging.......::..${widget.iteration}");
+//        z = 0;
+//        bingoCount = 0;
+//        countData = 0;
+//        onScoreFlag = 0;
+//        countEnd == 0;
+//        clickCounter = 0;
+//        onScoreFlag = 0;
+//        _copyQuestion.removeRange(0, _copyQuestion.length);
+//        _copyQuestion1.removeRange(0, _copyQuestion1.length);
+//        _all.removeRange(0, _all.length);
+//        _letters.removeRange(0, _letters.length);
+//        _shuffledLetters.removeRange(0, _shuffledLetters.length);
+//        print("iteration not chhanging.......::..${widget.iteration}");
       });
       _initBoard();
     }
@@ -316,10 +316,21 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                     print("this is my count End $countEnd");
                     countEnd = 0;
                     widget.onEnd();
+                    z = 0;
+                    bingoCount = 0;
+                    countData = 0;
+                    onScoreFlag = 0;
+                    clickCounter = 0;
+                    onScoreFlag = 0;
+                    _copyQuestion.removeRange(0, _copyQuestion.length);
+                    _copyQuestion1.removeRange(0, _copyQuestion1.length);
+                    _all.removeRange(0, _all.length);
+                    _letters.removeRange(0, _letters.length);
+                    _shuffledLetters.removeRange(0, _shuffledLetters.length);
                   }
                 });
                 //print("this is wrongg");
-                new Future.delayed(const Duration(milliseconds: 300), () {
+                new Future.delayed(const Duration(milliseconds: 100), () {
                   setState(() {
                     _ShakeCells[index] = ShakeCell.Wrong;
                     if (matchColumn == -1 && matchRow == -1) {
@@ -452,11 +463,24 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   void _turnByTurn() {
     if (onend == false) {
       onend = true;
+
       print("this is when onend calling method was........ ");
       setState(() {
-        new Future.delayed(const Duration(milliseconds: 500), () {
+        new Future.delayed(const Duration(milliseconds: 200), () {
           if (onend == true) {
+            countEnd == 0;
             widget.onEnd();
+            z = 0;
+            bingoCount = 0;
+            countData = 0;
+            onScoreFlag = 0;
+            clickCounter = 0;
+            onScoreFlag = 0;
+            _copyQuestion.removeRange(0, _copyQuestion.length);
+            _copyQuestion1.removeRange(0, _copyQuestion1.length);
+            _all.removeRange(0, _all.length);
+            _letters.removeRange(0, _letters.length);
+            _shuffledLetters.removeRange(0, _shuffledLetters.length);
           }
         });
       });
