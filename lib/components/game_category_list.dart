@@ -150,7 +150,7 @@ class _GameCategoryList extends State<GameCategoryList> {
                   decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new AssetImage(
-                          "assets/background_image/reflex_big.png"),
+                          "assets/background_image/${widget.game}_big.png"),
                       fit: BoxFit.fill,
                     ),
                   ),

@@ -94,7 +94,7 @@ class MyHomePageState extends State<MyDrawPage> implements _DrawPadDelegate {
                   // print({
                   //   "convert into percentage is : ": convertedIntoPercentage
                   // });
-                  double tolerence = 0.06;
+                  double tolerence = 0.08;
                   if (_drawLineProperty.length < 1) {
                     _drawLineProperty = new List.from(_drawLineProperty)
                       ..add(new DrawLineProperty(
