@@ -71,7 +71,7 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     _initBoard();
     animation = new AnimationController(
       vsync: this,
-      duration: new Duration(milliseconds: 600),
+      duration: new Duration(milliseconds: 400),
     );
     animation.addListener(() {
       this.setState(() {});
@@ -371,12 +371,6 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
     });
   }
 
-  @override
-  void dispose() {
-    animation.dispose();
-    super.dispose();
-  }
-
   popup() {
     print({"poped up dice value is  ": dice_tries});
     MediaQueryData media = MediaQuery.of(context);
@@ -396,6 +390,12 @@ class DiceGameState extends State<Dice> with SingleTickerProviderStateMixin {
         );
       },
     );
+  }
+
+   @override
+  void dispose() {
+    animation.dispose();
+    super.dispose();
   }
 }
 
