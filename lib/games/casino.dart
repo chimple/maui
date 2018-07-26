@@ -88,6 +88,15 @@ class _CasinoState extends State<Casino> {
     setState(() => _isLoading = false);
   }
 
+  @override
+  void didUpdateWidget(Casino oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.iteration != widget.iteration) {
+      givenWordList.clear();
+      _initLetters();
+    }
+  }
+
   Widget _buildScrollButton(
       BuildContext context, List<String> scrollingData, int buttonNumber) {
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
@@ -309,8 +318,7 @@ class _CasinoState extends State<Casino> {
                     },
                     color: new Color(0xFF734052),
                     child: new Icon(Icons.check_box,
-                    size: maxHeight*0.7,
-                    color:new Color(0xFFD64C60)),
+                        size: maxHeight * 0.7, color: new Color(0xFFD64C60)),
                     shape: new RoundedRectangleBorder(
                         borderRadius:
                             const BorderRadius.all(const Radius.circular(8.0))),
