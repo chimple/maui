@@ -328,6 +328,8 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controllerShake, controllerDrag;
   Animation<double> animation, animationShake, animationDrag;
+  bool isDragging = false;
+
   String _displayText;
   initState() {
     super.initState();
@@ -396,14 +398,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         scale: animation,
         child: new Draggable(
             onDragStarted: () {
-              if (ButtonStateContainer.of(context).startUsingButton())
+              if (ButtonStateContainer.of(context).startUsingButton()) {
+                isDragging = true;
                 widget.onDrag();
+              }
             },
             onDragCompleted: () {
-              ButtonStateContainer.of(context).endUsingButton();
+              if (isDragging) ButtonStateContainer.of(context).endUsingButton();
             },
             onDraggableCanceled: (Velocity v, Offset o) {
-              ButtonStateContainer.of(context).endUsingButton();
+              if (isDragging) ButtonStateContainer.of(context).endUsingButton();
             },
             maxSimultaneousDrags: 1,
             data: '${widget.index}' + '_' + '${widget.code}',
