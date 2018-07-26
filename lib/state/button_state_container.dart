@@ -35,6 +35,7 @@ class ButtonStateContainer extends StatefulWidget {
 
 class ButtonStateContainerState extends State<ButtonStateContainer> {
   ButtonConfig buttonConfig;
+  bool isButtonBeingUsed = false;
 
   void updateButtonConfig(
       {double fontSize, double width, double height, double radius}) {
@@ -48,6 +49,15 @@ class ButtonStateContainerState extends State<ButtonStateContainer> {
       buttonConfig.height = height ?? buttonConfig.height;
       buttonConfig.radius = radius ?? buttonConfig.radius;
     }
+  }
+
+  bool startUsingButton() {
+    if (!isButtonBeingUsed) isButtonBeingUsed = true;
+    return isButtonBeingUsed;
+  }
+
+  void endUsingButton() {
+    isButtonBeingUsed = false;
   }
 
   @override

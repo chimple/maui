@@ -395,7 +395,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       return new ScaleTransition(
         scale: animation,
         child: new Draggable(
-            onDragStarted: widget.onDrag,
+            onDragStarted: () {
+              if (ButtonStateContainer.of(context).startUsingButton())
+                widget.onDrag();
+            },
+            onDragCompleted: () {
+              ButtonStateContainer.of(context).endUsingButton();
+            },
+            onDraggableCanceled: (Velocity v, Offset o) {
+              ButtonStateContainer.of(context).endUsingButton();
+            },
             maxSimultaneousDrags: 1,
             data: '${widget.index}' + '_' + '${widget.code}',
             child: new UnitButton(
