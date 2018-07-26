@@ -8,7 +8,16 @@ class ArticleDao {
   Future<Article> getArticle(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Article.table,
-        columns: [Article.idCol, Article.nameCol,Article.topic_idCol,Article.orderCol,Article.videoCol,Article.audioCol, Article.imageCol, Article.textCol],
+        columns: [
+          Article.idCol,
+          Article.nameCol,
+          Article.topicIdCol,
+          Article.videoCol,
+          Article.audioCol,
+          Article.imageCol,
+          Article.textCol,
+          Article.orderCol
+        ],
         where: '${Article.idCol} = ?',
         whereArgs: [id]);
     if (maps.length > 0) {

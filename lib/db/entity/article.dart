@@ -1,43 +1,43 @@
 class Article {
-  static const table = 'Article';
+  static const table = 'article';
   static const idCol = 'id';
   static const nameCol = 'name';
-  static const topic_idCol = 'topic_id';
-  static const orderCol = 'order';
+  static const topicIdCol = 'topicId';
   static const videoCol = 'video';
   static const audioCol = 'audio';
   static const imageCol = 'image';
   static const textCol = 'text';
+  static const orderCol = 'order';
 
   String id;
   String name;
   String topicId;
-  int order;
   String video;
   String audio;
   String image;
   String text;
+  int order;
 
   Article(
       {this.id,
       this.name,
       this.topicId,
-      this.order,
       this.video,
       this.audio,
       this.image,
-      this.text});
+      this.text,
+      this.order});
 
   Map<String, dynamic> toMap() {
     return {
       idCol: id,
       nameCol: name,
-      topic_idCol: topicId,
-      orderCol: order,
+      topicIdCol: topicId,
       videoCol: video,
       audioCol: audio,
       imageCol: image,
-      textCol: text
+      textCol: text,
+      orderCol: order
     };
   }
 
@@ -45,23 +45,23 @@ class Article {
       : this(
             id: map[idCol],
             name: map[nameCol],
-            topicId: map[topic_idCol],
-            order: map[orderCol],
+            topicId: map[topicIdCol],
             video: map[videoCol],
             audio: map[audioCol],
             image: map[imageCol],
-            text: map[textCol]);
+            text: map[textCol],
+            order: map[orderCol]);
 
   @override
   int get hashCode =>
       id.hashCode ^
       name.hashCode ^
       topicId.hashCode ^
-      order.hashCode ^
       video.hashCode ^
       audio.hashCode ^
       image.hashCode ^
-      text.hashCode;
+      text.hashCode ^
+      order.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -71,14 +71,14 @@ class Article {
           id == other.id &&
           name == other.name &&
           topicId == other.topicId &&
-          order == other.order &&
           video == other.video &&
           audio == other.audio &&
           image == other.image &&
-          text == other.text;
+          text == other.text &&
+          order == other.order;
 
   @override
   String toString() {
-    return 'Article{id: $id, name: $name, topicId: $topicId,order: $order,video: $video,audio: $audio,image: $image, text: $text}';
+    return 'Article{id: $id, name: $name, topicId: $topicId,video: $video,audio: $audio,image: $image, text: $text,order: $order}';
   }
 }
