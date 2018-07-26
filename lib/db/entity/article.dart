@@ -12,11 +12,11 @@ class Article {
   String id;
   String name;
   String topicId;
-  int order;
-  String video;
+    String video;
   String audio;
   String image;
   String text;
+  int order;
 
   Article(
       {this.id,
@@ -33,11 +33,11 @@ class Article {
       idCol: id,
       nameCol: name,
       topicIdCol: topicId,
-      orderCol: order,
-      videoCol: video,
+            videoCol: video,
       audioCol: audio,
       imageCol: image,
-      textCol: text
+      textCol: text,
+      orderCol: order
     };
   }
 
@@ -46,22 +46,23 @@ class Article {
             id: map[idCol],
             name: map[nameCol],
             topicId: map[topicIdCol],
-            order: map[orderCol],
-            video: map[videoCol],
+                        video: map[videoCol],
             audio: map[audioCol],
             image: map[imageCol],
-            text: map[textCol]);
+            text: map[textCol],
+            order: map[orderCol]);
 
   @override
   int get hashCode =>
       id.hashCode ^
       name.hashCode ^
       topicId.hashCode ^
-      order.hashCode ^
-      video.hashCode ^
+            video.hashCode ^
       audio.hashCode ^
       image.hashCode ^
-      text.hashCode;
+      text.hashCode ^
+      order.hashCode ;
+
 
   @override
   bool operator ==(Object other) =>
