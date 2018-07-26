@@ -1,13 +1,13 @@
 class Article {
-  static const table = 'Article';
+  static const table = 'article';
   static const idCol = 'id';
   static const nameCol = 'name';
-  static const topic_idCol = 'topic_id';
-  static const orderCol = 'order';
+  static const topicIdCol = 'topicId';
   static const videoCol = 'video';
   static const audioCol = 'audio';
   static const imageCol = 'image';
   static const textCol = 'text';
+  static const orderCol = 'order';
 
   String id;
   String name;
@@ -22,17 +22,17 @@ class Article {
       {this.id,
       this.name,
       this.topicId,
-      this.order,
       this.video,
       this.audio,
       this.image,
-      this.text});
+      this.text,
+      this.order});
 
   Map<String, dynamic> toMap() {
     return {
       idCol: id,
       nameCol: name,
-      topic_idCol: topicId,
+      topicIdCol: topicId,
       orderCol: order,
       videoCol: video,
       audioCol: audio,
@@ -45,7 +45,7 @@ class Article {
       : this(
             id: map[idCol],
             name: map[nameCol],
-            topicId: map[topic_idCol],
+            topicId: map[topicIdCol],
             order: map[orderCol],
             video: map[videoCol],
             audio: map[audioCol],
