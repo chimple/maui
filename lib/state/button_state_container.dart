@@ -52,12 +52,19 @@ class ButtonStateContainerState extends State<ButtonStateContainer> {
   }
 
   bool startUsingButton() {
-    if (!isButtonBeingUsed) isButtonBeingUsed = true;
+    print('startUsingButton $isButtonBeingUsed');
+    if (isButtonBeingUsed) return false;
+    setState(() {
+      isButtonBeingUsed = true;
+    });
     return isButtonBeingUsed;
   }
 
   void endUsingButton() {
-    isButtonBeingUsed = false;
+    print('endUsingButton $isButtonBeingUsed');
+    setState(() {
+      isButtonBeingUsed = false;
+    });
   }
 
   @override

@@ -399,17 +399,39 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         child: new Draggable(
             onDragStarted: () {
               if (ButtonStateContainer.of(context).startUsingButton()) {
-                isDragging = true;
+                setState(() {
+                  isDragging = true;
+                });
+                print(
+                    'onDragStarted ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
                 widget.onDrag();
               }
             },
             onDragCompleted: () {
-              if (isDragging) ButtonStateContainer.of(context).endUsingButton();
+              print(
+                  'onDragCompleted start ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+                print(
+                    'onDragCompleted end ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              }
             },
             onDraggableCanceled: (Velocity v, Offset o) {
-              if (isDragging) ButtonStateContainer.of(context).endUsingButton();
+              print('onDraggableCanceled ${widget.text} $isDragging');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+              }
             },
-            maxSimultaneousDrags: 1,
+            maxSimultaneousDrags: (isDragging ||
+                    !ButtonStateContainer.of(context).isButtonBeingUsed)
+                ? 1
+                : 0,
             data: '${widget.index}' + '_' + '${widget.code}',
             child: new UnitButton(
               key: new Key('A${widget.keys}'),
