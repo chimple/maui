@@ -1,6 +1,6 @@
 class Category{
   static const table = 'category';
-  static const idCol = 'id';
+  static const categoryIdCol = 'id';
   static const nameCol = 'name';
   static const colorCol = 'color';
 
@@ -11,11 +11,11 @@ class Category{
   Category({this.id, this.name, this.color});
 
   Map<String, dynamic> toMap(){
-    return{idCol: id, nameCol: name, colorCol: color};
+    return{categoryIdCol: id, nameCol: name, colorCol: color};
   }
 
   Category.fromMap(Map<String, dynamic>map): this(
-    id: map[idCol],
+    id: map[categoryIdCol],
     name: map[nameCol],
     color: map[colorCol]
   );
@@ -35,6 +35,6 @@ class Category{
 
   @override
   String toString() {
-    return 'Category{id: $id, name: $name, color: $color}';
+    return 'Category{categoryId: $categoryIdCol, name: $name, color: $color}';
   }
 }

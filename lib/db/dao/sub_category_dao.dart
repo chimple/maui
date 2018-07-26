@@ -8,7 +8,7 @@ class SubCategoryDao {
   Future<Subcategory> getSubCategory(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Subcategory.table,
-        columns: [Subcategory.categoryIdCol, Subcategory.idCol, Subcategory.orderCol],
+        columns: [Subcategory.categoryIdCol, Subcategory.subcategoryIdCol, Subcategory.orderCol],
         where: '${Subcategory.categoryIdCol} = ?',
         whereArgs: [id]);
     if (maps.length > 0) {

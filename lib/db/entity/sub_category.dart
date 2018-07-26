@@ -1,7 +1,7 @@
 class Subcategory {
   static const table = 'subcategory';
   static const categoryIdCol = 'categoryId';
-  static const idCol = 'subcategoryId';
+  static const subcategoryIdCol = 'subcategoryId';
   static const orderCol = ' order';
 
   String categoryId;
@@ -11,13 +11,13 @@ class Subcategory {
   Subcategory({this.categoryId, this.id, this.order});
 
   Map<String, dynamic> toMap() {
-    return {categoryIdCol: categoryId, idCol: id, orderCol: order};
+    return {categoryIdCol: categoryId, subcategoryIdCol: id, orderCol: order};
   }
 
   Subcategory.fromMap(Map<String, dynamic> map)
       : this(
             categoryId: map[categoryIdCol],
-            id: map[idCol],
+            id: map[subcategoryIdCol],
             order: map[orderCol]);
 
   @override
@@ -35,6 +35,6 @@ class Subcategory {
 
   @override
   String toString() {
-    return 'Category{categoryId: $categoryId, id: $id, order: $order}';
+    return 'Category{categoryId: $categoryId, subcategoryId: $id, order: $order}';
   }
 }
