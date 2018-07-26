@@ -18,4 +18,16 @@ class ActivityTemplateDao {
     }
     return null;
   }
+
+  Future<List<ActivityTemplate>> getalltemplate({Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(
+      ActivityTemplate.table,
+      columns: [
+        ActivityTemplate.idCol,
+        ActivityTemplate.imageCol,
+      ],
+    );
+    return maps.map((el) => new ActivityTemplate.fromMap(el)).toList();
+  }
 }
