@@ -1,7 +1,7 @@
 class Subcategory {
   static const table = 'subcategory';
-  static const categoryIdCol = 'category_id';
-  static const idCol = 'id';
+  static const categoryIdCol = 'categoryId';
+  static const idCol = 'subcategoryId';
   static const orderCol = ' order';
 
   String categoryId;
