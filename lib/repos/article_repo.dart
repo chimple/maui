@@ -8,7 +8,7 @@ class ArticleRepo {
 
   const ArticleRepo();
 
-  Future<Article> getArticle(String id) async {
-    return articleDao.getArticle(id);
+  Future<Article> getArticle(String id,String topicId) async {
+    return articleDao.getArticle(id,topicId);
   }
 }

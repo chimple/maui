@@ -12,7 +12,7 @@ class Article {
   String id;
   String name;
   String topicId;
-    String video;
+  String video;
   String audio;
   String image;
   String text;
@@ -33,7 +33,7 @@ class Article {
       idCol: id,
       nameCol: name,
       topicIdCol: topicId,
-            videoCol: video,
+      videoCol: video,
       audioCol: audio,
       imageCol: image,
       textCol: text,
@@ -46,7 +46,7 @@ class Article {
             id: map[idCol],
             name: map[nameCol],
             topicId: map[topicIdCol],
-                        video: map[videoCol],
+            video: map[videoCol],
             audio: map[audioCol],
             image: map[imageCol],
             text: map[textCol],
@@ -57,12 +57,11 @@ class Article {
       id.hashCode ^
       name.hashCode ^
       topicId.hashCode ^
-            video.hashCode ^
+      video.hashCode ^
       audio.hashCode ^
       image.hashCode ^
       text.hashCode ^
-      order.hashCode ;
-
+      order.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -72,14 +71,14 @@ class Article {
           id == other.id &&
           name == other.name &&
           topicId == other.topicId &&
-          order == other.order &&
           video == other.video &&
           audio == other.audio &&
           image == other.image &&
-          text == other.text;
+          text == other.text &&
+          order == other.order;
 
   @override
   String toString() {
-    return 'Article{id: $id, name: $name, topicId: $topicId,order: $order,video: $video,audio: $audio,image: $image, text: $text}';
+    return 'Article{id: $id, name: $name, topicId: $topicId,video: $video,audio: $audio,image: $image, text: $text,order: $order}';
   }
 }
