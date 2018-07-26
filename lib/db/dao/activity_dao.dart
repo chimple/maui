@@ -4,7 +4,7 @@ import 'package:maui/db/entity/activity.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ActivityDao {
-  Future<Activity> getActivity(String id, String topicId, {Database db}) async {
+  Future<Activity> getActivity(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Activity.table,
         columns: [
@@ -14,8 +14,8 @@ class ActivityDao {
           Activity.textCol,
           Activity.stickerPackCol
         ],
-        where: "${Activity.idCol} = ? AND ${Activity.topicIdCol} = ?",
-        whereArgs: [id, topicId]);
+        where: "${Activity.idCol} = ? ",
+        whereArgs: [id]);
     if (maps.length > 0) {
       return Activity.fromMap(maps.first);
     }
