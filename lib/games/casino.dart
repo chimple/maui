@@ -88,6 +88,15 @@ class _CasinoState extends State<Casino> {
     setState(() => _isLoading = false);
   }
 
+  @override
+  void didUpdateWidget(Casino oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.iteration != widget.iteration) {
+      givenWordList.clear();
+      _initLetters();
+    }
+  }
+
   Widget _buildScrollButton(
       BuildContext context, List<String> scrollingData, int buttonNumber) {
     Set<String> scrollingLetter = new Set<String>.from(scrollingData);
@@ -172,24 +181,6 @@ class _CasinoState extends State<Casino> {
 
           print(" finalGivenWordList = $finalGivenWordList");
           print("count = $count");
-          if (const IterableEquality().equals(finalList, finalGivenWordList) &&
-              count >= givenWordList.length) {
-            new Future.delayed(const Duration(milliseconds: 1000), () {
-              widget.onScore(5);
-              widget.onProgress(1.0);
-              j = 0;
-              count = 0;
-            });
-
-            new Future.delayed(const Duration(milliseconds: 800), () {
-              setState(() {
-                _isShowingFlashCard = true;
-                lst.clear();
-              });
-            });
-
-            print("the end");
-          }
         },
         children:
             new List<Widget>.generate(scrollingLetterList.length, (int index) {
@@ -249,7 +240,7 @@ class _CasinoState extends State<Casino> {
       }
       return new Column(
         // direction: Axis.vertical,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Expanded(
               flex: 1,
@@ -287,6 +278,53 @@ class _CasinoState extends State<Casino> {
               }).toList(growable: false),
             ),
           ),
+          Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Container(
+                  width: maxHeight,
+                  height: maxHeight,
+                  // decoration: new BoxDecoration(
+                  //   borderRadius: new BorderRadius.circular(20.0),
+                  //   border: new Border.all(
+                  //     width: 6.0,
+                  //     color: new Color(0xFFD64C60),
+                  //   ),
+                  // ),
+                  child: new RaisedButton(
+                    onPressed: () {
+                      if (const IterableEquality()
+                              .equals(finalList, finalGivenWordList) &&
+                          count >= givenWordList.length) {
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onScore(5);
+                          widget.onProgress(1.0);
+                          j = 0;
+                          count = 0;
+                        });
+
+                        new Future.delayed(const Duration(milliseconds: 800),
+                            () {
+                          setState(() {
+                            _isShowingFlashCard = true;
+                            lst.clear();
+                          });
+                        });
+
+                        print("the end");
+                      }
+                    },
+                    color: new Color(0xFF734052),
+                    child: new Icon(Icons.check_box,
+                        size: maxHeight * 0.7, color: new Color(0xFFD64C60)),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
+                  ),
+                ),
+              ))
         ],
       );
     });
