@@ -67,7 +67,7 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
         }
       });
     controller.forward();
-
+    flag = 0;
     setState(() => _isLoading = true);
     _allLetters = [];
     _allLetters = await fetchSerialData(widget.gameConfig.gameCategoryId);
@@ -95,7 +95,6 @@ class OrderItState extends State<OrderIt> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
       _initBoard();
-      flag = 0;
     }
   }
 
