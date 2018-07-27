@@ -3,7 +3,6 @@ class CategoryTopic {
   static const idcCol = 'categoryId';
   static const idtCol = 'topicId';
   static const orderCol = 'order';
-
   String categoryId;
   String topicId;
 

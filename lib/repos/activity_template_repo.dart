@@ -10,10 +10,10 @@ class ActivityTemplateRepo {
 
   Future<ActivityTemplate> getTopic(String activityId) async {
     print("hello boss data is is there or not");
-    return await activityTemplateDao.getTopic(activityId);
+    return activityTemplateDao.getTopic(activityId);
   }
 
   Future<List<ActivityTemplate>> getalltemplate() async {
-    return await activityTemplateDao.getalltemplate();
+    return  activityTemplateDao.getalltemplate();
   }
 }

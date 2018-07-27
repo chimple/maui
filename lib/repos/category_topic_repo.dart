@@ -9,7 +9,11 @@ class CategoryTopicRepo {
 
   const CategoryTopicRepo();
 
-  Future<CategoryTopic> getTopic(String categoryId, String topicId) async {
-    return await categoryTopicDao.getTopic(categoryId, topicId);
+  Future<CategoryTopic> getTopic(String categoryId) async {
+    return await categoryTopicDao.getTopic(categoryId);
+  }
+
+  Future<List<CategoryTopic>> getallcategoryTopic(String categoryId) async {
+    return await categoryTopicDao.getallcategoryTopic(categoryId);
   }
 }
