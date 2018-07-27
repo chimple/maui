@@ -3,6 +3,9 @@ import 'package:maui/repos/article_repo.dart';
 import 'package:tuple/tuple.dart';
 
 class TopicScreen extends StatefulWidget {
+
+  TopicScreen({key}):super(key:key);
+  
   @override
   _TopicScreenState createState() => _TopicScreenState();
 }
