@@ -12,27 +12,27 @@ class CategoryTopicDao {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(CategoryTopic.table,
         columns: [
-          CategoryTopic.idcCol,
-          CategoryTopic.idtCol,
+          CategoryTopic.categoryIdCol,
+          CategoryTopic.topicIdCol,
           CategoryTopic.orderCol
         ],
-        where: '${CategoryTopic.idcCol} = ?',
+        where: '${CategoryTopic.categoryIdCol} = ?',
         whereArgs: [categoryId]);
     if (maps.length > 0) {
       return CategoryTopic.fromMap(maps.first);
     }
     return null;
   }
-   Future<List<CategoryTopic>> getallcategoryTopic(String categoryId,{Database db}) async {
+   Future<List<CategoryTopic>> getAllCategoryTopic(String categoryId,{Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       CategoryTopic.table,
       columns: [
-        CategoryTopic.idcCol,
-        CategoryTopic.idtCol,
-        CategoryTopic.idtCol,
+        CategoryTopic.categoryIdCol,
+        CategoryTopic.topicIdCol,
+        CategoryTopic.orderCol,
       ],
-     where: '${CategoryTopic.idcCol} = ?',
+     where: '${CategoryTopic.categoryIdCol} = ?',
         whereArgs: [categoryId]);
     return maps.map((el) => new CategoryTopic.fromMap(el)).toList();
   }

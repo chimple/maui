@@ -1,17 +1,14 @@
 import 'dart:async';
-
 import 'package:maui/app_database.dart';
-
 import 'package:sqflite/sqflite.dart';
-
 import '../entity/activity_template.dart';
 
 class ActivityTemplateDao {
   Future<ActivityTemplate> getTopic(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(ActivityTemplate.table,
-        columns: [ActivityTemplate.idCol, ActivityTemplate.imageCol],
-        where: '${ActivityTemplate.idCol} = ?',
+        columns: [ActivityTemplate.activityIdCol, ActivityTemplate.imageCol],
+        where: '${ActivityTemplate.activityIdCol} = ?',
         whereArgs: [id]);
     if (maps.length > 0) {
       return ActivityTemplate.fromMap(maps.first);
@@ -19,12 +16,12 @@ class ActivityTemplateDao {
     return null;
   }
 
-  Future<List<ActivityTemplate>> getalltemplate({Database db}) async {
+  Future<List<ActivityTemplate>> getAllTemplate({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       ActivityTemplate.table,
       columns: [
-        ActivityTemplate.idCol,
+        ActivityTemplate.activityIdCol,
         ActivityTemplate.imageCol,
       ],
     );

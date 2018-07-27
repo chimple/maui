@@ -18,8 +18,8 @@ class MyappclassState extends State<SubcategoryList> {
   bool val = true;
   String message = 'this is true';
   List<CategoryTopic> _datacategory = new List<CategoryTopic>();
-  var datatemplate;
-  var categorydata;
+  
+  var _categorydata;
   @override
   void initState() {
     super.initState();
@@ -31,12 +31,12 @@ class MyappclassState extends State<SubcategoryList> {
     String idname = widget.gamename;
     print(".....id matching or not.::$iddata......::$idname");
     // var notifs = await NotifRepo().getNotifCountByType();
-    categorydata =
-        await CategoryTopicRepo.categoryTopicDao.getallcategoryTopic(iddata);
+    _categorydata =
+        await CategoryTopicRepo.categoryTopicDao.getAllCategoryTopic(iddata);
     //  datatemplate= await  ActivityTemplateRepo.activityTemplateDao.getalltemplate();
-    print("object...category data is...eee...${categorydata}");
+    print("object...category data is...eee...${_categorydata}");
     setState(() {
-      _datacategory = categorydata;
+      _datacategory = _categorydata;
       print(".......::database data is....${_datacategory.length}");
       // _notifs = notifs;
     });
@@ -63,8 +63,8 @@ class MyappclassState extends State<SubcategoryList> {
                 children: new List.generate(_datacategory.length, (i) {
                   return GestureDetector(
                     onTap: () {
-                      String gamename = categorydata[i].name;
-                      String gameid = categorydata[i].id;
+                      String gamename = _categorydata[i].name;
+                      String gameid = _categorydata[i].id;
                       Navigator.of(context).push(new MaterialPageRoute(
                           builder: (BuildContext context) =>
                               new SubcategoryList(

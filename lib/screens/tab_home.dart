@@ -218,7 +218,7 @@ class TabHomeState extends State<TabHome>
                       text: Loca.of(context).game,
                     ),
                     new Tab(
-                      text: "Category",
+                      text: Loca.of(context).category,
                     )
                   ],
                 ),
@@ -235,19 +235,6 @@ class TabHomeState extends State<TabHome>
   }
 }
 
-// class ShowIcon extends StatelessWidget {
-//   ShowIcon({
-//     Key key,
-//     this.img,
-//   }) : super(key: key);
-//   final String img;
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Image.asset(
-//                           img,
-//                           scale: .3,
-//                         );  }
-// }
 
 class MyTabs {
   final String img1;

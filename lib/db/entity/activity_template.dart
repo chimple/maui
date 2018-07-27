@@ -1,23 +1,19 @@
 class ActivityTemplate {
   static const table = 'activityTemplate';
-  static const idCol = 'activityId';
-
+  static const activityIdCol = 'activityId';
   static const imageCol = 'image';
 
   String activityId;
-
   String image;
 
   ActivityTemplate({this.activityId, this.image});
-
   Map<String, dynamic> toMap() {
-    print("hello in this its comming database here");
-    return {idCol: activityId, imageCol: image};
+    return {activityIdCol: activityId, imageCol: image};
   }
 
   ActivityTemplate.fromMap(Map<String, dynamic> map)
       : this(
-          activityId: map[idCol],
+          activityId: map[activityIdCol],
           image: map[imageCol],
         );
 
@@ -35,6 +31,6 @@ class ActivityTemplate {
   @override
   String toString() {
     print("hello in this its comming database11 here");
-    return '{idCol: $activityId, imageCol: $image}';
+    return '{id: $activityId, imageCol: $image}';
   }
 }

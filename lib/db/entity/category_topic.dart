@@ -1,23 +1,22 @@
 class CategoryTopic {
   static const table = 'categoryTopic';
-  static const idcCol = 'categoryId';
-  static const idtCol = 'topicId';
+  static const categoryIdCol = 'categoryId';
+  static const topicIdCol = 'topicId';
   static const orderCol = 'order';
+
   String categoryId;
   String topicId;
-
   int order;
 
   CategoryTopic({this.categoryId, this.topicId, this.order});
-
   Map<String, dynamic> toMap() {
-    return {idcCol: categoryId, idtCol: topicId, orderCol: order};
+    return {categoryIdCol: categoryId, topicIdCol: topicId, orderCol: order};
   }
 
   CategoryTopic.fromMap(Map<String, dynamic> map)
       : this(
-            categoryId: map[idcCol],
-            topicId: map[idtCol],
+            categoryId: map[categoryIdCol],
+            topicId: map[topicIdCol],
             order: map[orderCol]);
 
   @override
@@ -34,6 +33,6 @@ class CategoryTopic {
 
   @override
   String toString() {
-    return 'Topic{id: $categoryId, name: $topicId, color: $order}';
+    return 'Topic{id: $categoryId, name: $topicId, order: $order}';
   }
 }

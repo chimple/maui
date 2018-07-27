@@ -27,9 +27,10 @@ class CategoryListView extends StatefulWidget {
 
 class GameListViewState extends State<CategoryListView> {
   Map<String, int> _notifs = Map<String, int>();
-  var datatemplate;
-  var categorydata;
-  List<Category> _datacategory = new List<Category>();
+ List<Category> _datacategory = new List<Category>();
+  var _datatemplate;
+  var _categorydata;
+ 
   @override
   void initState() {
     super.initState();
@@ -38,12 +39,12 @@ class GameListViewState extends State<CategoryListView> {
 
   void _initData() async {
     var notifs = await NotifRepo().getNotifCountByType();
-    categorydata = await CategoryRepo.categoryDao.getallcategory();
-    datatemplate =
-        await ActivityTemplateRepo.activityTemplateDao.getalltemplate();
-    print("object...category data is......$categorydata");
+    _categorydata = await CategoryRepo.categoryDao.getAllCategory();
+    _datatemplate =
+        await ActivityTemplateRepo.activityTemplateDao.getAllTemplate();
+    print("object...category data is......$_categorydata");
     setState(() {
-      _datacategory = categorydata;
+      _datacategory = _categorydata;
       // _datatemplate=datatemplate;
       print(".......::database data is....${_datacategory}");
       _notifs = notifs;
@@ -165,17 +166,17 @@ class GameListViewState extends State<CategoryListView> {
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-          children: new List.generate(categorydata.length, (i) {
+          children: new List.generate(_categorydata.length, (i) {
             return GestureDetector(
                 onTap: () {
-                  String gamename = categorydata[i].name;
-                  String gameid = categorydata[i].id;
+                  String gamename = _categorydata[i].name;
+                  String gameid = _categorydata[i].id;
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new SubcategoryList(
                           gamename: gamename, gameid: gameid)));
                 },
-                child: _buildButton(context, '${categorydata[i].name}',
-                    '${categorydata[i].id}'));
+                child: _buildButton(context, '${_categorydata[i].name}',
+                    '${_categorydata[i].id}'));
           }),
         ));
   }

@@ -13,7 +13,7 @@ class CategoryTopicRepo {
     return await categoryTopicDao.getTopic(categoryId);
   }
 
-  Future<List<CategoryTopic>> getallcategoryTopic(String categoryId) async {
-    return await categoryTopicDao.getallcategoryTopic(categoryId);
+  Future<List<CategoryTopic>> getAllCategoryTopic(String categoryId) async {
+    return await categoryTopicDao.getAllCategoryTopic(categoryId);
   }
 }
