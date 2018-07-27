@@ -7,7 +7,7 @@ class ActivityRepo {
 
   const ActivityRepo();
 
-  Future<Activity> getActivity(String id, String topicId) async {
-    return activityDao.getActivity(id, topicId);
+  Future<Activity> getActivity(String id) async {
+    return activityDao.getActivity(id);
   }
 }
