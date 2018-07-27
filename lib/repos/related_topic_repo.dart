@@ -8,7 +8,7 @@ class RelatedTopicRepo {
 
   const RelatedTopicRepo();
 
-  Future<List<RelatedTopic>> getRelatedTopic(String id) async {
-    return relTopicDao.getRelatedTopic(id);
+  Future<List<RelatedTopic>> getRelatedTopics(String id) async {
+    return relTopicDao.getRelatedTopics(id);
   }
 }

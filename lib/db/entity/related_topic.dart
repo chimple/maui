@@ -3,34 +3,31 @@ class RelatedTopic {
   static const topicIdCol = 'topicId';
   static const relTopicIdCol = 'relatedTopicId';
 
-  String id;
-  String relId;
+  String topicId;
+  String relatedTopicId;
 
-  RelatedTopic({this.id, this.relId});
+  RelatedTopic({this.topicId, this.relatedTopicId});
 
   Map<String, dynamic> toMap() {
-    return {topicIdCol: id, relTopicIdCol: relId};
+    return {topicIdCol: topicId, relTopicIdCol: relatedTopicId};
   }
 
   RelatedTopic.fromMap(Map<String, dynamic> map)
-      : this(
-            id: map[topicIdCol],
-            relId: map[relTopicIdCol]);
+      : this(topicId: map[topicIdCol], relatedTopicId: map[relTopicIdCol]);
 
   @override
-  int get hashCode =>
-      id.hashCode ^ relId.hashCode;
+  int get hashCode => topicId.hashCode ^ relatedTopicId.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RelatedTopic &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
-          relId == other.relId;
+          topicId == other.topicId &&
+          relatedTopicId == other.relatedTopicId;
 
   @override
   String toString() {
-    return 'RelatedTopic{id: $id, relId: $relId}';
+    return 'RelatedTopic{topicId: $topicId, relatedTopicId: $relatedTopicId}';
   }
 }
