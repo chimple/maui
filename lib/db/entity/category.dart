@@ -1,40 +1,44 @@
 class Category{
   static const table = 'category';
-  static const categoryIdCol = 'id';
+  static const categoryIdCol = 'categoryId';
   static const nameCol = 'name';
   static const colorCol = 'color';
+  static const imageCol = 'image';
 
-  String id;
+  String categoryId;
   String name;
   int color;
+  String image;
 
-  Category({this.id, this.name, this.color});
+  Category({this.categoryId, this.name, this.color, this.image});
 
   Map<String, dynamic> toMap(){
-    return{categoryIdCol: id, nameCol: name, colorCol: color};
+    return{categoryIdCol: categoryId, nameCol: name, colorCol: color, imageCol: image};
   }
 
   Category.fromMap(Map<String, dynamic>map): this(
-    id: map[categoryIdCol],
+    categoryId: map[categoryIdCol],
     name: map[nameCol],
-    color: map[colorCol]
+    color: map[colorCol],
+    image: map[imageCol]
   );
 
   @override
     // TODO: implement hashCode
-    int get hashCode => id.hashCode ^ name.hashCode ^ color.hashCode;
+    int get hashCode => categoryId.hashCode ^ name.hashCode ^ color.hashCode ^ image.hashCode;
 
  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Category &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
+          categoryId == other.categoryId &&
           name == other.name &&
+          image == other.image &&
           color == other.color;
 
   @override
   String toString() {
-    return 'Category{categoryId: $categoryIdCol, name: $name, color: $color}';
+    return 'Category{categoryId: $categoryId, name: $name, color: $color, image: $image}';
   }
 }
