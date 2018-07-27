@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/db/dao/activity_topic_dao.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
@@ -143,6 +144,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     print("second call when we are doing p2p");
     _Bingodata = await fetchPairData(
         widget.gameConfig.gameCategoryId, _maxSize * _maxSize);
+    var data = await ActivityTopicDao().getActivitiesByTopicId("lion");
+    print("Activity topic id $data");
     print({"kiran data": _Bingodata});
     print({"kiran data": _Bingodata.length});
     if (_Bingodata.length <= 8) {

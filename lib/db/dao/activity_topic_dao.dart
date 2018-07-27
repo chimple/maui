@@ -18,4 +18,17 @@ class ActivityTopicDao {
     }
     return null;
   }
+
+  Future<List<ActivityTopic>> getActivitiesByTopicId(String type,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(ActivityTopic.table,
+        columns: [
+          ActivityTopic.activityIdCol,
+          ActivityTopic.topicIdCol,
+        ],
+        where: "${ActivityTopic.topicIdCol} = ?",
+        whereArgs: [type]);
+    return maps.map((el) => new ActivityTopic.fromMap(el)).toList();
+  }
 }
