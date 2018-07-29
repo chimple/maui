@@ -16,7 +16,7 @@ class ActivityTemplateDao {
     return null;
   }
 
-  Future<List<ActivityTemplate>> getAllTemplate({Database db}) async {
+  Future<List<ActivityTemplate>> getAllTemplates({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       ActivityTemplate.table,

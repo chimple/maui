@@ -13,7 +13,7 @@ class ActivityTemplateRepo {
     return activityTemplateDao.getTopic(activityId);
   }
 
-  Future<List<ActivityTemplate>> getAllTemplate() async {
-    return  activityTemplateDao.getAllTemplate();
+  Future<List<ActivityTemplate>> getAllTemplates() async {
+    return  activityTemplateDao.getAllTemplates();
   }
 }

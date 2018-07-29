@@ -10,16 +10,15 @@ class SubcategoryList extends StatefulWidget {
   const SubcategoryList({Key key, this.gamename, this.gameid})
       : super(key: key);
   @override
-  MyappclassState createState() => new MyappclassState();
+  _SubcategoryListState createState() => new _SubcategoryListState();
 }
 
-class MyappclassState extends State<SubcategoryList> {
+class _SubcategoryListState extends State<SubcategoryList> {
   @override
-  bool val = true;
   String message = 'this is true';
-  List<CategoryTopic> _datacategory = new List<CategoryTopic>();
-  
-  var _categorydata;
+  List<CategoryTopic> _dataCategory = new List<CategoryTopic>();
+
+  var _categoryData;
   @override
   void initState() {
     super.initState();
@@ -31,13 +30,13 @@ class MyappclassState extends State<SubcategoryList> {
     String idname = widget.gamename;
     print(".....id matching or not.::$iddata......::$idname");
     // var notifs = await NotifRepo().getNotifCountByType();
-    _categorydata =
-        await CategoryTopicRepo.categoryTopicDao.getAllCategoryTopic(iddata);
+    _categoryData =
+        await CategoryTopicRepo.categoryTopicDao.getAllCategoryTopics(iddata);
     //  datatemplate= await  ActivityTemplateRepo.activityTemplateDao.getalltemplate();
-    print("object...category data is...eee...${_categorydata}");
+    print("object...category data is...eee...$_categoryData");
     setState(() {
-      _datacategory = _categorydata;
-      print(".......::database data is....${_datacategory.length}");
+      _dataCategory = _categoryData;
+      print(".......::database data is....${_dataCategory.length}");
       // _notifs = notifs;
     });
   }
@@ -54,17 +53,17 @@ class MyappclassState extends State<SubcategoryList> {
           Container(
               color: const Color(0xffFECE3D),
               child: new GridView.count(
-                key: new Key('Game_page'),
+                key: new Key('SubCategory_page'),
                 primary: true,
 //          padding: const EdgeInsets.all(.0),
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
                 crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-                children: new List.generate(_datacategory.length, (i) {
+                children: new List.generate(_dataCategory.length, (i) {
                   return GestureDetector(
                     onTap: () {
-                      String gamename = _categorydata[i].name;
-                      String gameid = _categorydata[i].id;
+                      String gamename = _categoryData[i].name;
+                      String gameid = _categoryData[i].id;
                       Navigator.of(context).push(new MaterialPageRoute(
                           builder: (BuildContext context) =>
                               new SubcategoryList(
@@ -75,17 +74,17 @@ class MyappclassState extends State<SubcategoryList> {
                       width: 40.0,
                       color: Colors.redAccent,
                       child: Center(
-                          child: new Text("${_datacategory[i].topicId}")),
+                          child: new Text("${_dataCategory[i].topicId}")),
                     ),
                   );
                 }),
               )),
-          new MyAppScrol(),
+          new SubcategoryScrollerView(),
         ]));
   }
 }
 
-class MyAppScrol extends StatelessWidget {
+class SubcategoryScrollerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("hello horizantal");

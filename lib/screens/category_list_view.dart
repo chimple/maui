@@ -16,8 +16,8 @@ class CategoryListView extends StatefulWidget {
   const CategoryListView({Key key}) : super(key: key);
 
   @override
-  GameListViewState createState() {
-    return new GameListViewState();
+  _CategoryListViewState createState() {
+    return new _CategoryListViewState();
   }
 
   showModes(BuildContext context, String game) {
@@ -25,12 +25,11 @@ class CategoryListView extends StatefulWidget {
   }
 }
 
-class GameListViewState extends State<CategoryListView> {
-  Map<String, int> _notifs = Map<String, int>();
- List<Category> _datacategory = new List<Category>();
-  var _datatemplate;
-  var _categorydata;
- 
+class _CategoryListViewState extends State<CategoryListView> {
+  List<Category> _dataCategory = new List<Category>();
+  var _dataTemplate;
+  var _categoryData;
+
   @override
   void initState() {
     super.initState();
@@ -38,16 +37,13 @@ class GameListViewState extends State<CategoryListView> {
   }
 
   void _initData() async {
-    var notifs = await NotifRepo().getNotifCountByType();
-    _categorydata = await CategoryRepo.categoryDao.getAllCategory();
-    _datatemplate =
-        await ActivityTemplateRepo.activityTemplateDao.getAllTemplate();
-    print("object...category data is......$_categorydata");
+    _categoryData = await CategoryRepo.categoryDao.getAllCategories();
+    _dataTemplate =
+        await ActivityTemplateRepo.activityTemplateDao.getAllTemplates();
+    print("object...category data is......$_categoryData");
     setState(() {
-      _datacategory = _categorydata;
-      // _datatemplate=datatemplate;
-      print(".......::database data is....${_datacategory}");
-      _notifs = notifs;
+      _dataCategory = _categoryData;
+      print(".......::database data is....${_categoryData}");
     });
   }
 
@@ -83,57 +79,12 @@ class GameListViewState extends State<CategoryListView> {
                     color: color,
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(16.0)),
-                    image: new DecorationImage(
-                      image: new AssetImage(
-                          "assets/background_image/${gameName}_small.png"),
-                      fit: BoxFit.cover,
-                    ),
                   ),
                 )),
             new Column(
               children: <Widget>[
-                new Expanded(
-                    child: _notifs[gameName] == null
-                        ? new Column(children: <Widget>[
-                            new Row(
-                              children: <Widget>[
-                                new Container(
-                                  width: orientation == Orientation.portrait
-                                      ? size.width * 0.15
-                                      : size.width * 0.1,
-                                  child: new Hero(
-                                    tag: 'assets/hoodie/$gameName.png',
-                                    child: Image.asset(
-                                        'assets/hoodie/$gameName.png',
-                                        scale: 0.2),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ])
-                        : Badge(
-                            value: '${_notifs[gameName]}',
-                            child: new Column(children: <Widget>[
-                              new Row(
-                                children: <Widget>[
-                                  new Container(
-                                    width: orientation == Orientation.portrait
-                                        ? size.width * 0.15
-                                        : size.width * 0.1,
-                                    child: new Hero(
-                                      tag: 'assets/hoodie/$gameName.png',
-                                      child: Image.asset(
-                                          'assets/hoodie/$gameName.png',
-                                          scale: 0.2),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ]))),
                 new Container(
                     child: new Container(
-//                      padding: EdgeInsets.only(left:size.width * 0.1),
-                        // margin: EdgeInsets.only(left: size.width*.15),
                         child: new Text(Loca.of(context).intl(gameName),
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
@@ -153,30 +104,26 @@ class GameListViewState extends State<CategoryListView> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-    final iconSize = min(media.size.width, media.size.height) / 8;
-    final TextStyle textStyle = Theme.of(context).textTheme.display1;
-    final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
 
     return Container(
         color: const Color(0xffFECE3D),
         child: new GridView.count(
-          key: new Key('Game_page'),
+          key: new Key('Category_page'),
           primary: true,
-//          padding: const EdgeInsets.all(.0),
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-          children: new List.generate(_categorydata.length, (i) {
+          children: new List.generate(_categoryData.length, (i) {
             return GestureDetector(
                 onTap: () {
-                  String gamename = _categorydata[i].name;
-                  String gameid = _categorydata[i].id;
+                  String gamename = _categoryData[i].name;
+                  String gameid = _categoryData[i].id;
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new SubcategoryList(
                           gamename: gamename, gameid: gameid)));
                 },
-                child: _buildButton(context, '${_categorydata[i].name}',
-                    '${_categorydata[i].id}'));
+                child: _buildButton(context, '${_categoryData[i].name}',
+                    '${_categoryData[i].id}'));
           }),
         ));
   }

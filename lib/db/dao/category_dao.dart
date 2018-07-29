@@ -17,7 +17,7 @@ class CategoryDao {
     return null;
   }
 
-   Future<List<Category>> getAllCategory({Database db}) async {
+   Future<List<Category>> getAllCategories({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       Category.table,

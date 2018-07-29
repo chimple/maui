@@ -23,7 +23,7 @@ class CategoryTopicDao {
     }
     return null;
   }
-   Future<List<CategoryTopic>> getAllCategoryTopic(String categoryId,{Database db}) async {
+   Future<List<CategoryTopic>> getAllCategoryTopics(String categoryId,{Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       CategoryTopic.table,
