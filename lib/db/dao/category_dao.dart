@@ -16,4 +16,17 @@ class CategoryDao {
     }
     return null;
   }
+
+   Future<List<Category>> getAllCategory({Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(
+      Category.table,
+      columns: [
+        Category.categoryIdCol,
+        Category.nameCol,
+        Category.colorCol,
+      ],
+    );
+    return maps.map((el) => new Category.fromMap(el)).toList();
+  }
 }
