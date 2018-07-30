@@ -14,10 +14,9 @@ class SubcategoryList extends StatefulWidget {
 }
 
 class _SubcategoryListState extends State<SubcategoryList> {
-  @override
-  List<CategoryTopic> _dataCategory = new List<CategoryTopic>();
+  List<CategoryTopic> _dataCategory;
   bool _isLoading = true;
-  var _categoryData;
+
   @override
   void initState() {
     super.initState();
@@ -30,15 +29,11 @@ class _SubcategoryListState extends State<SubcategoryList> {
     String idname = widget.categoryName;
     print(".....id matching or not.::$id......::$idname");
 
-    _categoryData = await CategoryTopicRepo().getCategoryTopicsBy(id);
+    _dataCategory = await CategoryTopicRepo().getCategoryTopicsByCategoryId(id);
 
-    print("object...category data is...eee...$_categoryData");
-    setState(() {
-      _dataCategory = _categoryData;
-      print(".......::database data is....${_dataCategory.length}");
+    print(".......::database data is....${_dataCategory.length}");
 
-      setState(() => _isLoading = false);
-    });
+    setState(() => _isLoading = false);
   }
 
   Widget build(BuildContext context) {

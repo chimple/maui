@@ -19,7 +19,7 @@ class CategoryListView extends StatefulWidget {
 }
 
 class _CategoryListViewState extends State<CategoryListView> {
-  List<Category> _dataCategory = new List<Category>();
+  var _dataCategory;
   bool _isLoading = true;
   var _categoryData;
 
@@ -31,11 +31,9 @@ class _CategoryListViewState extends State<CategoryListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _categoryData = await CategoryRepo().getCategories();
+    _dataCategory = await CategoryRepo().getCategories();
 
     print("object...category data is......$_categoryData");
-
-    _dataCategory = _categoryData;
     print("data of the $_dataCategory");
     setState(() => _isLoading = false);
   }
