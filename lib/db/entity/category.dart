@@ -1,44 +1,45 @@
-class Category{
+class Category {
   static const table = 'category';
-  static const categoryIdCol = 'categoryId';
+  static const idCol = 'id';
   static const nameCol = 'name';
   static const colorCol = 'color';
   static const imageCol = 'image';
 
-  String categoryId;
+  String id;
   String name;
   int color;
   String image;
 
-  Category({this.categoryId, this.name, this.color, this.image});
+  Category({this.id, this.name, this.color, this.image});
 
-  Map<String, dynamic> toMap(){
-    return{categoryIdCol: categoryId, nameCol: name, colorCol: color, imageCol: image};
+  Map<String, dynamic> toMap() {
+    return {idCol: id, nameCol: name, colorCol: color, imageCol: image};
   }
 
-  Category.fromMap(Map<String, dynamic>map): this(
-    categoryId: map[categoryIdCol],
-    name: map[nameCol],
-    color: map[colorCol],
-    image: map[imageCol]
-  );
+  Category.fromMap(Map<String, dynamic> map)
+      : this(
+            id: map[idCol],
+            name: map[nameCol],
+            color: map[colorCol],
+            image: map[imageCol]);
 
   @override
-    // TODO: implement hashCode
-    int get hashCode => categoryId.hashCode ^ name.hashCode ^ color.hashCode ^ image.hashCode;
+  // TODO: implement hashCode
+  int get hashCode =>
+      id.hashCode ^ name.hashCode ^ color.hashCode ^ image.hashCode;
 
- @override
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Category &&
           runtimeType == other.runtimeType &&
-          categoryId == other.categoryId &&
+          id == other.id &&
           name == other.name &&
           image == other.image &&
           color == other.color;
 
   @override
   String toString() {
-    return 'Category{categoryId: $categoryId, name: $name, color: $color, image: $image}';
+    return 'Category{id: $id, name: $name, color: $color, image: $image}';
   }
 }
