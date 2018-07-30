@@ -1,14 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/games/single_game.dart';
-import 'package:maui/screens/select_opponent_screen.dart';
-import 'package:maui/repos/notif_repo.dart';
-import 'package:badge/badge.dart';
+import 'package:maui/db/entity/category.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/components/gameaudio.dart';
-
-import '../db/entity/category.dart';
-import '../repos/activity_template_repo.dart';
 import '../repos/category_repo.dart';
 import 'sub_category_list_view.dart';
 
@@ -26,9 +18,8 @@ class CategoryListView extends StatefulWidget {
 }
 
 class _CategoryListViewState extends State<CategoryListView> {
-  List<Category> _dataCategory = new List<Category>();
-  var _dataTemplate;
-  var _categoryData;
+  List<Category> _dataCategories;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -37,65 +28,51 @@ class _CategoryListViewState extends State<CategoryListView> {
   }
 
   void _initData() async {
-    _categoryData = await CategoryRepo.categoryDao.getAllCategories();
-    _dataTemplate =
-        await ActivityTemplateRepo.activityTemplateDao.getAllTemplates();
-    print("object...category data is......$_categoryData");
-    setState(() {
-      _dataCategory = _categoryData;
-      print(".......::database data is....${_categoryData}");
-    });
+    setState(() => _isLoading = true);
+    _dataCategories = await CategoryRepo().getCategories();
+
+    print("object...category data is......$_dataCategories");
+    print("data of the $_dataCategories");
+    setState(() => _isLoading = false);
   }
 
   Widget _buildButton(
-      BuildContext context, String gameName, String displayName) {
+      BuildContext context, String categoryName, String categoryId) {
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = MediaQuery.of(context).orientation;
-    final colors = SingleGame.gameColors[gameName];
-    final color = colors != null ? colors[0] : Colors.amber;
+
+    final color = Colors.amber;
     var size = media.size;
     return new Container(
       decoration: new BoxDecoration(
         borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
       ),
       margin: EdgeInsets.all(size.width * .02),
-      child: new InkWell(
-        onTap: () {
-          String gamename = gameName;
-          String gameid = displayName;
-          Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  new SubcategoryList(gamename: gamename, gameid: gameid)));
-        },
-        key: new Key(gameName),
-        child: new Stack(
-          children: <Widget>[
-            new Material(
-                elevation: 8.0,
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(16.0)),
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    color: color,
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(16.0)),
-                  ),
-                )),
-            new Column(
-              children: <Widget>[
-                new Container(
-                    child: new Container(
-                        child: new Text(Loca.of(context).intl(gameName),
-                            textAlign: TextAlign.right,
-                            textDirection: TextDirection.rtl,
-                            style: new TextStyle(
-                                fontSize: size.height * .04,
-                                color: Colors.white),
-                            overflow: TextOverflow.ellipsis))),
-              ],
-            ),
-          ],
-        ),
+      child: new Stack(
+        children: <Widget>[
+          new Material(
+              elevation: 8.0,
+              borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
+              child: new Container(
+                decoration: new BoxDecoration(
+                  color: color,
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(16.0)),
+                ),
+              )),
+          new Column(
+            children: <Widget>[
+              new Container(
+                  child: new Container(
+                      child: new Text(categoryName,
+                          textAlign: TextAlign.right,
+                          textDirection: TextDirection.rtl,
+                          style: new TextStyle(
+                              fontSize: size.height * .04, color: Colors.white),
+                          overflow: TextOverflow.ellipsis))),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -104,7 +81,13 @@ class _CategoryListViewState extends State<CategoryListView> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     print(media);
-
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     return Container(
         color: const Color(0xffFECE3D),
         child: new GridView.count(
@@ -113,17 +96,17 @@ class _CategoryListViewState extends State<CategoryListView> {
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-          children: new List.generate(_categoryData.length, (i) {
+          children: new List.generate(_dataCategories.length, (i) {
             return GestureDetector(
                 onTap: () {
-                  String gamename = _categoryData[i].name;
-                  String gameid = _categoryData[i].id;
+                  String categoryName = _dataCategories[i].name;
+                  String categoryId = _dataCategories[i].categoryId;
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new SubcategoryList(
-                          gamename: gamename, gameid: gameid)));
+                          categoryName: categoryName, categoryId: categoryId)));
                 },
-                child: _buildButton(context, '${_categoryData[i].name}',
-                    '${_categoryData[i].id}'));
+                child: _buildButton(context, '${_dataCategories[i].name}',
+                    '${_dataCategories[i].categoryId}'));
           }),
         ));
   }
