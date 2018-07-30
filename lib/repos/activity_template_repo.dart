@@ -8,8 +8,8 @@ class ActivityTemplateRepo {
 
   const ActivityTemplateRepo();
 
-  Future<List<ActivityTemplate>> getActivityTemplatesBy(
+  Future<List<ActivityTemplate>> getActivityTemplatesByAtivityId(
       String activityId) async {
-    return activityTemplateDao.getActivityTemplatesBy(activityId);
+    return activityTemplateDao.getActivityTemplatesByAtivityId(activityId);
   }
 }
