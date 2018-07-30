@@ -38,14 +38,6 @@ class _ArticlePageState extends State<ArticlePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
-
     return new LayoutBuilder(builder: (context, constraints) {
       print("Screen Size: ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Material(
