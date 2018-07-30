@@ -8,7 +8,7 @@ class CategoryRepo {
 
   const CategoryRepo();
 
-  Future<Category> getCategory(String id) async {
-    return categoryDao.getCategory(id);
+  Future<List<Category>> getCategories() async {
+    return await categoryDao.getCategories();
   }
 }
