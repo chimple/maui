@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/category.dart';
 import 'package:maui/loca.dart';
 import '../repos/category_repo.dart';
 import 'sub_category_list_view.dart';
@@ -17,9 +18,8 @@ class CategoryListView extends StatefulWidget {
 }
 
 class _CategoryListViewState extends State<CategoryListView> {
-  var _dataCategory;
+  List<Category> _dataCategories;
   bool _isLoading = true;
-  var _categoryData;
 
   @override
   void initState() {
@@ -29,10 +29,10 @@ class _CategoryListViewState extends State<CategoryListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _dataCategory = await CategoryRepo().getCategories();
+    _dataCategories = await CategoryRepo().getCategories();
 
-    print("object...category data is......$_categoryData");
-    print("data of the $_dataCategory");
+    print("object...category data is......$_dataCategories");
+    print("data of the $_dataCategories");
     setState(() => _isLoading = false);
   }
 
@@ -64,7 +64,7 @@ class _CategoryListViewState extends State<CategoryListView> {
             children: <Widget>[
               new Container(
                   child: new Container(
-                      child: new Text(Loca.of(context).intl(categoryName),
+                      child: new Text(categoryName,
                           textAlign: TextAlign.right,
                           textDirection: TextDirection.rtl,
                           style: new TextStyle(
@@ -96,17 +96,17 @@ class _CategoryListViewState extends State<CategoryListView> {
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-          children: new List.generate(_dataCategory.length, (i) {
+          children: new List.generate(_dataCategories.length, (i) {
             return GestureDetector(
                 onTap: () {
-                  String categoryName = _dataCategory[i].name;
-                  String categoryId = _dataCategory[i].id;
+                  String categoryName = _dataCategories[i].name;
+                  String categoryId = _dataCategories[i].categoryId;
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new SubcategoryList(
                           categoryName: categoryName, categoryId: categoryId)));
                 },
-                child: _buildButton(context, '${_dataCategory[i].name}',
-                    '${_dataCategory[i].id}'));
+                child: _buildButton(context, '${_dataCategories[i].name}',
+                    '${_dataCategories[i].categoryId}'));
           }),
         ));
   }

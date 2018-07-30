@@ -10,6 +10,6 @@ class ActivityTemplateRepo {
 
   Future<List<ActivityTemplate>> getActivityTemplatesByAtivityId(
       String activityId) async {
-    return activityTemplateDao.getActivityTemplatesByAtivityId(activityId);
+    return activityTemplateDao.getActivityTemplatesByActivityId(activityId);
   }
 }

@@ -13,7 +13,9 @@ class SubcategoryList extends StatefulWidget {
 }
 
 class _SubcategoryListState extends State<SubcategoryList> {
+  //TODO: This should be List<Topic>
   List<CategoryTopic> _dataCategory;
+  //TODO: Get the list of subcategories from subcategories table
   bool _isLoading = true;
 
   @override
