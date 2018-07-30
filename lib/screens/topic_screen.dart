@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
+import 'package:maui/components/article_page.dart';
 
 class TopicScreen extends StatefulWidget {
-  TopicScreen({key, this.topicName, this.topicId}) : super(key: key);
-  String topicName;
-  String topicId;
+  
+  final String topicName;
+  
+  final String topicId;
+  TopicScreen({key, @required this.topicName, @required this.topicId}) : super(key: key);
 
   @override
   _TopicScreenState createState() => _TopicScreenState();
@@ -72,8 +74,15 @@ class _TopicScreenState extends State<TopicScreen> {
           _isLoading == false
               ? new Expanded(
                   flex: 16,
-                  child: new Container(
-                    color: Colors.green,
+                  child: new ArticlePage(
+                    topicId: widget.topicId,
+                    articleId: _articles[0].id,
+                    name: _articles[0].name,
+                    audio: _articles[0].audio,
+                    video: _articles[0].video,
+                    text: _articles[0].text,
+                    image: _articles[0].image,
+                    order: _articles[0].order,
                   ),
                 )
               : new Expanded(
