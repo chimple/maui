@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:maui/repos/article_repo.dart';
+import 'package:maui/db/entity/article.dart';
 import 'package:tuple/tuple.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -12,7 +14,7 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
 
-  List<Tuple7<String, String, String, String, String, String, int >> _articles;
+  List<Article> _articles;
 
   void _initTopic() async {
     new ArticleRepo().getArticle('lion').then((_articles) async{
