@@ -15,13 +15,11 @@ class TopicScreen extends StatefulWidget {
 class _TopicScreenState extends State<TopicScreen> {
 
   List<Article> _articles;
+  bool _isLoading = true;
 
   void _initTopic() async {
-    new ArticleRepo().getArticle('lion').then((_articles) async{
-      if(_articles.text.isNotEmpty){
-        print(_articles.text);
-
-      }
+    new ArticleRepo().getArticle('lion').then((articles) async{
+      _articles = articles;
     });
   }
 
@@ -29,7 +27,10 @@ class _TopicScreenState extends State<TopicScreen> {
     void initState() {
       // TODO: implement initState
       super.initState();
-      _initTopic();
+      setState(() {
+              _initTopic();
+              _isLoading =  false;
+            });
 
     }
 
@@ -70,12 +71,18 @@ class _TopicScreenState extends State<TopicScreen> {
                   iconSize: 50.0,
                 ),
             ),
+            _isLoading == false ? 
             new Expanded(
               flex: 16,
               child: new Container(
                 color: Colors.green,
               ),
-            ),
+            ) :
+            new Expanded(
+              flex: 16,
+              child: new CircularProgressIndicator(),
+            )
+            ,
             new Expanded(
               flex: 1,
               child: new IconButton(
