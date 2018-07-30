@@ -43,7 +43,7 @@ class ArticleDao {
       ],
       where: '${Article.topicIdCol} = ?',
       whereArgs: [topicId],
-      orderBy: '${Article.orderCol}',
+      // orderBy: '${Article.orderCol}',
     );
     return maps.map((article) => new Article.fromMap(article)).toList();
   }
