@@ -5,7 +5,7 @@ import 'package:maui/db/entity/category.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CategoryDao {
-  Future<List<Category>> getTheCategories({Database db}) async {
+  Future<List<Category>> getCategories({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       Category.table,

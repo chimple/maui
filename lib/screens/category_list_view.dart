@@ -31,7 +31,7 @@ class _CategoryListViewState extends State<CategoryListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _categoryData = await CategoryRepo().getTheCategories();
+    _categoryData = await CategoryRepo().getCategories();
 
     print("object...category data is......$_categoryData");
 
