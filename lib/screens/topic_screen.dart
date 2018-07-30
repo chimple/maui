@@ -3,8 +3,10 @@ import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
 
 class TopicScreen extends StatefulWidget {
-  @required String topicName;
-  @required String topicId;
+  @required
+  String topicName;
+  @required
+  String topicId;
   TopicScreen({key, this.topicName, this.topicId}) : super(key: key);
 
   @override
