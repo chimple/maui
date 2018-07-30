@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
 
 class TopicScreen extends StatefulWidget {
+  @required String topicName;
+  @required String topicId;
   TopicScreen({key, this.topicName, this.topicId}) : super(key: key);
-  String topicName;
-  String topicId;
 
   @override
   _TopicScreenState createState() => _TopicScreenState();
