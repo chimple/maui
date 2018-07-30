@@ -17,6 +17,7 @@ class TopicScreen extends StatefulWidget {
 class _TopicScreenState extends State<TopicScreen> {
   List<Article> _articles;
   bool _isLoading = true;
+  int _currentIndex=0;
 
   void _initTopic() async {
     new ArticleRepo()
@@ -24,7 +25,7 @@ class _TopicScreenState extends State<TopicScreen> {
         .then((articles) async {
       setState(() {
         _articles = articles;
-        _isLoading = false;
+        _articles.length != 0 ? _isLoading = false: _isLoading = true ;
       });
     });
   }
@@ -35,6 +36,27 @@ class _TopicScreenState extends State<TopicScreen> {
     super.initState();
     _initTopic();
   }
+
+  _forwardButtonBehaviour(){
+    if (_currentIndex<(_articles.length-1)) {
+      setState(() {
+              _currentIndex +=1;
+            });
+    } else {
+      print("curren index is at maximum");
+    }
+  }
+
+   _backwardButtonBehaviour(){
+    if (_currentIndex>0) {
+      setState(() {
+              _currentIndex -=1;
+            });
+    } else {
+      print("current index is at minimum");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +88,7 @@ class _TopicScreenState extends State<TopicScreen> {
           new Expanded(
             flex: 1,
             child: new IconButton(
-              onPressed: () => print("object"),
+              onPressed: () => _backwardButtonBehaviour(),
               icon: new Icon(Icons.arrow_left),
               iconSize: 50.0,
             ),
@@ -76,13 +98,13 @@ class _TopicScreenState extends State<TopicScreen> {
                   flex: 16,
                   child: new ArticlePage(
                     topicId: widget.topicId,
-                    articleId: _articles[0].id,
-                    name: _articles[0].name,
-                    audio: _articles[0].audio,
-                    video: _articles[0].video,
-                    text: _articles[0].text,
-                    image: _articles[0].image,
-                    order: _articles[0].order,
+                    articleId: _articles[_currentIndex].id,
+                    name: _articles[_currentIndex].name,
+                    audio: _articles[_currentIndex].audio,
+                    video: _articles[_currentIndex].video,
+                    text: _articles[_currentIndex].text,
+                    image: _articles[_currentIndex].image,
+                    order: _articles[_currentIndex].order,
                   ),
                 )
               : new Expanded(
@@ -92,7 +114,7 @@ class _TopicScreenState extends State<TopicScreen> {
           new Expanded(
             flex: 1,
             child: new IconButton(
-              onPressed: () => print("object"),
+              onPressed: () => _forwardButtonBehaviour(),
               icon: new Icon(Icons.arrow_right),
               iconSize: 50.0,
             ),
