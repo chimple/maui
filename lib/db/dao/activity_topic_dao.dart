@@ -5,7 +5,7 @@ import 'package:maui/db/entity/activity_topic.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ActivityTopicDao {
-  Future<List<ActivityTopic>> getActivityByTopicId(String topicId,
+  Future<List<ActivityTopic>> getActivityTopicByTopicId(String topicId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(ActivityTopic.table,
@@ -16,7 +16,8 @@ class ActivityTopicDao {
         where: "${ActivityTopic.topicIdCol} = ?",
         whereArgs: [topicId]);
     if (maps.length > 0) {
-    return maps.map((el) => new ActivityTopic.fromMap(el)).toList();
+      return maps.map((el) => new ActivityTopic.fromMap(el)).toList();
+    }
+    return null;
   }
-  return null;
 }
