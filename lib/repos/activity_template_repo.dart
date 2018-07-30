@@ -8,12 +8,8 @@ class ActivityTemplateRepo {
 
   const ActivityTemplateRepo();
 
-  Future<ActivityTemplate> getTopic(String activityId) async {
-    print("hello boss data is is there or not");
-    return activityTemplateDao.getTopic(activityId);
-  }
-
-  Future<List<ActivityTemplate>> getAllTemplates() async {
-    return  activityTemplateDao.getAllTemplates();
+  Future<List<ActivityTemplate>> getActivityTemplatesBy(
+      String activityId) async {
+    return activityTemplateDao.getActivityTemplatesBy(activityId);
   }
 }

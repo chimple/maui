@@ -4,10 +4,10 @@ import '../db/entity/category_topic.dart';
 import '../repos/category_topic_repo.dart';
 
 class SubcategoryList extends StatefulWidget {
-  final String gamename;
-  final String gameid;
+  final String categoryName;
+  final String categoryId;
 
-  const SubcategoryList({Key key, this.gamename, this.gameid})
+  const SubcategoryList({Key key, this.categoryName, this.categoryId})
       : super(key: key);
   @override
   _SubcategoryListState createState() => new _SubcategoryListState();
@@ -15,9 +15,8 @@ class SubcategoryList extends StatefulWidget {
 
 class _SubcategoryListState extends State<SubcategoryList> {
   @override
-  String message = 'this is true';
   List<CategoryTopic> _dataCategory = new List<CategoryTopic>();
-
+  bool _isLoading = true;
   var _categoryData;
   @override
   void initState() {
@@ -26,18 +25,19 @@ class _SubcategoryListState extends State<SubcategoryList> {
   }
 
   void _initData() async {
-    String iddata = widget.gameid;
-    String idname = widget.gamename;
-    print(".....id matching or not.::$iddata......::$idname");
-    // var notifs = await NotifRepo().getNotifCountByType();
-    _categoryData =
-        await CategoryTopicRepo.categoryTopicDao.getAllCategoryTopics(iddata);
-    //  datatemplate= await  ActivityTemplateRepo.activityTemplateDao.getalltemplate();
+    setState(() => _isLoading = true);
+    String id = widget.categoryId;
+    String idname = widget.categoryName;
+    print(".....id matching or not.::$id......::$idname");
+
+    _categoryData = await CategoryTopicRepo().getCategoryTopicsBy(id);
+
     print("object...category data is...eee...$_categoryData");
     setState(() {
       _dataCategory = _categoryData;
       print(".......::database data is....${_dataCategory.length}");
-      // _notifs = notifs;
+
+      setState(() => _isLoading = false);
     });
   }
 
@@ -45,9 +45,16 @@ class _SubcategoryListState extends State<SubcategoryList> {
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
     Orientation orientation = MediaQuery.of(context).orientation;
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("${widget.gamename}"),
+          title: new Text("${widget.categoryName}"),
         ),
         body: Stack(children: [
           Container(
@@ -60,22 +67,12 @@ class _SubcategoryListState extends State<SubcategoryList> {
                 mainAxisSpacing: 12.0,
                 crossAxisCount: media.size.height > media.size.width ? 2 : 2,
                 children: new List.generate(_dataCategory.length, (i) {
-                  return GestureDetector(
-                    onTap: () {
-                      String gamename = _categoryData[i].name;
-                      String gameid = _categoryData[i].id;
-                      Navigator.of(context).push(new MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              new SubcategoryList(
-                                  gamename: gamename, gameid: gameid)));
-                    },
-                    child: new Container(
-                      height: 40.0,
-                      width: 40.0,
-                      color: Colors.redAccent,
-                      child: Center(
-                          child: new Text("${_dataCategory[i].topicId}")),
-                    ),
+                  return new Container(
+                    height: 40.0,
+                    width: 40.0,
+                    color: Colors.redAccent,
+                    child:
+                        Center(child: new Text("${_dataCategory[i].topicId}")),
                   );
                 }),
               )),
