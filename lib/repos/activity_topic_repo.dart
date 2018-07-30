@@ -8,11 +8,7 @@ class ActivityTopicRepo {
 
   const ActivityTopicRepo();
 
-  Future<ActivityTopic> getActivityTopic(String activityId) async {
-    return await activityTopicDao.getActivityTopic(activityId);
-  }
-
-  Future<List<ActivityTopic>> getActivitiesByTopicId(String topicId) async {
-    return await activityTopicDao.getActivitiesByTopicId(topicId);
+  Future<List<ActivityTopic>> getActivityByTopicId(String topicId) async {
+    return await activityTopicDao.getActivityByTopicId(topicId);
   }
 }

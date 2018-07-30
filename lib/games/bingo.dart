@@ -144,8 +144,6 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     print("second call when we are doing p2p");
     _Bingodata = await fetchPairData(
         widget.gameConfig.gameCategoryId, _maxSize * _maxSize);
-    var data = await ActivityTopicDao().getActivitiesByTopicId("lion");
-    print("Activity topic id $data");
     print({"kiran data": _Bingodata});
     print({"kiran data": _Bingodata.length});
     if (_Bingodata.length <= 8) {
