@@ -20,6 +20,7 @@ class CategoryListView extends StatefulWidget {
 class _CategoryListViewState extends State<CategoryListView> {
   List<Category> _dataCategories;
   bool _isLoading = true;
+  static const mainCategoryId = 'main';
 
   @override
   void initState() {
@@ -29,7 +30,8 @@ class _CategoryListViewState extends State<CategoryListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _dataCategories = await CategoryRepo().getCategories();
+    _dataCategories =
+        await CategoryRepo().getSubcategoriesByCategoryId(mainCategoryId);
 
     print("object...category data is......$_dataCategories");
     print("data of the $_dataCategories");
@@ -100,13 +102,13 @@ class _CategoryListViewState extends State<CategoryListView> {
             return GestureDetector(
                 onTap: () {
                   String categoryName = _dataCategories[i].name;
-                  String categoryId = _dataCategories[i].categoryId;
+                  String categoryId = _dataCategories[i].id;
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new SubcategoryList(
                           categoryName: categoryName, categoryId: categoryId)));
                 },
                 child: _buildButton(context, '${_dataCategories[i].name}',
-                    '${_dataCategories[i].categoryId}'));
+                    '${_dataCategories[i].id}'));
           }),
         ));
   }
