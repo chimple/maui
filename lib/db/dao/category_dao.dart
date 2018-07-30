@@ -8,7 +8,7 @@ class CategoryDao {
   Future<Category> getCategory(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Category.table,
-        columns: [Category.categoryIdCol, Category.nameCol, Category.colorCol,],
+        columns: [Category.categoryIdCol, Category.nameCol, Category.colorCol, Category.imageCol],
         where: '${Category.categoryIdCol} = ?',
         whereArgs: [id]);
     if (maps.length > 0) {
