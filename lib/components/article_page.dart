@@ -29,8 +29,6 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
