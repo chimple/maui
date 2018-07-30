@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../db/entity/category_topic.dart';
-import '../repos/category_topic_repo.dart';
+import 'package:maui/db/entity/category.dart';
+import 'package:maui/db/entity/topic.dart';
+import '../repos/topic_repo.dart';
+import '../repos/category_repo.dart';
 
 class SubcategoryList extends StatefulWidget {
   final String categoryName;
@@ -13,9 +15,8 @@ class SubcategoryList extends StatefulWidget {
 }
 
 class _SubcategoryListState extends State<SubcategoryList> {
-  //TODO: This should be List<Topic>
-  List<CategoryTopic> _dataCategory;
-  //TODO: Get the list of subcategories from subcategories table
+  List<Topic> _topics;
+  List<Category> _subcategories;
   bool _isLoading = true;
 
   @override
@@ -29,10 +30,10 @@ class _SubcategoryListState extends State<SubcategoryList> {
     String id = widget.categoryId;
     String idname = widget.categoryName;
     print(".....id matching or not.::$id......::$idname");
+    _subcategories = await CategoryRepo().getSubcategoriesByCategoryId(id);
+    _topics = await TopicRepo().getTopicsForCategoryId(_subcategories.first.id);
 
-    _dataCategory = await CategoryTopicRepo().getCategoryTopicsByCategoryId(id);
-
-    print(".......::database data is....${_dataCategory.length}");
+    print(".......::database data is....${_topics.length}");
 
     setState(() => _isLoading = false);
   }
@@ -62,13 +63,12 @@ class _SubcategoryListState extends State<SubcategoryList> {
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
                 crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-                children: new List.generate(_dataCategory.length, (i) {
+                children: new List.generate(_topics.length, (i) {
                   return new Container(
                     height: 40.0,
                     width: 40.0,
                     color: Colors.redAccent,
-                    child:
-                        Center(child: new Text("${_dataCategory[i].topicId}")),
+                    child: Center(child: new Text("${_topics[i].name}")),
                   );
                 }),
               )),

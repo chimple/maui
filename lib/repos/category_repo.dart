@@ -11,4 +11,8 @@ class CategoryRepo {
   Future<List<Category>> getCategories() async {
     return await categoryDao.getCategories();
   }
+
+  Future<List<Category>> getSubcategoriesByCategoryId(String categoryId) async {
+    return await categoryDao.getSubcategoriesByCategoryId(categoryId);
+  }
 }
