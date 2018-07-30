@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../db/entity/category_topic.dart';
 import '../repos/category_topic_repo.dart';
 

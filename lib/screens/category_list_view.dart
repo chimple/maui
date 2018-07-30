@@ -1,7 +1,5 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
-import '../db/entity/category.dart';
 import '../repos/category_repo.dart';
 import 'sub_category_list_view.dart';
 
