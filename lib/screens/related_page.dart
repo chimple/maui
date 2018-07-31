@@ -29,7 +29,7 @@ class _RelatedPageState extends State<RelatedPage> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildtile(int index) {
+  Widget _buildTile(int index) {
     // print('topic tile ${topic[index].id} $index ${topic[index]}');
     return new Card(
         child: TopicButton(
@@ -61,6 +61,6 @@ class _RelatedPageState extends State<RelatedPage> {
                 mainAxisSpacing: 12.0,
                 crossAxisCount: 2,
                 children:
-                    new List.generate(topic.length, (i) => _buildtile(i)))));
+                    new List.generate(topic.length, (i) => _buildTile(i)))));
   }
 }
