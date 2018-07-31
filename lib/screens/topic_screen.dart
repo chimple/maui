@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
 import 'package:maui/components/article_page.dart';
@@ -98,8 +99,8 @@ class _TopicScreenState extends State<TopicScreen> {
           body: _isDataAvailable == false
               ? new Container(
                   child: new Center(
-                                      child: new Text(
-                      "no data",
+                    child: new Text(
+                      Loca.of(context).no_data,
                       style: new TextStyle(
                           fontSize: 50.0, fontWeight: FontWeight.bold),
                     ),
