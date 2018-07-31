@@ -2120,6 +2120,20 @@ flutter:
     - assets/stickers/emoguy/workingout.gif
     - assets/stickers/emoguy/yummy.gif
 
+
+    - assets/category/Animal.svg
+    - assets/category/apple.svg
+    - assets/category/fox.svg
+    - assets/category/home_stuff.svg
+    - assets/category/ice_cream.svg
+    - assets/category/lion.svg
+    - assets/category/monkey.svg
+    - assets/category/pen.svg
+    - assets/category/pencil.svg
+    - assets/category/rabbit.svg
+    - assets/category/truck.svg
+    - assets/category/vehicle.svg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+<title>Lion</title>
+<rect style="fill:none;" width="256" height="256"/>
+<g>
+	<path style="fill:#01A5AE;" d="M156.1,181.5c0,0,12,21.1,8.8,39S145.9,233,145.9,233l3-49L156.1,181.5z"/>
+	<path style="fill:#01A5AE;" d="M102.4,182.3c0,0-12,21.1-8.8,39s18.9,12.5,18.9,12.5l-3-49L102.4,182.3z"/>
+	<rect x="129.7" y="226.9" style="fill:#01A5AE;" width="21.7" height="25.9"/>
+	<path style="fill:#01A5AE;" d="M154.1,256h-24.4v-6h24.4c1.1,0,1.9,0.9,1.9,1.9v2.1C156.1,255.1,155.2,256,154.1,256z"/>
+	<rect x="107.3" y="226.9" style="fill:#01A5AE;" width="21.7" height="25.9"/>
+	<path style="fill:#01A5AE;" d="M104.7,256H129v-6h-24.4c-1.1,0-1.9,0.9-1.9,1.9v2.1C102.7,255.1,103.6,256,104.7,256z"/>
+	<path style="fill:#EFE2D5;" d="M156.7,219.8c0,15.6-12.6,28.2-28.2,28.2s-28.2-12.6-28.2-28.2l1.7-9.7l4-22.8h45.5l3.7,23.9
+		L156.7,219.8z"/>
+	<path style="fill:#01A5AE;" d="M123.2,99.4V5.5c0-5-6-7-8.8-3c-10.1,14.4-24.6,45-18.5,96.9H123.2z"/>
+	<path style="fill:#01A5AE;" d="M135.4,99.4V5.9c0-5,6.1-7.1,8.8-3c9.8,14.6,23.5,45.1,17.6,96.5H135.4z"/>
+	<g>
+		<path style="fill:#EFE2D5;" d="M127.3,193.9c-48.3,0-56.1-37.5-56.1-37.5l27.3-60.8c2-4.5,6.4-7.7,11.6-8.4l6.5-0.9
+			c8.7-1.2,17.5-1.1,26.2,0.1l4.7,0.7c5.1,0.7,9.5,3.9,11.5,8.5l27.4,61.7C186.3,157.3,175.6,193.9,127.3,193.9z"/>
+	</g>
+	<path style="fill:#E2D2C3;" d="M157.9,100.5l-5.6,16.4c0,0,0.2,68.5-22.5,68.3c-23.5-0.2-23.3-68.3-23.3-68.3l-6.2-15.9
+		c-2.9-7.4,2.6-15.5,10.5-15.5h36.4C154.9,85.5,160.4,93.1,157.9,100.5z"/>
+	<g>
+		<polyline style="fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;" points="117.7,179.4 129.3,185.5 141,179.4 		
+			"/>
+		<line style="fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;" x1="129.3" y1="194.9" x2="129.3" y2="185.5"/>
+	</g>
+	<g>
+		<circle style="fill:#FFFFFF;" cx="99.9" cy="108" r="8.5"/>
+		<circle cx="101.1" cy="108.5" r="4.3"/>
+	</g>
+	<g>
+		<circle style="fill:#FFFFFF;" cx="159.9" cy="108" r="8.5"/>
+		<circle cx="158.8" cy="108.5" r="4.3"/>
+	</g>
+</g>
+</svg>
