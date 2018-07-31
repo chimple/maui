@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/category.dart';
 import 'package:maui/loca.dart';
+import '../components/topic_button.dart';
 import '../repos/category_repo.dart';
 import 'sub_category_list_view.dart';
 
@@ -38,47 +39,6 @@ class _CategoryListViewState extends State<CategoryListView> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildButton(
-      BuildContext context, String categoryName, String categoryId) {
-    MediaQueryData media = MediaQuery.of(context);
-    Orientation orientation = MediaQuery.of(context).orientation;
-
-    final color = Colors.amber;
-    var size = media.size;
-    return new Container(
-      decoration: new BoxDecoration(
-        borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-      ),
-      margin: EdgeInsets.all(size.width * .02),
-      child: new Stack(
-        children: <Widget>[
-          new Material(
-              elevation: 8.0,
-              borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-              child: new Container(
-                decoration: new BoxDecoration(
-                  color: color,
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(16.0)),
-                ),
-              )),
-          new Column(
-            children: <Widget>[
-              new Container(
-                  child: new Container(
-                      child: new Text(categoryName,
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                          style: new TextStyle(
-                              fontSize: size.height * .04, color: Colors.white),
-                          overflow: TextOverflow.ellipsis))),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
@@ -90,6 +50,7 @@ class _CategoryListViewState extends State<CategoryListView> {
         child: new CircularProgressIndicator(),
       );
     }
+    print("hello image is ther or not ....::...'${_dataCategories[1].image}'");
     return Container(
         color: const Color(0xffFECE3D),
         child: new GridView.count(
@@ -99,16 +60,16 @@ class _CategoryListViewState extends State<CategoryListView> {
           mainAxisSpacing: 12.0,
           crossAxisCount: media.size.height > media.size.width ? 2 : 2,
           children: new List.generate(_dataCategories.length, (i) {
-            return GestureDetector(
-                onTap: () {
-                  String categoryName = _dataCategories[i].name;
-                  String categoryId = _dataCategories[i].id;
-                  Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (BuildContext context) => new SubcategoryList(
-                          categoryName: categoryName, categoryId: categoryId)));
-                },
-                child: _buildButton(context, '${_dataCategories[i].name}',
-                    '${_dataCategories[i].id}'));
+            return TopicButton(
+                text: '${_dataCategories[i].name}',
+                image: '${_dataCategories[i].image}',
+                onPress: () => Navigator.of(context).push(
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new SubcategoryList(
+                                  categoryName: _dataCategories[i].name,
+                                  categoryId: _dataCategories[i].id)),
+                    ));
           }),
         ));
   }
