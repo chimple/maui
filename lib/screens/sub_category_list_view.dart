@@ -18,6 +18,7 @@ class SubcategoryList extends StatefulWidget {
 class _SubcategoryListState extends State<SubcategoryList>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  var _topicis;
   List<Topic> _topics;
   List _listTopics = [];
   List<Category> _subcategories;
@@ -40,13 +41,14 @@ class _SubcategoryListState extends State<SubcategoryList>
         new TabController(vsync: this, length: _subcategories.length);
     _subcategories.forEach((e) {
       print("this data foreach is......::${e.name}");
-      _getTopicDataForcategory(e.name);
+
+      _getTopicDataForCategory(e.id);
     });
     print(
         "hello this is when click this in my tabbar....::${_subcategories.first.id}");
-    _topics = await TopicRepo().getTopicsForCategoryId('animals');
+    // _topics = await TopicRepo().getTopicsForCategoryId('animals');
 
-    print(".......::database data is....${_topics.length}");
+    print(".......::database data is....${_listTopics}");
     print("hello data of the databselength isss.....${_listTopics.length}");
 
     setState(() => _isLoading = false);
@@ -68,54 +70,57 @@ class _SubcategoryListState extends State<SubcategoryList>
         child: new CircularProgressIndicator(),
       );
     }
+    print("lenth os the topics is ......::${_listTopics.length}");
+    print("lenth os the topics is ......::$_listTopics");
     return new MaterialApp(
         home: new Scaffold(
-            appBar: new AppBar(
-              title: Row(children: [
-                new IconButton(
-                  icon: new Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                new Text("${widget.categoryName}")
-              ]),
-              bottom: new TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                tabs: List<Widget>.generate(_subcategories.length, (int index) {
-                  print("thisssss....is...::${_subcategories[index]}");
+      appBar: new AppBar(
+        title: Row(children: [
+          new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          new Text("${widget.categoryName}")
+        ]),
+        bottom: new TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabs: List<Widget>.generate(_subcategories.length, (int index) {
+            print("thisssss....is...::${_subcategories[index]}");
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new Tab(text: "${_subcategories[index].name}"),
-                  );
-                }),
-              ),
-            ),
-            body: _buildTabBarView(context)
-            // new TabBarView(
-            //   children:_buildTabBarView(context)
-            //   //     List<Widget>.generate(_subcategories.length, (int index) {
-            //   //   print(_subcategories[0]);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Tab(text: "${_subcategories[index].name}"),
+            );
+          }),
+        ),
+      ),
+      body: _buildTabBarView(context),
+      //     new TabBarView(
+      // controller: _tabController,
+      // children: List<Widget>.generate(_subcategories.length, (int index) {
+      //   print(_subcategories[0]);
 
-            //   //   return new GridView.count(
-            //   //     key: new Key('Category_page'),
-            //   //     primary: true,
-            //   //     crossAxisSpacing: 12.0,
-            //   //     mainAxisSpacing: 12.0,
-            //   //     crossAxisCount:
-            //   //         media.size.height > media.size.width ? 2 : 2,
-            //   //     children: new List.generate(_topics.length, (i) {
-            //   //       return TopicButton(
-            //   //           text: '${_topics[i].name}',
-            //   //           image: '${_topics[i].image}',
-            //   //           onPress: null);
-            //   //     }),
-            //   //   );
-            //   // }),
-            // )
-            ));
+      //   return new GridView.count(
+      //     key: new Key('Category_page'),
+      //     primary: true,
+      //     crossAxisSpacing: 12.0,
+      //     mainAxisSpacing: 12.0,
+      //     crossAxisCount: media.size.height > media.size.width ? 2 : 2,
+      //     children: new List.generate(_listTopics.length, (i) {
+      //       print("i isssss $i");
+      //       print("legth isssss.s........::${_listTopics.length}");
+      //       print("data iss........::${_listTopics[1][1].name}");
+      //       return TopicButton(
+      //           text: '${_listTopics[index][i].name}',
+      //           image: '${_listTopics[index][i].image}',
+      //           onPress: null);
+      //     }),
+      //   );
+      // }))
+    ));
   }
 
   Widget _buildTabBarView(BuildContext context) {
@@ -126,35 +131,31 @@ class _SubcategoryListState extends State<SubcategoryList>
     return new TabBarView(
         controller: _tabController,
         children: List<Widget>.generate(_subcategories.length, (int index) {
-          print(_subcategories[0]);
-
           return new GridView.count(
             key: new Key('Category_page'),
             primary: true,
             crossAxisSpacing: 12.0,
             mainAxisSpacing: 12.0,
             crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-            children: new List.generate(_listTopics.length, (i) {
-              print("legth isssss.s........::${_listTopics.length}");
+            children: new List.generate(_listTopics[index].length, (j) {
+              print("legth isssss.s........::${_listTopics}");
+              print("_listtopic length is .......;:${_listTopics.length}");
               print("data iss........::${_listTopics[1][0].name}");
               return TopicButton(
-                  text: '${_listTopics[i][0].name}',
-                  image: '${_listTopics[i][0].image}',
+                  text: '${_listTopics[index][j].name}',
+                  image: '${_listTopics[index][j].image}',
                   onPress: null);
             }),
           );
         }));
   }
 
-  void _getTopicDataForcategory(String name) async {
-    var _topicis;
+  _getTopicDataForCategory(String name) async {
     print(" topics comming or not");
-    _topicis = await TopicRepo().getTopicsForCategoryId('animals');
+    _topicis = await TopicRepo().getTopicsForCategoryId(name);
     print("after getting data from databse is...::$_topicis");
     setState(() {
       _listTopics.add(_topicis);
     });
-
-    print("topics is........$_listTopics");
   }
 }
