@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Tables extends StatefulWidget {
   Function onScore;
@@ -13,13 +14,14 @@ class Tables extends StatefulWidget {
   int gameCategoryId;
   bool isRotated;
 
-  Tables({key,
-    this.onScore,
-    this.onProgress,
-    this.onEnd,
-    this.iteration,
-    this.gameCategoryId,
-    this.isRotated = false})
+  Tables(
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.gameCategoryId,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -99,7 +101,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
     print('Pushed the Button');
   }
 
-
   Widget _buildItem(int index, String text, double _height) {
     print('_buildItem: $text');
     return new MyButton(
@@ -111,9 +112,9 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
             setState(() {
               _result = _result.substring(0, _result.length - 1);
             });
-          }
-          else if (text == '✔') {
-            if (_count  == _tableShuffledData.length - 1 && int.parse(_result) == _answer ) {
+          } else if (text == '✔') {
+            if (_count == _tableShuffledData.length - 1 &&
+                int.parse(_result) == _answer) {
               print("coming.........");
               int _temp = _tableShuffledData.length;
               print("$_count $_temp");
@@ -137,9 +138,8 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 _wrong = 0;
                 score = score + 4;
               });
-            }
-            else {
-              if(score > 0) {
+            } else {
+              if (score > 0) {
                 print("Score $score");
                 widget.onScore(-1);
               }
@@ -160,8 +160,7 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
                 }
               });
             }
-          }
-          else {
+          } else {
             setState(() {
               if (_result.length < 3) {
                 _result = _result + text;
@@ -170,7 +169,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
           }
         });
   }
-
 
   @override
   void didUpdateWidget(Tables oldWidget) {
@@ -196,7 +194,6 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       );
     }
 
-
     return new LayoutBuilder(builder: (context, constraints) {
       print("this is  data");
       print(constraints.maxHeight);
@@ -216,69 +213,81 @@ class _TablesState extends State<Tables> with SingleTickerProviderStateMixin {
       }
 
       if (_isShowingFlashCard) {
-        String temp  = _question + " = " +  _answer.toString();
-        return  FractionallySizedBox(
-            widthFactor: constraints.maxHeight > constraints.maxWidth ? 0.65 : 0.5,
-            heightFactor: constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.9,
-            child: new FlashCard(text: temp, onChecked: () {
-              setState(() {
-                _isShowingFlashCard = false;
-                print('thiss    ${this._count}   ${_tableShuffledData.length}');
-                 if(this._count==_tableShuffledData.length-1){
-                  widget.onEnd();
-                }else{
-                this._count = this._count + 1;
-                int temp1 = _tableShuffledData[_count].item1;
-                String temp2 = _tableShuffledData[_count].item2;
-                int temp3 = _tableShuffledData[_count].item3;
-                _question = "$temp1 $temp2 $temp3";
-                _answer = _tableShuffledData[_count].item4;
-                }
-              });
-            }));
+        String temp = _question + " = " + _answer.toString();
+        return FractionallySizedBox(
+            widthFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.7 : 0.65,
+            heightFactor:
+                constraints.maxHeight > constraints.maxWidth ? 0.4 : 0.8,
+            child: new FlashCard(
+                text: temp,
+                onChecked: () {
+                  setState(() {
+                    _isShowingFlashCard = false;
+                    print(
+                        'thiss    ${this._count}   ${_tableShuffledData.length}');
+                    if (this._count == _tableShuffledData.length - 1) {
+                      widget.onEnd();
+                    } else {
+                      this._count = this._count + 1;
+                      int temp1 = _tableShuffledData[_count].item1;
+                      String temp2 = _tableShuffledData[_count].item2;
+                      int temp3 = _tableShuffledData[_count].item3;
+                      _question = "$temp1 $temp2 $temp3";
+                      _answer = _tableShuffledData[_count].item4;
+                    }
+                  });
+                }));
       }
       return new Center(
           child: new Container(
-            child: new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  new Container(
-                      height: _height * 0.35,
-                      width: _width ,
-                      color: new Color(0xFFFF812C),
-                      child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      new Container (
-                        margin: new EdgeInsets.only(bottom: _height * 0.03),
-                        alignment: Alignment.center,
-                        child: new Text(
-                          '$_question',
-                          key: new Key('question'),
-                          style: new TextStyle(
-                            fontSize: _height * 0.1,
-                            fontWeight: FontWeight.bold,
-                            color:new Color(0xFFA46DBA),
+        child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                  height: _height * 0.35,
+                  width: _width,
+                  color: new Color(0xFFFF812C),
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        new Container(
+                          margin: new EdgeInsets.only(bottom: _height * 0.03),
+                          alignment: Alignment.center,
+                          child: new Text(
+                            '$_question',
+                            key: new Key('question'),
+                            style: new TextStyle(
+                              fontSize: _height * 0.1,
+                              fontWeight: FontWeight.bold,
+                              color: new Color(0xFFA46DBA),
+                            ),
                           ),
                         ),
-                      ),
-                      new TextAnimation(
-                        animation: animation,
-                        text: _result,
-                        height: _height,
-                        width: _width,
-                      )])),
-                  new Container(
-                    height: _height * 0.6,
-                    width: _width,
-                    padding: new EdgeInsets.only(
-                        right:constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
-                        left: constraints.maxWidth>constraints.maxHeight?constraints.maxWidth*0.3:constraints.maxWidth*0.1,
-                        top: constraints.maxWidth>constraints.maxHeight?constraints.maxHeight*0.05:constraints.maxWidth*0.07),
-                    child: new Table(children: rows),
-                  ),
-                ]),
-          ));
+                        new TextAnimation(
+                          animation: animation,
+                          text: _result,
+                          height: _height,
+                          width: _width,
+                        )
+                      ])),
+              new Container(
+                height: _height * 0.6,
+                width: _width,
+                padding: new EdgeInsets.only(
+                    right: constraints.maxWidth > constraints.maxHeight
+                        ? constraints.maxWidth * 0.3
+                        : constraints.maxWidth * 0.1,
+                    left: constraints.maxWidth > constraints.maxHeight
+                        ? constraints.maxWidth * 0.3
+                        : constraints.maxWidth * 0.1,
+                    top: constraints.maxWidth > constraints.maxHeight
+                        ? constraints.maxHeight * 0.05
+                        : constraints.maxWidth * 0.07),
+                child: new Table(children: rows),
+              ),
+            ]),
+      ));
     });
   }
 
@@ -336,11 +345,12 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     }
     print("_MyButtonState.didUpdateWidget: ${widget.text} ${oldWidget.text}");
   }
+
   @override
   Widget build(BuildContext context) {
     return new TableCell(
         child: new Padding(
-            padding:new EdgeInsets.all( widget.height * 0.008 ),
+            padding: new EdgeInsets.all(widget.height * 0.008),
             child: new RaisedButton(
                 splashColor: Theme.of(context).primaryColor,
                 highlightColor: Theme.of(context).primaryColor,
@@ -349,24 +359,31 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 color: Colors.white,
                 shape: new RoundedRectangleBorder(
                     side: new BorderSide(
-                        color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
-                        width:widget.height * 0.0075),
-                    borderRadius:
-                    new  BorderRadius.all(new Radius.circular(widget.height * 0.020))),
+                        color: _displayText == '✖'
+                            ? Colors.red
+                            : _displayText == '✔'
+                                ? Colors.green
+                                : new Color(0xFFA46DBA),
+                        width: widget.height * 0.0075),
+                    borderRadius: new BorderRadius.all(
+                        new Radius.circular(widget.height * 0.020))),
                 child: new Center(
                   child: new Text(_displayText,
                       key: new Key('keyPad'),
                       style: new TextStyle(
-                          color:_displayText == '✖' ? Colors.red: _displayText == '✔'?Colors.green: new Color(0xFFA46DBA),
+                          color: _displayText == '✖'
+                              ? Colors.red
+                              : _displayText == '✔'
+                                  ? Colors.green
+                                  : new Color(0xFFA46DBA),
                           fontSize: _displayText == '✖' || _displayText == '✔'
                               ? widget.height * 0.053
                               : widget.height * 0.06,
                           fontWeight: FontWeight.bold)),
                 )))
-      // )
-    );
+        // )
+        );
   }
-
 }
 
 class TextAnimation extends AnimatedWidget {
@@ -379,27 +396,27 @@ class TextAnimation extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     Animation animation = listenable;
-      return new Center(
-          child: new Container(
-              height: height * 0.12,
-              width: height / 4.0,
-              alignment: Alignment.center,
-              margin: new EdgeInsets.only(
-                  left: animation.value ?? 0, bottom: height * 0.03),
-              decoration: new BoxDecoration(
-                  color:  Colors.white,
-                  borderRadius: new BorderRadius.all(
-                      new Radius.circular(height * 0.015)),
-                  border: new Border.all(
-                    color: new Color(0xFFA46DBA),
-                    width: height * 0.0075,
-                  ),
-                  shape: BoxShape.rectangle),
-              child: new Text(text,
-                  style: new TextStyle(
-                    color: new Color(0xFFA46DBA),
-                    fontSize: height * 0.09,
-                    fontWeight: FontWeight.bold,))));
+    return new Center(
+        child: new Container(
+            height: height * 0.12,
+            width: height / 4.0,
+            alignment: Alignment.center,
+            margin: new EdgeInsets.only(
+                left: animation.value ?? 0, bottom: height * 0.03),
+            decoration: new BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    new BorderRadius.all(new Radius.circular(height * 0.015)),
+                border: new Border.all(
+                  color: new Color(0xFFA46DBA),
+                  width: height * 0.0075,
+                ),
+                shape: BoxShape.rectangle),
+            child: new Text(text,
+                style: new TextStyle(
+                  color: new Color(0xFFA46DBA),
+                  fontSize: height * 0.09,
+                  fontWeight: FontWeight.bold,
+                ))));
   }
 }
-

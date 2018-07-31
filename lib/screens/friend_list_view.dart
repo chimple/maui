@@ -8,6 +8,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/db/entity/notif.dart';
 import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FriendListView extends StatefulWidget {
   const FriendListView({Key key}) : super(key: key);
@@ -35,11 +36,9 @@ class _FriendListViewState extends State<FriendListView> {
 
   @override
   Widget build(BuildContext context) {
-    var user = AppStateContainer.of(context).state.loggedInUser;
-    var appUsers = AppStateContainer.of(context).users;
-    print('FriendListView.users $appUsers');
-    var users = [user];
-    if (appUsers != null) users.addAll(appUsers);
+    final user = AppStateContainer.of(context).state.loggedInUser;
+    var users = AppStateContainer.of(context).users;
+    print('FriendListView.users $users');
     var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
@@ -61,14 +60,15 @@ class _FriendListViewState extends State<FriendListView> {
               orElse: () => Notif(userId: u.id, numNotifs: 0));
           return FriendItem(
               id: u.id,
+              name: u.name,
               imageUrl: u.image,
               color: u.color,
               numNotifs: notif.numNotifs,
-              onTap: () => user.id == u.id
-                  ? Navigator.of(context).pushNamed('/chatbot')
-                  : Navigator.of(context).push(MaterialPageRoute<Null>(
-                      builder: (BuildContext context) => new ChatScreen(
-                          myId: user.id, friend: u, friendImageUrl: u.image))));
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute<Null>(
+                    builder: (BuildContext context) => new ChatScreen(
+                        myId: user.id, friend: u, friendImageUrl: u.image)));
+              });
         }).toList(growable: false),
       ),
     );

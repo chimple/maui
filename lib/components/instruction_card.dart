@@ -6,10 +6,9 @@ import 'package:meta/meta.dart';
 
 class InstructionCard extends StatefulWidget {
   final String text;
-  final String image;
   final VoidCallback onChecked;
 
-  InstructionCard({Key key, @required this.text, this.image, this.onChecked})
+  InstructionCard({Key key, @required this.text, this.onChecked})
       : super(key: key);
 
   @override
@@ -21,7 +20,6 @@ class InstructionCard extends StatefulWidget {
 class _InstructionCardState extends State<InstructionCard> {
   Unit _unit;
   bool _isLoading = true;
-  // String image = 'assets/apple.png';
 
   @override
   void initState() {
@@ -29,9 +27,17 @@ class _InstructionCardState extends State<InstructionCard> {
     _getData();
   }
 
+  @override
+  void didUpdateWidget(InstructionCard oldWidget) {
+    if (widget.text != oldWidget.text) {
+      _getData();
+    }
+  }
+
   void _getData() async {
+    _isLoading = true;
     _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
-    setState(() => _isLoading = false);
+    if (mounted) setState(() => _isLoading = false);
   }
 
   @override
@@ -46,7 +52,7 @@ class _InstructionCardState extends State<InstructionCard> {
     bool noImage = (_unit?.image?.length ?? 0) == 0;
     Color bgColor = Theme.of(context).accentColor;
     return Container(
-        decoration: noImage ? BoxDecoration(color: bgColor) : null,
+        decoration: BoxDecoration(color: Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -54,7 +60,7 @@ class _InstructionCardState extends State<InstructionCard> {
               alignment: Alignment(1.0, 0.0),
               child: IconButton(
                   icon: new Icon(Icons.volume_up),
-                  color: noImage ? Colors.white : bgColor,
+                  color: Colors.white,
                   onPressed: () =>
                       AppStateContainer.of(context).play(widget.text)),
             ),
@@ -63,7 +69,7 @@ class _InstructionCardState extends State<InstructionCard> {
                   ? new Center(
                       child: Text(
                       widget.text,
-                      style: TextStyle(color: Colors.white, fontSize: 48.0),
+                      style: TextStyle(color: bgColor, fontSize: 48.0),
                     ))
                   : new Padding(
                       padding: const EdgeInsets.all(8.0),

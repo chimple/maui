@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -47,7 +45,8 @@ class TextPainters extends CustomPainter {
   TextPainters({
     this.maxString,
     this.maxChar,
-    @required this.noOfSlice,
+    this.wmCount,
+    @required this.dataSize,
     @required this.data,
     this.rotation = 0.0,
   })  : tickPaint = new Paint(),
@@ -58,45 +57,49 @@ class TextPainters extends CustomPainter {
         ) {
     tickPaint.strokeWidth = 2.5;
   }
-  final int noOfSlice;
-  final int maxChar;
+  final int dataSize;
+  final int maxChar, wmCount;
   List<String> data = [];
 
   final rotation, tickPaint, textStyle;
   final textPainter;
   final String maxString;
-  double _angle, _radiun, radius, _baseLength, _fontSize, _wFactor;
+  double _angle,
+      _radiun,
+      radius,
+      _baseLength,
+      _fontSize,
+      _wmFactor,
+      _lengthOfString,
+      _const = 0.0,
+      _constX = .1;
   @override
   void paint(Canvas canvas, Size size) {
+    print('all data:: $data');
     double _uperCaseConstant = 0.0;
-    if (maxString.toUpperCase() == maxString.toUpperCase()) {
-      _uperCaseConstant = 8.0;
-    }
-    double _const = 0.0;
-    if (noOfSlice == 2) {
-      _const = -25.0;
-    } else if (noOfSlice == 4) {
+    if (maxString.toUpperCase() == maxString) {
+      if (dataSize == 4) {
+        _constX = .39;
+        _uperCaseConstant = 60.0;
+      } else if (dataSize == 6) {
+      } else if (dataSize == 8) {}
+    } else {}
+    if (dataSize == 2) {
+      _const = -23.0;
+    } else if (dataSize == 4) {
       _const = -16.0;
-    } else if (noOfSlice == 6) {
+      _uperCaseConstant = 30.0;
+    } else if (dataSize == 6) {
       _const = -8.0;
-    } else if (noOfSlice == 8) {
-      _const=-10.0;
-    }
-    int _wLength = 'w'.allMatches(maxString.toLowerCase()).length;
-    _wLength = 'm'.allMatches(maxString.toLowerCase()).length;
-    // print("max len string w:: ${data}");
-    if (_wLength > 0) {
-      _wFactor = 2.5 / _wLength.toDouble();
-    } else {
-      _wFactor = 1.5;
+    } else if (dataSize == 8) {
+      _const = -10.0;
     }
     radius = size.width / 2;
-    _angle = 360 / (noOfSlice * 2.0);
+    _angle = 360 / (dataSize * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
-    // print("_angle :: $_angle");
-    // print("radius :: ${2*radius*sin(_radiun)}");
-    _fontSize =  (_baseLength * .24) / (maxChar*_wFactor*.2);
+    _fontSize = ((_baseLength * .8) / maxChar) - wmCount * 1.2;
+    _lengthOfString = (_fontSize * dataSize) - wmCount * 1.2;
     canvas.translate(size.width / 2, size.height / 2);
     canvas.save();
     canvas.rotate(-rotation);
@@ -108,11 +111,18 @@ class TextPainters extends CustomPainter {
     path.close();
     int incr = 0;
     if (data.isNotEmpty)
-      for (var i = 0; i < noOfSlice * 2; ++i) {
+      for (var i = 0; i < dataSize * 2; ++i) {
         if (i % 2 == 0) {
           canvas.drawLine(
               new Offset(0.0, 0.0), new Offset(0.0, radius - 4.2), tickPaint);
         } else {
+          double _offset = size.width / 14 +
+              4 * data[incr].length +
+              _uperCaseConstant +
+              wmCount * 4.2;
+          if (maxChar == 1) {
+            _offset = size.height / 12;
+          }
           canvas.save();
           canvas.translate(-0.0, -((size.width) / 3));
           String _text = data[incr];
@@ -123,26 +133,25 @@ class TextPainters extends CustomPainter {
               fontStyle: FontStyle.italic,
               color: Colors.black,
               fontFamily: 'BebasNeue',
-              fontSize: maxChar > 1 ? _fontSize : _baseLength*.2,
+              fontSize: maxChar > 1 ? _fontSize : _baseLength * .2,
             ),
           );
-          incr++;
 
           textPainter.layout();
-
           canvas.rotate(-pi * 2);
           textPainter.paint(
             canvas,
             new Offset(
-              -((3.50 * _text.length) * _baseLength) / (117.50)+_wLength*2,
-              -(size.height / 7.800 + _const),
+              -(_offset),
+              -(size.height / 7.500 + _const),
             ),
           );
+
+          incr++;
           canvas.restore();
         }
-        canvas.rotate(2 * pi / (noOfSlice.toDouble() * 2));
+        canvas.rotate(2 * pi / (dataSize.toDouble() * 2));
       }
-
     canvas.restore();
   }
 
@@ -156,7 +165,7 @@ class ImagePainter extends CustomPainter {
   List<ui.Image> images = new List<ui.Image>();
   ImagePainter(
       {Key key,
-      @required this.noOfSlice,
+      @required this.dataSize,
       @required this.images,
       @required this.rotation,
       this.boxfit = BoxFit.contain})
@@ -169,18 +178,14 @@ class ImagePainter extends CustomPainter {
         tickPaint = new Paint() {
     tickPaint.strokeWidth = 2.5;
   }
-  final int noOfSlice;
-  //final path;
+  final int dataSize;
   final tickPaint;
-  double rotation = 0.0;
-
   final BoxFit boxfit;
-
-  ui.ImageByteFormat img;
   ui.Rect rect, inputSubrect, outputSubrect;
-  Size imageSize;
-  FittedSizes sizes;
+  Size _imageSize;
+  FittedSizes __fittedSize;
   double radius,
+      rotation = 0.0,
       _x,
       _y,
       _angle,
@@ -195,44 +200,42 @@ class ImagePainter extends CustomPainter {
   void paint(ui.Canvas canvas, ui.Size size) {
     print("image data:: $images");
     radius = size.width / 2;
-    _angle = 360 / (noOfSlice * 2.0);
+    _angle = 360 / (dataSize * 2.0);
     _radiun = (_angle * pi) / 180;
     _baseLength = 2 * radius * sin(_radiun);
     _incircleRadius = (_baseLength / 2) * tan(_radiun);
-    if (noOfSlice == 4) {
+    if (dataSize == 4) {
       _imageOffset = 30.0;
       _imageSizeConst = 30.0;
-      _x = 4.00;
-      _y = 2.90;
-    } else if (noOfSlice == 6) {
+      _x = 8.60;
+      _y = 4.10;
+    } else if (dataSize == 6) {
       _imageOffset = 20.0;
-      _x = 8.0;
-      _y = 4.0;
-    } else if (noOfSlice == 8) {
+      _x = 10.60;
+      _y = 5.60;
+    } else if (dataSize == 8) {
       _imageOffset = 40.0;
       _imageSizeConst = 30.0;
-      _x = 10.0;
-      _y = 5.0;
+      _x = 12.90;
+      _y = 6.60;
     }
-
-    //print("circle radisu:: $_incircleRadius");
-
     canvas.save();
     canvas.translate(size.width / 2, size.height / 2);
     canvas.rotate(-rotation);
-    //print("canvas size:: ${size.width}");
-    //print("size of canvas ::${size.width * 2}");
     int incr = 0;
     rect = ui.Offset((size.width / _x), size.width / _y) & new Size(0.0, 0.0);
 
-    imageSize = new Size(size.width*1.5 , size.width *1.5);
-    sizes = applyBoxFit(boxfit, imageSize,
-        new Size(size.width / 2 * .50+_incircleRadius*1.1, size.width / 2 * .50+_incircleRadius*1.1));
-    inputSubrect =
-        Alignment.center.inscribe(sizes.source, Offset.zero & imageSize);
-    outputSubrect = Alignment.center.inscribe(sizes.destination, rect);
-    if (images.length == noOfSlice)
-      for (var i = 1; i <= noOfSlice * 2; ++i) {
+    _imageSize = new Size(size.width * 1.5, size.width * 1.5);
+    __fittedSize = applyBoxFit(
+        boxfit,
+        _imageSize,
+        new Size(size.width / 2 * .50 + _incircleRadius * .8,
+            size.width / 2 * .50 + _incircleRadius * .8));
+    inputSubrect = Alignment.center
+        .inscribe(__fittedSize.source, Offset.zero & _imageSize);
+    outputSubrect = Alignment.center.inscribe(__fittedSize.destination, rect);
+    if (images.length == dataSize && images.isNotEmpty)
+      for (var i = 1; i <= dataSize * 2; ++i) {
         if (i % 2 != 0) {
           canvas.drawLine(
             new Offset(0.0, 0.0),
@@ -242,16 +245,16 @@ class ImagePainter extends CustomPainter {
         } else {
           canvas.save();
           canvas.translate(-0.0, -((size.width) / 2.2));
-          ui.Image image = images[incr];
-          if (image != null) {
+          ui.Image _image = images[incr];
+          if (_image != null) {
             canvas.drawImageRect(
-                image, inputSubrect, outputSubrect, new Paint());
+                _image, inputSubrect, outputSubrect, new Paint());
           }
 
           canvas.restore();
           incr++;
         }
-        canvas.rotate(2 * pi / (noOfSlice * 2.0));
+        canvas.rotate(2 * pi / (dataSize * 2.0));
       }
     canvas.restore();
   }

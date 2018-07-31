@@ -14,6 +14,7 @@ import 'package:flutter/animation.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:meta/meta.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class PictureSentence extends StatefulWidget {
   Function onScore;
@@ -153,7 +154,7 @@ class PictureSentenceState extends State<PictureSentence> {
     print('height is $_height');
     print('width is $_width');
     print('blankSpaceWidth/ 23  ${blankSpaceWidth/ 23}');
-   
+
     print("$sentence   (length = ${sentence.length-6})");
     print("Split >>>>>>>$eachWord");
 
@@ -223,16 +224,16 @@ class PictureSentenceState extends State<PictureSentence> {
             ),
           ])
         : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Container(
-              alignment: Alignment.bottomLeft,
-              child: new Text(output1,
-                  softWrap: true,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.greenAccent,
-                      fontSize: _height * 0.04))),
-        );
+            padding: const EdgeInsets.all(8.0),
+            child: new Container(
+                alignment: Alignment.bottomLeft,
+                child: new Text(output1,
+                    softWrap: true,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.greenAccent,
+                        fontSize: _height * 0.04))),
+          );
 
     var text2 = Padding(
       padding: const EdgeInsets.all(8.0),
@@ -294,11 +295,11 @@ class PictureSentenceState extends State<PictureSentence> {
     );
 
     if ((sentencePart1.length +
-            blankSpaceWidth/23 +
+            blankSpaceWidth / 23 +
             sentencePart2.length +
-            blankSpaceWidth/23 +
+            blankSpaceWidth / 23 +
             sentencePart3.length) <
-        _width/19) {
+        _width / 19) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -307,20 +308,24 @@ class PictureSentenceState extends State<PictureSentence> {
           ),
         ],
       );
-    }
-    else if ((sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length + blankSpaceWidth/23) <_width/19){
-       return new Column(
+    } else if ((sentencePart1.length +
+            blankSpaceWidth / 23 +
+            sentencePart2.length +
+            blankSpaceWidth / 23) <
+        _width / 19) {
+      return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1 ,text2, blankSpace2],
+            children: <Widget>[text1, blankSpace1, text2, blankSpace2],
           ),
           new Row(
-            children: <Widget>[ text3],
+            children: <Widget>[text3],
           )
         ],
       );
-    } else if (sentencePart1.length < _width/19 && (sentencePart1.length + blankSpaceWidth/23) >= _width/19) {
+    } else if (sentencePart1.length < _width / 19 &&
+        (sentencePart1.length + blankSpaceWidth / 23) >= _width / 19) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -332,8 +337,9 @@ class PictureSentenceState extends State<PictureSentence> {
           )
         ],
       );
-    } else if ((sentencePart1.length + blankSpaceWidth/23) < _width/19 &&
-        (sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length) > _width/19) {
+    } else if ((sentencePart1.length + blankSpaceWidth / 23) < _width / 19 &&
+        (sentencePart1.length + blankSpaceWidth / 23 + sentencePart2.length) >
+            _width / 19) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -345,17 +351,24 @@ class PictureSentenceState extends State<PictureSentence> {
           )
         ],
       );
-    } else if ((sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length) < _width/19 &&
-        (sentencePart1.length + blankSpaceWidth/23 + sentencePart2.length + blankSpaceWidth/23 + sentencePart3.length) > _width/19) {
-     
+    } else if ((sentencePart1.length +
+                blankSpaceWidth / 23 +
+                sentencePart2.length) <
+            _width / 19 &&
+        (sentencePart1.length +
+                blankSpaceWidth / 23 +
+                sentencePart2.length +
+                blankSpaceWidth / 23 +
+                sentencePart3.length) >
+            _width / 19) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1,text2],
+            children: <Widget>[text1, blankSpace1, text2],
           ),
           new Row(
-            children: <Widget>[ blankSpace2, text3],
+            children: <Widget>[blankSpace2, text3],
           )
         ],
       );

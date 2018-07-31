@@ -84,14 +84,22 @@ class _UnitButtonState extends State<UnitButton> {
     _getData();
   }
 
+  @override
+  void didUpdateWidget(UnitButton oldWidget) {
+    if (widget.text != oldWidget.text) {
+      _getData();
+    }
+  }
+
   void _getData() async {
+    _isLoading = true;
     _unit = await new UnitRepo().getUnit(widget.text.toLowerCase());
     if (!widget.forceUnitMode &&
         ((_unitMode == UnitMode.audio && (_unit.sound?.length ?? 0) == 0) ||
             (_unitMode == UnitMode.image && (_unit.image?.length ?? 0) == 0))) {
       _unitMode = UnitMode.text;
     }
-    setState(() => _isLoading = false);
+    if (mounted) setState(() => _isLoading = false);
   }
 
   @override
@@ -99,7 +107,7 @@ class _UnitButtonState extends State<UnitButton> {
     return widget.showHelp
         ? new GestureDetector(
             onLongPress: () {
-              AppStateContainer.of(context).play(widget.text.toLowerCase());
+              AppStateContainer.of(context).playWord(widget.text.toLowerCase());
               if (_unit != null && _unitMode != UnitMode.audio) {
                 AppStateContainer.of(context).display(context, widget.text);
               }
@@ -152,9 +160,7 @@ class _UnitButtonState extends State<UnitButton> {
     if (_unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (_unitMode == UnitMode.image) {
-      return _isLoading
-          ? new Container()
-          : new Image.asset('assets/dict/${widget.text.toLowerCase()}.png');
+      return _isLoading ? new Container() : new Image.asset(_unit.image);
     }
     return Center(
         child: Text(widget.text,

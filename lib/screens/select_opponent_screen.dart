@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:maui/components/videoplayer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class SelectOpponentScreen extends StatefulWidget {
   final String gameName;
@@ -56,6 +58,9 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
           await Flores().getLatestConversations(user.id, widget.gameName);
     } on PlatformException {
       print('Failed getting messages');
+    } catch (e, s) {
+      print('Exception details:\n $e');
+      print('Stack trace:\n $s');
     }
 
     print('_initData: $messages');
@@ -67,7 +72,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       _messages = messages;
       _localUsers.add(user);
       _users.forEach((u) {
-        if (u.id == user.id) {
+        if (u.id == user.id || u.id == User.botId) {
           //no op
         } else if (u.deviceId == _deviceId) {
           _localUsers.add(u);
@@ -93,7 +98,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
     final thirdColor = _colors != null ? _colors[2] : Colors.amber;
-
+    final gamename = widget.gameName;
     return Scaffold(
         body: (_isLoading)
             ? new Center(
@@ -105,36 +110,58 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   new SliverAppBar(
-                    backgroundColor: color,
-                    // pinned: true,
-                    expandedHeight: orientation == Orientation.portrait
-                        ? mediaSize.height * .25
-                        : mediaSize.height * .5,
-                    flexibleSpace: new FlexibleSpaceBar(
-                      background: new Stack(children: <Widget>[
-                        new Container(
-                          decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                            image: new AssetImage(
-                                "assets/background_image/${widget.gameName}_big.png"),
-                            fit: BoxFit.fill,
-                          )),
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                            child: Center(
-                              child: new Hero(
-                                tag: 'assets/hoodie/${widget.gameName}.png',
-                                child: new Image.asset(
-                                  'assets/hoodie/${widget.gameName}.png',
-                                  scale: .4,
+                      backgroundColor: color,
+                      // pinned: true,
+                      expandedHeight: orientation == Orientation.portrait
+                          ? mediaSize.height * .25
+                          : mediaSize.height * .5,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: new Stack(children: <Widget>[
+                          new Container(
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                              image: new AssetImage(
+                                  "assets/background_image/${widget.gameName}_big.png"),
+                              fit: BoxFit.fill,
+                            )),
+                          ),
+                          Container(
+                              padding: EdgeInsets.only(bottom: 20.0),
+                              child: Center(
+                                child: new Hero(
+                                  tag: 'assets/hoodie/${widget.gameName}.png',
+                                  child: new Image.asset(
+                                    'assets/hoodie/${widget.gameName}.png',
+                                    scale: .4,
+                                  ),
                                 ),
+                              ))
+                        ]),
+                      ),
+                      title: new Text(Loca.of(context).intl(widget.gameName)),
+                      actions: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              button3(context, gamename);
+                              print("valueme incresing");
+                            },
+                            child: Container(
+                              height: 60.0,
+                              width: 60.0,
+                              // margin: EdgeInsets.only(left: 190.0),
+                              decoration: new BoxDecoration(
+                                borderRadius: new BorderRadius.circular(40.0),
+                                // color: Colors.red
                               ),
-                            ))
+                              child: new Center(
+                                child: Image.asset('assets/videohelp.png'),
+                              ),
+                            ),
+                          ),
+                        )
                       ]),
-                    ),
-                    title: new Text(Loca.of(context).intl(widget.gameName)),
-                  ),
                   SliverToBoxAdapter(
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -262,10 +289,17 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   Widget convertToFriend(BuildContext context, User user, {Function onTap}) {
     return FriendItem(
       id: user.id,
+      name: user.name,
       imageUrl: user.image,
       color: user.color,
       replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
+  }
+
+  void button3(BuildContext context, String gamename) {
+    print("Button 1");
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
   }
 }

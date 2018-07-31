@@ -1,11 +1,10 @@
 {
-  "@@last_modified": "2018-07-10T14:54:21.472395",
-  "title": "Kilimanjaro",
+  "title": "Kichwa cha Habari",
   "@title": {
     "type": "text",
     "placeholders": {}
   },
-  "chat": "Ongea",
+  "chat": "Zungumza",
   "@chat": {
     "type": "text",
     "placeholders": {}
@@ -15,159 +14,739 @@
     "type": "text",
     "placeholders": {}
   },
-  "reflex": "Haraka",
+  "reflex": "Tendo lisilo la hiari",
   "@reflex": {
     "type": "text",
     "placeholders": {}
   },
-  "order_it": "Order It",
+  "order_it": "Agiza",
   "@order_it": {
     "type": "text",
     "placeholders": {}
   },
-  "memory": "Memory",
+  "memory": "Kumbukumbu",
   "@memory": {
     "type": "text",
     "placeholders": {}
   },
-  "draw_challenge": "draw_challenge",
+  "draw_challenge": "Anzisha Mchezo",
   "@draw_challenge": {
     "type": "text",
     "placeholders": {}
   },
-  "abacus": "Abacus",
+  "abacus": "Kikokotoo",
   "@abacus": {
     "type": "text",
     "placeholders": {}
   },
-  "crossword": "Crossword",
+  "crossword": "Maneno Mpishano",
   "@crossword": {
     "type": "text",
     "placeholders": {}
   },
-  "drawing": "drawing",
+  "drawing": "Kuchora",
   "@drawing": {
     "type": "text",
     "placeholders": {}
   },
-  "fill_in_the_blanks": "Fill In The Blanks",
+  "fill_in_the_blanks": "Jaza nafasi zilizo wazi",
   "@fill_in_the_blanks": {
     "type": "text",
     "placeholders": {}
   },
-  "calculate_numbers": "Calculate",
+  "calculate_numbers": "Kokotoa",
   "@calculate_numbers": {
     "type": "text",
     "placeholders": {}
   },
-  "casino": "Casino",
+  "casino": "Kamari",
   "@casino": {
     "type": "text",
     "placeholders": {}
   },
-  "match_the_following": "Match",
+  "match_the_following": "linganisha",
   "@match_the_following": {
     "type": "text",
     "placeholders": {}
   },
-  "bingo": "Bingo",
+  "bingo": "Hakika",
   "@bingo": {
     "type": "text",
     "placeholders": {}
   },
-  "true_or_false": "True Or False",
+  "true_or_false": "Kweli Au Uongo",
   "@true_or_false": {
     "type": "text",
     "placeholders": {}
   },
-  "tables": "Tables",
+  "tables": "Majedwali",
   "@tables": {
     "type": "text",
     "placeholders": {}
   },
-  "identify": "identify",
+  "identify": "tambua",
   "@identify": {
     "type": "text",
     "placeholders": {}
   },
-  "picture_sentence": "Picture Sentence",
+  "hint": "Weka picha",
+  "@hint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "picture_sentence": "Sentensi ya Picha",
   "@picture_sentence": {
     "type": "text",
     "placeholders": {}
   },
-  "fill_number": "Fill Number",
+  "fill_number": "Jaza Namba",
   "@fill_number": {
     "type": "text",
     "placeholders": {}
   },
-  "quiz": "Quiz",
+  "quiz": "Chemsha Bongo",
   "@quiz": {
     "type": "text",
     "placeholders": {}
   },
-  "connect_the_dots": "Connect The Dots",
+  "connect_the_dots": "Unganisha Nukta",
   "@connect_the_dots": {
     "type": "text",
     "placeholders": {}
   },
-  "tap_home": "Tap Home",
+  "tap_home": "Gusa Nyumbani",
   "@tap_home": {
     "type": "text",
     "placeholders": {}
   },
-  "tap_wrong": "Tap Wrong",
+  "tap_wrong": "Gusa isiyo sahihi",
   "@tap_wrong": {
     "type": "text",
     "placeholders": {}
   },
-  "guess": "guess",
+  "guess": "Kisia",
   "@guess": {
     "type": "text",
     "placeholders": {}
   },
-  "clue_game": "Clue",
+  "clue_game": "Kidokezo",
   "@clue_game": {
     "type": "text",
     "placeholders": {}
   },
-  "wordgrid": "Word Grid",
+  "wordgrid": "Mchezo wa kupanga Maneno",
   "@wordgrid": {
     "type": "text",
     "placeholders": {}
   },
-  "spin_wheel": "Spin The Wheel",
+  "spin_wheel": "Zungusha Duara",
   "@spin_wheel": {
     "type": "text",
     "placeholders": {}
   },
-  "first_word": "First Word",
+  "first_word": "Neno la Kwanza",
   "@first_word": {
     "type": "text",
     "placeholders": {}
   },
-  "friend_word": "Friend Word",
+  "friend_word": "Rafiki Neno",
   "@friend_word": {
     "type": "text",
     "placeholders": {}
   },
-  "dice": "Dice",
+  "dice": "Kete",
   "@dice": {
     "type": "text",
     "placeholders": {}
   },
-  "circle_word": "Circle Word",
+  "circle_word": "Mzunguko Neno",
   "@circle_word": {
     "type": "text",
     "placeholders": {}
   },
-    "family": "Familia",
-    "@family": {
-      "type": "text",
-      "placeholders": {}
-    },
-    "friends": "Marafiki",
-    "@friends": {
-      "type": "text",
-      "placeholders": {}
-    }
+  "family": "Familia",
+  "@family": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "friends": "Marafiki",
+  "@friends": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "owl": "Bundi",
+  "@owl": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "giraffe": "twiga",
+  "@giraffe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rabbit": "sungura",
+  "@rabbit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dog": "mbwa",
+  "@dog": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cat": "paka",
+  "@cat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "monkey": "tumbili",
+  "@monkey": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bear": "Dubu",
+  "@bear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "frog": "chura",
+  "@frog": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "red": "nyekundu",
+  "@red": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yellow": "njano",
+  "@yellow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orange": "machungwa",
+  "@orange": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "blue": "bluu",
+  "@blue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "green": "kijani",
+  "@green": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pink": "Waridi",
+  "@pink": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cyan": "Samawati",
+  "@cyan": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "purple": "zambarau",
+  "@purple": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brown": "kahawia",
+  "@brown": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "maroon": "Zambarau-nyekundu",
+  "@maroon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tulip": "Ua tulia",
+  "@tulip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hibiscus": "Rozela",
+  "@hibiscus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lotus": "lotasi",
+  "@lotus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orchid": "orchid",
+  "@orchid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "daffodil": "Ua nasiasa",
+  "@daffodil": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "jasmine": "Ua Asumini",
+  "@jasmine": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lavender": "Ua mrujuani",
+  "@lavender": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sunflower": "alizeti",
+  "@sunflower": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rose": "Ua waridi",
+  "@rose": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chamomile": "chamomile",
+  "@chamomile": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "candle": "mshumaa",
+  "@candle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "toaster": "Kioka",
+  "@toaster": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "teddy_bear": "Dubu",
+  "@teddy_bear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bulb": "Glopu",
+  "@bulb": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sofa": "Kochi",
+  "@sofa": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "headphones": "vichwa vya sauti",
+  "@headphones": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "microwave_oven": "tanuri",
+  "@microwave_oven": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "carpet": "Zulia",
+  "@carpet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "watch": "Saa",
+  "@watch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "clock": "saa",
+  "@clock": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "eagle": "tai",
+  "@eagle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "kingfisher": "Ndege Mdiria",
+  "@kingfisher": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "parrot": "Kasuku",
+  "@parrot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bat": "Popo",
+  "@bat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "peacock": "Tausi",
+  "@peacock": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "swan": "Bata maji",
+  "@swan": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rooster": "jogoo",
+  "@rooster": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "duck": "bata",
+  "@duck": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dove": "njiwa",
+  "@dove": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "face": "uso",
+  "@face": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "upper_body": "mwili wa juu",
+  "@upper_body": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_hand": "mkono wa kulia",
+  "@right_hand": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_hand": "mkono wa kushoto",
+  "@left_hand": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_palm": "Kiganja cha kulia",
+  "@right_palm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_palm": "Kiganja cha kushoto",
+  "@left_palm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_leg": "mguu wa kulia",
+  "@right_leg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_leg": "mguu wa kushoto",
+  "@left_leg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "right_foot": "mguu wa kulia",
+  "@right_foot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "left_foot": "mguu wa kushoto",
+  "@left_foot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cloud": "wingu",
+  "@cloud": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sun": "jua",
+  "@sun": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tree": "mti",
+  "@tree": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "leaf": "jani",
+  "@leaf": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ant": "Siafu",
+  "@ant": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "grass": "nyasi",
+  "@grass": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stones": "mawe",
+  "@stones": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pot": "Chungu",
+  "@pot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hexagon": "Pembe sita",
+  "@hexagon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "square": "mraba",
+  "@square": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "star": "nyota",
+  "@star": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "triangle": "pembe tatu",
+  "@triangle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "diamond": "Almasi",
+  "@diamond": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rectangle": "mstatili",
+  "@rectangle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rhombus": "Msambamba",
+  "@rhombus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "oval": "Duara dufu",
+  "@oval": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pentagon": "Pembe tano",
+  "@pentagon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trapezoid": "Tenge",
+  "@trapezoid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "bow": "upinde",
+  "@bow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "suit": "suti",
+  "@suit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "jacket": "koti",
+  "@jacket": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dress": "Gauni",
+  "@dress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "heels": "visigino",
+  "@heels": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shoes": "viatu",
+  "@shoes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "backpack": "Begi la mgongoni",
+  "@backpack": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "glasses": "Miwani",
+  "@glasses": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hat": "kofia",
+  "@hat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coat": "Koti",
+  "@coat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "strawberry": "strouberi",
+  "@strawberry": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "apple": "Tofaa",
+  "@apple": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cherry": "Matunda damu",
+  "@cherry": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "grapes": "zabibu",
+  "@grapes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "citrus": "Ndimu",
+  "@citrus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pear": "peasi",
+  "@pear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "watermelon": "Tikiti maji",
+  "@watermelon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mango": "Embe",
+  "@mango": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "banana": "ndizi",
+  "@banana": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sister": "Dada",
+  "@sister": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brother": "Kaka",
+  "@brother": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mother": "Mama",
+  "@mother": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "father": "Baba",
+  "@father": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "friend": "Rafiki",
+  "@friend": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hi": "Mambo",
+  "@hi": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "Khabari",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "letUsLearn": "Hebu Tujifunze",
+  "@letUsLearn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "letUsChat": "Hebu tuzungumze",
+  "@letUsChat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ok": "sawa",
+  "@ok": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendAMessage": "Tuma ujumbe",
+  "@sendAMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exitq": "Toka",
+  "@exitq": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youWon": "Umeshinda",
+  "@youWon": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tie": "Sare",
+  "@tie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youLoose": "Umeshindwa",
+  "@youLoose": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "gameOver": "Mchezi umekwisha",
+  "@gameOver": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "waitingForTurn": "Subiri Zamu",
+  "@waitingForTurn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "vs": "Dhidi ya ",
+  "@vs": {
+    "type": "text",
+    "placeholders": {}
+  },
+     "tapACamera": "Bomba kamera",
+     "@tapACamera": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "enterYourDetails": "Ingiza jina lako",
+     "@enterYourDetails": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "writeYourName": "Andika jina lako...",
+     "@writeYourName": {
+       "type": "text",
+       "placeholders": {}
+     }
 }

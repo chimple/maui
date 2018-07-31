@@ -10,6 +10,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
 
 import '../components/shaker.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class MatchTheFollowing extends StatefulWidget {
   Function onScore;
@@ -282,7 +283,7 @@ class _MatchTheFollowingState extends State<MatchTheFollowing>
     if (leftIsTapped == 1 &&
             leftSideTextIndex == _rightSideLetters.indexOf(_rightSideText) ||
         identical(_rightSideText, _leftSideText)) {
-      widget.onScore(1);
+      widget.onScore(4);
       correct++;
 
       widget.onProgress(correct / _numButtons);

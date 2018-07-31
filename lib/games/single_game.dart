@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/progress_circle.dart';
@@ -47,6 +48,11 @@ import 'package:flores/flores.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/log_repo.dart';
+import 'package:maui/repos/game_category_repo.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/components/gameaudio.dart';
+import 'package:maui/db/entity/lesson.dart';
 
 enum GameMode { timed, iterations }
 
@@ -170,7 +176,7 @@ class SingleGame extends StatefulWidget {
     'dice': [Color(0xFF66488c), Color(0xFFffb300), Color(0xFF282828)],
     'fill_in_the_blanks': [
       Color(0xFFDD6154),
-      Color(0xFFa3bc8b),
+      Color(0xFFffb300),
       Color(0xFF9A66CC)
     ],
     'fill_number': [Color(0xFFEDC23B), Color(0xFFFFF1B8), Color(0xFF1EC1A1)],
@@ -179,7 +185,7 @@ class SingleGame extends StatefulWidget {
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
     'match_the_following': [
       Color(0xFFDD4785),
-      Color(0xFFEFEFEF),
+      Color(0xFF9b671b),
       Color(0xFFf99b67)
     ],
     'memory': [Color(0xFFFF7676), Color(0xFFffffca), Color(0xFF896EDB)],
@@ -265,6 +271,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       await NotifRepo()
           .increment(widget.gameConfig.otherUser.id, widget.gameName, -1);
     }
+    writeLog('game,${widget.gameName},${widget.gameConfig}');
   }
 
   @override
@@ -276,25 +283,110 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Widget alertDialog(BuildContext context) {
+    var colors = SingleGame.gameColors[widget.gameName];
+    return Center(
+        child: Material(
+      type: MaterialType.transparency,
+      child: new Container(
+          width: 350.0,
+          height: 200.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+          ),
+          child: new Container(
+              child: new Column(
+            children: <Widget>[
+              new Padding(
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              new Text(
+                'Exit?',
+                style: TextStyle(
+                    color: colors[1],
+                    fontStyle: FontStyle.normal,
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              new Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator.of(context).pop(false);
+                        },
+                      )),
+                  new Padding(
+                    padding: EdgeInsets.only(right: 70.0),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(top: 40.0),
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        color: colors[0],
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xFF919191),
+                            spreadRadius: 1.0,
+                            offset: const Offset(0.0, 6.0),
+                          )
+                        ],
+                      ),
+                      child: new FlatButton(
+                        child: Center(
+                          child: IconButton(
+                            iconSize: 40.0,
+                            alignment: AlignmentDirectional.bottomStart,
+                            icon: Icon(Icons.check, color: Colors.white),
+                            onPressed: null,
+                          ),
+                        ),
+                        onPressed: () {
+                          AppStateContainer.of(context).play('_audiotap.mp3');
+                          Navigator
+                              .of(context)
+                              .popUntil(ModalRoute.withName('/tab'));
+                        },
+                      )),
+                ],
+              )
+            ],
+          ))),
+    ));
+  }
+
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
-          builder: (context) => new AlertDialog(
-                title: new Text('Do you want to exit?'),
-                content: new Text('You will lose your progress'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: new Text('No'),
-                  ),
-                  new FlatButton(
-                    onPressed: () => Navigator
-                        .of(context)
-                        .popUntil(ModalRoute.withName('/tab')),
-                    child: new Text('Yes'),
-                  ),
-                ],
-              ),
+          builder: alertDialog,
         ) ??
         false;
   }
@@ -373,6 +465,9 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
+                                            AppStateContainer
+                                                .of(context)
+                                                .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
                                         ))
@@ -490,16 +585,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       if (maxIterations > 0) {
         //since we have already switched amICurrentPlayer, test for reverse condition
-        if (!widget.gameConfig.amICurrentPlayer) {
-          if (widget.gameConfig.myIteration >= maxIterations &&
-              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
-//            _onGameEnd(context, gameData: gameData);
-            widget.gameConfig.isGameOver = true;
-        } else {
-          if (widget.gameConfig.otherIteration >= maxIterations &&
-              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
-//            _onGameEnd(context);
-            widget.gameConfig.isGameOver = true;
+//        if (!widget.gameConfig.amICurrentPlayer) {
+//          if (widget.gameConfig.myIteration >= maxIterations &&
+//              widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn)
+////            _onGameEnd(context, gameData: gameData);
+//            widget.gameConfig.isGameOver = true;
+//        } else {
+//          if (widget.gameConfig.otherIteration >= maxIterations &&
+//              widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn)
+////            _onGameEnd(context);
+//            widget.gameConfig.isGameOver = true;
+//        }
+        if (widget.gameConfig.myIteration >= maxIterations &&
+            widget.gameConfig.otherIteration >= maxIterations) {
+          widget.gameConfig.isGameOver = true;
         }
       } else {
         if (end) {
@@ -508,13 +607,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         }
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
-        await Flores().addMessage(
-            widget.gameConfig.myUser.id,
-            widget.gameConfig.otherUser.id,
-            widget.gameName,
-            widget.gameConfig.toJson(),
-            true,
-            widget.gameConfig.sessionId ?? Uuid().v4());
+        try {
+          await Flores().addMessage(
+              widget.gameConfig.myUser.id,
+              widget.gameConfig.otherUser.id,
+              widget.gameName,
+              widget.gameConfig.toJson(),
+              true,
+              widget.gameConfig.sessionId ?? Uuid().v4());
+        } on PlatformException {
+          print('Flores: Failed addMessage');
+        } catch (e, s) {
+          print('Exception details:\n $e');
+          print('Stack trace:\n $s');
+        }
       }
       if (widget.gameConfig.isGameOver) {
         _onGameEnd(context, gameData: gameData);
@@ -547,13 +653,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       {Map<String, dynamic> gameData, bool ack = false}) async {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
-      await Flores().addMessage(
-          widget.gameConfig.myUser.id,
-          widget.gameConfig.otherUser.id,
-          widget.gameName,
-          widget.gameConfig.toJson(),
-          false,
-          widget.gameConfig.sessionId ?? Uuid().v4());
+      try {
+        await Flores().addMessage(
+            widget.gameConfig.myUser.id,
+            widget.gameConfig.otherUser.id,
+            widget.gameName,
+            widget.gameConfig.toJson(),
+            false,
+            widget.gameConfig.sessionId ?? Uuid().v4());
+      } on PlatformException {
+        print('Failed getting messages');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
     }
     ScoreRepo().insert(Score(
         myUser: widget.gameConfig.myUser.id,
@@ -562,6 +675,23 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         otherScore: widget.gameConfig.otherScore,
         game: widget.gameName,
         playedAt: DateTime.now().millisecondsSinceEpoch));
+    writeLog(
+        'score,${widget.gameName},${widget.gameConfig.gameCategoryId},${widget.gameConfig.myUser.id},${widget.gameConfig.otherUser?.id},${widget.gameConfig.myScore},${widget.gameConfig.otherScore}');
+    var lessonId = await new GameCategoryRepo().getLessonIdByGameCategoryId(
+        widget.gameName, widget.gameConfig.gameCategoryId);
+    if (lessonId != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var numPlays = prefs.getInt('lessonId$lessonId') ?? 0;
+      if (++numPlays >= 3 &&
+          AppStateContainer.of(context).state.loggedInUser.currentLessonId <
+              Lesson.maxLessonId) {
+        AppStateContainer.of(context).state.loggedInUser.currentLessonId++;
+        await UserRepo()
+            .update(AppStateContainer.of(context).state.loggedInUser);
+      }
+      prefs.setInt('lessonId$lessonId', numPlays);
+    }
+
     if (widget.onGameEnd != null) {
       widget.onGameEnd(context);
     } else {

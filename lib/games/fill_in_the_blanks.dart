@@ -9,6 +9,7 @@ import 'package:maui/components/flash_card.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class FillInTheBlanks extends StatefulWidget {
   Function onScore;
@@ -60,6 +61,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
   void didUpdateWidget(FillInTheBlanks oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.iteration != oldWidget.iteration) {
+      _correct.clear();
       _initFillBlanks();
     }
   }
@@ -222,16 +224,7 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
         child: new CircularProgressIndicator(),
       );
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: fruit,
-          onChecked: () {
-            widget.onEnd();
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
+
     if (space == 0) {
       setState(() {
         _initFillBlanks();
@@ -248,6 +241,23 @@ class FillInTheBlanksState extends State<FillInTheBlanks> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      if (_isShowingFlashCard) {
+        return FractionallySizedBox(
+          widthFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.8 : 0.65,
+          heightFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.6 : 0.75,
+          child: new FlashCard(
+              text: fruit,
+              onChecked: () {
+                widget.onEnd();
+                setState(() {
+                  _isShowingFlashCard = false;
+                });
+              }),
+        );
+      }
+
       return new Flex(
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -318,6 +328,8 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controllerShake, controllerDrag;
   Animation<double> animation, animationShake, animationDrag;
+  bool isDragging = false;
+
   String _displayText;
   initState() {
     super.initState();
@@ -385,8 +397,41 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       return new ScaleTransition(
         scale: animation,
         child: new Draggable(
-            onDragStarted: widget.onDrag,
-            maxSimultaneousDrags: 1,
+            onDragStarted: () {
+              if (ButtonStateContainer.of(context).startUsingButton()) {
+                setState(() {
+                  isDragging = true;
+                });
+                print(
+                    'onDragStarted ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+                widget.onDrag();
+              }
+            },
+            onDragCompleted: () {
+              print(
+                  'onDragCompleted start ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+                print(
+                    'onDragCompleted end ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              }
+            },
+            onDraggableCanceled: (Velocity v, Offset o) {
+              print('onDraggableCanceled ${widget.text} $isDragging');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+              }
+            },
+            maxSimultaneousDrags: (isDragging ||
+                    !ButtonStateContainer.of(context).isButtonBeingUsed)
+                ? 1
+                : 0,
             data: '${widget.index}' + '_' + '${widget.code}',
             child: new UnitButton(
               key: new Key('A${widget.keys}'),

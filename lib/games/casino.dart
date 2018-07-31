@@ -11,6 +11,7 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/components/gameaudio.dart';
 
 class Casino extends StatefulWidget {
   Function onScore;
@@ -85,6 +86,15 @@ class _CasinoState extends State<Casino> {
     print("===============");
 
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(Casino oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.iteration != widget.iteration) {
+      givenWordList.clear();
+      _initLetters();
+    }
   }
 
   Widget _buildScrollButton(
@@ -171,24 +181,6 @@ class _CasinoState extends State<Casino> {
 
           print(" finalGivenWordList = $finalGivenWordList");
           print("count = $count");
-          if (const IterableEquality().equals(finalList, finalGivenWordList) &&
-              count >= givenWordList.length) {
-            new Future.delayed(const Duration(milliseconds: 1000), () {
-              widget.onScore(5);
-              widget.onProgress(1.0);
-              j = 0;
-              count = 0;
-            });
-
-            new Future.delayed(const Duration(milliseconds: 800), () {
-              setState(() {
-                _isShowingFlashCard = true;
-                lst.clear();
-              });
-            });
-
-            print("the end");
-          }
         },
         children:
             new List<Widget>.generate(scrollingLetterList.length, (int index) {
@@ -216,17 +208,6 @@ class _CasinoState extends State<Casino> {
       return new SizedBox(
           width: 20.0, height: 20.0, child: new CircularProgressIndicator());
     }
-    if (_isShowingFlashCard) {
-      return new FlashCard(
-          text: givenWord,
-          onChecked: () {
-            widget.onEnd();
-            // _initLetters();
-            setState(() {
-              _isShowingFlashCard = false;
-            });
-          });
-    }
 
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
@@ -240,10 +221,26 @@ class _CasinoState extends State<Casino> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-
+      if (_isShowingFlashCard) {
+        return FractionallySizedBox(
+          widthFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.65,
+          heightFactor:
+              constraints.maxHeight > constraints.maxWidth ? 0.9 : 0.9,
+          child: new FlashCard(
+              text: givenWord,
+              onChecked: () {
+                widget.onEnd();
+                // _initLetters();
+                setState(() {
+                  _isShowingFlashCard = false;
+                });
+              }),
+        );
+      }
       return new Column(
         // direction: Axis.vertical,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Expanded(
               flex: 1,
@@ -281,6 +278,53 @@ class _CasinoState extends State<Casino> {
               }).toList(growable: false),
             ),
           ),
+          Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Container(
+                  width: maxHeight,
+                  height: maxHeight,
+                  // decoration: new BoxDecoration(
+                  //   borderRadius: new BorderRadius.circular(20.0),
+                  //   border: new Border.all(
+                  //     width: 6.0,
+                  //     color: new Color(0xFFD64C60),
+                  //   ),
+                  // ),
+                  child: new RaisedButton(
+                    onPressed: () {
+                      if (const IterableEquality()
+                              .equals(finalList, finalGivenWordList) &&
+                          count >= givenWordList.length) {
+                        new Future.delayed(const Duration(milliseconds: 1000),
+                            () {
+                          widget.onScore(5);
+                          widget.onProgress(1.0);
+                          j = 0;
+                          count = 0;
+                        });
+
+                        new Future.delayed(const Duration(milliseconds: 800),
+                            () {
+                          setState(() {
+                            _isShowingFlashCard = true;
+                            lst.clear();
+                          });
+                        });
+
+                        print("the end");
+                      }
+                    },
+                    color: new Color(0xFF734052),
+                    child: new Icon(Icons.check_box,
+                        size: maxHeight * 0.7, color: new Color(0xFFD64C60)),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(8.0))),
+                  ),
+                ),
+              ))
         ],
       );
     });

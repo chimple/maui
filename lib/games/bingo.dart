@@ -6,8 +6,6 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:math';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/shaker.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
 import 'package:maui/state/button_state_container.dart';
 
 class Bingo extends StatefulWidget {
@@ -21,13 +19,13 @@ class Bingo extends StatefulWidget {
 
   Bingo(
       {key,
-        this.onScore,
-        this.onProgress,
-        this.onEnd,
-        this.iteration,
-        this.onTurn,
-        this.gameConfig,
-        this.isRotated = false})
+      this.onScore,
+      this.onProgress,
+      this.onEnd,
+      this.iteration,
+      this.onTurn,
+      this.gameConfig,
+      this.isRotated = false})
       : super(key: key);
 
   @override
@@ -83,7 +81,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
   var sum = 0;
   List _letters = [];
-  var c=0;
+  var c = 0;
   var _referenceMatrix = new List.generate(_maxSize, (_) => new List(_maxSize));
 
   @override
@@ -113,26 +111,26 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
           "this is my new data ${oldWidget.iteration} and ${widget.iteration}");
       onend = false;
       setState(() {
-        _statuses =
-            _letters.map((e) => Status.Active).toList(growable: false);
+        _statuses = _letters.map((e) => Status.Active).toList(growable: false);
         _ShakeCells =
             _letters.map((e) => ShakeCell.Wrong).toList(growable: false);
         _ColmunCells = _letters
             .map((e) => ColmunCell.ColumnActive)
             .toList(growable: false);
-        _RowCells =
-            _letters.map((e) => RowCell.Dance).toList(growable: false);
-        z = 0;
-        bingoCount = 0;
-        countData = 0;
-        onScoreFlag = 0;
-// widget.onEnd();
-        _copyQuestion.removeRange(0, _copyQuestion.length);
-        _copyQuestion1.removeRange(0, _copyQuestion1.length);
-        _all.removeRange(0, _all.length);
-        _letters.removeRange(0, _letters.length);
-        _shuffledLetters.removeRange(0, _shuffledLetters.length);
-        print("iteration not chhanging.......::..${widget.iteration}");
+        _RowCells = _letters.map((e) => RowCell.Dance).toList(growable: false);
+//        z = 0;
+//        bingoCount = 0;
+//        countData = 0;
+//        onScoreFlag = 0;
+//        countEnd == 0;
+//        clickCounter = 0;
+//        onScoreFlag = 0;
+//        _copyQuestion.removeRange(0, _copyQuestion.length);
+//        _copyQuestion1.removeRange(0, _copyQuestion1.length);
+//        _all.removeRange(0, _all.length);
+//        _letters.removeRange(0, _letters.length);
+//        _shuffledLetters.removeRange(0, _shuffledLetters.length);
+//        print("iteration not chhanging.......::..${widget.iteration}");
       });
       _initBoard();
     }
@@ -172,9 +170,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     ques = _copyQuestion[z];
     print("thia is a ques tio {$ques abd $z}");
     print("this is a $ques");
-    countEnd == 0;
-    clickCounter=0;
-    onScoreFlag =0;
+
 // _shuffledLetters.removeRange(0, _shuffledLetters.length);
     for (var i = 0; i < _all.length; i += _maxSize * _maxSize) {
       _shuffledLetters.addAll(
@@ -203,9 +199,8 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
       int maxChars,
       double maxWidth,
       double maxHeight) {
-
     print("clicking button calling again and again we have fix");
-    c=0;
+    c = 0;
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -213,7 +208,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
         tile: tile,
         Ctile: Ctile,
         Rtile: Rtile,
-        unitMode: widget.gameConfig.answerUnitMode, //question unit mode
+        unitMode: widget.gameConfig.questionUnitMode, //question unit mode
         onPress: () {
           print("text $text");
 
@@ -221,13 +216,11 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 
           var str1 = _all.indexOf(text);
           var str2 = _copyQuestion1.indexOf(ques);
-          print("comparring string in bingo game suddenly taking extra score $c");
-
-
+          print(
+              "comparring string in bingo game suddenly taking extra score $c");
 
           print(" staus is.......::$_statuses");
-          if (str1 == str2 && onend!=true &&status == Status.Active) {
-
+          if (str1 == str2 && onend != true && status == Status.Active) {
             widget.onScore(4);
             setState(() {
               _statuses[index] = Status.Visible;
@@ -299,49 +292,57 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                 print("this is a deleted copyquestion $ques");
                 print("this is a length copyquestion ${_copyQuestion[z]}");
               }
-
             } else {
               _copyQuestion.removeRange(0, _copyQuestion.length);
             }
-          }
-          else {
-
+          } else {
             print("this is my1 click $clickCounter");
             print("this is my2 intial $countEnd");
-            if (onScoreFlag != 1 && status == Status.Active && clickCounter > 0 && c==0) {
-
+            if (onScoreFlag != 1 &&
+                status == Status.Active &&
+                clickCounter > 0 &&
+                c == 0) {
               print("this is my click $clickCounter");
               print("this is my intial $countEnd");
-              if(c==0){
+              if (c == 0) {
                 setState(() {
-                  countEnd++;
                   widget.onScore(-1);
+                  countEnd++;
                   _ShakeCells[index] = ShakeCell.Right;
-                  if(countEnd == 3){
+                  if (countEnd == 3) {
                     print("this is my count End $countEnd");
-                    countEnd=0;
-                    _turnByTurn();
-
+                    countEnd = 0;
+                    widget.onEnd();
+                    z = 0;
+                    bingoCount = 0;
+                    countData = 0;
+                    onScoreFlag = 0;
+                    clickCounter = 0;
+                    onScoreFlag = 0;
+                    _copyQuestion.removeRange(0, _copyQuestion.length);
+                    _copyQuestion1.removeRange(0, _copyQuestion1.length);
+                    _all.removeRange(0, _all.length);
+                    _letters.removeRange(0, _letters.length);
+                    _shuffledLetters.removeRange(0, _shuffledLetters.length);
                   }
                 });
                 //print("this is wrongg");
-                new Future.delayed(const Duration(milliseconds: 300), () {
+                new Future.delayed(const Duration(milliseconds: 100), () {
                   setState(() {
                     _ShakeCells[index] = ShakeCell.Wrong;
                     if (matchColumn == -1 && matchRow == -1) {
                       final _random = new Random();
                       var element =
-                      _copyQuestion[_random.nextInt(_copyQuestion.length)];
+                          _copyQuestion[_random.nextInt(_copyQuestion.length)];
                       ques = element;
                       print("this is a elemet of removed $ques");
                     }
                   });
                 });
               }
-              c=1;
+              c = 1;
             }
           }
-
         });
   }
 
@@ -356,7 +357,7 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
     }
     final maxChars = (_letters != null
         ? _letters.fold(
-        1, (prev, element) => element.length > prev ? element.length : prev)
+            1, (prev, element) => element.length > prev ? element.length : prev)
         : 1);
     print("$maxChars");
     return new LayoutBuilder(builder: (context, constraints) {
@@ -405,17 +406,17 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
                       cols: _maxSize,
                       children: _letters
                           .map((e) => Padding(
-                          padding: EdgeInsets.all(buttonPadding),
-                          child: _buildItem(
-                              j,
-                              e,
-                              _statuses[j],
-                              _ShakeCells[j],
-                              _ColmunCells[j],
-                              _RowCells[j++],
-                              maxChars,
-                              maxWidth,
-                              maxHeight)))
+                              padding: EdgeInsets.all(buttonPadding),
+                              child: _buildItem(
+                                  j,
+                                  e,
+                                  _statuses[j],
+                                  _ShakeCells[j],
+                                  _ColmunCells[j],
+                                  _RowCells[j++],
+                                  maxChars,
+                                  maxWidth,
+                                  maxHeight)))
                           .toList(growable: false),
                     ))),
           ],
@@ -459,13 +460,24 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
   void _turnByTurn() {
     if (onend == false) {
       onend = true;
+
       print("this is when onend calling method was........ ");
       setState(() {
-        new Future.delayed(const Duration(milliseconds: 500), () {
-
-
+        new Future.delayed(const Duration(milliseconds: 200), () {
           if (onend == true) {
+            countEnd == 0;
             widget.onEnd();
+            z = 0;
+            bingoCount = 0;
+            countData = 0;
+            onScoreFlag = 0;
+            clickCounter = 0;
+            onScoreFlag = 0;
+            _copyQuestion.removeRange(0, _copyQuestion.length);
+            _copyQuestion1.removeRange(0, _copyQuestion1.length);
+            _all.removeRange(0, _all.length);
+            _letters.removeRange(0, _letters.length);
+            _shuffledLetters.removeRange(0, _shuffledLetters.length);
           }
         });
       });
@@ -476,16 +488,16 @@ class BingoState extends State<Bingo> with SingleTickerProviderStateMixin {
 class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
-        this.text,
-        this.onPress,
-        this.status,
-        this.tile,
-        this.Ctile,
-        this.Rtile,
-        this.unitMode, //question unit mode
-        this.maxChars,
-        this.maxWidth,
-        this.maxHeight})
+      this.text,
+      this.onPress,
+      this.status,
+      this.tile,
+      this.Ctile,
+      this.Rtile,
+      this.unitMode, //question unit mode
+      this.maxChars,
+      this.maxWidth,
+      this.maxHeight})
       : super(key: key);
 
   final String text;
@@ -515,7 +527,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   initState() {
     super.initState();
 // print("_MyButtonState.initState: ${widget.text}");
-//    print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
+// print("this fkjdnfjflkjfjfkdf nidfjodkfofkdf biswjeet");
     _displayText = widget.text;
     controller = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
@@ -524,7 +536,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 10), vsync: this);
 
     animationRight =
-    new CurvedAnimation(parent: controller, curve: Curves.decelerate);
+        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller2 = new AnimationController(
         duration: new Duration(milliseconds: 1000), vsync: this);
     controller.addStatusListener((state) {});
@@ -574,7 +586,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-//    print({"oldwidget data ": oldWidget.text});
+// print({"oldwidget data ": oldWidget.text});
     if (oldWidget.text != widget.text) {
       controller.reverse();
     }
@@ -594,7 +606,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 // print({"this is 123 kiran column":widget.Ctile});
     return new ScaleTransition(
         scale: widget.Ctile == ColmunCell.CurveColumn ||
-            widget.Rtile == RowCell.CurveRow
+                widget.Rtile == RowCell.CurveRow
             ? animationDance
             : animationRight,
         child: new Shake(
@@ -608,7 +620,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     text: _displayText,
                     highlighted: widget.status == Status.Visible ? true : false,
                     disabled: widget.Ctile == ColmunCell.CurveColumn ||
-                        widget.Rtile == RowCell.CurveRow
+                            widget.Rtile == RowCell.CurveRow
                         ? true
                         : false,
                     unitMode: widget.unitMode))));

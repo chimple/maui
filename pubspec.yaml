@@ -24,6 +24,7 @@ dependencies:
   badge: 0.0.2
   intl: 0.15.6
   intl_translation: 0.16.8
+  simple_permissions: 0.1.5
   flores:
     git:
       https://github.com/chimple/flores.git
@@ -34,6 +35,7 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  video_player: "^0.5.4"
   build_runner: ^0.7.6
   json_serializable: ^0.3.2
 # For information on the generic Dart part of this file, see the
@@ -53,6 +55,35 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/right.wav
+    - assets/wrong.wav
+    
+    - assets/tap.wav
+    - assets/demo_video/video.mp4
+    - assets/demo_video/tutorial.mp4
+    - assets/demo_video/bingo.mp4
+    - assets/demo_video/abacus.mp4
+    - assets/demo_video/calculate_numbers.mp4
+    - assets/demo_video/casino.mp4
+    - assets/demo_video/connect_the_dots.mp4
+    - assets/demo_video/dice.mp4
+    - assets/demo_video/drawing.mp4
+    - assets/demo_video/fill_in_the_blanks.mp4
+    - assets/demo_video/fill_number.mp4
+    - assets/demo_video/guess.mp4
+    - assets/demo_video/identify.mp4
+    - assets/demo_video/match_the_following.mp4
+    - assets/demo_video/memory.mp4
+    - assets/demo_video/order_it.mp4
+    - assets/demo_video/quiz.mp4
+    - assets/demo_video/reflex.mp4
+    - assets/demo_video/spin_wheel.mp4
+    - assets/demo_video/tables.mp4
+    - assets/demo_video/tap_home.mp4
+    - assets/demo_video/tap_wrong.mp4
+    - assets/demo_video/true_or_false.mp4
+    - assets/demo_video/wordgrid.mp4
+    - assets/videohelp.png
     - assets/database.db
     - assets/solo.nima
     - assets/solo.png
@@ -90,6 +121,7 @@ flutter:
     - assets/Hospital.png
     - assets/Animals.png
     - assets/BedRoom.png
+    - assets/chat_Bot_Icon.png
     - assets/Birds.png
     - assets/apple.ogg
     - assets/dice_game/1.png
@@ -151,7 +183,11 @@ flutter:
     - assets/background_image/tap_wrong_small.png
     - assets/background_image/spin_wheel_big.png
     - assets/background_image/spin_wheel_small.png
+    - assets/background_gif/Win_loop.gif
     - assets/chat_image/chat icon_01.png
+    - assets/chat_image/chat icon_04.png
+    - assets/chat_image/chat icon_03.png
+    - assets/chat_image/friend_background.png
     - assets/games.png
     - assets/chat.png
     - assets/chatBig.png
@@ -278,534 +314,596 @@ flutter:
     - assets/wordgrid_sad.png
     - assets/picture_sentence_sad.png
     # dictionary
-    - assets/dict/aardvark.png
-    - assets/dict/abdomen.png
-    - assets/dict/acid.png
+    - assets/dict/abiria.png
+    - assets/dict/abudu.png
+    - assets/dict/accident.png
+    - assets/dict/account.png
+    - assets/dict/achari.png
     - assets/dict/add.png
-    - assets/dict/addition.png
-    - assets/dict/adult.png
-    - assets/dict/aerobics.png
+    - assets/dict/adhabu.png
+    - assets/dict/adhibu.png
+    - assets/dict/adui.png
     - assets/dict/aeroplane.png
+    - assets/dict/afiki.png
     - assets/dict/afraid.png
     - assets/dict/afternoon.png
-    - assets/dict/age.png
-    - assets/dict/air.png
-    - assets/dict/ambulance.png
+    - assets/dict/afya.png
+    - assets/dict/ahali.png
+    - assets/dict/aim.png
+    - assets/dict/airplane.png
+    - assets/dict/ajabu.png
+    - assets/dict/ajali.png
+    - assets/dict/ajira.png
+    - assets/dict/akaunti.png
+    - assets/dict/akili.png
+    - assets/dict/alama.png
+    - assets/dict/albamu.png
+    - assets/dict/album.png
+    - assets/dict/algae.png
+    - assets/dict/allow.png
+    - assets/dict/almond.png
+    - assets/dict/ambassador.png
+    - assets/dict/amoeba.png
     - assets/dict/anchor.png
-    - assets/dict/angelfish.png
-    - assets/dict/anger.png
+    - assets/dict/angel.png
+    - assets/dict/angle.png
     - assets/dict/angry.png
-    - assets/dict/ankle.png
+    - assets/dict/animals.png
     - assets/dict/ant.png
-    - assets/dict/anteater.png
-    - assets/dict/antelope.png
-    - assets/dict/ape.png
+    - assets/dict/apparatus.png
+    - assets/dict/appease.png
     - assets/dict/apple.png
-    - assets/dict/apricot.png
     - assets/dict/arc.png
-    - assets/dict/archery.png
-    - assets/dict/area.png
-    - assets/dict/arm.png
-    - assets/dict/armadillo.png
-    - assets/dict/armchair.png
-    - assets/dict/art.png
-    - assets/dict/arteries.png
-    - assets/dict/artichoke.png
-    - assets/dict/asparagus.png
-    - assets/dict/aubergine.png
+    - assets/dict/arrow.png
+    - assets/dict/astronomy.png
+    - assets/dict/athletics.png
     - assets/dict/aunt.png
     - assets/dict/autumn.png
-    - assets/dict/avocado.png
     - assets/dict/axe.png
-    - assets/dict/baboon.png
     - assets/dict/baby.png
     - assets/dict/back.png
-    - assets/dict/badger.png
-    - assets/dict/badminton.png
     - assets/dict/bag.png
+    - assets/dict/baharia.png
+    - assets/dict/bajeti.png
     - assets/dict/bake.png
-    - assets/dict/ball.png
+    - assets/dict/balagha.png
+    - assets/dict/balloon.png
+    - assets/dict/balozi.png
+    - assets/dict/bambika.png
+    - assets/dict/bamboo.png
+    - assets/dict/bana.png
     - assets/dict/banana.png
-    - assets/dict/bandicoot.png
+    - assets/dict/bandage.png
+    - assets/dict/bandari.png
     - assets/dict/bank.png
+    - assets/dict/baraka.png
+    - assets/dict/bark.png
+    - assets/dict/barley.png
+    - assets/dict/barrel.png
     - assets/dict/baseball.png
-    - assets/dict/basketball.png
     - assets/dict/bass.png
     - assets/dict/bat.png
-    - assets/dict/beads.png
+    - assets/dict/bathtub.png
+    - assets/dict/beach.png
+    - assets/dict/bead.png
+    - assets/dict/bean.png
     - assets/dict/beans.png
-    - assets/dict/bear.png
     - assets/dict/beard.png
-    - assets/dict/beat.png
-    - assets/dict/bedroom.png
     - assets/dict/bee.png
-    - assets/dict/beetle.png
-    - assets/dict/beetroot.png
+    - assets/dict/bell.png
     - assets/dict/belt.png
-    - assets/dict/bench.png
-    - assets/dict/bike.png
-    - assets/dict/biking.png
-    - assets/dict/bilberry.png
-    - assets/dict/birth.png
-    - assets/dict/bison.png
+    - assets/dict/bicycle.png
     - assets/dict/black.png
-    - assets/dict/blackberry.png
-    - assets/dict/blackcurrant.png
-    - assets/dict/blazer.png
+    - assets/dict/blanket.png
+    - assets/dict/blessing.png
+    - assets/dict/blind.png
+    - assets/dict/blood.png
+    - assets/dict/blow.png
     - assets/dict/blue.png
-    - assets/dict/blueberry.png
     - assets/dict/boat.png
-    - assets/dict/body.png
     - assets/dict/boil.png
-    - assets/dict/boiler.png
     - assets/dict/bolt.png
-    - assets/dict/book.png
     - assets/dict/books.png
     - assets/dict/bored.png
-    - assets/dict/bottle.png
+    - assets/dict/bounce.png
     - assets/dict/bow.png
     - assets/dict/bowl.png
-    - assets/dict/bowling.png
     - assets/dict/box.png
-    - assets/dict/boxer.png
+    - assets/dict/boxers.png
     - assets/dict/boxing.png
-    - assets/dict/boy.png
-    - assets/dict/boysenberry.png
     - assets/dict/bracelet.png
     - assets/dict/brain.png
-    - assets/dict/brave.png
-    - assets/dict/briefcase.png
-    - assets/dict/brinjal.png
-    - assets/dict/broccoli.png
+    - assets/dict/branch.png
+    - assets/dict/bravery.png
+    - assets/dict/bread.png
+    - assets/dict/brick.png
     - assets/dict/broom.png
     - assets/dict/brother.png
     - assets/dict/brown.png
     - assets/dict/brush.png
     - assets/dict/bucket.png
+    - assets/dict/budget.png
     - assets/dict/buffalo.png
-    - assets/dict/bull.png
+    - assets/dict/building.png
+    - assets/dict/bulb.png
     - assets/dict/bulldozer.png
+    - assets/dict/bun.png
     - assets/dict/bunch.png
-    - assets/dict/burner.png
     - assets/dict/bus.png
     - assets/dict/butter.png
     - assets/dict/butterfly.png
+    - assets/dict/button.png
     - assets/dict/cabbage.png
     - assets/dict/cabinet.png
     - assets/dict/cable.png
+    - assets/dict/cactus.png
     - assets/dict/cage.png
-    - assets/dict/cake.png
-    - assets/dict/calf.png
+    - assets/dict/calculator.png
+    - assets/dict/calender.png
     - assets/dict/camel.png
-    - assets/dict/campfire.png
+    - assets/dict/camera.png
+    - assets/dict/camp.png
     - assets/dict/can.png
+    - assets/dict/cancel.png
     - assets/dict/candle.png
-    - assets/dict/cap.png
-    - assets/dict/capybara.png
-    - assets/dict/car.png
-    - assets/dict/care.png
+    - assets/dict/candy.png
+    - assets/dict/carbon.png
+    - assets/dict/card.png
+    - assets/dict/carefully.png
+    - assets/dict/carpenter.png
+    - assets/dict/carpet.png
     - assets/dict/carriage.png
     - assets/dict/carrot.png
-    - assets/dict/carton.png
-    - assets/dict/cash.png
+    - assets/dict/cars.png
     - assets/dict/cat.png
-    - assets/dict/caterpillar.png
-    - assets/dict/catfish.png
     - assets/dict/cauliflower.png
+    - assets/dict/cave.png
     - assets/dict/ceiling.png
-    - assets/dict/celeriac.png
-    - assets/dict/celery.png
-    - assets/dict/cello.png
     - assets/dict/centipede.png
+    - assets/dict/certificate.png
+    - assets/dict/chache.png
+    - assets/dict/chaguo.png
+    - assets/dict/chain.png
     - assets/dict/chair.png
+    - assets/dict/chairs.png
+    - assets/dict/chakula.png
+    - assets/dict/chalk.png
+    - assets/dict/chama.png
     - assets/dict/chameleon.png
-    - assets/dict/chamois.png
-    - assets/dict/chard.png
+    - assets/dict/chanjo.png
+    - assets/dict/chanzo.png
+    - assets/dict/chapa.png
     - assets/dict/chariot.png
+    - assets/dict/chart.png
+    - assets/dict/chati.png
+    - assets/dict/chawa.png
+    - assets/dict/cheche.png
     - assets/dict/cheek.png
+    - assets/dict/cheerful.png
     - assets/dict/cheese.png
     - assets/dict/cheetah.png
-    - assets/dict/cherry.png
+    - assets/dict/chef.png
+    - assets/dict/cheki.png
+    - assets/dict/chembe.png
+    - assets/dict/chenza.png
+    - assets/dict/cheo.png
     - assets/dict/chess.png
     - assets/dict/chest.png
     - assets/dict/chicken.png
-    - assets/dict/chico.png
-    - assets/dict/chihuahua.png
-    - assets/dict/children.png
-    - assets/dict/chilli.png
-    - assets/dict/chimpanzee.png
-    - assets/dict/chin.png
-    - assets/dict/chinchilla.png
-    - assets/dict/chipmunk.png
+    - assets/dict/chikoo.png
     - assets/dict/chisel.png
+    - assets/dict/choice.png
     - assets/dict/chop.png
     - assets/dict/circle.png
-    - assets/dict/city.png
+    - assets/dict/classroom.png
+    - assets/dict/clean.png
     - assets/dict/clear.png
-    - assets/dict/clementine.png
-    - assets/dict/clothesline.png
-    - assets/dict/clothespins.png
-    - assets/dict/cloudberry.png
     - assets/dict/cloudy.png
-    - assets/dict/coach.png
     - assets/dict/coat.png
-    - assets/dict/cock.png
     - assets/dict/cockroach.png
     - assets/dict/coconut.png
-    - assets/dict/cocoon.png
     - assets/dict/coffee.png
-    - assets/dict/cold.png
+    - assets/dict/coin.png
+    - assets/dict/commander.png
+    - assets/dict/committee.png
+    - assets/dict/community.png
+    - assets/dict/compass.png
+    - assets/dict/complaint.png
     - assets/dict/cone.png
     - assets/dict/confused.png
-    - assets/dict/container.png
     - assets/dict/cook.png
+    - assets/dict/cookie.png
     - assets/dict/cool.png
-    - assets/dict/coot.png
+    - assets/dict/copy.png
     - assets/dict/corn.png
-    - assets/dict/cot.png
+    - assets/dict/cost.png
+    - assets/dict/cotton.png
     - assets/dict/couch.png
-    - assets/dict/cougar.png
-    - assets/dict/cow.png
+    - assets/dict/cpu.png
     - assets/dict/crab.png
-    - assets/dict/cranberry.png
+    - assets/dict/crack.png
     - assets/dict/crane.png
+    - assets/dict/crawl.png
     - assets/dict/cream.png
+    - assets/dict/credit.png
     - assets/dict/cricket.png
     - assets/dict/crocodile.png
-    - assets/dict/crop.png
-    - assets/dict/cross.png
     - assets/dict/crow.png
     - assets/dict/crown.png
     - assets/dict/crying.png
-    - assets/dict/cube.png
     - assets/dict/cuboid.png
     - assets/dict/cuckoo.png
     - assets/dict/cucumber.png
     - assets/dict/cup.png
     - assets/dict/cups.png
-    - assets/dict/curlew.png
-    - assets/dict/currant.png
-    - assets/dict/curtains.png
-    - assets/dict/cushion.png
+    - assets/dict/curse.png
+    - assets/dict/curtain.png
     - assets/dict/cut.png
-    - assets/dict/cycle.png
-    - assets/dict/cycling.png
     - assets/dict/cyclone.png
-    - assets/dict/cygnini.png
     - assets/dict/cylinder.png
-    - assets/dict/dad.png
-    - assets/dict/dam.png
-    - assets/dict/dance.png
-    - assets/dict/dancing.png
+    - assets/dict/dagla.png
+    - assets/dict/daisy.png
+    - assets/dict/daka.png
+    - assets/dict/dakika.png
+    - assets/dict/damisi.png
+    - assets/dict/dampo.png
     - assets/dict/danger.png
-    - assets/dict/darts.png
-    - assets/dict/date.png
-    - assets/dict/daughter.png
-    - assets/dict/decagon.png
-    - assets/dict/deer.png
+    - assets/dict/darana.png
+    - assets/dict/darasa.png
+    - assets/dict/dates.png
+    - assets/dict/dawa.png
+    - assets/dict/dazani.png
+    - assets/dict/deki.png
+    - assets/dict/democracy.png
+    - assets/dict/demokrasia.png
+    - assets/dict/deni.png
+    - assets/dict/department.png
+    - assets/dict/dereva.png
+    - assets/dict/desert.png
     - assets/dict/desire.png
     - assets/dict/desk.png
     - assets/dict/detergent.png
-    - assets/dict/diary.png
-    - assets/dict/dinner.png
-    - assets/dict/dodo.png
+    - assets/dict/diamond.png
+    - assets/dict/dig.png
+    - assets/dict/dirt.png
+    - assets/dict/disaster.png
+    - assets/dict/division.png
+    - assets/dict/doctor.png
+    - assets/dict/doctors.png
     - assets/dict/dog.png
+    - assets/dict/doll.png
     - assets/dict/dolphin.png
     - assets/dict/donkey.png
     - assets/dict/door.png
-    - assets/dict/doorbell.png
-    - assets/dict/dove.png
     - assets/dict/dozen.png
-    - assets/dict/dragonfruit.png
+    - assets/dict/dragonfly.png
     - assets/dict/drapes.png
     - assets/dict/dress.png
-    - assets/dict/drizzling.png
+    - assets/dict/driver.png
+    - assets/dict/drizzle.png
     - assets/dict/drum.png
-    - assets/dict/dryer.png
     - assets/dict/duck.png
-    - assets/dict/durian.png
-    - assets/dict/dust.png
-    - assets/dict/duster.png
-    - assets/dict/dustpan.png
-    - assets/dict/eagle.png
+    - assets/dict/dump.png
     - assets/dict/ear.png
+    - assets/dict/earnings.png
     - assets/dict/earring.png
-    - assets/dict/earrings.png
-    - assets/dict/earth.png
     - assets/dict/earthworm.png
-    - assets/dict/east.png
-    - assets/dict/eat.png
+    - assets/dict/education.png
     - assets/dict/eel.png
     - assets/dict/egg.png
     - assets/dict/eggplant.png
-    - assets/dict/eggs.png
-    - assets/dict/elbow.png
-    - assets/dict/elderberry.png
+    - assets/dict/election.png
     - assets/dict/elephant.png
-    - assets/dict/ellipse.png
-    - assets/dict/emu.png
+    - assets/dict/elfu.png
+    - assets/dict/elimu.png
+    - assets/dict/embe.png
+    - assets/dict/employers.png
+    - assets/dict/employment.png
+    - assets/dict/enemy.png
     - assets/dict/engine.png
+    - assets/dict/envelope.png
     - assets/dict/eraser.png
+    - assets/dict/eropleni.png
     - assets/dict/even.png
     - assets/dict/evening.png
-    - assets/dict/exam.png
+    - assets/dict/excess.png
     - assets/dict/excited.png
+    - assets/dict/excitement.png
     - assets/dict/exercise.png
     - assets/dict/exhausted.png
+    - assets/dict/expensive.png
+    - assets/dict/extra.png
     - assets/dict/eye.png
-    - assets/dict/eyeball.png
-    - assets/dict/eyebrows.png
-    - assets/dict/eyelash.png
+    - assets/dict/eyebrow.png
+    - assets/dict/eyelid.png
     - assets/dict/eyes.png
     - assets/dict/face.png
+    - assets/dict/fahali.png
+    - assets/dict/fainali.png
+    - assets/dict/faith.png
+    - assets/dict/falaki.png
     - assets/dict/falcon.png
-    - assets/dict/family.png
     - assets/dict/fan.png
+    - assets/dict/farakano.png
+    - assets/dict/farm.png
+    - assets/dict/fasiri.png
+    - assets/dict/fat.png
     - assets/dict/father.png
-    - assets/dict/feet.png
-    - assets/dict/fence.png
+    - assets/dict/fatigue.png
+    - assets/dict/fault.png
+    - assets/dict/feather.png
+    - assets/dict/feri.png
+    - assets/dict/ferry.png
+    - assets/dict/festival.png
+    - assets/dict/few.png
+    - assets/dict/fidia.png
     - assets/dict/fig.png
+    - assets/dict/fight.png
     - assets/dict/file.png
+    - assets/dict/final.png
     - assets/dict/finch.png
     - assets/dict/finger.png
-    - assets/dict/fireplace.png
+    - assets/dict/firauni.png
+    - assets/dict/firework.png
     - assets/dict/fish.png
     - assets/dict/fishing.png
     - assets/dict/fist.png
+    - assets/dict/five.png
+    - assets/dict/fizikia.png
     - assets/dict/flag.png
-    - assets/dict/flamingo.png
+    - assets/dict/flame.png
     - assets/dict/flea.png
+    - assets/dict/flood.png
     - assets/dict/floor.png
     - assets/dict/flute.png
     - assets/dict/fly.png
+    - assets/dict/foam.png
     - assets/dict/foggy.png
+    - assets/dict/fomu.png
     - assets/dict/food.png
-    - assets/dict/foot.png
     - assets/dict/football.png
-    - assets/dict/forearm.png
-    - assets/dict/forehead.png
-    - assets/dict/forest.png
-    - assets/dict/forgive.png
-    - assets/dict/fork.png
+    - assets/dict/form.png
     - assets/dict/fox.png
-    - assets/dict/freezer.png
+    - assets/dict/frame.png
+    - assets/dict/fraud.png
     - assets/dict/freezing.png
+    - assets/dict/fremu.png
+    - assets/dict/fridge.png
+    - assets/dict/friend.png
+    - assets/dict/friji.png
     - assets/dict/frog.png
     - assets/dict/fry.png
-    - assets/dict/fun.png
-    - assets/dict/furniture.png
-    - assets/dict/gain.png
-    - assets/dict/galaxy.png
-    - assets/dict/gallon.png
-    - assets/dict/game.png
-    - assets/dict/gannet.png
-    - assets/dict/garden.png
-    - assets/dict/garlic.png
-    - assets/dict/gem.png
-    - assets/dict/giant.png
+    - assets/dict/ganda.png
+    - assets/dict/gangster.png
+    - assets/dict/gate.png
+    - assets/dict/gauge.png
+    - assets/dict/gavana.png
+    - assets/dict/gego.png
+    - assets/dict/geji.png
+    - assets/dict/ghairi.png
+    - assets/dict/ghala.png
+    - assets/dict/ghali.png
+    - assets/dict/gharama.png
+    - assets/dict/gharika.png
+    - assets/dict/ghashi.png
     - assets/dict/gift.png
     - assets/dict/ginger.png
     - assets/dict/giraffe.png
-    - assets/dict/girl.png
-    - assets/dict/glass.png
+    - assets/dict/give.png
     - assets/dict/globe.png
     - assets/dict/gloves.png
+    - assets/dict/glue.png
+    - assets/dict/goalpost.png
     - assets/dict/goat.png
+    - assets/dict/godoro.png
+    - assets/dict/gofu.png
     - assets/dict/gold.png
-    - assets/dict/golf.png
-    - assets/dict/goose.png
-    - assets/dict/gooseberry.png
+    - assets/dict/goli.png
+    - assets/dict/gome.png
     - assets/dict/gorilla.png
-    - assets/dict/gourds.png
+    - assets/dict/gospel.png
+    - assets/dict/government.png
+    - assets/dict/governor.png
     - assets/dict/gown.png
-    - assets/dict/grandchildren.png
-    - assets/dict/granddaughter.png
+    - assets/dict/granary.png
     - assets/dict/grandfather.png
     - assets/dict/grandmother.png
-    - assets/dict/grandparents.png
     - assets/dict/grandson.png
-    - assets/dict/grape.png
     - assets/dict/grapefruit.png
+    - assets/dict/grass.png
     - assets/dict/grasshopper.png
-    - assets/dict/gray.png
     - assets/dict/green.png
+    - assets/dict/grey.png
     - assets/dict/grill.png
+    - assets/dict/growth.png
     - assets/dict/guava.png
     - assets/dict/guitar.png
-    - assets/dict/gull.png
-    - assets/dict/gun.png
-    - assets/dict/gymnastics.png
-    - assets/dict/hacksaw.png
+    - assets/dict/gym.png
+    - assets/dict/hadhi.png
+    - assets/dict/hadithi.png
     - assets/dict/hair.png
-    - assets/dict/hairband.png
+    - assets/dict/haja.png
+    - assets/dict/haki.png
+    - assets/dict/hakimu.png
     - assets/dict/hammer.png
+    - assets/dict/hamu.png
     - assets/dict/hand.png
-    - assets/dict/handball.png
+    - assets/dict/handaki.png
+    - assets/dict/handbag.png
     - assets/dict/handkerchief.png
-    - assets/dict/hanger.png
+    - assets/dict/handle.png
+    - assets/dict/hanjamu.png
     - assets/dict/happy.png
-    - assets/dict/hare.png
+    - assets/dict/haragwe.png
+    - assets/dict/haramia.png
     - assets/dict/harp.png
+    - assets/dict/hasara.png
     - assets/dict/hat.png
+    - assets/dict/hata.png
+    - assets/dict/hati.png
+    - assets/dict/hatia.png
+    - assets/dict/hatua.png
     - assets/dict/hawk.png
     - assets/dict/head.png
+    - assets/dict/headline.png
+    - assets/dict/heads.png
+    - assets/dict/health.png
     - assets/dict/heart.png
     - assets/dict/heel.png
-    - assets/dict/hen.png
-    - assets/dict/heptagon.png
-    - assets/dict/heron.png
-    - assets/dict/hexagon.png
     - assets/dict/hip.png
-    - assets/dict/hockey.png
-    - assets/dict/honey.png
-    - assets/dict/honeybee.png
-    - assets/dict/honeydew.png
-    - assets/dict/honeyeater.png
-    - assets/dict/hornbill.png
+    - assets/dict/hoe.png
+    - assets/dict/honour.png
+    - assets/dict/hook.png
+    - assets/dict/horn.png
     - assets/dict/horse.png
-    - assets/dict/hot.png
-    - assets/dict/housesparrow.png
-    - assets/dict/humble.png
+    - assets/dict/hospital.png
+    - assets/dict/hotel.png
     - assets/dict/hummingbird.png
-    - assets/dict/hungry.png
-    - assets/dict/husband.png
-    - assets/dict/hut.png
-    - assets/dict/hyacinth.png
+    - assets/dict/hunger.png
     - assets/dict/hyena.png
-    - assets/dict/ibis.png
-    - assets/dict/ice.png
-    - assets/dict/iceberg.png
-    - assets/dict/idea.png
+    - assets/dict/hypocrite.png
+    - assets/dict/ibada.png
+    - assets/dict/idara.png
+    - assets/dict/idhini.png
+    - assets/dict/idhinisha.png
     - assets/dict/iguana.png
-    - assets/dict/images.png
-    - assets/dict/impala.png
-    - assets/dict/indexfinger.png
-    - assets/dict/industry.png
-    - assets/dict/infant.png
+    - assets/dict/ilani.png
+    - assets/dict/imani.png
+    - assets/dict/imara.png
+    - assets/dict/imarisha.png
+    - assets/dict/injili.png
+    - assets/dict/injini.png
     - assets/dict/injury.png
-    - assets/dict/ink.png
-    - assets/dict/insect.png
-    - assets/dict/inside.png
-    - assets/dict/internet.png
-    - assets/dict/inventor.png
-    - assets/dict/invitation.png
+    - assets/dict/inspection.png
     - assets/dict/iron.png
-    - assets/dict/island.png
-    - assets/dict/jackal.png
+    - assets/dict/ishi.png
+    - assets/dict/ishirini.png
+    - assets/dict/isimu.png
+    - assets/dict/itikadi.png
     - assets/dict/jacket.png
     - assets/dict/jackfruit.png
-    - assets/dict/jaguar.png
-    - assets/dict/jaketi.png
-    - assets/dict/jam.png
+    - assets/dict/jagi.png
+    - assets/dict/jaja.png
+    - assets/dict/jaji.png
+    - assets/dict/jalada.png
+    - assets/dict/jamaa.png
+    - assets/dict/jambo.png
+    - assets/dict/jamhuri.png
+    - assets/dict/jamiana.png
+    - assets/dict/jamii.png
+    - assets/dict/jana.png
+    - assets/dict/janga.png
+    - assets/dict/jangili.png
+    - assets/dict/jani.png
     - assets/dict/jar.png
+    - assets/dict/jarari.png
     - assets/dict/jaw.png
-    - assets/dict/jay.png
     - assets/dict/jeans.png
-    - assets/dict/jeep.png
-    - assets/dict/jelly.png
     - assets/dict/jellyfish.png
-    - assets/dict/jet.png
-    - assets/dict/jewel.png
-    - assets/dict/jewelry.png
-    - assets/dict/jog.png
     - assets/dict/jogging.png
+    - assets/dict/jowar.png
+    - assets/dict/judge.png
     - assets/dict/jug.png
-    - assets/dict/juice-01.png
-    - assets/dict/juice.png
-    - assets/dict/jump.png
-    - assets/dict/jungle.png
-    - assets/dict/jupiter.png
-    - assets/dict/kangaroo.png
-    - assets/dict/kettle.png
+    - assets/dict/kaakaa.png
+    - assets/dict/kabidhi.png
+    - assets/dict/kabila.png
+    - assets/dict/kaboni.png
+    - assets/dict/kabwela.png
+    - assets/dict/kadha.png
+    - assets/dict/kadi.png
+    - assets/dict/kali.png
+    - assets/dict/kamanda.png
+    - assets/dict/kamati.png
     - assets/dict/key.png
-    - assets/dict/keyboard.png
     - assets/dict/keychain.png
-    - assets/dict/kid.png
     - assets/dict/kidney.png
-    - assets/dict/kind.png
-    - assets/dict/king.png
     - assets/dict/kingfisher.png
     - assets/dict/kitchen.png
     - assets/dict/kite.png
-    - assets/dict/kitten.png
     - assets/dict/kiwi.png
-    - assets/dict/kiwifruit.png
     - assets/dict/knee.png
-    - assets/dict/kneel.png
+    - assets/dict/knees.png
     - assets/dict/knife.png
-    - assets/dict/knight.png
-    - assets/dict/knowledge.png
     - assets/dict/knuckle.png
-    - assets/dict/koala.png
-    - assets/dict/kohlrabi.png
-    - assets/dict/lace.png
+    - assets/dict/laana.png
     - assets/dict/ladder.png
     - assets/dict/ladle.png
-    - assets/dict/lady.png
-    - assets/dict/ladybug.png
     - assets/dict/ladyfinger.png
-    - assets/dict/lake.png
-    - assets/dict/lamb.png
     - assets/dict/lamp.png
-    - assets/dict/land.png
-    - assets/dict/larynx.png
+    - assets/dict/lantern.png
     - assets/dict/laugh.png
-    - assets/dict/lava.png
+    - assets/dict/lawama.png
+    - assets/dict/lawn.png
+    - assets/dict/lawyer.png
+    - assets/dict/lawyers.png
+    - assets/dict/lazima.png
     - assets/dict/leaf.png
-    - assets/dict/leek.png
+    - assets/dict/league.png
+    - assets/dict/ledger.png
     - assets/dict/leg.png
+    - assets/dict/leja.png
     - assets/dict/lemon.png
-    - assets/dict/lemur.png
+    - assets/dict/lengo.png
+    - assets/dict/lens.png
+    - assets/dict/lenzi.png
+    - assets/dict/leo.png
     - assets/dict/leopard.png
-    - assets/dict/letter.png
-    - assets/dict/lettuce.png
+    - assets/dict/less.png
     - assets/dict/lightning.png
-    - assets/dict/lightningbug.png
+    - assets/dict/ligi.png
     - assets/dict/lime.png
     - assets/dict/lion.png
     - assets/dict/lips.png
-    - assets/dict/list.sh
-    - assets/dict/liter.png
-    - assets/dict/littlefinger.png
+    - assets/dict/live.png
     - assets/dict/liver.png
     - assets/dict/lizard.png
-    - assets/dict/lobster.png
+    - assets/dict/lock.png
     - assets/dict/locket.png
-    - assets/dict/log.png
-    - assets/dict/lorry.png
+    - assets/dict/loss.png
+    - assets/dict/louse.png
     - assets/dict/love.png
     - assets/dict/lungs.png
-    - assets/dict/lychee.png
-    - assets/dict/mad.png
-    - assets/dict/magic.png
+    - assets/dict/machozi.png
+    - assets/dict/madaktari.png
+    - assets/dict/madarasa.png
+    - assets/dict/madereva.png
+    - assets/dict/madini.png
+    - assets/dict/madiwani.png
+    - assets/dict/maembe.png
+    - assets/dict/mafunzo.png
+    - assets/dict/mafuta.png
+    - assets/dict/magamba.png
+    - assets/dict/magari.png
+    - assets/dict/magistrate.png
     - assets/dict/magnet.png
-    - assets/dict/maina.png
-    - assets/dict/mallard.png
-    - assets/dict/mallet.png
-    - assets/dict/mammal.png
-    - assets/dict/mammoth.png
-    - assets/dict/man.png
-    - assets/dict/mandolin.png
+    - assets/dict/magodoro.png
+    - assets/dict/magonjwa.png
+    - assets/dict/magoti.png
     - assets/dict/mango.png
-    - assets/dict/many.png
-    - assets/dict/map.png
-    - assets/dict/marble.png
-    - assets/dict/march.png
-    - assets/dict/married.png
-    - assets/dict/mask.png
+    - assets/dict/mangoes.png
+    - assets/dict/mark.png
+    - assets/dict/mat.png
+    - assets/dict/matchbox.png
+    - assets/dict/mattress.png
     - assets/dict/measure.png
     - assets/dict/meat.png
-    - assets/dict/meerkat.png
-    - assets/dict/metal.png
-    - assets/dict/midddlefinger.png
+    - assets/dict/medicine.png
+    - assets/dict/men.png
     - assets/dict/milk.png
     - assets/dict/millipede.png
+    - assets/dict/mineral.png
+    - assets/dict/minute.png
     - assets/dict/mix.png
     - assets/dict/mixer.png
+    - assets/dict/molar.png
     - assets/dict/money.png
     - assets/dict/mongoose.png
     - assets/dict/monitor.png
+    - assets/dict/monkey .png
     - assets/dict/monkey.png
+    - assets/dict/monsoon.png
+    - assets/dict/moon.png
+    - assets/dict/mop.png
     - assets/dict/morning.png
     - assets/dict/mosquito.png
     - assets/dict/moth.png
@@ -813,396 +911,1111 @@ flutter:
     - assets/dict/mountain.png
     - assets/dict/mouse.png
     - assets/dict/mouth.png
-    - assets/dict/mule.png
-    - assets/dict/muscles.png
+    - assets/dict/muscle.png
     - assets/dict/mushroom.png
     - assets/dict/mustache.png
+    - assets/dict/myna.png
+    - assets/dict/nafasi.png
+    - assets/dict/nafuu.png
     - assets/dict/nail.png
-    - assets/dict/nailpolish.png
     - assets/dict/nails.png
-    - assets/dict/napkin.png
+    - assets/dict/nakala.png
+    - assets/dict/nanga.png
     - assets/dict/naughty.png
+    - assets/dict/ndogo.png
+    - assets/dict/ndovu.png
     - assets/dict/neck.png
     - assets/dict/necklace.png
+    - assets/dict/need.png
     - assets/dict/needle.png
-    - assets/dict/neighbour.png
-    - assets/dict/nest.png
-    - assets/dict/net.png
+    - assets/dict/nene.png
     - assets/dict/newspaper.png
+    - assets/dict/ngazi.png
+    - assets/dict/ngumi.png
+    - assets/dict/nguo.png
+    - assets/dict/nguvu.png
     - assets/dict/night.png
-    - assets/dict/nightingale.png
-    - assets/dict/nonagon.png
-    - assets/dict/noodles.png
-    - assets/dict/noon.png
-    - assets/dict/north.png
+    - assets/dict/njaa.png
+    - assets/dict/nje.png
     - assets/dict/nose.png
-    - assets/dict/nostril.png
+    - assets/dict/novel.png
     - assets/dict/nurse.png
     - assets/dict/nut.png
-    - assets/dict/oatmeal.png
-    - assets/dict/ocean.png
-    - assets/dict/octagon.png
+    - assets/dict/oats.png
+    - assets/dict/occurence.png
     - assets/dict/octopus.png
-    - assets/dict/odd.png
-    - assets/dict/oil.png
-    - assets/dict/okra.png
-    - assets/dict/old.png
-    - assets/dict/olive.png
-    - assets/dict/omelet.png
-    - assets/dict/onion.png
+    - assets/dict/officer.png
+    - assets/dict/ofisa.png
+    - assets/dict/oktoba.png
+    - assets/dict/ombi.png
     - assets/dict/orange.png
     - assets/dict/ostrich.png
     - assets/dict/outside.png
     - assets/dict/oval.png
     - assets/dict/oven.png
+    - assets/dict/overcoat.png
     - assets/dict/owl.png
+    - assets/dict/ox.png
+    - assets/dict/paa.png
     - assets/dict/pack.png
     - assets/dict/package.png
-    - assets/dict/paint.png
+    - assets/dict/packet.png
+    - assets/dict/pad.png
     - assets/dict/painting.png
-    - assets/dict/pajamas.png
-    - assets/dict/palace.png
-    - assets/dict/palm.png
+    - assets/dict/pakiti.png
+    - assets/dict/palette.png
+    - assets/dict/pamba.png
     - assets/dict/pan.png
+    - assets/dict/pana.png
     - assets/dict/panda.png
     - assets/dict/pant.png
-    - assets/dict/panther.png
-    - assets/dict/papaya.png
     - assets/dict/paper.png
-    - assets/dict/parallelogram.png
-    - assets/dict/parents.png
     - assets/dict/parrot.png
-    - assets/dict/parsnip.png
-    - assets/dict/pea.png
-    - assets/dict/peach.png
+    - assets/dict/part.png
+    - assets/dict/party.png
+    - assets/dict/passenger.png
+    - assets/dict/pato.png
     - assets/dict/peacock.png
-    - assets/dict/pear.png
     - assets/dict/peas.png
+    - assets/dict/pedi.png
     - assets/dict/peel.png
     - assets/dict/pelican.png
+    - assets/dict/pembe.png
     - assets/dict/pen.png
+    - assets/dict/pencil.png
     - assets/dict/penguin.png
-    - assets/dict/pentagon.png
-    - assets/dict/people.png
     - assets/dict/pepper.png
-    - assets/dict/peregrine.png
-    - assets/dict/photo.png
+    - assets/dict/permission.png
+    - assets/dict/physics.png
     - assets/dict/piano.png
     - assets/dict/picture.png
     - assets/dict/pig.png
     - assets/dict/pigeon.png
     - assets/dict/pilot.png
     - assets/dict/pin.png
-    - assets/dict/pineapple.png
     - assets/dict/pink.png
-    - assets/dict/pint.png
     - assets/dict/pipe.png
+    - assets/dict/pirate.png
+    - assets/dict/pitchfork.png
     - assets/dict/plant.png
     - assets/dict/plate.png
-    - assets/dict/platypus.png
-    - assets/dict/pliers.png
-    - assets/dict/plum.png
-    - assets/dict/polarbear.png
-    - assets/dict/polo.png
-    - assets/dict/pomegranate.png
-    - assets/dict/potato.png
-    - assets/dict/pound.png
+    - assets/dict/players.png
+    - assets/dict/playing.png
+    - assets/dict/plug.png
+    - assets/dict/point.png
+    - assets/dict/pointi.png
+    - assets/dict/pole.png
+    - assets/dict/police.png
+    - assets/dict/polisi.png
+    - assets/dict/pond.png
+    - assets/dict/porridge.png
+    - assets/dict/port.png
+    - assets/dict/potatoes.png
     - assets/dict/pour.png
-    - assets/dict/prawn.png
+    - assets/dict/povu.png
+    - assets/dict/prayer.png
+    - assets/dict/president.png
     - assets/dict/printer.png
     - assets/dict/prism.png
-    - assets/dict/proud.png
-    - assets/dict/puma.png
-    - assets/dict/pumpkin.png
+    - assets/dict/procreation.png
+    - assets/dict/pulses.png
+    - assets/dict/punish.png
+    - assets/dict/punishment.png
+    - assets/dict/pupa.png
     - assets/dict/purple.png
-    - assets/dict/purse.png
     - assets/dict/pyramid.png
-    - assets/dict/quail.png
-    - assets/dict/qualify.png
-    - assets/dict/quality.png
-    - assets/dict/quantity.png
-    - assets/dict/quart.png
     - assets/dict/quarter.png
-    - assets/dict/quartz.png
-    - assets/dict/queen.png
-    - assets/dict/question.png
-    - assets/dict/quetzal.png
-    - assets/dict/quick.png
-    - assets/dict/quill.png
-    - assets/dict/quite.png
-    - assets/dict/quiver.png
-    - assets/dict/quiz.png
-    - assets/dict/quokka.png
-    - assets/dict/quotation.png
     - assets/dict/rabbit.png
-    - assets/dict/race.png
     - assets/dict/rack.png
-    - assets/dict/racket.png
     - assets/dict/radio.png
     - assets/dict/radish.png
+    - assets/dict/rafiki.png
+    - assets/dict/rai.png
+    - assets/dict/rail.png
     - assets/dict/rain.png
-    - assets/dict/rainbow.png
-    - assets/dict/raining.png
-    - assets/dict/raspberry.png
+    - assets/dict/rais.png
+    - assets/dict/rank.png
+    - assets/dict/ransom.png
     - assets/dict/rat.png
-    - assets/dict/rattlesnake.png
-    - assets/dict/raven.png
-    - assets/dict/rays.png
-    - assets/dict/read.png
+    - assets/dict/razor.png
+    - assets/dict/record.png
     - assets/dict/rectangle.png
     - assets/dict/red.png
     - assets/dict/refrigerator.png
-    - assets/dict/remote.png
-    - assets/dict/respect.png
-    - assets/dict/rhinoceros.png
-    - assets/dict/rhombus.png
+    - assets/dict/rekodi.png
+    - assets/dict/relative.png
+    - assets/dict/request.png
+    - assets/dict/responsibility.png
+    - assets/dict/rhetorical.png
+    - assets/dict/riadha.png
+    - assets/dict/ribbon.png
     - assets/dict/rice.png
+    - assets/dict/rich.png
+    - assets/dict/right.png
     - assets/dict/ring.png
+    - assets/dict/rings.png
     - assets/dict/river.png
+    - assets/dict/riwaya.png
     - assets/dict/roast.png
-    - assets/dict/robin.png
+    - assets/dict/robo.png
+    - assets/dict/robot.png
     - assets/dict/rock.png
+    - assets/dict/rocket.png
     - assets/dict/roll.png
-    - assets/dict/roots.png
-    - assets/dict/rope.png
+    - assets/dict/rooster.png
+    - assets/dict/row.png
+    - assets/dict/rubani.png
+    - assets/dict/rubber.png
     - assets/dict/running.png
-    - assets/dict/sad-.png
+    - assets/dict/saba.png
+    - assets/dict/sabini.png
     - assets/dict/sad.png
-    - assets/dict/sail.png
-    - assets/dict/sailfish.png
-    - assets/dict/salad.png
+    - assets/dict/safi.png
+    - assets/dict/safu.png
+    - assets/dict/sailor.png
     - assets/dict/salt.png
+    - assets/dict/sanctions.png
     - assets/dict/sand.png
-    - assets/dict/sandal.png
-    - assets/dict/sandals.png
-    - assets/dict/sandpiper.png
-    - assets/dict/saturn.png
+    - assets/dict/sarafu.png
     - assets/dict/saw.png
     - assets/dict/saxophone.png
-    - assets/dict/scalene.png
+    - assets/dict/sayansi.png
+    - assets/dict/scale.png
     - assets/dict/scanner.png
+    - assets/dict/school.png
+    - assets/dict/science.png
     - assets/dict/scooter.png
     - assets/dict/scorpion.png
     - assets/dict/screw.png
-    - assets/dict/seahorse.png
-    - assets/dict/seal.png
-    - assets/dict/shallot.png
+    - assets/dict/sea.png
+    - assets/dict/sector.png
+    - assets/dict/sehemu.png
+    - assets/dict/sekta.png
+    - assets/dict/septemba.png
+    - assets/dict/september.png
+    - assets/dict/seremala.png
+    - assets/dict/serikali.png
+    - assets/dict/seven.png
+    - assets/dict/seventy.png
+    - assets/dict/shadow.png
     - assets/dict/shark.png
+    - assets/dict/sharpener.png
     - assets/dict/sheep.png
+    - assets/dict/shelve.png
     - assets/dict/shelves.png
     - assets/dict/shirt.png
     - assets/dict/shoes.png
     - assets/dict/shorts.png
     - assets/dict/shoulder.png
-    - assets/dict/siblings.png
+    - assets/dict/shout.png
+    - assets/dict/shovel.png
     - assets/dict/sick.png
+    - assets/dict/sickle.png
     - assets/dict/sideburn.png
-    - assets/dict/signal.png
-    - assets/dict/silver.png
     - assets/dict/sink.png
     - assets/dict/sister.png
     - assets/dict/skeleton.png
     - assets/dict/skirt.png
-    - assets/dict/skydiving.png
     - assets/dict/sleepy.png
     - assets/dict/slice.png
     - assets/dict/slippers.png
+    - assets/dict/small.png
     - assets/dict/snail.png
     - assets/dict/snake.png
     - assets/dict/snooker.png
-    - assets/dict/snowing.png
-    - assets/dict/soap.png
-    - assets/dict/soccer.png
+    - assets/dict/snowy.png
+    - assets/dict/socket.png
     - assets/dict/socks.png
+    - assets/dict/soda.png
     - assets/dict/sofa.png
-    - assets/dict/softball.png
-    - assets/dict/soksi.png
-    - assets/dict/son.png
+    - assets/dict/soldier.png
+    - assets/dict/sour.png
+    - assets/dict/space.png
+    - assets/dict/spark.png
     - assets/dict/sparrow.png
-    - assets/dict/spatula.png
-    - assets/dict/speaker.png
+    - assets/dict/spear.png
     - assets/dict/sphere.png
+    - assets/dict/spice.png
     - assets/dict/spider.png
-    - assets/dict/spinach.png
+    - assets/dict/spill.png
     - assets/dict/spoon.png
-    - assets/dict/spoonbill.png
     - assets/dict/spring.png
     - assets/dict/square.png
     - assets/dict/squash.png
+    - assets/dict/squeeze.png
     - assets/dict/squid.png
-    - assets/dict/starfish.png
-    - assets/dict/starling.png
+    - assets/dict/squirrel.png
+    - assets/dict/stabilize.png
+    - assets/dict/star.png
+    - assets/dict/state.png
+    - assets/dict/statistics.png
     - assets/dict/steam.png
     - assets/dict/steamer.png
+    - assets/dict/step.png
     - assets/dict/stir.png
     - assets/dict/stomach.png
-    - assets/dict/storm.png
+    - assets/dict/stormy.png
+    - assets/dict/story.png
     - assets/dict/stove.png
     - assets/dict/strainer.png
+    - assets/dict/strap.png
     - assets/dict/strawberry.png
-    - assets/dict/summer.png
-    - assets/dict/sunny.png
-    - assets/dict/swan.png
+    - assets/dict/strength.png
+    - assets/dict/strong.png
+    - assets/dict/students.png
+    - assets/dict/study.png
+    - assets/dict/sugar.png
+    - assets/dict/sun.png
+    - assets/dict/surveillance.png
     - assets/dict/sweater.png
-    - assets/dict/swede.png
     - assets/dict/swift.png
     - assets/dict/swimming.png
-    - assets/dict/table.png
-    - assets/dict/tail.png
-    - assets/dict/talk.png
+    - assets/dict/swordfish.png
+    - assets/dict/taaluma.png
+    - assets/dict/taarifa.png
+    - assets/dict/taji.png
+    - assets/dict/tajiri.png
+    - assets/dict/taka.png
+    - assets/dict/takwimu.png
     - assets/dict/tamarind.png
+    - assets/dict/tamasha.png
+    - assets/dict/tambaa.png
+    - assets/dict/tamko.png
+    - assets/dict/tangerine.png
     - assets/dict/tank.png
-    - assets/dict/tanker.png
-    - assets/dict/tap.png
+    - assets/dict/tano.png
     - assets/dict/tape.png
-    - assets/dict/target.png
-    - assets/dict/taste.png
+    - assets/dict/taratibu.png
+    - assets/dict/taswira.png
+    - assets/dict/tatu.png
+    - assets/dict/tawi.png
     - assets/dict/tea.png
-    - assets/dict/team.png
-    - assets/dict/teapoy.png
-    - assets/dict/tear.png
-    - assets/dict/teenager.png
+    - assets/dict/teapot.png
+    - assets/dict/tears.png
     - assets/dict/teeth.png
     - assets/dict/television.png
     - assets/dict/temperature.png
-    - assets/dict/temple.png
     - assets/dict/tent.png
     - assets/dict/termite.png
-    - assets/dict/text.png
-    - assets/dict/thermometer.png
+    - assets/dict/thick.png
     - assets/dict/thigh.png
-    - assets/dict/thin.png
-    - assets/dict/thirsty.png
+    - assets/dict/thousand.png
     - assets/dict/thread.png
-    - assets/dict/thumb.png
+    - assets/dict/three.png
     - assets/dict/tie.png
-    - assets/dict/tiger.png
-    - assets/dict/tired.png
-    - assets/dict/toad.png
     - assets/dict/toaster.png
     - assets/dict/today.png
-    - assets/dict/toddler.png
-    - assets/dict/toe.png
     - assets/dict/tomato.png
-    - assets/dict/tomorrow.png
     - assets/dict/tongue.png
     - assets/dict/tooth.png
-    - assets/dict/tortise.png
+    - assets/dict/torch.png
+    - assets/dict/touch.png
+    - assets/dict/towel.png
+    - assets/dict/tower.png
     - assets/dict/tractor.png
-    - assets/dict/train.png
-    - assets/dict/trapezium.png
-    - assets/dict/trapezoid.png
+    - assets/dict/tradition.png
+    - assets/dict/translation.png
+    - assets/dict/trap.png
+    - assets/dict/tree.png
+    - assets/dict/trench.png
+    - assets/dict/tribe.png
+    - assets/dict/trophy.png
+    - assets/dict/trowel.png
     - assets/dict/truck.png
     - assets/dict/trumpet.png
     - assets/dict/tub.png
-    - assets/dict/tuba.png
     - assets/dict/tube.png
-    - assets/dict/turkey.png
-    - assets/dict/turnip.png
     - assets/dict/turtle.png
+    - assets/dict/twenty.png
+    - assets/dict/uchafu.png
+    - assets/dict/uchaguzi.png
+    - assets/dict/uchovu.png
+    - assets/dict/ufa.png
+    - assets/dict/uhai.png
+    - assets/dict/ujana.png
+    - assets/dict/ujasiri.png
+    - assets/dict/uji.png
+    - assets/dict/ukaguzi.png
+    - assets/dict/ukuaji.png
+    - assets/dict/ulimwengu.png
+    - assets/dict/ulinzi.png
     - assets/dict/umbrella.png
-    - assets/dict/umpire.png
-    - assets/dict/under.png
-    - assets/dict/undo.png
-    - assets/dict/unhappy.png
-    - assets/dict/unicorn.png
-    - assets/dict/unicycle.png
-    - assets/dict/uniform.png
-    - assets/dict/unique.png
-    - assets/dict/university.png
-    - assets/dict/up.png
-    - assets/dict/upperarm.png
-    - assets/dict/upset.png
-    - assets/dict/urban.png
-    - assets/dict/urn.png
-    - assets/dict/user.png
-    - assets/dict/utensils.png
-    - assets/dict/vacation.png
-    - assets/dict/valley.png
-    - assets/dict/value.png
-    - assets/dict/van.png
-    - assets/dict/vase.png
-    - assets/dict/vegetable.png
-    - assets/dict/vehicle.png
+    - assets/dict/uncle.png
+    - assets/dict/utterance.png
+    - assets/dict/vaccine.png
     - assets/dict/veins.png
-    - assets/dict/veranda.png
-    - assets/dict/vessel.png
     - assets/dict/vest.png
-    - assets/dict/victory.png
-    - assets/dict/video.png
-    - assets/dict/village.png
-    - assets/dict/violet.png
+    - assets/dict/viazi.png
+    - assets/dict/view.png
+    - assets/dict/vifo.png
+    - assets/dict/vikombe.png
+    - assets/dict/vikundi.png
+    - assets/dict/vikwazo.png
+    - assets/dict/vilema.png
     - assets/dict/violin.png
-    - assets/dict/voice.png
-    - assets/dict/volleyball.png
-    - assets/dict/volume.png
-    - assets/dict/vote.png
-    - assets/dict/vulture.png
+    - assets/dict/vipimo.png
+    - assets/dict/vipuli.png
+    - assets/dict/virus.png
+    - assets/dict/virusi.png
+    - assets/dict/vision.png
+    - assets/dict/visiwa.png
+    - assets/dict/vita.png
+    - assets/dict/viti.png
+    - assets/dict/vyakula.png
+    - assets/dict/vyama.png
+    - assets/dict/waajiri.png
+    - assets/dict/waandishi.png
+    - assets/dict/wachezaji.png
+    - assets/dict/wafu.png
     - assets/dict/wagon.png
     - assets/dict/waist.png
+    - assets/dict/waiter.png
+    - assets/dict/wajibu.png
+    - assets/dict/wakili.png
+    - assets/dict/wakurugenzi.png
+    - assets/dict/wakuu.png
+    - assets/dict/walezi.png
+    - assets/dict/walimu.png
+    - assets/dict/walinzi.png
     - assets/dict/walk.png
     - assets/dict/walking.png
     - assets/dict/wall.png
-    - assets/dict/wallaby.png
     - assets/dict/wallet.png
-    - assets/dict/walrus.png
-    - assets/dict/war.png
+    - assets/dict/wanafunzi.png
+    - assets/dict/wanasheria.png
+    - assets/dict/wanaume.png
+    - assets/dict/wanawake.png
+    - assets/dict/want.png
+    - assets/dict/wanyama.png
     - assets/dict/warm.png
+    - assets/dict/warning.png
     - assets/dict/wash.png
-    - assets/dict/washer.png
     - assets/dict/wasp.png
     - assets/dict/watch.png
-    - assets/dict/water.png
-    - assets/dict/waterfall.png
-    - assets/dict/watermelon.png
+    - assets/dict/wave.png
     - assets/dict/wax.png
-    - assets/dict/web.png
-    - assets/dict/well.png
+    - assets/dict/way.png
+    - assets/dict/weight.png
     - assets/dict/whale.png
-    - assets/dict/wheelbarrow.png
-    - assets/dict/whistle.png
+    - assets/dict/wheat.png
     - assets/dict/white.png
+    - assets/dict/wide.png
     - assets/dict/wife.png
+    - assets/dict/win.png
     - assets/dict/window.png
-    - assets/dict/windows.png
-    - assets/dict/winner.png
     - assets/dict/winter.png
     - assets/dict/wire.png
-    - assets/dict/wok.png
-    - assets/dict/wolf.png
-    - assets/dict/wolverine.png
-    - assets/dict/woman.png
-    - assets/dict/woodpecker.png
-    - assets/dict/workout.png
+    - assets/dict/women.png
+    - assets/dict/wonder.png
+    - assets/dict/wood.png
     - assets/dict/world.png
+    - assets/dict/worm.png
+    - assets/dict/worship.png
     - assets/dict/wrist.png
-    - assets/dict/xray.png
     - assets/dict/xylophone.png
-    - assets/dict/yacht.png
-    - assets/dict/yak.png
-    - assets/dict/yam.png
-    - assets/dict/yams.png
+    - assets/dict/yadi.png
     - assets/dict/yard.png
-    - assets/dict/yarn.png
-    - assets/dict/yawn.png
-    - assets/dict/year.png
     - assets/dict/yell.png
     - assets/dict/yellow.png
-    - assets/dict/yes.png
     - assets/dict/yesterday.png
-    - assets/dict/yogurt.png
-    - assets/dict/yolk.png
-    - assets/dict/you.png
     - assets/dict/young.png
     - assets/dict/youth.png
+    - assets/dict/yowe.png
+    - assets/dict/yeye.png
+    - assets/dict/yeyote.png
+    - assets/dict/yote.png
+    - assets/dict/zahanati.png
+    - assets/dict/zaidi.png
+    - assets/dict/zana.png
     - assets/dict/zebra.png
-    - assets/dict/zebu.png
     - assets/dict/zero.png
-    - assets/dict/zigzag.png
-    - assets/dict/zip.png
-    - assets/dict/zodiac.png
-    - assets/dict/zoo.png
-    - assets/dict/zucchini.png
+    - assets/dict/ziada.png
+    - assets/dict/zoezi.png
+    - assets/dict/A.png
+    - assets/dict/B.png
+    - assets/dict/C.png
+    - assets/dict/D.png
+    - assets/dict/E.png
+    - assets/dict/F.png
+    - assets/dict/G.png
+    - assets/dict/H.png
+    - assets/dict/I.png
+    - assets/dict/J.png
+    - assets/dict/K.png
+    - assets/dict/L.png
+    - assets/dict/M.png
+    - assets/dict/N.png
+    - assets/dict/O.png
+    - assets/dict/P.png
+    - assets/dict/R.png
+    - assets/dict/S.png
+    - assets/dict/T.png
+    - assets/dict/U.png
+    - assets/dict/V.png
+    - assets/dict/W.png
+    - assets/dict/Y.png
+    - assets/dict/Z.png
+    - assets/dict/lowercase_a.png
+    - assets/dict/lowercase_b.png
+    - assets/dict/lowercase_c.png
+    - assets/dict/lowercase_d.png
+    - assets/dict/lowercase_e.png
+    - assets/dict/lowercase_f.png
+    - assets/dict/lowercase_g.png
+    - assets/dict/lowercase_h.png
+    - assets/dict/lowercase_i.png
+    - assets/dict/lowercase_j.png
+    - assets/dict/lowercase_k.png
+    - assets/dict/lowercase_l.png
+    - assets/dict/lowercase_m.png
+    - assets/dict/lowercase_n.png
+    - assets/dict/lowercase_o.png
+    - assets/dict/lowercase_p.png
+    - assets/dict/lowercase_r.png
+    - assets/dict/lowercase_s.png
+    - assets/dict/lowercase_t.png
+    - assets/dict/lowercase_u.png
+    - assets/dict/lowercase_v.png
+    - assets/dict/lowercase_w.png
+    - assets/dict/lowercase_y.png
+    - assets/dict/lowercase_z.png
+    - assets/dict/a.ogg
+    - assets/dict/abiria.ogg
+    - assets/dict/abudu.ogg
+    - assets/dict/achari.ogg
+    - assets/dict/adhabu.ogg
+    - assets/dict/adhibu.ogg
+    - assets/dict/adui.ogg
+    - assets/dict/afiki.ogg
+    - assets/dict/afya.ogg
+    - assets/dict/ahali.ogg
+    - assets/dict/ajabu.ogg
+    - assets/dict/ajali.ogg
+    - assets/dict/ajira.ogg
+    - assets/dict/akaunti.ogg
+    - assets/dict/akili.ogg
+    - assets/dict/alama.ogg
+    - assets/dict/albamu.ogg
+    - assets/dict/almasi.ogg
+    - assets/dict/askari.ogg
+    - assets/dict/asubuhi.ogg
+    - assets/dict/b.ogg
+    - assets/dict/baba.ogg
+    - assets/dict/babu.ogg
+    - assets/dict/bahari.ogg
+    - assets/dict/baharia.ogg
+    - assets/dict/bahasha.ogg
+    - assets/dict/baiskeli.ogg
+    - assets/dict/bajeti.ogg
+    - assets/dict/bakuli.ogg
+    - assets/dict/balagha.ogg
+    - assets/dict/balozi.ogg
+    - assets/dict/bambika.ogg
+    - assets/dict/bana.ogg
+    - assets/dict/bandari.ogg
+    - assets/dict/bangili.ogg
+    - assets/dict/bao.ogg
+    - assets/dict/baraka.ogg
+    - assets/dict/baridi.ogg
+    - assets/dict/basi.ogg
+    - assets/dict/bata.ogg
+    - assets/dict/bega.ogg
+    - assets/dict/behewa.ogg
+    - assets/dict/bendera.ogg
+    - assets/dict/benki.ogg
+    - assets/dict/bibi.ogg
+    - assets/dict/blanketi.ogg
+    - assets/dict/bluu.ogg
+    - assets/dict/bomba.ogg
+    - assets/dict/brashi.ogg
+    - assets/dict/buibui.ogg
+    - assets/dict/butu.ogg
+    - assets/dict/bwawa.ogg
+    - assets/dict/c.ogg
+    - assets/dict/chache.ogg
+    - assets/dict/chaguo.ogg
+    - assets/dict/chai.ogg
+    - assets/dict/chaki.ogg
+    - assets/dict/chakula.ogg
+    - assets/dict/chama.ogg
+    - assets/dict/chanjo.ogg
+    - assets/dict/chanzo.ogg
+    - assets/dict/chapa.ogg
+    - assets/dict/chati.ogg
+    - assets/dict/chawa.ogg
+    - assets/dict/cheche.ogg
+    - assets/dict/cheki.ogg
+    - assets/dict/chembe.ogg
+    - assets/dict/chenza.ogg
+    - assets/dict/cheo.ogg
+    - assets/dict/chiriku.ogg
+    - assets/dict/chombo.ogg
+    - assets/dict/chui.ogg
+    - assets/dict/chuma.ogg
+    - assets/dict/chumvi.ogg
+    - assets/dict/chupa.ogg
+    - assets/dict/chupi.ogg
+    - assets/dict/chura.ogg
+    - assets/dict/d.ogg
+    - assets/dict/dada.ogg
+    - assets/dict/dagla.ogg
+    - assets/dict/daka.ogg
+    - assets/dict/dakika.ogg
+    - assets/dict/daktari.ogg
+    - assets/dict/damisi.ogg
+    - assets/dict/dampo.ogg
+    - assets/dict/damu.ogg
+    - assets/dict/darana.ogg
+    - assets/dict/darasa.ogg
+    - assets/dict/dawa.ogg
+    - assets/dict/dawati.ogg
+    - assets/dict/dazani.ogg
+    - assets/dict/deki.ogg
+    - assets/dict/demokrasia.ogg
+    - assets/dict/deni.ogg
+    - assets/dict/dereva.ogg
+    - assets/dict/dhahabu.ogg
+    - assets/dict/dhoruba.ogg
+    - assets/dict/dira.ogg
+    - assets/dict/dirisha.ogg
+    - assets/dict/dubu.ogg
+    - assets/dict/duma.ogg
+    - assets/dict/dunia.ogg
+    - assets/dict/e.ogg
+    - assets/dict/elfu.ogg
+    - assets/dict/elimu.ogg
+    - assets/dict/embe.ogg
+    - assets/dict/eropleni.ogg
+    - assets/dict/f.ogg
+    - assets/dict/fahali.ogg
+    - assets/dict/fainali.ogg
+    - assets/dict/falaki.ogg
+    - assets/dict/farakano.ogg
+    - assets/dict/farasi.ogg
+    - assets/dict/fasiri.ogg
+    - assets/dict/fedha.ogg
+    - assets/dict/fenesi.ogg
+    - assets/dict/feri.ogg
+    - assets/dict/fidia.ogg
+    - assets/dict/figo.ogg
+    - assets/dict/filimbi.ogg
+    - assets/dict/firauni.ogg
+    - assets/dict/fisi.ogg
+    - assets/dict/fizikia.ogg
+    - assets/dict/fomu.ogg
+    - assets/dict/fremu.ogg
+    - assets/dict/friji.ogg
+    - assets/dict/funga.ogg
+    - assets/dict/fungu.ogg
+    - assets/dict/funza.ogg
+    - assets/dict/furaha.ogg
+    - assets/dict/furushi.ogg
+    - assets/dict/g.ogg
+    - assets/dict/ganda.ogg
+    - assets/dict/gari.ogg
+    - assets/dict/gauni.ogg
+    - assets/dict/gavana.ogg
+    - assets/dict/gazeti.ogg
+    - assets/dict/gego.ogg
+    - assets/dict/geji.ogg
+    - assets/dict/ghairi.ogg
+    - assets/dict/ghala.ogg
+    - assets/dict/ghali.ogg
+    - assets/dict/gharama.ogg
+    - assets/dict/gharika.ogg
+    - assets/dict/ghashi.ogg
+    - assets/dict/gitaa.ogg
+    - assets/dict/glopu.ogg
+    - assets/dict/godoro.ogg
+    - assets/dict/gofu.ogg
+    - assets/dict/goli.ogg
+    - assets/dict/gome.ogg
+    - assets/dict/goti.ogg
+    - assets/dict/gundi.ogg
+    - assets/dict/h.ogg
+    - assets/dict/hadhi.ogg
+    - assets/dict/hadithi.ogg
+    - assets/dict/haja.ogg
+    - assets/dict/haki.ogg
+    - assets/dict/hakimu.ogg
+    - assets/dict/hamu.ogg
+    - assets/dict/handaki.ogg
+    - assets/dict/hanjamu.ogg
+    - assets/dict/haragwe.ogg
+    - assets/dict/haramia.ogg
+    - assets/dict/harimuni.ogg
+    - assets/dict/hasara.ogg
+    - assets/dict/hasira.ogg
+    - assets/dict/hata.ogg
+    - assets/dict/hatari.ogg
+    - assets/dict/hati.ogg
+    - assets/dict/hatia.ogg
+    - assets/dict/hatua.ogg
+    - assets/dict/hema.ogg
+    - assets/dict/hereni.ogg
+    - assets/dict/hofu.ogg
+    - assets/dict/hospitali.ogg
+    - assets/dict/hoteli.ogg
+    - assets/dict/huzuni.ogg
+    - assets/dict/i.ogg
+    - assets/dict/ibada.ogg
+    - assets/dict/idara.ogg
+    - assets/dict/idhini.ogg
+    - assets/dict/idhinisha.ogg
+    - assets/dict/ilani.ogg
+    - assets/dict/imani.ogg
+    - assets/dict/imara.ogg
+    - assets/dict/imarisha.ogg
+    - assets/dict/ini.ogg
+    - assets/dict/injili.ogg
+    - assets/dict/injini.ogg
+    - assets/dict/inzi.ogg
+    - assets/dict/ishi.ogg
+    - assets/dict/ishirini.ogg
+    - assets/dict/isimu.ogg
+    - assets/dict/itikadi.ogg
+    - assets/dict/j.ogg
+    - assets/dict/jagi.ogg
+    - assets/dict/jaja.ogg
+    - assets/dict/jaji.ogg
+    - assets/dict/jaketi.ogg
+    - assets/dict/jalada.ogg
+    - assets/dict/jamaa.ogg
+    - assets/dict/jambo.ogg
+    - assets/dict/jamhuri.ogg
+    - assets/dict/jamiana.ogg
+    - assets/dict/jamii.ogg
+    - assets/dict/jana.ogg
+    - assets/dict/janga.ogg
+    - assets/dict/jangili.ogg
+    - assets/dict/jangwa.ogg
+    - assets/dict/jani.ogg
+    - assets/dict/jarari.ogg
+    - assets/dict/jembe.ogg
+    - assets/dict/jengo.ogg
+    - assets/dict/jibini.ogg
+    - assets/dict/jicho.ogg
+    - assets/dict/jiko.ogg
+    - assets/dict/jikoni.ogg
+    - assets/dict/jino.ogg
+    - assets/dict/jioni.ogg
+    - assets/dict/jogoo.ogg
+    - assets/dict/jokofu.ogg
+    - assets/dict/jongoo.ogg
+    - assets/dict/joto.ogg
+    - assets/dict/jua.ogg
+    - assets/dict/k.ogg
+    - assets/dict/kaa.ogg
+    - assets/dict/kaakaa.ogg
+    - assets/dict/kaanga.ogg
+    - assets/dict/kabati.ogg
+    - assets/dict/kabichi.ogg
+    - assets/dict/kabidhi.ogg
+    - assets/dict/kabila.ogg
+    - assets/dict/kaboni.ogg
+    - assets/dict/kabwela.ogg
+    - assets/dict/kadha.ogg
+    - assets/dict/kadhaa.ogg
+    - assets/dict/kadi.ogg
+    - assets/dict/kahawa.ogg
+    - assets/dict/kahawia.ogg
+    - assets/dict/kaka.ogg
+    - assets/dict/kalamu.ogg
+    - assets/dict/kali.ogg
+    - assets/dict/kamanda.ogg
+    - assets/dict/kamati.ogg
+    - assets/dict/kamba.ogg
+    - assets/dict/kambi.ogg
+    - assets/dict/kamera.ogg
+    - assets/dict/kanzu.ogg
+    - assets/dict/karatasi.ogg
+    - assets/dict/karoti.ogg
+    - assets/dict/kasuku.ogg
+    - assets/dict/kata.ogg
+    - assets/dict/kenge.ogg
+    - assets/dict/kengele.ogg
+    - assets/dict/kiberiti.ogg
+    - assets/dict/kichwa.ogg
+    - assets/dict/kidole.ogg
+    - assets/dict/kifaru.ogg
+    - assets/dict/kifua.ogg
+    - assets/dict/kifungo.ogg
+    - assets/dict/kijani.ogg
+    - assets/dict/kijiko.ogg
+    - assets/dict/kijivu.ogg
+    - assets/dict/kikombe.ogg
+    - assets/dict/kilio.ogg
+    - assets/dict/kimbia.ogg
+    - assets/dict/kimbunga.ogg
+    - assets/dict/kinga.ogg
+    - assets/dict/kinywa.ogg
+    - assets/dict/kipande.ogg
+    - assets/dict/kipanya.ogg
+    - assets/dict/kipenyo.ogg
+    - assets/dict/kipepeo.ogg
+    - assets/dict/kipofu.ogg
+    - assets/dict/kisigino.ogg
+    - assets/dict/kisu.ogg
+    - assets/dict/kitanda.ogg
+    - assets/dict/kiti.ogg
+    - assets/dict/kiuno.ogg
+    - assets/dict/kivuli.ogg
+    - assets/dict/kiwiko.ogg
+    - assets/dict/kobe.ogg
+    - assets/dict/kofia.ogg
+    - assets/dict/komamanga.ogg
+    - assets/dict/kombe.ogg
+    - assets/dict/kona.ogg
+    - assets/dict/kondoo.ogg
+    - assets/dict/kope.ogg
+    - assets/dict/koroga.ogg
+    - assets/dict/korongo.ogg
+    - assets/dict/koti.ogg
+    - assets/dict/kozi.ogg
+    - assets/dict/kucheza.ogg
+    - assets/dict/kuchimba.ogg
+    - assets/dict/kuchoka.ogg
+    - assets/dict/kukimbia.ogg
+    - assets/dict/kuku.ogg
+    - assets/dict/kumwaga.ogg
+    - assets/dict/kunguru.ogg
+    - assets/dict/kuogelea.ogg
+    - assets/dict/kupigana.ogg
+    - assets/dict/kupika.ogg
+    - assets/dict/kupima.ogg
+    - assets/dict/kushughulikia.ogg
+    - assets/dict/kutembea.ogg
+    - assets/dict/kuziba.ogg
+    - assets/dict/l.ogg
+    - assets/dict/laana.ogg
+    - assets/dict/lango.ogg
+    - assets/dict/lawama.ogg
+    - assets/dict/lazima.ogg
+    - assets/dict/leja.ogg
+    - assets/dict/lengo.ogg
+    - assets/dict/lenzi.ogg
+    - assets/dict/leo.ogg
+    - assets/dict/leso.ogg
+    - assets/dict/ligi.ogg
+    - assets/dict/limau.ogg
+    - assets/dict/lori.ogg
+    - assets/dict/lozi.ogg
+    - assets/dict/m.ogg
+    - assets/dict/macho.ogg
+    - assets/dict/machozi.ogg
+    - assets/dict/machungwa.ogg
+    - assets/dict/madaktari.ogg
+    - assets/dict/madarasa.ogg
+    - assets/dict/madereva.ogg
+    - assets/dict/madini.ogg
+    - assets/dict/madiwani.ogg
+    - assets/dict/maembe.ogg
+    - assets/dict/mafunzo.ogg
+    - assets/dict/mafuta.ogg
+    - assets/dict/magamba.ogg
+    - assets/dict/magari.ogg
+    - assets/dict/magodoro.ogg
+    - assets/dict/magonjwa.ogg
+    - assets/dict/magoti.ogg
+    - assets/dict/maharagwe.ogg
+    - assets/dict/malaika.ogg
+    - assets/dict/mama.ogg
+    - assets/dict/mamba.ogg
+    - assets/dict/mapazia.ogg
+    - assets/dict/marimba.ogg
+    - assets/dict/mashua.ogg
+    - assets/dict/mawingu.ogg
+    - assets/dict/maziwa.ogg
+    - assets/dict/mazoezi.ogg
+    - assets/dict/mbao.ogg
+    - assets/dict/mbayuwayu.ogg
+    - assets/dict/mbu.ogg
+    - assets/dict/mbuni.ogg
+    - assets/dict/mbuzi.ogg
+    - assets/dict/mbwa.ogg
+    - assets/dict/mbweha.ogg
+    - assets/dict/mchana.ogg
+    - assets/dict/mchanga.ogg
+    - assets/dict/mchele.ogg
+    - assets/dict/mchwa.ogg
+    - assets/dict/mdogo.ogg
+    - assets/dict/mende.ogg
+    - assets/dict/meno.ogg
+    - assets/dict/mfuko.ogg
+    - assets/dict/mgongo.ogg
+    - assets/dict/mguu.ogg
+    - assets/dict/mhudumu.ogg
+    - assets/dict/midomo.ogg
+    - assets/dict/mifupa.ogg
+    - assets/dict/mjomba.ogg
+    - assets/dict/mjukuu.ogg
+    - assets/dict/mjusi.ogg
+    - assets/dict/mkate.ogg
+    - assets/dict/mkeka.ogg
+    - assets/dict/mkoba.ogg
+    - assets/dict/mkokoteni.ogg
+    - assets/dict/mkono.ogg
+    - assets/dict/mkufu.ogg
+    - assets/dict/mkuki.ogg
+    - assets/dict/mkunga.ogg
+    - assets/dict/mlango.ogg
+    - assets/dict/mlima.ogg
+    - assets/dict/mmea.ogg
+    - assets/dict/moto.ogg
+    - assets/dict/moyo.ogg
+    - assets/dict/mpira.ogg
+    - assets/dict/mpishi.ogg
+    - assets/dict/mraba.ogg
+    - assets/dict/mrija.ogg
+    - assets/dict/mshale.ogg
+    - assets/dict/mshumaa.ogg
+    - assets/dict/msisimko.ogg
+    - assets/dict/mstatili.ogg
+    - assets/dict/msumari.ogg
+    - assets/dict/msumeno.ogg
+    - assets/dict/mtama.ogg
+    - assets/dict/mtego.ogg
+    - assets/dict/mti.ogg
+    - assets/dict/mto.ogg
+    - assets/dict/mtoto.ogg
+    - assets/dict/muhindi.ogg
+    - assets/dict/mundu.ogg
+    - assets/dict/muuguzi.ogg
+    - assets/dict/mviringo.ogg
+    - assets/dict/mvua.ogg
+    - assets/dict/mvuke.ogg
+    - assets/dict/mwamba.ogg
+    - assets/dict/mwamvuli.ogg
+    - assets/dict/mwanasesere.ogg
+    - assets/dict/mwanzi.ogg
+    - assets/dict/mwezi.ogg
+    - assets/dict/mwiko.ogg
+    - assets/dict/n.ogg
+    - assets/dict/nafasi.ogg
+    - assets/dict/nafuu.ogg
+    - assets/dict/nakala.ogg
+    - assets/dict/nanga.ogg
+    - assets/dict/ndege.ogg
+    - assets/dict/ndizi.ogg
+    - assets/dict/ndoano.ogg
+    - assets/dict/ndogo.ogg
+    - assets/dict/ndoo.ogg
+    - assets/dict/ndovu.ogg
+    - assets/dict/nene.ogg
+    - assets/dict/ngamia.ogg
+    - assets/dict/ngazi.ogg
+    - assets/dict/ngoma.ogg
+    - assets/dict/ngome.ogg
+    - assets/dict/ngumi.ogg
+    - assets/dict/nguo.ogg
+    - assets/dict/nguvu.ogg
+    - assets/dict/njaa.ogg
+    - assets/dict/njano.ogg
+    - assets/dict/nje.ogg
+    - assets/dict/njegere.ogg
+    - assets/dict/njia.ogg
+    - assets/dict/njiwa.ogg
+    - assets/dict/nta.ogg
+    - assets/dict/nyama.ogg
+    - assets/dict/nyanja.ogg
+    - assets/dict/nyanya.ogg
+    - assets/dict/nyasi.ogg
+    - assets/dict/nyati.ogg
+    - assets/dict/nyekundu.ogg
+    - assets/dict/nyeupe.ogg
+    - assets/dict/nyeusi.ogg
+    - assets/dict/nyoka.ogg
+    - assets/dict/nyota.ogg
+    - assets/dict/nyuki.ogg
+    - assets/dict/nyundo.ogg
+    - assets/dict/nywele.ogg
+    - assets/dict/o.ogg
+    - assets/dict/ofisa.ogg
+    - assets/dict/oka.ogg
+    - assets/dict/oktoba.ogg
+    - assets/dict/ombi.ogg
+    - assets/dict/ongeza.ogg
+    - assets/dict/p.ogg
+    - assets/dict/paa.ogg
+    - assets/dict/paka.ogg
+    - assets/dict/pakiti.ogg
+    - assets/dict/pamba.ogg
+    - assets/dict/pana.ogg
+    - assets/dict/pango.ogg
+    - assets/dict/panya.ogg
+    - assets/dict/papa.ogg
+    - assets/dict/pato.ogg
+    - assets/dict/pedi.ogg
+    - assets/dict/pembe.ogg
+    - assets/dict/penseli.ogg
+    - assets/dict/pete.ogg
+    - assets/dict/picha.ogg
+    - assets/dict/pikipiki.ogg
+    - assets/dict/pipi.ogg
+    - assets/dict/pointi.ogg
+    - assets/dict/pole.ogg
+    - assets/dict/polisi.ogg
+    - assets/dict/popo.ogg
+    - assets/dict/povu.ogg
+    - assets/dict/pua.ogg
+    - assets/dict/punda.ogg
+    - assets/dict/pundamilia.ogg
+    - assets/dict/pwani.ogg
+    - assets/dict/r.ogg
+    - assets/dict/rafiki.ogg
+    - assets/dict/rai.ogg
+    - assets/dict/rais.ogg
+    - assets/dict/redio.ogg
+    - assets/dict/rekodi.ogg
+    - assets/dict/reli.ogg
+    - assets/dict/riadha.ogg
+    - assets/dict/riwaya.ogg
+    - assets/dict/robo.ogg
+    - assets/dict/rubani.ogg
+    - assets/dict/ruka.ogg
+    - assets/dict/s.ogg
+    - assets/dict/saa.ogg
+    - assets/dict/saba.ogg
+    - assets/dict/sabini.ogg
+    - assets/dict/sabuni.ogg
+    - assets/dict/safi.ogg
+    - assets/dict/safisha.ogg
+    - assets/dict/safu.ogg
+    - assets/dict/sahani.ogg
+    - assets/dict/sakafu.ogg
+    - assets/dict/samaki.ogg
+    - assets/dict/sanduku.ogg
+    - assets/dict/sarafu.ogg
+    - assets/dict/sayansi.ogg
+    - assets/dict/sehemu.ogg
+    - assets/dict/sekta.ogg
+    - assets/dict/septemba.ogg
+    - assets/dict/seremala.ogg
+    - assets/dict/serikali.ogg
+    - assets/dict/shamba.ogg
+    - assets/dict/shati.ogg
+    - assets/dict/shingo.ogg
+    - assets/dict/shule.ogg
+    - assets/dict/sifuri.ogg
+    - assets/dict/sikio.ogg
+    - assets/dict/simba.ogg
+    - assets/dict/sindano.ogg
+    - assets/dict/sofa.ogg
+    - assets/dict/soka.ogg
+    - assets/dict/sokwe.ogg
+    - assets/dict/sufuria.ogg
+    - assets/dict/sukari.ogg
+    - assets/dict/sumaku.ogg
+    - assets/dict/sungura.ogg
+    - assets/dict/suruali.ogg
+    - assets/dict/t.ogg
+    - assets/dict/taa.ogg
+    - assets/dict/taaluma.ogg
+    - assets/dict/taarifa.ogg
+    - assets/dict/tai.ogg
+    - assets/dict/taji.ogg
+    - assets/dict/tajiri.ogg
+    - assets/dict/taka.ogg
+    - assets/dict/takwimu.ogg
+    - assets/dict/tamasha.ogg
+    - assets/dict/tambaa.ogg
+    - assets/dict/tamko.ogg
+    - assets/dict/tano.ogg
+    - assets/dict/taratibu.ogg
+    - assets/dict/tarumbeta.ogg
+    - assets/dict/taswira.ogg
+    - assets/dict/tatu.ogg
+    - assets/dict/tausi.ogg
+    - assets/dict/tawi.ogg
+    - assets/dict/taya.ogg
+    - assets/dict/televisheni.ogg
+    - assets/dict/tembea.ogg
+    - assets/dict/tembo.ogg
+    - assets/dict/theluji.ogg
+    - assets/dict/tofali.ogg
+    - assets/dict/tulivu.ogg
+    - assets/dict/tumbo.ogg
+    - assets/dict/twiga.ogg
+    - assets/dict/u.ogg
+    - assets/dict/ua.ogg
+    - assets/dict/uchafu.ogg
+    - assets/dict/uchaguzi.ogg
+    - assets/dict/uchovu.ogg
+    - assets/dict/ufa.ogg
+    - assets/dict/ufunguo.ogg
+    - assets/dict/ugonjwa.ogg
+    - assets/dict/uhai.ogg
+    - assets/dict/ujana.ogg
+    - assets/dict/ujasiri.ogg
+    - assets/dict/uji.ogg
+    - assets/dict/ukaguzi.ogg
+    - assets/dict/ukanda.ogg
+    - assets/dict/ukuaji.ogg
+    - assets/dict/ukuta.ogg
+    - assets/dict/ulimi.ogg
+    - assets/dict/ulimwengu.ogg
+    - assets/dict/ulinzi.ogg
+    - assets/dict/uma.ogg
+    - assets/dict/umeme.ogg
+    - assets/dict/upendo.ogg
+    - assets/dict/upinde.ogg
+    - assets/dict/usiku.ogg
+    - assets/dict/usingizi.ogg
+    - assets/dict/uso.ogg
+    - assets/dict/uvuvi.ogg
+    - assets/dict/uzito.ogg
+    - assets/dict/v.ogg
+    - assets/dict/viatu.ogg
+    - assets/dict/viazi.ogg
+    - assets/dict/vifo.ogg
+    - assets/dict/vikombe.ogg
+    - assets/dict/vikundi.ogg
+    - assets/dict/vikwazo.ogg
+    - assets/dict/vilema.ogg
+    - assets/dict/vipimo.ogg
+    - assets/dict/vipuli.ogg
+    - assets/dict/virusi.ogg
+    - assets/dict/visiwa.ogg
+    - assets/dict/vita.ogg
+    - assets/dict/vitabu.ogg
+    - assets/dict/viti.ogg
+    - assets/dict/vuguvugu.ogg
+    - assets/dict/vyakula.ogg
+    - assets/dict/vyama.ogg
+    - assets/dict/w.ogg
+    - assets/dict/waajiri.ogg
+    - assets/dict/waandishi.ogg
+    - assets/dict/wachezaji.ogg
+    - assets/dict/wafu.ogg
+    - assets/dict/wajibu.ogg
+    - assets/dict/wakili.ogg
+    - assets/dict/wakurugenzi.ogg
+    - assets/dict/wakuu.ogg
+    - assets/dict/walezi.ogg
+    - assets/dict/walimu.ogg
+    - assets/dict/walinzi.ogg
+    - assets/dict/wamechoka.ogg
+    - assets/dict/wanafunzi.ogg
+    - assets/dict/wanasheria.ogg
+    - assets/dict/wanaume.ogg
+    - assets/dict/wanawake.ogg
+    - assets/dict/wanyama.ogg
+    - assets/dict/waya.ogg
+    - assets/dict/wazi.ogg
+    - assets/dict/wimbi.ogg
+    - assets/dict/y.ogg
+    - assets/dict/yadi.ogg
+    - assets/dict/yai.ogg
+    - assets/dict/yowe.ogg
+    - assets/dict/z.ogg
+    - assets/dict/zabibu.ogg
+    - assets/dict/zahanati.ogg
+    - assets/dict/zaidi.ogg
+    - assets/dict/zambarau.ogg
+    - assets/dict/zana.ogg
+    - assets/dict/zawadi.ogg
+    - assets/dict/ziada.ogg
+    - assets/dict/zoezi.ogg
     - assets/star_music.mp3
     - assets/stickers/pig/pig.png
     - assets/stickers/pig/8.png
@@ -1255,6 +2068,72 @@ flutter:
     - assets/stickers/monkey/2.png
     - assets/stickers/monkey/3.png
     - assets/stickers/monkey/1.png
+    - assets/stickers/doggie/doggie.png
+    - assets/stickers/doggie/8.png
+    - assets/stickers/doggie/9.png
+    - assets/stickers/doggie/14.png
+    - assets/stickers/doggie/15.png
+    - assets/stickers/doggie/16.png
+    - assets/stickers/doggie/12.png
+    - assets/stickers/doggie/13.png
+    - assets/stickers/doggie/11.png
+    - assets/stickers/doggie/10.png
+    - assets/stickers/doggie/4.png
+    - assets/stickers/doggie/5.png
+    - assets/stickers/doggie/7.png
+    - assets/stickers/doggie/6.png
+    - assets/stickers/doggie/2.png
+    - assets/stickers/doggie/3.png
+    - assets/stickers/doggie/1.png
+    - assets/stickers/carpie/carpie.png
+    - assets/stickers/carpie/8.png
+    - assets/stickers/carpie/9.png
+    - assets/stickers/carpie/14.png
+    - assets/stickers/carpie/15.png
+    - assets/stickers/carpie/16.png
+    - assets/stickers/carpie/12.png
+    - assets/stickers/carpie/13.png
+    - assets/stickers/carpie/11.png
+    - assets/stickers/carpie/10.png
+    - assets/stickers/carpie/4.png
+    - assets/stickers/carpie/5.png
+    - assets/stickers/carpie/7.png
+    - assets/stickers/carpie/6.png
+    - assets/stickers/carpie/2.png
+    - assets/stickers/carpie/3.png
+    - assets/stickers/carpie/1.png
+    - assets/stickers/emoguy/happy.png
+    - assets/stickers/emoguy/angry.gif
+    - assets/stickers/emoguy/cold.gif
+    - assets/stickers/emoguy/cry.gif
+    - assets/stickers/emoguy/happy.gif
+    - assets/stickers/emoguy/irritated.gif
+    - assets/stickers/emoguy/laughing.gif
+    - assets/stickers/emoguy/love.gif
+    - assets/stickers/emoguy/playing.gif
+    - assets/stickers/emoguy/relaxed.gif
+    - assets/stickers/emoguy/sad.gif
+    - assets/stickers/emoguy/scared.gif
+    - assets/stickers/emoguy/sleeping.gif
+    - assets/stickers/emoguy/thumbsdown.gif
+    - assets/stickers/emoguy/thumbup.gif
+    - assets/stickers/emoguy/workingout.gif
+    - assets/stickers/emoguy/yummy.gif
+
+
+    - assets/category/Animal.svg
+    - assets/category/apple.svg
+    - assets/category/fox.svg
+    - assets/category/home_stuff.svg
+    - assets/category/ice_cream.svg
+    - assets/category/lion.svg
+    - assets/category/monkey.svg
+    - assets/category/pen.svg
+    - assets/category/pencil.svg
+    - assets/category/rabbit.svg
+    - assets/category/truck.svg
+    - assets/category/vehicle.svg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
