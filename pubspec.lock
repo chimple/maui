@@ -214,6 +214,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_svg:
+    dependency: "direct main"
+    description:
+      name: flutter_svg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -408,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4"
   path_provider:
     dependency: "direct main"
     description:
@@ -658,6 +672,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.7"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   yaml:
     dependency: transitive
     description:
@@ -667,4 +688,4 @@ packages:
     version: "2.1.13"
 sdks:
   dart: ">=2.0.0-dev.55.0 <=2.0.0-dev.58.0.flutter-f981f09760"
-  flutter: ">=0.2.5 <2.0.0"
+  flutter: ">=0.5.1 <2.0.0"
