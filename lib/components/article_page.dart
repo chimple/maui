@@ -1,3 +1,4 @@
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
 class ArticlePage extends StatefulWidget {
@@ -59,7 +60,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   color: Colors.red,
                   child: FittedBox(
                     child: new Image.asset(
-                      null,
+                      widget.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -98,10 +99,8 @@ class _ArticlePageState extends State<ArticlePage> {
                   width: 500.0,
                   height: 126.0,
                   color: Colors.grey,
-                  child: new Text(
-                    null,
-                    style:
-                        TextStyle(fontSize: 40.0, fontStyle: FontStyle.italic),
+                  child: new Markdown(
+                    data: widget.text,
                   ),
                 ),
               ),
