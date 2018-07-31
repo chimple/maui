@@ -18,14 +18,15 @@ class _TopicScreenState extends State<TopicScreen> {
   List<Article> _articles;
   List<Widget> _pageViewWidgets = [];
   bool _isLoading = true;
-  int _currentIndex = 0;
   bool _isDataAvailable = false;
+  PageController pageController = new PageController(initialPage: 0);
 
   void _initTopic() async {
     new ArticleRepo()
         .getArticlesByTopicId(widget.topicId)
         .then((articles) async {
       setState(() {
+        articles.sort((a, b) => a.order.compareTo(b.order));
         _articles = articles;
         _isLoading = false;
         _articles.length != 0
@@ -59,122 +60,89 @@ class _TopicScreenState extends State<TopicScreen> {
   }
 
   _forwardButtonBehaviour() {
-    if (_currentIndex < (_articles.length - 1)) {
-      setState(() {
-        _currentIndex += 1;
-      });
-    } else {
-      print("curren index is at maximum");
-    }
+    pageController.nextPage(
+        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
 
   _backwardButtonBehaviour() {
-    if (_currentIndex > 0) {
-      setState(() {
-        _currentIndex -= 1;
-      });
-    } else {
-      print("current index is at minimum");
-    }
+    pageController.previousPage(
+        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
 
   @override
   Widget build(BuildContext context) {
-    print("<<<<<<<<<<<<<<<$_articles>>>>>>>>>>>>>>>>>>>");
     if (_isLoading == true) {
       return new CircularProgressIndicator();
     } else {
       return Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.topicName),
-        centerTitle: true,
-        backgroundColor: Colors.teal[300],
-        elevation: 5.0,
-        actions: <Widget>[
-          new IconButton(
-            onPressed: () => print("object"),
-            icon: new Icon(Icons.local_activity),
+          appBar: new AppBar(
+            title: new Text(widget.topicName),
+            centerTitle: true,
+            backgroundColor: Colors.teal[300],
+            elevation: 5.0,
+            actions: <Widget>[
+              new IconButton(
+                onPressed: () => print("object"),
+                icon: new Icon(Icons.local_activity),
+              ),
+              new IconButton(
+                onPressed: () => print("object"),
+                icon: new Icon(Icons.games),
+              ),
+              new IconButton(
+                onPressed: () => print("object"),
+                icon: new Icon(Icons.find_replace),
+              )
+            ],
           ),
-          new IconButton(
-            onPressed: () => print("object"),
-            icon: new Icon(Icons.games),
-          ),
-          new IconButton(
-            onPressed: () => print("object"),
-            icon: new Icon(Icons.find_replace),
-          )
-        ],
-      ),
-      body: new PageView(
-            scrollDirection: Axis.horizontal,
-            children: _createPageViewWidgets(context),
-          ),
-          // new Expanded(
-          //   flex: 1,
-          //   child: new IconButton(
-          //     onPressed: () => _backwardButtonBehaviour(),
-          //     icon: new Icon(Icons.arrow_left),
-          //     iconSize: 50.0,
-          //   ),
-          // ),
-
-          // (_isDataAvailable == false && _isLoading)
-          //     ? new Expanded(
-          //         flex: 16,
-          //         child: new CircularProgressIndicator(),
-          //       )
-          //     : ((_isDataAvailable == false && _isLoading == false)
-          //         ? new Expanded(
-          //             flex: 16,
-          //             child: new Center(
-          //                 child: new Text(
-          //               "no data",
-          //               style:
-          //                   new TextStyle(fontSize: 40.0, color: Colors.black),
-          //             )),
-          //           )
-          //         : new Expanded(
-          //             flex: 16,
-          //             child: new ArticlePage(
-          //               topicId: widget.topicId,
-          //               articleId: _articles[_currentIndex].id,
-          //               name: _articles[_currentIndex].name,
-          //               audio: _articles[_currentIndex].audio,
-          //               video: _articles[_currentIndex].video,
-          //               text: _articles[_currentIndex].text,
-          //               image: _articles[_currentIndex].image,
-          //               order: _articles[_currentIndex].order,
-          //             ),
-          //           )),
-
-          // // _isLoading == false
-          // //     ? new Expanded(
-          // //         flex: 16,
-          // //         child: new ArticlePage(
-          // //           topicId: widget.topicId,
-          // //           articleId: _articles[_currentIndex].id,
-          // //           name: _articles[_currentIndex].name,
-          // //           audio: _articles[_currentIndex].audio,
-          // //           video: _articles[_currentIndex].video,
-          // //           text: _articles[_currentIndex].text,
-          // //           image: _articles[_currentIndex].image,
-          // //           order: _articles[_currentIndex].order,
-          // //         ),
-          // //       )
-          // //     : new Expanded(
-          // //         flex: 16,
-          // //         child: new CircularProgressIndicator(),
-          // //       ),
-          // new Expanded(
-          //   flex: 1,
-          //   child: new IconButton(
-          //     onPressed: () => _forwardButtonBehaviour(),
-          //     icon: new Icon(Icons.arrow_right),
-          //     iconSize: 50.0,
-          //   ),
-          // )
-        );
+          body: _isDataAvailable == false
+              ? new Container(
+                  child: new Center(
+                                      child: new Text(
+                      "no data",
+                      style: new TextStyle(
+                          fontSize: 50.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+              : new Stack(
+                  children: <Widget>[
+                    new PageView(
+                      controller: pageController,
+                      scrollDirection: Axis.horizontal,
+                      children: _createPageViewWidgets(context),
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Expanded(
+                          flex: 2,
+                          child: new IconButton(
+                            onPressed: () => _backwardButtonBehaviour(),
+                            icon: new Icon(Icons.arrow_left),
+                            iconSize: 50.0,
+                            disabledColor: Colors.grey,
+                            splashColor: Colors.green,
+                            highlightColor: Colors.white,
+                          ),
+                        ),
+                        new Expanded(flex: 10, child: new Container()),
+                        new Expanded(
+                          flex: 2,
+                          child: new IconButton(
+                            onPressed: () => _forwardButtonBehaviour(),
+                            icon: new Icon(Icons.arrow_right),
+                            iconSize: 50.0,
+                            disabledColor: Colors.grey,
+                            splashColor: Colors.green,
+                            highlightColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ));
     }
-    
   }
 }
