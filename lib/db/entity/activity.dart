@@ -2,15 +2,15 @@ class Activity {
   static const table = 'activity';
   static const idCol = 'id';
   static const topicIdCol = 'topicId';
-  static const orderCol = 'order';
   static const textCol = 'text';
-  static const stickerPackCol = 'sticker_pack';
+  static const stickerPackCol = 'stickerPack';
+  static const orderCol = 'order';
 
   String id;
   String topicId;
-  int order;
   String text;
   String stickerPack;
+  int order;
 
   Activity({this.id, this.topicId, this.order, this.text, this.stickerPack});
 
@@ -53,6 +53,6 @@ class Activity {
 
   @override
   String toString() {
-    return 'Topic{id: $id, topicId: $topicId, order: $order, stickerPack: $stickerPack}';
+    return 'Activity{id: $id, topicId: $topicId, order: $order, stickerPack: $stickerPack}';
   }
 }

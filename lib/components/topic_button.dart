@@ -33,29 +33,33 @@ class TopicButton extends StatelessWidget {
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                  image.endsWith(".svg")
+                  image == null
                       ? new Expanded(
-                          child: new Container(
-                            color: Colors.red,
-                            child: new AspectRatio(
-                              aspectRatio: 2.0,
-                              child: new SvgPicture.asset(
-                                image,
-                                allowDrawingOutsideViewBox: false,
+                          child: Container(color: Colors.red),
+                        )
+                      : image.endsWith(".svg")
+                          ? new Expanded(
+                              child: new Container(
+                                color: Colors.red,
+                                child: new AspectRatio(
+                                  aspectRatio: 2.0,
+                                  child: new SvgPicture.asset(
+                                    image,
+                                    allowDrawingOutsideViewBox: false,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : new Expanded(
+                              child: Container(
+                                decoration: new BoxDecoration(
+                                    image: new DecorationImage(
+                                      image: new AssetImage(image),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    color: Colors.red),
                               ),
                             ),
-                          ),
-                        )
-                      : new Expanded(
-                          child: Container(
-                            decoration: new BoxDecoration(
-                                image: new DecorationImage(
-                                  image: new AssetImage(image),
-                                  fit: BoxFit.cover,
-                                ),
-                                color: Colors.red),
-                          ),
-                        ),
                   Container(
                     child: new Text(
                       text,
