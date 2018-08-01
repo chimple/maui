@@ -45,6 +45,7 @@ class Loca {
   String get tables => Intl.message('Tables', name: 'tables');
   String get identify => Intl.message('identify', name: 'identify');
   String get hint => Intl.message('Type image', name: 'hint');
+  String get no_data => Intl.message('No Data', name: 'No Data');
   String get picture_sentence =>
       Intl.message('Picture Sentence', name: 'picture_sentence');
   String get fill_number => Intl.message('Fill Number', name: 'fill_number');
