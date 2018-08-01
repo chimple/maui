@@ -30,10 +30,11 @@ class RelatedTopicDao {
       't.${Topic.idCol}',
       't.${Topic.nameCol}',
       't.${Topic.imageCol}',
-      't.${Topic.colorCol}'
+      //  't.${Topic.colorCol}'
     ], where: '''
-t.${Topic.idCol} != ? 
-AND (r.${RelatedTopic.topicIdCol} = ? OR r.${RelatedTopic.relTopicIdCol} = ?)
+  (r.${RelatedTopic.relTopicIdCol} = ? AND r.${RelatedTopic.topicIdCol} = t.${Topic.idCol})
+  OR
+  (r.${RelatedTopic.topicIdCol} = ? AND r.${RelatedTopic.relTopicIdCol} = t.${Topic.idCol})
 ''', whereArgs: [
       topicId,
       topicId

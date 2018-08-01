@@ -25,21 +25,19 @@ class _RelatedPageState extends State<RelatedPage> {
     setState(() => _isLoading = true);
     topic = await RelatedTopicRepo.relTopicDao
         .getTopicsByRelatedTopicId(widget.topicId);
-    print(' data 456 is   $topic  ${topic.length}');
     setState(() => _isLoading = false);
   }
 
   Widget _buildTile(int index) {
     // print('topic tile ${topic[index].id} $index ${topic[index]}');
-    return new Card(
-        child: TopicButton(
+    return new TopicButton(
       text: topic[index].name,
       color: topic[index].color,
       image: topic[index].image,
       // onPress: () => Navigator.of(context).push(new MaterialPageRoute(
       //     builder: (BuildContext context) => new TopicScreen(
       //         topicId: topic[index].id, topicName: topic[index].name))),
-    ));
+    );
   }
 
   @override
