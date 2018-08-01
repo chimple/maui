@@ -23,7 +23,7 @@ class _TopicScreenState extends State<TopicScreen> {
   PageController pageController = new PageController(initialPage: 0);
 
   void _initTopic() async {
-    new ArticleRepo()
+    await new ArticleRepo()
         .getArticlesByTopicId(widget.topicId)
         .then((articles) async {
       setState(() {
