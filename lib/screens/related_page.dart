@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/repos/related_topic_repo.dart';
 import 'package:maui/db/entity/topic.dart';
 import 'package:maui/components/topic_button.dart';
+import 'package:maui/screens/topic_screen.dart';
 
 class RelatedPage extends StatefulWidget {
   RelatedPage({Key key, @required this.topicId}) : super(key: key);
@@ -34,9 +35,9 @@ class _RelatedPageState extends State<RelatedPage> {
       text: topic[index].name,
       color: topic[index].color,
       image: topic[index].image,
-      // onPress: () => Navigator.of(context).push(new MaterialPageRoute(
-      //     builder: (BuildContext context) => new TopicScreen(
-      //         topicId: topic[index].id, topicName: topic[index].name))),
+      onPress: () => Navigator.of(context).push(new MaterialPageRoute(
+          builder: (BuildContext context) => new TopicScreen(
+              topicId: topic[index].id, topicName: topic[index].name))),
     );
   }
 
