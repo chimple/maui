@@ -52,7 +52,7 @@ class _TopicScreenState extends State<TopicScreen> {
         _isBackwardDisable = false;
       });
     }
-    if (pageController.page + 1.0 == (_articles.length - 1).toDouble()) {
+    if ((pageController.page + 1.0).toInt() == (_articles.length - 1)) {
       setState(() {
         _isForwardDisable = true;
       });
@@ -62,7 +62,7 @@ class _TopicScreenState extends State<TopicScreen> {
   void _backwardButtonBehaviour() {
     pageController.previousPage(
         duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
-    if (pageController.page == (_articles.length - 1).toDouble()) {
+    if ((pageController.page).toInt() == (_articles.length - 1)) {
       setState(() {
         _isForwardDisable = false;
       });
