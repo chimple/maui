@@ -5,7 +5,8 @@ import 'package:maui/loca.dart';
 import '../repos/activity_repo.dart';
 
 class ActivityListView extends StatefulWidget {
-  const ActivityListView({Key key}) : super(key: key);
+  final String topicId;
+  const ActivityListView({Key key, this.topicId}) : super(key: key);
 
   @override
   _ActivityListViewState createState() {
@@ -20,8 +21,6 @@ class ActivityListView extends StatefulWidget {
 class _ActivityListViewState extends State<ActivityListView> {
   List<Activity> _dataActivity;
   bool _isLoading = true;
-  static const activityTopicId = 'lion';
-
   @override
   void initState() {
     super.initState();
@@ -30,8 +29,7 @@ class _ActivityListViewState extends State<ActivityListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _dataActivity =
-        await ActivityRepo().getActivitiesByTopicId(activityTopicId);
+    _dataActivity = await ActivityRepo().getActivitiesByTopicId(widget.topicId);
 
     print("object...category data is......$_dataActivity");
     print("data of the ${_dataActivity}");
