@@ -24,7 +24,7 @@ class TopicDao {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
         '${Topic.table} t, ${CategoryTopic.table} c',
-        columns: [Topic.idCol, Topic.nameCol, Topic.imageCol],
+        columns: [Topic.idCol, Topic.nameCol, Topic.imageCol,Topic.colorCol],
         where: '''
 t.${Topic.idCol} = c.${CategoryTopic.topicIdCol}
 AND c.${CategoryTopic.categoryIdCol} = ?
