@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/category.dart';
 import 'package:maui/db/entity/topic.dart';
+import 'package:maui/screens/topic_screen.dart';
 import '../components/topic_button.dart';
 import '../repos/topic_repo.dart';
 import '../repos/category_repo.dart';
@@ -17,10 +18,6 @@ class SubcategoryList extends StatefulWidget {
 
 class _SubcategoryListState extends State<SubcategoryList>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-
-  List<Topic> _topics;
-  List _listTopics = [];
   List<Category> _subcategories;
   bool _isLoading = true;
 
@@ -33,12 +30,10 @@ class _SubcategoryListState extends State<SubcategoryList>
   void _initData() async {
     setState(() => _isLoading = true);
     String id = widget.categoryId;
-
+    print(";;;;;id of the subcatgory isss....;:$id");
     _subcategories = await CategoryRepo().getSubcategoriesByCategoryId(id);
-    for (var i = 0; i < _subcategories.length; i++) {
-      _topics = await TopicRepo().getTopicsForCategoryId(_subcategories[i].id);
-      _listTopics.add(_topics);
-    }
+    print("subcategory of birds iss,,,....::$_subcategories");
+
     setState(() => _isLoading = false);
   }
 
@@ -82,23 +77,71 @@ class _SubcategoryListState extends State<SubcategoryList>
   }
 
   Widget _buildTabBarView(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
-
     return new TabBarView(
         children: List<Widget>.generate(_subcategories.length, (int index) {
-      return new GridView.count(
-        key: new Key('Category_page'),
-        primary: true,
-        crossAxisSpacing: 12.0,
-        mainAxisSpacing: 12.0,
-        crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-        children: new List.generate(_listTopics[index].length, (j) {
-          return TopicButton(
-              text: '${_listTopics[index][j].name}',
-              image: '${_listTopics[index][j].image}',
-              onPress: null);
-        }).toList(),
-      );
+      return new TabcontrollerView(id: _subcategories[index].id);
     }));
+  }
+}
+
+class TabcontrollerView extends StatefulWidget {
+  final String id;
+
+  const TabcontrollerView({Key key, this.id}) : super(key: key);
+  @override
+  TabcontrollerViewState createState() => new TabcontrollerViewState();
+}
+
+class TabcontrollerViewState extends State<TabcontrollerView> {
+  List<Topic> _topics;
+
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initData();
+  }
+
+  void _initData() async {
+    setState(() => _isLoading = true);
+    String id = widget.id;
+    print(";;;;;id of the subcatgory isss....;:$id");
+
+    _topics = await TopicRepo().getTopicsForCategoryId(id);
+    print("topic data to dilspy is....::$_topics");
+
+    setState(() => _isLoading = false);
+  }
+
+  Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    return new GridView.count(
+      key: new Key('Subcatgory_page'),
+      primary: true,
+      crossAxisSpacing: 12.0,
+      mainAxisSpacing: 12.0,
+      crossAxisCount: media.size.height > media.size.width ? 2 : 2,
+      children: new List.generate(_topics.length, (j) {
+        return TopicButton(
+            text: '${_topics[j].name}',
+            image: '${_topics[j].image}',
+            onPress: () {
+              Navigator.of(context).push(
+                    new MaterialPageRoute(
+                        builder: (BuildContext context) => new TopicScreen(
+                            topicName: _topics[j].name,
+                            topicId: _topics[j].id)),
+                  );
+            });
+      }).toList(),
+    );
   }
 }
