@@ -10,4 +10,8 @@ class ActivityRepo {
   Future<Activity> getActivity(String id) async {
     return activityDao.getActivity(id);
   }
+
+  Future<List<Activity>> getActivitiesByTopicId(String topicId) async {
+    return await activityDao.getActivitiesByTopicId(topicId);
+  }
 }
