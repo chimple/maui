@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
+import 'package:maui/screens/activity_list_view.dart';
+import 'package:maui/screens/related_page.dart';
 import 'package:maui/components/article_page.dart';
 
 class TopicScreen extends StatefulWidget {
