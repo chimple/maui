@@ -27,6 +27,7 @@ class CategoryDao {
       'c.${Category.idCol}',
       'c.${Category.nameCol}',
       'c.${Category.colorCol}',
+      'c.${Category.imageCol}',
     ], where: '''
 c.${Category.idCol} = s.${Subcategory.subcategoryIdCol} 
 AND s.${Subcategory.categoryIdCol} = ?
