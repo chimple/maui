@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/category.dart';
 import 'package:maui/db/entity/topic.dart';
+import 'package:maui/screens/topic_screen.dart';
+import '../components/topic_button.dart';
 import '../repos/topic_repo.dart';
 import '../repos/category_repo.dart';
 
@@ -14,8 +16,8 @@ class SubcategoryList extends StatefulWidget {
   _SubcategoryListState createState() => new _SubcategoryListState();
 }
 
-class _SubcategoryListState extends State<SubcategoryList> {
-  List<Topic> _topics;
+class _SubcategoryListState extends State<SubcategoryList>
+    with SingleTickerProviderStateMixin {
   List<Category> _subcategories;
   bool _isLoading = true;
 
@@ -28,20 +30,14 @@ class _SubcategoryListState extends State<SubcategoryList> {
   void _initData() async {
     setState(() => _isLoading = true);
     String id = widget.categoryId;
-    String idname = widget.categoryName;
-    print(".....id matching or not.::$id......::$idname");
+    print(";;;;;id of the subcatgory isss....;:$id");
     _subcategories = await CategoryRepo().getSubcategoriesByCategoryId(id);
-    _topics = await TopicRepo().getTopicsForCategoryId(_subcategories.first.id);
-
-    print(".......::database data is....${_topics.length}");
+    print("subcategory of birds iss,,,....::$_subcategories");
 
     setState(() => _isLoading = false);
   }
 
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
-    var size = media.size;
-    Orientation orientation = MediaQuery.of(context).orientation;
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -49,56 +45,103 @@ class _SubcategoryListState extends State<SubcategoryList> {
         child: new CircularProgressIndicator(),
       );
     }
-    return new Scaffold(
+
+    return new MaterialApp(
+        home: DefaultTabController(
+      length: _subcategories.length,
+      child: new Scaffold(
         appBar: new AppBar(
-          title: new Text("${widget.categoryName}"),
+          title: Row(children: [
+            new IconButton(
+              icon: new Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new Text("${widget.categoryName}")
+          ]),
+          bottom: new TabBar(
+            // controller: _tabController,
+            isScrollable: true,
+            tabs: List<Widget>.generate(_subcategories.length, (int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new Tab(text: "${_subcategories[index].name}"),
+              );
+            }).toList(),
+          ),
         ),
-        body: Stack(children: [
-          Container(
-              color: const Color(0xffFECE3D),
-              child: new GridView.count(
-                key: new Key('SubCategory_page'),
-                primary: true,
-//          padding: const EdgeInsets.all(.0),
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
-                crossAxisCount: media.size.height > media.size.width ? 2 : 2,
-                children: new List.generate(_topics.length, (i) {
-                  return new Container(
-                    height: 40.0,
-                    width: 40.0,
-                    color: Colors.redAccent,
-                    child: Center(child: new Text("${_topics[i].name}")),
-                  );
-                }),
-              )),
-          new SubcategoryScrollerView(),
-        ]));
+        body: _buildTabBarView(context),
+      ),
+    ));
+  }
+
+  Widget _buildTabBarView(BuildContext context) {
+    return new TabBarView(
+        children: List<Widget>.generate(_subcategories.length, (int index) {
+      return new TabcontrollerView(id: _subcategories[index].id);
+    }));
   }
 }
 
-class SubcategoryScrollerView extends StatelessWidget {
+class TabcontrollerView extends StatefulWidget {
+  final String id;
+
+  const TabcontrollerView({Key key, this.id}) : super(key: key);
   @override
+  TabcontrollerViewState createState() => new TabcontrollerViewState();
+}
+
+class TabcontrollerViewState extends State<TabcontrollerView> {
+  List<Topic> _topics;
+
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initData();
+  }
+
+  void _initData() async {
+    setState(() => _isLoading = true);
+    String id = widget.id;
+    print(";;;;;id of the subcatgory isss....;:$id");
+
+    _topics = await TopicRepo().getTopicsForCategoryId(id);
+    print("topic data to dilspy is....::$_topics");
+
+    setState(() => _isLoading = false);
+  }
+
   Widget build(BuildContext context) {
-    print("hello horizantal");
-    return new Container(
-      // margin: EdgeInsets.symmetric(vertical: 20.0),
-      height: 40.0,
-      child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: new List.generate(9, (index) {
-            return Container(
-              color: Colors.amber,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 90.0,
-                  color: Colors.blue,
-                  child: Center(child: new Text("$index")),
-                ),
-              ),
-            );
-          })),
+    MediaQueryData media = MediaQuery.of(context);
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    return new GridView.count(
+      key: new Key('Subcatgory_page'),
+      primary: true,
+      crossAxisSpacing: 12.0,
+      mainAxisSpacing: 12.0,
+      crossAxisCount: media.size.height > media.size.width ? 2 : 2,
+      children: new List.generate(_topics.length, (j) {
+        return TopicButton(
+            text: '${_topics[j].name}',
+            image: '${_topics[j].image}',
+            onPress: () {
+              Navigator.of(context).push(
+                    new MaterialPageRoute(
+                        builder: (BuildContext context) => new TopicScreen(
+                            topicName: _topics[j].name,
+                            topicId: _topics[j].id)),
+                  );
+            });
+      }).toList(),
     );
   }
 }
