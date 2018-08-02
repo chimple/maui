@@ -96,7 +96,14 @@ class _TopicScreenState extends State<TopicScreen> {
             elevation: 5.0,
             actions: <Widget>[
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return ActivityListView(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.local_activity),
               ),
               new IconButton(
@@ -104,7 +111,14 @@ class _TopicScreenState extends State<TopicScreen> {
                 icon: new Icon(Icons.games),
               ),
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return RelatedPage(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.find_replace),
               )
             ],
