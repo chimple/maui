@@ -11,9 +11,10 @@ class ActivityDao {
         columns: [
           Activity.idCol,
           Activity.topicIdCol,
-          Activity.orderCol,
+          Activity.serialCol,
           Activity.textCol,
-          Activity.stickerPackCol
+          Activity.stickerPackCol,
+          Activity.imageCol
         ],
         where: "${Activity.idCol} = ? ",
         whereArgs: [id]);
@@ -30,9 +31,8 @@ class ActivityDao {
         await db.query('${Activity.table} a,${Topic.table} t', columns: [
       'a.${Activity.idCol}',
       'a.${Activity.topicIdCol}',
-      'a.${Activity.orderCol}',
       'a.${Activity.textCol}',
-      'a.${Activity.stickerPackCol}',
+      'a.${Activity.stickerPackCol}' 'a.${Activity.imageCol}',
     ], where: '''
       a.${Activity.topicIdCol} = t.${Topic.idCol} 
       AND  a.${Activity.topicIdCol} = ?
