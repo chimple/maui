@@ -25,6 +25,7 @@ dependencies:
   intl: 0.15.6
   intl_translation: 0.16.8
   simple_permissions: 0.1.5
+  flutter_svg: ^0.5.1
   flores:
     git:
       https://github.com/chimple/flores.git
@@ -38,6 +39,7 @@ dev_dependencies:
   video_player: "^0.5.4"
   build_runner: ^0.7.6
   json_serializable: ^0.3.2
+  flutter_markdown: ^0.1.5
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
