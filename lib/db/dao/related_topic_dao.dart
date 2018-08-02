@@ -30,7 +30,7 @@ class RelatedTopicDao {
       't.${Topic.idCol}',
       't.${Topic.nameCol}',
       't.${Topic.imageCol}',
-      //  't.${Topic.colorCol}'
+      't.${Topic.colorCol}'
     ], where: '''
   (r.${RelatedTopic.relTopicIdCol} = ? AND r.${RelatedTopic.topicIdCol} = t.${Topic.idCol})
   OR
