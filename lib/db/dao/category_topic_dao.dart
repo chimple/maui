@@ -14,7 +14,7 @@ class CategoryTopicDao {
         columns: [
           CategoryTopic.categoryIdCol,
           CategoryTopic.topicIdCol,
-          CategoryTopic.orderCol,
+          CategoryTopic.serialCol,
         ],
         where: '${CategoryTopic.categoryIdCol} = ?',
         whereArgs: [categoryId]);

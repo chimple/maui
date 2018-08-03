@@ -2,25 +2,25 @@ class CategoryTopic {
   static const table = 'categoryTopic';
   static const categoryIdCol = 'categoryId';
   static const topicIdCol = 'topicId';
-  static const orderCol = 'order';
+  static const serialCol = 'serial';
 
   String categoryId;
   String topicId;
-  int order;
+  int serial;
 
-  CategoryTopic({this.categoryId, this.topicId, this.order});
+  CategoryTopic({this.categoryId, this.topicId, this.serial});
   Map<String, dynamic> toMap() {
-    return {categoryIdCol: categoryId, topicIdCol: topicId, orderCol: order};
+    return {categoryIdCol: categoryId, topicIdCol: topicId, serialCol: serial};
   }
 
   CategoryTopic.fromMap(Map<String, dynamic> map)
       : this(
             categoryId: map[categoryIdCol],
             topicId: map[topicIdCol],
-            order: map[orderCol]);
+            serial: map[serialCol]);
 
   @override
-  int get hashCode => categoryId.hashCode ^ topicId.hashCode ^ order.hashCode;
+  int get hashCode => categoryId.hashCode ^ topicId.hashCode ^ serial.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -29,10 +29,10 @@ class CategoryTopic {
           runtimeType == other.runtimeType &&
           categoryId == other.categoryId &&
           topicId == other.topicId &&
-          order == other.order;
+          serial == other.serial;
 
   @override
   String toString() {
-    return 'Topic{id: $categoryId, name: $topicId, order: $order}';
+    return 'Topic{id: $categoryId, name: $topicId, serial: $serial}';
   }
 }

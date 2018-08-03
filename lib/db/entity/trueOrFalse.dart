@@ -27,7 +27,7 @@ class TrueOrFalse {
       id.hashCode ^ topicId.hashCode ^ question.hashCode ^ associatedQuestion.hashCode ^ isTrue.hashCode;
 
   @override
-  bool operator ==(Object other) =>
+  bool operator == (Object other) =>
       identical(this, other) ||
       other is TrueOrFalse &&
           runtimeType == other.runtimeType &&

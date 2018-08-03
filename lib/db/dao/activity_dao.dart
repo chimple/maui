@@ -11,7 +11,7 @@ class ActivityDao {
         columns: [
           Activity.idCol,
           Activity.topicIdCol,
-          Activity.orderCol,
+          Activity.serialCol,
           Activity.textCol,
           Activity.stickerPackCol
         ],
@@ -30,8 +30,11 @@ class ActivityDao {
         await db.query('${Activity.table} a,${Topic.table} t', columns: [
       'a.${Activity.idCol}',
       'a.${Activity.topicIdCol}',
-      'a.${Activity.orderCol}',
-      'a.${Activity.textCol}',
+      'a.${Activity.serialCol}',
+      'a.${Activity.imageCol}'
+          'a.${Activity.videoCol}'
+          'a.${Activity.audioCol}'
+          'a.${Activity.textCol}',
       'a.${Activity.stickerPackCol}',
     ], where: '''
       a.${Activity.topicIdCol} = t.${Topic.idCol} 
