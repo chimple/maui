@@ -5,7 +5,7 @@ import 'package:maui/db/entity/multiple_choice.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MultipleChoiceDao {
-  Future<List<MultipleChoice>> getMultipleChoiceDataByTopicId(String topicId,
+  Future<List<MultipleChoice>> getMultipleChoicesByTopicId(String topicId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(MultipleChoice.table,
