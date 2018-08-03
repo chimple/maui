@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
+import 'package:maui/screens/activity_list_view.dart';
+import 'package:maui/screens/related_page.dart';
 import 'package:maui/components/article_page.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -94,7 +96,14 @@ class _TopicScreenState extends State<TopicScreen> {
             elevation: 5.0,
             actions: <Widget>[
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return ActivityListView(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.local_activity),
               ),
               new IconButton(
@@ -102,7 +111,14 @@ class _TopicScreenState extends State<TopicScreen> {
                 icon: new Icon(Icons.games),
               ),
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return RelatedPage(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.find_replace),
               )
             ],
