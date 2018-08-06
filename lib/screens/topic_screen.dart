@@ -30,7 +30,7 @@ class _TopicScreenState extends State<TopicScreen> {
         .getArticlesByTopicId(widget.topicId)
         .then((articles) async {
       setState(() {
-        articles.sort((a, b) => a.order.compareTo(b.order));
+        articles.sort((a, b) => a.serial.compareTo(b.serial));
         _articles = articles;
         _isLoading = false;
         _articles.length != 0
@@ -148,7 +148,7 @@ class _TopicScreenState extends State<TopicScreen> {
                           audio: _articles[index].audio,
                           video: _articles[index].video,
                           image: _articles[index].image,
-                          order: _articles[index].order,
+                          order: _articles[index].serial,
                         );
                       },
                     ),
