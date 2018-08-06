@@ -24,7 +24,7 @@ class _RelatedPageState extends State<RelatedPage> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    topic = await RelatedTopicRepo.getTopicsByRelatedTopicId(widget.topicId);
+    topic = await RelatedTopicRepo().getTopicsByRelatedTopicId(widget.topicId);
     setState(() => _isLoading = false);
   }
 
