@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
+import 'package:maui/screens/activity_list_view.dart';
+import 'package:maui/screens/related_page.dart';
 import 'package:maui/components/article_page.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -17,13 +19,14 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
   List<Article> _articles;
-  List<Widget> _pageViewWidgets = [];
   bool _isLoading = true;
   bool _isDataAvailable = false;
+  bool _isForwardDisable = false;
+  bool _isBackwardDisable = true;
   PageController pageController = new PageController(initialPage: 0);
 
   void _initTopic() async {
-    new ArticleRepo()
+    await new ArticleRepo()
         .getArticlesByTopicId(widget.topicId)
         .then((articles) async {
       setState(() {
@@ -37,41 +40,51 @@ class _TopicScreenState extends State<TopicScreen> {
     });
   }
 
-  List<Widget> _createPageViewWidgets(BuildContext context) {
-    for (var i = 0; i < _articles.length; i++) {
-      _pageViewWidgets.add(new ArticlePage(
-        topicId: _articles[i].topicId,
-        articleId: _articles[i].id,
-        name: _articles[i].name,
-        text: _articles[i].text,
-        audio: _articles[i].audio,
-        video: _articles[i].video,
-        image: _articles[i].image,
-        order: _articles[i].order,
-      ));
-    }
-    return _pageViewWidgets;
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initTopic();
   }
 
-  _forwardButtonBehaviour() {
+  void _forwardButtonBehaviour() {
     pageController.nextPage(
         duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+    if (pageController.page == 0.0) {
+      setState(() {
+        _isBackwardDisable = false;
+      });
+    }
+    if ((pageController.page + 1.0).toInt() == (_articles.length - 1)) {
+      setState(() {
+        _isForwardDisable = true;
+      });
+    }
   }
 
-  _backwardButtonBehaviour() {
+  void _backwardButtonBehaviour() {
     pageController.previousPage(
         duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+    if ((pageController.page).toInt() == (_articles.length - 1)) {
+      setState(() {
+        _isForwardDisable = false;
+      });
+    }
+    if (pageController.page - 1.0 == 0.0) {
+      setState(() {
+        _isBackwardDisable = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_articles);
     if (_isLoading == true) {
       return new CircularProgressIndicator();
     } else {
@@ -83,7 +96,14 @@ class _TopicScreenState extends State<TopicScreen> {
             elevation: 5.0,
             actions: <Widget>[
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return ActivityListView(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.local_activity),
               ),
               new IconButton(
@@ -91,7 +111,14 @@ class _TopicScreenState extends State<TopicScreen> {
                 icon: new Icon(Icons.games),
               ),
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return RelatedPage(
+                      topicId: widget.topicId,
+                    );
+                  }));
+                },
                 icon: new Icon(Icons.find_replace),
               )
             ],
@@ -108,40 +135,60 @@ class _TopicScreenState extends State<TopicScreen> {
                 )
               : new Stack(
                   children: <Widget>[
-                    new PageView(
-                      controller: pageController,
+                    new PageView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: _createPageViewWidgets(context),
+                      itemCount: _articles.length,
+                      controller: pageController,
+                      itemBuilder: (context, index) {
+                        return new ArticlePage(
+                          topicId: _articles[index].topicId,
+                          articleId: _articles[index].id,
+                          name: _articles[index].name,
+                          text: _articles[index].text,
+                          audio: _articles[index].audio,
+                          video: _articles[index].video,
+                          image: _articles[index].image,
+                          order: _articles[index].order,
+                        );
+                      },
                     ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new Expanded(
-                          flex: 2,
-                          child: new IconButton(
-                            onPressed: () => _backwardButtonBehaviour(),
-                            icon: new Icon(Icons.arrow_left),
-                            iconSize: 50.0,
-                            disabledColor: Colors.grey,
-                            splashColor: Colors.green,
-                            highlightColor: Colors.white,
-                          ),
-                        ),
-                        new Expanded(flex: 10, child: new Container()),
-                        new Expanded(
-                          flex: 2,
-                          child: new IconButton(
-                            onPressed: () => _forwardButtonBehaviour(),
-                            icon: new Icon(Icons.arrow_right),
-                            iconSize: 50.0,
-                            disabledColor: Colors.grey,
-                            splashColor: Colors.green,
-                            highlightColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                    _articles.length > 1
+                        ? new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                flex: 2,
+                                child: _isBackwardDisable
+                                    ? new Container()
+                                    : new IconButton(
+                                        onPressed: () =>
+                                            _backwardButtonBehaviour(),
+                                        icon: new Icon(
+                                          Icons.arrow_left,
+                                          color: Colors.black,
+                                        ),
+                                        iconSize: 50.0,
+                                      ),
+                              ),
+                              new Expanded(flex: 10, child: new Container()),
+                              new Expanded(
+                                flex: 2,
+                                child: _isForwardDisable
+                                    ? new Container()
+                                    : new IconButton(
+                                        onPressed: () =>
+                                            _forwardButtonBehaviour(),
+                                        icon: new Icon(
+                                          Icons.arrow_right,
+                                          color: Colors.black,
+                                        ),
+                                        iconSize: 50.0,
+                                      ),
+                              ),
+                            ],
+                          )
+                        : new Container(),
                   ],
                 ));
     }
