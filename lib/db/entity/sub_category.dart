@@ -2,27 +2,32 @@ class Subcategory {
   static const table = 'subcategory';
   static const categoryIdCol = 'categoryId';
   static const subcategoryIdCol = 'subcategoryId';
-  static const orderCol = ' order';
+  static const serialCol = ' serial';
 
   String categoryId;
   String subcategoryId;
-  int order;
+  int serial;
 
-  Subcategory({this.categoryId, this.subcategoryId, this.order});
+  Subcategory({this.categoryId, this.subcategoryId, this.serial});
 
   Map<String, dynamic> toMap() {
-    return {categoryIdCol: categoryId, subcategoryIdCol: subcategoryId, orderCol: order};
+    return {
+      categoryIdCol: categoryId,
+      subcategoryIdCol: subcategoryId,
+      serialCol: serial
+    };
   }
 
   Subcategory.fromMap(Map<String, dynamic> map)
       : this(
             categoryId: map[categoryIdCol],
             subcategoryId: map[subcategoryIdCol],
-            order: map[orderCol]);
+            serial: map[serialCol]);
 
   @override
   // TODO: implement hashCode
-  int get hashCode => categoryId.hashCode ^ subcategoryId.hashCode ^ order.hashCode;
+  int get hashCode =>
+      categoryId.hashCode ^ subcategoryId.hashCode ^ serial.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -31,10 +36,10 @@ class Subcategory {
           runtimeType == other.runtimeType &&
           categoryId == other.categoryId &&
           subcategoryId == other.subcategoryId &&
-          order == other.order;
+          serial == other.serial;
 
   @override
   String toString() {
-    return 'Category{categoryId: $categoryId, subcategoryId: $subcategoryId, order: $order}';
+    return 'Category{categoryId: $categoryId, subcategoryId: $subcategoryId, serial: $serial}';
   }
 }
