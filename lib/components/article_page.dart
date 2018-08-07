@@ -16,7 +16,7 @@ class ArticlePage extends StatefulWidget {
   final String audio;
   final String image;
   final String text;
-  final int order;
+  final int serial;
 
   ArticlePage({
     Key key,
@@ -27,7 +27,7 @@ class ArticlePage extends StatefulWidget {
     @required this.audio,
     @required this.image,
     @required this.text,
-    @required this.order,
+    @required this.serial,
   }) : super(key: key);
 
   @override
@@ -66,8 +66,8 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   void dispose() {
-    super.dispose();
     audioPlayer.stop();
+    super.dispose();
   }
 
   void play() async {
