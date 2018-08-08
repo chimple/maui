@@ -148,7 +148,7 @@ class _TopicScreenState extends State<TopicScreen> {
                           audio: _articles[index].audio,
                           video: _articles[index].video,
                           image: _articles[index].image,
-                          order: _articles[index].serial,
+                          serial: _articles[index].serial,
                         );
                       },
                     ),
