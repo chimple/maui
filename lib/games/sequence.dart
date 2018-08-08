@@ -22,7 +22,6 @@ class SequenceQuizState extends State<SequenceQuiz>
 {
   bool _isLoading = true;
   var keys = 0;
-  Tuple3<String, String, List<String>> _allques;
   String questionText;
   String ans;
   List<String> ch;
@@ -36,13 +35,16 @@ class SequenceQuizState extends State<SequenceQuiz>
 
   void _initboard() {
     setState(() => _isLoading = true);
-    choice = [];
+    choice = widget.input['order'];
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     print("Question text - ${widget.input['question']}");
+    
+
+
   }
 
 }
