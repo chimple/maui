@@ -25,7 +25,7 @@ class SequenceQuizState extends State<SequenceQuiz>
   String questionText;
   String ans;
   List<String> ch;
-  List<String> choice = []; 
+  var choice = []; 
 
   @override
   void initState() {
@@ -43,8 +43,45 @@ class SequenceQuizState extends State<SequenceQuiz>
     // TODO: implement build
     print("Question text - ${widget.input['question']}");
     
+    return new LayoutBuilder(builder: (context, constraints) {
+      double ht = constraints.maxHeight;
+      double wd = constraints.maxWidth;
+    return new Material(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          //Question and Image represented here
+          new Container(
+          height: ht * 0.4,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                width: wd * 0.4,
+                child: new Center(
+                  child: new Text(widget.input['question'], style: new TextStyle(fontSize: 10.0),),
+                ),
+              ),
+              new Container(
+                width: wd * 0.4,
+                child: new Center(
+                  child: new Text(widget.input['image'], style: new TextStyle(fontSize: 10.0),),
+                ),
+              )
+            ],
+          )),
 
+          //Choices represented here
+          new Row(
+            children: <Widget>[],
+          )
+        ],
+      )
+    );
 
-  }
+    }
+    );}
 
 }
