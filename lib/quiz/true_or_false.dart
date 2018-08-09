@@ -7,13 +7,13 @@ const Map<String, dynamic> quizMap = {
     {
       'image': 'lion',
       'question': 'Match the following according to the habitat of each animal',
-      'bool': 'true'
+      'bool': true
     },
     {
       'image': 'duck',
       'question':
           'this is my new appffnkabbfbafanfbfabnafbnafbanfa fa afa  asbffnabfnasb  sbfbfbnafba  nbfnbabnafbnafbnabfanfbna',
-      'bool': 'false'
+      'bool': false
     }
   ]
 };
