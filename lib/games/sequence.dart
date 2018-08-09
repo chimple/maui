@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 const Map<String, dynamic> testMap = {
-'image': 'stickers/giraffe/girafee.png',
+'image': 'stickers/giraffe/giraffe.png',
 'question': 'Match the following according to the habitat of each animal',
 'order': ["abc.png", "def.png", "xyz.png", "lmn.png"]
 };
@@ -20,7 +19,6 @@ const SequenceQuiz(
 
 class SequenceQuizState extends State<SequenceQuiz>
 {
-  bool _isLoading = true;
   var keys = 0;
   String ans;
   int score=0;
@@ -33,7 +31,6 @@ class SequenceQuizState extends State<SequenceQuiz>
   }
 
   void _initboard() {
-    setState(() => _isLoading = true);
     for(var i=0;i<widget.input['order'].length;i++){
     choice.add(widget.input['order'][i]);}
     ans = widget.input['image'];
@@ -89,21 +86,12 @@ class SequenceQuizState extends State<SequenceQuiz>
      double ht = MediaQuery.of(context).size.height;
      double wd = MediaQuery.of(context).size.width;
 
-     int j = 0;
-
-    return new LayoutBuilder(builder: (context, constraints) {
-     final hPadding = pow(constraints.maxWidth / 150.0, 2);
-      final vPadding = pow(constraints.maxHeight / 150.0, 2);
-
-      double maxWidth = (constraints.maxWidth - hPadding * 2) / 2;
-      double maxHeight = (constraints.maxHeight - vPadding * 2) / 3;
-
-      final buttonPadding = sqrt(min(maxWidth, maxHeight));
-
+     int j = 0;   
+     
      List<Widget> tableRows = new List<Widget>();
     for (var i = 0; i < 2; ++i) {
       List<Widget> cells = choice.cast<String>().map((e) => new Padding(
-                      padding: EdgeInsets.all(buttonPadding),
+                      padding: EdgeInsets.all(10.0),
                       child: _buildItem(j++, e),
                     )).toList(growable: false)
           .skip(i * 2)
@@ -179,7 +167,7 @@ class SequenceQuizState extends State<SequenceQuiz>
        ],
      ),
     );
-    });    
+    // });    
     }
 }
 
