@@ -88,7 +88,7 @@ class _TopicScreenState extends State<TopicScreen> {
     if (_isLoading == true) {
       return new CircularProgressIndicator();
     } else {
-      return Scaffold(
+      return new Scaffold(
           appBar: new AppBar(
             title: new Text(widget.topicName),
             centerTitle: true,
@@ -148,7 +148,7 @@ class _TopicScreenState extends State<TopicScreen> {
                           audio: _articles[index].audio,
                           video: _articles[index].video,
                           image: _articles[index].image,
-                          order: _articles[index].serial,
+                          serial: _articles[index].serial,
                         );
                       },
                     ),
