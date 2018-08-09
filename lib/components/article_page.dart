@@ -1,5 +1,12 @@
+import 'dart:io';
+import 'package:audioplayer/audioplayer.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
+
+enum PlayerState { playing, paused, stopped }
 
 class ArticlePage extends StatefulWidget {
   final String articleId;
@@ -9,7 +16,7 @@ class ArticlePage extends StatefulWidget {
   final String audio;
   final String image;
   final String text;
-  final int order;
+  final int serial;
 
   ArticlePage({
     Key key,
@@ -20,7 +27,7 @@ class ArticlePage extends StatefulWidget {
     @required this.audio,
     @required this.image,
     @required this.text,
-    @required this.order,
+    @required this.serial,
   }) : super(key: key);
 
   @override
@@ -30,15 +37,63 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
+  AudioPlayer audioPlayer = new AudioPlayer();
+  File audioFile;
+  PlayerState playerState;
+
   @override
   void initState() {
     super.initState();
+    _initAudioPlayer();
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future _loadAsset(String sample) async {
+    return await rootBundle.load('assets/$sample.wav');
+  }
+
+  Future _initAudioPlayer() async {
+    playerState == PlayerState.stopped;
+    try {
+      final path = await _localPath;
+      final file = new File('$path/sample.mp3');
+      audioFile = file;
+    } catch (e) {}
+  }
+
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
+  }
+
+  void play() async {
+    if (await audioFile.exists()) {
+      print('file exist');
+      await audioFile
+          .writeAsBytes((await _loadAsset('audio')).buffer.asUint8List());
+      await audioPlayer.play(audioFile.path, isLocal: true);
+    }
+  }
+
+  void pause() async {
+    if (await audioFile.exists()) {
+      print('file exist');
+      await audioPlayer.pause();
+    }
+  }
+
+  void onComplete() {
+    setState(() => playerState = PlayerState.stopped);
   }
 
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
-      print("Screen Size: ${constraints.maxHeight} , ${constraints.maxWidth}");
+      print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Material(
         type: MaterialType.transparency,
         child: new Container(
@@ -68,41 +123,44 @@ class _ArticlePageState extends State<ArticlePage> {
               ),
               Expanded(
                 flex: 1,
-                child: Container(
-                  child: new Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(left: 10.0),
-                        child: new Text("Progress Indicator"),
-                      ),
-                      new Container(
-                        margin: const EdgeInsets.only(left: 230.0),
-                        color: Colors.blue,
-                        child: IconButton(
-                          iconSize: 40.0,
-                          alignment: AlignmentDirectional.bottomStart,
-                          icon: Icon(Icons.audiotrack, color: Colors.black),
-                          onPressed: () {
-                            //Call Audio To Play
-                          },
-                        ),
-                      ),
-                    ],
+                child: new RawMaterialButton(
+                  shape: new CircleBorder(),
+                  fillColor: Colors.white,
+                  splashColor: Colors.teal,
+                  highlightColor: Colors.teal.withOpacity(0.5),
+                  elevation: 10.0,
+                  highlightElevation: 5.0,
+                  onPressed: () {
+                    if (playerState == PlayerState.stopped ||
+                        playerState == PlayerState.playing) {
+                      pause();
+                      setState(() {
+                        playerState = PlayerState.paused;
+                      });
+                    } else {
+                      play();
+                      setState(() {
+                        playerState = PlayerState.playing;
+                      });
+                    }
+                  },
+                  child: new Icon(
+                    (playerState == PlayerState.stopped ||
+                            playerState == PlayerState.playing)
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                    color: Colors.purple,
+                    size: 40.0,
                   ),
                 ),
               ),
               Expanded(
                 flex: 3,
                 child: new Container(
-                  width: 500.0,
-                  height: 126.0,
-                  color: Colors.grey,
-                  child: new Markdown(
-                    data: widget.text,
-                  ),
-                ),
+                    color: Colors.grey,
+                    child: new Markdown(
+                      data: widget.text,
+                    )),
               ),
             ],
           ),
