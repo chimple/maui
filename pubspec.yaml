@@ -208,7 +208,6 @@ flutter:
     - assets/animations/koala_sad.json
     - assets/animations/horse_sad2.json
     - assets/animations/goat_sad2.json
-    - assets/GameData.json
     - assets/animations/goat_sad3.json
     - assets/animations/zebra_face.json
     - assets/animations/happybirthday.json
