@@ -14,20 +14,16 @@ class QuizButton extends StatefulWidget {
   QuizButtonState createState() => new QuizButtonState();
 }
 
-class QuizButtonState extends State<QuizButton>{
-  
+class QuizButtonState extends State<QuizButton>{  
 
-  initState() {
-    super.initState();
-    print("QuizButtonState.initState: ${widget.text}");
-  }
+  // initState() {
+  //   super.initState();
+  //   print("QuizButtonState.initState: ${widget.text}");
+  // }
 
   @override
   Widget build(BuildContext context) {
     print("QuizButtonState.build");
-
-    double ht = MediaQuery.of(context).size.height;
-    double wd = MediaQuery.of(context).size.width;
 
     return new GestureDetector(
                   child: new ButtonTheme(
@@ -38,13 +34,10 @@ class QuizButtonState extends State<QuizButton>{
                    color: const Color(0xFFffffff),
                    shape: new RoundedRectangleBorder(
                        borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-                   child: widget.text.endsWith(".png")? new Image.asset("assets/$widget.text", width: wd * 0.4, height: ht * 0.12,) : new Container(
-                     width: wd * 0.4,
-                     height: ht * 0.12,
-                       child: new Center(
+                   child: widget.text.endsWith(".png")? new Center(child: new Image.asset("assets/$widget.text")) : new Center(
                          child: new Text(widget.text,
                        key: new Key("${widget.key}"),
-                       style: new TextStyle(color: Colors.black, fontSize: ht * 0.1))))
+                       style: new TextStyle(color: Colors.black)))
       )),
     );
   }
