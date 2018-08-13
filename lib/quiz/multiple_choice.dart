@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
 const Map<String, dynamic> _homework = {
-  'data': [
-    {
-      'image': 'lion',
-      'questions': "#This animal is a carnivorous reptile.",
-      'answer': 'lion',
-      'choices': ["Cat", "Sheep", "lion", "Cow"],
-    },
-  ]
+  'image': 'lion',
+  'questions': "#This animal is a carnivorous reptile.",
+  'answer': 'lion',
+  'choices': ["Cat", "Sheep", "lion", "Cow"],
 };
 
 class Multiplechoice extends StatefulWidget {
@@ -26,7 +22,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
-    print("hello data is.....::${widget.input['data'][0]['choices']}");
+    print("hello data is.....::${widget.input['choices']}");
     return Scaffold(
       body: new Container(
         margin: const EdgeInsets.all(10.0),
@@ -47,7 +43,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                     ),
                     new Container(
                       child: new Text(
-                        "${widget.input['data'][0]['questions']}",
+                        "${widget.input['questions']}",
                         textAlign: TextAlign.center,
                         style:
                             new TextStyle(color: Colors.black, fontSize: 20.0),
@@ -65,7 +61,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 child: new GridView.count(
                   crossAxisCount: 2,
                   children: new List.generate(
-                      widget.input['data'][0]['choices'].length, (index) {
+                      widget.input['choices'].length, (index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: new MaterialButton(
@@ -73,9 +69,9 @@ class MultiplechoiceState extends State<Multiplechoice> {
                         color: Colors.blueGrey,
                         onPressed: () {
                           print(
-                              "......data is....${widget.input['data'][0]['choices'][index]}");
-                          if (widget.input['data'][0]['choices'][index] ==
-                              widget.input['data'][0]['answer']) {
+                              "......data is....${widget.input['choices'][index]}");
+                          if (widget.input['choices'][index] ==
+                              widget.input['answer']) {
                             print("Correct");
                             score++;
                           } else {
@@ -83,7 +79,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                           }
                         },
                         child: new Text(
-                          widget.input['data'][0]['choices'][index],
+                          widget.input[index],
                           style: new TextStyle(
                               fontSize: 20.0, color: Colors.white),
                         ),
