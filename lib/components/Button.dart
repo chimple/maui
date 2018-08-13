@@ -43,9 +43,13 @@ class _MyButtonState extends State<MyButton>{
                    color: const Color(0xFFffffff),
                    shape: new RoundedRectangleBorder(
                        borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-                   child: _displayText.endsWith(".png")? new Image.asset("$_displayText", width: 150.0, height: 150.0,) : new Text(_displayText,
+                   child: _displayText.endsWith(".png")? new Image.asset("assets/$_displayText", width: wd * 0.4, height: ht * 0.12,) : new Container(
+                     width: wd * 0.4,
+                     height: ht * 0.12,
+                       child: new Center(
+                         child: new Text(_displayText,
                        key: new Key("${widget.keys}"),
-                       style: new TextStyle(color: Colors.black, fontSize: ht * 0.05))
+                       style: new TextStyle(color: Colors.black, fontSize: ht * 0.1))))
       )),
     );
   }
