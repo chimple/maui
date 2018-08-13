@@ -215,9 +215,9 @@ class TabHomeState extends State<TabHome>
                     new Tab(
                       text: Loca.of(context).game,
                     ),
-                    new Tab(
-                      text: Loca.of(context).category,
-                    )
+//                    new Tab(
+//                      text: Loca.of(context).category,
+//                    )
                   ],
                 ),
               ),
@@ -225,14 +225,16 @@ class TabHomeState extends State<TabHome>
           },
           body: new TabBarView(
             controller: _controller,
-            children: <Widget>[new FriendListView(), new GameListView(),
-            new CategoryListView()],
+            children: <Widget>[
+              new FriendListView(),
+              new GameListView(),
+              new CategoryListView()
+            ],
           ),
         ),
       );
   }
 }
-
 
 class MyTabs {
   final String img1;
