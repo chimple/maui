@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-Map<String, dynamic> _selected = {};
-
 class MatchingGame extends StatefulWidget {
   Map<String, dynamic> gameData;
   MatchingGame(
@@ -39,6 +37,7 @@ class MatchingGame extends StatefulWidget {
 }
 
 class _MatchingGameState extends State<MatchingGame> {
+  Map<String, dynamic> _selected = {};
   String _leftItemTapped;
 
   List<String> _leftSideItems = [];
@@ -48,14 +47,13 @@ class _MatchingGameState extends State<MatchingGame> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _leftSideItems = (widget.gameData["pairs"].keys.toList()..shuffle());
     _rightSideItems = (widget.gameData["pairs"].values.toList()..shuffle());
   }
 
-  bool _checkItem(String i, String side) {
-    if (side == "left") {
+  bool _checkItem(String i, bool sideCheck) {
+    if (sideCheck == true) {
       return (_leftSideDisabledItems.indexOf(i) != -1) ? true : false;
     } else {
       return (_rightSideDisabledItems.indexOf(i) != -1) ? true : false;
@@ -71,111 +69,103 @@ class _MatchingGameState extends State<MatchingGame> {
           _leftSideDisabledItems, _rightSideDisabledItems);
       print(_selected);
     }
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Matching"),
-        centerTitle: true,
-        backgroundColor: Colors.green,
-      ),
-      body: new Container(
-        decoration: new BoxDecoration(
-            image: new DecorationImage(
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.grey, BlendMode.lighten),
-          image: new NetworkImage(widget.gameData["image"]),
-        )),
-        child: new Column(
-          children: <Widget>[
-            new Expanded(
-              flex: 1,
-              child: Container(
-                margin: EdgeInsets.all(10.0),
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: new BorderRadius.all(Radius.circular(10.0))),
-                child: new Center(
-                  child: new Text(
-                    widget.gameData["question"],
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
+    return new Container(
+      decoration: new BoxDecoration(
+          image: new DecorationImage(
+        fit: BoxFit.cover,
+        colorFilter: ColorFilter.mode(Colors.grey, BlendMode.lighten),
+        image: new NetworkImage(widget.gameData["image"]),
+      )),
+      child: new Column(
+        children: <Widget>[
+          new Expanded(
+            flex: 1,
+            child: Container(
+              margin: EdgeInsets.all(10.0),
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.orange,
+                  borderRadius: new BorderRadius.all(Radius.circular(10.0))),
+              child: new Center(
+                child: new Text(
+                  widget.gameData["question"],
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
               ),
             ),
-            new Expanded(
-              flex: 7,
-              child: new Container(
-                child: new ListView.builder(
-                  itemCount: widget.gameData["pairs"].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        new Container(
-                          margin: EdgeInsets.all(10.0),
-                          child: new RaisedButton(
-                            onPressed: _checkItem(_leftSideItems[index], "left")
-                                ? null
-                                : () {
-                                    _leftItemTapped = _leftSideItems[index];
-                                  },
-                            padding: EdgeInsets.all(20.0),
-                            child: new Center(
-                              child: new Text(
-                                _leftSideItems[index],
-                                style: new TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+          ),
+          new Expanded(
+            flex: 7,
+            child: new Container(
+              child: new ListView.builder(
+                itemCount: widget.gameData["pairs"].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      new Container(
+                        margin: EdgeInsets.all(10.0),
+                        child: new RaisedButton(
+                          onPressed: _checkItem(_leftSideItems[index], true)
+                              ? null
+                              : () {
+                                  _leftItemTapped = _leftSideItems[index];
+                                },
+                          padding: EdgeInsets.all(20.0),
+                          child: new Center(
+                            child: new Text(
+                              _leftSideItems[index],
+                              style: new TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                        new Container(
-                          margin: EdgeInsets.all(10.0),
-                          child: new RaisedButton(
-                            onPressed:
-                                _checkItem(_rightSideItems[index], "right")
-                                    ? null
-                                    : () {
-                                        print("correct");
-                                        print(_leftItemTapped == ''
-                                            ? "leftNotTapped"
-                                            : _leftItemTapped);
-                                        print(_rightSideItems[index]);
-                                        if (_leftItemTapped != '') {
-                                          setState(() {
-                                            _leftSideDisabledItems
-                                                .add(_leftItemTapped);
-                                            print(_leftSideDisabledItems);
-                                            _rightSideDisabledItems
-                                                .add(_rightSideItems[index]);
-                                            print(_rightSideDisabledItems);
-                                            print(_selected);
-                                          });
-                                        }
-                                      },
-                            padding: EdgeInsets.all(20.0),
-                            child: new Center(
-                              child: new Text(
-                                _rightSideItems[index],
-                                style: new TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      ),
+                      new Container(
+                        margin: EdgeInsets.all(10.0),
+                        child: new RaisedButton(
+                          onPressed: _checkItem(_rightSideItems[index], false)
+                              ? null
+                              : () {
+                                  print("correct");
+                                  print(_leftItemTapped == ''
+                                      ? "leftNotTapped"
+                                      : _leftItemTapped);
+                                  print(_rightSideItems[index]);
+                                  if (_leftItemTapped != '') {
+                                    setState(() {
+                                      _leftSideDisabledItems
+                                          .add(_leftItemTapped);
+                                      print(_leftSideDisabledItems);
+                                      _rightSideDisabledItems
+                                          .add(_rightSideItems[index]);
+                                      print(_rightSideDisabledItems);
+                                      print(_selected);
+                                    });
+                                  }
+                                },
+                          padding: EdgeInsets.all(20.0),
+                          child: new Center(
+                            child: new Text(
+                              _rightSideItems[index],
+                              style: new TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ],
+                  );
+                },
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
