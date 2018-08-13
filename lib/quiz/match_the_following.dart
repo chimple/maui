@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MatchingGame extends StatefulWidget {
   Map<String, dynamic> gameData;
   MatchingGame(
@@ -39,7 +38,6 @@ class MatchingGame extends StatefulWidget {
 
 class _MatchingGameState extends State<MatchingGame> {
   Map<String, dynamic> _selectedPairs = {};
-  bool _isLeftItemTapped;
   String _leftItemSelected;
 
   List<String> _leftSideItems;
@@ -54,17 +52,17 @@ class _MatchingGameState extends State<MatchingGame> {
     _rightSideItems = (widget.gameData["pairs"].values.toList()..shuffle());
   }
 
-  bool _checkItem(String buttonItem , bool isItemOnLeft) {
+  bool _checkItem(String buttonItem, bool isItemOnLeft) {
     if (isItemOnLeft == true) {
-      return (_leftSideDisabledItems.indexOf(buttonItem ) != -1) ? true : false;
+      return (_leftSideDisabledItems.indexOf(buttonItem) != -1) ? true : false;
     } else {
-      return (_rightSideDisabledItems.indexOf(buttonItem ) != -1) ? true : false;
+      return (_rightSideDisabledItems.indexOf(buttonItem) != -1) ? true : false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _isLeftItemTapped = false;
+    _leftItemSelected = '';
     if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
         _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
       _selectedPairs = new Map.fromIterables(
@@ -112,7 +110,6 @@ class _MatchingGameState extends State<MatchingGame> {
                           onPressed: _checkItem(_leftSideItems[index], true)
                               ? null
                               : () {
-                                  _isLeftItemTapped = true;
                                   _leftItemSelected = _leftSideItems[index];
                                 },
                           padding: EdgeInsets.all(20.0),
@@ -134,11 +131,11 @@ class _MatchingGameState extends State<MatchingGame> {
                               ? null
                               : () {
                                   print("correct");
-                                  print(_isLeftItemTapped == false
+                                  print(_leftItemSelected == ''
                                       ? "leftNotTapped"
-                                      : _isLeftItemTapped);
+                                      : _leftItemSelected);
                                   print(_rightSideItems[index]);
-                                  if (_isLeftItemTapped) {
+                                  if (_leftItemSelected != '') {
                                     setState(() {
                                       _leftSideDisabledItems
                                           .add(_leftItemSelected);
