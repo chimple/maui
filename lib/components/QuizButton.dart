@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 class QuizButton extends StatefulWidget {
   final String text;
   final VoidCallback onPress;
-  int keys;
 
   QuizButton(
       {Key key,
       this.text,
-      this.keys,
       this.onPress})
       : super(key: key);
   
@@ -26,7 +24,6 @@ class QuizButtonState extends State<QuizButton>{
 
   @override
   Widget build(BuildContext context) {
-    widget.keys++;
     print("QuizButtonState.build");
 
     double ht = MediaQuery.of(context).size.height;
@@ -46,7 +43,7 @@ class QuizButtonState extends State<QuizButton>{
                      height: ht * 0.12,
                        child: new Center(
                          child: new Text(widget.text,
-                       key: new Key("${widget.keys}"),
+                       key: new Key("${widget.key}"),
                        style: new TextStyle(color: Colors.black, fontSize: ht * 0.1))))
       )),
     );
