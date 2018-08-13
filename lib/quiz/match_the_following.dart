@@ -39,7 +39,7 @@ class MatchingGame extends StatefulWidget {
 
 class _MatchingGameState extends State<MatchingGame> {
   Map<String, dynamic> _selectedPairs = {};
-  bool _leftItemTapped;
+  bool _isleftItemTapped;
   String _leftItemSelected;
 
   List<String> _leftSideItems;
@@ -64,7 +64,7 @@ class _MatchingGameState extends State<MatchingGame> {
 
   @override
   Widget build(BuildContext context) {
-    _leftItemTapped = false;
+    _isleftItemTapped = false;
     if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
         _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
       _selectedPairs = new Map.fromIterables(
@@ -112,7 +112,7 @@ class _MatchingGameState extends State<MatchingGame> {
                           onPressed: _checkItem(_leftSideItems[index], true)
                               ? null
                               : () {
-                                  _leftItemTapped = true;
+                                  _isleftItemTapped = true;
                                   _leftItemSelected = _leftSideItems[index];
                                 },
                           padding: EdgeInsets.all(20.0),
@@ -134,11 +134,11 @@ class _MatchingGameState extends State<MatchingGame> {
                               ? null
                               : () {
                                   print("correct");
-                                  print(_leftItemTapped == false
+                                  print(_isleftItemTapped == false
                                       ? "leftNotTapped"
-                                      : _leftItemTapped);
+                                      : _isleftItemTapped);
                                   print(_rightSideItems[index]);
-                                  if (_leftItemTapped) {
+                                  if (_isleftItemTapped) {
                                     setState(() {
                                       _leftSideDisabledItems
                                           .add(_leftItemSelected);
