@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/QuizButton.dart';
 
 const Map<String, dynamic> testMap = {
 'image': 'stickers/giraffe/giraffe.png',
@@ -19,7 +20,6 @@ const SequenceQuiz(
 
 class SequenceQuizState extends State<SequenceQuiz>
 {
-  var keys = 0;
   String ans;
   int score=0;
   var choice = []; 
@@ -47,11 +47,9 @@ class SequenceQuizState extends State<SequenceQuiz>
 
 
   Widget _buildItem(int index, String text) {
-    return new MyButton(
+    return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        ans: this.ans,
-        keys: keys++,
         onPress: () {
           if (text == ans) {   
             score+=4;         
@@ -169,112 +167,4 @@ class SequenceQuizState extends State<SequenceQuiz>
     );
     // });    
     }
-}
-
-class MyButton extends StatefulWidget {
-  String ans;
-  MyButton(
-      {Key key,
-      this.text,
-      this.ans,
-      this.keys,
-      this.onPress})
-      : super(key: key);
-  final String text;
-  final VoidCallback onPress;
-  int keys;
-  @override
-  _MyButtonState createState() => new _MyButtonState();
-}
-
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
-  String _displayText;
-
-  initState() {
-    super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
-
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 600), vsync: this);
-    // wrongController = new AnimationController(
-    //     duration: new Duration(milliseconds: 100), vsync: this);
-
-    animation =
-        new CurvedAnimation(parent: controller, curve: Curves.elasticOut)
-          ..addStatusListener((state) {
-//        print("$state:${animation.value}");
-            if (state == AnimationStatus.dismissed) {
-              print('dismissed');
-              if (widget.text != null) {
-                setState(() => _displayText = widget.text);
-                controller.forward();
-              }
-            }
-          });
-    // wrongAnimation = new Tween(begin: -8.0, end: 10.0).animate(wrongController);
-    controller.forward();
-    // _myAnim();
-  }
-
-  // void _myAnim() {
-  //   wrongAnimation.addStatusListener((status) {
-  //     if (status == AnimationStatus.completed) {
-  //       wrongController.reverse();
-  //     } else if (status == AnimationStatus.dismissed) {
-  //       wrongController.forward();
-  //     }
-  //   });
-  //   wrongController.forward();
-  // }
-
-  @override
-  void dispose() {
-    // wrongController.dispose();
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    widget.keys++;
-    print("_MyButtonState.build");
-
-    double ht = MediaQuery.of(context).size.height;
-    double wd = MediaQuery.of(context).size.width;
-
-    return new GestureDetector(
-      // onLongPress: () {
-      //   showDialog(
-      //       context: context,
-      //       child: new FractionallySizedBox(
-      //           heightFactor: 0.5,
-      //           widthFactor: 0.8,
-      //           child: new FlashCard(text: widget.text)));
-      // },
-      // child: new UnitButton(
-      //   onPress: () => widget.onPress(),
-      //   text: _displayText,
-      //   unitMode: widget.unitMode,
-              //  child: new ButtonTheme(
-              //     minWidth: 100.0,
-              //     height: 100.0,
-                  child: new ButtonTheme(
-                    minWidth: 150.0,
-                    height: 150.0,
-                    child: new FlatButton(
-                   onPressed: () => widget.onPress(),
-                   color: const Color(0xFFffffff),
-                   shape: new RoundedRectangleBorder(
-                       borderRadius:
-                       const BorderRadius.all(const Radius.circular(8.0))),
-                   child: new Text(_displayText,
-                       key: new Key("${widget.keys}"),
-                       style:
-                       new TextStyle(color: Colors.black, fontSize: ht * 0.05))
-      )),
-    );
-  }
 }
