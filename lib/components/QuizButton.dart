@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyButton extends StatefulWidget {
+class QuizButton extends StatefulWidget {
   final String text;
   final VoidCallback onPress;
   int keys;
 
-  MyButton(
+  QuizButton(
       {Key key,
       this.text,
       this.keys,
@@ -13,23 +13,21 @@ class MyButton extends StatefulWidget {
       : super(key: key);
   
   @override
-  _MyButtonState createState() => new _MyButtonState();
+  QuizButtonState createState() => new QuizButtonState();
 }
 
-class _MyButtonState extends State<MyButton>{
-  String _displayText;
+class QuizButtonState extends State<QuizButton>{
+  
 
   initState() {
     super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
-
+    print("QuizButtonState.initState: ${widget.text}");
   }
 
   @override
   Widget build(BuildContext context) {
     widget.keys++;
-    print("_MyButtonState.build");
+    print("QuizButtonState.build");
 
     double ht = MediaQuery.of(context).size.height;
     double wd = MediaQuery.of(context).size.width;
@@ -43,11 +41,11 @@ class _MyButtonState extends State<MyButton>{
                    color: const Color(0xFFffffff),
                    shape: new RoundedRectangleBorder(
                        borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-                   child: _displayText.endsWith(".png")? new Image.asset("assets/$_displayText", width: wd * 0.4, height: ht * 0.12,) : new Container(
+                   child: widget.text.endsWith(".png")? new Image.asset("assets/$widget.text", width: wd * 0.4, height: ht * 0.12,) : new Container(
                      width: wd * 0.4,
                      height: ht * 0.12,
                        child: new Center(
-                         child: new Text(_displayText,
+                         child: new Text(widget.text,
                        key: new Key("${widget.keys}"),
                        style: new TextStyle(color: Colors.black, fontSize: ht * 0.1))))
       )),
