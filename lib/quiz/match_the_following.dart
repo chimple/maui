@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class MatchingGame extends StatefulWidget {
   Map<String, dynamic> gameData;
   MatchingGame(
@@ -37,13 +38,14 @@ class MatchingGame extends StatefulWidget {
 }
 
 class _MatchingGameState extends State<MatchingGame> {
-  Map<String, dynamic> _selected = {};
-  String _leftItemTapped;
+  Map<String, dynamic> _selectedPairs = {};
+  bool _leftItemTapped;
+  String _leftItemSelected;
 
-  List<String> _leftSideItems = [];
+  List<String> _leftSideItems;
   List<String> _leftSideDisabledItems = [];
-  List<dynamic> _rightSideDisabledItems = [];
-  List<dynamic> _rightSideItems = [];
+  List<String> _rightSideDisabledItems = [];
+  List<String> _rightSideItems;
 
   @override
   void initState() {
@@ -52,22 +54,22 @@ class _MatchingGameState extends State<MatchingGame> {
     _rightSideItems = (widget.gameData["pairs"].values.toList()..shuffle());
   }
 
-  bool _checkItem(String i, bool sideCheck) {
-    if (sideCheck == true) {
-      return (_leftSideDisabledItems.indexOf(i) != -1) ? true : false;
+  bool _checkItem(String buttonItem , bool isItemOnLeft) {
+    if (isItemOnLeft == true) {
+      return (_leftSideDisabledItems.indexOf(buttonItem ) != -1) ? true : false;
     } else {
-      return (_rightSideDisabledItems.indexOf(i) != -1) ? true : false;
+      return (_rightSideDisabledItems.indexOf(buttonItem ) != -1) ? true : false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _leftItemTapped = '';
+    _leftItemTapped = false;
     if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
         _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
-      _selected = new Map.fromIterables(
+      _selectedPairs = new Map.fromIterables(
           _leftSideDisabledItems, _rightSideDisabledItems);
-      print(_selected);
+      print(_selectedPairs);
     }
     return new Container(
       decoration: new BoxDecoration(
@@ -110,7 +112,8 @@ class _MatchingGameState extends State<MatchingGame> {
                           onPressed: _checkItem(_leftSideItems[index], true)
                               ? null
                               : () {
-                                  _leftItemTapped = _leftSideItems[index];
+                                  _leftItemTapped = true;
+                                  _leftItemSelected = _leftSideItems[index];
                                 },
                           padding: EdgeInsets.all(20.0),
                           child: new Center(
@@ -131,19 +134,19 @@ class _MatchingGameState extends State<MatchingGame> {
                               ? null
                               : () {
                                   print("correct");
-                                  print(_leftItemTapped == ''
+                                  print(_leftItemTapped == false
                                       ? "leftNotTapped"
                                       : _leftItemTapped);
                                   print(_rightSideItems[index]);
-                                  if (_leftItemTapped != '') {
+                                  if (_leftItemTapped) {
                                     setState(() {
                                       _leftSideDisabledItems
-                                          .add(_leftItemTapped);
+                                          .add(_leftItemSelected);
                                       print(_leftSideDisabledItems);
                                       _rightSideDisabledItems
                                           .add(_rightSideItems[index]);
                                       print(_rightSideDisabledItems);
-                                      print(_selected);
+                                      print(_selectedPairs);
                                     });
                                   }
                                 },
