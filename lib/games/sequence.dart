@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/components/Button.dart';
+import 'package:maui/components/QuizButton.dart';
 
 const Map<String, dynamic> testMap = {
 'image': 'stickers/giraffe/giraffe.png',
@@ -20,7 +20,6 @@ const SequenceQuiz(
 
 class SequenceQuizState extends State<SequenceQuiz>
 {
-  var keys = 0;
   String ans;
   int score=0;
   var choice = []; 
@@ -48,10 +47,9 @@ class SequenceQuizState extends State<SequenceQuiz>
 
 
   Widget _buildItem(int index, String text) {
-    return new MyButton(
+    return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        keys: keys++,
         onPress: () {
           if (text == ans) {   
             score+=4;         
