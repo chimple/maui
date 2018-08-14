@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/category.dart';
 import 'package:maui/db/entity/topic.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/screens/topic_screen.dart';
 import '../components/topic_button.dart';
 import '../repos/topic_repo.dart';
@@ -38,6 +39,7 @@ class _SubcategoryListState extends State<SubcategoryList>
   }
 
   Widget build(BuildContext context) {
+    print('loca sub_category_list_state ${Loca.of(context)}');
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -46,20 +48,11 @@ class _SubcategoryListState extends State<SubcategoryList>
       );
     }
 
-    return new MaterialApp(
-        home: DefaultTabController(
+    return DefaultTabController(
       length: _subcategories.length,
       child: new Scaffold(
         appBar: new AppBar(
-          title: Row(children: [
-            new IconButton(
-              icon: new Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new Text("${widget.categoryName}")
-          ]),
+          title: Text("${widget.categoryName}")
           bottom: new TabBar(
             // controller: _tabController,
             isScrollable: true,
@@ -73,7 +66,7 @@ class _SubcategoryListState extends State<SubcategoryList>
         ),
         body: _buildTabBarView(context),
       ),
-    ));
+    );
   }
 
   Widget _buildTabBarView(BuildContext context) {
@@ -115,6 +108,7 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
   }
 
   Widget build(BuildContext context) {
+    print('loca tab_controller_view_state ${Loca.of(context)}');
     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new SizedBox(

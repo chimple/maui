@@ -12,7 +12,8 @@ const Map<String, dynamic> testMap = {
 
 class GroupingQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
-  GroupingQuiz({this.input = testMap});
+  Function onEnd;
+  GroupingQuiz({this.input = testMap, this.onEnd});
 
   @override
   _GroupingQuizState createState() => new _GroupingQuizState();
@@ -68,6 +69,9 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     print("Call Back..!!");
     setState(() {
       shuffledOptions.remove(str);
+      if (shuffledOptions.isEmpty) {
+        widget.onEnd();
+      }
     });
     print("shuffledOptions after remove() $str: ${shuffledOptions}");
   }
