@@ -5,6 +5,7 @@ import 'package:maui/db/entity/article.dart';
 import 'package:maui/screens/activity_list_view.dart';
 import 'package:maui/screens/related_page.dart';
 import 'package:maui/components/article_page.dart';
+import 'package:maui/screens/select_opponent_screen.dart';
 
 class TopicScreen extends StatefulWidget {
   final String topicName;
@@ -78,12 +79,13 @@ class _TopicScreenState extends State<TopicScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('loca topic_screen ${Loca.of(context)}');
     print(_articles);
     if (_isLoading == true) {
       return new CircularProgressIndicator();
@@ -107,7 +109,13 @@ class _TopicScreenState extends State<TopicScreen> {
                 icon: new Icon(Icons.local_activity),
               ),
               new IconButton(
-                onPressed: () => print("object"),
+                onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                            builder: (BuildContext context) {
+                      return SelectOpponentScreen(
+                        gameName: 'quiz_pager',
+                      );
+                    })),
                 icon: new Icon(Icons.games),
               ),
               new IconButton(

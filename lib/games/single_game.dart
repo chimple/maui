@@ -44,6 +44,7 @@ import 'package:maui/components/hud.dart';
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
+import 'package:maui/quiz/quiz_pager.dart';
 import 'package:flores/flores.dart';
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
@@ -70,6 +71,7 @@ class GameConfig {
   UnitMode questionUnitMode;
   UnitMode answerUnitMode;
   int gameCategoryId;
+  String topicId;
   int level;
   GameDisplay gameDisplay;
   User myUser;
@@ -88,13 +90,14 @@ class GameConfig {
 
   @override
   String toString() {
-    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId, isGameOver: $isGameOver}';
+    return 'GameConfig{questionUnitMode: $questionUnitMode, answerUnitMode: $answerUnitMode, gameCategoryId: $gameCategoryId, topicId: $topicId, level: $level, gameDisplay: $gameDisplay, myUser: $myUser, otherUser: $otherUser, myScore: $myScore, otherScore: $otherScore, myIteration: $myIteration, otherIteration: $otherIteration, amICurrentPlayer: $amICurrentPlayer, orientation: $orientation, gameData: $gameData, sessionId: $sessionId, isGameOver: $isGameOver}';
   }
 
   GameConfig(
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
+      this.topicId,
       this.gameDisplay,
       this.level,
       this.otherUser,
@@ -114,6 +117,7 @@ class GameConfig {
     data['questionUnitMode'] = questionUnitMode.index;
     data['answerUnitMode'] = answerUnitMode.index;
     data['gameCategoryId'] = gameCategoryId;
+    data['topicId'] = topicId;
     data['gameDisplay'] = gameDisplay.index;
     data['level'] = level;
     data['myScore'] = myScore;
@@ -130,6 +134,7 @@ class GameConfig {
     questionUnitMode = UnitMode.values[data['questionUnitMode']];
     answerUnitMode = UnitMode.values[data['answerUnitMode']];
     gameCategoryId = data['gameCategoryId'];
+    topicId = data['topicId'];
     gameDisplay = GameDisplay.values[data['gameDisplay']];
     level = data['level'];
     myScore = data['myScore'];
@@ -201,7 +206,8 @@ class SingleGame extends StatefulWidget {
       Color(0xFF1DC8CC),
       Color(0xFF282828),
       Color(0xFFFE6677)
-    ]
+    ],
+    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
   };
 
   SingleGame(this.gameName,
@@ -728,6 +734,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onProgress: _onProgress,
             onEnd: (Map<String, dynamic> gameData, bool end) =>
                 _onEnd(context, gameData: gameData, end: end),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
+      case 'quiz_pager':
+        playTime = 15000;
+        maxIterations = 4;
+        return new QuizPager(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,

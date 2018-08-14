@@ -11,7 +11,9 @@ const Map<String, dynamic> _homework = {
 
 class Multiplechoice extends StatefulWidget {
   final Map<String, dynamic> input;
-  Multiplechoice({Key key, this.input = _homework}) : super(key: key);
+  Function onEnd;
+  Multiplechoice({Key key, this.input = _homework, this.onEnd})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return new MultiplechoiceState();
@@ -23,7 +25,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
-    List<String> choices=widget.input['choices'];
+    List<String> choices = widget.input['choices'];
     print("hello data is.....::${widget.input['choices']}");
     return new Container(
       margin: const EdgeInsets.all(10.0),
@@ -61,7 +63,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                       } else {
                         print("Wrong");
                       }
-                      updateQuestion();
+                      widget.onEnd();
                     },
                     child: new Text(
                       element,
@@ -75,9 +77,5 @@ class MultiplechoiceState extends State<Multiplechoice> {
         ],
       ),
     );
-  }
-
-  void updateQuestion() {
-    setState(() {});
   }
 }
