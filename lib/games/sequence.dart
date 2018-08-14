@@ -50,6 +50,7 @@ class SequenceQuizState extends State<SequenceQuiz>
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
+        buttonRightorWrong: text == ans ? true : false,
         onPress: () {
           if (text == ans) {   
             score+=4;         
