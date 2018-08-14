@@ -3,7 +3,7 @@ class Article {
   static const idCol = 'id';
   static const nameCol = 'name';
   static const topicIdCol = 'topicId';
-  static const orderCol = 'order';
+  static const serialCol = 'serial';
   static const videoCol = 'video';
   static const audioCol = 'audio';
   static const imageCol = 'image';
@@ -12,7 +12,7 @@ class Article {
   String id;
   String name;
   String topicId;
-  int order;
+  int serial;
   String video;
   String audio;
   String image;
@@ -22,7 +22,7 @@ class Article {
       {this.id,
       this.name,
       this.topicId,
-      this.order,
+      this.serial,
       this.video,
       this.audio,
       this.image,
@@ -33,7 +33,7 @@ class Article {
       idCol: id,
       nameCol: name,
       topicIdCol: topicId,
-      orderCol: order,
+      serialCol: serial,
       videoCol: video,
       audioCol: audio,
       imageCol: image,
@@ -46,7 +46,7 @@ class Article {
             id: map[idCol],
             name: map[nameCol],
             topicId: map[topicIdCol],
-            order: map[orderCol],
+            serial: map[serialCol],
             video: map[videoCol],
             audio: map[audioCol],
             image: map[imageCol],
@@ -57,7 +57,7 @@ class Article {
       id.hashCode ^
       name.hashCode ^
       topicId.hashCode ^
-      order.hashCode ^
+      serial.hashCode ^
       video.hashCode ^
       audio.hashCode ^
       image.hashCode ^
@@ -71,7 +71,7 @@ class Article {
           id == other.id &&
           name == other.name &&
           topicId == other.topicId &&
-          order == other.order &&
+          serial == other.serial &&
           video == other.video &&
           audio == other.audio &&
           image == other.image &&
@@ -79,6 +79,6 @@ class Article {
 
   @override
   String toString() {
-    return 'Article{id: $id, name: $name, topicId: $topicId,order: $order,video: $video,audio: $audio,image: $image, text: $text}';
+    return 'Article{id: $id, name: $name, topicId: $topicId,serial: $serial,video: $video,audio: $audio,image: $image, text: $text}';
   }
 }
