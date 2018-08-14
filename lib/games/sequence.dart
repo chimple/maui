@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_grid.dart';
 
 const Map<String, dynamic> testMap = {
 'image': 'stickers/giraffe/giraffe.png',
 'question': 'Match the following according to the habitat of each animal',
-'order': ["abc.png", "def.png", "xyz.png", "lmn.png"]
+'order': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"]
 };
+
+enum Status {Selected, NotSelected}
 
 class SequenceQuiz extends StatefulWidget {
 final Map<String, dynamic> input;
@@ -23,6 +26,7 @@ class SequenceQuizState extends State<SequenceQuiz>
   String ans;
   int score=0;
   var choice = []; 
+  var statusmap = [];
 
   @override
   void initState() {
@@ -34,6 +38,10 @@ class SequenceQuizState extends State<SequenceQuiz>
     for(var i=0;i<widget.input['order'].length;i++){
     choice.add(widget.input['order'][i]);}
     ans = widget.input['image'];
+    print("Choices at initializtion -$choice");
+    print("Statusmap before passing status values - $statusmap");
+    statusmap = choice.map((a) => Status.NotSelected).toList(growable: false);
+    print("StatusMap after passing status values - $statusmap");
   }
 
   // @override
@@ -50,8 +58,9 @@ class SequenceQuizState extends State<SequenceQuiz>
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        buttonRightorWrong: text == ans ? true : false,
+        color: statusmap[index] == Status.NotSelected ? Color(0xFFffffff) : (text == ans) ? Colors.green : Colors.red,
         onPress: () {
+          setState(() { statusmap[index] = Status.Selected; });
           if (text == ans) {   
             score+=4;         
             choice.removeRange(0, choice.length);
@@ -69,10 +78,10 @@ class SequenceQuizState extends State<SequenceQuiz>
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    print("Input - ${widget.input}");
+    // print("Input - ${widget.input}");
     // print("Image - ${widget.input['image']}");
 
-    print("order choice[0] - ${choice[0]}");
+    // print("order choice[0] - ${choice[0]}");
 
     // if (_isLoading) {
     //   return new SizedBox(
@@ -87,20 +96,12 @@ class SequenceQuizState extends State<SequenceQuiz>
 
      int j = 0;   
      
-     List<Widget> tableRows = new List<Widget>();
-    for (var i = 0; i < 2; ++i) {
-      List<Widget> cells = choice.cast<String>().map((e) => new Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: _buildItem(j++, e),
-                    )).toList(growable: false)
-          .skip(i * 2)
-          .take(2)
-          .toList(growable: false);
-      tableRows.add( new Column(
-            children: cells,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          ));
-    }
+     
+    List<Widget> cells = choice.cast<String>().map((e) => new Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: _buildItem(j++, e),
+                  )).toList(growable: false);
+          
 
 
     return new Scaffold(
@@ -160,7 +161,7 @@ class SequenceQuizState extends State<SequenceQuiz>
           new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: tableRows,          
+            children: cells,          
            )
          
        ],
