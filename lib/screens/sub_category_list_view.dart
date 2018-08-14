@@ -52,7 +52,7 @@ class _SubcategoryListState extends State<SubcategoryList>
       length: _subcategories.length,
       child: new Scaffold(
         appBar: new AppBar(
-          title: Text("${widget.categoryName}")
+          title: Text("${widget.categoryName}"),
           bottom: new TabBar(
             // controller: _tabController,
             isScrollable: true,

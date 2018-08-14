@@ -75,19 +75,16 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     setState(() {
       shuffledOptions.remove(str);
       if (shuffledOptions.isEmpty) {
-        widget.onEnd();
+        print("Game Over..!!");
+        gameEnd = true;
+        new Future.delayed(const Duration(milliseconds: 3000), () {
+          setState(() {
+            widget.onEnd();
+          });
+        });
       }
     });
     print("shuffledOptions after remove() $str: ${shuffledOptions}");
-
-    if (shuffledOptions.isEmpty) {
-      new Future.delayed(const Duration(milliseconds: 500), () {
-        setState(() {
-          print("Game Over..!!");
-          gameEnd = true;
-        });
-      });
-    }
   }
 
   @override
