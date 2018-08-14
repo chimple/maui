@@ -31,10 +31,10 @@ class ActivityDao {
       'a.${Activity.idCol}',
       'a.${Activity.topicIdCol}',
       'a.${Activity.serialCol}',
-      'a.${Activity.imageCol}'
-          'a.${Activity.videoCol}'
-          'a.${Activity.audioCol}'
-          'a.${Activity.textCol}',
+      'a.${Activity.imageCol}',
+      'a.${Activity.videoCol}',
+      'a.${Activity.audioCol}',
+      'a.${Activity.textCol}',
       'a.${Activity.stickerPackCol}',
     ], where: '''
       a.${Activity.topicIdCol} = t.${Topic.idCol} 
