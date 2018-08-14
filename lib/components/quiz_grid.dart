@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/QuizButton.dart';
 
-class QuizGridView extends StatelessWidget {
+class QuizGrid extends StatelessWidget {
   final List<String> buttonData;
 
-  QuizGridView({Key key, @required this.buttonData}) : super(key: key);
+  QuizGrid({Key key, @required this.buttonData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,9 @@ class QuizGridView extends StatelessWidget {
       shrinkWrap: true,
       padding: EdgeInsets.all(20.0),
       addAutomaticKeepAlives: true,
-      children: buttonData.map((e) => new QuizButton(text: e)).toList(),
+      children: buttonData
+          .map((e) => new QuizButton(text: e))
+          .toList(growable: false),
     );
   }
 }
