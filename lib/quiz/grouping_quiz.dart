@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 const Map<String, dynamic> testMap = {
   'image': 'xyz.png',
   'question': 'Group the Animals according to the Wild and Pet Animals...?',
+  'groupNames': ['Wild Animals', 'Pet Animals'],
   'groups': [
     ['Tiger', 'Lion', 'Fox', 'Cheetah', 'Deer', 'Bear', 'Leopard'],
     ['Dog', 'Cat', 'Cow', 'Parrot', 'Duck', 'Fish', 'Donkey']
