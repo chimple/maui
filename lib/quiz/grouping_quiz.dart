@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -21,6 +22,7 @@ class GroupingQuiz extends StatefulWidget {
 class _GroupingQuizState extends State<GroupingQuiz> {
   String question = 'Question..!!';
   String image = ' ';
+  bool gameEnd = false;
   List<List<String>> options = [];
   List<String> allOptions = [];
   List<String> itemsOfgroupA = [];
@@ -60,6 +62,8 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     print("Groups: ${options}");
     print("groupA: ${itemsOfgroupA}");
     print("groupB: ${itemsOfgroupB}");
+    print("optionsOfGroupA: ${optionsOfGroupA}");
+    print("optionsOfGroupB: ${optionsOfGroupB}");
     print("allOptions: ${allOptions}");
     print("shuffledOptions: ${shuffledOptions}");
   }
@@ -70,6 +74,15 @@ class _GroupingQuizState extends State<GroupingQuiz> {
       shuffledOptions.remove(str);
     });
     print("shuffledOptions after remove() $str: ${shuffledOptions}");
+
+    if (shuffledOptions.isEmpty) {
+      new Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          print("Game Over..!!");
+          gameEnd = true;
+        });
+      });
+    }
   }
 
   @override
@@ -79,32 +92,41 @@ class _GroupingQuizState extends State<GroupingQuiz> {
         question: question,
         scrollControllerForGroupA: _scrollControllerForGroupA,
         optionsOfGroupA: optionsOfGroupA,
+        itemsOfgroupA: itemsOfgroupA,
         shuffledOptions: shuffledOptions,
         scrollControllerForGroupB: _scrollControllerForGroupB,
-        optionsOfGroupB: optionsOfGroupB);
+        optionsOfGroupB: optionsOfGroupB,
+        itemsOfgroupB: itemsOfgroupB,
+        gameEnd: gameEnd);
   }
 }
 
 class GameUI extends StatelessWidget {
   final Function(String) removeData;
   final String question;
+  final bool gameEnd;
   final ScrollController scrollControllerForGroupA;
   final List<String> optionsOfGroupA;
+  final List<String> itemsOfgroupA;
   final List<String> shuffledOptions;
   final ScrollController scrollControllerForGroupB;
   final List<String> optionsOfGroupB;
-  final String groupA = 'GroupA';
-  final String groupB = 'GroupB';
+  final List<String> itemsOfgroupB;
+  final String groupA = 'Wild Animals';
+  final String groupB = 'Pet Animals';
 
   const GameUI({
     Key key,
+    @required this.removeData,
     @required this.question,
+    @required this.gameEnd,
     @required this.scrollControllerForGroupA,
     @required this.optionsOfGroupA,
+    @required this.itemsOfgroupA,
     @required this.shuffledOptions,
     @required this.scrollControllerForGroupB,
     @required this.optionsOfGroupB,
-    @required this.removeData,
+    @required this.itemsOfgroupB,
   }) : super(key: key);
 
   @override
@@ -145,8 +167,10 @@ class GameUI extends StatelessWidget {
                       removeData: removeData,
                       group: groupA,
                       optionsOfGroup: optionsOfGroupA,
+                      itemsOfgroup: itemsOfgroupA,
                       scrollControllerForGroup: scrollControllerForGroupA,
-                      shuffledOptions: shuffledOptions),
+                      shuffledOptions: shuffledOptions,
+                      gameEnd: gameEnd),
                   new Padding(
                     padding: const EdgeInsets.all(5.0),
                   ),
@@ -154,8 +178,10 @@ class GameUI extends StatelessWidget {
                       removeData: removeData,
                       group: groupB,
                       optionsOfGroup: optionsOfGroupB,
+                      itemsOfgroup: itemsOfgroupB,
                       scrollControllerForGroup: scrollControllerForGroupB,
-                      shuffledOptions: shuffledOptions),
+                      shuffledOptions: shuffledOptions,
+                      gameEnd: gameEnd),
                 ],
               ),
             ),
@@ -202,12 +228,16 @@ class GroupUI extends StatelessWidget {
     @required this.removeData,
     @required this.group,
     @required this.optionsOfGroup,
+    @required this.itemsOfgroup,
     @required this.scrollControllerForGroup,
     @required this.shuffledOptions,
+    @required this.gameEnd,
   }) : super(key: key);
   final Function(String) removeData;
   final String group;
+  final bool gameEnd;
   final List<String> optionsOfGroup;
+  final List<String> itemsOfgroup;
   final ScrollController scrollControllerForGroup;
   final List<String> shuffledOptions;
   @override
@@ -233,7 +263,6 @@ class GroupUI extends StatelessWidget {
                 curve: Curves.easeOut,
               );
             });
-
             if (optionsOfGroup.contains(label)) {
               return;
             } else {
@@ -260,7 +289,6 @@ class GroupUI extends StatelessWidget {
                       margin: const EdgeInsets.all(7.0),
                       decoration: new BoxDecoration(
                         border: new Border.all(color: Colors.black, width: 3.0),
-                        color: Colors.orange,
                         boxShadow: [
                           new BoxShadow(
                             color: const Color(0x44000000),
@@ -270,9 +298,26 @@ class GroupUI extends StatelessWidget {
                         ],
                         borderRadius: new BorderRadius.circular(12.0),
                       ),
-                      child: new ListTile(
-                        title: new Text(optionsOfGroup[i],
-                            textAlign: TextAlign.center),
+                      child: new RaisedButton(
+                        color: gameEnd
+                            ? itemsOfgroup.contains(optionsOfGroup[i])
+                                ? Colors.green
+                                : Colors.red
+                            : Colors.grey,
+                        splashColor: Colors.grey,
+                        onPressed: () {
+                          print("Hello World..!!");
+                        },
+                        child: new Center(
+                          child: new Text(
+                            optionsOfGroup[i],
+                            style: TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                              fontSize: 38.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
               )),
