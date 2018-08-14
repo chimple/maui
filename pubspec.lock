@@ -56,7 +56,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.7+2"
+    version: "0.12.7+3"
   build_config:
     dependency: transitive
     description:
@@ -70,7 +70,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1+1"
+    version: "0.2.2+1"
   build_runner:
     dependency: "direct dev"
     description:
@@ -181,7 +181,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a919788892bcbacb45562739970d36a95ce87c6f
+      resolved-ref: "4bc44602c30f8b110dddecead5326e63cde4ec51"
       url: "https://github.com/chimple/flores.git"
     source: git
     version: "0.0.1"
@@ -220,14 +220,14 @@ packages:
       name: flutter_markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   flutter_svg:
     dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3"
+    version: "0.5.5+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -365,7 +365,7 @@ packages:
       name: markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "2.0.2"
   matcher:
     dependency: transitive
     description:
@@ -435,7 +435,14 @@ packages:
       name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4"
+    version: "0.3.0"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   path_provider:
     dependency: "direct main"
     description:
@@ -485,13 +492,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.29.0+1"
-  quiver_hashcode:
-    dependency: transitive
-    description:
-      name: quiver_hashcode
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -573,7 +573,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0+5"
+    version: "0.11.1"
   stack_trace:
     dependency: transitive
     description:
@@ -608,7 +608,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.1+1"
   term_glyph:
     dependency: transitive
     description:
@@ -629,7 +629,7 @@ packages:
       name: tuple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   typed_data:
     dependency: transitive
     description:

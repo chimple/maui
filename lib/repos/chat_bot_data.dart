@@ -428,8 +428,8 @@ final List<String> oneLinersEng = [
 ];
 
 List<String> getPossibleReplies(String currentChat, int num) {
-  final reply = replyEng;
-  final oneLiners = oneLinersEng;
+  final reply = replySwa;
+  final oneLiners = oneLinersSwa;
   List<String> possibleReplies = reply[currentChat] ?? List<String>()
     ..shuffle();
   if (possibleReplies.length < num) {
