@@ -23,6 +23,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
+    List<String> choices=widget.input['choices'];
     print("hello data is.....::${widget.input['choices']}");
     return new Container(
       margin: const EdgeInsets.all(10.0),
@@ -45,38 +46,31 @@ class MultiplechoiceState extends State<Multiplechoice> {
           new Padding(padding: EdgeInsets.all(10.0)),
           Expanded(
             child: Container(
-              color: Colors.amber,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: widget.input['choices'].length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new MaterialButton(
-                      minWidth: 120.0,
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        print(
-                            "......data is....${widget.input['choices'][index]}");
-                        if (widget.input['choices'][index] ==
-                            widget.input['answer']) {
-                          print("Correct");
-                        } else {
-                          print("Wrong");
-                        }
-                      },
-                      child: new Text(
-                        widget.input['choices'][index],
-                        style:
-                            new TextStyle(fontSize: 20.0, color: Colors.white),
-                      ),
+                child: new GridView.count(
+              crossAxisCount: 2,
+              children: choices.map((element) {
+                print("the dataq is.....$element");
+                return new Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new MaterialButton(
+                    minWidth: 120.0,
+                    color: Colors.blueGrey,
+                    onPressed: () {
+                      if (element == widget.input['answer']) {
+                        print("Correct");
+                      } else {
+                        print("Wrong");
+                      }
+                      updateQuestion();
+                    },
+                    child: new Text(
+                      element,
+                      style: new TextStyle(fontSize: 20.0, color: Colors.white),
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
+                );
+              }).toList(growable: false),
+            )),
           ),
         ],
       ),
