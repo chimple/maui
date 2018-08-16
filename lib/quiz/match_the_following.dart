@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class MatchingGame extends StatefulWidget {
   Map<String, dynamic> gameData;
+  Function onEnd;
   MatchingGame(
       {key,
+      this.onEnd,
       this.gameData = const {
         "image":
             "https://raw.githubusercontent.com/flutter/website/master/_includes/code/layout/lakes/images/lake.jpg",
@@ -144,6 +146,10 @@ class _MatchingGameState extends State<MatchingGame> {
                                           .add(_rightSideItems[index]);
                                       print(_rightSideDisabledItems);
                                       print(_selectedPairs);
+                                      if (_leftSideDisabledItems.length ==
+                                          _leftSideItems.length) {
+                                        widget.onEnd();
+                                      }
                                     });
                                   }
                                 },
