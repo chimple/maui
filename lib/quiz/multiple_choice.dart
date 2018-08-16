@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../components/QuizButton.dart';
 import '../components/quiz_question.dart';
+import '../db/entity/quiz.dart';
+import '../repos/quiz_repo.dart';
 
 const Map<String, dynamic> _homework = {
   'image': 'lion',
@@ -21,6 +24,22 @@ class Multiplechoice extends StatefulWidget {
 }
 
 class MultiplechoiceState extends State<Multiplechoice> {
+//    List<Quiz> _quizzes;
+//   bool _isLoading = true;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _initState();
+//   }
+
+//   void _initState() async {
+// //TODO: Link to topic
+//     _quizzes = await QuizRepo().getQuizzesByTopicId('lion');
+//     setState(() {
+//       _isLoading = false;
+//     });
+//   }
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
@@ -50,32 +69,24 @@ class MultiplechoiceState extends State<Multiplechoice> {
             child: Container(
                 child: new GridView.count(
               crossAxisCount: 2,
+              childAspectRatio: 2.0,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 15.0,
+              shrinkWrap: true,
               children: choices.map((element) {
                 print("the dataq is.....$element");
-                return new Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: new MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.blueGrey,
-                    onPressed: () {
-                      if (element == widget.input['answer']) {
-                        print("Correct");
-                      } else {
-                        print("Wrong");
-                      }
-                      widget.onEnd();
-                    },
-                    child: new Text(
-                      element,
-                      style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                    ),
-                  ),
-                );
+                return new QuizButton(text: element, onPress: onPress);
               }).toList(growable: false),
             )),
           ),
         ],
       ),
     );
+  }
+
+  onPress() {
+    setState(() {
+      widget.onEnd();
+    });
   }
 }
