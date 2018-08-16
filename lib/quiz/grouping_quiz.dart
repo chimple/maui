@@ -43,10 +43,10 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   }
 
   void initData() {
-    image = testMap['image'];
-    question = testMap['question'];
-    groupNames = testMap['groupNames'];
-    options = testMap['groups'];
+    image = widget.input['image'];
+    question = widget.input['question'];
+    groupNames = widget.input['groupNames'];
+    options = widget.input['groups'];
 
     options[0].forEach((f) {
       itemsOfgroupA.add(f);
@@ -294,7 +294,7 @@ class GroupUI extends StatelessWidget {
                   maxHeight < maxWidth ? maxHeight * 0.5059 : maxHeight * 0.557,
               decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: group == 'Wild Animals' ? Colors.blue : Colors.purple,
+                color: Colors.blue,
                 borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
               ),
               margin: const EdgeInsets.only(left: 0.0),
