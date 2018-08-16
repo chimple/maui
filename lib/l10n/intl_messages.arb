@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-07-20T15:58:24.905184",
+  "@@last_modified": "2018-08-14T16:24:32.859263",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -12,6 +12,11 @@
   },
   "game": "Game",
   "@game": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "category": "Category",
+  "@category": {
     "type": "text",
     "placeholders": {}
   },
@@ -95,6 +100,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "no_data": "No Data",
+  "@no_data": {
+    "type": "text",
+    "placeholders": {}
+  },
   "picture_sentence": "Picture Sentence",
   "@picture_sentence": {
     "type": "text",
@@ -162,6 +172,11 @@
   },
   "circle_word": "Circle Word",
   "@circle_word": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quiz_pager": "Quiz",
+  "@quiz_pager": {
     "type": "text",
     "placeholders": {}
   },

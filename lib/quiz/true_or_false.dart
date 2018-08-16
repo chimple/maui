@@ -3,25 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 const Map<String, dynamic> quizMap = {
-  'data': [
-    {
-      'image': 'lion',
-      'question': 'Match the following according to the habitat of each animal',
-      'bool': true
-    },
-    {
-      'image': 'duck',
-      'question':
-          'this is my new appffnkabbfbafanfbfabnafbnafbanfa fa afa  asbffnabfnasb  sbfbfbnafba  nbfnbabnafbnafbnabfanfbna',
-      'bool': false
-    }
-  ]
+  'image': 'lion',
+  'question': 'Match the following according to the habitat of each animal',
+  'bool': true
 };
 
 class TrueOrFalse extends StatefulWidget {
   final Map<String, dynamic> input;
+  final Function onEnd;
 
-  const TrueOrFalse({Key key, this.input = quizMap}) : super(key: key);
+  const TrueOrFalse({Key key, this.input = quizMap, this.onEnd})
+      : super(key: key);
   @override
   _TrueOrFalseState createState() {
     // TODO: implement createState
@@ -36,7 +28,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
   Widget build(BuildContext context) {
     // TODO: implement build
     print(
-        "this is my data from json  ${"assets/${widget.input['data'][1]['image']}.png"}");
+        "this is my data from json  ${"assets/${widget.input['image']}.png"}");
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
     return new Scaffold(
@@ -68,7 +60,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
                           child: new Container(
                             color: Colors.blue,
                             child: new Image.asset(
-                              "assets/${widget.input['data'][1]['image']}.png",
+                              "assets/${widget.input['image']}.png",
                               fit: BoxFit.fill,
 //                    color: Colors.red,
                             ),
@@ -76,7 +68,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
                         ),
                         new Container(
                           child: new Text(
-                            "${widget.input['data'][1]['question']}",
+                            "${widget.input['question']}",
                             textAlign: TextAlign.center,
                             style: new TextStyle(
                                 color: Colors.red, fontSize: 20.0),
@@ -107,6 +99,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
                             ),
                             onPressed: () {
                               print("this is my True");
+                              widget.onEnd();
                             },
                             splashColor: Colors.red,
                           ),
