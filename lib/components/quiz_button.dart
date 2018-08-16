@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-enum Status{ notselected, correct, incorrect }
+enum Status{ notSelected, correct, incorrect }
 
 class QuizButton extends StatefulWidget {
   final String text;
-  Status buttonstatus;
+  Status buttonStatus;
   final Function onPress;
 
   QuizButton(
       {Key key,
       this.text,
-      this.buttonstatus,
+      this.buttonStatus,
       this.onPress})
       : super(key: key);
   
@@ -19,12 +19,12 @@ class QuizButton extends StatefulWidget {
 }
 
 class QuizButtonState extends State<QuizButton>{  
-  Status currentbuttonstate;
+  Status currentButtonState;
 
   initState() {
     super.initState();
     print("QuizButtonState.initState: ${widget.text}");
-    currentbuttonstate =Status.notselected;
+    currentButtonState =Status.notSelected;
   }
 
   @override
@@ -33,9 +33,9 @@ class QuizButtonState extends State<QuizButton>{
 
     return new ButtonTheme(
                     child: new RaisedButton(
-                   onPressed: () { setState(() { currentbuttonstate = widget.buttonstatus; });
+                   onPressed: () { setState(() { currentButtonState = widget.buttonStatus; });
                      widget.onPress();},
-                   color: currentbuttonstate == Status.notselected ?  Color(0xFFffffff) : currentbuttonstate == Status.correct ? Colors.greenAccent : Colors.redAccent,
+                   color: currentButtonState == Status.notSelected ?  Color(0xFFffffff) : currentButtonState == Status.correct ? Colors.greenAccent : Colors.redAccent,
                    shape: new RoundedRectangleBorder(
                        borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
                    child: widget.text.endsWith(".png")? new Center(child: new Image.asset("assets/${widget.text}")) : new Center(

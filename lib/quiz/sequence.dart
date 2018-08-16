@@ -34,6 +34,7 @@ class SequenceQuizState extends State<SequenceQuiz>
   void _initboard() {
     for(var i=0;i<widget.input['order'].length;i++){
     choice.add(widget.input['order'][i]);}
+    // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
     ans = widget.input['image'];
     print("Choices at initializtion -$choice");
   }
@@ -52,7 +53,7 @@ class SequenceQuizState extends State<SequenceQuiz>
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        buttonstatus: text == ans ? Status.correct : Status.incorrect,
+        buttonStatus: text == ans ? Status.correct : Status.incorrect,
         onPress: () {
           print("Score before onPress - $score");
           if (text == ans) { 
