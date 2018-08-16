@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:maui/components/QuizButton.dart';
+import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_grid.dart';
 
 const Map<String, dynamic> testMap = {
 'image': 'stickers/giraffe/giraffe.png',
 'question': 'Match the following according to the habitat of each animal',
-'order': ["abc.png", "def.png", "xyz.png", "lmn.png"]
+'order': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"]
 };
 
 class SequenceQuiz extends StatefulWidget {
@@ -33,7 +34,9 @@ class SequenceQuizState extends State<SequenceQuiz>
   void _initboard() {
     for(var i=0;i<widget.input['order'].length;i++){
     choice.add(widget.input['order'][i]);}
+    // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
     ans = widget.input['image'];
+    print("Choices at initializtion -$choice");
   }
 
   // @override
@@ -50,13 +53,16 @@ class SequenceQuizState extends State<SequenceQuiz>
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
+        buttonStatus: text == ans ? Status.correct : Status.incorrect,
         onPress: () {
-          if (text == ans) {   
-            score+=4;         
+          print("Score before onPress - $score");
+          if (text == ans) { 
+            score+=4;      
+            print("Score Update - $score");   
             choice.removeRange(0, choice.length);
           } else {            
             if (score > 0) {
-              score = score - 1;;
+              score = score - 1;
             } else {
               score=0;
             }
@@ -68,10 +74,10 @@ class SequenceQuizState extends State<SequenceQuiz>
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    print("Input - ${widget.input}");
+    // print("Input - ${widget.input}");
     // print("Image - ${widget.input['image']}");
 
-    print("order choice[0] - ${choice[0]}");
+    // print("order choice[0] - ${choice[0]}");
 
     // if (_isLoading) {
     //   return new SizedBox(
@@ -86,7 +92,8 @@ class SequenceQuizState extends State<SequenceQuiz>
 
      int j = 0;   
      
-     List<Widget> tableRows = new List<Widget>();
+     
+    List<Widget> tableRows = new List<Widget>();
     for (var i = 0; i < 2; ++i) {
       List<Widget> cells = choice.cast<String>().map((e) => new Padding(
                       padding: EdgeInsets.all(10.0),
@@ -100,6 +107,7 @@ class SequenceQuizState extends State<SequenceQuiz>
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ));
     }
+          
 
 
     return new Scaffold(

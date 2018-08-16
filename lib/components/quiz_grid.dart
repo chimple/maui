@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/components/QuizButton.dart';
+import 'package:maui/components/quiz_button.dart';
 
 class QuizGrid extends StatelessWidget {
   final List<String> buttonData;
