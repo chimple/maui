@@ -33,8 +33,8 @@ class QuizButtonState extends State<QuizButton>{
 
     return new RaisedButton(
                    onPressed: () { setState(() { currentButtonState = widget.buttonStatus; });
-                     currentButtonState != Status.disabled ? widget.onPress() : ;},
-                   color: currentButtonState == Status.notSelected ?  Color(0xFFffffff) : currentButtonState == Status.correct ? Colors.greenAccent : Colors.redAccent,
+                     widget.onPress();},
+                   color: currentButtonState == Status.notSelected ?  Color(0xFFffffff) : currentButtonState == Status.disabled ? Colors.grey : currentButtonState == Status.correct ? Colors.greenAccent : Colors.redAccent,
                    shape: new RoundedRectangleBorder(
                        borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
                    child: widget.text.endsWith(".png")? new Center(child: new Image.asset("assets/${widget.text}")) : new Center(
