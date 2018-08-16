@@ -14,7 +14,7 @@ const Map<String, dynamic> testMap = {
 
 class GroupingQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
-  Function onEnd;
+  final Function onEnd;
   GroupingQuiz({this.input = testMap, this.onEnd});
 
   @override
@@ -25,6 +25,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   String question = 'Question..!!';
   String image = ' ';
   bool gameEnd = false;
+  List<String> groupNames = [];
   List<List<String>> options = [];
   List<String> allOptions = [];
   List<String> itemsOfgroupA = [];
@@ -44,6 +45,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   void initData() {
     image = testMap['image'];
     question = testMap['question'];
+    groupNames = testMap['groupNames'];
     options = testMap['groups'];
 
     options[0].forEach((f) {
@@ -92,6 +94,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     return new GameUI(
         removeData: _removeData,
         question: question,
+        groupNames: groupNames,
         scrollControllerForGroupA: _scrollControllerForGroupA,
         optionsOfGroupA: optionsOfGroupA,
         itemsOfgroupA: itemsOfgroupA,
@@ -108,20 +111,20 @@ class GameUI extends StatelessWidget {
   final String question;
   final bool gameEnd;
   final ScrollController scrollControllerForGroupA;
+  final List<String> groupNames;
   final List<String> optionsOfGroupA;
   final List<String> itemsOfgroupA;
   final List<String> shuffledOptions;
   final ScrollController scrollControllerForGroupB;
   final List<String> optionsOfGroupB;
   final List<String> itemsOfgroupB;
-  final String groupA = 'Wild Animals';
-  final String groupB = 'Pet Animals';
 
   const GameUI({
     Key key,
     @required this.removeData,
     @required this.question,
     @required this.gameEnd,
+    @required this.groupNames,
     @required this.scrollControllerForGroupA,
     @required this.optionsOfGroupA,
     @required this.itemsOfgroupA,
@@ -133,94 +136,101 @@ class GameUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: Colors.white,
-        borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
-      ),
-      child: new Flex(
-        direction: Axis.vertical,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: new Container(
-              color: Colors.red,
-              child: Center(
-                child: Text(
-                  question,
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 6,
-            child: Container(
-              child: new Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  new GroupUI(
-                      removeData: removeData,
-                      group: groupA,
-                      optionsOfGroup: optionsOfGroupA,
-                      itemsOfgroup: itemsOfgroupA,
-                      scrollControllerForGroup: scrollControllerForGroupA,
-                      shuffledOptions: shuffledOptions,
-                      gameEnd: gameEnd),
-                  new Padding(
-                    padding: const EdgeInsets.all(5.0),
-                  ),
-                  new GroupUI(
-                      removeData: removeData,
-                      group: groupB,
-                      optionsOfGroup: optionsOfGroupB,
-                      itemsOfgroup: itemsOfgroupB,
-                      scrollControllerForGroup: scrollControllerForGroupB,
-                      shuffledOptions: shuffledOptions,
-                      gameEnd: gameEnd),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: new Center(
+    return new LayoutBuilder(builder: (context, constraints) {
+      print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
+      return new Container(
+        decoration: new BoxDecoration(
+          shape: BoxShape.rectangle,
+          color: Colors.white,
+          borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+        ),
+        child: new Flex(
+          direction: Axis.vertical,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
               child: new Container(
-                color: Colors.white,
-                child: GridView.count(
-                  childAspectRatio: 2.0,
-                  crossAxisCount: 2,
-                  children: new List.generate(shuffledOptions.length, (i) {
-                    return new Container(
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: new BoxDecoration(
-                        border: new Border.all(color: Colors.black, width: 3.0),
-                        color: Colors.blueGrey,
-                        boxShadow: [
-                          new BoxShadow(
-                            color: const Color(0x44000000),
-                            spreadRadius: 2.0,
-                            offset: const Offset(0.0, 1.0),
-                          )
-                        ],
-                        borderRadius: new BorderRadius.circular(12.0),
-                      ),
-                      child: new DragBox(shuffledOptions[i]),
-                    );
-                  }),
+                color: Colors.red,
+                child: Center(
+                  child: Text(
+                    question,
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
-    );
+            Expanded(
+              flex: 6,
+              child: Container(
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new GroupUI(
+                        removeData: removeData,
+                        maxHeight: constraints.maxHeight,
+                        maxWidth: constraints.maxWidth,
+                        group: groupNames[0],
+                        optionsOfGroup: optionsOfGroupA,
+                        itemsOfgroup: itemsOfgroupA,
+                        scrollControllerForGroup: scrollControllerForGroupA,
+                        shuffledOptions: shuffledOptions,
+                        gameEnd: gameEnd),
+                    new Padding(
+                      padding: const EdgeInsets.all(5.0),
+                    ),
+                    new GroupUI(
+                        removeData: removeData,
+                        maxHeight: constraints.maxHeight,
+                        maxWidth: constraints.maxWidth,
+                        group: groupNames[1],
+                        optionsOfGroup: optionsOfGroupB,
+                        itemsOfgroup: itemsOfgroupB,
+                        scrollControllerForGroup: scrollControllerForGroupB,
+                        shuffledOptions: shuffledOptions,
+                        gameEnd: gameEnd),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: new Center(
+                child: new Container(
+                  color: Colors.white,
+                  child: GridView.count(
+                    childAspectRatio: 2.0,
+                    crossAxisCount: 2,
+                    children: new List.generate(shuffledOptions.length, (i) {
+                      return new Container(
+                        margin: const EdgeInsets.all(8.0),
+                        decoration: new BoxDecoration(
+                          border:
+                              new Border.all(color: Colors.black, width: 3.0),
+                          color: Colors.blueGrey,
+                          boxShadow: [
+                            new BoxShadow(
+                              color: const Color(0x44000000),
+                              spreadRadius: 2.0,
+                              offset: const Offset(0.0, 1.0),
+                            )
+                          ],
+                          borderRadius: new BorderRadius.circular(12.0),
+                        ),
+                        child: new DragBox(shuffledOptions[i]),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -228,6 +238,8 @@ class GroupUI extends StatelessWidget {
   const GroupUI({
     Key key,
     @required this.removeData,
+    @required this.maxHeight,
+    @required this.maxWidth,
     @required this.group,
     @required this.optionsOfGroup,
     @required this.itemsOfgroup,
@@ -242,6 +254,8 @@ class GroupUI extends StatelessWidget {
   final List<String> itemsOfgroup;
   final ScrollController scrollControllerForGroup;
   final List<String> shuffledOptions;
+  final double maxHeight;
+  final double maxWidth;
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -275,11 +289,12 @@ class GroupUI extends StatelessWidget {
           builder: (BuildContext context, List<dynamic> accepted,
               List<dynamic> rejected) {
             return new Container(
-              width: 200.0,
-              height: 380.0,
+              width: maxWidth * 0.486,
+              height:
+                  maxHeight < maxWidth ? maxHeight * 0.5059 : maxHeight * 0.557,
               decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: group == 'GroupA' ? Colors.blue : Colors.purple,
+                color: group == 'Wild Animals' ? Colors.blue : Colors.purple,
                 borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
               ),
               margin: const EdgeInsets.only(left: 0.0),
