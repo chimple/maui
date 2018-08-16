@@ -75,19 +75,13 @@ class _MatchingGameState extends State<MatchingGame> {
     }
     return new LayoutBuilder(
       builder: (context, constraints) {
-        return new Container(
-          decoration: new BoxDecoration(
-              image: new DecorationImage(
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.grey, BlendMode.lighten),
-            image: new NetworkImage(widget.gameData["image"]),
-          )),
-          child: new Column(
+        return new Column(
             children: <Widget>[
               new Expanded(
                 flex: 1,
                 child: new QuizQuestion(
                   text: widget.gameData["question"],
+                  // image: widget.gameData["image"],
                 ),
                 // child: Container(
                 //   margin: EdgeInsets.all(10.0),
@@ -107,11 +101,11 @@ class _MatchingGameState extends State<MatchingGame> {
               ),
               new Expanded(
                 flex: 7,
-                child: new Container(
-                  child: new ListView.builder(
+                child: new ListView.builder(
                     itemCount: widget.gameData["pairs"].length,
                     itemBuilder: (BuildContext context, int index) {
                       return new Container(
+                        padding: EdgeInsets.all(5.0),
                         height: (constraints.maxHeight - (constraints.maxHeight/8) )/5,
                         width: constraints.maxWidth,
                                               child: new Row(
@@ -217,11 +211,9 @@ class _MatchingGameState extends State<MatchingGame> {
                       );
                     },
                   ),
-                ),
-              )
+              ),
             ],
-          ),
-        );
+          );
       },
     );
   }
