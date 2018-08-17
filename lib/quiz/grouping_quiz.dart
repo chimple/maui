@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_question.dart';
 
 const Map<String, dynamic> testMap = {
   'image': 'xyz.png',
@@ -149,18 +151,8 @@ class GameUI extends StatelessWidget {
           children: <Widget>[
             Expanded(
               flex: 1,
-              child: new Container(
-                color: Colors.red,
-                child: Center(
-                  child: Text(
-                    question,
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
+              child: new QuizQuestion(
+                text: question,
               ),
             ),
             Expanded(
@@ -294,7 +286,7 @@ class GroupUI extends StatelessWidget {
                   maxHeight < maxWidth ? maxHeight * 0.5059 : maxHeight * 0.557,
               decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.blue,
+                color: const Color(0x44000000),
                 borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
               ),
               margin: const EdgeInsets.only(left: 0.0),
@@ -315,26 +307,14 @@ class GroupUI extends StatelessWidget {
                         ],
                         borderRadius: new BorderRadius.circular(12.0),
                       ),
-                      child: new RaisedButton(
-                        color: gameEnd
+                      child: new QuizButton(
+                        text: optionsOfGroup[i],
+                        buttonStatus: gameEnd
                             ? itemsOfgroup.contains(optionsOfGroup[i])
-                                ? Colors.green
-                                : Colors.red
-                            : Colors.grey,
-                        splashColor: Colors.grey,
-                        onPressed: () {
-                          print("Hello World..!!");
-                        },
-                        child: new Center(
-                          child: new Text(
-                            optionsOfGroup[i],
-                            style: TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontSize: 38.0,
-                            ),
-                          ),
-                        ),
+                                ? Status.correct
+                                : Status.incorrect
+                            : Status.notSelected,
+                        onPress: () {},
                       ),
                     ),
               )),
@@ -367,39 +347,15 @@ class _DragBoxState extends State<DragBox> {
   Widget build(BuildContext context) {
     return Draggable(
       data: widget.label,
-      child: new RaisedButton(
-        color: Colors.grey,
-        splashColor: Colors.grey,
-        onPressed: () {
-          print("Hello World..!!");
-        },
-        child: new Center(
-          child: new Text(
-            widget.label,
-            style: TextStyle(
-              color: Colors.white,
-              decoration: TextDecoration.none,
-              fontSize: 40.0,
-            ),
-          ),
-        ),
+      child: new QuizButton(
+        text: widget.label,
+        buttonStatus: Status.notSelected,
+        onPress: () {},
       ),
-      feedback: new RaisedButton(
-        color: Colors.grey,
-        splashColor: Colors.grey,
-        onPressed: () {
-          print("Hello World..!!");
-        },
-        child: new Center(
-          child: new Text(
-            widget.label,
-            style: TextStyle(
-              color: Colors.white,
-              decoration: TextDecoration.none,
-              fontSize: 38.0,
-            ),
-          ),
-        ),
+      feedback: new QuizButton(
+        text: widget.label,
+        buttonStatus: Status.notSelected,
+        onPress: () {},
       ),
     );
   }
