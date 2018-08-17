@@ -48,7 +48,8 @@ class _MatchingGameState extends State<MatchingGame> {
   List<String> _leftSideDisabledItems = [];
   List<String> _rightSideDisabledItems = [];
   List<String> _rightSideItems;
-
+  Status _leftButtonStatus = Status.notSelected ;
+  Status _rightButtonStatus = Status.notSelected ;
   @override
   void initState() {
     super.initState();
@@ -114,7 +115,7 @@ class _MatchingGameState extends State<MatchingGame> {
                           children: <Widget>[
                             new Container(
                               child: new QuizButton(
-                                // buttonStatus: _leftItemSelected == "" ? Status.notSelected : Status.correct ,
+                                buttonStatus: _leftButtonStatus,
                                 onPress: _checkItem(_leftSideItems[index], true)
                                     ? null
                                     : () {
@@ -142,7 +143,7 @@ class _MatchingGameState extends State<MatchingGame> {
                             ),
                             new Container(
                               child: new QuizButton(
-                                // buttonStatus: _leftItemSelected == "" ? Status.notSelected : widget.gameData[_leftItemSelected] == _rightSideItems[index] ? Status.correct : Status.incorrect ,
+                                buttonStatus: _rightButtonStatus,
                                 onPress: _checkItem(_rightSideItems[index], false)
                                     ? null
                                     : () {
@@ -153,6 +154,8 @@ class _MatchingGameState extends State<MatchingGame> {
                                         print(_rightSideItems[index]);
                                         if (_leftItemSelected != '') {
                                           setState(() {
+                                            _leftButtonStatus = Status.disabled;
+                                            _rightButtonStatus = Status.disabled;
                                             _leftSideDisabledItems
                                                 .add(_leftItemSelected);
                                             print(_leftSideDisabledItems);
