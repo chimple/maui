@@ -5,7 +5,7 @@ import '../components/quiz_question.dart';
 
 const Map<String, dynamic> _homework = {
   'image': 'lion',
-  'questions': "#This animal is a carnivorous reptile.",
+  'questions': "This animal is a carnivorous reptile.",
   'answer': 'lion',
   'choices': ["Cat", "Sheep", "lion", "Cow"],
 };
@@ -21,15 +21,13 @@ class Multiplechoice extends StatefulWidget {
   }
 }
 
-// enum Status { notSelected, correct, incorrect }
-enum Statuses { Active, Visible, Disappear, Draggable, Dragtarget, First }
-enum ShakeCell { Right, InActive, Dance, CurveRow }
+enum Statuses { Active, Visible, Disappear, Wrong }
 
 class MultiplechoiceState extends State<Multiplechoice> {
   var val;
   bool showans = false;
   List<Statuses> _statuses = [];
-  List<ShakeCell> _shakeCells = [];
+
   bool _isLoading = true;
 
   @override
@@ -60,15 +58,12 @@ class MultiplechoiceState extends State<Multiplechoice> {
     var size = media.size;
     List<String> choices = widget.input['choices'];
     var j = 0;
-    print("hello data is.....::${widget.input['choices']}");
+
     return new Container(
       margin: const EdgeInsets.all(10.0),
       alignment: Alignment.topCenter,
       child: new Column(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        // mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          new Padding(padding: EdgeInsets.all(10.0)),
           new SingleChildScrollView(
             child: Container(
               height: size.height / 2,
@@ -79,7 +74,6 @@ class MultiplechoiceState extends State<Multiplechoice> {
               ),
             ),
           ),
-          new Padding(padding: EdgeInsets.all(10.0)),
           Expanded(
             child: Container(
                 child: new GridView.count(
@@ -110,19 +104,18 @@ class MultiplechoiceState extends State<Multiplechoice> {
             ? Status.notSelected
             : status == Statuses.Disappear ? Status.correct : Status.incorrect,
         onPress: () {
-          //  setState(() {
           if (!showans) {
-            // showans = true;
             if (element == widget.input['answer']) {
               setState(() {
                 showans = true;
-                print("coorect one is...clicked here$element");
+                print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
+                widget.onEnd();
               });
             } else {
               setState(() {
                 showans = true;
-                _statuses[index] = Statuses.Dragtarget;
+                _statuses[index] = Statuses.Wrong;
                 print(
                     "this. is when we clicked wrong choice in quize is.....;::$_statuses");
 
@@ -137,11 +130,12 @@ class MultiplechoiceState extends State<Multiplechoice> {
                     }
                   });
                 });
+                new Future.delayed(const Duration(milliseconds: 1500), () {
+                  widget.onEnd();
+                });
               });
             }
           }
         });
-
-    // });
   }
 }
