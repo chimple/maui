@@ -16,7 +16,7 @@ class QuizQuestion extends StatelessWidget {
     print(" image of the data is...$image");
 
     return new Container(
-      padding: EdgeInsets.all(10.0),
+    
       color: Colors.white,
       child: Container(
         child: new ListView(
@@ -37,13 +37,13 @@ class QuizQuestion extends StatelessWidget {
                           )
                         : Container(
                             child: new AspectRatio(
-                                aspectRatio: 1.15,
+                                aspectRatio: 1.32,
                                 child: new Image.asset(image)),
                           ),
                   ),
             new Container(
               child: new AspectRatio(
-                aspectRatio: 1.0,
+                aspectRatio: 1.6,
                 child: new Text(
                   text,
                   textAlign: TextAlign.center,

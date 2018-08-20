@@ -10,7 +10,7 @@ class QuizButton extends StatelessWidget {
   const QuizButton(
       {Key key,
       @required this.text,
-      @required this.buttonStatus,
+      @required this.buttonStatus = Status.notSelected,
       @required this.onPress})
       : super(key: key);
 
@@ -18,7 +18,7 @@ class QuizButton extends StatelessWidget {
     print("QuizButton.build");
 
     return new RaisedButton(
-        onPressed: onPress(),
+        onPressed: onPress,
         color: buttonStatus == Status.notSelected
             ? Color(0xFFffffff)
             : buttonStatus == Status.disabled

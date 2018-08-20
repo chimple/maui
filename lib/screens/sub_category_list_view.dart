@@ -130,9 +130,8 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
             onPress: () {
               Navigator.of(context).push(
                     new MaterialPageRoute(
-                        builder: (BuildContext context) => new TopicScreen(
-                            topicName: _topics[j].name,
-                            topicId: _topics[j].id)),
+                        builder: (BuildContext context) =>
+                            new TopicScreen(topicId: _topics[j].id)),
                   );
             });
       }).toList(),

@@ -20,21 +20,7 @@ class MatchingGame extends StatefulWidget {
           "3": "string3",
           "4": "string4",
           "5": "string5",
-          "6": "string6",
-          "7": "string7",
-          "8": "string8",
-          "9": "string9",
-          "10": "string10",
-          "11": "string11",
-          "12": "string12",
-          "13": "string13",
-          "14": "string14",
-          "15": "string15",
-          "16": "string16",
-          "17": "string17",
-          "18": "string18",
-          "19": "string19",
-          "20": "string20"
+          "6": "string6"
         }
       }})
       : super(key: key);
