@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/article_repo.dart';
+import 'package:maui/repos/topic_repo.dart';
 import 'package:maui/db/entity/article.dart';
+import 'package:maui/db/entity/topic.dart';
 import 'package:maui/screens/activity_list_view.dart';
 import 'package:maui/screens/related_page.dart';
 import 'package:maui/components/article_page.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 
 class TopicScreen extends StatefulWidget {
-  final String topicName;
-
   final String topicId;
-  TopicScreen({key, @required this.topicName, @required this.topicId})
-      : super(key: key);
+  TopicScreen({key, @required this.topicId}) : super(key: key);
 
   @override
   _TopicScreenState createState() => _TopicScreenState();
@@ -20,6 +19,7 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
   List<Article> _articles;
+  Topic _topic;
   bool _isLoading = true;
   bool _isDataAvailable = false;
   bool _isForwardDisable = false;
@@ -27,16 +27,19 @@ class _TopicScreenState extends State<TopicScreen> {
   PageController pageController = new PageController(initialPage: 0);
 
   void _initTopic() async {
-    await new ArticleRepo()
-        .getArticlesByTopicId(widget.topicId)
-        .then((articles) async {
-      setState(() {
-        articles.sort((a, b) => a.serial.compareTo(b.serial));
-        _articles = articles;
-        _isLoading = false;
-        _articles.length != 0
-            ? _isDataAvailable = true
-            : _isDataAvailable = false;
+    await new TopicRepo().getTopic(widget.topicId).then((topic) {
+      _topic = topic;
+      new ArticleRepo()
+          .getArticlesByTopicId(widget.topicId)
+          .then((articles) async {
+        setState(() {
+          articles.sort((a, b) => a.serial.compareTo(b.serial));
+          _articles = articles;
+          _isLoading = false;
+          _articles.length != 0
+              ? _isDataAvailable = true
+              : _isDataAvailable = false;
+        });
       });
     });
   }
@@ -92,7 +95,7 @@ class _TopicScreenState extends State<TopicScreen> {
     } else {
       return new Scaffold(
           appBar: new AppBar(
-            title: new Text(widget.topicName),
+            title: new Text(_topic.name),
             centerTitle: true,
             backgroundColor: Colors.teal[300],
             elevation: 5.0,
