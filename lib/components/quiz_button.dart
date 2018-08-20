@@ -11,6 +11,7 @@ class QuizButton extends StatelessWidget {
       {Key key,
       @required this.text,
       @required this.onPress,
+      @required this.buttonStatus})
       : super(key: key);
 
   Widget build(BuildContext context) {
