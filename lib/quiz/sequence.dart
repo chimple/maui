@@ -9,8 +9,10 @@ const Map<String, dynamic> testMap = {
 
 class SequenceQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
+  final Function onEnd;
 
-  const SequenceQuiz({Key key, this.input = testMap}) : super(key: key);
+  const SequenceQuiz({Key key, this.input = testMap, this.onEnd})
+      : super(key: key);
 
   @override
   State createState() => new SequenceQuizState();
@@ -50,11 +52,13 @@ class SequenceQuizState extends State<SequenceQuiz> {
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        buttonStatus: clicked == false ? Status.notSelected : text == ans ? Status.correct : Status.incorrect,
+        buttonStatus: clicked == false
+            ? Status.notSelected
+            : text == ans ? Status.correct : Status.incorrect,
         onPress: () {
           setState(() {
-                      clicked = true;
-                    });
+            clicked = true;
+          });
           print("Score before onPress - $score");
           if (text == ans) {
             score += 4;
@@ -67,6 +71,8 @@ class SequenceQuizState extends State<SequenceQuiz> {
               score = 0;
             }
           }
+          //TODO: Call this when all the items have been chosen
+          widget.onEnd();
         });
   }
 

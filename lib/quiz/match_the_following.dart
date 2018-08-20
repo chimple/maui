@@ -18,21 +18,7 @@ class MatchingGame extends StatefulWidget {
           "3": "string3",
           "4": "string4",
           "5": "string5",
-          "6": "string6",
-          "7": "string7",
-          "8": "string8",
-          "9": "string9",
-          "10": "string10",
-          "11": "string11",
-          "12": "string12",
-          "13": "string13",
-          "14": "string14",
-          "15": "string15",
-          "16": "string16",
-          "17": "string17",
-          "18": "string18",
-          "19": "string19",
-          "20": "string20"
+          "6": "string6"
         }
       }})
       : super(key: key);
@@ -63,14 +49,14 @@ class _MatchingGameState extends State<MatchingGame> {
     }
   }
 
-  bool _checkForRightSideItemCorrectness(String rightSideItem){
+  bool _checkForRightSideItemCorrectness(String rightSideItem) {
     bool isCorrect;
-    _selectedPairs.forEach((k,v){
-      if(v==rightSideItem){
+    _selectedPairs.forEach((k, v) {
+      if (v == rightSideItem) {
         if (widget.gameData["pairs"][k] == rightSideItem) {
-          isCorrect= true;
+          isCorrect = true;
         } else {
-          isCorrect= false;
+          isCorrect = false;
         }
       }
     });
@@ -138,7 +124,8 @@ class _MatchingGameState extends State<MatchingGame> {
                                         widget.gameData["pairs"].length &&
                                     _leftSideDisabledItems.length ==
                                         widget.gameData["pairs"].length)
-                                ? ( _checkForRightSideItemCorrectness(_rightSideItems[index])
+                                ? (_checkForRightSideItemCorrectness(
+                                        _rightSideItems[index])
                                     ? Status.correct
                                     : Status.incorrect)
                                 : Status.notSelected,

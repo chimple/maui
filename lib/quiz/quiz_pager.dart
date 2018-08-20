@@ -7,6 +7,7 @@ import 'match_the_following.dart';
 import 'multiple_choice.dart';
 import 'grouping_quiz.dart';
 import 'true_or_false.dart';
+import 'sequence.dart';
 
 class QuizPager extends StatefulWidget {
   Function onScore;
@@ -82,6 +83,9 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         break;
       case QuizType.grouping:
         return GroupingQuiz(onEnd: widget.onEnd);
+        break;
+      case QuizType.sequence:
+        return SequenceQuiz(onEnd: widget.onEnd);
         break;
     }
   }
