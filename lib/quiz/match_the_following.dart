@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
 import 'package:maui/components/quiz_question.dart';
@@ -63,14 +65,14 @@ class _MatchingGameState extends State<MatchingGame> {
     }
   }
 
-  bool _checkForRightSideItemCorrectness(String rightSideItem){
+  bool _checkForRightSideItemCorrectness(String rightSideItem) {
     bool isCorrect;
-    _selectedPairs.forEach((k,v){
-      if(v==rightSideItem){
+    _selectedPairs.forEach((k, v) {
+      if (v == rightSideItem) {
         if (widget.gameData["pairs"][k] == rightSideItem) {
-          isCorrect= true;
+          isCorrect = true;
         } else {
-          isCorrect= false;
+          isCorrect = false;
         }
       }
     });
@@ -138,7 +140,8 @@ class _MatchingGameState extends State<MatchingGame> {
                                         widget.gameData["pairs"].length &&
                                     _leftSideDisabledItems.length ==
                                         widget.gameData["pairs"].length)
-                                ? ( _checkForRightSideItemCorrectness(_rightSideItems[index])
+                                ? (_checkForRightSideItemCorrectness(
+                                        _rightSideItems[index])
                                     ? Status.correct
                                     : Status.incorrect)
                                 : Status.notSelected,
@@ -161,7 +164,10 @@ class _MatchingGameState extends State<MatchingGame> {
                                         print(_selectedPairs);
                                         if (_leftSideDisabledItems.length ==
                                             _leftSideItems.length) {
-                                          widget.onEnd();
+                                          new Future.delayed(
+                                              const Duration(seconds: 5), () {
+                                            widget.onEnd();
+                                          });
                                         }
                                       });
                                     }
