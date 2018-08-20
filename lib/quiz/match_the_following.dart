@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
 import 'package:maui/components/quiz_question.dart';
@@ -148,7 +150,10 @@ class _MatchingGameState extends State<MatchingGame> {
                                         print(_selectedPairs);
                                         if (_leftSideDisabledItems.length ==
                                             _leftSideItems.length) {
-                                          widget.onEnd();
+                                          new Future.delayed(
+                                              const Duration(seconds: 5), () {
+                                            widget.onEnd();
+                                          });
                                         }
                                       });
                                     }
