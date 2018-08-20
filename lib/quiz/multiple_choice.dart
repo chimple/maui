@@ -28,33 +28,18 @@ class MultiplechoiceState extends State<Multiplechoice> {
   bool showans = false;
   List<Statuses> _statuses = [];
 
-  bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    print("hello this should come first...");
-    _initBoard();
-  }
-
-  void _initBoard() async {
-    setState(() => _isLoading = true);
     List<String> choices = widget.input['choices'];
     _statuses = choices.map((a) => Statuses.Active).toList(growable: false);
-    print("hello this shake cell staius is......$_statuses");
-    setState(() => _isLoading = false);
+    print("hello this should come first...");
   }
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
+
     var size = media.size;
     List<String> choices = widget.input['choices'];
     var j = 0;
