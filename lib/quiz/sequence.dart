@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
 
@@ -11,8 +12,7 @@ class SequenceQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
   final Function onEnd;
 
-  const SequenceQuiz({Key key, this.input = testMap, this.onEnd})
-      : super(key: key);
+  const SequenceQuiz({Key key, this.input = testMap, this.onEnd}) : super(key: key);
 
   @override
   State createState() => new SequenceQuizState();
@@ -21,8 +21,10 @@ class SequenceQuiz extends StatefulWidget {
 class SequenceQuizState extends State<SequenceQuiz> {
   String ans;
   int score = 0;
-  bool clicked = false;
-  var choice = [];
+  var clicked = [];
+  var choice = [], clickedChoices = [];
+  List<bool> rightOrWrong = [];
+  int j = 0, k = 0, count = 0;
 
   @override
   void initState() {
@@ -31,79 +33,85 @@ class SequenceQuizState extends State<SequenceQuiz> {
   }
 
   void _initboard() {
+
+    // Array for storing choices from input
     for (var i = 0; i < widget.input['order'].length; i++) {
       choice.add(widget.input['order'][i]);
     }
     // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
     ans = widget.input['image'];
     print("Choices at initializtion -$choice");
+    
+    // Array to track the choices clicked
+    clicked = choice.map((e) => "false").toList(growable: false);
+    // Array to check if the choices are clicked in the correct sequence
+    rightOrWrong = choice.map((i) => false).toList(growable: false);
   }
 
-  // @override
-  // void didUpdateWidget(SequenceQuiz oldWidget) {
-  //   print(oldWidget.iteration);
-  //   print(widget.iteration);
-  //   if (widget.iteration != oldWidget.iteration) {
-  //     _initboard();
-  //   }
-  // }
-
-  Widget _buildItem(int index, String text) {
+  Widget _buildItem(int index, String text, int k) {
+    
+    // Universal Button for mapping keys, text/image to be shown, Button's present status and a function to perform desired actions
     return new QuizButton(
         key: new ValueKey<int>(index),
         text: text,
-        buttonStatus: clicked == false
-            ? Status.notSelected
-            : text == ans ? Status.correct : Status.incorrect,
+        buttonStatus: clicked[k] == "false" ? Status.notSelected : clicked[k] == "true" ? Status.disabled : rightOrWrong[k] ? Status.correct : Status.incorrect,
         onPress: () {
-          setState(() {
-            clicked = true;
-          });
           print("Score before onPress - $score");
-          if (text == ans) {
-            score += 4;
-            print("Score Update - $score");
-            choice.removeRange(0, choice.length);
-          } else {
-            if (score > 0) {
-              score = score - 1;
-            } else {
-              score = 0;
+          // changing value of clicked button to true when button is clicked
+          setState(() {
+                      clicked[k] = "true";
+                      clickedChoices.add(text); // storing the sequence in which the choices are clicked
+                      count++; // counter to check if the sequence is completed
+                    });
+
+            if(count == 4){
+              new Future.delayed(const Duration(milliseconds: 300), () {
+              for(var i = 0;i < 4;i++)
+              {
+                
+                setState(() {
+                                  clicked[i] = "completed";
+                                });                
+                
+                // checking if the element at choice and clicked choice array are same and mapping rightOrWrong array to true for performing the desired action
+                if(choice[i] == clickedChoices[i])
+                {
+                  setState(() {
+                                      rightOrWrong[i] = true;
+                                    });                  
+                }
+              }
+              });
+
+              // Calling the parent class for an end and to switch on to the next game
+              new Future.delayed(const Duration(milliseconds: 2000), () {
+                //TODO: Call this when all the items have been chosen
+                widget.onEnd();
+                setState(() {
+                                  choice = clicked.map((e) => "").toList(growable: false);
+                                  clicked = choice.map((e) => "false").toList(growable: false);
+                                  rightOrWrong = choice.map((i) => false).toList(growable: false);
+                                });            
+              });
             }
-          }
-          //TODO: Call this when all the items have been chosen
-          widget.onEnd();
+          
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    // print("Input - ${widget.input}");
-    // print("Image - ${widget.input['image']}");
-
-    // print("order choice[0] - ${choice[0]}");
-
-    // if (_isLoading) {
-    //   return new SizedBox(
-    //     width: 20.0,
-    //     height: 20.0,
-    //     child: new CircularProgressIndicator(),
-    //   );
-    // }
 
     double ht = MediaQuery.of(context).size.height;
-    double wd = MediaQuery.of(context).size.width;
-
-    int j = 0;
+    double wd = MediaQuery.of(context).size.width;    
 
     List<Widget> tableRows = new List<Widget>();
     for (var i = 0; i < 2; ++i) {
+      if(k > 3){k = 0;}
       List<Widget> cells = choice
           .cast<String>()
           .map((e) => new Padding(
                 padding: EdgeInsets.all(10.0),
-                child: _buildItem(j++, e),
+                child: _buildItem(j++, e, k++),
               ))
           .toList(growable: false)
           .skip(i * 2)
@@ -115,9 +123,9 @@ class SequenceQuizState extends State<SequenceQuiz> {
       ));
     }
 
-    return new Scaffold(
-      backgroundColor: Colors.grey,
-      body: new Column(
+    return new LayoutBuilder(
+      builder: (context, constraints) {
+        return new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -173,8 +181,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
             children: tableRows,
           )
         ],
-      ),
-    );
-    // });
+      );
+      });
   }
 }

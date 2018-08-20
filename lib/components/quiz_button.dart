@@ -4,28 +4,22 @@ enum Status { notSelected, correct, incorrect, disabled }
 
 class QuizButton extends StatelessWidget {
   final String text;
-  final Status buttonStatus;
   final Function onPress;
+  final Status buttonStatus;
 
   const QuizButton(
       {Key key,
       @required this.text,
-      @required this.buttonStatus = Status.notSelected,
-      @required this.onPress})
+      @required this.onPress,
       : super(key: key);
 
   Widget build(BuildContext context) {
     print("QuizButton.build");
+    print("ButtonStatus - $buttonStatus");
 
     return new RaisedButton(
         onPressed: onPress,
-        color: buttonStatus == Status.notSelected
-            ? Color(0xFFffffff)
-            : buttonStatus == Status.disabled
-                ? Colors.grey
-                : buttonStatus == Status.correct
-                    ? Colors.greenAccent
-                    : Colors.redAccent,
+        color: buttonStatus == Status.disabled ? Colors.grey : buttonStatus == Status.correct ? Colors.green : buttonStatus == Status.incorrect ? Colors.red : Colors.white,
         shape: new RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
         child: text.endsWith(".png")
