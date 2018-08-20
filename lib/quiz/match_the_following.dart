@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_question.dart';
 
 class MatchingGame extends StatefulWidget {
   Map<String, dynamic> gameData;
@@ -46,7 +48,6 @@ class _MatchingGameState extends State<MatchingGame> {
   List<String> _leftSideDisabledItems = [];
   List<String> _rightSideDisabledItems = [];
   List<String> _rightSideItems;
-
   @override
   void initState() {
     super.initState();
@@ -62,6 +63,20 @@ class _MatchingGameState extends State<MatchingGame> {
     }
   }
 
+  bool _checkForRightSideItemCorrectness(String rightSideItem){
+    bool isCorrect;
+    _selectedPairs.forEach((k,v){
+      if(v==rightSideItem){
+        if (widget.gameData["pairs"][k] == rightSideItem) {
+          isCorrect= true;
+        } else {
+          isCorrect= false;
+        }
+      }
+    });
+    return isCorrect;
+  }
+
   @override
   Widget build(BuildContext context) {
     _leftItemSelected = '';
@@ -71,108 +86,98 @@ class _MatchingGameState extends State<MatchingGame> {
           _leftSideDisabledItems, _rightSideDisabledItems);
       print(_selectedPairs);
     }
-    return new Container(
-      decoration: new BoxDecoration(
-          image: new DecorationImage(
-        fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(Colors.grey, BlendMode.lighten),
-        image: new NetworkImage(widget.gameData["image"]),
-      )),
-      child: new Column(
-        children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.all(10.0),
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.orange,
-                  borderRadius: new BorderRadius.all(Radius.circular(10.0))),
-              child: new Center(
-                child: new Text(
-                  widget.gameData["question"],
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
+    return new LayoutBuilder(
+      builder: (context, constraints) {
+        return new Column(
+          children: <Widget>[
+            new Expanded(
+              flex: 1,
+              child: new QuizQuestion(
+                text: widget.gameData["question"],
+                // image: widget.gameData["image"],
               ),
             ),
-          ),
-          new Expanded(
-            flex: 7,
-            child: new Container(
+            new Expanded(
+              flex: 7,
               child: new ListView.builder(
                 itemCount: widget.gameData["pairs"].length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      new Container(
-                        margin: EdgeInsets.all(10.0),
-                        child: new RaisedButton(
-                          onPressed: _checkItem(_leftSideItems[index], true)
-                              ? null
-                              : () {
-                                  _leftItemSelected = _leftSideItems[index];
-                                },
-                          padding: EdgeInsets.all(20.0),
-                          child: new Center(
-                            child: new Text(
-                              _leftSideItems[index],
-                              style: new TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                  return new Container(
+                    padding: EdgeInsets.all(5.0),
+                    height:
+                        (constraints.maxHeight - (constraints.maxHeight / 8)) /
+                            5,
+                    width: constraints.maxWidth,
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        new Container(
+                          child: new QuizButton(
+                            buttonStatus: (_rightSideDisabledItems.length ==
+                                        widget.gameData["pairs"].length &&
+                                    _leftSideDisabledItems.length ==
+                                        widget.gameData["pairs"].length)
+                                ? (widget.gameData["pairs"]
+                                            [_leftSideItems[index]] ==
+                                        _selectedPairs[_leftSideItems[index]]
+                                    ? Status.correct
+                                    : Status.incorrect)
+                                : Status.notSelected,
+                            onPress: _checkItem(_leftSideItems[index], true)
+                                ? null
+                                : () {
+                                    _leftItemSelected = _leftSideItems[index];
+                                  },
+                            text: _leftSideItems[index],
                           ),
                         ),
-                      ),
-                      new Container(
-                        margin: EdgeInsets.all(10.0),
-                        child: new RaisedButton(
-                          onPressed: _checkItem(_rightSideItems[index], false)
-                              ? null
-                              : () {
-                                  print("correct");
-                                  print(_leftItemSelected == ''
-                                      ? "leftNotTapped"
-                                      : _leftItemSelected);
-                                  print(_rightSideItems[index]);
-                                  if (_leftItemSelected != '') {
-                                    setState(() {
-                                      _leftSideDisabledItems
-                                          .add(_leftItemSelected);
-                                      print(_leftSideDisabledItems);
-                                      _rightSideDisabledItems
-                                          .add(_rightSideItems[index]);
-                                      print(_rightSideDisabledItems);
-                                      print(_selectedPairs);
-                                      if (_leftSideDisabledItems.length ==
-                                          _leftSideItems.length) {
-                                        widget.onEnd();
-                                      }
-                                    });
-                                  }
-                                },
-                          padding: EdgeInsets.all(20.0),
-                          child: new Center(
-                            child: new Text(
-                              _rightSideItems[index],
-                              style: new TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                        new Container(
+                          child: new QuizButton(
+                            buttonStatus: (_rightSideDisabledItems.length ==
+                                        widget.gameData["pairs"].length &&
+                                    _leftSideDisabledItems.length ==
+                                        widget.gameData["pairs"].length)
+                                ? ( _checkForRightSideItemCorrectness(_rightSideItems[index])
+                                    ? Status.correct
+                                    : Status.incorrect)
+                                : Status.notSelected,
+                            onPress: _checkItem(_rightSideItems[index], false)
+                                ? null
+                                : () {
+                                    print("correct");
+                                    print(_leftItemSelected == ''
+                                        ? "leftNotTapped"
+                                        : _leftItemSelected);
+                                    print(_rightSideItems[index]);
+                                    if (_leftItemSelected != '') {
+                                      setState(() {
+                                        _leftSideDisabledItems
+                                            .add(_leftItemSelected);
+                                        print(_leftSideDisabledItems);
+                                        _rightSideDisabledItems
+                                            .add(_rightSideItems[index]);
+                                        print(_rightSideDisabledItems);
+                                        print(_selectedPairs);
+                                        if (_leftSideDisabledItems.length ==
+                                            _leftSideItems.length) {
+                                          widget.onEnd();
+                                        }
+                                      });
+                                    }
+                                  },
+                            text: _rightSideItems[index],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),
             ),
-          )
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
