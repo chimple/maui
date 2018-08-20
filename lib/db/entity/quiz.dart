@@ -4,6 +4,7 @@ enum QuizType {
   trueOrFalse,
   matchTheFollowing,
   grouping,
+  sequence
 }
 
 class Quiz {
@@ -69,6 +70,7 @@ class Quiz {
     if (type == 'trueOrFalse') return QuizType.trueOrFalse;
     if (type == 'matchTheFollowing') return QuizType.matchTheFollowing;
     if (type == 'grouping') return QuizType.grouping;
+    if (type == 'sequence') return QuizType.sequence;
     return QuizType.unknown;
   }
 }
