@@ -104,15 +104,11 @@ class MultiplechoiceState extends State<Multiplechoice> {
 
   Widget _buildItem(int index, String element, List<String> choices,
       Statuses status, input, val) {
-    return new MyButton(
-        key: new ValueKey<int>(index),
-        index: index,
+    return new QuizButton(
         text: element,
-        status: status,
-        input: input,
-
-        // ? Status.correct
-        // : Status.incorrect,
+        buttonStatus: status == Statuses.Active
+            ? Status.notSelected
+            : status == Statuses.Disappear ? Status.correct : Status.incorrect,
         onPress: () {
           //  setState(() {
           if (!showans) {
@@ -122,7 +118,6 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 showans = true;
                 print("coorect one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
-                print("values of clor ellement is.....::${ _statuses}");
               });
             } else {
               setState(() {
@@ -146,100 +141,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
             }
           }
         });
+
     // });
-  }
-}
-
-class MyButton extends StatefulWidget {
-  MyButton({
-    Key key,
-    this.text,
-    this.index,
-    this.status,
-    this.input,
-    this.onPress,
-  }) : super(key: key);
-
-  final String text;
-  int index;
-  final String input;
-  Statuses status;
-
-  final VoidCallback onPress;
-
-  @override
-  _MyButtonState createState() => new _MyButtonState();
-}
-
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
-  AnimationController controller, controller1;
-  Animation<double> animationRight, animation, animationWrong, animationDance;
-  String _displayText;
-  Velocity v;
-  Offset o;
-  Status currentButtonState;
-  initState() {
-    super.initState();
-    print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
-    currentButtonState = Status.notSelected;
-    controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 20), vsync: this);
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 250), vsync: this);
-    animationRight =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((state) {
-        if (state == AnimationStatus.dismissed) {
-          if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
-            controller.forward();
-          }
-        }
-      });
-    controller.forward();
-    animationWrong = new Tween(begin: -2.0, end: 2.0).animate(controller1);
-    _myAnim();
-  }
-
-  void _myAnim() {
-    animationWrong.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller1.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        controller1.forward();
-      }
-    });
-    controller1.forward();
-  }
-
-  @override
-  void didUpdateWidget(MyButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
-      controller.reverse();
-    }
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    controller1.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("0.......data is.... ${widget.status}");
-
-    return new QuizButton(
-        text: widget.text,
-        buttonStatus: widget.status == Statuses.Active
-            ? Status.notSelected
-            : widget.status == Statuses.Disappear
-                ? Status.correct
-                : Status.incorrect,
-        onPress: widget.onPress);
   }
 }
