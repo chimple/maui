@@ -1,46 +1,38 @@
 import 'package:flutter/material.dart';
 
-enum Status{ notSelected, correct, incorrect, disabled }
+enum Status { notSelected, correct, incorrect, disabled }
 
-class QuizButton extends StatefulWidget {
+class QuizButton extends StatelessWidget {
   final String text;
-  Status buttonStatus;
+  final Status buttonStatus;
   final Function onPress;
 
-  QuizButton(
+  const QuizButton(
       {Key key,
       @required this.text,
-      @required this.buttonStatus,
+      @required this.buttonStatus = Status.notSelected,
       @required this.onPress})
       : super(key: key);
-  
-  @override
-  QuizButtonState createState() => new QuizButtonState();
-}
 
-class QuizButtonState extends State<QuizButton>{  
-  Status currentButtonState;
-
-  initState() {
-    super.initState();
-    print("QuizButtonState.initState: ${widget.text}");
-    currentButtonState =Status.notSelected;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print("QuizButtonState.build");
+    print("QuizButton.build");
 
     return new RaisedButton(
-                   onPressed: () { setState(() { currentButtonState = widget.buttonStatus; });
-                     widget.onPress();},
-                   color: currentButtonState == Status.notSelected ?  Color(0xFFffffff) : currentButtonState == Status.disabled ? Colors.grey : currentButtonState == Status.correct ? Colors.greenAccent : Colors.redAccent,
-                   shape: new RoundedRectangleBorder(
-                       borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-                   child: widget.text.endsWith(".png")? new Center(child: new Image.asset("assets/${widget.text}")) : new Center(
-                         child: new Text(widget.text,
-                       key: new Key("${widget.key}"),
-                       style: new TextStyle(color: Colors.black)))
-      );
+        onPressed: onPress,
+        color: buttonStatus == Status.notSelected
+            ? Color(0xFFffffff)
+            : buttonStatus == Status.disabled
+                ? Colors.grey
+                : buttonStatus == Status.correct
+                    ? Colors.greenAccent
+                    : Colors.redAccent,
+        shape: new RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
+        child: text.endsWith(".png")
+            ? new Center(child: new Image.asset("assets/${text}"))
+            : new Center(
+                child: new Text(text,
+                    key: new Key("${key}"),
+                    style: new TextStyle(color: Colors.black))));
   }
 }
