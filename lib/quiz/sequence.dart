@@ -24,7 +24,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
   var clicked = [];
   var choice = [], clickedChoices = [];
   List<bool> rightOrWrong = [];
-  int j = 0, k = 0, count = 0;
+  int j = 0, count = 0;
 
   @override
   void initState() {
@@ -100,28 +100,17 @@ class SequenceQuizState extends State<SequenceQuiz> {
 
   @override
   Widget build(BuildContext context) {
+    int k=0;
 
     double ht = MediaQuery.of(context).size.height;
     double wd = MediaQuery.of(context).size.width;    
 
-    List<Widget> tableRows = new List<Widget>();
-    for (var i = 0; i < 2; ++i) {
-      if(k > 3){k = 0;}
-      List<Widget> cells = choice
-          .cast<String>()
-          .map((e) => new Padding(
+    
+    List<Widget> cells = choice.cast<String>().map((e) => new Padding(
                 padding: EdgeInsets.all(10.0),
                 child: _buildItem(j++, e, k++),
               ))
-          .toList(growable: false)
-          .skip(i * 2)
-          .take(2)
           .toList(growable: false);
-      tableRows.add(new Column(
-        children: cells,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      ));
-    }
 
     return new LayoutBuilder(
       builder: (context, constraints) {
@@ -175,10 +164,15 @@ class SequenceQuizState extends State<SequenceQuiz> {
               )),
             ],
           ),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: tableRows,
+          new Expanded(
+            child: new GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(40.0),
+              crossAxisSpacing: 10.0,
+              crossAxisCount: 2,
+              childAspectRatio: 2.0,
+              children: cells
+            ),
           )
         ],
       );
