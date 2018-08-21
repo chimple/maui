@@ -86,7 +86,12 @@ class _GroupingQuizState extends State<GroupingQuiz> {
         gameEnd = true;
         new Future.delayed(const Duration(milliseconds: 3000), () {
           setState(() {
-            widget.onEnd();
+            widget.onEnd({
+              'itemsOfGroupA': itemsOfgroupA,
+              'itemsOfGroupB': itemsOfgroupB,
+              'correct': 1,
+              'total': 2
+            });
           });
         });
       }

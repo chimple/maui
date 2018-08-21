@@ -95,7 +95,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 showans = true;
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
-                widget.onEnd();
+                widget.onEnd({'userChoice': element, 'correct': 1, 'total': 1});
               });
             } else {
               setState(() {
@@ -116,7 +116,8 @@ class MultiplechoiceState extends State<Multiplechoice> {
                   });
                 });
                 new Future.delayed(const Duration(milliseconds: 1500), () {
-                  widget.onEnd();
+                  widget
+                      .onEnd({'userChoice': element, 'correct': 0, 'total': 1});
                 });
               });
             }

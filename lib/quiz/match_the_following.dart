@@ -154,7 +154,8 @@ class _MatchingGameState extends State<MatchingGame> {
                                             _leftSideItems.length) {
                                           new Future.delayed(
                                               const Duration(seconds: 5), () {
-                                            widget.onEnd();
+                                            widget.onEnd(
+                                                {'correct': 1, 'total': 2});
                                           });
                                         }
                                       });

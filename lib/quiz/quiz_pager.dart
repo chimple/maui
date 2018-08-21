@@ -118,7 +118,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     }
   }
 
-  _onEnd({Map<String, dynamic> resultData}) {
+  _onEnd(Map<String, dynamic> resultData) {
     if (resultData != null) _quizInputs[_currentQuiz].addAll(resultData);
     setState(() {
       widget.onProgress(++_currentQuiz / _quizzes.length);

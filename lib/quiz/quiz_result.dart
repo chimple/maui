@@ -19,7 +19,7 @@ class QuizResultState extends State<QuizResult> {
           .map((q) => Row(
                 children: <Widget>[
                   Text(q['question']),
-                  Text(q['result'] ?? '')
+                  Text('${q['correct']} / ${q['total']})')
                 ],
               ))
           .toList(growable: false),
