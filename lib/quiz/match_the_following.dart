@@ -101,7 +101,7 @@ class _MatchingGameState extends State<MatchingGame> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         new Container(
-                          width: mediaQueryData.size.width/3 ,
+                          width: mediaQueryData.size.width / 3,
                           child: new QuizButton(
                             buttonStatus: (_rightSideDisabledItems.length ==
                                         widget.gameData["pairs"].length &&
@@ -112,17 +112,19 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _selectedPairs[_leftSideItems[index]]
                                     ? Status.correct
                                     : Status.incorrect)
-                                : (_leftSideDisabledItems.indexOf(_leftSideItems[index]) == -1 ? Status.notSelected : Status.disabled),
-                            onPress: _checkItem(_leftSideItems[index], true)
-                                ? null
-                                : () {
+                                : (_leftSideDisabledItems
+                                            .indexOf(_leftSideItems[index]) ==
+                                        -1
+                                    ? Status.notSelected
+                                    : Status.disabled),
+                            onPress: () {
                                     _leftItemSelected = _leftSideItems[index];
                                   },
                             text: _leftSideItems[index],
                           ),
                         ),
                         new Container(
-                          width: mediaQueryData.size.width/3 ,
+                          width: mediaQueryData.size.width / 3,
                           child: new QuizButton(
                             buttonStatus: (_rightSideDisabledItems.length ==
                                         widget.gameData["pairs"].length &&
@@ -132,10 +134,12 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _rightSideItems[index])
                                     ? Status.correct
                                     : Status.incorrect)
-                                : (_rightSideDisabledItems.indexOf(_rightSideItems[index]) == -1 ? Status.notSelected : Status.disabled),
-                            onPress: _checkItem(_rightSideItems[index], false)
-                                ? null
-                                : () {
+                                : (_rightSideDisabledItems
+                                            .indexOf(_rightSideItems[index]) ==
+                                        -1
+                                    ? Status.notSelected
+                                    : Status.disabled),
+                            onPress: () {
                                     print("correct");
                                     print(_leftItemSelected == ''
                                         ? "leftNotTapped"
