@@ -69,8 +69,11 @@ class SequenceQuizState extends State<SequenceQuiz> {
           // changing value of clicked button to true when button is clicked
           setState(() {
                       clicked[k] = "true";
+                      if(clickedChoices.contains(text)){}
+                      else {
                       clickedChoices.add(text); // storing the sequence in which the choices are clicked
                       count++; // counter to check if the sequence is completed
+                      }
                     });
 
             if(count == choice.length){
