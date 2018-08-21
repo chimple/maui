@@ -39,8 +39,10 @@ class _MatchingGameState extends State<MatchingGame> {
   @override
   void initState() {
     super.initState();
-    _leftSideItems = (widget.gameData["pairs"].keys.toList()..shuffle());
-    _rightSideItems = (widget.gameData["pairs"].values.toList()..shuffle());
+    _leftSideItems =
+        (widget.gameData["pairs"].keys.toList().cast<String>()..shuffle());
+    _rightSideItems =
+        (widget.gameData["pairs"].values.toList().cast<String>()..shuffle());
   }
 
   bool _checkItem(String buttonItem, bool isItemOnLeft) {

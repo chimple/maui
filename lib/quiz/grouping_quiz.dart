@@ -47,8 +47,11 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   void initData() {
     image = widget.input['image'];
     question = widget.input['question'];
-    groupNames = widget.input['groupNames'];
-    options = widget.input['groups'];
+    groupNames = widget.input['groupNames'].cast<String>();
+    options = [
+      widget.input['groups'][0].cast<String>(),
+      widget.input['groups'][1].cast<String>()
+    ];
 
     options[0].forEach((f) {
       itemsOfgroupA.add(f);
