@@ -112,7 +112,7 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _selectedPairs[_leftSideItems[index]]
                                     ? Status.correct
                                     : Status.incorrect)
-                                : Status.notSelected,
+                                : (_leftSideDisabledItems.indexOf(_leftSideItems[index]) == -1 ? Status.notSelected : Status.disabled),
                             onPress: _checkItem(_leftSideItems[index], true)
                                 ? null
                                 : () {
@@ -132,7 +132,7 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _rightSideItems[index])
                                     ? Status.correct
                                     : Status.incorrect)
-                                : Status.notSelected,
+                                : (_rightSideDisabledItems.indexOf(_rightSideItems[index]) == -1 ? Status.notSelected : Status.disabled),
                             onPress: _checkItem(_rightSideItems[index], false)
                                 ? null
                                 : () {
