@@ -31,13 +31,14 @@ class _RelatedPageState extends State<RelatedPage> {
   Widget _buildTile(int index) {
     // print('topic tile ${topic[index].id} $index ${topic[index]}');
     return new TopicButton(
-      text: topic[index].name,
-      color: topic[index].color,
-      image: topic[index].image,
-      onPress: () => Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => new TopicScreen(
-              topicId: topic[index].id, topicName: topic[index].name))),
-    );
+        text: topic[index].name,
+        color: topic[index].color,
+        image: topic[index].image,
+        onPress: () => Navigator.of(context).push(
+              new MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      new TopicScreen(topicId: topic[index].id)),
+            ));
   }
 
   @override
