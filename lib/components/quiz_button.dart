@@ -19,8 +19,13 @@ class QuizButton extends StatelessWidget {
     print("ButtonStatus - $buttonStatus");
 
     return new RaisedButton(
-        onPressed: onPress,
-        color: buttonStatus == Status.disabled ? Colors.grey : buttonStatus == Status.correct ? Colors.green : buttonStatus == Status.incorrect ? Colors.red : Colors.white,
+        onPressed: buttonStatus == Status.notSelected ? onPress : null,
+        color: Color(0xFFffffff),
+        disabledColor: buttonStatus == Status.disabled
+            ? Colors.grey
+            : buttonStatus == Status.correct
+                ? Colors.greenAccent
+                : Colors.redAccent,
         shape: new RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
         child: text.endsWith(".png")
