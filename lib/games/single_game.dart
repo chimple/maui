@@ -38,6 +38,7 @@ import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
 import 'package:maui/games/picture_sentence.dart';
 import 'package:maui/screens/score_screen.dart';
+import "package:maui/components/result_summary_page.dart";
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/components/hud.dart';
@@ -635,21 +636,22 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         Navigator.push(context,
             new MaterialPageRoute<void>(builder: (BuildContext context) {
           final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-          return new ScoreScreen(
-            gameName: widget.gameName,
-            gameDisplay: widget.gameConfig.gameDisplay,
-            myUser: loggedInUser,
-            myScore: loggedInUser == widget.gameConfig.myUser
-                ? widget.gameConfig.myScore
-                : widget.gameConfig.otherScore,
-            otherUser: loggedInUser == widget.gameConfig.myUser
-                ? widget.gameConfig.otherUser
-                : widget.gameConfig.myUser,
-            otherScore: loggedInUser == widget.gameConfig.myUser
-                ? widget.gameConfig.otherScore
-                : widget.gameConfig.myScore,
-            isGameOver: false,
-          );
+          // return new ScoreScreen(
+          //   gameName: widget.gameName,
+          //   gameDisplay: widget.gameConfig.gameDisplay,
+          //   myUser: loggedInUser,
+          //   myScore: loggedInUser == widget.gameConfig.myUser
+          //       ? widget.gameConfig.myScore
+          //       : widget.gameConfig.otherScore,
+          //   otherUser: loggedInUser == widget.gameConfig.myUser
+          //       ? widget.gameConfig.otherUser
+          //       : widget.gameConfig.myUser,
+          //   otherScore: loggedInUser == widget.gameConfig.myUser
+          //       ? widget.gameConfig.otherScore
+          //       : widget.gameConfig.myScore,
+          //   isGameOver: false,
+          // );
+          return new ResultSummaryPage();
         }));
       }
     }
@@ -704,20 +706,21 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-        return new ScoreScreen(
-          gameName: widget.gameName,
-          gameDisplay: widget.gameConfig.gameDisplay,
-          myUser: loggedInUser,
-          myScore: loggedInUser == widget.gameConfig.myUser
-              ? widget.gameConfig.myScore
-              : widget.gameConfig.otherScore,
-          otherUser: loggedInUser == widget.gameConfig.myUser
-              ? widget.gameConfig.otherUser
-              : widget.gameConfig.myUser,
-          otherScore: loggedInUser == widget.gameConfig.myUser
-              ? widget.gameConfig.otherScore
-              : widget.gameConfig.myScore,
-        );
+        // return new ScoreScreen(
+        //   gameName: widget.gameName,
+        //   gameDisplay: widget.gameConfig.gameDisplay,
+        //   myUser: loggedInUser,
+        //   myScore: loggedInUser == widget.gameConfig.myUser
+        //       ? widget.gameConfig.myScore
+        //       : widget.gameConfig.otherScore,
+        //   otherUser: loggedInUser == widget.gameConfig.myUser
+        //       ? widget.gameConfig.otherUser
+        //       : widget.gameConfig.myUser,
+        //   otherScore: loggedInUser == widget.gameConfig.myUser
+        //       ? widget.gameConfig.otherScore
+        //       : widget.gameConfig.myScore,
+        // );
+        return ResultSummaryPage();
       }));
     }
   }
