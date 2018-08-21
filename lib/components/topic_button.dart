@@ -61,14 +61,13 @@ class TopicButton extends StatelessWidget {
                               ),
                             ),
                   Container(
-                    child: new Text(
-                      text,
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontSize: 30.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    child: new Text(text,
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 30.0,
+                        ),
+//                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis),
                   )
                 ],
               )
