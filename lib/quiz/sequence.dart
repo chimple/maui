@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_question.dart';
 
 const Map<String, dynamic> testMap = {
-  'image': 'stickers/giraffe/giraffe.png',
+  'image': 'assets/stickers/giraffe/giraffe.png',
   'question': 'Match the following according to the habitat of each animal',
   'order': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"]
 };
@@ -21,26 +22,34 @@ class SequenceQuiz extends StatefulWidget {
 class SequenceQuizState extends State<SequenceQuiz> {
   String ans;
   int score = 0;
-  var clicked = [];
-  var choice = [], clickedChoices = [];
+  List<String> clicked = [], shuffledChoices = [];
+  List<String> choice = [];
+  List<String> clickedChoices = [];
   List<bool> rightOrWrong = [];
   int j = 0, count = 0;
 
   @override
   void initState() {
     super.initState();
-    _initboard();
+    _initBoard();
   }
 
-  void _initboard() {
+  void _initBoard() {
 
     // Array for storing choices from input
     for (var i = 0; i < widget.input['order'].length; i++) {
-      choice.add(widget.input['order'][i]);
+      choice.add(widget.input['order'].cast<String>()[i]);
+      shuffledChoices.add(widget.input['order'].cast<String>()[i]);
     }
     // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
     ans = widget.input['image'];
     print("Choices at initializtion -$choice");
+
+    shuffledChoices.shuffle();
+
+    print("Shuffled Choices - $shuffledChoices");
+
+    // shuffledChoices = choice.cast<String>().map((e) => choice.cast<String>()[e]).toList(growable: false);
     
     // Array to track the choices clicked
     clicked = choice.map((e) => "false").toList(growable: false);
@@ -64,9 +73,9 @@ class SequenceQuizState extends State<SequenceQuiz> {
                       count++; // counter to check if the sequence is completed
                     });
 
-            if(count == 4){
+            if(count == choice.length){
               new Future.delayed(const Duration(milliseconds: 300), () {
-              for(var i = 0;i < 4;i++)
+              for(var i = 0;i < clicked.length;i++)
               {
                 
                 setState(() {
@@ -100,71 +109,29 @@ class SequenceQuizState extends State<SequenceQuiz> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
     int k=0;
+    var size = media.size;
 
-    double ht = MediaQuery.of(context).size.height;
-    double wd = MediaQuery.of(context).size.width;    
-
-    
-    List<Widget> cells = choice.cast<String>().map((e) => new Padding(
+    List<Widget> cells = shuffledChoices.map((e) => new Padding(
                 padding: EdgeInsets.all(10.0),
                 child: _buildItem(j++, e, k++),
               ))
           .toList(growable: false);
 
-    return new LayoutBuilder(
-      builder: (context, constraints) {
-        return new Column(
+    return new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              new SingleChildScrollView(
-                  child: new Container(
-                height: ht * 0.48,
-                width: wd * 0.7,
-                decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(20.0),
-                  color: Colors.white,
-                  border: new Border.all(
-                    width: 6.0,
-                    color: Colors.grey,
-                  ),
-                ),
-                child: new Column(children: <Widget>[
-                  //Image's Container
-                  new Container(
-                    height: ht * 0.4,
-                    width: wd * 0.4,
-                    child: new Image(
-                      image: new AssetImage("assets/${widget.input['image']}"),
-                    ),
-                  ),
-
-                  // Question's Container
-                  new Container(
-                    height: ht * 0.07,
-                    decoration: new BoxDecoration(
-                        // borderRadius: new BorderRadius.circular(20.0),
-                        color: const Color(0xFFC0C0C0),
-                        border: const Border(
-                          bottom:
-                              const BorderSide(width: 10.0, color: Colors.grey),
-                        )),
-                    child: new Text(
-                      "${widget.input['question']}",
-                      style: new TextStyle(
-                          fontSize: ht * 0.03, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ]),
+          new Container(
+            height: size.height / 2,
+            child: 
+            new QuizQuestion(
+                text: widget.input['question'],
+                image: widget.input['image'],
               )),
-            ],
-          ),
           new Expanded(
+            flex: 1,
             child: new GridView.count(
               primary: false,
               padding: const EdgeInsets.all(40.0),
@@ -176,6 +143,5 @@ class SequenceQuizState extends State<SequenceQuiz> {
           )
         ],
       );
-      });
   }
 }
