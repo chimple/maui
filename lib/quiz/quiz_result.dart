@@ -15,13 +15,14 @@ class QuizResult extends StatefulWidget {
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
 
-  Widget _buildAskedQuestionExpandableTile(Map<String, dynamic> q) {
+  Widget _buildAskedQuestionExpandableTile(
+      Map<String, dynamic> q, BuildContext context) {
     GlobalKey<ControlledExpansionTileState> _expansionKey =
         new GlobalObjectKey(q['question']);
     return new Container(
       margin: new EdgeInsets.all(2.0),
       color: Colors.teal,
-          child: new ControlledExpansionTile(
+      child: new ControlledExpansionTile(
         key: _expansionKey,
         onExpansionChanged: (bool value) {
           if (value) {
@@ -85,12 +86,12 @@ class QuizResultState extends State<QuizResult> {
     );
   }
 
-  List<Widget> _buildListOfQuestionsAsked() {
+  List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
     List<Widget> _questionResults = [];
     widget.quizInputs
         .map(
           (q) => _questionResults.add(
-                _buildAskedQuestionExpandableTile(q),
+                _buildAskedQuestionExpandableTile(q, context),
               ),
         )
         .toList(growable: false);
@@ -100,15 +101,8 @@ class QuizResultState extends State<QuizResult> {
 
   @override
   Widget build(BuildContext context) {
-    return new CustomScrollView(
-      shrinkWrap: false,
-      primary: true,
-      controller: null,
-      slivers: <Widget>[
-        new SliverList(
-          delegate: new SliverChildListDelegate(_buildListOfQuestionsAsked()),
-        ),
-      ],
+    return new ListView(
+      children: _buildListOfQuestionsAsked(context),
     );
   }
 }
