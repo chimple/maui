@@ -18,8 +18,22 @@ class QuizResultState extends State<QuizResult> {
       children: widget.quizInputs
           .map((q) => Row(
                 children: <Widget>[
-                  Text(q['question']),
-                  Text('${q['correct']} / ${q['total']})')
+                  new Expanded(
+                    flex: 4,
+                    child: new Container(
+                      child: new Center(
+                        child: Text(q['question'], overflow: TextOverflow.ellipsis ,),
+                      ),
+                    ),
+                  ),
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      child: new Center(
+                        child: Text('${q['correct']} / ${q['total']})'),
+                      ),
+                    ),
+                  ),
                 ],
               ))
           .toList(growable: false),
