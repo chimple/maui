@@ -8,6 +8,7 @@ import 'multiple_choice.dart';
 import 'grouping_quiz.dart';
 import 'true_or_false.dart';
 import 'sequence.dart';
+import 'quiz_result.dart';
 
 class QuizPager extends StatefulWidget {
   Function onScore;
@@ -35,7 +36,9 @@ class QuizPager extends StatefulWidget {
 
 class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Quiz> _quizzes;
+  List<Map<String, dynamic>> _quizInputs;
   bool _isLoading = true;
+  int _currentQuiz = 0;
 
   @override
   void initState() {
@@ -46,6 +49,17 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   void _initState() async {
     widget.gameConfig.topicId = 'lion'; //TODO: Link to topic
     _quizzes = await QuizRepo().getQuizzesByTopicId(widget.gameConfig.topicId);
+    _quizInputs = _quizzes.map((quiz) {
+      Map<String, dynamic> data;
+      try {
+        data = json.decode(quiz.content);
+      } catch (e) {
+        print(e);
+        data = {};
+      }
+      return data;
+    }).toList(growable: false);
+    print(_quizInputs);
     setState(() {
       _isLoading = false;
     });
@@ -61,32 +75,53 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         child: new CircularProgressIndicator(),
       ));
     }
-    Quiz quiz = _quizzes[widget.iteration % _quizzes.length];
-    try {
-      Map<String, dynamic> data = json.decode(quiz.content);
-    } catch (e) {
-      print(e);
+    if (_currentQuiz < _quizzes.length) {
+      Quiz quiz = _quizzes[_currentQuiz];
+      final input = _quizInputs[_currentQuiz];
+      print(input);
+      switch (quiz.quizType) {
+        case QuizType.multipleChoice:
+          return Multiplechoice(
+            onEnd: _onEnd,
+            input: input,
+          );
+          break;
+        case QuizType.matchTheFollowing:
+          return MatchingGame(
+            onEnd: _onEnd,
+            gameData: input,
+          );
+          break;
+        case QuizType.trueOrFalse:
+          return TrueOrFalse(
+            onEnd: _onEnd,
+            input: input,
+          );
+          break;
+        case QuizType.grouping:
+          return GroupingQuiz(
+            onEnd: _onEnd,
+            input: input,
+          );
+          break;
+        case QuizType.sequence:
+          return SequenceQuiz(
+            onEnd: _onEnd,
+            input: input,
+          );
+          break;
+      }
+    } else {
+      return QuizResult(
+        quizInputs: _quizInputs,
+      );
     }
-    switch (quiz.quizType) {
-      case QuizType.multipleChoice:
-        return Multiplechoice(onEnd: widget.onEnd);
-        break;
-      case QuizType.matchTheFollowing:
-        return MatchingGame(
-          onEnd: widget.onEnd,
-        );
-        break;
-      case QuizType.trueOrFalse:
-        return TrueOrFalse(
-          onEnd: widget.onEnd,
-        );
-        break;
-      case QuizType.grouping:
-        return GroupingQuiz(onEnd: widget.onEnd);
-        break;
-      case QuizType.sequence:
-        return SequenceQuiz(onEnd: widget.onEnd);
-        break;
-    }
+  }
+
+  _onEnd(Map<String, dynamic> resultData) {
+    if (resultData != null) _quizInputs[_currentQuiz].addAll(resultData);
+    setState(() {
+      widget.onProgress(++_currentQuiz / _quizzes.length);
+    });
   }
 }

@@ -4,7 +4,7 @@ import 'package:maui/components/quiz_button.dart';
 const Map<String, dynamic> testMap = {
   'image': 'stickers/giraffe/giraffe.png',
   'question': 'Match the following according to the habitat of each animal',
-  'order': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"]
+  'order': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"],
 };
 
 class SequenceQuiz extends StatefulWidget {
@@ -72,7 +72,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
             }
           }
           //TODO: Call this when all the items have been chosen
-          widget.onEnd();
+          widget.onEnd({'correct': 1, 'total': 2});
         });
   }
 
