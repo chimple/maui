@@ -13,24 +13,24 @@ class QuizResult extends StatefulWidget {
 }
 
 class QuizResultState extends State<QuizResult> {
-  GlobalKey<ControlledExpansionTileState> currentExpandedTile;
+  GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
 
   Widget _buildAskedQuestionExpandableTile(Map<String, dynamic> q) {
-    GlobalKey<ControlledExpansionTileState> expansionKey =
+    GlobalKey<ControlledExpansionTileState> _expansionKey =
         new GlobalObjectKey(q['question']);
     return new Container(
       margin: new EdgeInsets.all(2.0),
       color: Colors.teal,
           child: new ControlledExpansionTile(
-        key: expansionKey,
+        key: _expansionKey,
         onExpansionChanged: (bool value) {
           if (value) {
-            if (currentExpandedTile != null) {
-              currentExpandedTile.currentState?.handleTap();
+            if (_currentExpandedTile != null) {
+              _currentExpandedTile.currentState?.handleTap();
             }
-            currentExpandedTile = expansionKey;
+            _currentExpandedTile = _expansionKey;
           } else {
-            currentExpandedTile = null;
+            _currentExpandedTile = null;
           }
         },
         title: new Padding(
