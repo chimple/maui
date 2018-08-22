@@ -6,6 +6,7 @@ import 'package:maui/quiz/multiple_choice.dart';
 import 'package:maui/quiz/grouping_quiz.dart';
 import 'package:maui/quiz/true_or_false.dart';
 import 'package:maui/quiz/sequence.dart';
+import 'quiz_pager.dart';
 
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
@@ -21,44 +22,6 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
-
-  List<Widget> _expandQuiz(String quizType, Map<String, dynamic> q) {
-    List<Widget> _quizWithCorrectAnswer = [];
-    switch (quizType) {
-      case "multipleChoice":
-        _quizWithCorrectAnswer.add(new Multiplechoice(
-          onEnd: null,
-          input: q,
-        ));
-
-        break;
-      case "matchTheFollowing":
-        _quizWithCorrectAnswer.add(new MatchingGame(
-          onEnd: null,
-          gameData: q,
-        ));
-        break;
-      case "trueOrFalse":
-        _quizWithCorrectAnswer.add(new TrueOrFalse(
-          onEnd: null,
-          input: q,
-        ));
-        break;
-      case "grouping":
-        _quizWithCorrectAnswer.add(new GroupingQuiz(
-          onEnd: null,
-          input: q,
-        ));
-        break;
-      case "sequence":
-        _quizWithCorrectAnswer.add(new SequenceQuiz(
-          onEnd: null,
-          input: q,
-        ));
-        break;
-    }
-    return _quizWithCorrectAnswer;
-  }
 
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
@@ -124,7 +87,12 @@ class QuizResultState extends State<QuizResult> {
             ),
           ),
         ),
-        children: _expandQuiz(widget.quizzes[_quizIndex].type, q),
+        children: <Widget>[
+          QuizPager.createQuiz(
+              quiz: widget.quizzes[_quizIndex],
+              input: widget.quizInputs[_quizIndex],
+              onEnd: null)
+        ],
       ),
     );
   }
