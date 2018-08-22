@@ -422,7 +422,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           data: theme,
           child: Scaffold(
               key: _scaffoldKey,
-              endDrawer: new ShowHelpDrawer(topicId: widget.gameConfig.topicId),
+              endDrawer: new ShowHelp(topicId: widget.gameConfig.topicId),
               resizeToAvoidBottomPadding: false,
               backgroundColor: colors[0],
               body: new SafeArea(

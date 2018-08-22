@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/topic_page_view.dart';
 
-class ShowHelpDrawer extends StatelessWidget {
+class ShowHelp extends StatelessWidget {
  final String topicId;
-  const ShowHelpDrawer({
+  const ShowHelp({
     Key key,
     @required this.topicId,
   }) : super(key: key);
