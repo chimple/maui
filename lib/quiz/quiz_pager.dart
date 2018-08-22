@@ -79,38 +79,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       Quiz quiz = _quizzes[_currentQuiz];
       final input = _quizInputs[_currentQuiz];
       print(input);
-      switch (quiz.quizType) {
-        case QuizType.multipleChoice:
-          return Multiplechoice(
-            onEnd: _onEnd,
-            input: input,
-          );
-          break;
-        case QuizType.matchTheFollowing:
-          return MatchingGame(
-            onEnd: _onEnd,
-            gameData: input,
-          );
-          break;
-        case QuizType.trueOrFalse:
-          return TrueOrFalse(
-            onEnd: _onEnd,
-            input: input,
-          );
-          break;
-        case QuizType.grouping:
-          return GroupingQuiz(
-            onEnd: _onEnd,
-            input: input,
-          );
-          break;
-        case QuizType.sequence:
-          return SequenceQuiz(
-            onEnd: _onEnd,
-            input: input,
-          );
-          break;
-      }
+      return createQuiz(quiz: quiz, input: input, onEnd: _onEnd);
     } else {
       return QuizResult(
         quizInputs: _quizInputs,
@@ -123,5 +92,41 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     setState(() {
       widget.onProgress(++_currentQuiz / _quizzes.length);
     });
+  }
+
+  static Widget createQuiz(
+      {Quiz quiz, Map<String, dynamic> input, Function onEnd}) {
+    switch (quiz.quizType) {
+      case QuizType.multipleChoice:
+        return Multiplechoice(
+          onEnd: onEnd,
+          input: input,
+        );
+        break;
+      case QuizType.matchTheFollowing:
+        return MatchingGame(
+          onEnd: onEnd,
+          gameData: input,
+        );
+        break;
+      case QuizType.trueOrFalse:
+        return TrueOrFalse(
+          onEnd: onEnd,
+          input: input,
+        );
+        break;
+      case QuizType.grouping:
+        return GroupingQuiz(
+          onEnd: onEnd,
+          input: input,
+        );
+        break;
+      case QuizType.sequence:
+        return SequenceQuiz(
+          onEnd: onEnd,
+          input: input,
+        );
+        break;
+    }
   }
 }
