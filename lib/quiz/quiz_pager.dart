@@ -83,6 +83,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     } else {
       return QuizResult(
         quizInputs: _quizInputs,
+        quizzes: _quizzes,
       );
     }
   }

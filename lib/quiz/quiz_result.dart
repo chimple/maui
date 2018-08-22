@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
+import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/quiz/match_the_following.dart';
 import 'package:maui/quiz/multiple_choice.dart';
 import 'package:maui/quiz/grouping_quiz.dart';
@@ -8,8 +9,9 @@ import 'package:maui/quiz/sequence.dart';
 
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
+  List<Quiz> quizzes;
 
-  QuizResult({Key key, this.quizInputs}) : super(key: key);
+  QuizResult({Key key, this.quizInputs, this.quizzes}) : super(key: key);
 
   @override
   QuizResultState createState() {
@@ -20,8 +22,49 @@ class QuizResult extends StatefulWidget {
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
 
+  List<Widget> _expandQuiz(String quizType, Map<String, dynamic> q) {
+    List<Widget> _quizWithCorrectAnswer = [];
+    switch (quizType) {
+      case "multipleChoice":
+        _quizWithCorrectAnswer.add(new Multiplechoice(
+          onEnd: null,
+          input: q,
+        ));
+
+        break;
+      case "matchTheFollowing":
+        _quizWithCorrectAnswer.add(new MatchingGame(
+          onEnd: null,
+          gameData: q,
+        ));
+        break;
+      case "trueOrFalse":
+        _quizWithCorrectAnswer.add(new TrueOrFalse(
+          onEnd: null,
+          input: q,
+        ));
+        break;
+      case "grouping":
+        _quizWithCorrectAnswer.add(new GroupingQuiz(
+          onEnd: null,
+          input: q,
+        ));
+        break;
+      case "sequence":
+        _quizWithCorrectAnswer.add(new SequenceQuiz(
+          onEnd: null,
+          input: q,
+        ));
+        break;
+    }
+    return _quizWithCorrectAnswer;
+  }
+
   Widget _buildAskedQuestionExpandableTile(
-      Map<String, dynamic> q, BuildContext context) {
+      Map<String, dynamic> q, int _quizIndex, BuildContext context) {
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(widget.quizzes[_quizIndex].type);
+    print(_quizIndex);
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
@@ -81,22 +124,18 @@ class QuizResultState extends State<QuizResult> {
             ),
           ),
         ),
-        children: <Widget>[
-          new MatchingGame(
-            gameData: q,
-            onEnd: null,
-          ),
-        ],
+        children: _expandQuiz(widget.quizzes[_quizIndex].type, q),
       ),
     );
   }
 
   List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
     List<Widget> _questionResults = [];
+    int _quizIndex = 0;
     widget.quizInputs
         .map(
           (q) => _questionResults.add(
-                _buildAskedQuestionExpandableTile(q, context),
+                _buildAskedQuestionExpandableTile(q, _quizIndex++, context),
               ),
         )
         .toList(growable: false);
