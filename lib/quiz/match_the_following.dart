@@ -20,7 +20,11 @@ class MatchingGame extends StatefulWidget {
           "4": "string4",
           "5": "string5",
           "6": "string6"
-        }
+        },
+        "correct": null,
+        "total": null,
+        "leftSelectedItems": null,
+        "rightSelectedItems":null,
       }})
       : super(key: key);
   @override
@@ -68,7 +72,8 @@ class _MatchingGameState extends State<MatchingGame> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    if(widget.gameData["correct"] == null){
+      MediaQueryData mediaQueryData = MediaQuery.of(context);
     _leftItemSelected = '';
     if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
         _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
@@ -161,7 +166,7 @@ class _MatchingGameState extends State<MatchingGame> {
                                           new Future.delayed(
                                               const Duration(seconds: 5), () {
                                             widget.onEnd(
-                                                {'correct': 1, 'total': 2});
+                                                {'correct': 1, 'total': 2, "leftSelectedItems": "$_leftSideDisabledItems", "rightSelectedItems" : "$_rightSideDisabledItems" });
                                           });
                                         }
                                       });
@@ -180,5 +185,9 @@ class _MatchingGameState extends State<MatchingGame> {
         );
       },
     );
+    } else {
+      return new Container( color: Colors.yellow, height: 150.0 ,child: new Center( child: new Text("data") , ), );
+    }
+    
   }
 }
