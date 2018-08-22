@@ -741,7 +741,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 5;
+        maxIterations = 1;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
