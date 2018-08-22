@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
+import 'package:maui/quiz/match_the_following.dart';
+import 'package:maui/quiz/multiple_choice.dart';
+import 'package:maui/quiz/grouping_quiz.dart';
+import 'package:maui/quiz/true_or_false.dart';
+import 'package:maui/quiz/sequence.dart';
 
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
@@ -17,19 +22,20 @@ class QuizResultState extends State<QuizResult> {
 
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, BuildContext context) {
-    GlobalKey<ControlledExpansionTileState> _expansionKey =
+    GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
       margin: new EdgeInsets.all(2.0),
       color: Colors.teal,
       child: new ControlledExpansionTile(
-        key: _expansionKey,
+        leading: new Icon(Icons.check),
+        key: _expandableTileKey,
         onExpansionChanged: (bool value) {
           if (value) {
             if (_currentExpandedTile != null) {
               _currentExpandedTile.currentState?.handleTap();
             }
-            _currentExpandedTile = _expansionKey;
+            _currentExpandedTile = _expandableTileKey;
           } else {
             _currentExpandedTile = null;
           }
@@ -76,10 +82,9 @@ class QuizResultState extends State<QuizResult> {
           ),
         ),
         children: <Widget>[
-          new Container(
-            height: 500.0,
-            color: Colors.yellow,
-            child: new Center(child: new Text("data")),
+          new MatchingGame(
+            gameData: q,
+            onEnd: null,
           ),
         ],
       ),
@@ -101,6 +106,8 @@ class QuizResultState extends State<QuizResult> {
 
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>>>>>...................<<<<<<<<<<<<<<<<<<,,");
+    print(widget.quizInputs);
     return new ListView(
       children: _buildListOfQuestionsAsked(context),
     );
