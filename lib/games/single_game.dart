@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:maui/components/topic_page_view.dart';
+import 'package:maui/screens/topic_screen.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -403,6 +406,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     print(widget.key.toString());
+    var _scaffoldKey = new GlobalKey<ScaffoldState>();
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
         primaryColor:
@@ -418,6 +422,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       child: new Theme(
           data: theme,
           child: Scaffold(
+              key: _scaffoldKey,
+              endDrawer: new ShowHelpDrawer(topicId: widget.gameConfig.topicId),
               resizeToAvoidBottomPadding: false,
               backgroundColor: colors[0],
               body: new SafeArea(
@@ -478,6 +484,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           },
                                         ))
                                     : Container(),
+
+                                !oh2h
+                                    ? Positioned(
+                                        right: 0.0,
+                                        top: 0.0,
+                                        child: IconButton(
+                                          icon: Icon(Icons.help_outline),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            _scaffoldKey.currentState.openEndDrawer();
+                                          },
+                                        ))
+                                    : Container(),
+
                                 widget.gameConfig.gameDisplay ==
                                             GameDisplay.localTurnByTurn ||
                                         widget.gameConfig.gameDisplay ==
@@ -741,7 +761,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 5;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1105,5 +1125,26 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
     }
     return null;
+  }
+}
+
+class ShowHelpDrawer extends StatelessWidget {
+ final String topicId;
+  const ShowHelpDrawer({
+    Key key,
+    @required this.topicId,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return new LayoutBuilder(builder: (context, constraints) {
+      print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
+      return new Container(
+        height: constraints.maxHeight,
+        width: constraints.maxWidth * 0.89,
+        child: new Drawer(
+          child: new TopicPageView(topicId: topicId,),
+        ),
+      );
+    });
   }
 }
