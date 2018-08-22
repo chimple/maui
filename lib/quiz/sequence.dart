@@ -98,12 +98,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
               // Calling the parent class for an end and to switch on to the next game
               new Future.delayed(const Duration(milliseconds: 2000), () {
                 //TODO: Call this when all the items have been chosen
-                widget.onEnd();
-                setState(() {
-                                  choice = clicked.map((e) => "").toList(growable: false);
-                                  clicked = choice.map((e) => "false").toList(growable: false);
-                                  rightOrWrong = choice.map((i) => false).toList(growable: false);
-                                });            
+                widget.onEnd({'correct': 1, 'total': 2});   
               });
             }
           
