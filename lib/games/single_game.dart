@@ -636,22 +636,21 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         Navigator.push(context,
             new MaterialPageRoute<void>(builder: (BuildContext context) {
           final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-          // return new ScoreScreen(
-          //   gameName: widget.gameName,
-          //   gameDisplay: widget.gameConfig.gameDisplay,
-          //   myUser: loggedInUser,
-          //   myScore: loggedInUser == widget.gameConfig.myUser
-          //       ? widget.gameConfig.myScore
-          //       : widget.gameConfig.otherScore,
-          //   otherUser: loggedInUser == widget.gameConfig.myUser
-          //       ? widget.gameConfig.otherUser
-          //       : widget.gameConfig.myUser,
-          //   otherScore: loggedInUser == widget.gameConfig.myUser
-          //       ? widget.gameConfig.otherScore
-          //       : widget.gameConfig.myScore,
-          //   isGameOver: false,
-          // );
-          return new ResultSummaryPage();
+          return new ScoreScreen(
+            gameName: widget.gameName,
+            gameDisplay: widget.gameConfig.gameDisplay,
+            myUser: loggedInUser,
+            myScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.myScore
+                : widget.gameConfig.otherScore,
+            otherUser: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherUser
+                : widget.gameConfig.myUser,
+            otherScore: loggedInUser == widget.gameConfig.myUser
+                ? widget.gameConfig.otherScore
+                : widget.gameConfig.myScore,
+            isGameOver: false,
+          );
         }));
       }
     }
@@ -706,21 +705,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       Navigator.push(context,
           new MaterialPageRoute<void>(builder: (BuildContext context) {
         final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
-        // return new ScoreScreen(
-        //   gameName: widget.gameName,
-        //   gameDisplay: widget.gameConfig.gameDisplay,
-        //   myUser: loggedInUser,
-        //   myScore: loggedInUser == widget.gameConfig.myUser
-        //       ? widget.gameConfig.myScore
-        //       : widget.gameConfig.otherScore,
-        //   otherUser: loggedInUser == widget.gameConfig.myUser
-        //       ? widget.gameConfig.otherUser
-        //       : widget.gameConfig.myUser,
-        //   otherScore: loggedInUser == widget.gameConfig.myUser
-        //       ? widget.gameConfig.otherScore
-        //       : widget.gameConfig.myScore,
-        // );
-        return ResultSummaryPage();
+        return new ScoreScreen(
+          gameName: widget.gameName,
+          gameDisplay: widget.gameConfig.gameDisplay,
+          myUser: loggedInUser,
+          myScore: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.myScore
+              : widget.gameConfig.otherScore,
+          otherUser: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.otherUser
+              : widget.gameConfig.myUser,
+          otherScore: loggedInUser == widget.gameConfig.myUser
+              ? widget.gameConfig.otherScore
+              : widget.gameConfig.myScore,
+        );
       }));
     }
   }
