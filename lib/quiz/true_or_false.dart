@@ -103,7 +103,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Reform;
                 new Future.delayed(const Duration(milliseconds: 1000), () {
-                  widget.onEnd();
+                  widget.onEnd({'correct': 1, 'total': 2});
                 });
               });
             } else {
@@ -125,7 +125,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
                   });
                 });
                 new Future.delayed(const Duration(milliseconds: 1000), () {
-                  widget.onEnd();
+                  widget.onEnd({'correct': 1, 'total': 2});
                 });
               });
             }

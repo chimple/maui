@@ -38,6 +38,7 @@ import 'package:maui/games/tap_wrong.dart';
 import 'package:maui/games/wordgrid.dart';
 import 'package:maui/games/picture_sentence.dart';
 import 'package:maui/screens/score_screen.dart';
+import "package:maui/components/result_summary_page.dart";
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/components/hud.dart';
@@ -741,7 +742,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 5;
+        maxIterations = 1;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
