@@ -26,7 +26,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
   List<String> choice = [];
   List<String> clickedChoices = [];
   List<bool> rightOrWrong = [];
-  int j = 0, count = 0;
+  int j = 0, count = 0, correctchoices = 0;
 
   @override
   void initState() {
@@ -36,15 +36,15 @@ class SequenceQuizState extends State<SequenceQuiz> {
 
   void _initBoard() {
 
-    // Array for storing choices from input
+    // Arrays for storing choices from input
     for (var i = 0; i < widget.input['order'].length; i++) {
       choice.add(widget.input['order'].cast<String>()[i]);
       shuffledChoices.add(widget.input['order'].cast<String>()[i]);
     }
     // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
     ans = widget.input['image'];
-    print("Choices at initializtion -$choice");
 
+    // Shuffled Choices
     shuffledChoices.shuffle();
 
     print("Shuffled Choices - $shuffledChoices");
@@ -90,6 +90,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
                 {
                   setState(() {
                                       rightOrWrong[i] = true;
+                                      correctchoices ++;
                                     });                  
                 }
               }
@@ -98,7 +99,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
               // Calling the parent class for an end and to switch on to the next game
               new Future.delayed(const Duration(milliseconds: 2000), () {
                 //TODO: Call this when all the items have been chosen
-                widget.onEnd({'correct': 1, 'total': 2});   
+                widget.onEnd({'correct': correctchoices, 'total': choice.length});   
               });
             }
           
@@ -122,8 +123,9 @@ class SequenceQuizState extends State<SequenceQuiz> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Container(
-            height: size.height / 2,
+            height: size.height * 0.53,
             child: 
+            // Common class for printing question and associated image
             new QuizQuestion(
                 text: widget.input['question'],
                 image: widget.input['image'],
