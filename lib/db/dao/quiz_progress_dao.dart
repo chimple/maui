@@ -6,8 +6,8 @@ import 'package:maui/db/entity/topic.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ActivityDao {
-  Future<QuizProgress> getActivity(String id, {Database db}) async {
+class QuizProgressDao {
+  Future<QuizProgress> getQuizprogress(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(QuizProgress.table,
         columns: [
@@ -25,7 +25,7 @@ class ActivityDao {
     return null;
   }
 
-  Future<List<QuizProgress>> getActivitiesByTopicId(String topicId,
+  Future<List<QuizProgress>> getQuizProgressByTopicId(String topicId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps =
@@ -44,7 +44,7 @@ class ActivityDao {
     return maps.map((el) => new QuizProgress.fromMap(el)).toList();
   }
 
-  Future<List<QuizProgress>> getActivitiesByUserId(String userId,
+  Future<List<QuizProgress>> getQuizProgressByUserId(String userId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps =
@@ -63,7 +63,7 @@ class ActivityDao {
     return maps.map((el) => new QuizProgress.fromMap(el)).toList();
   }
 
-  Future<List<QuizProgress>> getActivitiesByQuizId(String quizId,
+  Future<List<QuizProgress>> getQuizProgressByQuizId(String quizId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps =

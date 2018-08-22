@@ -17,21 +17,22 @@ class QuizProgress {
   Map<String, dynamic> toMap() {
     return {
       idCol: id,
-      userIdCol: userId, 
-      topicIdCol: topicId, 
-      quizIdCol: quizId, 
-      doneCol: done};
+      userIdCol: userId,
+      topicIdCol: topicId,
+      quizIdCol: quizId,
+      doneCol: done
+    };
   }
 
-    QuizProgress.fromMap(Map<String, dynamic> map)
+  QuizProgress.fromMap(Map<String, dynamic> map)
       : this(
-        id: map[idCol], 
-        userId: map[userIdCol],
-        topicId: map[topicIdCol],
-        quizId: map[quizIdCol],
-        done: map[doneCol]);
+            id: map[idCol],
+            userId: map[userIdCol],
+            topicId: map[topicIdCol],
+            quizId: map[quizIdCol],
+            done: map[doneCol]);
 
-    @override
+  @override
   int get hashCode =>
       id.hashCode ^
       userId.hashCode ^
@@ -39,7 +40,7 @@ class QuizProgress {
       quizId.hashCode ^
       done.hashCode;
 
-       @override
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is QuizProgress &&
@@ -51,9 +52,7 @@ class QuizProgress {
           done == other.done;
 
   @override
-    String toString() {
-      return 'Quiz{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, done: $done}';
-    }
-
-
+  String toString() {
+    return 'Quiz{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, done: $done}';
+  }
 }
