@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
 import 'package:maui/components/quiz_question.dart';
@@ -69,6 +68,7 @@ class _MatchingGameState extends State<MatchingGame> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
     _leftItemSelected = '';
     if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
         _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
@@ -103,6 +103,7 @@ class _MatchingGameState extends State<MatchingGame> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         new Container(
+                          width: mediaQueryData.size.width / 3,
                           child: new QuizButton(
                             buttonStatus: (_rightSideDisabledItems.length ==
                                         widget.gameData["pairs"].length &&
@@ -113,16 +114,19 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _selectedPairs[_leftSideItems[index]]
                                     ? Status.correct
                                     : Status.incorrect)
-                                : Status.notSelected,
-                            onPress: _checkItem(_leftSideItems[index], true)
-                                ? null
-                                : () {
+                                : (_leftSideDisabledItems
+                                            .indexOf(_leftSideItems[index]) ==
+                                        -1
+                                    ? Status.notSelected
+                                    : Status.disabled),
+                            onPress: () {
                                     _leftItemSelected = _leftSideItems[index];
                                   },
                             text: _leftSideItems[index],
                           ),
                         ),
                         new Container(
+                          width: mediaQueryData.size.width / 3,
                           child: new QuizButton(
                             buttonStatus: (_rightSideDisabledItems.length ==
                                         widget.gameData["pairs"].length &&
@@ -132,10 +136,12 @@ class _MatchingGameState extends State<MatchingGame> {
                                         _rightSideItems[index])
                                     ? Status.correct
                                     : Status.incorrect)
-                                : Status.notSelected,
-                            onPress: _checkItem(_rightSideItems[index], false)
-                                ? null
-                                : () {
+                                : (_rightSideDisabledItems
+                                            .indexOf(_rightSideItems[index]) ==
+                                        -1
+                                    ? Status.notSelected
+                                    : Status.disabled),
+                            onPress: () {
                                     print("correct");
                                     print(_leftItemSelected == ''
                                         ? "leftNotTapped"
