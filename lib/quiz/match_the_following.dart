@@ -50,29 +50,37 @@ class _MatchingGameState extends State<MatchingGame> {
   }
 
   List<Widget> _buildExpandedQuizWithCorrectAnswers(BuildContext context) {
-    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    print(
+        "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     print(widget.gameData);
     List<Widget> correctPairs = [];
     widget.gameData["pairs"].forEach((k, v) {
       correctPairs.add(new Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment:  CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Expanded(
-            flex:1,
+            flex: 1,
             child: new Container(
               padding: new EdgeInsets.all(20.0),
               color: Colors.red,
-              child: new Center(child: new Text(k, style: new TextStyle( fontSize:20.0 ),)),
+              child: new Center(
+                  child: new Text(
+                k,
+                style: new TextStyle(fontSize: 20.0),
+              )),
             ),
           ),
           new Expanded(
-            flex:1,
+            flex: 1,
             child: new Container(
-              padding: new EdgeInsets.all(20.0),
-              color: Colors.yellow,
-              child: new Center(child: new Text(v, style: new TextStyle( fontSize: 20.0 ),))
-            ),
+                padding: new EdgeInsets.all(20.0),
+                color: Colors.yellow,
+                child: new Center(
+                    child: new Text(
+                  v,
+                  style: new TextStyle(fontSize: 20.0),
+                ))),
           ),
         ],
       ));
@@ -220,9 +228,9 @@ class _MatchingGameState extends State<MatchingGame> {
     } else {
       return new Container(
         height: widget.gameData["pairs"].length * 65.0,
-              child: new ListView(
-            children: _buildExpandedQuizWithCorrectAnswers(context),
-          ),
+        child: new ListView(
+          children: _buildExpandedQuizWithCorrectAnswers(context),
+        ),
       );
     }
   }
