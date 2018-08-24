@@ -226,11 +226,8 @@ class _MatchingGameState extends State<MatchingGame> {
         },
       );
     } else {
-      return new Container(
-        height: widget.gameData["pairs"].length * 65.0,
-        child: new ListView(
-          children: _buildExpandedQuizWithCorrectAnswers(context),
-        ),
+      return new Column(
+        children: _buildExpandedQuizWithCorrectAnswers(context),
       );
     }
   }
