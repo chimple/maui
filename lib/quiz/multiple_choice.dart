@@ -13,7 +13,8 @@ const Map<String, dynamic> _homework = {
 class Multiplechoice extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
-  Multiplechoice({Key key, this.input = _homework, this.onEnd})
+  Function onProgress;
+  Multiplechoice({Key key, this.input = _homework, this.onEnd,this.onProgress})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -63,8 +64,8 @@ class MultiplechoiceState extends State<Multiplechoice> {
             child: Container(
                 child: new GridView.count(
               crossAxisCount: 2,
-              childAspectRatio: 2.0,
-              crossAxisSpacing: 10.0,
+              childAspectRatio: 2.2,
+              crossAxisSpacing: 20.0,
               mainAxisSpacing: 15.0,
               shrinkWrap: true,
               children: choices.map((element) {
@@ -92,14 +93,17 @@ class MultiplechoiceState extends State<Multiplechoice> {
           if (!showans) {
             if (element == widget.input['answer']) {
               setState(() {
+                  
                 showans = true;
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
+                 widget.onProgress(1.0);
                 widget.onEnd();
               });
             } else {
               setState(() {
                 showans = true;
+                widget.onProgress(1.0);
                 _statuses[index] = Statuses.Wrong;
                 print(
                     "this. is when we clicked wrong choice in quize is.....;::$_statuses");

@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/progress_circle.dart';
+import 'package:maui/components/progress_bar.dart';
 
 class Hud extends StatelessWidget {
   User user;
+  bool amICurrentUser;
   double height;
+  double width;
   bool start;
   Color backgroundColor;
   Color foregroundColor;
@@ -18,28 +21,35 @@ class Hud extends StatelessWidget {
   double progress;
   int score;
 
-  Hud(
-      {Key key,
-      this.user,
-      this.height,
-      this.start = true,
-      this.backgroundColor,
-      this.foregroundColor,
-      this.gameMode,
-      this.playTime,
-      this.onEnd,
-      this.progress,
-      this.score})
-      : super(key: key);
+  Hud({
+    Key key,
+    this.user,
+    this.height,
+    this.width,
+    this.start = true,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.gameMode,
+    this.playTime,
+    this.onEnd,
+    this.amICurrentUser,
+    this.progress,
+    this.score,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     height = height * 0.6;
+    width = width;
+    print('nikhil  12 ${user.name} ');
+
+    print("hello this ia who is playing current user in game;;;;::${onEnd}");
     final fontSize = min(18.0, height / 2);
 
     var headers = <Widget>[
-      new Stack(
-        alignment: AlignmentDirectional.center,
+      new Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // alignment: AlignmentDirectional.center,
         children: <Widget>[
           new Container(
               width: height,
@@ -49,48 +59,67 @@ class Hud extends StatelessWidget {
                   image: new DecorationImage(
                       image: new FileImage(new File(user.image)),
                       fit: BoxFit.fill))),
-          new SizedBox(
-              width: height,
-              height: height,
-              child: new CircularProgressIndicator(
-                strokeWidth: height / 8.0,
-                value: 1.0,
-                valueColor: new AlwaysStoppedAnimation<Color>(backgroundColor),
-              )),
-          new SizedBox(
-              width: height,
-              height: height,
-              child: gameMode == GameMode.timed
-                  ? new ProgressCircle(
-                      time: playTime,
-                      onEnd: () => onEnd(context),
-                      strokeWidth: height / 8.0,
-                    )
-                  : new ProgressCircle(
-                      progress: progress,
-                      strokeWidth: height / 8.0,
-                    )),
         ],
       ),
-      new Column(
-        crossAxisAlignment:
-            start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          new Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              '$score',
-              style: new TextStyle(fontSize: height*0.6, color: foregroundColor),
-            ),
-          )
-        ],
-      )
+      Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Stack(children: [
+          Text(
+            '$score',
+            style: new TextStyle(fontSize: 20.0, color: foregroundColor),
+          ),
+        ]),
+      ),
+      _builProgressbar(context, amICurrentUser, start),
     ];
 
     return new Row(
         mainAxisAlignment:
             start ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: start ? headers : headers.reversed.toList(growable: false));
+  }
+
+  _builProgressbar(BuildContext context, bool amICurrentUser, bool start) {
+    return amICurrentUser
+        ? new Stack(
+            alignment: AlignmentDirectional.center,
+            // crossAxisAlignment:
+            //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+                child: new SizedBox(
+                    width: width,
+                    height: 25.0,
+                    child: new LinearProgressIndicator(
+                      // strokeWidth: height / 8.0,
+                      value: 1.0,
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(backgroundColor),
+                    )),
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: new SizedBox(
+                    width: width,
+                    height: 25.0,
+                    child: gameMode == GameMode.timed
+                        ? new ProgressBar(
+                            time: playTime,
+                            onEnd: () => onEnd(context),
+                            // strokeWidth: height / 8.0,
+                          )
+                        : new ProgressBar(
+                            progress: progress,
+                            // strokeWidth: height / 8.0,
+                          )),
+              ),
+            ],
+          )
+        : new Container();
   }
 }

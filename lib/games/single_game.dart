@@ -151,6 +151,7 @@ enum Learning { literacy, maths }
 class SingleGame extends StatefulWidget {
   final String gameName;
   final GameConfig gameConfig;
+
   final Function onGameEnd;
   final Function onScore; //TODO: Can be removed
   final GameMode gameMode;
@@ -400,6 +401,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print('_SingleGameState:build: ${widget.gameConfig}');
+    print("this i want know topicid is,,,,...::${widget.gameConfig.topicId}");
+
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     print(widget.key.toString());
@@ -412,6 +415,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         accentColor: colors[1]);
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
+
+    print("this... my game in the quize iiss......::${game.runtimeType}");
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -444,8 +449,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                     left: !oh2h ? 32.0 : null,
                                     right: oh2h ? 32.0 : null,
                                     child: Hud(
+                                        amICurrentUser:
+                                            widget.gameConfig.amICurrentPlayer,
                                         user: widget.gameConfig.myUser,
-                                        height: media.size.height / 8.0,
+                                        height: media.size.height / 8,
+                                        width: media.size.width / 2,
                                         gameMode: widget.gameMode,
                                         playTime: playTime,
                                         onEnd: widget.onGameEnd,
@@ -455,14 +463,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                         backgroundColor:
                                             oh2h ? colors[0] : colors[2],
                                         foregroundColor: colors[1])),
-                                new Center(
-                                  child: Nima(
-                                      name: widget.gameName,
-                                      score: _cumulativeIncrement,
-                                      tag: !oh2h
-                                          ? 'assets/hoodie/${widget.gameName}.png'
-                                          : 'other.png'),
-                                ),
+                                //  game.runtimeType==QuizPager
+                                //       ? Container()
+                                //       : new Center(
+                                //           child: Nima(
+                                //               name: widget.gameName,
+                                //               score: _cumulativeIncrement,
+                                //               tag: !oh2h
+                                //                   ? 'assets/hoodie/${widget.gameName}.png'
+                                //                   : 'other.png'),
+                                //         ),
                                 !oh2h
                                     ? Positioned(
                                         left: 0.0,
@@ -486,12 +496,14 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                         right: 32.0,
                                         child: Hud(
                                             start: false,
+                                            amICurrentUser: false,
                                             user: widget.gameConfig.otherUser,
+                                            width: media.size.width / 2,
                                             height: media.size.height / 8.0,
                                             gameMode: widget.gameMode,
                                             playTime: playTime,
                                             onEnd: widget.onGameEnd,
-                                            progress: _otherProgress,
+                                            progress: _myProgress,
                                             score: widget.gameConfig.otherScore,
                                             backgroundColor: colors[2],
                                             foregroundColor: colors[1]))
