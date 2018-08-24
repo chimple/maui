@@ -99,7 +99,7 @@ class GameConfig {
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
-      this.topicId,
+      this.topicId = "lion", //TODO: This is a temporary initialization
       this.gameDisplay,
       this.level,
       this.otherUser,
@@ -483,7 +483,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           },
                                         ))
                                     : Container(),
-
                                 !oh2h
                                     ? Positioned(
                                         right: 0.0,
@@ -492,11 +491,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.help_outline),
                                           color: Colors.white,
                                           onPressed: () {
-                                            _scaffoldKey.currentState.openEndDrawer();
+                                            _scaffoldKey.currentState
+                                                .openEndDrawer();
                                           },
                                         ))
                                     : Container(),
-
                                 widget.gameConfig.gameDisplay ==
                                             GameDisplay.localTurnByTurn ||
                                         widget.gameConfig.gameDisplay ==
@@ -1126,4 +1125,3 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     return null;
   }
 }
-
