@@ -62,8 +62,11 @@ class _MatchingGameState extends State<MatchingGame> {
           new Expanded(
             flex: 1,
             child: new Container(
+              margin: new EdgeInsets.all(5.0),
               padding: new EdgeInsets.all(20.0),
-              color: Colors.red,
+              color: (_selectedPairs[k] == widget.gameData["pairs"][k])
+                  ? Colors.green
+                  : Colors.red,
               child: new Center(
                   child: new Text(
                 k,
@@ -74,8 +77,11 @@ class _MatchingGameState extends State<MatchingGame> {
           new Expanded(
             flex: 1,
             child: new Container(
+                margin: new EdgeInsets.all(5.0),
                 padding: new EdgeInsets.all(20.0),
-                color: Colors.yellow,
+                color: _checkForRightSideItemCorrectness(v)
+                    ? Colors.green
+                    : Colors.red,
                 child: new Center(
                     child: new Text(
                   v,
@@ -93,7 +99,10 @@ class _MatchingGameState extends State<MatchingGame> {
     _selectedPairs.forEach((k, v) {
       if (v == rightSideItem) {
         if (widget.gameData["pairs"][k] == rightSideItem) {
-          numberOfCorrectChoices += 1;
+          if (widget.gameData["correct"] == null) {
+            numberOfCorrectChoices += 1;
+          }
+
           isCorrect = true;
         } else {
           isCorrect = false;
@@ -106,7 +115,6 @@ class _MatchingGameState extends State<MatchingGame> {
   @override
   Widget build(BuildContext context) {
     if (widget.gameData["correct"] == null) {
-      MediaQueryData mediaQueryData = MediaQuery.of(context);
       _leftItemSelected = '';
       if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
           _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
@@ -141,7 +149,7 @@ class _MatchingGameState extends State<MatchingGame> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           new Container(
-                            width: mediaQueryData.size.width / 3,
+                            width: constraints.maxWidth / 3,
                             child: new QuizButton(
                               buttonStatus: (_rightSideDisabledItems.length ==
                                           widget.gameData["pairs"].length &&
@@ -164,7 +172,7 @@ class _MatchingGameState extends State<MatchingGame> {
                             ),
                           ),
                           new Container(
-                            width: mediaQueryData.size.width / 3,
+                            width: constraints.maxWidth / 3,
                             child: new QuizButton(
                               buttonStatus: (_rightSideDisabledItems.length ==
                                           widget.gameData["pairs"].length &&
@@ -203,9 +211,9 @@ class _MatchingGameState extends State<MatchingGame> {
                                           'total':
                                               widget.gameData["pairs"].length,
                                           "leftSelectedItems":
-                                              "$_leftSideDisabledItems",
+                                              _leftSideDisabledItems,
                                           "rightSelectedItems":
-                                              "$_rightSideDisabledItems"
+                                              _rightSideDisabledItems
                                         });
                                       });
                                     }
@@ -226,12 +234,16 @@ class _MatchingGameState extends State<MatchingGame> {
         },
       );
     } else {
-      return new Container(
-        height: widget.gameData["pairs"].length * 65.0,
-        child: new ListView(
+      _leftSideDisabledItems = widget.gameData["leftSelectedItems"];
+      print(_leftSideDisabledItems);
+      _rightSideDisabledItems = widget.gameData["rightSelectedItems"];
+      print(_rightSideDisabledItems);
+      _selectedPairs = new Map.fromIterables(
+          _leftSideDisabledItems, _rightSideDisabledItems);
+      print(_selectedPairs);
+      return new ListView(
           children: _buildExpandedQuizWithCorrectAnswers(context),
-        ),
-      );
+        );
     }
   }
 }
