@@ -241,9 +241,9 @@ class _MatchingGameState extends State<MatchingGame> {
       _selectedPairs = new Map.fromIterables(
           _leftSideDisabledItems, _rightSideDisabledItems);
       print(_selectedPairs);
-      return new ListView(
-          children: _buildExpandedQuizWithCorrectAnswers(context),
-        );
+      return new Column(
+        children: _buildExpandedQuizWithCorrectAnswers(context),
+      );
     }
   }
 }

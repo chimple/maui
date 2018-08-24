@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
+import 'package:maui/components/show_help.dart';
+import 'package:maui/screens/topic_screen.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,7 +99,7 @@ class GameConfig {
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
-      this.topicId,
+      this.topicId = "lion", //TODO: This is a temporary initialization
       this.gameDisplay,
       this.level,
       this.otherUser,
@@ -403,6 +405,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
     print(widget.key.toString());
+    var _scaffoldKey = new GlobalKey<ScaffoldState>();
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
         primaryColor:
@@ -418,6 +421,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       child: new Theme(
           data: theme,
           child: Scaffold(
+              key: _scaffoldKey,
+              endDrawer: new ShowHelp(topicId: widget.gameConfig.topicId),
               resizeToAvoidBottomPadding: false,
               backgroundColor: colors[0],
               body: new SafeArea(
@@ -475,6 +480,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                                 .of(context)
                                                 .play('_audiotap.mp3');
                                             _onWillPop();
+                                          },
+                                        ))
+                                    : Container(),
+                                !oh2h
+                                    ? Positioned(
+                                        right: 0.0,
+                                        top: 0.0,
+                                        child: IconButton(
+                                          icon: Icon(Icons.help_outline),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            _scaffoldKey.currentState
+                                                .openEndDrawer();
                                           },
                                         ))
                                     : Container(),
@@ -741,7 +759,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 5;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
