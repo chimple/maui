@@ -47,8 +47,11 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   void initData() {
     image = widget.input['image'];
     question = widget.input['question'];
-    groupNames = widget.input['groupNames'];
-    options = widget.input['groups'];
+    groupNames = widget.input['groupNames'].cast<String>();
+    options = [
+      widget.input['groups'][0].cast<String>(),
+      widget.input['groups'][1].cast<String>()
+    ];
 
     options[0].forEach((f) {
       itemsOfgroupA.add(f);
@@ -83,7 +86,12 @@ class _GroupingQuizState extends State<GroupingQuiz> {
         gameEnd = true;
         new Future.delayed(const Duration(milliseconds: 3000), () {
           setState(() {
-            widget.onEnd();
+            widget.onEnd({
+              'itemsOfGroupA': itemsOfgroupA,
+              'itemsOfGroupB': itemsOfgroupB,
+              'correct': 1,
+              'total': 2
+            });
           });
         });
       }
