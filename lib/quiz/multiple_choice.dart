@@ -5,7 +5,7 @@ import '../components/quiz_question.dart';
 
 const Map<String, dynamic> _homework = {
   'image': 'lion',
-  'questions': "This animal is a carnivorous reptile.",
+  'question': "This animal is a carnivorous reptile.",
   'answer': 'lion',
   'choices': ["Cat", "Sheep", "lion", "Cow"],
 };
@@ -31,7 +31,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
   @override
   void initState() {
     super.initState();
-    List<String> choices = widget.input['choices'];
+    List<String> choices = widget.input['choices'].cast<String>();
     _statuses = choices.map((a) => Statuses.Active).toList(growable: false);
     print("hello this should come first...");
   }
@@ -41,7 +41,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
-    List<String> choices = widget.input['choices'];
+    List<String> choices = widget.input['choices'].cast<String>();
     var j = 0;
 
     return new Container(
@@ -54,7 +54,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
               height: size.height / 2,
               color: Colors.amber,
               child: QuizQuestion(
-                text: widget.input['questions'],
+                text: widget.input['question'],
                 image: 'assets/Animals.png',
               ),
             ),
@@ -106,7 +106,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
                 widget.onProgress(1.0);
-                widget.onEnd();
+                widget.onEnd({'userChoice': element, 'correct': 1, 'total': 1});
               });
             } else {
               setState(() {
@@ -128,7 +128,8 @@ class MultiplechoiceState extends State<Multiplechoice> {
                   });
                 });
                 new Future.delayed(const Duration(milliseconds: 1500), () {
-                  widget.onEnd();
+                  widget
+                      .onEnd({'userChoice': element, 'correct': 0, 'total': 1});
                 });
               });
             }
