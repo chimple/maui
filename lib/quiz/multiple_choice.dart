@@ -13,7 +13,8 @@ const Map<String, dynamic> _homework = {
 class Multiplechoice extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
-  Multiplechoice({Key key, this.input = _homework, this.onEnd})
+  Function onProgress;
+  Multiplechoice({Key key, this.input = _homework, this.onEnd, this.onProgress})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +25,6 @@ class Multiplechoice extends StatefulWidget {
 enum Statuses { Active, Visible, Disappear, Wrong }
 
 class MultiplechoiceState extends State<Multiplechoice> {
-  var val;
   bool showans = false;
   List<Statuses> _statuses = [];
 
@@ -63,16 +63,21 @@ class MultiplechoiceState extends State<Multiplechoice> {
             child: Container(
                 child: new GridView.count(
               crossAxisCount: 2,
-              childAspectRatio: 2.0,
-              crossAxisSpacing: 10.0,
+              childAspectRatio: 2.2,
+              crossAxisSpacing: 20.0,
               mainAxisSpacing: 15.0,
               shrinkWrap: true,
               children: choices.map((element) {
                 print("the dataq is.....$element");
                 return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: _buildItem(j, element, choices, _statuses[j++],
-                        widget.input['answer'], val));
+                    child: _buildItem(
+                      j,
+                      element,
+                      choices,
+                      _statuses[j++],
+                      widget.input['answer'],
+                    ));
               }).toList(growable: false),
             )),
           ),
@@ -81,8 +86,13 @@ class MultiplechoiceState extends State<Multiplechoice> {
     );
   }
 
-  Widget _buildItem(int index, String element, List<String> choices,
-      Statuses status, input, val) {
+  Widget _buildItem(
+    int index,
+    String element,
+    List<String> choices,
+    Statuses status,
+    input,
+  ) {
     return new QuizButton(
         text: element,
         buttonStatus: status == Statuses.Active
@@ -95,11 +105,13 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 showans = true;
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
+                widget.onProgress(1.0);
                 widget.onEnd({'userChoice': element, 'correct': 1, 'total': 1});
               });
             } else {
               setState(() {
                 showans = true;
+                widget.onProgress(1.0);
                 _statuses[index] = Statuses.Wrong;
                 print(
                     "this. is when we clicked wrong choice in quize is.....;::$_statuses");
