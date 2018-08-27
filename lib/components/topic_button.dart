@@ -29,6 +29,7 @@ class TopicButton extends StatefulWidget {
 
 class TopicButtonState extends State<TopicButton>{
   QuizProgress _quizProgress;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -37,14 +38,24 @@ class TopicButtonState extends State<TopicButton>{
   }
 
   void _initData() async{
+    setState(() => _isLoading = true);
    _quizProgress =
         await QuizProgressRepo().getQuizProgressByTopicId("1");
+    setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     print("Current QuizProgress - $_quizProgress");
-    // print("Current QuizProgress Done Status - ${widget.quizProgress.done}");
+    print("Current QuizProgress Done Status - ${_quizProgress.done}");
+
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
 
     // TODO: implement build
     print("hello Topic button ${widget.image} and ${widget.text}");
@@ -60,6 +71,8 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
+                  new LinearProgressIndicator({_quizProgress.id,"${_quizProgress.done}/5"}),
+
                   widget.image == null
                       ? new Expanded(
                           child: Container(color: Colors.red),
