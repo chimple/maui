@@ -14,7 +14,7 @@ class Multiplechoice extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Function onProgress;
-  Multiplechoice({Key key, this.input = _homework, this.onEnd,this.onProgress})
+  Multiplechoice({Key key, this.input = _homework, this.onEnd, this.onProgress})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +25,6 @@ class Multiplechoice extends StatefulWidget {
 enum Statuses { Active, Visible, Disappear, Wrong }
 
 class MultiplechoiceState extends State<Multiplechoice> {
-  var val;
   bool showans = false;
   List<Statuses> _statuses = [];
 
@@ -72,8 +71,13 @@ class MultiplechoiceState extends State<Multiplechoice> {
                 print("the dataq is.....$element");
                 return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: _buildItem(j, element, choices, _statuses[j++],
-                        widget.input['answer'], val));
+                    child: _buildItem(
+                      j,
+                      element,
+                      choices,
+                      _statuses[j++],
+                      widget.input['answer'],
+                    ));
               }).toList(growable: false),
             )),
           ),
@@ -82,8 +86,13 @@ class MultiplechoiceState extends State<Multiplechoice> {
     );
   }
 
-  Widget _buildItem(int index, String element, List<String> choices,
-      Statuses status, input, val) {
+  Widget _buildItem(
+    int index,
+    String element,
+    List<String> choices,
+    Statuses status,
+    input,
+  ) {
     return new QuizButton(
         text: element,
         buttonStatus: status == Statuses.Active
@@ -93,11 +102,10 @@ class MultiplechoiceState extends State<Multiplechoice> {
           if (!showans) {
             if (element == widget.input['answer']) {
               setState(() {
-                  
                 showans = true;
                 print("correct one is...clicked here$element");
                 _statuses[index] = Statuses.Disappear;
-                 widget.onProgress(1.0);
+                widget.onProgress(1.0);
                 widget.onEnd();
               });
             } else {
