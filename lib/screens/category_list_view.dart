@@ -50,8 +50,8 @@ class _CategoryListViewState extends State<CategoryListView> {
         child: new CircularProgressIndicator(),
       );
     }
-    print("hello image is ther or not ....::...'${_dataCategories[1].image}'");
-    print("data Category list received - '${_dataCategories}'");
+    print("hello image is ther or not ....::...'${_dataCategories[0].image}'");
+    print("data Category list received - '${_dataCategories[0].id}'");
     return Container(
         color: const Color(0xffFECE3D),
         child: new GridView.count(
