@@ -63,13 +63,12 @@ class SequenceQuizState extends State<SequenceQuiz> {
     }
   }
 
-  Widget _buildItem(int index, String text, int k) {
-    print("Value of Choices Right or Wrong  array - ${widget.input['choicesRightOrWrong']}");
-    print("Value of Right Or Wrong Arrray - $rightOrWrong");
-    print("Value of J = $index");
-    print("Value of K = $k");
+  Widget _buildItem(int index, String text, int k, double ht) {
+
     // Universal Button for mapping keys, text/image to be shown, Button's present status and a function to perform desired actions
-    return new QuizButton(
+    return new  Container(
+        height: ht / 8.0,
+        child: QuizButton(
         key: new ValueKey<int>(index),
         text: text,
         buttonStatus: (widget.input['correct'] == null ? (clicked[k] == "false"
@@ -118,7 +117,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
           else {
             print("This is the else section");
           }
-        });
+        }));
   }
 
   @override
@@ -128,11 +127,10 @@ class SequenceQuizState extends State<SequenceQuiz> {
     var size = media.size;
     print("Welconme to Widget Build Sequence Game");
     List<Widget> cells;
-
     cells = (widget.input['correct'] == null ? shuffledChoices : choice)
         .map((e) => new Padding(
               padding: EdgeInsets.all(10.0),
-              child: _buildItem(j++, e, k++),
+              child: _buildItem(j++, e, k++, size.height),
             ))
         .toList(growable: false);
   
@@ -168,14 +166,11 @@ class SequenceQuizState extends State<SequenceQuiz> {
         ) : new Container(),
 
         widget.input['correct'] == null ? new Container() : new Container(
-          height: size.height * 0.3,
-          child: new GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(40.0),
-              crossAxisSpacing: 10.0,
-              crossAxisCount: 4,
-              childAspectRatio: 2.0,
-              children: cells)),
+          width: size.width * 0.7,
+          child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: cells)),
       ]);
   }
 }
