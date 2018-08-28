@@ -14,21 +14,25 @@ class QuizQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(" image of the data is...$image");
+ MediaQueryData media = MediaQuery.of(context);
 
+    var size = media.size;
     return new Container(
     
       color: Colors.white,
       child: Container(
         child: new ListView(
           children: <Widget>[
+            
             image == null
                 ? Container()
                 : Container(
+                  height: size.height*0.3,
                     child: image.endsWith(".svg")
                         ? new Container(
                             color: Colors.red,
                             child: new AspectRatio(
-                              aspectRatio: 1.15,
+                              aspectRatio: 1.0,
                               child: new SvgPicture.asset(
                                 image,
                                 allowDrawingOutsideViewBox: false,
@@ -36,21 +40,20 @@ class QuizQuestion extends StatelessWidget {
                             ),
                           )
                         : Container(
-                            child: new AspectRatio(
-                                aspectRatio: 1.32,
-                                child: new Image.asset(image)),
+                            child: new Image.asset(image,),
                           ),
                   ),
-            new Container(
-              child: new AspectRatio(
-                aspectRatio: 1.6,
-                child: new Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(color: Colors.black, fontSize: 20.0),
-                ),
+                   Padding(
+                     padding: const EdgeInsets.all(40.0),
+                     child: new Container(
+              child: new Text(
+                text,
+                textAlign: TextAlign.center,
+                style: new TextStyle(color: Colors.black, fontSize: 20.0),
               ),
             ),
+                   ),
+           
           ],
         ),
       ),
