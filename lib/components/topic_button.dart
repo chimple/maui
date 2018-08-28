@@ -42,7 +42,7 @@ class TopicButtonState extends State<TopicButton>{
     setState(() => _isLoading = true);
    _quizProgress =
         await QuizProgressRepo().getQuizProgressByTopicId("1");    
-    doneStatus = (double.parse(_quizProgress.done)/6);  
+    doneStatus = (double.parse(_quizProgress.maxScore)/double.parse(_quizProgress.outOfTotal));  
     setState(() => _isLoading = false);
     
   }
