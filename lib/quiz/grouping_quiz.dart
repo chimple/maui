@@ -11,7 +11,7 @@ const Map<String, dynamic> testMap = {
   'groups': [
     ['Tiger', 'Lion', 'Fox', 'Cheetah', 'Deer', 'Bear', 'Leopard'],
     ['Dog', 'Cat', 'Cow', 'Parrot', 'Duck', 'Fish', 'Donkey']
-  ]
+  ],
 };
 
 class GroupingQuiz extends StatefulWidget {
@@ -27,6 +27,9 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   String question = 'Question..!!';
   String image = ' ';
   bool gameEnd = false;
+  bool showMode = false;
+  int correct = 0;
+  int total;
   List<String> groupNames = [];
   List<List<String>> options = [];
   List<String> allOptions = [];
@@ -63,8 +66,22 @@ class _GroupingQuizState extends State<GroupingQuiz> {
       allOptions.add(f);
     });
 
-    shuffledOptions.addAll(
-        allOptions.take(allOptions.length).toList(growable: false)..shuffle());
+    total = allOptions.length;
+    showMode = widget.input['correct'] == null ? false : true;
+    showMode == true
+        ? optionsOfGroupA = widget.input['optionsOfGroupA'].cast<String>()
+        : null;
+    showMode == true
+        ? optionsOfGroupB = widget.input['optionsOfGroupB'].cast<String>()
+        : null;
+    print(
+        "allOptions and showMode: ${allOptions.length} , ${showMode}");
+
+    showMode == false
+        ? shuffledOptions.addAll(
+            allOptions.take(allOptions.length).toList(growable: false)
+              ..shuffle())
+        : null;
 
     print("Image: ${image}");
     print("Question: ${question}");
@@ -78,7 +95,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   }
 
   void _removeData(String str) {
-    print("Call Back..!!");
+    print("_removeData Call Back..!!");
     setState(() {
       shuffledOptions.remove(str);
       if (shuffledOptions.isEmpty) {
@@ -87,10 +104,10 @@ class _GroupingQuizState extends State<GroupingQuiz> {
         new Future.delayed(const Duration(milliseconds: 3000), () {
           setState(() {
             widget.onEnd({
-              'itemsOfGroupA': itemsOfgroupA,
-              'itemsOfGroupB': itemsOfgroupB,
-              'correct': 1,
-              'total': 2
+              'optionsOfGroupA': optionsOfGroupA,
+              'optionsOfGroupB': optionsOfGroupB,
+              'correct': correct,
+              'total': total
             });
           });
         });
@@ -99,24 +116,41 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     print("shuffledOptions after remove() $str: ${shuffledOptions}");
   }
 
+  void _incrementCorrect() {
+    print("_incrementCorrect Call Back..!!");
+    setState(() {
+      correct++;
+    });
+    print("_incrementCorrect ${correct}");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new GameUI(
-        removeData: _removeData,
-        question: question,
-        groupNames: groupNames,
-        scrollControllerForGroupA: _scrollControllerForGroupA,
-        optionsOfGroupA: optionsOfGroupA,
-        itemsOfgroupA: itemsOfgroupA,
-        shuffledOptions: shuffledOptions,
-        scrollControllerForGroupB: _scrollControllerForGroupB,
-        optionsOfGroupB: optionsOfGroupB,
-        itemsOfgroupB: itemsOfgroupB,
-        gameEnd: gameEnd);
+    MediaQueryData media = MediaQuery.of(context);
+    var size = media.size;
+    return new Container(
+      height: size.height * 0.5856,
+      child: new GameUI(
+          showMode: showMode,
+          incrementCorrect: _incrementCorrect,
+          removeData: _removeData,
+          question: question,
+          groupNames: groupNames,
+          scrollControllerForGroupA: _scrollControllerForGroupA,
+          optionsOfGroupA: optionsOfGroupA,
+          itemsOfgroupA: itemsOfgroupA,
+          shuffledOptions: shuffledOptions,
+          scrollControllerForGroupB: _scrollControllerForGroupB,
+          optionsOfGroupB: optionsOfGroupB,
+          itemsOfgroupB: itemsOfgroupB,
+          gameEnd: gameEnd),
+    );
   }
 }
 
 class GameUI extends StatelessWidget {
+  final bool showMode;
+  final Function() incrementCorrect;
   final Function(String) removeData;
   final String question;
   final bool gameEnd;
@@ -131,6 +165,8 @@ class GameUI extends StatelessWidget {
 
   const GameUI({
     Key key,
+    @required this.showMode,
+    @required this.incrementCorrect,
     @required this.removeData,
     @required this.question,
     @required this.gameEnd,
@@ -157,12 +193,14 @@ class GameUI extends StatelessWidget {
         child: new Flex(
           direction: Axis.vertical,
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: new QuizQuestion(
-                text: question,
-              ),
-            ),
+            showMode == false
+                ? Expanded(
+                    flex: 1,
+                    child: new QuizQuestion(
+                      text: question,
+                    ),
+                  )
+                : new Container(),
             Expanded(
               flex: 6,
               child: Container(
@@ -170,6 +208,8 @@ class GameUI extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     new GroupUI(
+                        showMode: showMode,
+                        incrementCorrect: incrementCorrect,
                         removeData: removeData,
                         maxHeight: constraints.maxHeight,
                         maxWidth: constraints.maxWidth,
@@ -183,6 +223,8 @@ class GameUI extends StatelessWidget {
                       padding: const EdgeInsets.all(5.0),
                     ),
                     new GroupUI(
+                        showMode: showMode,
+                        incrementCorrect: incrementCorrect,
                         removeData: removeData,
                         maxHeight: constraints.maxHeight,
                         maxWidth: constraints.maxWidth,
@@ -196,37 +238,27 @@ class GameUI extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              flex: 3,
-              child: new Center(
-                child: new Container(
-                  color: Colors.white,
-                  child: GridView.count(
-                    childAspectRatio: 2.0,
-                    crossAxisCount: 2,
-                    children: new List.generate(shuffledOptions.length, (i) {
-                      return new Container(
-                        margin: const EdgeInsets.all(8.0),
-                        decoration: new BoxDecoration(
-                          border:
-                              new Border.all(color: Colors.black, width: 3.0),
-                          color: Colors.blueGrey,
-                          boxShadow: [
-                            new BoxShadow(
-                              color: const Color(0x44000000),
-                              spreadRadius: 2.0,
-                              offset: const Offset(0.0, 1.0),
-                            )
-                          ],
-                          borderRadius: new BorderRadius.circular(12.0),
+            showMode == false
+                ? Expanded(
+                    flex: 3,
+                    child: new Center(
+                      child: new Container(
+                        color: Colors.white,
+                        child: GridView.count(
+                          childAspectRatio: 2.0,
+                          crossAxisCount: 2,
+                          children:
+                              new List.generate(shuffledOptions.length, (i) {
+                            return new Container(
+                              margin: const EdgeInsets.all(8.0),
+                              child: new DragBox(shuffledOptions[i]),
+                            );
+                          }),
                         ),
-                        child: new DragBox(shuffledOptions[i]),
-                      );
-                    }),
-                  ),
-                ),
-              ),
-            )
+                      ),
+                    ),
+                  )
+                : new Container(),
           ],
         ),
       );
@@ -237,6 +269,8 @@ class GameUI extends StatelessWidget {
 class GroupUI extends StatelessWidget {
   const GroupUI({
     Key key,
+    @required this.showMode,
+    @required this.incrementCorrect,
     @required this.removeData,
     @required this.maxHeight,
     @required this.maxWidth,
@@ -247,6 +281,8 @@ class GroupUI extends StatelessWidget {
     @required this.shuffledOptions,
     @required this.gameEnd,
   }) : super(key: key);
+  final showMode;
+  final Function() incrementCorrect;
   final Function(String) removeData;
   final String group;
   final bool gameEnd;
@@ -279,6 +315,9 @@ class GroupUI extends StatelessWidget {
                 curve: Curves.easeOut,
               );
             });
+            if (itemsOfgroup.contains(label)) {
+              incrementCorrect();
+            }
             if (optionsOfGroup.contains(label)) {
               return;
             } else {
@@ -294,34 +333,33 @@ class GroupUI extends StatelessWidget {
                   maxHeight < maxWidth ? maxHeight * 0.5059 : maxHeight * 0.557,
               decoration: new BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: const Color(0x44000000),
+                color: showMode == false ? Color(0x44000000) : Colors.white,
                 borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
               ),
               margin: const EdgeInsets.only(left: 0.0),
               child: Center(
                   child: new ListView.builder(
                 controller: scrollControllerForGroup,
-                itemCount: optionsOfGroup?.length,
+                physics:
+                    showMode == true ? NeverScrollableScrollPhysics() : null,
+                itemCount: showMode == false
+                    ? optionsOfGroup?.length
+                    : itemsOfgroup?.length,
                 itemBuilder: (context, i) => new Container(
                       margin: const EdgeInsets.all(7.0),
-                      decoration: new BoxDecoration(
-                        border: new Border.all(color: Colors.black, width: 3.0),
-                        boxShadow: [
-                          new BoxShadow(
-                            color: const Color(0x44000000),
-                            spreadRadius: 2.0,
-                            offset: const Offset(0.0, 1.0),
-                          )
-                        ],
-                        borderRadius: new BorderRadius.circular(12.0),
-                      ),
                       child: new QuizButton(
-                        text: optionsOfGroup[i],
-                        buttonStatus: gameEnd
-                            ? itemsOfgroup.contains(optionsOfGroup[i])
+                        text: showMode == false
+                            ? optionsOfGroup[i]
+                            : itemsOfgroup[i],
+                        buttonStatus: showMode == false
+                            ? gameEnd
+                                ? itemsOfgroup.contains(optionsOfGroup[i])
+                                    ? Status.correct
+                                    : Status.incorrect
+                                : Status.notSelected
+                            : optionsOfGroup.contains(itemsOfgroup[i])
                                 ? Status.correct
-                                : Status.incorrect
-                            : Status.notSelected,
+                                : Status.incorrect,
                         onPress: () {},
                       ),
                     ),
@@ -353,18 +391,25 @@ class _DragBoxState extends State<DragBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Draggable(
-      data: widget.label,
-      child: new QuizButton(
-        text: widget.label,
-        buttonStatus: Status.notSelected,
-        onPress: () {},
-      ),
-      feedback: new QuizButton(
-        text: widget.label,
-        buttonStatus: Status.notSelected,
-        onPress: () {},
-      ),
-    );
+    return new LayoutBuilder(builder: (context, constraints) {
+      print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
+      return Draggable(
+        data: widget.label,
+        child: new QuizButton(
+          text: widget.label,
+          buttonStatus: Status.notSelected,
+          onPress: () {},
+        ),
+        feedback: Container(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: new QuizButton(
+            text: widget.label,
+            buttonStatus: Status.notSelected,
+            onPress: () {},
+          ),
+        ),
+      );
+    });
   }
 }
