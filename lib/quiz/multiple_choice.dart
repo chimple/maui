@@ -88,7 +88,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
               children: <Widget>[
                 new SingleChildScrollView(
                   child: Container(
-                    height: size.height / 6,
+                    height: size.height / 8,
                     color: Colors.amber,
                     child: QuizQuestion(
                       text: widget.input['question'],
@@ -160,15 +160,21 @@ class MultiplechoiceState extends State<Multiplechoice> {
         ),
       );
     } else {
-      return new QuizButton(
-          text: element,
-          buttonStatus: input == widget.input["userChoice"] &&
-                  widget.input["userChoice"] == element
-              ? Status.correct
-              : element == widget.input["userChoice"]
-                  ? Status.incorrect
-                  : element == input ? Status.correct : Status.notSelected,
-          onPress: () {});
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: size / 8,
+          child: new QuizButton(
+              text: element,
+              buttonStatus: input == widget.input["userChoice"] &&
+                      widget.input["userChoice"] == element
+                  ? Status.correct
+                  : element == widget.input["userChoice"]
+                      ? Status.incorrect
+                      : element == input ? Status.correct : Status.notSelected,
+              onPress: () {}),
+        ),
+      );
     }
   }
 }

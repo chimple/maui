@@ -11,8 +11,9 @@ import 'quiz_pager.dart';
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
   List<Quiz> quizzes;
-
-  QuizResult({Key key, this.quizInputs, this.quizzes}) : super(key: key);
+  Function onEnd;
+  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd})
+      : super(key: key);
 
   @override
   QuizResultState createState() {
@@ -25,6 +26,7 @@ class QuizResultState extends State<QuizResult> {
 
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
+      
     print(q);
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     print(widget.quizzes[_quizIndex].type);
@@ -99,6 +101,9 @@ class QuizResultState extends State<QuizResult> {
   }
 
   List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
+       MediaQueryData media = MediaQuery.of(context);
+
+    var size = media.size;
     List<Widget> _questionResults = [];
     int _quizIndex = 0;
     widget.quizInputs
@@ -108,6 +113,30 @@ class QuizResultState extends State<QuizResult> {
               ),
         )
         .toList(growable: false);
+    _questionResults.add(Container(
+      // width: 60.0,
+      height: size.height/8,
+      color: Colors.white,
+      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(50.0),
+      child: Card(
+        child: RaisedButton(
+            color: Colors.green,
+            onPressed: () {
+              widget.onEnd();
+            },
+            shape: new RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(16.0))),
+            child: Center(child: Text("Next"))
+//         new IconButton(
+//   icon: new Icon(Icons.accessible_forward),
+//   tooltip: 'Increase volume by 10%',
+//   onPressed: () { setState(() {  },);}
+// ),
+            ),
+      ),
+    ));
 
     return _questionResults;
   }
