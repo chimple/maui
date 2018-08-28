@@ -398,6 +398,7 @@ class _DragBoxState extends State<DragBox> {
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Draggable(
+        maxSimultaneousDrags: 1,
         data: widget.label,
         child: new QuizButton(
           text: widget.label,
