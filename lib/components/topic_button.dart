@@ -38,7 +38,7 @@ class TopicButtonState extends State<TopicButton>{
   void initState() {
     super.initState();
     print("Topic Id received at topic Button - ${widget.topicId}");
-    widget.topicId == null ? "Animals" : widget.topicId;
+    widget.topicId == null ? "animals" : widget.topicId;
     _initData();
   }
 
