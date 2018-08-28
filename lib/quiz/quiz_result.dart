@@ -33,7 +33,7 @@ class QuizResultState extends State<QuizResult> {
         new GlobalObjectKey(q['question']);
     return new Container(
       margin: new EdgeInsets.all(2.0),
-      color: Colors.teal,
+      color: Colors.white,
       child: new ControlledExpansionTile(
         leading: new Icon(Icons.check),
         key: _expandableTileKey,
