@@ -52,10 +52,25 @@ class _MatchingGameState extends State<MatchingGame> {
   List<Widget> _buildExpandedQuizWithCorrectAnswers(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     List<Widget> correctPairs = [];
+    correctPairs.add(
+      // new Container(
+      //   height: (mediaQueryData.size.height - 300.0) / 6,
+      //   child: new Center(
+      //     child: new Text(widget.gameData["question"]),
+      //   ),
+      // ),
+      new Container(
+        height: (mediaQueryData.size.height - 300.0) / 6,
+              child: new QuizQuestion(
+          text: widget.gameData["question"],
+          // image: widget.gameData["image"],
+        ),
+      ),
+    );
     widget.gameData["pairs"].forEach((k, v) {
       correctPairs.add(new Container(
         padding: new EdgeInsets.all(5.0),
-        height: (mediaQueryData.size.height - 300.0) / 5,
+        height: (mediaQueryData.size.height - 300.0) / 6,
         width: mediaQueryData.size.width,
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
