@@ -411,6 +411,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     print(media.size);
     print(widget.key.toString());
     var _scaffoldKey = new GlobalKey<ScaffoldState>();
+    print("scaffold key is....::$_scaffoldKey");
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
         primaryColor:
@@ -567,6 +568,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.help_outline),
                                           color: Colors.white,
                                           onPressed: () {
+                                            print("scaffold data is.......::${_scaffoldKey.currentState}");
                                             _scaffoldKey.currentState
                                                 .openEndDrawer();
                                           },
@@ -913,7 +915,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 5;
+        maxIterations = 1;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
