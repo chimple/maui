@@ -61,34 +61,25 @@ class _MatchingGameState extends State<MatchingGame> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            new Expanded(
-              flex: 1,
-              child: new Container(
-                margin: new EdgeInsets.all(5.0),
-                width: mediaQueryData.size.width / 2,
-                color: (_selectedPairs[k] == widget.gameData["pairs"][k])
-                    ? Colors.greenAccent
-                    : Colors.redAccent,
-                child: new Center(
-                    child: new Text(
-                  k,
-                  style: new TextStyle(fontSize: 20.0),
-                )),
+            new Container(
+              width: mediaQueryData.size.width / 3,
+              child: new QuizButton(
+                onPress: null,
+                text: k,
+                buttonStatus: (_selectedPairs[k] == widget.gameData["pairs"][k])
+                    ? Status.correct
+                    : Status.incorrect,
               ),
             ),
-            new Expanded(
-              flex: 1,
-              child: new Container(
-                  margin: new EdgeInsets.all(5.0),
-                  width: mediaQueryData.size.width / 2,
-                  color: _checkForRightSideItemCorrectness(v)
-                      ? Colors.greenAccent
-                      : Colors.redAccent,
-                  child: new Center(
-                      child: new Text(
-                    v,
-                    style: new TextStyle(fontSize: 20.0),
-                  ))),
+            new Container(
+              width: mediaQueryData.size.width / 3,
+              child: new QuizButton(
+                onPress: null,
+                text: v,
+                buttonStatus: _checkForRightSideItemCorrectness(v)
+                    ? Status.correct
+                    : Status.incorrect,
+              ),
             ),
           ],
         ),
