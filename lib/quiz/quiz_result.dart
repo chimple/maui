@@ -25,10 +25,6 @@ class QuizResultState extends State<QuizResult> {
 
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
-    print(q);
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    print(widget.quizzes[_quizIndex].type);
-    print(_quizIndex);
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
@@ -114,8 +110,6 @@ class QuizResultState extends State<QuizResult> {
 
   @override
   Widget build(BuildContext context) {
-    print(">>>>>>>>>>>...................<<<<<<<<<<<<<<<<<<,,");
-    print(widget.quizInputs);
     return new ListView(
       children: _buildListOfQuestionsAsked(context),
     );
