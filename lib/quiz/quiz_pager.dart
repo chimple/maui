@@ -122,7 +122,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         child: QuizResult(
           quizInputs: _quizInputs,
           quizzes: _quizzes,
-           onEnd: widget.onEnd
+           onEnd: widget.onEnd,
+           onScore:widget.onScore
         ),
       );
     }

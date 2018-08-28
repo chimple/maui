@@ -12,7 +12,8 @@ class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
   List<Quiz> quizzes;
   Function onEnd;
-  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd})
+  Function onScore;
+  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd,this.onScore})
       : super(key: key);
 
   @override
@@ -23,7 +24,7 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
-
+var scoreIs=0;
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
       
@@ -31,6 +32,7 @@ class QuizResultState extends State<QuizResult> {
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     print(widget.quizzes[_quizIndex].type);
     print(_quizIndex);
+     scoreIs=scoreIs+_quizIndex;
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
@@ -123,7 +125,11 @@ class QuizResultState extends State<QuizResult> {
         child: RaisedButton(
             color: Colors.green,
             onPressed: () {
+            
               widget.onEnd();
+                widget.onScore(scoreIs);
+              
+              
             },
             shape: new RoundedRectangleBorder(
                 borderRadius:
