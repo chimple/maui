@@ -13,6 +13,6 @@ class QuizProgressRepo {
   }
 
   Future<QuizProgress> getQuizProgressByTopicId(String topicId) async {
-    return await quizProgressDao.getQuizProgress(topicId);
+    return await quizProgressDao.getQuizProgressByTopicId(topicId);
   }
 }
