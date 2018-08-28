@@ -74,8 +74,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     showMode == true
         ? optionsOfGroupB = widget.input['optionsOfGroupB'].cast<String>()
         : null;
-    print(
-        "allOptions and showMode: ${allOptions.length} , ${showMode}");
+    print("allOptions and showMode: ${allOptions.length} , ${showMode}");
 
     showMode == false
         ? shuffledOptions.addAll(
@@ -196,8 +195,13 @@ class GameUI extends StatelessWidget {
             showMode == false
                 ? Expanded(
                     flex: 1,
-                    child: new QuizQuestion(
-                      text: question,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: constraints.maxHeight * 0.0871,
+                        child: new QuizQuestion(
+                          text: question,
+                        ),
+                      ),
                     ),
                   )
                 : new Container(),
