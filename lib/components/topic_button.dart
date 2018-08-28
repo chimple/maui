@@ -10,6 +10,7 @@ class TopicButton extends StatefulWidget {
   final int color;
   final String image;
   final VoidCallback onPress;
+  String topicId;
   
 
   TopicButton({
@@ -17,7 +18,8 @@ class TopicButton extends StatefulWidget {
     @required this.text,
     this.color,
     this.image,
-    this.onPress
+    this.onPress,
+    this.topicId,
 //      this.sizeHieght,
 //      this.sizeWidth
   }) : super(key: key);
@@ -35,13 +37,15 @@ class TopicButtonState extends State<TopicButton>{
   @override
   void initState() {
     super.initState();
+    print("Topic Id received at topic Button - ${widget.topicId}");
+    widget.topicId == null ? "Animals" : widget.topicId;
     _initData();
   }
 
   void _initData() async{
     setState(() => _isLoading = true);
    _quizProgress =
-        await QuizProgressRepo().getQuizProgressByTopicId("1");    
+        await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);    
     doneStatus = (double.parse(_quizProgress.maxScore)/double.parse(_quizProgress.outOfTotal));  
     setState(() => _isLoading = false);
     

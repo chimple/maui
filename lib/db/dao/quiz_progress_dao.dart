@@ -22,4 +22,23 @@ class QuizProgressDao {
     }
     return null;
   }
+
+  Future<QuizProgress> getQuizProgressByTopicId(String topicId, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(QuizProgress.table,
+        columns: [
+          QuizProgress.idCol,
+          QuizProgress.userIdCol,
+          QuizProgress.topicIdCol,
+          QuizProgress.quizIdCol,
+          QuizProgress.maxScoreCol,
+          QuizProgress.outOfTotalCol
+        ],
+        where: "${QuizProgress.topicIdCol} = ?",
+        whereArgs: [topicId]);
+    if (maps.length > 0) {
+      return QuizProgress.fromMap(maps.first);
+    }
+    return null;
+  }
 }

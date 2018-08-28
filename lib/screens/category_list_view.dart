@@ -51,6 +51,7 @@ class _CategoryListViewState extends State<CategoryListView> {
       );
     }
     print("hello image is ther or not ....::...'${_dataCategories[1].image}'");
+    print("data Category list received - '${_dataCategories}'");
     return Container(
         color: const Color(0xffFECE3D),
         child: new GridView.count(
@@ -63,6 +64,7 @@ class _CategoryListViewState extends State<CategoryListView> {
             return TopicButton(
                 text: '${_dataCategories[i].name}',
                 image: '${_dataCategories[i].image}',
+                topicId: '${_dataCategories[i].name}',
                 onPress: () {
                   Navigator.of(context).push(
                         new MaterialPageRoute(
