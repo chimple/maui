@@ -59,8 +59,8 @@ class _ArticlePageState extends State<ArticlePage> {
   Future _initAudioPlayer() async {
     playerState == PlayerState.stopped;
     try {
-      final path = await _localPath;
-      final file = new File('$path/sample.mp3');
+      final String path = await _localPath;
+      final File file = new File('$path/sample.wav');
       audioFile = file;
     } catch (e) {}
   }
@@ -71,12 +71,9 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   void play() async {
-    if (await audioFile.exists()) {
-      print('file exist');
-      await audioFile
-          .writeAsBytes((await _loadAsset('audio')).buffer.asUint8List());
-      await audioPlayer.play(audioFile.path, isLocal: true);
-    }
+    await audioFile
+        .writeAsBytes((await _loadAsset('lion')).buffer.asUint8List());
+    await audioPlayer.play(audioFile.path, isLocal: true);
   }
 
   void pause() async {
