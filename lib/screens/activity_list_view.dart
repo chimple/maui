@@ -47,18 +47,24 @@ class _ActivityListViewState extends State<ActivityListView> {
         child: new CircularProgressIndicator(),
       );
     }
-    return new GridView.count(
-      key: new Key('Category_page'),
-      primary: true,
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      crossAxisCount: media.size.height > media.size.width ? 3 : 2,
-      children: new List.generate(_dataActivity.length, (i) {
-        return TopicButton(
-          text: "${_dataActivity[i].text}",
-          image: "assets/category/lion.svg",
-        );
-      }),
+    return Scaffold(
+      appBar: new AppBar(
+          title: new Text(
+        widget.topicId,
+      )),
+      body: new GridView.count(
+        key: new Key('Category_page'),
+        primary: true,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        crossAxisCount: media.size.height > media.size.width ? 3 : 2,
+        children: new List.generate(_dataActivity.length, (i) {
+          return TopicButton(
+            text: "${_dataActivity[i].text}",
+            image: "${_dataActivity[i].image}",
+          );
+        }),
+      ),
     );
   }
 }
