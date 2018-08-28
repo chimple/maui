@@ -13,8 +13,7 @@ const Map<String, dynamic> _homework = {
 class Multiplechoice extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
-  Function onProgress;
-  Multiplechoice({Key key, this.input = _homework, this.onEnd, this.onProgress})
+  Multiplechoice({Key key, this.input = _homework, this.onEnd})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -42,98 +41,140 @@ class MultiplechoiceState extends State<Multiplechoice> {
 
     var size = media.size;
     List<String> choices = widget.input['choices'].cast<String>();
-    var j = 0;
+    var k = 0;
+    List<TableRow> rows = new List<TableRow>();
 
-    return new Container(
-      margin: const EdgeInsets.all(10.0),
-      alignment: Alignment.topCenter,
-      child: new Column(
-        children: <Widget>[
-          new SingleChildScrollView(
-            child: Container(
-              height: size.height / 2,
-              color: Colors.amber,
-              child: QuizQuestion(
-                text: widget.input['question'],
-                image: 'assets/Animals.png',
-              ),
+    for (var i = 0; i < 2; ++i) {
+      List<Widget> cells = choices
+          .skip(i * 2)
+          .take(2)
+          .map((e) => Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: _buildItem(k, e, choices, _statuses[k++],
+                    widget.input['answer'], size.height),
+              ))
+          .toList();
+      rows.add(new TableRow(children: cells));
+    }
+
+    return (widget.input['userChoice'] == null)
+        ? new Container(
+            margin: const EdgeInsets.all(10.0),
+            alignment: Alignment.topCenter,
+            child: new Column(
+              children: <Widget>[
+                new SingleChildScrollView(
+                  child: Container(
+                    height: size.height / 2,
+                    color: Colors.amber,
+                    child: QuizQuestion(
+                      text: widget.input['question'],
+                      image: 'assets/Animals.png',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: new Table(children: rows),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Expanded(
-            child: Container(
-                child: new GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 2.2,
-              crossAxisSpacing: 20.0,
-              mainAxisSpacing: 15.0,
-              shrinkWrap: true,
-              children: choices.map((element) {
-                print("the dataq is.....$element");
-                return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildItem(
-                      j,
-                      element,
-                      choices,
-                      _statuses[j++],
-                      widget.input['answer'],
-                    ));
-              }).toList(growable: false),
-            )),
-          ),
-        ],
-      ),
-    );
+          )
+        : new Container(
+            margin: const EdgeInsets.all(10.0),
+            alignment: Alignment.topCenter,
+            child: new Column(
+              children: <Widget>[
+                new SingleChildScrollView(
+                  child: Container(
+                    height: size.height / 8,
+                    color: Colors.amber,
+                    child: QuizQuestion(
+                      text: widget.input['question'],
+                      image: null,
+                    ),
+                  ),
+                ),
+                new Table(children: rows)
+              ],
+            ),
+          );
   }
 
-  Widget _buildItem(
-    int index,
-    String element,
-    List<String> choices,
-    Statuses status,
-    input,
-  ) {
-    return new QuizButton(
-        text: element,
-        buttonStatus: status == Statuses.Active
-            ? Status.notSelected
-            : status == Statuses.Disappear ? Status.correct : Status.incorrect,
-        onPress: () {
-          if (!showans) {
-            if (element == widget.input['answer']) {
-              setState(() {
-                showans = true;
-                print("correct one is...clicked here$element");
-                _statuses[index] = Statuses.Disappear;
-                widget.onProgress(1.0);
-                widget.onEnd({'userChoice': element, 'correct': 1, 'total': 1});
-              });
-            } else {
-              setState(() {
-                showans = true;
-                widget.onProgress(1.0);
-                _statuses[index] = Statuses.Wrong;
-                print(
-                    "this. is when we clicked wrong choice in quize is.....;::$_statuses");
+  Widget _buildItem(int index, String element, List<String> choices,
+      Statuses status, input, size) {
+    if (widget.input['correct'] == null) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: size / 8,
+          child: new QuizButton(
+              text: element,
+              buttonStatus: status == Statuses.Active
+                  ? Status.notSelected
+                  : status == Statuses.Disappear
+                      ? Status.correct
+                      : Status.incorrect,
+              onPress: () {
+                if (!showans) {
+                  if (element == widget.input['answer']) {
+                    setState(() {
+                      showans = true;
+                      print("correct one is...clicked here$element");
+                      _statuses[index] = Statuses.Disappear;
 
-                new Future.delayed(const Duration(milliseconds: 500), () {
-                  choices.forEach((element) {
-                    if (element == widget.input['answer']) {
-                      print("after some delay  in quize is.....;::$_statuses");
-                      var i = choices.indexOf(element);
-                      setState(() {
-                        _statuses[i] = Statuses.Disappear;
+                      new Future.delayed(const Duration(milliseconds: 850), () {
+                        widget.onEnd(
+                            {'userChoice': element, 'correct': 1, 'total': 1});
                       });
-                    }
-                  });
-                });
-                new Future.delayed(const Duration(milliseconds: 1500), () {
-                  widget
-                      .onEnd({'userChoice': element, 'correct': 0, 'total': 1});
-                });
-              });
-            }
-          }
-        });
+                    });
+                  } else {
+                    setState(() {
+                      showans = true;
+                      _statuses[index] = Statuses.Wrong;
+                      print(
+                          "this. is when we clicked wrong choice in quize is.....;::$_statuses");
+
+                      new Future.delayed(const Duration(milliseconds: 500), () {
+                        choices.forEach((element) {
+                          if (element == widget.input['answer']) {
+                            print(
+                                "after some delay  in quize is.....;::$_statuses");
+                            var i = choices.indexOf(element);
+                            setState(() {
+                              _statuses[i] = Statuses.Disappear;
+                            });
+                          }
+                        });
+                      });
+                      new Future.delayed(const Duration(milliseconds: 1500),
+                          () {
+                        widget.onEnd(
+                            {'userChoice': element, 'correct': 0, 'total': 1});
+                      });
+                    });
+                  }
+                }
+              }),
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: size / 8,
+          child: new QuizButton(
+              text: element,
+              buttonStatus: input == widget.input["userChoice"] &&
+                      widget.input["userChoice"] == element
+                  ? Status.correct
+                  : element == widget.input["userChoice"]
+                      ? Status.incorrect
+                      : element == input ? Status.correct : Status.notSelected,
+              onPress: () {}),
+        ),
+      );
+    }
   }
 }
