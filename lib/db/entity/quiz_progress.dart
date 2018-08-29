@@ -11,8 +11,8 @@ class QuizProgress {
   String userId;
   String topicId;
   String quizId;
-  String maxScore;
-  String outOfTotal;
+  int maxScore;
+  int outOfTotal;
 
   QuizProgress({this.id, this.userId, this.topicId, this.quizId, this.maxScore, this.outOfTotal});
 
@@ -59,6 +59,6 @@ class QuizProgress {
 
   @override
   String toString() {
-    return 'Quiz{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, maxScore: $maxScore, outOfTotal: $outOfTotal}';
+    return 'QuizProgresss{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, maxScore: $maxScore, outOfTotal: $outOfTotal}';
   }
 }

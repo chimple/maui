@@ -4,7 +4,7 @@ import 'package:maui/db/entity/quiz_progress.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuizProgressDao {
-  Future<QuizProgress> getQuizProgress(String id, {Database db}) async {
+  Future<QuizProgress> getQuizProgressByQuizProgressId(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(QuizProgress.table,
         columns: [

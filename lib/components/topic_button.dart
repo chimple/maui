@@ -10,7 +10,7 @@ class TopicButton extends StatefulWidget {
   final int color;
   final String image;
   final VoidCallback onPress;
-  String topicId;
+  final String topicId;
   
 
   TopicButton({
@@ -32,7 +32,7 @@ class TopicButton extends StatefulWidget {
 class TopicButtonState extends State<TopicButton>{
   QuizProgress _quizProgress;
   bool _isLoading = true;
-  var doneStatus;
+  double _doneStatus;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class TopicButtonState extends State<TopicButton>{
     setState(() => _isLoading = true);
    _quizProgress =
         await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);    
-    doneStatus = (double.parse(_quizProgress.maxScore)/double.parse(_quizProgress.outOfTotal));  
+    _doneStatus = (_quizProgress.maxScore/_quizProgress.outOfTotal);  
     setState(() => _isLoading = false);
     
   }
@@ -54,9 +54,9 @@ class TopicButtonState extends State<TopicButton>{
   @override
   Widget build(BuildContext context) {
     print("Current QuizProgress - $_quizProgress");  
-    print("Current QuizProgress Done Status - $doneStatus");
+    print("Current QuizProgress Done Status - $_doneStatus");
 
-    if (_isLoading == true && _quizProgress != null) {
+    if (_isLoading == true) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -78,7 +78,7 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                      _quizProgress != null ? new LinearProgressIndicator(value: doneStatus) : new Container(),
+                      _quizProgress != null ? new LinearProgressIndicator(value: _doneStatus) : new Container(),
                     
                   widget.image == null
                       ? new Expanded(
