@@ -127,12 +127,14 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
         return TopicButton(
             text: '${_topics[j].name}',
             image: '${_topics[j].image}',
+            topicId: '${_topics[j].id}',
             onPress: () {
               Navigator.of(context).push(
                     new MaterialPageRoute(
                         builder: (BuildContext context) =>
                             new TopicScreen(topicId: _topics[j].id,
                             topicName: _topics[j].name
+
                             )),
                   );
             });

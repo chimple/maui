@@ -78,12 +78,7 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                      _quizProgress != null ? new Wrap(
-                        direction: Axis.horizontal,
-                        children: <Widget>[
-                      new Text("Total topics covered - ", style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                      new LinearProgressIndicator(value: doneStatus),
-                      ]) : new Container(),
+                      _quizProgress != null ? new LinearProgressIndicator(value: doneStatus) : new Container(),
                     
                   widget.image == null
                       ? new Expanded(
