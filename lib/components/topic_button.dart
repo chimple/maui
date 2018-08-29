@@ -56,7 +56,7 @@ class TopicButtonState extends State<TopicButton>{
     print("Current QuizProgress - $_quizProgress");  
     print("Current QuizProgress Done Status - $_doneStatus");
 
-    if (_isLoading == true) {
+    if (_isLoading == true && _quizProgress != null) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
