@@ -53,15 +53,9 @@ class _MatchingGameState extends State<MatchingGame> {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     List<Widget> correctPairs = [];
     correctPairs.add(
-      // new Container(
-      //   height: (mediaQueryData.size.height - 300.0) / 6,
-      //   child: new Center(
-      //     child: new Text(widget.gameData["question"]),
-      //   ),
-      // ),
       new Container(
         height: (mediaQueryData.size.height - 300.0) / 6,
-              child: new QuizQuestion(
+        child: new QuizQuestion(
           text: widget.gameData["question"],
           // image: widget.gameData["image"],
         ),
@@ -213,12 +207,12 @@ class _MatchingGameState extends State<MatchingGame> {
                                           ? Status.notSelected
                                           : Status.disabled),
                                   onPress: () {
-                                    print("correct");
                                     print(_leftItemSelected == ''
                                         ? "leftNotTapped"
                                         : _leftItemSelected);
                                     print(_rightSideItems[index]);
-                                    if (_leftItemSelected != '') {
+                                    if (_leftItemSelected != '' && _leftSideDisabledItems.indexOf(_leftItemSelected) == -1) {
+                                      print("<><><><><><><><><><><><><><><><><><><><><><><><><><<>");
                                       setState(() {
                                         _leftSideDisabledItems
                                             .add(_leftItemSelected);
@@ -230,7 +224,7 @@ class _MatchingGameState extends State<MatchingGame> {
                                         if (_leftSideDisabledItems.length ==
                                             _leftSideItems.length) {
                                           new Future.delayed(
-                                              const Duration(seconds: 5), () {
+                                              const Duration(seconds: 2), () {
                                             widget.onEnd({
                                               'correct': numberOfCorrectChoices,
                                               'total': widget
