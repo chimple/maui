@@ -116,11 +116,16 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       final input = _quizInputs[_currentQuiz];
       print(input);
       return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd);
-    } else {
-      return QuizResult(
+    }
+     else {
+      return IntrinsicHeight(
+        child: QuizResult(
           quizInputs: _quizInputs,
           quizzes: _quizzes,
-        );
+           onEnd: widget.onEnd,
+           onScore:widget.onScore
+        ),
+      );
     }
   }
 
