@@ -36,6 +36,7 @@ class QuizProgressDao {
         ],
         where: "${QuizProgress.topicIdCol} = ?",
         whereArgs: [topicId]);
+        print("Topic Id received in QuizprogressDao - $topicId");
     if (maps.length > 0) {
       return QuizProgress.fromMap(maps.first);
     }

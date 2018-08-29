@@ -64,7 +64,6 @@ class _CategoryListViewState extends State<CategoryListView> {
             return TopicButton(
                 text: '${_dataCategories[i].name}',
                 image: '${_dataCategories[i].image}',
-                topicId: '${_dataCategories[i].id}',
                 onPress: () {
                   Navigator.of(context).push(
                         new MaterialPageRoute(
