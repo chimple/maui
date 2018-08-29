@@ -1,8 +1,4 @@
-import 'dart:io';
-import 'package:audioplayer/audioplayer.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
@@ -37,54 +33,16 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  AudioPlayer audioPlayer = new AudioPlayer();
-  File audioFile;
   PlayerState playerState;
 
   @override
   void initState() {
-    super.initState();
-    _initAudioPlayer();
-  }
-
-  Future _initAudioPlayer() async {
     playerState == PlayerState.stopped;
-    try {
-      final String path = await _localPath;
-      final File file = new File('$path/sample.ogg');
-      audioFile = file;
-    } catch (e) {}
-  }
-
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future _loadAsset(String sample) async {
-    return await rootBundle.load('$sample');
-  }
-
-  void dispose() {
-    audioPlayer.stop();
-    super.dispose();
-  }
-
-  void play() async {
-    await audioFile
-        .writeAsBytes((await _loadAsset(widget.audio)).buffer.asUint8List());
-    await audioPlayer.play(audioFile.path, isLocal: true);
-  }
-
-  void pause() async {
-    if (await audioFile.exists()) {
-      print('file exist');
-      await audioPlayer.pause();
-    }
+    super.initState();
   }
 
   void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
+    setState(() => playerState = PlayerState.paused);
   }
 
   @override
@@ -131,12 +89,20 @@ class _ArticlePageState extends State<ArticlePage> {
                         onPressed: () {
                           if (playerState == PlayerState.stopped ||
                               playerState == PlayerState.playing) {
-                            pause();
+                            AppStateContainer.of(context).pauseArticleAudio();
                             setState(() {
                               playerState = PlayerState.paused;
                             });
                           } else {
-                            play();
+                            AppStateContainer
+                                .of(context)
+                                .playArticleAudio(widget.audio)
+                                .then((f) {
+                              f.completionHandler = () {
+                                print('audio completed::');
+                                onComplete();
+                              };
+                            });
                             setState(() {
                               playerState = PlayerState.playing;
                             });
