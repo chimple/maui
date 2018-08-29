@@ -56,7 +56,7 @@ class TopicButtonState extends State<TopicButton>{
     print("Current QuizProgress - $_quizProgress");  
     print("Current QuizProgress Done Status - $doneStatus");
 
-    if (_isLoading) {
+    if (_isLoading == true && _quizProgress != null) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
@@ -78,9 +78,12 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                  
+                      _quizProgress != null ? new Wrap(
+                        direction: Axis.horizontal,
+                        children: <Widget>[
                       new Text("Total topics covered - ", style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
                       new LinearProgressIndicator(value: doneStatus),
+                      ]) : new Container(),
                     
                   widget.image == null
                       ? new Expanded(
