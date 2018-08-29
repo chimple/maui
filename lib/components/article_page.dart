@@ -47,22 +47,22 @@ class _ArticlePageState extends State<ArticlePage> {
     _initAudioPlayer();
   }
 
+  Future _initAudioPlayer() async {
+    playerState == PlayerState.stopped;
+    try {
+      final String path = await _localPath;
+      final File file = new File('$path/sample.ogg');
+      audioFile = file;
+    } catch (e) {}
+  }
+
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
   Future _loadAsset(String sample) async {
-    return await rootBundle.load('assets/$sample.wav');
-  }
-
-  Future _initAudioPlayer() async {
-    playerState == PlayerState.stopped;
-    try {
-      final String path = await _localPath;
-      final File file = new File('$path/sample.wav');
-      audioFile = file;
-    } catch (e) {}
+    return await rootBundle.load('$sample');
   }
 
   void dispose() {
@@ -72,7 +72,7 @@ class _ArticlePageState extends State<ArticlePage> {
 
   void play() async {
     await audioFile
-        .writeAsBytes((await _loadAsset('lion')).buffer.asUint8List());
+        .writeAsBytes((await _loadAsset(widget.audio)).buffer.asUint8List());
     await audioPlayer.play(audioFile.path, isLocal: true);
   }
 
@@ -118,39 +118,41 @@ class _ArticlePageState extends State<ArticlePage> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: new RawMaterialButton(
-                  shape: new CircleBorder(),
-                  fillColor: Colors.white,
-                  splashColor: Colors.teal,
-                  highlightColor: Colors.teal.withOpacity(0.5),
-                  elevation: 10.0,
-                  highlightElevation: 5.0,
-                  onPressed: () {
-                    if (playerState == PlayerState.stopped ||
-                        playerState == PlayerState.playing) {
-                      pause();
-                      setState(() {
-                        playerState = PlayerState.paused;
-                      });
-                    } else {
-                      play();
-                      setState(() {
-                        playerState = PlayerState.playing;
-                      });
-                    }
-                  },
-                  child: new Icon(
-                    (playerState == PlayerState.stopped ||
-                            playerState == PlayerState.playing)
-                        ? Icons.pause
-                        : Icons.play_arrow,
-                    color: Colors.purple,
-                    size: 40.0,
-                  ),
-                ),
-              ),
+              widget.audio != null
+                  ? Expanded(
+                      flex: 1,
+                      child: new RawMaterialButton(
+                        shape: new CircleBorder(),
+                        fillColor: Colors.white,
+                        splashColor: Colors.teal,
+                        highlightColor: Colors.teal.withOpacity(0.5),
+                        elevation: 10.0,
+                        highlightElevation: 5.0,
+                        onPressed: () {
+                          if (playerState == PlayerState.stopped ||
+                              playerState == PlayerState.playing) {
+                            pause();
+                            setState(() {
+                              playerState = PlayerState.paused;
+                            });
+                          } else {
+                            play();
+                            setState(() {
+                              playerState = PlayerState.playing;
+                            });
+                          }
+                        },
+                        child: new Icon(
+                          (playerState == PlayerState.stopped ||
+                                  playerState == PlayerState.playing)
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          color: Colors.purple,
+                          size: 40.0,
+                        ),
+                      ),
+                    )
+                  : new Container(),
               Expanded(
                 flex: 3,
                 child: new Container(
