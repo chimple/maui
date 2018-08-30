@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maui/components/quiz_progress_tracker.dart';
 import 'package:maui/db/dao/quiz_progress_dao.dart';
 import 'package:maui/db/entity/quiz_progress.dart';
 import '../repos/quiz_progress_repo.dart';
@@ -30,37 +31,14 @@ class TopicButton extends StatefulWidget {
 }
 
 class TopicButtonState extends State<TopicButton>{
-  QuizProgress _quizProgress;
-  bool _isLoading = true;
-  double _doneStatus;
 
   @override
   void initState() {
     super.initState();
-    _initData();
-  }
-
-  void _initData() async{
-    setState(() => _isLoading = true);
-   _quizProgress =
-        await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);    
-    _doneStatus = (_quizProgress.maxScore/_quizProgress.outOfTotal);  
-    setState(() => _isLoading = false);
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Current QuizProgress - $_quizProgress");  
-    print("Current QuizProgress Done Status - $_doneStatus");
-
-    if (_isLoading == true && _quizProgress != null) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
 
     // TODO: implement build
     print("hello Topic button ${widget.image} and ${widget.text}");
@@ -76,7 +54,7 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                      _quizProgress != null ? new LinearProgressIndicator(value: _doneStatus) : new Container(),
+                      new QuizProgressTracker(topicId: widget.topicId),
                     
                   widget.image == null
                       ? new Expanded(
