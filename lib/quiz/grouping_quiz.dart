@@ -249,7 +249,7 @@ class GameUI extends StatelessWidget {
                       child: new Container(
                         color: Colors.white,
                         child: GridView.count(
-                          childAspectRatio: 2.0,
+                          childAspectRatio: constraints.maxHeight > 1000 ? 3.0 : 2.0,
                           crossAxisCount: 2,
                           children:
                               new List.generate(shuffledOptions.length, (i) {
