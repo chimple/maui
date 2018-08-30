@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
