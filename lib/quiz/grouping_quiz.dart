@@ -74,8 +74,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     showMode == true
         ? optionsOfGroupB = widget.input['optionsOfGroupB'].cast<String>()
         : null;
-    print(
-        "allOptions and showMode: ${allOptions.length} , ${showMode}");
+    print("allOptions and showMode: ${allOptions.length} , ${showMode}");
 
     showMode == false
         ? shuffledOptions.addAll(
@@ -196,8 +195,13 @@ class GameUI extends StatelessWidget {
             showMode == false
                 ? Expanded(
                     flex: 1,
-                    child: new QuizQuestion(
-                      text: question,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: constraints.maxHeight * 0.0871,
+                        child: new QuizQuestion(
+                          text: question,
+                        ),
+                      ),
                     ),
                   )
                 : new Container(),
@@ -245,7 +249,7 @@ class GameUI extends StatelessWidget {
                       child: new Container(
                         color: Colors.white,
                         child: GridView.count(
-                          childAspectRatio: 2.0,
+                          childAspectRatio: constraints.maxHeight > 1000 ? 3.0 : 2.0,
                           crossAxisCount: 2,
                           children:
                               new List.generate(shuffledOptions.length, (i) {
@@ -394,6 +398,7 @@ class _DragBoxState extends State<DragBox> {
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Draggable(
+        maxSimultaneousDrags: 1,
         data: widget.label,
         child: new QuizButton(
           text: widget.label,

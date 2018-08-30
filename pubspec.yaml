@@ -59,8 +59,12 @@ flutter:
   assets:
     - assets/right.wav
     - assets/wrong.wav
-    - assets/audio.wav
-    
+    - assets/lion.ogg
+    - assets/monkey.ogg
+    - assets/duck.ogg
+    - assets/fox.ogg
+    - assets/rabbit.ogg
+
     - assets/tap.wav
     - assets/demo_video/video.mp4
     - assets/demo_video/tutorial.mp4
