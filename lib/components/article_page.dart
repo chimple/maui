@@ -1,3 +1,4 @@
+import 'package:audioplayer/audioplayer.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,13 @@ class _ArticlePageState extends State<ArticlePage> {
     setState(() => playerState = PlayerState.paused);
   }
 
+  @override 
+  void dispose(){
+   _audioPlayer.stop();
+    super.dispose();
+  }
+ 
+  AudioPlayer _audioPlayer;
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
@@ -98,7 +106,8 @@ class _ArticlePageState extends State<ArticlePage> {
                                 .of(context)
                                 .playArticleAudio(widget.audio)
                                 .then((f) {
-                              f.completionHandler = () {
+                                  _audioPlayer = f;
+                              _audioPlayer.completionHandler = () {
                                 print('audio completed::');
                                 onComplete();
                               };
