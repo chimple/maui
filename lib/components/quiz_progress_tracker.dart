@@ -40,7 +40,7 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
     print("Current QuizProgress - $_quizProgress");  
     print("Current QuizProgress Done Status - $_doneStatus");
 
-    if (_isLoading == true && _quizProgress != null) {
+    if (_isLoading == true) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
