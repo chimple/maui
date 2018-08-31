@@ -22,6 +22,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  audio_recorder:
+    dependency: transitive
+    description:
+      name: audio_recorder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
+  audioplayer2:
+    dependency: transitive
+    description:
+      name: audioplayer2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1"
   audioplayers:
     dependency: "direct main"
     description:
@@ -503,6 +517,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0+1"
+  scoped_model:
+    dependency: transitive
+    description:
+      name: scoped_model
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -620,6 +641,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1+1"
+  tahiti:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: b9062f387dcfcc727e6f0fa0d60feade2dea7a50
+      url: "https://github.com/chimple/tahiti.git"
+    source: git
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:

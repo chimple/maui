@@ -35,6 +35,9 @@ dependencies:
       https://github.com/chimple/flores.git
   flutter_localizations:
     sdk: flutter
+  tahiti:
+    git:
+      https://github.com/chimple/tahiti.git
 dev_dependencies:
   flutter_test:
     sdk: flutter
