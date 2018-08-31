@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flores/flores.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:maui/components/flash_card.dart';
@@ -116,12 +116,8 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   void _initAudioPlayer() {
     _audioPlayer = new AudioPlayer();
-    _audioPlayer.setCompletionHandler(() {
-      _isPlaying = false;
-    });
-    _audioPlayer.setErrorHandler((msg) {
-      _isPlaying = false;
-    });
+    _audioPlayer.completionHandler = () => _isPlaying = false;
+    _audioPlayer.errorHandler = (msg) => _isPlaying = false;
   }
 
   Future showNotification(
@@ -203,11 +199,12 @@ class AppStateContainerState extends State<AppStateContainer> {
   void display(BuildContext context, String fileName) {
     if (isShowingFlashCard) {
       showDialog(
-          context: context,
-          child: new FractionallySizedBox(
-              heightFactor: 0.5,
-              widthFactor: 0.8,
-              child: new FlashCard(text: fileName))).whenComplete(() {
+              context: context,
+              child: new FractionallySizedBox(
+                  heightFactor: 0.5,
+                  widthFactor: 0.8,
+                  child: new FlashCard(text: fileName)))
+          .whenComplete(() {
         isShowingFlashCard = true;
       });
     } else {
@@ -216,7 +213,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     isShowingFlashCard = false;
   }
 
-  void beginChat(String fId) async {
+  Future<void> beginChat(String fId) async {
     List<dynamic> msgs;
     friendId = fId;
     activity = 'chat';
@@ -308,7 +305,8 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  void getUsers() async {
+  Future<void> getUsers() async {
+    print('getUsers begin');
     activity = 'friends';
     final userList = await UserRepo().getRemoteUsers();
     final botUser = await UserRepo().getUser(User.botId);
@@ -318,6 +316,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       users = userList;
       notifs = notifList;
     });
+    print('getUsers end');
   }
 
   Future<Map<String, dynamic>> _respondToChat(String message) async {

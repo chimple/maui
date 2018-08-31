@@ -61,7 +61,7 @@ class _ActivityListViewState extends State<ActivityListView> {
         children: new List.generate(_dataActivity.length, (i) {
           return TopicButton(
             text: "${_dataActivity[i].text}",
-            image: "${_dataActivity[i].image}",
+            image: "${_dataActivity[i].image}"
           );
         }),
       ),

@@ -30,8 +30,10 @@ class _FriendListViewState extends State<FriendListView> {
   }
 
   void _initData() async {
-    await AppStateContainer.of(context).getUsers();
-    _isLoading = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await AppStateContainer.of(context).getUsers();
+      _isLoading = false;
+    });
   }
 
   @override

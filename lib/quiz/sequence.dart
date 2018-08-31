@@ -25,13 +25,12 @@ class SequenceQuiz extends StatefulWidget {
 }
 
 class SequenceQuizState extends State<SequenceQuiz> {
-  String ans;
   int score = 0;
   List<String> clicked = [], shuffledChoices = [];
   List<String> choice = [];
   List<String> clickedChoices = [];
   List<bool> rightOrWrong = [];
-  int count = 0, correctchoices = 0;
+  int count = 0, correctChoices = 0;
 
   @override
   void initState() {
@@ -45,15 +44,10 @@ class SequenceQuizState extends State<SequenceQuiz> {
       choice.add(widget.input['order'].cast<String>()[i]);
       shuffledChoices.add(widget.input['order'].cast<String>()[i]);
     }
-    // choice = choice.map((a) => widget.input['order'][a]).toList(growable: false);
-    ans = widget.input['image'];
-
+  
     // Shuffled Choices
     shuffledChoices.shuffle();
-
     print("Shuffled Choices - $shuffledChoices");
-
-    // shuffledChoices = choice.cast<String>().map((e) => choice.cast<String>()[e]).toList(growable: false);
 
     // Array to track the choices clicked
     clicked = choice.map((e) => "false").toList(growable: false);
@@ -69,13 +63,12 @@ class SequenceQuizState extends State<SequenceQuiz> {
     }
   }
 
-  Widget _buildItem(int index, String text, int k) {
-    print("Value of Choices Right or Wrong  array - ${widget.input['choicesRightOrWrong']}");
-    print("Value of Right Or Wrong Arrray - $rightOrWrong");
-    print("Value of J = $index");
-    print("Value of K = $k");
+  Widget _buildItem(int index, String text, int k, double ht) {
+
     // Universal Button for mapping keys, text/image to be shown, Button's present status and a function to perform desired actions
-    return new QuizButton(
+    return new  Container(
+        height: ht / 8.0,
+        child: QuizButton(
         key: new ValueKey<int>(index),
         text: text,
         buttonStatus: (widget.input['correct'] == null ? (clicked[k] == "false"
@@ -108,7 +101,7 @@ class SequenceQuizState extends State<SequenceQuiz> {
                 if (choice[i] == clickedChoices[i]) {
                   setState(() {
                     rightOrWrong[i] = true;
-                    correctchoices++;
+                    correctChoices++;
                   });
                 }
               }
@@ -117,14 +110,14 @@ class SequenceQuizState extends State<SequenceQuiz> {
             // Calling the parent class for an end and to switch on to the next game
             new Future.delayed(const Duration(milliseconds: 2000), () {
               //TODO: Call this when all the items have been chosen
-              widget.onEnd({'correct': correctchoices, 'total': choice.length, 'correctSequenceChoices': "$choice", 'choicesRightOrWrong': rightOrWrong});
+              widget.onEnd({'correct': correctChoices, 'total': choice.length, 'correctSequenceChoices': "$choice", 'choicesRightOrWrong': rightOrWrong});
             });
           } 
           } 
           else {
             print("This is the else section");
           }
-        });
+        }));
   }
 
   @override
@@ -134,11 +127,10 @@ class SequenceQuizState extends State<SequenceQuiz> {
     var size = media.size;
     print("Welconme to Widget Build Sequence Game");
     List<Widget> cells;
-
     cells = (widget.input['correct'] == null ? shuffledChoices : choice)
         .map((e) => new Padding(
               padding: EdgeInsets.all(10.0),
-              child: _buildItem(j++, e, k++),
+              child: _buildItem(j++, e, k++, size.height),
             ))
         .toList(growable: false);
   
@@ -174,14 +166,11 @@ class SequenceQuizState extends State<SequenceQuiz> {
         ) : new Container(),
 
         widget.input['correct'] == null ? new Container() : new Container(
-          height: size.height * 0.3,
-          child: new GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(40.0),
-              crossAxisSpacing: 10.0,
-              crossAxisCount: 4,
-              childAspectRatio: 2.0,
-              children: cells)),
+          width: size.width * 0.7,
+          child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: cells)),
       ]);
   }
 }

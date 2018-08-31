@@ -10,36 +10,43 @@ dependencies:
   image_picker:
   cupertino_icons: ^0.1.0
   sqflite: any
-  uuid: ^0.5.0
+  uuid: ^1.0.3
   path_provider: ^0.4.0
   tuple: ^1.0.1
-  json_annotation: ^0.2.2
-  audioplayer: ^0.4.0
-  fluttery: "^0.0.6"
-  flutter_circular_chart: "^0.0.3"
+  json_annotation: ^1.1.0
+  audioplayers: ^0.7.5
+  fluttery:
+    git:
+      https://github.com/chimple/fluttery.git
+  flutter_circular_chart: "^0.1.0"
   shared_preferences: ^0.4.2
   camera: 0.2.1
-  nima: 1.0.0
-  flutter_local_notifications: 0.3.3
-  badge: 0.0.2
-  intl: 0.15.6
-  intl_translation: 0.16.8
-  simple_permissions: 0.1.5
+  nima: ^1.0.1
+  flutter_local_notifications: ^0.3.7
+  badge:
+    git:
+      https://github.com/chimple/Flutter-Badge.git
+  intl: ^0.15.7
+  intl_translation: ^0.17.0
+  simple_permissions: ^0.1.6
   flutter_svg: ^0.5.1
   flores:
     git:
       https://github.com/chimple/flores.git
   flutter_localizations:
     sdk: flutter
+  tahiti:
+    git:
+      https://github.com/chimple/tahiti.git
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
   video_player: "^0.5.4"
-  build_runner: ^0.7.6
-  json_serializable: ^0.3.2
-  flutter_markdown: ^0.1.5
+  build_runner: ^0.10.1
+  json_serializable: ^1.2.1
+  flutter_markdown: ^0.2.0
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 

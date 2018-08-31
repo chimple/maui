@@ -47,44 +47,46 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   void _initData() async {
-    _isLoading = true;
-    var user = AppStateContainer.of(context).state.loggedInUser;
-    List<User> users;
-    users = await UserRepo().getUsers();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<dynamic> messages;
-    try {
-      messages =
-          await Flores().getLatestConversations(user.id, widget.gameName);
-    } on PlatformException {
-      print('Failed getting messages');
-    } catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _isLoading = true;
+      var user = AppStateContainer.of(context).state.loggedInUser;
+      List<User> users;
+      users = await UserRepo().getUsers();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<dynamic> messages;
+      try {
+        messages =
+            await Flores().getLatestConversations(user.id, widget.gameName);
+      } on PlatformException {
+        print('Failed getting messages');
+      } catch (e, s) {
+        print('Exception details:\n $e');
+        print('Stack trace:\n $s');
+      }
 
-    print('_initData: $messages');
+      print('_initData: $messages');
 
-    if (!mounted) return;
-    setState(() {
-      _deviceId = prefs.getString('deviceId');
-      _users = users;
-      _messages = messages;
-      _localUsers.add(user);
-      _users.forEach((u) {
-        if (u.id == user.id || u.id == User.botId) {
-          //no op
-        } else if (u.deviceId == _deviceId) {
-          _localUsers.add(u);
-        } else if (messages.any((m) => u.id == m['userId'])) {
-          _myTurn.add(u);
-        } else if (messages.any((m) => u.id == m['recipientUserId'])) {
-          _otherTurn.add(u);
-        } else {
-          _remoteUsers.add(u);
-        }
+      if (!mounted) return;
+      setState(() {
+        _deviceId = prefs.getString('deviceId');
+        _users = users;
+        _messages = messages;
+        _localUsers.add(user);
+        _users.forEach((u) {
+          if (u.id == user.id || u.id == User.botId) {
+            //no op
+          } else if (u.deviceId == _deviceId) {
+            _localUsers.add(u);
+          } else if (messages.any((m) => u.id == m['userId'])) {
+            _myTurn.add(u);
+          } else if (messages.any((m) => u.id == m['recipientUserId'])) {
+            _otherTurn.add(u);
+          } else {
+            _remoteUsers.add(u);
+          }
+        });
+        _isLoading = false;
       });
-      _isLoading = false;
     });
   }
 
@@ -259,8 +261,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   goToMyTurn(BuildContext context, User user) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
 
-    Navigator
-        .of(context)
+    Navigator.of(context)
         .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
       print('continueGame: ${user.id} $_messages');
       final message = _messages.firstWhere((m) => user.id == m['userId']);

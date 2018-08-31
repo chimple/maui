@@ -66,7 +66,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _initMessages() async {
-    await AppStateContainer.of(context).beginChat(widget.friend.id);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await AppStateContainer.of(context).beginChat(widget.friend.id);
+    });
   }
 
   @override
