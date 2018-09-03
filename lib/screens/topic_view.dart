@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
 import '../repos/topic_repo.dart';
-import 'package:flutter/material.dart';
 import 'package:maui/db/entity/topic.dart';
 
 class TopicView extends StatefulWidget {
@@ -19,7 +18,7 @@ class _TestListState extends State<TopicView> {
     "Gallery",
     "Topic",
   ];
-List<Topic> _quizProgress;
+  List<Topic> _quizProgress;
   bool _isLoading = true;
 
   @override
@@ -29,17 +28,16 @@ List<Topic> _quizProgress;
     _initData();
   }
 
-  void _initData() async{
+  void _initData() async {
     setState(() => _isLoading = true);
-   _quizProgress =
-        await TopicRepo().getAllTopics();    
-   print("list quizes is.......::$_quizProgress");
+    _quizProgress = await TopicRepo().getAllTopics();
+    print("list quizes is.......::$_quizProgress");
     setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext ctxt) {
- print("list quizes is.......::$_quizProgress");
+    print("list quizes is.......::$_quizProgress");
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -48,17 +46,16 @@ List<Topic> _quizProgress;
       );
     }
     return new Container(
-        child: new ListView.builder
-              (
-                itemCount: _quizProgress.length,
-                itemBuilder: (BuildContext ctxt, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Row(children: [new Text("${_quizProgress[index].id}")]),
-                      new QuizProgressTracker(topicId:_quizProgress[index].id)]),
-                  );
-                }
-            ));
+        child: new ListView.builder(
+            itemCount: _quizProgress.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(children: [
+                  Row(children: [new Text("${_quizProgress[index].id}")]),
+                  new QuizProgressTracker(topicId: _quizProgress[index].id)
+                ]),
+              );
+            }));
   }
 }

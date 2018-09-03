@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/quiz.dart';
-import 'package:maui/quiz/match_the_following.dart';
-import 'package:maui/quiz/multiple_choice.dart';
-import 'package:maui/quiz/grouping_quiz.dart';
-import 'package:maui/quiz/true_or_false.dart';
-import 'package:maui/quiz/sequence.dart';
 import 'quiz_pager.dart';
 
 class QuizResult extends StatefulWidget {
@@ -118,9 +113,10 @@ class QuizResultState extends State<QuizResult> {
     double marginSide;
     double marginTop;
     if (buttonSize < size.height - media.size.height / 8.0) {
-      containerSize = (size.height - media.size.height / 8.0 - buttonSize - 7)/1.5;
-      marginSide = containerSize *0.18;
-      marginTop = containerSize*0.1;
+      containerSize =
+          (size.height - media.size.height / 8.0 - buttonSize - 7) / 1.5;
+      marginSide = containerSize * 0.18;
+      marginTop = containerSize * 0.1;
       print(
           "in if condition is....... ::$containerSize..... and margin is.....$marginSide");
       // containerSize = containerSize / 3;
@@ -128,15 +124,15 @@ class QuizResultState extends State<QuizResult> {
       marginTop = marginSide;
       if (containerSize <= tileSize) {
         containerSize = 100.0;
-       marginSide = containerSize *0.18;
-      marginTop = containerSize*0.1;
+        marginSide = containerSize * 0.18;
+        marginTop = containerSize * 0.1;
       }
       print("afetr some diving hieght is.....::$containerSize");
     } else {
       print("else is........");
       containerSize = tileSize;
-     marginSide = containerSize *0.18;
-      marginTop = containerSize*0.1;
+      marginSide = containerSize * 0.18;
+      marginTop = containerSize * 0.1;
     }
 
     print(
@@ -161,7 +157,7 @@ class QuizResultState extends State<QuizResult> {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             height: 80.0,
-            width: media.size.height /3,
+            width: media.size.height / 3,
             // color: Colors.white,
             decoration: new BoxDecoration(
               color: Colors.green,

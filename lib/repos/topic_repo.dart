@@ -15,6 +15,7 @@ class TopicRepo {
   Future<List<Topic>> getTopicsForCategoryId(String categoryId) async {
     return topicDao.getTopicsForCategoryId(categoryId);
   }
+
   Future<List<Topic>> getAllTopics() async {
     return await topicDao.getAllTopics();
   }
