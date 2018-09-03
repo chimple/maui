@@ -11,8 +11,10 @@ import 'quiz_pager.dart';
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
   List<Quiz> quizzes;
-
-  QuizResult({Key key, this.quizInputs, this.quizzes}) : super(key: key);
+  Function onEnd;
+  Function onScore;
+  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd,this.onScore})
+      : super(key: key);
 
   @override
   QuizResultState createState() {
@@ -22,18 +24,15 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
-
+var scoreIs=0;
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
-    print(q);
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    print(widget.quizzes[_quizIndex].type);
-    print(_quizIndex);
+     scoreIs=scoreIs+_quizIndex;
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
       margin: new EdgeInsets.all(2.0),
-      color: Colors.teal,
+      color: Colors.white,
       child: new ControlledExpansionTile(
         leading: new Icon(Icons.check),
         key: _expandableTileKey,
@@ -99,6 +98,9 @@ class QuizResultState extends State<QuizResult> {
   }
 
   List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
+       MediaQueryData media = MediaQuery.of(context);
+
+    var size = media.size;
     List<Widget> _questionResults = [];
     int _quizIndex = 0;
     widget.quizInputs
@@ -108,14 +110,40 @@ class QuizResultState extends State<QuizResult> {
               ),
         )
         .toList(growable: false);
+    _questionResults.add(Container(
+      // width: 60.0,
+      height: size.height/8,
+      color: Colors.white,
+      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(50.0),
+      child: Card(
+        child: RaisedButton(
+            color: Colors.green,
+            onPressed: () {
+            
+              widget.onEnd();
+                widget.onScore(scoreIs);
+              
+              
+            },
+            shape: new RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(16.0))),
+            child: Center(child: Text("Next"))
+//         new IconButton(
+//   icon: new Icon(Icons.accessible_forward),
+//   tooltip: 'Increase volume by 10%',
+//   onPressed: () { setState(() {  },);}
+// ),
+            ),
+      ),
+    ));
 
     return _questionResults;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(">>>>>>>>>>>...................<<<<<<<<<<<<<<<<<<,,");
-    print(widget.quizInputs);
     return new ListView(
       children: _buildListOfQuestionsAsked(context),
     );
