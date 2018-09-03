@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -78,7 +78,7 @@ class UserRepo {
         '*' +
         base64.encode(contents);
     try {
-      Flores().addUser(user.id, deviceId, enc);
+      p2p.addUser(user.id, deviceId, enc);
     } on PlatformException {
       print('Flores: Failed addUser');
     } catch (e, s) {

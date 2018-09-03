@@ -30,11 +30,11 @@ dependencies:
   intl_translation: ^0.17.0
   simple_permissions: ^0.1.6
   flutter_svg: ^0.5.1
-  flores:
-    git:
-      https://github.com/chimple/flores.git
   flutter_localizations:
     sdk: flutter
+  tahiti:
+    git:
+      https://github.com/chimple/tahiti.git
 dev_dependencies:
   flutter_test:
     sdk: flutter
