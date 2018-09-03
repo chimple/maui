@@ -34,4 +34,13 @@ AND c.${CategoryTopic.categoryIdCol} = ?
         print("the data from database is....::$maps");
     return maps.map((el) => new Topic.fromMap(el)).toList();
   }
+   Future<List<Topic>> getAllTopics({Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(Topic.table,
+        columns: [
+          Topic.idCol, Topic.nameCol, Topic.imageCol, Topic.colorCol
+        ],
+        );
+    return maps.map((el) => new Topic.fromMap(el)).toList();
+  }
 }

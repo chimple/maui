@@ -13,7 +13,7 @@ class QuizResult extends StatefulWidget {
   List<Quiz> quizzes;
   Function onEnd;
   Function onScore;
-  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd,this.onScore})
+  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd, this.onScore})
       : super(key: key);
 
   @override
@@ -24,10 +24,13 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
-var scoreIs=0;
+  var scoreIs = 0;
+  double tileSize = 100.0;
+  double buttonSize = 0.0;
+  var countTile = 0;
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
-     scoreIs=scoreIs+_quizIndex;
+    scoreIs = scoreIs + _quizIndex;
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
@@ -49,7 +52,7 @@ var scoreIs=0;
         title: new Padding(
           padding: new EdgeInsets.all(5.0),
           child: new Container(
-            height: 100.0,
+            height: tileSize,
             child: new Row(
               children: <Widget>[
                 new Expanded(
@@ -98,44 +101,76 @@ var scoreIs=0;
   }
 
   List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
-       MediaQueryData media = MediaQuery.of(context);
+    MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
     List<Widget> _questionResults = [];
     int _quizIndex = 0;
-    widget.quizInputs
-        .map(
-          (q) => _questionResults.add(
-                _buildAskedQuestionExpandableTile(q, _quizIndex++, context),
-              ),
-        )
-        .toList(growable: false);
+
+    widget.quizInputs.map((q) {
+      buttonSize = buttonSize + tileSize;
+      countTile = countTile + 1;
+      _questionResults.add(
+        _buildAskedQuestionExpandableTile(q, _quizIndex++, context),
+      );
+    }).toList(growable: false);
+    double containerSize;
+    double marginSide;
+    double marginTop;
+    if (buttonSize < size.height - media.size.height / 8.0) {
+      containerSize = (size.height - media.size.height / 8.0 - buttonSize - 7)/1.5;
+      marginSide = containerSize *0.18;
+      marginTop = containerSize*0.1;
+      print(
+          "in if condition is....... ::$containerSize..... and margin is.....$marginSide");
+      // containerSize = containerSize / 3;
+      // marginSide = containerSize /2;
+      marginTop = marginSide;
+      if (containerSize <= tileSize) {
+        containerSize = 100.0;
+       marginSide = containerSize *0.18;
+      marginTop = containerSize*0.1;
+      }
+      print("afetr some diving hieght is.....::$containerSize");
+    } else {
+      print("else is........");
+      containerSize = tileSize;
+     marginSide = containerSize *0.18;
+      marginTop = containerSize*0.1;
+    }
+
+    print(
+        "its my width margin is.........::$marginSide........... container hiegt...::$containerSize.");
+    print(
+        "hieght of the button is,....::$buttonSize......... real hieght is.......::${size.height}");
     _questionResults.add(Container(
-      // width: 60.0,
-      height: size.height/8,
-      color: Colors.white,
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.all(50.0),
-      child: Card(
-        child: RaisedButton(
-            color: Colors.green,
-            onPressed: () {
-            
-              widget.onEnd();
-                widget.onScore(scoreIs);
-              
-              
-            },
-            shape: new RoundedRectangleBorder(
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(16.0))),
-            child: Center(child: Text("Next"))
-//         new IconButton(
-//   icon: new Icon(Icons.accessible_forward),
-//   tooltip: 'Increase volume by 10%',
-//   onPressed: () { setState(() {  },);}
-// ),
+      height: containerSize,
+      alignment: Alignment.bottomCenter,
+      // padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.only(
+        left: marginSide, right: marginSide,
+        top: marginTop,
+        // bottom: marginTop
+      ),
+      child: GestureDetector(
+        onTap: () {
+          widget.onEnd();
+          widget.onScore(scoreIs);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 80.0,
+            width: media.size.height /3,
+            // color: Colors.white,
+            decoration: new BoxDecoration(
+              color: Colors.green,
+              borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
             ),
+
+            child: Center(child: Text("Next")),
+          ),
+        ),
       ),
     ));
 
