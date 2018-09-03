@@ -464,13 +464,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                           media.size.height / 8)
                       : EdgeInsets.all(progregressPading -
                           (media.size.width / 2.8) / 2 -
-                          25 -
-                          7 -
+                          32 -
                           media.size.height / 8)
                   : EdgeInsets.all((progregressPading / 1.5 -
                           (media.size.width / 2.8) / 3 -
-                          25 -
-                          7 -
+                         32-
                           media.size.height / 8) /
                       2),
               child: new Stack(
@@ -617,8 +615,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                                           (media.size.width /
                                                                   2.8) /
                                                               2 -
-                                                          7 -
-                                                          25 -
+                                                        32 -
                                                           media.size.height /
                                                               8),
                                                   child: new Stack(
