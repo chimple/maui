@@ -1,10 +1,6 @@
 import 'dart:io';
-import '../db/entity/quiz.dart';
 import '../loca.dart';
-import '../repos/quiz_repo.dart';
-import '../repos/topic_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/db/entity/topic.dart';
 import '../state/app_state_container.dart';
 import 'topic_view.dart';
 
@@ -25,7 +21,7 @@ class ProfileViewState extends State<ProfileView>
   void initState() {
     super.initState();
     print("Welcome to QuizProgressTracker class");
-    _controller = new TabController(length: 4, vsync: this);
+    _controller = new TabController(length: categories.length, vsync: this);
   }
 
   @override

@@ -23,6 +23,10 @@ class QuizResultState extends State<QuizResult> {
   double tileSize = 100.0;
   double buttonSize = 0.0;
   var countTile = 0;
+  double containerSize = 0.0;
+  double marginSide = 0.0;
+  double marginTop = 0.0;
+  bool extentionTile = false;
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
     scoreIs = scoreIs + _quizIndex;
@@ -37,12 +41,18 @@ class QuizResultState extends State<QuizResult> {
         onExpansionChanged: (bool value) {
           if (value) {
             if (_currentExpandedTile != null) {
+              setState(() {
+                extentionTile = value;
+              });
               _currentExpandedTile.currentState?.handleTap();
             }
             _currentExpandedTile = _expandableTileKey;
           } else {
             _currentExpandedTile = null;
           }
+          setState(() {
+            extentionTile = value;
+          });
         },
         title: new Padding(
           padding: new EdgeInsets.all(5.0),
@@ -109,12 +119,11 @@ class QuizResultState extends State<QuizResult> {
         _buildAskedQuestionExpandableTile(q, _quizIndex++, context),
       );
     }).toList(growable: false);
-    double containerSize;
-    double marginSide;
-    double marginTop;
-    if (buttonSize < size.height - media.size.height / 8.0) {
+
+    if (buttonSize < size.height - media.size.height / 8.0 && !extentionTile) {
       containerSize =
-          (size.height - media.size.height / 8.0 - buttonSize - 7) / 1.5;
+          (size.height - media.size.height / 8.0 - buttonSize - countTile * 7) /
+              1.5;
       marginSide = containerSize * 0.18;
       marginTop = containerSize * 0.1;
       print(
@@ -175,6 +184,10 @@ class QuizResultState extends State<QuizResult> {
 
   @override
   Widget build(BuildContext context) {
+    containerSize = 0.0;
+    marginSide = 0.0;
+    marginTop = 0.0;
+    scoreIs = 0;
     return new ListView(
       children: _buildListOfQuestionsAsked(context),
     );
