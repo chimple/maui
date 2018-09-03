@@ -14,7 +14,7 @@ import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/loca.dart';
 import 'package:maui/components/gameaudio.dart';
 // void main() => runApp(VideoApp());

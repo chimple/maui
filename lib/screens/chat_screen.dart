@@ -18,7 +18,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/components/select_text_choice.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/loca.dart';
 
 enum InputType { hidden, keyboard, emoji, sticker, choices }

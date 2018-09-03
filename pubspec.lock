@@ -100,14 +100,14 @@ packages:
       name: built_collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.3"
+    version: "4.0.0"
   built_value:
     dependency: transitive
     description:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.5.5"
+    version: "6.1.1"
   camera:
     dependency: "direct main"
     description:
@@ -135,7 +135,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "3.1.3"
   collection:
     dependency: transitive
     description:
@@ -192,15 +192,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.8"
-  flores:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3d761c615d84920fe043396a2492702d39805ac0"
-      url: "https://github.com/chimple/flores.git"
-    source: git
-    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -313,7 +304,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.8"
+    version: "0.4.10"
   intl:
     dependency: "direct main"
     description:
@@ -646,7 +637,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: b9062f387dcfcc727e6f0fa0d60feade2dea7a50
+      resolved-ref: af3ad2e9f167802e10aa55aeeb865dfca710f574
       url: "https://github.com/chimple/tahiti.git"
     source: git
     version: "0.0.1"

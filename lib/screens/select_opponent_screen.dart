@@ -13,7 +13,7 @@ import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'game_category_list_screen.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/loca.dart';
 import 'package:maui/components/gameaudio.dart';
 
@@ -55,8 +55,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<dynamic> messages;
       try {
-        messages =
-            await Flores().getLatestConversations(user.id, widget.gameName);
+        messages = await p2p.getLatestConversations(user.id, widget.gameName);
       } on PlatformException {
         print('Failed getting messages');
       } catch (e, s) {
