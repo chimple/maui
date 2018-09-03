@@ -16,9 +16,8 @@ class QuizProgressTracker extends StatefulWidget{
 }
 
 class QuizProgressTrackerState extends State<QuizProgressTracker> {
-  QuizProgress _quizProgress;
+  double _quizProgress;
   bool _isLoading = true;
-  double _doneStatus;
 
   @override
   void initState() {
@@ -31,14 +30,12 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
     setState(() => _isLoading = true);
    _quizProgress =
         await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);    
-    _doneStatus = (_quizProgress.maxScore/_quizProgress.outOfTotal);  
     setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Current QuizProgress - $_quizProgress");  
-    print("Current QuizProgress Done Status - $_doneStatus");
+    print("Current QuizProgress for topic Id(${widget.topicId}) - $_quizProgress");  
 
     if (_isLoading == true) {
       return new SizedBox(
@@ -49,7 +46,7 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
     }
 
     return new Container(
-      child: _quizProgress != null ? new LinearProgressIndicator(value: _doneStatus) : new Container(),
+      child: _quizProgress != null ? new LinearProgressIndicator(value: _quizProgress) : new Container(),
       );
 
   }

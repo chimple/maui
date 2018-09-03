@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
-import 'package:maui/db/dao/quiz_progress_dao.dart';
-import 'package:maui/db/entity/quiz_progress.dart';
-import '../repos/quiz_progress_repo.dart';
 
 class TopicButton extends StatefulWidget {
   final String text;

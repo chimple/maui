@@ -8,11 +8,7 @@ class QuizProgressRepo {
 
   const QuizProgressRepo();
 
-  Future<QuizProgress> getQuizProgressByQuizProgressId(String id) async {
-    return await quizProgressDao.getQuizProgressByQuizProgressId(id);
-  }
-
-  Future<QuizProgress> getQuizProgressByTopicId(String topicId) async {
+  Future<double> getQuizProgressByTopicId(String topicId) async {
     return await quizProgressDao.getQuizProgressByTopicId(topicId);
   }
 }
