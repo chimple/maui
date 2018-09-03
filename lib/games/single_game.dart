@@ -382,8 +382,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                         ),
                         onPressed: () {
                           AppStateContainer.of(context).play('_audiotap.mp3');
-                          Navigator
-                              .of(context)
+                          Navigator.of(context)
                               .popUntil(ModalRoute.withName('/tab'));
                         },
                       )),
@@ -425,11 +424,12 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
 
     print("this... my game in the quize iiss......::${game.runtimeType}");
+    final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
     print("here we have to check the oh2h....::$oh2h");
 
-
-    print("this is height when its comes to head to head,,,....::${media.size.width}");
+    print(
+        "this is height when its comes to head to head,,,....::${media.size.width}");
     var headers = <Widget>[
       Hud(
           user: widget.gameConfig.myUser,
@@ -455,21 +455,24 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       ),
       widget.gameConfig.amICurrentPlayer
           ? Padding(
-              padding: !oh2h
-                            ? media.size.width > media.size.height
-                                ? EdgeInsets.all(progregressPading -
-                  (media.size.width / 2.8) / 2 -
-                  25 -7-
-                  media.size.height / 8)
-                                :  EdgeInsets.all(progregressPading -
-                  (media.size.width / 2.8) / 2 -
-                  25 -7-
-                  media.size.height / 8):
-              
-              EdgeInsets.all(progregressPading/2 -
-                  (media.size.width / 2.8) / 3 -
-                  25 -7-
-                  media.size.height / 8),
+              padding: !oh2h && !mh2h
+                  ? media.size.width > media.size.height
+                      ? EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          25 -
+                          7 -
+                          media.size.height / 8)
+                      : EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          25 -
+                          7 -
+                          media.size.height / 8)
+                  : EdgeInsets.all((progregressPading / 1.5 -
+                          (media.size.width / 2.8) / 3 -
+                          25 -
+                          7 -
+                          media.size.height / 8) /
+                      2),
               child: new Stack(
                 alignment: AlignmentDirectional.center,
                 // crossAxisAlignment:
@@ -480,11 +483,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     child: new SizedBox(
-                        width: !oh2h
+                        width: !oh2h && !mh2h
                             ? media.size.width > media.size.height
                                 ? media.size.width / 2.8
                                 : media.size.width / 2.25
-                            : media.size.width / 2.8,
+                            : media.size.width / 3.5,
                         height: 25.0,
                         child: new LinearProgressIndicator(
                           // strokeWidth: height / 8.0,
@@ -498,11 +501,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: new SizedBox(
-                        width: !oh2h
+                        width: !oh2h && !mh2h
                             ? media.size.width > media.size.height
                                 ? media.size.width / 2.8
                                 : media.size.width / 2.25
-                            : media.size.width / 2.8,
+                            : media.size.width / 3.5,
                         height: 25.0,
                         child: widget.gameMode == GameMode.timed
                             ? new ProgressBar(
@@ -578,8 +581,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
-                                            AppStateContainer
-                                                .of(context)
+                                            AppStateContainer.of(context)
                                                 .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
@@ -614,7 +616,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                                       progregressPading -
                                                           (media.size.width /
                                                                   2.8) /
-                                                              2 -7-
+                                                              2 -
+                                                          7 -
                                                           25 -
                                                           media.size.height /
                                                               8),
@@ -643,7 +646,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                                                 : media.size
                                                                         .width /
                                                                     2.25,
-                                                              height: 25.0,
+                                                            height: 25.0,
                                                             child:
                                                                 new LinearProgressIndicator(
                                                               // strokeWidth: height / 8.0,
