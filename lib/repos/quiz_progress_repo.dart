@@ -9,6 +9,7 @@ class QuizProgressRepo {
   const QuizProgressRepo();
 
   Future<double> getQuizProgressByTopicId(String topicId) async {
+    print("Topic Id received by QuizProgressRepo class - $topicId");
     return await quizProgressDao.getQuizProgressByTopicId(topicId);
   }
 }

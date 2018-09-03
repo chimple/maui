@@ -22,20 +22,19 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
   @override
   void initState() {
     super.initState();
-    print("Welcome to QuizProgressTracker class");
     _initData();
   }
 
   void _initData() async{
     setState(() => _isLoading = true);
    _quizProgress =
-        await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);    
+        await QuizProgressRepo().getQuizProgressByTopicId(widget.topicId);   
     setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Current QuizProgress for topic Id(${widget.topicId}) - $_quizProgress");  
+    
 
     if (_isLoading == true) {
       return new SizedBox(
