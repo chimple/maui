@@ -178,7 +178,8 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  Future<AudioPlayer> playArticleAudio(String audio) async {
+  void playArticleAudio(
+      String audio, Function onComplete) async {
     audio = audio.toLowerCase();
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -195,12 +196,18 @@ class AppStateContainerState extends State<AppStateContainer> {
     } catch (e) {
       print(e);
     }
-    return _audioPlayer;
+    _audioPlayer.completionHandler = () {
+      print('audio completed::');
+      onComplete();
+    };
   }
 
   void pauseArticleAudio() async {
-    print('file exist');
     await _audioPlayer.pause();
+  }
+
+  void stopArticleAudio() async {
+    await _audioPlayer.stop();
   }
 
   void playWord(String word) async {

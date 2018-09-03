@@ -1,4 +1,3 @@
-import 'package:audioplayer/audioplayer.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
@@ -43,18 +42,20 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   void onComplete() {
+    print('onComplete CallBack:');
     setState(() => playerState = PlayerState.paused);
   }
 
-  @override 
-  void dispose(){
-   _audioPlayer.stop();
-    super.dispose();
+  @override
+  void deactivate() {
+    AppStateContainer.of(_ctx).stopArticleAudio();
+    super.deactivate();
   }
- 
-  AudioPlayer _audioPlayer;
+
+  BuildContext _ctx;
   @override
   Widget build(BuildContext context) {
+    _ctx = context;
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Material(
@@ -104,14 +105,7 @@ class _ArticlePageState extends State<ArticlePage> {
                           } else {
                             AppStateContainer
                                 .of(context)
-                                .playArticleAudio(widget.audio)
-                                .then((f) {
-                                  _audioPlayer = f;
-                              _audioPlayer.completionHandler = () {
-                                print('audio completed::');
-                                onComplete();
-                              };
-                            });
+                                .playArticleAudio(widget.audio, onComplete);
                             setState(() {
                               playerState = PlayerState.playing;
                             });
