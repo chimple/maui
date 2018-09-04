@@ -1,12 +1,25 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/drawing.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/activity_template_repo.dart';
 import 'package:maui/db/entity/activity_template.dart';
+import 'package:maui/repos/drawing_repo.dart';
+import 'package:maui/state/app_state_container.dart';
+
+enum DrawingSelect { create, latest, id }
 
 class NewDrawing extends StatefulWidget {
   final String activityId;
+  final DrawingSelect drawingSelect;
+  final String drawingId;
 
-  const NewDrawing({Key key, this.activityId}) : super(key: key);
+  const NewDrawing(
+      {Key key,
+      @required this.activityId,
+      this.drawingSelect = DrawingSelect.latest,
+      this.drawingId})
+      : super(key: key);
 
   @override
   NewDrawingState createState() {
@@ -16,7 +29,10 @@ class NewDrawing extends StatefulWidget {
 
 class NewDrawingState extends State<NewDrawing> {
   bool _isLoading = true;
-  List<ActivityTemplate> templates;
+  DrawingSelect _drawingSelect;
+  Drawing _drawing;
+  List<String> _templates;
+  Map<String, dynamic> _jsonMap;
 
   @override
   void initState() {
@@ -24,12 +40,37 @@ class NewDrawingState extends State<NewDrawing> {
     _initData();
   }
 
+  @override
+  void didUpdateWidget(NewDrawing oldWidget) {
+    if (oldWidget.drawingSelect != widget.drawingSelect) {
+      _initData();
+    }
+  }
+
   void _initData() async {
-    templates = await ActivityTemplateRepo()
-        .getActivityTemplatesByAtivityId(widget.activityId);
-    setState(() {
-      _isLoading = false;
-    });
+    setState(() => _isLoading = true);
+    _drawingSelect = widget.drawingSelect;
+    _jsonMap = null;
+    if (widget.drawingSelect == DrawingSelect.latest) {
+      _drawing =
+          await DrawingRepo().getLatestDrawingByActivityId(widget.activityId);
+      if (_drawing == null) _drawingSelect = DrawingSelect.create;
+    } else if (widget.drawingSelect == DrawingSelect.id) {
+      if (widget.drawingId != null)
+        _drawing = await DrawingRepo().getDrawing(widget.drawingId);
+      if (_drawing == null) _drawingSelect = DrawingSelect.create;
+    }
+
+    if (widget.drawingSelect == DrawingSelect.create) {
+      _templates = (await ActivityTemplateRepo()
+              .getActivityTemplatesByAtivityId(widget.activityId))
+          .map((t) => t.image)
+          .toList(growable: false);
+    } else {
+      _jsonMap = json.decode(_drawing.json);
+    }
+
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -42,6 +83,14 @@ class NewDrawingState extends State<NewDrawing> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return ActivityBoard();
+    print('NewDrawing jsonMap: $_jsonMap');
+    return ActivityBoard(
+      json: _jsonMap,
+      templates: _templates,
+      saveCallback: ({Map<String, dynamic> jsonMap}) => DrawingRepo().upsert(
+          jsonMap: jsonMap,
+          activityId: widget.activityId,
+          userId: AppStateContainer.of(context).state.loggedInUser.id),
+    );
   }
 }
