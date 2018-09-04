@@ -14,7 +14,13 @@ class QuizProgress {
   int maxScore;
   int outOfTotal;
 
-  QuizProgress({this.id, this.userId, this.topicId, this.quizId, this.maxScore, this.outOfTotal});
+  QuizProgress(
+      {this.id,
+      this.userId,
+      this.topicId,
+      this.quizId,
+      this.maxScore,
+      this.outOfTotal});
 
   Map<String, dynamic> toMap() {
     return {
@@ -42,7 +48,7 @@ class QuizProgress {
       userId.hashCode ^
       topicId.hashCode ^
       quizId.hashCode ^
-      maxScore.hashCode ^ 
+      maxScore.hashCode ^
       outOfTotal.hashCode;
 
   @override

@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/db/entity/user.dart';
@@ -77,7 +77,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       state = new AppState();
     }
     try {
-      Flores().initialize((Map<dynamic, dynamic> message) {
+      p2p.initialize((Map<dynamic, dynamic> message) {
         print('Flores received message: $message');
         onReceiveMessage(message);
       });
@@ -223,8 +223,8 @@ class AppStateContainerState extends State<AppStateContainer> {
       });
     } else {
       try {
-        msgs = await Flores()
-            .getConversations(state.loggedInUser.id, friendId, 'chat');
+        msgs =
+            await p2p.getConversations(state.loggedInUser.id, friendId, 'chat');
       } on PlatformException {
         print('Failed getting messages');
       } catch (e, s) {
@@ -261,7 +261,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       botMessages.insert(0, msg);
     } else {
       try {
-        await Flores().addMessage(
+        await p2p.addMessage(
             state.loggedInUser.id, friendId, 'chat', message, true, '');
       } on PlatformException {
         print('Flores: Failed addChat');
@@ -432,7 +432,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     prefs.setString('userId', user.id);
     if (user != null) {
       try {
-        Flores().loggedInUser(user.id, deviceId);
+        p2p.loggedInUser(user.id, deviceId);
       } on PlatformException {
         print('Flores: Failed loggedInUser');
       } catch (e, s) {
@@ -441,7 +441,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       }
     }
     try {
-      Flores().start();
+      p2p.start();
     } on PlatformException {
       print('Flores: Failed start');
     } catch (e, s) {
