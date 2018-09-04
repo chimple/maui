@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:maui/db/dao/quiz_progress_dao.dart';
-import 'package:maui/db/entity/quiz_progress.dart';
 import '../repos/quiz_progress_repo.dart';
 
-class QuizProgressTracker extends StatefulWidget{
-   final String topicId;
+class QuizProgressTracker extends StatefulWidget {
+  final String topicId;
 
-   QuizProgressTracker({
-     Key key,
-     this.topicId
-   }) : super(key : key);
+  QuizProgressTracker({Key key, this.topicId}) : super(key: key);
 
-   @override
-   State createState() => new QuizProgressTrackerState();
+  @override
+  State createState() => new QuizProgressTrackerState();
 }
 
 class QuizProgressTrackerState extends State<QuizProgressTracker> {
@@ -25,23 +20,22 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
     _initData();
   }
 
-  void _initData() async{
-   _quizProgress =
-        await QuizProgressRepo().getScoreSummaryByTopicId(widget.topicId);   
+  void _initData() async {
+    _quizProgress =
+        await QuizProgressRepo().getScoreSummaryByTopicId(widget.topicId);
     setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     if (_quizProgress == null) {
       return new Container();
     }
 
     return new Container(
-      child: _quizProgress != null ? new LinearProgressIndicator(value: _quizProgress) : new Container(),
-      );
-
+      child: _quizProgress != null
+          ? new LinearProgressIndicator(value: _quizProgress)
+          : new Container(),
+    );
   }
 }
