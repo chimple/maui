@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/drawing.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/activity_template_repo.dart';
-import 'package:maui/db/entity/activity_template.dart';
 import 'package:maui/repos/drawing_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 enum DrawingSelect { create, latest, id }
 
-class NewDrawing extends StatefulWidget {
+class DrawingWrapper extends StatefulWidget {
   final String activityId;
   final DrawingSelect drawingSelect;
   final String drawingId;
 
-  const NewDrawing(
+  const DrawingWrapper(
       {Key key,
       @required this.activityId,
       this.drawingSelect = DrawingSelect.latest,
@@ -22,12 +21,12 @@ class NewDrawing extends StatefulWidget {
       : super(key: key);
 
   @override
-  NewDrawingState createState() {
-    return new NewDrawingState();
+  DrawingWrapperState createState() {
+    return new DrawingWrapperState();
   }
 }
 
-class NewDrawingState extends State<NewDrawing> {
+class DrawingWrapperState extends State<DrawingWrapper> {
   bool _isLoading = true;
   DrawingSelect _drawingSelect;
   Drawing _drawing;
@@ -41,7 +40,7 @@ class NewDrawingState extends State<NewDrawing> {
   }
 
   @override
-  void didUpdateWidget(NewDrawing oldWidget) {
+  void didUpdateWidget(DrawingWrapper oldWidget) {
     if (oldWidget.drawingSelect != widget.drawingSelect) {
       _initData();
     }

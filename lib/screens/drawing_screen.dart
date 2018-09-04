@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/activity_repo.dart';
 import 'package:maui/db/entity/activity.dart';
-import 'package:maui/components/new_drawing.dart';
+import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/screens/drawing_list_screen.dart';
 
 class DrawingScreen extends StatefulWidget {
   final String activityId;
@@ -63,12 +64,16 @@ class DrawingScreenState extends State<DrawingScreen> {
           new IconButton(
             icon: new Icon(Icons.view_list),
             tooltip: 'View all drawings',
-            onPressed: () =>
-                setState(() => _drawingSelect = DrawingSelect.latest),
+            onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return DrawingListScreen(
+                    activityId: widget.activityId,
+                  );
+                })),
           ),
         ],
       ),
-      body: NewDrawing(
+      body: DrawingWrapper(
         activityId: widget.activityId,
         drawingSelect: _drawingSelect,
         drawingId: widget.drawingId,
