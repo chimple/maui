@@ -48,13 +48,11 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
     var size = media.size;
     List<TableRow> rows = new List<TableRow>();
     var k = 0;
-    List<Widget> cells = TrueorFalse
-        .map((element) => Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: _buildItem(k, element, TrueorFalse, _statuses[k++],
-                  widget.input['bool'], size.height),
-            ))
-        .toList(growable: false);
+    List<Widget> cells = TrueorFalse.map((element) => Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: _buildItem(k, element, TrueorFalse, _statuses[k++],
+              widget.input['bool'], size.height),
+        )).toList(growable: false);
     rows.add(new TableRow(children: cells));
 
     return (widget.input['answer'] == null)
@@ -104,6 +102,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
       Statuses status, input, double size) {
     if (widget.input['correct'] == null) {
       return Container(
+        key: Key(TrueorFalse.first),
         height: size / 8.0,
         child: new QuizButton(
             text: element,
@@ -171,6 +170,7 @@ class _TrueOrFalseState extends State<TrueOrFalse> {
       print("inputfom    $input");
       print("element from dcree $element");
       return Container(
+        key: Key('true'),
         height: size / 8.0,
         child: new QuizButton(
             text: element,
