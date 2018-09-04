@@ -49,7 +49,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
           .skip(i * 2)
           .take(2)
           .map((e) => Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(8.0),
                 child: _buildItem(k, e, choices, _statuses[k++],
                     widget.input['answer'], size.height),
               ))
@@ -62,6 +62,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
             margin: const EdgeInsets.all(10.0),
             alignment: Alignment.topCenter,
             child: new Column(
+
               children: <Widget>[
                 new SingleChildScrollView(
                   child: Container(
@@ -74,9 +75,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    child: new Table(children: rows),
-                  ),
+                  child: new Table(children: rows),
                 ),
               ],
             ),
@@ -106,9 +105,9 @@ class MultiplechoiceState extends State<Multiplechoice> {
       Statuses status, input, size) {
     if (widget.input['correct'] == null) {
       return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(6.0),
         child: Container(
-          height: size / 8,
+          height: size *0.15,
           child: new QuizButton(
               text: element,
               buttonStatus: status == Statuses.Active
@@ -124,7 +123,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                       print("correct one is...clicked here$element");
                       _statuses[index] = Statuses.Disappear;
 
-                      new Future.delayed(const Duration(milliseconds: 850), () {
+                      new Future.delayed(const Duration(milliseconds: 2000), () {
                         widget.onEnd(
                             {'userChoice': element, 'correct': 1, 'total': 1});
                       });
@@ -148,7 +147,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
                           }
                         });
                       });
-                      new Future.delayed(const Duration(milliseconds: 1500),
+                      new Future.delayed(const Duration(milliseconds: 2000),
                           () {
                         widget.onEnd(
                             {'userChoice': element, 'correct': 0, 'total': 1});
