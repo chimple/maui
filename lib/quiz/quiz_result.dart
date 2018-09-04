@@ -40,7 +40,6 @@ class QuizResultState extends State<QuizResult> {
         key: _expandableTileKey,
         onExpansionChanged: (bool value) {
           if (value) {
-            
             if (_currentExpandedTile != null) {
               setState(() {
                 extentionTile = value;
@@ -189,8 +188,8 @@ class QuizResultState extends State<QuizResult> {
     marginSide = 0.0;
     marginTop = 0.0;
     scoreIs = 0;
-    buttonSize=0.0;
-    countTile=0;
+    buttonSize = 0.0;
+    countTile = 0;
     return new ListView(
       children: _buildListOfQuestionsAsked(context),
     );
