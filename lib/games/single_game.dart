@@ -3,14 +3,11 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/show_help.dart';
-import 'package:maui/screens/topic_screen.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
-import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/true_false.dart';
@@ -47,7 +44,7 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:maui/quiz/quiz_pager.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
@@ -382,8 +379,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                         ),
                         onPressed: () {
                           AppStateContainer.of(context).play('_audiotap.mp3');
-                          Navigator
-                              .of(context)
+                          Navigator.of(context)
                               .popUntil(ModalRoute.withName('/tab'));
                         },
                       )),
@@ -553,8 +549,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
-                                            AppStateContainer
-                                                .of(context)
+                                            AppStateContainer.of(context)
                                                 .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
@@ -568,7 +563,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.help_outline),
                                           color: Colors.white,
                                           onPressed: () {
-                                            print("scaffold data is.......::${_scaffoldKey.currentState}");
+                                            print(
+                                                "scaffold data is.......::${_scaffoldKey.currentState}");
                                             _scaffoldKey.currentState
                                                 .openEndDrawer();
                                           },
@@ -788,7 +784,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
         try {
-          await Flores().addMessage(
+          await p2p.addMessage(
               widget.gameConfig.myUser.id,
               widget.gameConfig.otherUser.id,
               widget.gameName,
@@ -834,7 +830,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       try {
-        await Flores().addMessage(
+        await p2p.addMessage(
             widget.gameConfig.myUser.id,
             widget.gameConfig.otherUser.id,
             widget.gameName,

@@ -118,7 +118,6 @@ class TrueFalseGameState extends State<TrueFalseGame> {
   @override
   Widget build(BuildContext context) {
     keys = 0;
-    Size media = MediaQuery.of(context).size;
     print("Question text here $questionText");
     print("Answer here $tf");
 

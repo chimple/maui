@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/quiz.dart';
-import 'package:maui/quiz/match_the_following.dart';
-import 'package:maui/quiz/multiple_choice.dart';
-import 'package:maui/quiz/grouping_quiz.dart';
-import 'package:maui/quiz/true_or_false.dart';
-import 'package:maui/quiz/sequence.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/quiz_progress_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'quiz_pager.dart';
+import 'package:uuid/uuid.dart';
 
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
   List<Quiz> quizzes;
   Function onEnd;
   Function onScore;
-  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd,this.onScore})
+  QuizResult({Key key, this.quizInputs, this.quizzes, this.onEnd, this.onScore})
       : super(key: key);
 
   @override
@@ -24,10 +23,10 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   GlobalKey<ControlledExpansionTileState> _currentExpandedTile;
-var scoreIs=0;
+  var scoreIs = 0;
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
-     scoreIs=scoreIs+_quizIndex;
+    scoreIs = scoreIs + _quizIndex;
     GlobalKey<ControlledExpansionTileState> _expandableTileKey =
         new GlobalObjectKey(q['question']);
     return new Container(
@@ -98,7 +97,7 @@ var scoreIs=0;
   }
 
   List<Widget> _buildListOfQuestionsAsked(BuildContext context) {
-       MediaQueryData media = MediaQuery.of(context);
+    MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
     List<Widget> _questionResults = [];
@@ -112,7 +111,7 @@ var scoreIs=0;
         .toList(growable: false);
     _questionResults.add(Container(
       // width: 60.0,
-      height: size.height/8,
+      height: size.height / 8,
       color: Colors.white,
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.all(50.0),
@@ -120,11 +119,8 @@ var scoreIs=0;
         child: RaisedButton(
             color: Colors.green,
             onPressed: () {
-            
               widget.onEnd();
-                widget.onScore(scoreIs);
-              
-              
+              widget.onScore(scoreIs);
             },
             shape: new RoundedRectangleBorder(
                 borderRadius:
@@ -140,6 +136,29 @@ var scoreIs=0;
     ));
 
     return _questionResults;
+  }
+
+  void _initQuizProgressTable() async {
+    List<Map> quizInputsMapList = widget.quizInputs;
+    List<Quiz> quizzesMapList = widget.quizzes;
+    User _user = AppStateContainer.of(context).state.loggedInUser;
+    print("lion material");
+    for (var i = 0; i < quizInputsMapList.length; i++) {
+      print(await new QuizProgressRepo().insertOrUpdateQuizProgress(
+          Uuid().v4(),
+          _user.id,
+          quizzesMapList[0].topicId,
+          quizzesMapList[0].type,
+          quizInputsMapList[0]["correct"],
+          quizInputsMapList[0]["total"]));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initQuizProgressTable();
   }
 
   @override

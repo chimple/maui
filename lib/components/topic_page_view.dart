@@ -90,6 +90,8 @@ class _TopicPageViewState extends State<TopicPageView> {
         : new Stack(
             children: <Widget>[
               new PageView.builder(
+                pageSnapping: false,
+                physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: _articles.length,
                 controller: pageController,

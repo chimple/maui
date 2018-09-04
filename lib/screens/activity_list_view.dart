@@ -3,6 +3,7 @@ import 'package:maui/components/topic_button.dart';
 import 'package:maui/db/entity/activity.dart';
 import 'package:maui/loca.dart';
 import '../repos/activity_repo.dart';
+import 'package:maui/screens/drawing_screen.dart';
 
 class ActivityListView extends StatefulWidget {
   final String topicId;
@@ -62,6 +63,12 @@ class _ActivityListViewState extends State<ActivityListView> {
           return TopicButton(
             text: "${_dataActivity[i].text}",
             image: "${_dataActivity[i].image}",
+            onPress: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return DrawingScreen(
+                    activityId: _dataActivity[i].id,
+                  );
+                })),
           );
         }),
       ),
