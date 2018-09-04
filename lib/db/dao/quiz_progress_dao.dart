@@ -4,37 +4,29 @@ import 'package:maui/db/entity/quiz_progress.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuizProgressDao {
-
-  Future<double> getQuizProgressByTopicId(String topicId, {Database db}) async {
+  Future<double> getScoreSummaryByTopicId(String topicId, {Database db}) async {
+    print("Topic Id received by Quiz Progress Dao - $topicId");
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(QuizProgress.table,
-        columns: [
-          QuizProgress.idCol,
-          QuizProgress.userIdCol,
-          QuizProgress.topicIdCol,
-          QuizProgress.quizIdCol,
-          QuizProgress.maxScoreCol,
-          QuizProgress.outOfTotalCol
-        ],
+    
+    List maxScoreSum = (await db.query(QuizProgress.table,
+        columns: ['sum(${QuizProgress.maxScoreCol})'],
         where: "${QuizProgress.topicIdCol} = ?",
-        whereArgs: [topicId]);
+        whereArgs: [topicId]));
 
-    List<int> maxScore = [];
-    List<int> outOfTotal = [];
-    int maxScoreTotal = 0, outOfTotalScore = 0;
+    List outOfTotalScoreSum = (await db.query(
+        QuizProgress.table,
+        columns: ['sum(${QuizProgress.outOfTotalCol})'],
+        where: "${QuizProgress.topicIdCol} = ?",
+        whereArgs: [topicId]));
 
-    maxScore = maps.map((el) => new QuizProgress.fromMap(el).maxScore).toList();
-    outOfTotal =
-        maps.map((el) => new QuizProgress.fromMap(el).outOfTotal).toList();
+    print("Value of maxScoreSum = ${maxScoreSum[0]["sum(maxScore)"]}");
+    print("Value of outOfTotalScoreSum = ${outOfTotalScoreSum[0]["sum(outOfTotal)"]}");
 
-    for (int i = 0; i < maxScore.length; i++) {
-      maxScoreTotal = maxScoreTotal + maxScore[i];
-      outOfTotalScore = outOfTotalScore + outOfTotal[i];
+    if(maxScoreSum[0]["sum(maxScore)"] != null){
+      return (maxScoreSum[0]["sum(maxScore)"] / outOfTotalScoreSum[0]["sum(outOfTotal)"]);
     }
-
-    if (maps.length > 0) {
-      return (maxScoreTotal / outOfTotalScore);
-    }
+    else{
     return null;
+    }
   }
 }
