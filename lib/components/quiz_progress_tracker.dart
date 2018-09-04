@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maui/db/dao/quiz_progress_dao.dart';
+import 'package:maui/db/entity/quiz_progress.dart';
 import '../repos/quiz_progress_repo.dart';
 
 class QuizProgressTracker extends StatefulWidget{
@@ -15,6 +17,7 @@ class QuizProgressTracker extends StatefulWidget{
 
 class QuizProgressTrackerState extends State<QuizProgressTracker> {
   double _quizProgress;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -22,14 +25,20 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
     _initData();
   }
 
-  void _initData() async{   
+  void _initData() async{
    _quizProgress =
-        await QuizProgressRepo().getScoreSummaryByTopicId(widget.topicId); 
+        await QuizProgressRepo().getScoreSummaryByTopicId(widget.topicId);   
+    setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     
+
+    if (_quizProgress == null) {
+      return new Container();
+    }
+
     return new Container(
       child: _quizProgress != null ? new LinearProgressIndicator(value: _quizProgress) : new Container(),
       );
