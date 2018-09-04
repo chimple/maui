@@ -1,8 +1,4 @@
-import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
@@ -37,61 +33,29 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  AudioPlayer audioPlayer = new AudioPlayer();
-  File audioFile;
   PlayerState playerState;
 
   @override
   void initState() {
-    super.initState();
-    _initAudioPlayer();
-  }
-
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future _loadAsset(String sample) async {
-    return await rootBundle.load('assets/$sample.wav');
-  }
-
-  Future _initAudioPlayer() async {
     playerState == PlayerState.stopped;
-    try {
-      final path = await _localPath;
-      final file = new File('$path/sample.mp3');
-      audioFile = file;
-    } catch (e) {}
-  }
-
-  void dispose() {
-    audioPlayer.stop();
-    super.dispose();
-  }
-
-  void play() async {
-    if (await audioFile.exists()) {
-      print('file exist');
-      await audioFile
-          .writeAsBytes((await _loadAsset('audio')).buffer.asUint8List());
-      await audioPlayer.play(audioFile.path, isLocal: true);
-    }
-  }
-
-  void pause() async {
-    if (await audioFile.exists()) {
-      print('file exist');
-      await audioPlayer.pause();
-    }
+    super.initState();
   }
 
   void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
+    print('onComplete CallBack:');
+    setState(() => playerState = PlayerState.paused);
   }
 
   @override
+  void deactivate() {
+    AppStateContainer.of(_ctx).stopArticleAudio();
+    super.deactivate();
+  }
+
+  BuildContext _ctx;
+  @override
   Widget build(BuildContext context) {
+    _ctx = context;
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Material(
@@ -121,39 +85,43 @@ class _ArticlePageState extends State<ArticlePage> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: new RawMaterialButton(
-                  shape: new CircleBorder(),
-                  fillColor: Colors.white,
-                  splashColor: Colors.teal,
-                  highlightColor: Colors.teal.withOpacity(0.5),
-                  elevation: 10.0,
-                  highlightElevation: 5.0,
-                  onPressed: () {
-                    if (playerState == PlayerState.stopped ||
-                        playerState == PlayerState.playing) {
-                      pause();
-                      setState(() {
-                        playerState = PlayerState.paused;
-                      });
-                    } else {
-                      play();
-                      setState(() {
-                        playerState = PlayerState.playing;
-                      });
-                    }
-                  },
-                  child: new Icon(
-                    (playerState == PlayerState.stopped ||
-                            playerState == PlayerState.playing)
-                        ? Icons.pause
-                        : Icons.play_arrow,
-                    color: Colors.purple,
-                    size: 40.0,
-                  ),
-                ),
-              ),
+              widget.audio != null
+                  ? Expanded(
+                      flex: 1,
+                      child: new RawMaterialButton(
+                        shape: new CircleBorder(),
+                        fillColor: Colors.white,
+                        splashColor: Colors.teal,
+                        highlightColor: Colors.teal.withOpacity(0.5),
+                        elevation: 10.0,
+                        highlightElevation: 5.0,
+                        onPressed: () {
+                          if (playerState == PlayerState.stopped ||
+                              playerState == PlayerState.playing) {
+                            AppStateContainer.of(context).pauseArticleAudio();
+                            setState(() {
+                              playerState = PlayerState.paused;
+                            });
+                          } else {
+                            AppStateContainer
+                                .of(context)
+                                .playArticleAudio(widget.audio, onComplete);
+                            setState(() {
+                              playerState = PlayerState.playing;
+                            });
+                          }
+                        },
+                        child: new Icon(
+                          (playerState == PlayerState.stopped ||
+                                  playerState == PlayerState.playing)
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          color: Colors.purple,
+                          size: 40.0,
+                        ),
+                      ),
+                    )
+                  : new Container(),
               Expanded(
                 flex: 3,
                 child: new Container(
