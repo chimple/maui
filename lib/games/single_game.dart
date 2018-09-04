@@ -3,14 +3,11 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/show_help.dart';
-import 'package:maui/screens/topic_screen.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
-import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/true_false.dart';
@@ -47,7 +44,7 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:maui/quiz/quiz_pager.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
@@ -382,8 +379,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                         ),
                         onPressed: () {
                           AppStateContainer.of(context).play('_audiotap.mp3');
-                          Navigator
-                              .of(context)
+                          Navigator.of(context)
                               .popUntil(ModalRoute.withName('/tab'));
                         },
                       )),
@@ -409,6 +405,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
 
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
+    var size = media.size;
+    double progregressPading = media.size.width / 2;
     print(widget.key.toString());
     var _scaffoldKey = new GlobalKey<ScaffoldState>();
     print("scaffold key is....::$_scaffoldKey");
@@ -423,7 +421,12 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
 
     print("this... my game in the quize iiss......::${game.runtimeType}");
+    final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
+    print("here we have to check the oh2h....::$oh2h");
+
+    print(
+        "this is height when its comes to head to head,,,....::${media.size.width}");
     var headers = <Widget>[
       Hud(
           user: widget.gameConfig.myUser,
@@ -436,62 +439,81 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           score: widget.gameConfig.myScore,
           backgroundColor: oh2h ? colors[0] : colors[2],
           foregroundColor: colors[1]),
-      Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Stack(children: [
-          Text(
-            '${widget.gameConfig.myScore}',
-            style: new TextStyle(fontSize: 20.0, color: colors[1]),
-          ),
-        ]),
+      Container(
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Stack(children: [
+            Text(
+              '${widget.gameConfig.myScore}',
+              style: new TextStyle(fontSize: 20.0, color: colors[1]),
+            ),
+          ]),
+        ),
       ),
       widget.gameConfig.amICurrentPlayer
-          ? new Stack(
-              alignment: AlignmentDirectional.center,
-              // crossAxisAlignment:
-              //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
-                  child: new SizedBox(
-                      width: !oh2h
-                          ? media.size.width > media.size.height
-                              ? media.size.width / 2.8
-                              : media.size.width / 2.25
-                          : media.size.width / 2.8,
-                      height: 25.0,
-                      child: new LinearProgressIndicator(
-                        // strokeWidth: height / 8.0,
-                        value: 1.0,
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            oh2h ? colors[0] : colors[2]),
-                      )),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+          ? Padding(
+              padding: !oh2h && !mh2h
+                  ? media.size.width > media.size.height
+                      ? EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          32 -
+                          media.size.height / 8)
+                      : EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          32 -
+                          media.size.height / 8)
+                  : EdgeInsets.all((progregressPading / 1.5 -
+                          (media.size.width / 2.8) / 3 -
+                          32 -
+                          media.size.height / 8) /
+                      2),
+              child: new Stack(
+                alignment: AlignmentDirectional.center,
+                // crossAxisAlignment:
+                //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround
+                children: <Widget>[
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: new SizedBox(
+                        width: !oh2h && !mh2h
+                            ? media.size.width > media.size.height
+                                ? media.size.width / 2.8
+                                : media.size.width / 2.25
+                            : media.size.width / 3.5,
+                        height: 25.0,
+                        child: new LinearProgressIndicator(
+                          // strokeWidth: height / 8.0,
+                          value: 1.0,
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              oh2h ? colors[0] : colors[2]),
+                        )),
                   ),
-                  child: new SizedBox(
-                      width: !oh2h
-                          ? media.size.width > media.size.height
-                              ? media.size.width / 2.8
-                              : media.size.width / 2.25
-                          : media.size.width / 2.8,
-                      height: 25.0,
-                      child: widget.gameMode == GameMode.timed
-                          ? new ProgressBar(
-                              time: playTime,
-                              onEnd: () => widget.onGameEnd(context),
-                              // strokeWidth: height / 8.0,
-                            )
-                          : new ProgressBar(
-                              progress: _myProgress,
-                              // strokeWidth: height / 8.0,
-                            )),
-                ),
-              ],
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: new SizedBox(
+                        width: !oh2h && !mh2h
+                            ? media.size.width > media.size.height
+                                ? media.size.width / 2.8
+                                : media.size.width / 2.25
+                            : media.size.width / 3.5,
+                        height: 25.0,
+                        child: widget.gameMode == GameMode.timed
+                            ? new ProgressBar(
+                                time: playTime,
+                                onEnd: () => widget.onGameEnd(context),
+                                // strokeWidth: height / 8.0,
+                              )
+                            : new ProgressBar(
+                                progress: _myProgress,
+                                // strokeWidth: height / 8.0,
+                              )),
+                  ),
+                ],
+              ),
             )
           : new Container()
     ];
@@ -553,8 +575,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
-                                            AppStateContainer
-                                                .of(context)
+                                            AppStateContainer.of(context)
                                                 .play('_audiotap.mp3');
                                             _onWillPop();
                                           },
@@ -568,7 +589,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.help_outline),
                                           color: Colors.white,
                                           onPressed: () {
-                                            print("scaffold data is.......::${_scaffoldKey.currentState}");
+                                            print(
+                                                "scaffold data is.......::${_scaffoldKey.currentState}");
                                             _scaffoldKey.currentState
                                                 .openEndDrawer();
                                           },
@@ -583,66 +605,92 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                         child: Row(children: [
                                           widget.gameConfig.amICurrentPlayer
                                               ? new Container()
-                                              : new Stack(
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                  // crossAxisAlignment:
-                                                  //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-                                                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: <Widget>[
-                                                    Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15.0)),
-                                                      child: new SizedBox(
-                                                          width:
-                                                              media.size.width /
-                                                                  2.25,
-                                                          height: 25.0,
-                                                          child:
-                                                              new LinearProgressIndicator(
-                                                            // strokeWidth: height / 8.0,
-                                                            value: 1.0,
-                                                            valueColor:
-                                                                new AlwaysStoppedAnimation<
-                                                                        Color>(
-                                                                    colors[2]),
-                                                          )),
-                                                    ),
-                                                    Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15.0),
+                                              : Padding(
+                                                  padding: EdgeInsets.all(
+                                                      progregressPading -
+                                                          (media.size.width /
+                                                                  2.8) /
+                                                              2 -
+                                                          32 -
+                                                          media.size.height /
+                                                              8),
+                                                  child: new Stack(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .center,
+                                                    // crossAxisAlignment:
+                                                    //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                                                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0)),
+                                                        child: new SizedBox(
+                                                            width: media.size
+                                                                        .width >
+                                                                    media.size
+                                                                        .height
+                                                                ? media.size
+                                                                        .width /
+                                                                    2.8
+                                                                : media.size
+                                                                        .width /
+                                                                    2.25,
+                                                            height: 25.0,
+                                                            child:
+                                                                new LinearProgressIndicator(
+                                                              // strokeWidth: height / 8.0,
+                                                              value: 1.0,
+                                                              valueColor:
+                                                                  new AlwaysStoppedAnimation<
+                                                                          Color>(
+                                                                      colors[
+                                                                          2]),
+                                                            )),
                                                       ),
-                                                      child: new SizedBox(
-                                                          width:
-                                                              media.size.width /
-                                                                  2.25,
-                                                          height: 25.0,
-                                                          child: widget
-                                                                      .gameMode ==
-                                                                  GameMode.timed
-                                                              ? new ProgressBar(
-                                                                  time:
-                                                                      playTime,
-                                                                  onEnd: () => widget
-                                                                      .onGameEnd(
-                                                                          context),
-                                                                  // strokeWidth: height / 8.0,
-                                                                )
-                                                              : new ProgressBar(
-                                                                  progress:
-                                                                      _otherProgress,
-                                                                  // strokeWidth: height / 8.0,
-                                                                )),
-                                                    ),
-                                                  ],
+                                                      Card(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.0),
+                                                        ),
+                                                        child: new SizedBox(
+                                                            width: media.size
+                                                                        .width >
+                                                                    media.size
+                                                                        .height
+                                                                ? media.size
+                                                                        .width /
+                                                                    2.8
+                                                                : media.size
+                                                                        .width /
+                                                                    2.25,
+                                                            height: 25.0,
+                                                            child: widget
+                                                                        .gameMode ==
+                                                                    GameMode
+                                                                        .timed
+                                                                ? new ProgressBar(
+                                                                    time:
+                                                                        playTime,
+                                                                    onEnd: () =>
+                                                                        widget.onGameEnd(
+                                                                            context),
+                                                                    // strokeWidth: height / 8.0,
+                                                                  )
+                                                                : new ProgressBar(
+                                                                    progress:
+                                                                        _otherProgress,
+                                                                    // strokeWidth: height / 8.0,
+                                                                  )),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                           Padding(
                                             padding: const EdgeInsets.all(4.0),
@@ -788,7 +836,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
         try {
-          await Flores().addMessage(
+          await p2p.addMessage(
               widget.gameConfig.myUser.id,
               widget.gameConfig.otherUser.id,
               widget.gameName,
@@ -834,7 +882,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       try {
-        await Flores().addMessage(
+        await p2p.addMessage(
             widget.gameConfig.myUser.id,
             widget.gameConfig.otherUser.id,
             widget.gameName,

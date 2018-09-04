@@ -30,9 +30,6 @@ dependencies:
   intl_translation: ^0.17.0
   simple_permissions: ^0.1.6
   flutter_svg: ^0.5.1
-  flores:
-    git:
-      https://github.com/chimple/flores.git
   flutter_localizations:
     sdk: flutter
 dev_dependencies:
@@ -44,6 +41,9 @@ dev_dependencies:
   build_runner: ^0.10.1
   json_serializable: ^1.2.1
   flutter_markdown: ^0.2.0
+  tahiti:
+    path: ../tahiti
+
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
@@ -2166,3 +2166,42 @@ flutter:
   #
   # For details regarding fonts from package dependencies, 
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+    - family: Bungee
+      fonts:
+        - asset: assets/fonts/Bungee-Regular.ttf
+    - family: Chela one
+      fonts:
+        - asset: assets/fonts/ChelaOne-Regular.ttf
+    - family: Gloria Hallelujah
+      fonts:
+        - asset: assets/fonts/GloriaHallelujah.ttf
+    - family: Great vibes
+      fonts:
+        - asset: assets/fonts/GreatVibes-Regular.ttf
+    - family: Homemade apple
+      fonts:
+        - asset: assets/fonts/HomemadeApple-Regular.ttf
+    - family: Indie Flower
+      fonts:
+        - asset: assets/fonts/IndieFlower.ttf
+    - family: Kirang Haerang
+      fonts:
+        - asset: assets/fonts/KirangHaerang-Regular.ttf
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf
+    - family: Patrick Hand
+      fonts:
+        - asset: assets/fonts/PatrickHand-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Rock salt
+      fonts:
+        - asset: assets/fonts/RockSalt-Regular.ttf
+    - family: Shadows into light
+      fonts:
+        - asset: assets/fonts/ShadowsIntoLight.ttf
