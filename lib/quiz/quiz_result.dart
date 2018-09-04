@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/quiz.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/quiz_progress_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'quiz_pager.dart';
+import 'package:uuid/uuid.dart';
 
 class QuizResult extends StatefulWidget {
   List<Map<String, dynamic>> quizInputs;
@@ -180,6 +184,29 @@ class QuizResultState extends State<QuizResult> {
     ));
 
     return _questionResults;
+  }
+
+  void _initQuizProgressTable() async {
+    List<Map> quizInputsMapList = widget.quizInputs;
+    List<Quiz> quizzesMapList = widget.quizzes;
+    User _user = AppStateContainer.of(context).state.loggedInUser;
+    print("lion material");
+    for (var i = 0; i < quizInputsMapList.length; i++) {
+      print(await new QuizProgressRepo().insertOrUpdateQuizProgress(
+          Uuid().v4(),
+          _user.id,
+          quizzesMapList[0].topicId,
+          quizzesMapList[0].type,
+          quizInputsMapList[0]["correct"],
+          quizInputsMapList[0]["total"]));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initQuizProgressTable();
   }
 
   @override
