@@ -18,13 +18,13 @@ class QuizProgressDao {
         where: "${QuizProgress.topicIdCol} = ?",
         whereArgs: [topicId]));
 
-    print("Value of maxScoreSum = ${maxScoreSum[0]["sum(maxScore)"]}");
+    print("Value of maxScoreSum = ${maxScoreSum.first["sum(maxScore)"]}");
     print(
-        "Value of outOfTotalScoreSum = ${outOfTotalScoreSum[0]["sum(outOfTotal)"]}");
+        "Value of outOfTotalScoreSum = ${outOfTotalScoreSum.first["sum(outOfTotal)"]}");
 
     if (maxScoreSum != null) {
-      return (maxScoreSum[0]["sum(maxScore)"] /
-          outOfTotalScoreSum[0]["sum(outOfTotal)"]);
+      return (maxScoreSum.first["sum(maxScore)"] /
+          outOfTotalScoreSum.first["sum(outOfTotal)"]);
     } else {
       return null;
     }
