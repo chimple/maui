@@ -29,4 +29,19 @@ class QuizProgressDao {
       return null;
     }
   }
+
+  Future<void> insertQuizProgress(QuizProgress quizProgress,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.insert(QuizProgress.table, quizProgress.toMap());
+  }
+
+  Future<void> updateQuizProgress(QuizProgress quizProgress,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.update(QuizProgress.table, quizProgress.toMap(),
+        where:
+            '''${QuizProgress.topicIdCol} = ? AND ${QuizProgress.quizIdCol} = ?''',
+        whereArgs: [quizProgress.topicId, quizProgress.quizId]);
+  }
 }

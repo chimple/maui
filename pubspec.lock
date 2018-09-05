@@ -633,13 +633,16 @@ packages:
     source: hosted
     version: "1.5.1+1"
   tahiti:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       path: "."
       ref: HEAD
       resolved-ref: "35d3c282f31e921cbf999d6fc56a25a2d0c9593a"
       url: "https://github.com/chimple/tahiti.git"
     source: git
+      path: "../tahiti"
+      relative: true
+    source: path
     version: "0.0.1"
   term_glyph:
     dependency: transitive

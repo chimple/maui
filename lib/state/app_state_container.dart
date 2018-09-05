@@ -196,6 +196,38 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
+   void playArticleAudio(
+      String audio, Function onComplete) async {
+    audio = audio.toLowerCase();
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final path = directory.path;
+      final file = new File('$path/sample.ogg');
+      print('Playing ${file.path}');
+      if (await file.exists()) {
+        await _audioPlayer.play(file.path, isLocal: true);
+      } else {
+        await file.writeAsBytes(
+            (await rootBundle.load('$audio')).buffer.asUint8List());
+        await _audioPlayer.play(file.path, isLocal: true);
+      }
+    } catch (e) {
+      print(e);
+    }
+    _audioPlayer.completionHandler = () {
+      print('audio completed::');
+      onComplete();
+    };
+  }
+
+  void pauseArticleAudio() async {
+    await _audioPlayer.pause();
+  }
+
+  void stopArticleAudio() async {
+    await _audioPlayer.stop();
+  }
+
   void display(BuildContext context, String fileName) {
     if (isShowingFlashCard) {
       showDialog(
