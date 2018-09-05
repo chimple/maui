@@ -26,6 +26,21 @@ class DrawingDao {
     return maps.map((el) => new Drawing.fromMap(el)).toList();
   }
 
+  Future<Drawing> getLatestDrawingByActivityId(String activityId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(Drawing.table,
+        columns: Drawing.allCols,
+        where: "${Drawing.activityIdCol} = ? ",
+        whereArgs: [activityId],
+        orderBy: '${Drawing.updatedAtCol} DESC',
+        limit: 1);
+    if (maps.length > 0) {
+      return Drawing.fromMap(maps.first);
+    }
+    return null;
+  }
+
   Future<Drawing> insert(Drawing drawing, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     await db.insert(Drawing.table, drawing.toMap());

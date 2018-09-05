@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/activity_repo.dart';
 import 'package:maui/db/entity/activity.dart';
-import 'package:maui/components/new_drawing.dart';
+import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/screens/drawing_list_screen.dart';
 
 class DrawingScreen extends StatefulWidget {
   final String activityId;
-  DrawingScreen({Key key, this.activityId}) : super(key: key);
+  final String drawingId;
+  DrawingScreen({Key key, this.activityId, this.drawingId}) : super(key: key);
 
   @override
   DrawingScreenState createState() {
@@ -17,10 +19,15 @@ class DrawingScreen extends StatefulWidget {
 class DrawingScreenState extends State<DrawingScreen> {
   bool _isLoading = true;
   Activity _activity;
+  DrawingSelect _drawingSelect;
 
   @override
   void initState() {
     super.initState();
+    if (widget.drawingId != null)
+      _drawingSelect = DrawingSelect.id;
+    else
+      _drawingSelect = DrawingSelect.latest;
     _initData();
   }
 
@@ -49,24 +56,27 @@ class DrawingScreenState extends State<DrawingScreen> {
         ),
         actions: <Widget>[
           new IconButton(
-            icon: new Icon(Icons.playlist_play),
-            tooltip: 'Air it',
-            onPressed: () => print('1'),
+            icon: new Icon(Icons.add_circle),
+            tooltip: 'Create new drawing',
+            onPressed: () =>
+                setState(() => _drawingSelect = DrawingSelect.create),
           ),
           new IconButton(
-            icon: new Icon(Icons.playlist_add),
-            tooltip: 'Restitch it',
-            onPressed: () => print('2'),
-          ),
-          new IconButton(
-            icon: new Icon(Icons.playlist_add_check),
-            tooltip: 'Repair it',
-            onPressed: () => print('3'),
+            icon: new Icon(Icons.view_list),
+            tooltip: 'View all drawings',
+            onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return DrawingListScreen(
+                    activityId: widget.activityId,
+                  );
+                })),
           ),
         ],
       ),
-      body: NewDrawing(
+      body: DrawingWrapper(
         activityId: widget.activityId,
+        drawingSelect: _drawingSelect,
+        drawingId: widget.drawingId,
       ),
     );
   }
