@@ -1,5 +1,7 @@
 import 'dart:async';
 
+
+import 'package:maui/db/entity/quiz_progress.dart';
 import 'package:maui/db/dao/quiz_progress_dao.dart';
 
 class QuizProgressRepo {
@@ -18,9 +20,6 @@ class QuizProgressRepo {
         topicId, quizId);
   }
 
-  Future<QuizProgress> getQuizProgressByTopicId(String topicId) async {
-    return await quizProgressDao.getQuizProgressByTopicId(topicId);
-  }
 
   Future<String> insertOrUpdateQuizProgress(String id, String userId,
       String topicId, String quizId, int maxScore, int outOfTotal) async {
