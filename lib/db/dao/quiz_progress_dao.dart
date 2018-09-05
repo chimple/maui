@@ -30,6 +30,32 @@ class QuizProgressDao {
     }
   }
 
+  Future<QuizProgress> getQuizProgressByTopicAndQuizId(
+      String topicId, String quizId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(QuizProgress.table,
+        columns: [
+          QuizProgress.idCol,
+          QuizProgress.userIdCol,
+          QuizProgress.topicIdCol,
+          QuizProgress.quizIdCol,
+          QuizProgress.maxScoreCol,
+          QuizProgress.outOfTotalCol
+        ],
+        where:
+            '''${QuizProgress.topicIdCol} = ? AND ${QuizProgress.quizIdCol} = ?''',
+        whereArgs: [
+          topicId,
+          quizId
+        ]);
+    print("Topic Id received in QuizprogressDao - $topicId");
+    if (maps.length > 0) {
+      return QuizProgress.fromMap(maps.first);
+    }
+    return null;
+  }
+
   Future<void> insertQuizProgress(QuizProgress quizProgress,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
