@@ -107,7 +107,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   camera:
     dependency: "direct main"
     description:
@@ -635,6 +635,11 @@ packages:
   tahiti:
     dependency: "direct dev"
     description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "35d3c282f31e921cbf999d6fc56a25a2d0c9593a"
+      url: "https://github.com/chimple/tahiti.git"
+    source: git
       path: "../tahiti"
       relative: true
     source: path

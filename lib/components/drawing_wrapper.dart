@@ -59,16 +59,14 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         _drawing = await DrawingRepo().getDrawing(widget.drawingId);
       if (_drawing == null) _drawingSelect = DrawingSelect.create;
     }
-
-    if (widget.drawingSelect == DrawingSelect.create) {
-      _templates = (await ActivityTemplateRepo()
-              .getActivityTemplatesByAtivityId(widget.activityId))
-          .map((t) => t.image)
-          .toList(growable: false);
+    if (_drawingSelect == DrawingSelect.create) {
+      final activityTemplates = await ActivityTemplateRepo()
+          .getActivityTemplatesByActivityId(widget.activityId);
+      _templates =
+          activityTemplates.map((t) => t.image).toList(growable: false);
     } else {
       _jsonMap = json.decode(_drawing.json);
     }
-
     setState(() => _isLoading = false);
   }
 
@@ -82,7 +80,6 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         child: new CircularProgressIndicator(),
       ));
     }
-    print('NewDrawing jsonMap: $_jsonMap');
     return ActivityBoard(
       json: _jsonMap,
       templates: _templates,
