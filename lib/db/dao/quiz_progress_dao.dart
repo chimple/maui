@@ -4,71 +4,30 @@ import 'package:maui/db/entity/quiz_progress.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuizProgressDao {
-  Future<QuizProgress> getQuizProgressByQuizProgressId(String id,
-      {Database db}) async {
+  Future<double> getScoreSummaryByTopicId(String topicId, {Database db}) async {
+    print("Topic Id received by Quiz Progress Dao - $topicId");
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(QuizProgress.table,
-        columns: [
-          QuizProgress.idCol,
-          QuizProgress.userIdCol,
-          QuizProgress.topicIdCol,
-          QuizProgress.quizIdCol,
-          QuizProgress.maxScoreCol,
-          QuizProgress.outOfTotalCol
-        ],
-        where: "${QuizProgress.idCol} = ? ",
-        whereArgs: [id]);
-    if (maps.length > 0) {
-      return QuizProgress.fromMap(maps.first);
-    }
-    return null;
-  }
 
-  Future<QuizProgress> getQuizProgressByTopicAndQuizId(
-      String topicId, String quizId,
-      {Database db}) async {
-    db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(QuizProgress.table,
-        columns: [
-          QuizProgress.idCol,
-          QuizProgress.userIdCol,
-          QuizProgress.topicIdCol,
-          QuizProgress.quizIdCol,
-          QuizProgress.maxScoreCol,
-          QuizProgress.outOfTotalCol
-        ],
-        where:
-            '''${QuizProgress.topicIdCol} = ? AND ${QuizProgress.quizIdCol} = ?''',
-        whereArgs: [
-          topicId,
-          quizId
-        ]);
-    print("Topic Id received in QuizprogressDao - $topicId");
-    if (maps.length > 0) {
-      return QuizProgress.fromMap(maps.first);
-    }
-    return null;
-  }
-
-  Future<QuizProgress> getQuizProgressByTopicId(String topicId,
-      {Database db}) async {
-    db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(QuizProgress.table,
-        columns: [
-          QuizProgress.idCol,
-          QuizProgress.userIdCol,
-          QuizProgress.topicIdCol,
-          QuizProgress.quizIdCol,
-          QuizProgress.maxScoreCol,
-          QuizProgress.outOfTotalCol
-        ],
+    List maxScoreSum = (await db.query(QuizProgress.table,
+        columns: ['sum(${QuizProgress.maxScoreCol})'],
         where: "${QuizProgress.topicIdCol} = ?",
-        whereArgs: [topicId]);
-    print("Topic Id received in QuizprogressDao - $topicId");
-    if (maps.length > 0) {
-      return QuizProgress.fromMap(maps.first);
+        whereArgs: [topicId]));
+
+    List outOfTotalScoreSum = (await db.query(QuizProgress.table,
+        columns: ['sum(${QuizProgress.outOfTotalCol})'],
+        where: "${QuizProgress.topicIdCol} = ?",
+        whereArgs: [topicId]));
+
+    print("Value of maxScoreSum = ${maxScoreSum.first["sum(maxScore)"]}");
+    print(
+        "Value of outOfTotalScoreSum = ${outOfTotalScoreSum.first["sum(outOfTotal)"]}");
+
+    if (maxScoreSum != null) {
+      return (maxScoreSum.first["sum(maxScore)"] /
+          outOfTotalScoreSum.first["sum(outOfTotal)"]);
+    } else {
+      return null;
     }
-    return null;
   }
 
   Future<void> insertQuizProgress(QuizProgress quizProgress,
