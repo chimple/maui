@@ -61,7 +61,7 @@ class TextPainters extends CustomPainter {
   final int maxChar, wmCount;
   List<String> data = [];
 
-  final rotation, tickPaint, textStyle;
+  final rotation, tickPaint;
   final textPainter;
   final String maxString;
   double _angle,
