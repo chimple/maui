@@ -17,7 +17,7 @@ const Map<String, dynamic> testMap = {
 class GroupingQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
   final Function onEnd;
-  GroupingQuiz({this.input = testMap, this.onEnd});
+  GroupingQuiz({Key key, this.input = testMap, this.onEnd}) : super(key: key);
 
   @override
   _GroupingQuizState createState() => new _GroupingQuizState();
@@ -348,6 +348,7 @@ class GroupUI extends StatelessWidget {
           ),
         ),
         new DragTarget(
+          key: Key('Target'),
           onAccept: (String label) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
               scrollControllerForGroup.animateTo(
@@ -445,6 +446,7 @@ class _DragBoxState extends State<DragBox> {
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Draggable(
+        key: Key('Source'),
         onDragStarted: () {
           widget.onDragStarted();
         },
