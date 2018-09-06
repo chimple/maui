@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
+import 'package:maui/components/show_help.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maui/components/nima.dart';
 import 'package:maui/state/button_state_container.dart';
-import 'package:maui/components/progress_circle.dart';
 import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/Draw_Challenge.dart';
 import 'package:maui/games/true_false.dart';
@@ -45,7 +44,7 @@ import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:maui/quiz/quiz_pager.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/repos/score_repo.dart';
 import 'package:maui/db/entity/score.dart';
 import 'package:maui/repos/notif_repo.dart';
@@ -54,6 +53,8 @@ import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/db/entity/lesson.dart';
+
+import '../components/progress_bar.dart';
 
 enum GameMode { timed, iterations }
 
@@ -97,7 +98,7 @@ class GameConfig {
       {this.questionUnitMode,
       this.answerUnitMode,
       this.gameCategoryId,
-      this.topicId,
+      this.topicId = "lion", //TODO: This is a temporary initialization
       this.gameDisplay,
       this.level,
       this.otherUser,
@@ -151,6 +152,7 @@ enum Learning { literacy, maths }
 class SingleGame extends StatefulWidget {
   final String gameName;
   final GameConfig gameConfig;
+
   final Function onGameEnd;
   final Function onScore; //TODO: Can be removed
   final GameMode gameMode;
@@ -377,8 +379,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                         ),
                         onPressed: () {
                           AppStateContainer.of(context).play('_audiotap.mp3');
-                          Navigator
-                              .of(context)
+                          Navigator.of(context)
                               .popUntil(ModalRoute.withName('/tab'));
                         },
                       )),
@@ -400,9 +401,15 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print('_SingleGameState:build: ${widget.gameConfig}');
+    print("this i want know topicid is,,,,...::${widget.gameConfig.topicId}");
+
     MediaQueryData media = MediaQuery.of(context);
     print(media.size);
+    var size = media.size;
+    double progregressPading = media.size.width / 2;
     print(widget.key.toString());
+    var _scaffoldKey = new GlobalKey<ScaffoldState>();
+    print("scaffold key is....::$_scaffoldKey");
     var colors = SingleGame.gameColors[widget.gameName];
     var theme = new ThemeData(
         primaryColor:
@@ -412,12 +419,111 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         accentColor: colors[1]);
     var game =
         buildSingleGame(context, widget.gameConfig.gameDisplay.toString());
+
+    print("this... my game in the quize iiss......::${game.runtimeType}");
+    final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
     final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
+    print("here we have to check the oh2h....::$oh2h");
+
+    print(
+        "this is height when its comes to head to head,,,....::${media.size.width}");
+    var headers = <Widget>[
+      Hud(
+          user: widget.gameConfig.myUser,
+          height: media.size.height / 8,
+          gameMode: widget.gameMode,
+          playTime: playTime,
+          onEnd: widget.onGameEnd,
+          progress: widget.gameConfig.amICurrentPlayer ? _myProgress : null,
+          start: !oh2h,
+          score: widget.gameConfig.myScore,
+          backgroundColor: oh2h ? colors[0] : colors[2],
+          foregroundColor: colors[1]),
+      Container(
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Stack(children: [
+            Text(
+              '${widget.gameConfig.myScore}',
+              style: new TextStyle(fontSize: 20.0, color: colors[1]),
+            ),
+          ]),
+        ),
+      ),
+      widget.gameConfig.amICurrentPlayer
+          ? Padding(
+              padding: !oh2h && !mh2h
+                  ? media.size.width > media.size.height
+                      ? EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          32 -
+                          media.size.height / 8)
+                      : EdgeInsets.all(progregressPading -
+                          (media.size.width / 2.8) / 2 -
+                          32 -
+                          media.size.height / 8)
+                  : EdgeInsets.all((progregressPading / 1.5 -
+                          (media.size.width / 2.8) / 3 -
+                          32 -
+                          media.size.height / 8) /
+                      2),
+              child: new Stack(
+                alignment: AlignmentDirectional.center,
+                // crossAxisAlignment:
+                //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround
+                children: <Widget>[
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: new SizedBox(
+                        width: !oh2h && !mh2h
+                            ? media.size.width > media.size.height
+                                ? media.size.width / 2.8
+                                : media.size.width / 2.25
+                            : media.size.width / 3.5,
+                        height: 25.0,
+                        child: new LinearProgressIndicator(
+                          // strokeWidth: height / 8.0,
+                          value: 1.0,
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              oh2h ? colors[0] : colors[2]),
+                        )),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: new SizedBox(
+                        width: !oh2h && !mh2h
+                            ? media.size.width > media.size.height
+                                ? media.size.width / 2.8
+                                : media.size.width / 2.25
+                            : media.size.width / 3.5,
+                        height: 25.0,
+                        child: widget.gameMode == GameMode.timed
+                            ? new ProgressBar(
+                                time: playTime,
+                                onEnd: () => widget.onGameEnd(context),
+                                // strokeWidth: height / 8.0,
+                              )
+                            : new ProgressBar(
+                                progress: _myProgress,
+                                // strokeWidth: height / 8.0,
+                              )),
+                  ),
+                ],
+              ),
+            )
+          : new Container()
+    ];
     return WillPopScope(
       onWillPop: _onWillPop,
       child: new Theme(
           data: theme,
           child: Scaffold(
+              key: _scaffoldKey,
+              endDrawer: new ShowHelp(topicId: widget.gameConfig.topicId),
               resizeToAvoidBottomPadding: false,
               backgroundColor: colors[0],
               body: new SafeArea(
@@ -443,26 +549,24 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                 new Positioned(
                                     left: !oh2h ? 32.0 : null,
                                     right: oh2h ? 32.0 : null,
-                                    child: Hud(
-                                        user: widget.gameConfig.myUser,
-                                        height: media.size.height / 8.0,
-                                        gameMode: widget.gameMode,
-                                        playTime: playTime,
-                                        onEnd: widget.onGameEnd,
-                                        progress: _myProgress,
-                                        start: !oh2h,
-                                        score: widget.gameConfig.myScore,
-                                        backgroundColor:
-                                            oh2h ? colors[0] : colors[2],
-                                        foregroundColor: colors[1])),
-                                new Center(
-                                  child: Nima(
-                                      name: widget.gameName,
-                                      score: _cumulativeIncrement,
-                                      tag: !oh2h
-                                          ? 'assets/hoodie/${widget.gameName}.png'
-                                          : 'other.png'),
-                                ),
+                                    child: Row(
+                                        mainAxisAlignment: oh2h
+                                            ? MainAxisAlignment.start
+                                            : MainAxisAlignment.end,
+                                        children: !oh2h
+                                            ? headers
+                                            : headers.reversed
+                                                .toList(growable: false))),
+                                //  game.runtimeType==QuizPager
+                                //       ? Container()
+                                //       : new Center(
+                                //           child: Nima(
+                                //               name: widget.gameName,
+                                //               score: _cumulativeIncrement,
+                                //               tag: !oh2h
+                                //                   ? 'assets/hoodie/${widget.gameName}.png'
+                                //                   : 'other.png'),
+                                //         ),
                                 !oh2h
                                     ? Positioned(
                                         left: 0.0,
@@ -471,10 +575,24 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                           icon: Icon(Icons.arrow_back),
                                           color: Colors.white,
                                           onPressed: () {
-                                            AppStateContainer
-                                                .of(context)
+                                            AppStateContainer.of(context)
                                                 .play('_audiotap.mp3');
                                             _onWillPop();
+                                          },
+                                        ))
+                                    : Container(),
+                                !oh2h
+                                    ? Positioned(
+                                        right: 0.0,
+                                        top: 0.0,
+                                        child: IconButton(
+                                          icon: Icon(Icons.help_outline),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            print(
+                                                "scaffold data is.......::${_scaffoldKey.currentState}");
+                                            _scaffoldKey.currentState
+                                                .openEndDrawer();
                                           },
                                         ))
                                     : Container(),
@@ -484,17 +602,121 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                             GameDisplay.networkTurnByTurn
                                     ? Positioned(
                                         right: 32.0,
-                                        child: Hud(
-                                            start: false,
-                                            user: widget.gameConfig.otherUser,
-                                            height: media.size.height / 8.0,
-                                            gameMode: widget.gameMode,
-                                            playTime: playTime,
-                                            onEnd: widget.onGameEnd,
-                                            progress: _otherProgress,
-                                            score: widget.gameConfig.otherScore,
-                                            backgroundColor: colors[2],
-                                            foregroundColor: colors[1]))
+                                        child: Row(children: [
+                                          widget.gameConfig.amICurrentPlayer
+                                              ? new Container()
+                                              : Padding(
+                                                  padding: EdgeInsets.all(
+                                                      progregressPading -
+                                                          (media.size.width /
+                                                                  2.8) /
+                                                              2 -
+                                                          32 -
+                                                          media.size.height /
+                                                              8),
+                                                  child: new Stack(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .center,
+                                                    // crossAxisAlignment:
+                                                    //     start ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                                                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0)),
+                                                        child: new SizedBox(
+                                                            width: media.size
+                                                                        .width >
+                                                                    media.size
+                                                                        .height
+                                                                ? media.size
+                                                                        .width /
+                                                                    2.8
+                                                                : media.size
+                                                                        .width /
+                                                                    2.25,
+                                                            height: 25.0,
+                                                            child:
+                                                                new LinearProgressIndicator(
+                                                              // strokeWidth: height / 8.0,
+                                                              value: 1.0,
+                                                              valueColor:
+                                                                  new AlwaysStoppedAnimation<
+                                                                          Color>(
+                                                                      colors[
+                                                                          2]),
+                                                            )),
+                                                      ),
+                                                      Card(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.0),
+                                                        ),
+                                                        child: new SizedBox(
+                                                            width: media.size
+                                                                        .width >
+                                                                    media.size
+                                                                        .height
+                                                                ? media.size
+                                                                        .width /
+                                                                    2.8
+                                                                : media.size
+                                                                        .width /
+                                                                    2.25,
+                                                            height: 25.0,
+                                                            child: widget
+                                                                        .gameMode ==
+                                                                    GameMode
+                                                                        .timed
+                                                                ? new ProgressBar(
+                                                                    time:
+                                                                        playTime,
+                                                                    onEnd: () =>
+                                                                        widget.onGameEnd(
+                                                                            context),
+                                                                    // strokeWidth: height / 8.0,
+                                                                  )
+                                                                : new ProgressBar(
+                                                                    progress:
+                                                                        _otherProgress,
+                                                                    // strokeWidth: height / 8.0,
+                                                                  )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Stack(children: [
+                                              Text(
+                                                '${widget.gameConfig.otherScore}',
+                                                style: new TextStyle(
+                                                    fontSize: 20.0,
+                                                    color: colors[1]),
+                                              ),
+                                            ]),
+                                          ),
+                                          Hud(
+                                              start: false,
+                                              amICurrentUser: false,
+                                              user: widget.gameConfig.otherUser,
+                                              height: media.size.height / 8.0,
+                                              gameMode: widget.gameMode,
+                                              playTime: playTime,
+                                              onEnd: widget.onGameEnd,
+                                              progress: _otherProgress,
+                                              score:
+                                                  widget.gameConfig.otherScore,
+                                              backgroundColor: colors[2],
+                                              foregroundColor: colors[1])
+                                        ]))
                                     : Container(),
                                 widget.gameConfig.gameDisplay ==
                                             GameDisplay.localTurnByTurn ||
@@ -614,7 +836,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
       }
       if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn) {
         try {
-          await Flores().addMessage(
+          await p2p.addMessage(
               widget.gameConfig.myUser.id,
               widget.gameConfig.otherUser.id,
               widget.gameName,
@@ -660,7 +882,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
     if (widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn && ack) {
       widget.gameConfig.amICurrentPlayer = !widget.gameConfig.amICurrentPlayer;
       try {
-        await Flores().addMessage(
+        await p2p.addMessage(
             widget.gameConfig.myUser.id,
             widget.gameConfig.otherUser.id,
             widget.gameName,
@@ -741,7 +963,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'quiz_pager':
         playTime = 15000;
-        maxIterations = 4;
+        maxIterations = 1;
         return new QuizPager(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,

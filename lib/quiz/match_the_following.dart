@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:maui/components/quiz_button.dart';
+import 'package:maui/components/quiz_question.dart';
 
 class MatchingGame extends StatefulWidget {
-  Map<String, dynamic> gameData;
-  Function onEnd;
+  final Map<String, dynamic> gameData;
+  final Function onEnd;
   MatchingGame(
       {key,
       this.onEnd,
@@ -16,22 +19,12 @@ class MatchingGame extends StatefulWidget {
           "3": "string3",
           "4": "string4",
           "5": "string5",
-          "6": "string6",
-          "7": "string7",
-          "8": "string8",
-          "9": "string9",
-          "10": "string10",
-          "11": "string11",
-          "12": "string12",
-          "13": "string13",
-          "14": "string14",
-          "15": "string15",
-          "16": "string16",
-          "17": "string17",
-          "18": "string18",
-          "19": "string19",
-          "20": "string20"
-        }
+          "6": "string6"
+        },
+        "correct": null,
+        "total": null,
+        "leftSelectedItems": null,
+        "rightSelectedItems": null,
       }})
       : super(key: key);
   @override
@@ -41,138 +34,233 @@ class MatchingGame extends StatefulWidget {
 class _MatchingGameState extends State<MatchingGame> {
   Map<String, dynamic> _selectedPairs = {};
   String _leftItemSelected;
+  int numberOfCorrectChoices = 0;
 
   List<String> _leftSideItems;
   List<String> _leftSideDisabledItems = [];
   List<String> _rightSideDisabledItems = [];
   List<String> _rightSideItems;
-
   @override
   void initState() {
     super.initState();
-    _leftSideItems = (widget.gameData["pairs"].keys.toList()..shuffle());
-    _rightSideItems = (widget.gameData["pairs"].values.toList()..shuffle());
+    _leftSideItems =
+        (widget.gameData["pairs"].keys.toList().cast<String>()..shuffle());
+    _rightSideItems =
+        (widget.gameData["pairs"].values.toList().cast<String>()..shuffle());
   }
 
-  bool _checkItem(String buttonItem, bool isItemOnLeft) {
-    if (isItemOnLeft == true) {
-      return (_leftSideDisabledItems.indexOf(buttonItem) != -1) ? true : false;
-    } else {
-      return (_rightSideDisabledItems.indexOf(buttonItem) != -1) ? true : false;
-    }
+  List<Widget> _buildExpandedQuizWithCorrectAnswers(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    List<Widget> correctPairs = [];
+    correctPairs.add(
+      new Container(
+        height: (mediaQueryData.size.height - 300.0) / 6,
+        child: new QuizQuestion(
+          key: new Key("question"),
+          text: widget.gameData["question"],
+          // image: widget.gameData["image"],
+        ),
+      ),
+    );
+    widget.gameData["pairs"].forEach((k, v) {
+      correctPairs.add(new Container(
+        padding: new EdgeInsets.all(5.0),
+        height: (mediaQueryData.size.height - 300.0) / 6,
+        width: mediaQueryData.size.width,
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            new Container(
+              width: mediaQueryData.size.width / 3,
+              child: new QuizButton(
+                key: new Key(k),
+                onPress: null,
+                text: k,
+                buttonStatus: (_selectedPairs[k] == widget.gameData["pairs"][k])
+                    ? Status.correct
+                    : Status.incorrect,
+              ),
+            ),
+            new Container(
+              width: mediaQueryData.size.width / 3,
+              child: new QuizButton(
+                key: new Key(v),
+                onPress: null,
+                text: v,
+                buttonStatus: _checkForRightSideItemCorrectness(v)
+                    ? Status.correct
+                    : Status.incorrect,
+              ),
+            ),
+          ],
+        ),
+      ));
+    });
+    return correctPairs;
+  }
+
+  bool _checkForRightSideItemCorrectness(String rightSideItem) {
+    bool isCorrect;
+    _selectedPairs.forEach((k, v) {
+      if (v == rightSideItem) {
+        if (widget.gameData["pairs"][k] == rightSideItem) {
+          if (widget.gameData["correct"] == null) {
+            numberOfCorrectChoices += 1;
+          }
+
+          isCorrect = true;
+        } else {
+          isCorrect = false;
+        }
+      }
+    });
+    return isCorrect;
   }
 
   @override
   Widget build(BuildContext context) {
-    _leftItemSelected = '';
-    if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
-        _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
+    if (widget.gameData["correct"] == null) {
+      _leftItemSelected = '';
+      if (_rightSideDisabledItems.length == widget.gameData["pairs"].length &&
+          _leftSideDisabledItems.length == widget.gameData["pairs"].length) {
+        _selectedPairs = new Map.fromIterables(
+            _leftSideDisabledItems, _rightSideDisabledItems);
+        print(_selectedPairs);
+      }
+    } else {
+      _leftSideDisabledItems = widget.gameData["leftSelectedItems"];
+      print(_leftSideDisabledItems);
+      _rightSideDisabledItems = widget.gameData["rightSelectedItems"];
+      print(_rightSideDisabledItems);
       _selectedPairs = new Map.fromIterables(
           _leftSideDisabledItems, _rightSideDisabledItems);
       print(_selectedPairs);
     }
-    return new Container(
-      decoration: new BoxDecoration(
-          image: new DecorationImage(
-        fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(Colors.grey, BlendMode.lighten),
-        image: new NetworkImage(widget.gameData["image"]),
-      )),
-      child: new Column(
-        children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.all(10.0),
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.orange,
-                  borderRadius: new BorderRadius.all(Radius.circular(10.0))),
-              child: new Center(
-                child: new Text(
-                  widget.gameData["question"],
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
-              ),
-            ),
-          ),
-          new Expanded(
-            flex: 7,
-            child: new Container(
-              child: new ListView.builder(
-                itemCount: widget.gameData["pairs"].length,
-                itemBuilder: (BuildContext context, int index) {
-                  return new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      new Container(
-                        margin: EdgeInsets.all(10.0),
-                        child: new RaisedButton(
-                          onPressed: _checkItem(_leftSideItems[index], true)
-                              ? null
-                              : () {
-                                  _leftItemSelected = _leftSideItems[index];
-                                },
-                          padding: EdgeInsets.all(20.0),
-                          child: new Center(
-                            child: new Text(
-                              _leftSideItems[index],
-                              style: new TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      new Container(
-                        margin: EdgeInsets.all(10.0),
-                        child: new RaisedButton(
-                          onPressed: _checkItem(_rightSideItems[index], false)
-                              ? null
-                              : () {
-                                  print("correct");
-                                  print(_leftItemSelected == ''
-                                      ? "leftNotTapped"
-                                      : _leftItemSelected);
-                                  print(_rightSideItems[index]);
-                                  if (_leftItemSelected != '') {
-                                    setState(() {
-                                      _leftSideDisabledItems
-                                          .add(_leftItemSelected);
-                                      print(_leftSideDisabledItems);
-                                      _rightSideDisabledItems
-                                          .add(_rightSideItems[index]);
-                                      print(_rightSideDisabledItems);
-                                      print(_selectedPairs);
-                                      if (_leftSideDisabledItems.length ==
-                                          _leftSideItems.length) {
-                                        widget.onEnd();
-                                      }
-                                    });
-                                  }
-                                },
-                          padding: EdgeInsets.all(20.0),
-                          child: new Center(
-                            child: new Text(
-                              _rightSideItems[index],
-                              style: new TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+    return (widget.gameData["correct"] != null)
+        ? new Column(
+            children: _buildExpandedQuizWithCorrectAnswers(context),
           )
-        ],
-      ),
-    );
+        : new LayoutBuilder(
+            builder: (context, constraints) {
+              return new Column(
+                children: <Widget>[
+                  new Expanded(
+                    flex: 1,
+                    child: new QuizQuestion(
+                      key: new Key("question"),
+                      text: widget.gameData["question"],
+                      // image: widget.gameData["image"],
+                    ),
+                  ),
+                  new Expanded(
+                    flex: 7,
+                    child: new ListView.builder(
+                      itemCount: widget.gameData["pairs"].length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return new Container(
+                          padding: EdgeInsets.all(5.0),
+                          height: (constraints.maxHeight -
+                                  (constraints.maxHeight / 8)) /
+                              5,
+                          width: constraints.maxWidth,
+                          child: new Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              new Container(
+                                width: constraints.maxWidth / 3,
+                                child: new QuizButton(
+                                  key: new Key(_leftSideItems[index]),
+                                  buttonStatus: (_rightSideDisabledItems
+                                                  .length ==
+                                              widget.gameData["pairs"].length &&
+                                          _leftSideDisabledItems.length ==
+                                              widget.gameData["pairs"].length)
+                                      ? (widget.gameData["pairs"]
+                                                  [_leftSideItems[index]] ==
+                                              _selectedPairs[
+                                                  _leftSideItems[index]]
+                                          ? Status.correct
+                                          : Status.incorrect)
+                                      : (_leftSideDisabledItems.indexOf(
+                                                  _leftSideItems[index]) ==
+                                              -1
+                                          ? Status.notSelected
+                                          : Status.disabled),
+                                  onPress: () {
+                                    _leftItemSelected = _leftSideItems[index];
+                                  },
+                                  text: _leftSideItems[index],
+                                ),
+                              ),
+                              new Container(
+                                width: constraints.maxWidth / 3,
+                                child: new QuizButton(
+                                  key: new Key(_rightSideItems[index]) ,
+                                  buttonStatus: (_rightSideDisabledItems
+                                                  .length ==
+                                              widget.gameData["pairs"].length &&
+                                          _leftSideDisabledItems.length ==
+                                              widget.gameData["pairs"].length)
+                                      ? (_checkForRightSideItemCorrectness(
+                                              _rightSideItems[index])
+                                          ? Status.correct
+                                          : Status.incorrect)
+                                      : (_rightSideDisabledItems.indexOf(
+                                                  _rightSideItems[index]) ==
+                                              -1
+                                          ? Status.notSelected
+                                          : Status.disabled),
+                                  onPress: () {
+                                    print(_leftItemSelected == ''
+                                        ? "leftNotTapped"
+                                        : _leftItemSelected);
+                                    print(_rightSideItems[index]);
+                                    if (_leftItemSelected != '' &&
+                                        _leftSideDisabledItems
+                                                .indexOf(_leftItemSelected) ==
+                                            -1) {
+                                      print(
+                                          "<><><><><><><><><><><><><><><><><><><><><><><><><><<>");
+                                      setState(() {
+                                        _leftSideDisabledItems
+                                            .add(_leftItemSelected);
+                                        print(_leftSideDisabledItems);
+                                        _rightSideDisabledItems
+                                            .add(_rightSideItems[index]);
+                                        print(_rightSideDisabledItems);
+                                        print(_selectedPairs);
+                                        if (_leftSideDisabledItems.length ==
+                                            _leftSideItems.length) {
+                                          new Future.delayed(
+                                              const Duration(seconds: 2), () {
+                                            widget.onEnd({
+                                              'correct': numberOfCorrectChoices,
+                                              'total': widget
+                                                  .gameData["pairs"].length,
+                                              "leftSelectedItems":
+                                                  _leftSideDisabledItems,
+                                              "rightSelectedItems":
+                                                  _rightSideDisabledItems
+                                            });
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
+                                  text: _rightSideItems[index],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
   }
 }

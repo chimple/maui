@@ -3,6 +3,7 @@ import 'package:maui/components/topic_button.dart';
 import 'package:maui/db/entity/activity.dart';
 import 'package:maui/loca.dart';
 import '../repos/activity_repo.dart';
+import 'package:maui/screens/drawing_screen.dart';
 
 class ActivityListView extends StatefulWidget {
   final String topicId;
@@ -47,18 +48,30 @@ class _ActivityListViewState extends State<ActivityListView> {
         child: new CircularProgressIndicator(),
       );
     }
-    return new GridView.count(
-      key: new Key('Category_page'),
-      primary: true,
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      crossAxisCount: media.size.height > media.size.width ? 3 : 2,
-      children: new List.generate(_dataActivity.length, (i) {
-        return TopicButton(
-          text: "${_dataActivity[i].text}",
-          image: "assets/category/lion.svg",
-        );
-      }),
+    return Scaffold(
+      appBar: new AppBar(
+          title: new Text(
+        widget.topicId,
+      )),
+      body: new GridView.count(
+        key: new Key('Category_page'),
+        primary: true,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        crossAxisCount: media.size.height > media.size.width ? 3 : 2,
+        children: new List.generate(_dataActivity.length, (i) {
+          return TopicButton(
+            text: "${_dataActivity[i].text}",
+            image: "${_dataActivity[i].image}",
+            onPress: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return DrawingScreen(
+                    activityId: _dataActivity[i].id,
+                  );
+                })),
+          );
+        }),
+      ),
     );
   }
 }
