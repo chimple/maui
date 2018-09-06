@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
-import 'package:maui/db/dao/quiz_progress_dao.dart';
-import 'package:maui/db/entity/quiz_progress.dart';
-import '../repos/quiz_progress_repo.dart';
 
 class TopicButton extends StatefulWidget {
   final String text;
@@ -12,7 +9,6 @@ class TopicButton extends StatefulWidget {
   final String image;
   final VoidCallback onPress;
   final String topicId;
-  
 
   TopicButton({
     Key key,
@@ -24,14 +20,12 @@ class TopicButton extends StatefulWidget {
 //      this.sizeHieght,
 //      this.sizeWidth
   }) : super(key: key);
-  
+
   @override
   State createState() => new TopicButtonState();
-
 }
 
-class TopicButtonState extends State<TopicButton>{
-
+class TopicButtonState extends State<TopicButton> {
   @override
   void initState() {
     super.initState();
@@ -39,7 +33,6 @@ class TopicButtonState extends State<TopicButton>{
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement build
     print("hello Topic button ${widget.image} and ${widget.text}");
     return Padding(
@@ -54,8 +47,7 @@ class TopicButtonState extends State<TopicButton>{
             child: new Stack(children: [
               new Column(
                 children: <Widget>[
-                      new QuizProgressTracker(topicId: widget.topicId),
-                    
+                  new QuizProgressTracker(topicId: widget.topicId),
                   widget.image == null
                       ? new Expanded(
                           child: Container(color: Colors.red),
