@@ -41,7 +41,9 @@ class DrawingWrapperState extends State<DrawingWrapper> {
 
   @override
   void didUpdateWidget(DrawingWrapper oldWidget) {
-    if (oldWidget.drawingSelect != widget.drawingSelect) {
+    if (oldWidget.drawingSelect != widget.drawingSelect ||
+        widget.drawingSelect == DrawingSelect.create) {
+      print('hi didupdate');
       _initData();
     }
   }
