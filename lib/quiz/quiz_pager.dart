@@ -9,6 +9,7 @@ import 'grouping_quiz.dart';
 import 'true_or_false.dart';
 import 'sequence.dart';
 import 'quiz_result.dart';
+import 'card_list.dart';
 
 class QuizPager extends StatefulWidget {
   Function onScore;
@@ -37,33 +38,33 @@ class QuizPager extends StatefulWidget {
       {Quiz quiz, Map<String, dynamic> input, Function onEnd}) {
     switch (quiz.quizType) {
       case QuizType.multipleChoice:
-        return Multiplechoice(
+        return CardList(
           onEnd: onEnd,
-          input: input,
+          optionsType: OptionCategory.many,
         );
         break;
       case QuizType.matchTheFollowing:
-        return MatchingGame(
+        return CardList(
           onEnd: onEnd,
-          gameData: input,
+          optionsType: OptionCategory.many,
         );
         break;
       case QuizType.trueOrFalse:
-        return TrueOrFalse(
+       return CardList(
           onEnd: onEnd,
-          input: input,
+          optionsType: OptionCategory.many,
         );
         break;
       case QuizType.grouping:
-        return GroupingQuiz(
+        return CardList(
           onEnd: onEnd,
-          input: input,
+          optionsType: OptionCategory.many,
         );
         break;
       case QuizType.sequence:
-        return SequenceQuiz(
+        return CardList(
           onEnd: onEnd,
-          input: input,
+          optionsType: OptionCategory.many,
         );
         break;
     }
