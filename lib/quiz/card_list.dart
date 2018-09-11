@@ -22,7 +22,7 @@ class CardList extends StatefulWidget {
   const CardList ({
     Key key,
     this.input = testMap,
-    @required this.optionsType,
+    this.optionsType = OptionCategory.many,
     this.onEnd
   }) : super(key: key);
 
@@ -47,11 +47,16 @@ class CardListState extends State<CardList> {
   }
 
   void _initBoard() {
-    
+    if(widget.optionsType == OptionCategory.many) {
     for(int i = 0; i < len; i++) {
     choice.add(widget.input['order'].cast<String>()[i]);
     shuffledChoices.add(widget.input['order'].cast<String>()[i]);
+    }
+  } else if(widget.optionsType == OptionCategory.oneAtATime) {
+    choice = ["true","false"];
+    shuffledChoices = ["true", "false"];
   }
+
 
   print("Values added to choices array - $choice");
   print("Values added to Shuffled Choices - $shuffledChoices");
@@ -124,10 +129,32 @@ class CardListState extends State<CardList> {
                 });
               } 
             } else if (widget.optionsType == OptionCategory.oneAtATime){
-              setState(() {
-                              clicked[k] = "yes";
+              if(clicked[k] == "no"){
+                setState(() {
+                              clicked = choice.map((e) => "yes").toList(growable: false);
                               clickedChoices.add(text);
                             });
+
+                            new Future.delayed(const Duration(milliseconds: 300), () {
+                              clicked = choice.map((e) => "done").toList(growable: false);
+
+                              if(text == widget.input['answer'])
+                              {
+                                correctChoices++;
+                              }
+                            });
+
+                            // Calling the parent class for an end and to switch on to the next game
+                new Future.delayed(const Duration(milliseconds: 2000), () {
+                  //TODO: Call this when all the items have been chosen
+                  widget.onEnd({'correct': correctChoices, 'total': choice.length, 'choicesRightOrWrong': rightOrWrong});
+                });
+              } else {}
+            } else if( widget.optionsType == OptionCategory.pair) {
+              if(clicked[k] == "no")
+              {
+
+              }
             }
           }
           else {
@@ -147,7 +174,7 @@ class CardListState extends State<CardList> {
     var size = media.size;
 
     List<Widget> cells;
-    cells = choice
+    cells = shuffledChoices
         .map((e) => new Padding(
               padding: EdgeInsets.all(10.0),
               child: _buildItem(j++, e, k++, size.height),
