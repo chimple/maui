@@ -29,7 +29,8 @@ class DrawingList extends StatelessWidget {
                       );
                     })),
                 child: ScopedModel<ActivityModel>(
-                  model: ActivityModel.fromJson(json.decode(d.json)),
+                  model: ActivityModel.fromJson(json.decode(d.json))
+                    ..isInteractive = false,
                   child: Paper(),
                 ),
               ))
