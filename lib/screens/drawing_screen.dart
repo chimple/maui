@@ -75,12 +75,15 @@ class DrawingScreenState extends State<DrawingScreen> {
           new IconButton(
             icon: new Icon(Icons.view_list),
             tooltip: 'View all drawings',
-            onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return DrawingListScreen(
-                    activityId: widget.activityId,
-                  );
-                })),
+            onPressed: () {
+              _drawingSelect = DrawingSelect.none;
+              Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (BuildContext context) {
+                return DrawingListScreen(
+                  activityId: widget.activityId,
+                );
+              }));
+            },
           ),
         ],
       ),
