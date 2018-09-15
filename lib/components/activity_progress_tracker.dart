@@ -24,6 +24,8 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
 
   void _initData() async {
     User _user = AppStateContainer.of(context).state.loggedInUser;
+    print(":");
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     _activityProgress = await ActivityProgressRepo()
         .getActivityProgressStatus(widget.topicId, _user.id);
     setState(() => _isLoading = false);
@@ -36,7 +38,9 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
     }
 
     return new Container(
-      child:new LinearProgressIndicator(value: 1.0,),
+      child: new LinearProgressIndicator(
+        value: _activityProgress,
+      ),
     );
   }
 }

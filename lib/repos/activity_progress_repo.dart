@@ -10,11 +10,14 @@ class ActivityProgressRepo {
 
   Future<double> getActivityProgressStatus(
       String topicId, String userId) async {
+    print("j bewqg");
     int activitiesAttempted = await activityProgressDao
         .getActivityProgressScoreByTopicIdAndUserId(topicId, userId);
+    print("object");
     int activitiesPresent =
         await ActivityTopicRepo().getTopicActivitiesByTopicId(topicId);
     double activitiesCompleted = (activitiesAttempted / activitiesPresent);
+    print("ngf");
     return activitiesCompleted;
   }
 
@@ -26,7 +29,6 @@ class ActivityProgressRepo {
       activityId,
       userId,
     );
-    print("nbbb");
     if (activityProgress == null) {
       await activityProgressDao.insertActivityProgress(new ActivityProgress(
         topicId: topicId,
@@ -37,18 +39,5 @@ class ActivityProgressRepo {
     } else {
       return "already present";
     }
-
-    // else {
-    //   if (quizProgress.maxScore < maxScore) {
-    //     await activityProgressDao.updateQuizProgress(new QuizProgress(
-    //       topicId: topicId,
-    //       userId: userId,
-    //       quizId: activityId,
-    //     ));
-    //     return "Current maxScore updated";
-    //   } else {
-    //     return "Current maxScore is less than or equal to the Previous maxScore";
-    //   }
-    // }
   }
 }
