@@ -13,10 +13,13 @@ class ActivityProgressRepo {
     print("j bewqg");
     int activitiesAttempted = await activityProgressDao
         .getActivityProgressScoreByTopicIdAndUserId(topicId, userId);
+    print(activitiesAttempted);
     print("object");
     int activitiesPresent =
         await ActivityTopicRepo().getTopicActivitiesByTopicId(topicId);
+    print(activitiesPresent);
     double activitiesCompleted = (activitiesAttempted / activitiesPresent);
+    print(activitiesCompleted);
     print("ngf");
     return activitiesCompleted;
   }
@@ -37,6 +40,7 @@ class ActivityProgressRepo {
       ));
       return "inserted";
     } else {
+      print(activityProgress);
       return "already present";
     }
   }
