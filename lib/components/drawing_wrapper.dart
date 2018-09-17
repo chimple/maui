@@ -6,7 +6,7 @@ import 'package:maui/repos/activity_template_repo.dart';
 import 'package:maui/repos/drawing_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
-enum DrawingSelect { create, latest, id }
+enum DrawingSelect { create, latest, id, none }
 
 class DrawingWrapper extends StatefulWidget {
   final String activityId;
