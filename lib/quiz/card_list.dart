@@ -144,6 +144,8 @@ class CardListState extends State<CardList> {
                       widget.onEnd({
                         'correct': correctChoices,
                         'total': choice.length,
+                        'choices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
                         'correctSequenceChoices': "$choice",
                         'choicesRightOrWrong': rightOrWrong
                       });
@@ -174,8 +176,8 @@ class CardListState extends State<CardList> {
                       widget.onEnd({
                         'correct': correctChoices,
                         'total': choice.length,
-                        'correctChoices': "${widget.input['answer']}",
-                        'incorrectChoices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.input['choices']}",
                         'choicesRightOrWrong': rightOrWrong
                       });
                     });
@@ -206,6 +208,8 @@ class CardListState extends State<CardList> {
                       widget.onEnd({
                         'correct': correctChoices,
                         'total': choice.length,
+                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.input['choices']}",
                         'choicesRightOrWrong': rightOrWrong
                       });
                     });
@@ -257,7 +261,8 @@ class CardListState extends State<CardList> {
                       widget.onEnd({
                         'correct': correctChoices,
                         'total': choice.length,
-                        'choices': choice,
+                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.input['choices']}",
                         'choicesRightOrWrong': rightOrWrong
                       });
                     });
