@@ -39,8 +39,11 @@ class DrawingScreenState extends State<DrawingScreen> {
   void _initData() async {
     _activity = await ActivityRepo().getActivity(widget.activityId);
     User _user = AppStateContainer.of(context).state.loggedInUser;
-    print(await ActivityProgressRepo()
-        .insertActivityProgress(_user.id, widget.topicId, widget.activityId));
+    print(await ActivityProgressRepo().insertActivityProgress(
+        _user.id,
+        widget.topicId,
+        widget.activityId,
+        (new DateTime.now().millisecondsSinceEpoch).toString()));
     setState(() {
       _isLoading = false;
     });

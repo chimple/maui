@@ -11,27 +11,24 @@ class ActivityProgressRepo {
   Future<double> getActivityProgressStatus(
       String topicId, String userId) async {
     int activitiesAttempted = await activityProgressDao
-        .getActivityProgressScoreByTopicIdAndUserId(topicId, userId);
+        .getActivityProgressStatusByTopicIdAndUserId(topicId, userId);
     int activitiesPresent =
         await ActivityTopicRepo().getTopicActivitiesByTopicId(topicId);
     double activitiesCompleted = (activitiesAttempted / activitiesPresent);
     return activitiesCompleted;
   }
 
-  Future<String> insertActivityProgress(
-      String userId, String topicId, String activityId) async {
+  Future<String> insertActivityProgress(String userId, String topicId,
+      String activityId, String timeStampId) async {
     ActivityProgress activityProgress = await activityProgressDao
         .getActivityProgressByTopicIdAndActivityIdAndUserId(
-      topicId,
-      activityId,
-      userId,
-    );
+            topicId, activityId, userId, timeStampId);
     if (activityProgress == null) {
       await activityProgressDao.insertActivityProgress(new ActivityProgress(
-        topicId: topicId,
-        userId: userId,
-        activityId: activityId,
-      ));
+          topicId: topicId,
+          userId: userId,
+          activityId: activityId,
+          timeStampId: timeStampId));
       return "inserted";
     } else {
       print(activityProgress);

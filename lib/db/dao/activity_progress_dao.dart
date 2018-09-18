@@ -6,14 +6,15 @@ import 'package:sqflite/sqflite.dart';
 class ActivityProgressDao {
   const ActivityProgressDao();
   Future<ActivityProgress> getActivityProgressByTopicIdAndActivityIdAndUserId(
-      String topicId, String activityId, String userId,
+      String topicId, String activityId, String userId, String timeStamp,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(ActivityProgress.table,
         columns: [
           ActivityProgress.userIdCol,
           ActivityProgress.topicIdCol,
-          ActivityProgress.activityIdCol
+          ActivityProgress.activityIdCol,
+          ActivityProgress.timeStampIdCol
         ],
         where:
             '''${ActivityProgress.topicIdCol} = ? AND ${ActivityProgress.activityIdCol} = ? AND ${ActivityProgress.userIdCol} = ?''',
@@ -28,7 +29,7 @@ class ActivityProgressDao {
     return null;
   }
 
-  Future<int> getActivityProgressScoreByTopicIdAndUserId(
+  Future<int> getActivityProgressStatusByTopicIdAndUserId(
       String topicId, String userId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
