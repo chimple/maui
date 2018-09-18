@@ -16,7 +16,7 @@ class ArticleProgressRepo {
       articleId,
       userId,
     );
-    if (articleProgress == null || articleProgress.articleId != articleId) {
+    if (articleProgress == null) {
       await articleProgressDao.insertArticleProgress(new ArticleProgress(
           id: id,
           topicId: topicId,
