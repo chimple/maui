@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maui/components/activity_progress_tracker.dart';
 import 'package:maui/db/entity/category.dart';
 import 'package:maui/db/entity/topic.dart';
 import 'package:maui/loca.dart';
@@ -126,43 +125,18 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
       crossAxisCount: media.size.height > media.size.width ? 2 : 2,
       children: new List.generate(_topics.length, (j) {
         print("Topic Id generated at subcategory list - ${_topics[j].id}");
-        return new Column(children: [
-          new Expanded(
-            flex: 7,
-            child: TopicButton(
-                text: '${_topics[j].name}',
-                image: '${_topics[j].image}',
-                topicId: '${_topics[j].id}',
-                onPress: () {
-                  Navigator.of(context).push(
-                    new MaterialPageRoute(
-                        builder: (BuildContext context) => new TopicScreen(
-                            topicId: _topics[j].id,
-                            topicName: _topics[j].name)),
-                  );
-                }),
-          ),
-          new Expanded(
-            flex: 1,
-            child: new ActivityProgressTracker(
-              topicId: _topics[j].id,
-            ),
-          ),
-        ]);
-        // return TopicButton(
-        //     text: '${_topics[j].name}',
-        //     image: '${_topics[j].image}',
-        //     topicId: '${_topics[j].id}',
-        //     onPress: () {
-        //       Navigator.of(context).push(
-        //             new MaterialPageRoute(
-        //                 builder: (BuildContext context) =>
-        //                     new TopicScreen(topicId: _topics[j].id,
-        //                     topicName: _topics[j].name
-
-        //                     )),
-        //           );
-        //     });
+        return TopicButton(
+            x: true,
+            text: '${_topics[j].name}',
+            image: '${_topics[j].image}',
+            topicId: '${_topics[j].id}',
+            onPress: () {
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => new TopicScreen(
+                        topicId: _topics[j].id, topicName: _topics[j].name)),
+              );
+            });
       }).toList(),
     );
   }

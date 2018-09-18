@@ -10,17 +10,11 @@ class ActivityProgressRepo {
 
   Future<double> getActivityProgressStatus(
       String topicId, String userId) async {
-    print("j bewqg");
     int activitiesAttempted = await activityProgressDao
         .getActivityProgressScoreByTopicIdAndUserId(topicId, userId);
-    print(activitiesAttempted);
-    print("object");
     int activitiesPresent =
         await ActivityTopicRepo().getTopicActivitiesByTopicId(topicId);
-    print(activitiesPresent);
     double activitiesCompleted = (activitiesAttempted / activitiesPresent);
-    print(activitiesCompleted);
-    print("ngf");
     return activitiesCompleted;
   }
 

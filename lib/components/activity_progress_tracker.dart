@@ -16,16 +16,8 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
   double _activityProgress;
   bool _isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
   void _initData() async {
     User _user = AppStateContainer.of(context).state.loggedInUser;
-    print(":");
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     _activityProgress = await ActivityProgressRepo()
         .getActivityProgressStatus(widget.topicId, _user.id);
     setState(() => _isLoading = false);
@@ -34,12 +26,19 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading == true) {
-      return new Container();
+      _initData();
+      return new Container(
+        child: new LinearProgressIndicator(
+          value: 0.0,
+          backgroundColor: Colors.orange,
+        ),
+      );
     }
 
     return new Container(
       child: new LinearProgressIndicator(
         value: _activityProgress,
+          backgroundColor: Colors.orange,
       ),
     );
   }
