@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/article_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 enum PlayerState { playing, paused, stopped }
 
@@ -34,11 +38,22 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticlePageState extends State<ArticlePage> {
   PlayerState playerState;
+  User user;
 
   @override
   void initState() {
-    playerState == PlayerState.stopped;
+    playerState = PlayerState.paused;
+    articleProgressTracker();
     super.initState();
+  }
+
+  void articleProgressTracker() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var timeStampId = new DateTime.now().millisecondsSinceEpoch.toString();
+      user = AppStateContainer.of(context).state.loggedInUser;
+      await ArticleProgressRepo().insertArticleProgress(Uuid().v4(),
+          user.id, widget.topicId, widget.articleId, timeStampId);
+    });
   }
 
   void onComplete() {
@@ -103,8 +118,7 @@ class _ArticlePageState extends State<ArticlePage> {
                               playerState = PlayerState.paused;
                             });
                           } else {
-                            AppStateContainer
-                                .of(context)
+                            AppStateContainer.of(context)
                                 .playArticleAudio(widget.audio, onComplete);
                             setState(() {
                               playerState = PlayerState.playing;
