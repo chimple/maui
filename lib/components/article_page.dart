@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/article_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -49,10 +48,9 @@ class _ArticlePageState extends State<ArticlePage> {
 
   void articleProgressTracker() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var timeStampId = new DateTime.now().millisecondsSinceEpoch.toString();
       user = AppStateContainer.of(context).state.loggedInUser;
       await ArticleProgressRepo().insertArticleProgress(Uuid().v4(),
-          user.id, widget.topicId, widget.articleId, timeStampId);
+          user.id, widget.topicId, widget.articleId);
     });
   }
 

@@ -7,9 +7,9 @@ class ArticleProgressRepo {
   static final ArticleProgressDao articleProgressDao = new ArticleProgressDao();
 
   Future<String> insertArticleProgress(String id, String userId, String topicId,
-      String articleId, String timeStampId) async {
+      String articleId) async {
     print(
-        "InsertArticleProgressRepo $topicId, $articleId, $userId, $timeStampId");
+        "InsertArticleProgressRepo $topicId, $articleId, $userId");
     ArticleProgress articleProgress = await articleProgressDao
         .getArticleProgressByTopicIdAndArticleIdAndUserId(
       topicId,
@@ -22,7 +22,7 @@ class ArticleProgressRepo {
           topicId: topicId,
           userId: userId,
           articleId: articleId,
-          timeStampId: timeStampId));
+          timeStampId: DateTime.now()));
       return "Inserted";
     } else {
       print(articleProgress);

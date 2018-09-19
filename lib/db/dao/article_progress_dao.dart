@@ -15,7 +15,8 @@ class ArticleProgressDao {
         columns: [
           ArticleProgress.userIdCol,
           ArticleProgress.topicIdCol,
-          ArticleProgress.articleIdCol
+          ArticleProgress.articleIdCol,
+          ArticleProgress.timeStampIdCol
         ],
         where:
             '''${ArticleProgress.topicIdCol} = ? AND ${ArticleProgress.articleIdCol} = ? AND ${ArticleProgress.userIdCol} = ?''',

@@ -10,7 +10,7 @@ class ArticleProgress {
   String userId;
   String topicId;
   String articleId;
-  String timeStampId;
+  DateTime timeStampId;
 
   ArticleProgress(
       {this.id, this.userId, this.topicId, this.articleId, this.timeStampId});
@@ -21,7 +21,7 @@ class ArticleProgress {
       userIdCol: userId,
       topicIdCol: topicId,
       articleIdCol: articleId,
-      timeStampIdCol: timeStampId
+      timeStampIdCol: timeStampId.millisecondsSinceEpoch,
     };
   }
 
@@ -31,7 +31,7 @@ class ArticleProgress {
             userId: map[userIdCol],
             topicId: map[topicIdCol],
             articleId: map[articleIdCol],
-            timeStampId: map[timeStampIdCol]);
+            timeStampId: DateTime.fromMillisecondsSinceEpoch(map[timeStampIdCol]));
 
   @override
   int get hashCode =>
