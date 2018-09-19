@@ -12,7 +12,6 @@ const Map<String, dynamic> testMap = {
   'answer': ['a', 'b', 'c', 'd'],
   'correct': null,
   'total': null,
-  'correctSequenceChoices': null,
   'choicesRightOrWrong': null
 };
 
@@ -124,23 +123,8 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
-                      setState(() {
-                        displayIcon = true;
-                      });
                     });
 
-                    // Calling the parent class for an end and to switch on to the next game
-                    new Future.delayed(const Duration(milliseconds: 2000), () {
-                      //TODO: Call this when all the items have been chosen
-                      widget.onEnd({
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
-                        'correctSequenceChoices': "$choice",
-                        'choicesRightOrWrong': rightOrWrong
-                      });
-                    });
                   } else if (clickedChoices.length == widget.input['answer'].length &&
                       widget.input['choices'] != null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
@@ -161,17 +145,6 @@ class CardListState extends State<CardList> {
                       });
                     });
 
-                    // Calling the parent class for an end and to switch on to the next game
-                    new Future.delayed(const Duration(milliseconds: 2000), () {
-                      //TODO: Call this when all the items have been chosen
-                      widget.onEnd({
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'answer': "${widget.input['answer']}",
-                        'choices': "${widget.input['choices']}",
-                        'choicesRightOrWrong': rightOrWrong
-                      });
-                    });
                   }
                 } else if (widget.optionsType == OptionCategory.oneAtATime) {
                   if (clicked[k] == ClickedStatus.no) {
@@ -193,18 +166,7 @@ class CardListState extends State<CardList> {
                       }
                     });
 
-                    // Calling the parent class for an end and to switch on to the next game
-                    new Future.delayed(const Duration(milliseconds: 2000), () {
-                      //TODO: Call this when all the items have been chosen
-                      widget.onEnd({
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'answer': "${widget.input['answer']}",
-                        'choices': "${widget.input['choices']}",
-                        'choicesRightOrWrong': rightOrWrong
-                      });
-                    });
-                  } else {}
+                  }
                 } else if (widget.optionsType == OptionCategory.pair) {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
@@ -242,18 +204,6 @@ class CardListState extends State<CardList> {
                         });
                       });
 
-                      // Calling the parent class for an end and to switch on to the next game
-                      new Future.delayed(const Duration(milliseconds: 2000),
-                          () {
-                        //TODO: Call this when all the items have been chosen
-                        widget.onEnd({
-                          'correct': correctChoices,
-                          'total': choice.length,
-                          'answer': "${widget.input['answer']}",
-                          'choices': "${widget.input['choices']}",
-                          'choicesRightOrWrong': rightOrWrong
-                        });
-                      });
                     }
                   }
                 }
@@ -282,10 +232,48 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new Column(
+      child: new Wrap(
+        children: <Widget> [
+          // Row for Displaying the Question text
+          new Row(
+            children: <Widget>[
+              new Text(widget.input['question'], style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),)
+            ],
+          ),
+
+          // Column for buttons
+          new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: cells),
+
+          // Row to display icon to call onEnd Widget
+          displayIcon == true ? new Center(
+            child: new Container(
+            height: 50.0,
+            width: 50.0,
+            decoration: new BoxDecoration(
+            border: new Border.all(
+              color: Colors.black,
+            ),
+            shape: BoxShape.circle,
+          ),
+          child: new IconButton(
+            icon: new Icon(Icons.check),
+            onPressed: (){
+                //TODO: Call this when all the items have been chosen
+                      widget.onEnd({
+                        'correct': correctChoices,
+                        'total': choice.length,
+                        'choices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
+                        'choicesRightOrWrong': rightOrWrong
+                      });
+            })
+          )) : new Container(),
+
+          ]),
+
     );
   }
 }
