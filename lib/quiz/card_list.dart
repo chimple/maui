@@ -4,6 +4,8 @@ import 'package:maui/components/quiz_button.dart';
 
 enum OptionCategory { oneAtATime, many, pair }
 
+enum ClickedStatus { no, yes, done }
+
 const Map<String, dynamic> testMap = {
   'question': 'Match the following according to the habitat of each animal',
   'choices': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"],
@@ -31,13 +33,14 @@ class CardList extends StatefulWidget {
 }
 
 class CardListState extends State<CardList> {
-  List<String> clicked = [],
-      choice = [],
+  List<String> choice = [],
       clickedChoices = [],
       shuffledChoices = [];
+  List<ClickedStatus> clicked = [];
   List<bool> rightOrWrong = [];
   bool displayIcon = false;
-  int count = 0, correctChoices = 0;
+  int correctChoices = 0;
+  bool displayResults;
 
   @override
   void initState() {
@@ -47,39 +50,31 @@ class CardListState extends State<CardList> {
   }
 
   void _initBoard() {
+    displayResults = widget.input['correct'] == null ? false : true;
+
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
-    if (widget.optionsType == OptionCategory.many) {
-      for (int i = 0; i < widget.input['answer'].length; i++) {
-        choice.add(widget.input['answer'].cast<String>()[i]);
-        shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
-      }
-      if (widget.input['choices'] != null) {
-        for (int i = 0; i < widget.input['choices'].length; i++) {
-          choice.add(widget.input['choices'].cast<String>()[i]);
-          shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
-        }
-      }
-    } else if (widget.optionsType == OptionCategory.oneAtATime) {
-      choice = shuffledChoices = widget.input['answer'];
-      for (int i = 0; i < widget.input['choices'].length; i++) {
-        choice.add(widget.input['choices']);
-        shuffledChoices.add(widget.input['choices']);
-      }
-    } else if (widget.optionsType == OptionCategory.pair) {
+
+    for (int i = 0; i < widget.input['answer'].length; i++) {
+      choice.add(widget.input['answer'].cast<String>()[i]);
+      shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
+    }
+    if (widget.input['choices'] != null &&
+            widget.optionsType == OptionCategory.many ||
+        widget.optionsType == OptionCategory.oneAtATime) {
       for (int i = 0; i < widget.input['choices'].length; i++) {
         choice.add(widget.input['choices'].cast<String>()[i]);
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
       }
     }
-
+  
     // Shuffling choices
     shuffledChoices.shuffle();
 
     // Array to keep track if a choice is clicked or not
-    clicked = choice.map((e) => "no").toList(growable: false);
+    clicked = choice.map((e) => ClickedStatus.no).toList(growable: false);
 
     // Array to keep track if choice is correct or incorrect
-    if (widget.input['correct'] == null) {
+    if (displayResults == false) {
       rightOrWrong = choice.map((i) => false).toList(growable: false);
     } else {
       for (var i = 0; i < widget.input['choicesRightOrWrong'].length; i++) {
@@ -89,40 +84,36 @@ class CardListState extends State<CardList> {
     print("Value of RightOrWrong Array after getting values - $rightOrWrong");
   }
 
-  Widget _buildItem(int index, String text, int k, double ht) {
+  Widget _buildItem(String text, int k, double ht) {
     // Universal Button for mapping keys, text/image to be shown, Button's present status and a function to perform desired actions
     return new Container(
         height: ht / 8.0,
         child: QuizButton(
-            key: new ValueKey<int>(index),
+            key: new ValueKey<int>(k),
             text: text,
-            buttonStatus: (widget.input['correct'] == null
-                ? (clicked[k] == "no"
+            buttonStatus: (displayResults == false
+                ? (clicked[k] == ClickedStatus.no
                     ? Status.notSelected
-                    : clicked[k] == "yes"
+                    : clicked[k] == ClickedStatus.yes
                         ? Status.disabled
                         : rightOrWrong[k] ? Status.correct : Status.incorrect)
                 : rightOrWrong[k] == true ? Status.correct : Status.incorrect),
             onPress: () {
               // changing value of clicked array to yes when button is clicked
-              if (widget.input['correct'] == null) {
+              if (displayResults == false) {
                 if (widget.optionsType == OptionCategory.many) {
                   setState(() {
-                    clicked[k] = "yes";
-                    if (clickedChoices.contains(text)) {
-                    } else {
+                    clicked[k] = ClickedStatus.yes;                    
                       clickedChoices.add(
-                          text); // storing the sequence in which the choices are clicked
-                      count++; // counter to check if the sequence is completed
-                    }
+                          text); // storing the sequence in which the choices are clicked       
                   });
 
-                  if (count == choice.length &&
+                  if (clickedChoices.length == choice.length &&
                       widget.input['choices'] == null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       for (int i = 0; i < clicked.length; i++) {
                         setState(() {
-                          clicked[i] = "done";
+                          clicked[i] = ClickedStatus.done;
                           displayIcon = true;
                         });
 
@@ -133,9 +124,9 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
-                       setState(() {
-                          displayIcon = true;                                              
-                        });
+                      setState(() {
+                        displayIcon = true;
+                      });
                     });
 
                     // Calling the parent class for an end and to switch on to the next game
@@ -150,12 +141,12 @@ class CardListState extends State<CardList> {
                         'choicesRightOrWrong': rightOrWrong
                       });
                     });
-                  } else if (count == widget.input['answer'].length &&
+                  } else if (clickedChoices.length == widget.input['answer'].length &&
                       widget.input['choices'] != null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       for (int i = 0; i < clicked.length; i++) {
                         setState(() {
-                          clicked[i] = "done";
+                          clicked[i] = ClickedStatus.done;
                         });
 
                         if (choice.contains(clickedChoices[i])) {
@@ -166,12 +157,12 @@ class CardListState extends State<CardList> {
                         }
                       }
                       setState(() {
-                          displayIcon = true;                                              
-                        });
+                        displayIcon = true;
+                      });
                     });
 
                     // Calling the parent class for an end and to switch on to the next game
-                    new Future.delayed(const Duration(milliseconds: 2000), () {                      
+                    new Future.delayed(const Duration(milliseconds: 2000), () {
                       //TODO: Call this when all the items have been chosen
                       widget.onEnd({
                         'correct': correctChoices,
@@ -183,19 +174,19 @@ class CardListState extends State<CardList> {
                     });
                   }
                 } else if (widget.optionsType == OptionCategory.oneAtATime) {
-                  if (clicked[k] == "no") {
+                  if (clicked[k] == ClickedStatus.no) {
                     setState(() {
                       clicked =
-                          choice.map((e) => "yes").toList(growable: false);
+                          choice.map((e) => ClickedStatus.yes).toList(growable: false);
                       clickedChoices.add(text);
                     });
 
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       setState(() {
                         clicked =
-                          choice.map((e) => "done").toList(growable: false);                          
-                      displayIcon = true;                                              
-                      });                      
+                            choice.map((e) => ClickedStatus.done).toList(growable: false);
+                        displayIcon = true;
+                      });
 
                       if (text == widget.input['answer']) {
                         correctChoices++;
@@ -215,22 +206,18 @@ class CardListState extends State<CardList> {
                     });
                   } else {}
                 } else if (widget.optionsType == OptionCategory.pair) {
-                  if (clicked[k] == "no") {
+                  if (clicked[k] == ClickedStatus.no) {
                     setState(() {
-                      clicked[k] = "yes";
-                      if (clickedChoices.contains(text)) {
-                      } else {
-                        clickedChoices.add(
+                      clicked[k] = ClickedStatus.yes;
+                      clickedChoices.add(
                             text); // storing the sequence in which the choices are clicked
-                        count++; // counter to check if the sequence is completed
-                      }
                     });
 
-                    if (count == choice.length) {
+                    if (clickedChoices.length == choice.length) {
                       new Future.delayed(const Duration(milliseconds: 300), () {
                         for (int i = 0; i < clickedChoices.length; i++) {
                           setState(() {
-                            clicked[i] = "done";
+                            clicked[i] = ClickedStatus.done;
                           });
 
                           int k = choice.indexOf(clickedChoices[i]);
@@ -250,22 +237,23 @@ class CardListState extends State<CardList> {
                             }
                           }
                         }
-                         setState(() {
-                          displayIcon = true;                                              
+                        setState(() {
+                          displayIcon = true;
                         });
                       });
 
                       // Calling the parent class for an end and to switch on to the next game
-                    new Future.delayed(const Duration(milliseconds: 2000), () {                      
-                      //TODO: Call this when all the items have been chosen
-                      widget.onEnd({
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'answer': "${widget.input['answer']}",
-                        'choices': "${widget.input['choices']}",
-                        'choicesRightOrWrong': rightOrWrong
+                      new Future.delayed(const Duration(milliseconds: 2000),
+                          () {
+                        //TODO: Call this when all the items have been chosen
+                        widget.onEnd({
+                          'correct': correctChoices,
+                          'total': choice.length,
+                          'answer': "${widget.input['answer']}",
+                          'choices': "${widget.input['choices']}",
+                          'choicesRightOrWrong': rightOrWrong
+                        });
                       });
-                    });
                     }
                   }
                 }
@@ -278,7 +266,7 @@ class CardListState extends State<CardList> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    int k = 0, j = 0;
+    int k = 0;
 
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
@@ -287,7 +275,7 @@ class CardListState extends State<CardList> {
     cells = shuffledChoices
         .map((e) => new Padding(
               padding: EdgeInsets.all(10.0),
-              child: _buildItem(j++, e, k++, size.height),
+              child: _buildItem(e, k++, size.height),
             ))
         .toList(growable: false);
 
