@@ -32,9 +32,7 @@ class CardList extends StatefulWidget {
 }
 
 class CardListState extends State<CardList> {
-  List<String> choice = [],
-      clickedChoices = [],
-      shuffledChoices = [];
+  List<String> choice = [], clickedChoices = [], shuffledChoices = [];
   List<ClickedStatus> clicked = [];
   List<bool> rightOrWrong = [];
   bool displayIcon = false;
@@ -65,7 +63,7 @@ class CardListState extends State<CardList> {
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
       }
     }
-  
+
     // Shuffling choices
     shuffledChoices.shuffle();
 
@@ -102,9 +100,9 @@ class CardListState extends State<CardList> {
               if (displayResults == false) {
                 if (widget.optionsType == OptionCategory.many) {
                   setState(() {
-                    clicked[k] = ClickedStatus.yes;                    
-                      clickedChoices.add(
-                          text); // storing the sequence in which the choices are clicked       
+                    clicked[k] = ClickedStatus.yes;
+                    clickedChoices.add(
+                        text); // storing the sequence in which the choices are clicked
                   });
 
                   if (clickedChoices.length == choice.length &&
@@ -124,8 +122,8 @@ class CardListState extends State<CardList> {
                         }
                       }
                     });
-
-                  } else if (clickedChoices.length == widget.input['answer'].length &&
+                  } else if (clickedChoices.length ==
+                          widget.input['answer'].length &&
                       widget.input['choices'] != null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       for (int i = 0; i < clicked.length; i++) {
@@ -144,20 +142,21 @@ class CardListState extends State<CardList> {
                         displayIcon = true;
                       });
                     });
-
                   }
                 } else if (widget.optionsType == OptionCategory.oneAtATime) {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
-                      clicked =
-                          choice.map((e) => ClickedStatus.yes).toList(growable: false);
+                      clicked = choice
+                          .map((e) => ClickedStatus.yes)
+                          .toList(growable: false);
                       clickedChoices.add(text);
                     });
 
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       setState(() {
-                        clicked =
-                            choice.map((e) => ClickedStatus.done).toList(growable: false);
+                        clicked = choice
+                            .map((e) => ClickedStatus.done)
+                            .toList(growable: false);
                         displayIcon = true;
                       });
 
@@ -165,14 +164,13 @@ class CardListState extends State<CardList> {
                         correctChoices++;
                       }
                     });
-
                   }
                 } else if (widget.optionsType == OptionCategory.pair) {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
                       clicked[k] = ClickedStatus.yes;
                       clickedChoices.add(
-                            text); // storing the sequence in which the choices are clicked
+                          text); // storing the sequence in which the choices are clicked
                     });
 
                     if (clickedChoices.length == choice.length) {
@@ -203,7 +201,6 @@ class CardListState extends State<CardList> {
                           displayIcon = true;
                         });
                       });
-
                     }
                   }
                 }
@@ -232,48 +229,49 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new Wrap(
-        children: <Widget> [
-          // Row for Displaying the Question text
-          new Row(
-            children: <Widget>[
-              new Text(widget.input['question'], style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),)
-            ],
-          ),
+      child: new Wrap(children: <Widget>[
+        // Row for Displaying the Question text
+        new Row(
+          children: <Widget>[
+            new Text(
+              widget.input['question'],
+              style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
 
-          // Column for buttons
-          new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: cells),
+        // Column for buttons
+        new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: cells),
 
-          // Row to display icon to call onEnd Widget
-          displayIcon == true ? new Center(
-            child: new Container(
-            height: 50.0,
-            width: 50.0,
-            decoration: new BoxDecoration(
-            border: new Border.all(
-              color: Colors.black,
-            ),
-            shape: BoxShape.circle,
-          ),
-          child: new IconButton(
-            icon: new Icon(Icons.check),
-            onPressed: (){
-                //TODO: Call this when all the items have been chosen
-                      widget.onEnd({
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
-                        'choicesRightOrWrong': rightOrWrong
-                      });
-            })
-          )) : new Container(),
-
-          ]),
-
+        // Row to display icon to call onEnd Widget
+        displayIcon == true
+            ? new Center(
+                child: new Container(
+                    height: 50.0,
+                    width: 50.0,
+                    decoration: new BoxDecoration(
+                      border: new Border.all(
+                        color: Colors.black,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: new IconButton(
+                        icon: new Icon(Icons.check),
+                        onPressed: () {
+                          //TODO: Call this when all the items have been chosen
+                          widget.onEnd({
+                            'correct': correctChoices,
+                            'total': choice.length,
+                            'choices': "${widget.input['choices']}",
+                            'answer': "${widget.input['answer']}",
+                            'choicesRightOrWrong': rightOrWrong
+                          });
+                        })))
+            : new Container(),
+      ]),
     );
   }
 }
