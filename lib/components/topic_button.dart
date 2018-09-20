@@ -9,13 +9,13 @@ class TopicButton extends StatefulWidget {
   final String image;
   final VoidCallback onPress;
   final String topicId;
-  final bool x;
+  final bool isDisplayingTopic;
 
   TopicButton({
     Key key,
     @required this.text,
     this.color,
-    this.x = false,
+    this.isDisplayingTopic = false,
     this.image,
     this.onPress,
     this.topicId,
@@ -46,7 +46,7 @@ class TopicButtonState extends State<TopicButton> {
               new Expanded(
                   flex: 1,
                   child: new QuizProgressTracker(topicId: widget.topicId)),
-              widget.x
+              widget.isDisplayingTopic
                   ? new Expanded(
                       flex: 1,
                       child:
