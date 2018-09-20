@@ -12,8 +12,7 @@ class DrawingScreen extends StatefulWidget {
   final String topicId;
   final String activityId;
   final String drawingId;
-  DrawingScreen({Key key, this.activityId, this.drawingId, this.topicId})
-      : super(key: key);
+  DrawingScreen({Key key, this.activityId, this.drawingId}) : super(key: key);
 
   @override
   DrawingScreenState createState() {
@@ -38,12 +37,14 @@ class DrawingScreenState extends State<DrawingScreen> {
 
   void _initData() async {
     _activity = await ActivityRepo().getActivity(widget.activityId);
-    User _user = AppStateContainer.of(context).state.loggedInUser;
-    print(await ActivityProgressRepo().insertActivityProgress(
-        _user.id,
-        widget.topicId,
-        widget.activityId,
-        (new DateTime.now().millisecondsSinceEpoch).toString()));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      User user = AppStateContainer.of(context).state.loggedInUser;
+      await ActivityProgressRepo().insertActivityProgress(
+          user.id,
+          _activity.topicId,
+          widget.activityId,
+          (new DateTime.now().millisecondsSinceEpoch).toString());
+    });
     setState(() {
       _isLoading = false;
     });

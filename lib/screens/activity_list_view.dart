@@ -67,7 +67,6 @@ class _ActivityListViewState extends State<ActivityListView> {
                     MaterialPageRoute<void>(builder: (BuildContext context) {
                   return DrawingScreen(
                     activityId: _dataActivity[i].id,
-                    topicId :  widget.topicId
                   );
                 })),
           );
