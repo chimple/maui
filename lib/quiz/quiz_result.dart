@@ -4,7 +4,6 @@ import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/quiz_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'quiz_pager.dart';
 import 'package:uuid/uuid.dart';
 import 'card_list.dart';
 
@@ -122,10 +121,6 @@ class QuizResultState extends State<QuizResult> {
           ),
         ),
         children: <Widget>[
-          // QuizPager.createQuiz(
-          //     quiz: widget.quizzes[_quizIndex],
-          //     input: widget.quizInputs[_quizIndex],
-          //     onEnd: null)
           new CardList(
             onEnd: null,
             optionsType: _optionsType(widget.quizzes[_quizIndex]),
