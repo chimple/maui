@@ -9,7 +9,6 @@ import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/repos/activity_progress_repo.dart';
 
 class DrawingScreen extends StatefulWidget {
-  final String topicId;
   final String activityId;
   final String drawingId;
   DrawingScreen({Key key, this.activityId, this.drawingId}) : super(key: key);
