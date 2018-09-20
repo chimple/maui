@@ -19,7 +19,6 @@ class ScoreScreen extends StatefulWidget {
   final User otherUser;
   final int myScore;
   final int otherScore;
-  final List<Widget> otherscore;
   final bool isGameOver;
 
   ScoreScreen(
@@ -52,7 +51,6 @@ class _ScoreScreenState extends State<ScoreScreen>
   User otherUser;
   int myScore;
   int otherScore;
-  List<Widget> otherscore;
   List<String> mystars = [];
   List<String> otherstars = [];
   bool flag = false;
@@ -97,7 +95,6 @@ class _ScoreScreenState extends State<ScoreScreen>
     myScore = widget.myScore;
     myUser = widget.myUser;
     otherScore = widget.otherScore;
-    otherscore = widget.otherscore;
     otherUser = widget.otherUser;
 
     for (var i = 0; i < 3; i++) {
@@ -179,7 +176,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         : _colors[1];
 
     print(
-        "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore...otherscore: $otherscore");
+        "gmaeName: $gameName...gameDisplay: $gameDisplay...myUser: $myUser...otherUser: $otherUser...myScore:$myScore...otherScore: $otherScore");
     List<Widget> scores = [
       new Expanded(
           flex: 1,
@@ -411,8 +408,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                         child: new Text(
                                             widget.isGameOver == true
                                                 ? Loca.of(context).gameOver
-                                                : Loca
-                                                    .of(context)
+                                                : Loca.of(context)
                                                     .waitingForTurn,
                                             style: new TextStyle(
                                                 fontSize: ht > wd
@@ -559,12 +555,10 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
-                                  AppStateContainer
-                                      .of(context)
+                                  AppStateContainer.of(context)
                                       .play('_audiotap.mp3');
                                   if (flag == true) {
-                                    Navigator
-                                        .of(context)
+                                    Navigator.of(context)
                                         .popUntil(ModalRoute.withName('/tab'));
                                   }
                                 }),
@@ -573,12 +567,10 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
-                                  AppStateContainer
-                                      .of(context)
+                                  AppStateContainer.of(context)
                                       .play('_audiotap.mp3');
                                   if (flag == true) {
-                                    Navigator
-                                        .of(context)
+                                    Navigator.of(context)
                                         .popUntil(ModalRoute.withName('/tab'));
                                   }
                                 }),

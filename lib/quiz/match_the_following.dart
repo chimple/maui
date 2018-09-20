@@ -56,6 +56,7 @@ class _MatchingGameState extends State<MatchingGame> {
       new Container(
         height: (mediaQueryData.size.height - 300.0) / 6,
         child: new QuizQuestion(
+          key: new Key("question"),
           text: widget.gameData["question"],
           // image: widget.gameData["image"],
         ),
@@ -73,6 +74,7 @@ class _MatchingGameState extends State<MatchingGame> {
             new Container(
               width: mediaQueryData.size.width / 3,
               child: new QuizButton(
+                key: new Key(k),
                 onPress: null,
                 text: k,
                 buttonStatus: (_selectedPairs[k] == widget.gameData["pairs"][k])
@@ -83,6 +85,7 @@ class _MatchingGameState extends State<MatchingGame> {
             new Container(
               width: mediaQueryData.size.width / 3,
               child: new QuizButton(
+                key: new Key(v),
                 onPress: null,
                 text: v,
                 buttonStatus: _checkForRightSideItemCorrectness(v)
@@ -145,6 +148,7 @@ class _MatchingGameState extends State<MatchingGame> {
                   new Expanded(
                     flex: 1,
                     child: new QuizQuestion(
+                      key: new Key("question"),
                       text: widget.gameData["question"],
                       // image: widget.gameData["image"],
                     ),
@@ -167,6 +171,7 @@ class _MatchingGameState extends State<MatchingGame> {
                               new Container(
                                 width: constraints.maxWidth / 3,
                                 child: new QuizButton(
+                                  key: new Key(_leftSideItems[index]),
                                   buttonStatus: (_rightSideDisabledItems
                                                   .length ==
                                               widget.gameData["pairs"].length &&
@@ -192,6 +197,7 @@ class _MatchingGameState extends State<MatchingGame> {
                               new Container(
                                 width: constraints.maxWidth / 3,
                                 child: new QuizButton(
+                                  key: new Key(_rightSideItems[index]) ,
                                   buttonStatus: (_rightSideDisabledItems
                                                   .length ==
                                               widget.gameData["pairs"].length &&
@@ -211,8 +217,12 @@ class _MatchingGameState extends State<MatchingGame> {
                                         ? "leftNotTapped"
                                         : _leftItemSelected);
                                     print(_rightSideItems[index]);
-                                    if (_leftItemSelected != '' && _leftSideDisabledItems.indexOf(_leftItemSelected) == -1) {
-                                      print("<><><><><><><><><><><><><><><><><><><><><><><><><><<>");
+                                    if (_leftItemSelected != '' &&
+                                        _leftSideDisabledItems
+                                                .indexOf(_leftItemSelected) ==
+                                            -1) {
+                                      print(
+                                          "<><><><><><><><><><><><><><><><><><><><><><><><><><<>");
                                       setState(() {
                                         _leftSideDisabledItems
                                             .add(_leftItemSelected);
