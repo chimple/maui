@@ -17,10 +17,10 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
   bool _isLoading = true;
   User user;
 
-  void _initData() async {
-    super.initState();
+  @override
+  void _initState() async {
     articleProgressTracker();
-    setState(() => _isLoading = false);
+    super.initState();
   }
 
    void articleProgressTracker() async {
@@ -31,15 +31,6 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
     });
     setState(() => _isLoading = false);
   }
-
-  
-
-  @override
-    void didChangeDependencies() {
-      // TODO: implement didChangeDependencies
-      super.didChangeDependencies();
-      _initData();
-    }
 
   @override
   Widget build(BuildContext context) {
