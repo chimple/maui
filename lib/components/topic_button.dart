@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/components/activity_progress_tracker.dart';
+import 'package:maui/components/article_progress_tracker.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
 
 class TopicButton extends StatefulWidget {
@@ -52,6 +53,12 @@ class TopicButtonState extends State<TopicButton> {
                       child:
                           new ActivityProgressTracker(topicId: widget.topicId))
                   : new Container(),
+               widget.isDisplayingTopic
+                  ? new Expanded(
+                      flex: 1,
+                      child:
+                          new ArticleProgressTracker(topicId: widget.topicId))
+                  : new Container(),    
               widget.image == null
                   ? new Expanded(
                       flex: 12,
