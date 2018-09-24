@@ -51,13 +51,15 @@ class CardListState extends State<CardList> {
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
 
+    if(widget.optionsType == OptionCategory.many || widget.optionsType == OptionCategory.pair)
+    {
     for (int i = 0; i < widget.input['answer'].length; i++) {
       choice.add(widget.input['answer'].cast<String>()[i]);
       shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
     }
+    }
     if (widget.input['choices'] != null &&
-            widget.optionsType == OptionCategory.many ||
-        widget.optionsType == OptionCategory.oneAtATime) {
+            widget.optionsType == OptionCategory.many || widget.optionsType == OptionCategory.oneAtATime) {
       for (int i = 0; i < widget.input['choices'].length; i++) {
         choice.add(widget.input['choices'].cast<String>()[i]);
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
@@ -78,7 +80,6 @@ class CardListState extends State<CardList> {
         rightOrWrong.add(widget.input['choicesRightOrWrong'][i]);
       }
     }
-    print("Value of RightOrWrong Array after getting values - $rightOrWrong");
   }
 
   Widget _buildItem(String text, int k, double ht) {
@@ -108,7 +109,7 @@ class CardListState extends State<CardList> {
                   if (clickedChoices.length == choice.length &&
                       widget.input['choices'] == null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
-                      for (int i = 0; i < clicked.length; i++) {
+                      for (int i = 0; i < choice.length; i++) {
                         setState(() {
                           clicked[i] = ClickedStatus.done;
                           displayIcon = true;
@@ -117,7 +118,7 @@ class CardListState extends State<CardList> {
                         // checking if the element at choice and clicked choice array are same and mapping rightOrWrong array to true for performing the desired action
                         if (choice[i] == clickedChoices[i]) {
                           setState(() {
-                            rightOrWrong[k] = true;
+                            rightOrWrong[i] = true;
                           });
                         }
                       }
@@ -126,15 +127,29 @@ class CardListState extends State<CardList> {
                           widget.input['answer'].length &&
                       widget.input['choices'] != null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
-                      for (int i = 0; i < clicked.length; i++) {
+                      for (int i = 0; i < choice.length; i++) {
                         setState(() {
                           clicked[i] = ClickedStatus.done;
-                        });
+                        });                        
+                      }
 
-                        if (choice.contains(clickedChoices[i])) {
+                      for(int i=0;i<clickedChoices.length;i++)
+                      {
+                        if ((widget.input['answer']).contains(clickedChoices[i])) {  
+                          int index = shuffledChoices.indexOf(clickedChoices[i]);
                           setState(() {
-                            rightOrWrong[k] = true;
+                            rightOrWrong[index] = true;
                             correctChoices++;
+                          });
+                        }
+                      }
+                      for(int i=0;i<(shuffledChoices).length;i++)
+                      {
+                        if(((widget.input['answer']).contains(shuffledChoices[i]))==false)
+                        {
+                          setState(() {
+                            rightOrWrong[i] = true;
+                            correctChoices++;                          
                           });
                         }
                       }
@@ -160,8 +175,11 @@ class CardListState extends State<CardList> {
                         displayIcon = true;
                       });
 
-                      if (text == widget.input['answer']) {
-                        correctChoices++;
+                      if (text == widget.input['answer'].first) {
+                        setState(() {
+                          rightOrWrong[k] = true;    
+                          correctChoices++;                      
+                        });                        
                       }
                     });
                   }
@@ -180,22 +198,37 @@ class CardListState extends State<CardList> {
                             clicked[i] = ClickedStatus.done;
                           });
 
-                          int k = choice.indexOf(clickedChoices[i]);
-                          if (k % 2 == 0) {
-                            if (clickedChoices[i + 1] == choice[k + 1]) {
+                          int index = choice.indexOf(clickedChoices[i]);
+                          if(i % 2 == 0 && index % 2 ==0){
+                            if (clickedChoices[i + 1] == choice[index + 1]) {
                               setState(() {
-                                rightOrWrong[k] = true;
+                                rightOrWrong[i] = true;
+                                correctChoices++;
+                              });
+                              }
+                            } else if(i%2 == 0 && index%2 ==1){
+                              if (clickedChoices[i + 1] == choice[index - 1]) {
+                              setState(() {
+                                rightOrWrong[i] = true;
                                 correctChoices++;
                               });
                             }
-                          } else if (k % 2 == 1) {
-                            if (clickedChoices[i - 1] == choice[k - 1]) {
+                            } else if(i%2 == 1 && index%2 == 0){
+                              if (clickedChoices[i - 1] == choice[index + 1]) {
                               setState(() {
-                                rightOrWrong[k] = true;
+                                rightOrWrong[i] = true;
+                                correctChoices++;
+                              });
+                            }
+                            } else if(i%2 == 1 && index%2 == 1){
+                             if (clickedChoices[i - 1] == choice[index - 1]) {
+                              setState(() {
+                                rightOrWrong[i] = true;
                                 correctChoices++;
                               });
                             }
                           }
+                          
                         }
                         setState(() {
                           displayIcon = true;
@@ -229,7 +262,8 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new Wrap(children: <Widget>[
+      child: new ListView(
+        children: <Widget>[
         // Row for Displaying the Question text
         new Row(
           children: <Widget>[
@@ -241,10 +275,12 @@ class CardListState extends State<CardList> {
         ),
 
         // Column for buttons
+        new Wrap(
+          children:<Widget>[
         new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: cells),
+            children: cells)]),
 
         // Row to display icon to call onEnd Widget
         displayIcon == true
