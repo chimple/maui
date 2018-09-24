@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/activity_repo.dart';
 import 'package:maui/db/entity/activity.dart';
-import 'package:maui/components/new_drawing.dart';
+import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/screens/drawing_list_screen.dart';
+import 'package:maui/repos/activity_progress_repo.dart';
 
 class DrawingScreen extends StatefulWidget {
   final String activityId;
-  DrawingScreen({Key key, this.activityId}) : super(key: key);
+  final String drawingId;
+  DrawingScreen({Key key, this.activityId, this.drawingId}) : super(key: key);
 
   @override
   DrawingScreenState createState() {
@@ -17,15 +22,28 @@ class DrawingScreen extends StatefulWidget {
 class DrawingScreenState extends State<DrawingScreen> {
   bool _isLoading = true;
   Activity _activity;
+  DrawingSelect _drawingSelect;
 
   @override
   void initState() {
     super.initState();
+    if (widget.drawingId != null)
+      _drawingSelect = DrawingSelect.id;
+    else
+      _drawingSelect = DrawingSelect.create;
     _initData();
   }
 
   void _initData() async {
     _activity = await ActivityRepo().getActivity(widget.activityId);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      User user = AppStateContainer.of(context).state.loggedInUser;
+      await ActivityProgressRepo().insertActivityProgress(
+          user.id,
+          _activity.topicId,
+          widget.activityId,
+          (new DateTime.now().millisecondsSinceEpoch).toString());
+    });
     setState(() {
       _isLoading = false;
     });
@@ -47,26 +65,11 @@ class DrawingScreenState extends State<DrawingScreen> {
           _activity.text,
           overflow: TextOverflow.ellipsis,
         ),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.playlist_play),
-            tooltip: 'Air it',
-            onPressed: () => print('1'),
-          ),
-          new IconButton(
-            icon: new Icon(Icons.playlist_add),
-            tooltip: 'Restitch it',
-            onPressed: () => print('2'),
-          ),
-          new IconButton(
-            icon: new Icon(Icons.playlist_add_check),
-            tooltip: 'Repair it',
-            onPressed: () => print('3'),
-          ),
-        ],
       ),
-      body: NewDrawing(
+      body: DrawingWrapper(
         activityId: widget.activityId,
+        drawingSelect: _drawingSelect,
+        drawingId: widget.drawingId,
       ),
     );
   }

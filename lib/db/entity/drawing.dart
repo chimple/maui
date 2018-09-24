@@ -3,7 +3,7 @@ class Drawing {
   static const idCol = 'id';
   static const activityIdCol = 'activityId';
   static const jsonCol = 'json';
-  static const thumbnailImageIdCol = 'thumbnailImageId';
+  static const thumbnailImageCol = 'thumbnailImage';
   static const createdAtCol = 'createdAt';
   static const userIdCol = 'userId';
   static const updatedAtCol = 'updatedAt';
@@ -12,7 +12,7 @@ class Drawing {
     idCol,
     activityIdCol,
     jsonCol,
-    thumbnailImageIdCol,
+    thumbnailImageCol,
     userIdCol,
     createdAtCol,
     updatedAtCol
@@ -21,7 +21,7 @@ class Drawing {
   String id;
   String activityId;
   String json;
-  String thumbnailImageId;
+  String thumbnailImage;
   String userId;
   DateTime createdAt;
   DateTime updatedAt;
@@ -30,7 +30,7 @@ class Drawing {
       {this.id,
       this.activityId,
       this.json,
-      this.thumbnailImageId,
+      this.thumbnailImage,
       this.createdAt,
       this.userId,
       this.updatedAt});
@@ -40,7 +40,7 @@ class Drawing {
       idCol: id,
       activityIdCol: activityId,
       jsonCol: json,
-      thumbnailImageIdCol: thumbnailImageId,
+      thumbnailImageCol: thumbnailImage,
       userIdCol: userId,
       createdAtCol: createdAt.millisecondsSinceEpoch,
       updatedAtCol: updatedAt.millisecondsSinceEpoch
@@ -52,7 +52,7 @@ class Drawing {
             id: map[idCol],
             activityId: map[activityIdCol],
             json: map[jsonCol],
-            thumbnailImageId: map[thumbnailImageIdCol],
+            thumbnailImage: map[thumbnailImageCol],
             userId: map[userIdCol],
             createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAtCol]),
             updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAtCol]));
@@ -62,7 +62,7 @@ class Drawing {
       id.hashCode ^
       activityId.hashCode ^
       json.hashCode ^
-      thumbnailImageId.hashCode ^
+      thumbnailImage.hashCode ^
       userId.hashCode ^
       createdAt.hashCode ^
       updatedAt.hashCode;
@@ -75,13 +75,13 @@ class Drawing {
           id == other.id &&
           activityId == other.activityId &&
           json == other.json &&
-          thumbnailImageId == other.thumbnailImageId &&
+          thumbnailImage == other.thumbnailImage &&
           userId == other.userId &&
           createdAt == other.createdAt &&
           updatedAt == other.updatedAt;
 
   @override
   String toString() {
-    return 'Drawing{id: $id, activityId: $activityId, json: $json, thumbnailImageId: $thumbnailImageId, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Drawing{id: $id, activityId: $activityId, json: $json, thumbnailImage: $thumbnailImage, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 }

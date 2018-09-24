@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/drawing_list.dart';
 import 'package:maui/components/topic_button.dart';
 import 'package:maui/db/entity/activity.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/screens/drawing_list_screen.dart';
 import '../repos/activity_repo.dart';
 import 'package:maui/screens/drawing_screen.dart';
 
@@ -59,18 +61,19 @@ class _ActivityListViewState extends State<ActivityListView> {
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
         crossAxisCount: media.size.height > media.size.width ? 3 : 2,
-        children: new List.generate(_dataActivity.length, (i) {
-          return TopicButton(
-            text: "${_dataActivity[i].text}",
-            image: "${_dataActivity[i].image}",
-            onPress: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return DrawingScreen(
-                    activityId: _dataActivity[i].id,
-                  );
-                })),
-          );
-        }),
+        children: _dataActivity
+            .map((a) => TopicButton(
+                  text: a.text,
+                  image: a.image,
+                  onPress: () => Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                        return DrawingListScreen(
+                          activityId: a.id,
+                        );
+                      })),
+                ))
+            .toList(growable: false),
       ),
     );
   }
