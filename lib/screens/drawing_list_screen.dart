@@ -59,6 +59,18 @@ class DrawingListScreenState extends State<DrawingListScreen> {
             _activity.text,
             overflow: TextOverflow.ellipsis,
           ),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.add_circle),
+              tooltip: 'Create new drawing',
+              onPressed: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return DrawingScreen(
+                      activityId: widget.activityId,
+                    );
+                  })),
+            )
+          ],
         ),
         body: DrawingList(
           drawings: _drawings,

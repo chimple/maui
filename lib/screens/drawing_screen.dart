@@ -30,7 +30,7 @@ class DrawingScreenState extends State<DrawingScreen> {
     if (widget.drawingId != null)
       _drawingSelect = DrawingSelect.id;
     else
-      _drawingSelect = DrawingSelect.latest;
+      _drawingSelect = DrawingSelect.create;
     _initData();
   }
 
@@ -65,27 +65,6 @@ class DrawingScreenState extends State<DrawingScreen> {
           _activity.text,
           overflow: TextOverflow.ellipsis,
         ),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.add_circle),
-            tooltip: 'Create new drawing',
-            onPressed: () =>
-                setState(() => _drawingSelect = DrawingSelect.create),
-          ),
-          new IconButton(
-            icon: new Icon(Icons.view_list),
-            tooltip: 'View all drawings',
-            onPressed: () {
-              _drawingSelect = DrawingSelect.none;
-              Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (BuildContext context) {
-                return DrawingListScreen(
-                  activityId: widget.activityId,
-                );
-              }));
-            },
-          ),
-        ],
       ),
       body: DrawingWrapper(
         activityId: widget.activityId,
