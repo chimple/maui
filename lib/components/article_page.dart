@@ -1,3 +1,4 @@
+import 'package:maui/components/videoplayer.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/article_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -38,6 +39,7 @@ class ArticlePage extends StatefulWidget {
 class _ArticlePageState extends State<ArticlePage> {
   PlayerState playerState;
   User user;
+  var top = 0.0;
 
   @override
   void initState() {
@@ -49,8 +51,8 @@ class _ArticlePageState extends State<ArticlePage> {
   void articleProgressTracker() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       user = AppStateContainer.of(context).state.loggedInUser;
-      await ArticleProgressRepo().insertArticleProgress(Uuid().v4(),
-          user.id, widget.topicId, widget.articleId);
+      await ArticleProgressRepo().insertArticleProgress(
+          Uuid().v4(), user.id, widget.topicId, widget.articleId);
     });
   }
 
@@ -69,83 +71,157 @@ class _ArticlePageState extends State<ArticlePage> {
   @override
   Widget build(BuildContext context) {
     _ctx = context;
-    return new LayoutBuilder(builder: (context, constraints) {
-      print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
-      return Material(
-        type: MaterialType.transparency,
-        child: new Container(
-          width: constraints.maxWidth,
-          height: constraints.maxHeight,
-          decoration: new BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Colors.white,
-            borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
-          ),
-          child: new Flex(
-            direction: Axis.vertical,
-            children: <Widget>[
-              Expanded(
-                flex: 6,
-                child: new Container(
-                  width: constraints.maxWidth * 0.992,
-                  height: constraints.maxHeight * 0.732,
-                  color: Colors.red,
-                  child: FittedBox(
-                    child: new Image.asset(
-                      widget.image,
-                      fit: BoxFit.cover,
-                    ),
+    MediaQueryData media = MediaQuery.of(context);
+
+    var size = media.size;
+
+    List<String> choices = [
+      "Cat",
+      "Sheep",
+      "lion",
+      "Cow" "shshs",
+      "udsjhjd",
+      "hdjajdh",
+      "hello",
+      "boss",
+      "scroll"
+    ];
+    print("video and audio ${widget.video} and ${widget.audio}");
+    return Scaffold(
+      bottomNavigationBar: Container(
+        height: top == 0.0 ? 100.0 : 100.0,
+        child: new Material(
+          color: Colors.orange,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+// controller: tabController,
+//             tabs: <Widget>[
+            children: [
+              new Tab(
+                child: new IconButton(
+                  icon: new Icon(
+                    Icons.arrow_back,
+                    semanticLabel: "previous",
                   ),
                 ),
               ),
-              widget.audio != null
-                  ? Expanded(
-                      flex: 1,
-                      child: new RawMaterialButton(
-                        shape: new CircleBorder(),
-                        fillColor: Colors.white,
-                        splashColor: Colors.teal,
-                        highlightColor: Colors.teal.withOpacity(0.5),
-                        elevation: 10.0,
-                        highlightElevation: 5.0,
-                        onPressed: () {
-                          if (playerState == PlayerState.stopped ||
-                              playerState == PlayerState.playing) {
-                            AppStateContainer.of(context).pauseArticleAudio();
-                            setState(() {
-                              playerState = PlayerState.paused;
-                            });
-                          } else {
-                            AppStateContainer.of(context)
-                                .playArticleAudio(widget.audio, onComplete);
-                            setState(() {
-                              playerState = PlayerState.playing;
-                            });
-                          }
-                        },
-                        child: new Icon(
-                          (playerState == PlayerState.stopped ||
-                                  playerState == PlayerState.playing)
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          color: Colors.purple,
-                          size: 40.0,
-                        ),
-                      ),
-                    )
-                  : new Container(),
-              Expanded(
-                flex: 3,
-                child: new Container(
-                    color: Colors.grey,
-                    child: new Markdown(
-                      data: widget.text,
-                    )),
+//              new Tab(
+//                child: Hud(
+//                    user: widget.gameConfig.myUser,
+//                    height: media.size.height / 8,
+//                    gameMode: widget.gameMode,
+//                    playTime: playTime,
+//                    onEnd: widget.onGameEnd,
+//                    progress:
+//                    widget.gameConfig.amICurrentPlayer ? _myProgress : null,
+//                    start: false,
+//                    score: 10,
+//                    backgroundColor: Colors.red,
+//                    foregroundColor: Colors.blue),
+//              ),
+              new Tab(
+                child: new Icon(Icons.arrow_forward),
               ),
             ],
           ),
         ),
-      );
-    });
+      ),
+      body: new NotificationListener(
+        onNotification: (v) {
+          if (v is ScrollUpdateNotification) {
+            setState(() => top -= v.scrollDelta / 4);
+          }
+        },
+        child:
+// Stack(children: [
+//          new Positioned(
+//            top: top,
+//            child: new ConstrainedBox(
+//              constraints: new BoxConstraints(maxHeight: 300.0),
+//              child: new Image.asset('assets/images/pattern.jpg'),
+//            ),
+//          ),
+            new CustomScrollView(
+          slivers: <Widget>[
+            new SliverAppBar(
+              titleSpacing: 0.0,
+              elevation: 0.0,
+              bottom: new PreferredSize(
+                  child: Container(
+                    // width: size.width,
+                    height: size.height / 7,
+                  ),
+                  preferredSize: Size.fromHeight(
+                    size.height / 7,
+                  )),
+              backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              expandedHeight: size.height / 2,
+              pinned: true,
+              floating: false,
+              // snap: true,
+
+              flexibleSpace: new FlexibleSpaceBar(
+                centerTitle: true,
+                background: new Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+//                        ? new Image.asset(
+//                            "${widget.image}",
+//                            fit: BoxFit.fitWidth,
+////                        height: 500.0,
+//                          )
+//                        :
+                    VideoApp(
+                      gamename: "bingo",
+                    ),
+
+                    // This gradient ensures that the toolbar icons are distinct
+
+                    // against the background image.
+
+                    const DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(0.0, -1.0),
+                          end: Alignment(0.0, -0.4),
+                          colors: <Color>[Color(0x60000000), Color(0x00000000)],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            new SliverList(
+//              viewportFraction: 1.0,
+              delegate: new SliverChildListDelegate(<Widget>[
+                Container(
+                    decoration: new BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: const Radius.circular(30.0),
+                          topRight: const Radius.circular(40.0)),
+                    ),
+                    child: Column(
+                      children: [
+//                        _Markdown(),
+                        new MarkdownBody(
+                          data: "${widget.text}",
+                        ),
+                        new MarkdownBody(data: "${widget.text}"),
+                        new MarkdownBody(data: "${widget.text}"),
+                        new MarkdownBody(data: "${widget.text}"),
+                        new MarkdownBody(data: "${widget.text}"),
+                        new MarkdownBody(data: "${widget.text}"),
+                        new MarkdownBody(data: "${widget.text}"),
+                      ],
+                    )),
+              ]),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
