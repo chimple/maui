@@ -18,9 +18,9 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
   User user;
 
   @override
-  void _initState() async {
-    articleProgressTracker();
+  void initState() async {
     super.initState();
+    articleProgressTracker();
   }
 
    void articleProgressTracker() async {
