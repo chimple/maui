@@ -32,6 +32,19 @@ class ArticleProgressDao {
     return null;
   }
 
+  Future<int> getArticleProgressStatusByTopicIdAndUserId(
+      String topicId, String userId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> articlesAttempted = await db.query(ArticleProgress.table,
+        columns: [ArticleProgress.articleIdCol],
+        where:
+            '''${ArticleProgress.topicIdCol} = ? AND ${ArticleProgress.userIdCol} = ?''',
+        whereArgs: [topicId, userId]);
+
+    return articlesAttempted.length;
+  }
+
   Future<void> insertArticleProgress(ArticleProgress articleProgress,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
