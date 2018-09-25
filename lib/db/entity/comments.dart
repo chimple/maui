@@ -1,20 +1,17 @@
 class Comments {
   static const table = 'comments';
   static const tileIdCol = 'tileId';
-  static const userIdCol = 'userId';
   static const commentCol = 'comment';
   static const timeStampCol = 'timeStamp';
   static const commentingUserIdCol = 'commentingUserId';
 
   String tileId;
-  String userId;
   String comment;
   String timeStamp;
   String commentingUserId;
 
   Comments({
     this.tileId,
-    this.userId,
     this.comment,
     this.timeStamp,
     this.commentingUserId,
@@ -23,7 +20,6 @@ class Comments {
   Map<String, dynamic> toMap() {
     return {
       tileIdCol: tileId,
-      userIdCol: userId,
       commentCol: comment,
       timeStampCol: timeStamp,
       commentingUserIdCol: commentingUserId,
@@ -33,7 +29,6 @@ class Comments {
   Comments.fromMap(Map<String, dynamic> map)
       : this(
           tileId: map[tileIdCol],
-          userId: map[userIdCol],
           comment: map[commentCol],
           timeStamp: map[timeStampCol],
           commentingUserId: map[commentingUserIdCol],
@@ -42,7 +37,6 @@ class Comments {
   @override
   int get hashCode =>
       tileId.hashCode ^
-      userId.hashCode ^
       comment.hashCode ^
       timeStamp.hashCode ^
       commentingUserId.hashCode;
@@ -53,13 +47,12 @@ class Comments {
       other is Comments &&
           runtimeType == other.runtimeType &&
           tileId == other.tileId &&
-          userId == other.userId &&
           comment == other.comment &&
           timeStamp == other.timeStamp &&
           commentingUserId == other.commentingUserId;
 
   @override
   String toString() {
-    return 'Comments{tileId: $tileId, userId: $userId, comment: $comment, timeStamp: $timeStamp, commentingUserId: $commentingUserId}';
+    return 'Comments{tileId: $tileId, comment: $comment, timeStamp: $timeStamp, commentingUserId: $commentingUserId}';
   }
 }
