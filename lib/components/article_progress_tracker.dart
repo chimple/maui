@@ -18,7 +18,7 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
   User user;
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     articleProgressTracker();
   }
@@ -28,8 +28,8 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
       user = AppStateContainer.of(context).state.loggedInUser;
       _articleProgress = await ArticleProgressRepo()
         .getArticleProgressStatus(widget.topicId, user.id);
+        setState(() => _isLoading = false);
     });
-    setState(() => _isLoading = false);
   }
 
   @override
@@ -37,7 +37,7 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
     if (_isLoading == true) {
       return new Container(
         child: new LinearProgressIndicator(
-          value: 0.0,
+          value: null,
           backgroundColor: Colors.green,
         ),
       );
