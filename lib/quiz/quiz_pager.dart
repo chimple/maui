@@ -36,31 +36,31 @@ class QuizPager extends StatefulWidget {
   static Widget createQuiz(
       {Quiz quiz, Map<String, dynamic> input, Function onEnd}) {
     switch (quiz.quizType) {
-      case QuizType.multipleChoice:
+      case QuizType.oneAtAtime:
         return Multiplechoice(
           onEnd: onEnd,
           input: input,
         );
         break;
-      case QuizType.matchTheFollowing:
+      case QuizType.pair:
         return MatchingGame(
           onEnd: onEnd,
           gameData: input,
         );
         break;
-      case QuizType.trueOrFalse:
+      case QuizType.oneAtAtime:
         return TrueOrFalse(
           onEnd: onEnd,
           input: input,
         );
         break;
-      case QuizType.grouping:
+      case QuizType.many:
         return GroupingQuiz(
           onEnd: onEnd,
           input: input,
         );
         break;
-      case QuizType.sequence:
+      case QuizType.many:
         return SequenceQuiz(
           onEnd: onEnd,
           input: input,

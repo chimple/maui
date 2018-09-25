@@ -51,15 +51,16 @@ class CardListState extends State<CardList> {
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
 
-    if(widget.optionsType == OptionCategory.many || widget.optionsType == OptionCategory.pair)
-    {
-    for (int i = 0; i < widget.input['answer'].length; i++) {
-      choice.add(widget.input['answer'].cast<String>()[i]);
-      shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
-    }
+    if (widget.optionsType == OptionCategory.many ||
+        widget.optionsType == OptionCategory.pair) {
+      for (int i = 0; i < widget.input['answer'].length; i++) {
+        choice.add(widget.input['answer'].cast<String>()[i]);
+        shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
+      }
     }
     if (widget.input['choices'] != null &&
-            widget.optionsType == OptionCategory.many || widget.optionsType == OptionCategory.oneAtATime) {
+            widget.optionsType == OptionCategory.many ||
+        widget.optionsType == OptionCategory.oneAtATime) {
       for (int i = 0; i < widget.input['choices'].length; i++) {
         choice.add(widget.input['choices'].cast<String>()[i]);
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
@@ -102,8 +103,10 @@ class CardListState extends State<CardList> {
                 if (widget.optionsType == OptionCategory.many) {
                   setState(() {
                     clicked[k] = ClickedStatus.yes;
-                    clickedChoices.add(
-                        text); // storing the sequence in which the choices are clicked
+                    if ((clickedChoices.contains(text)) == false) {
+                      clickedChoices.add(
+                          text); // storing the sequence in which the choices are clicked
+                    }
                   });
 
                   if (clickedChoices.length == choice.length &&
@@ -130,26 +133,27 @@ class CardListState extends State<CardList> {
                       for (int i = 0; i < choice.length; i++) {
                         setState(() {
                           clicked[i] = ClickedStatus.done;
-                        });                        
+                        });
                       }
 
-                      for(int i=0;i<clickedChoices.length;i++)
-                      {
-                        if ((widget.input['answer']).contains(clickedChoices[i])) {  
-                          int index = shuffledChoices.indexOf(clickedChoices[i]);
+                      for (int i = 0; i < clickedChoices.length; i++) {
+                        if ((widget.input['answer'])
+                            .contains(clickedChoices[i])) {
+                          int index =
+                              shuffledChoices.indexOf(clickedChoices[i]);
                           setState(() {
                             rightOrWrong[index] = true;
                             correctChoices++;
                           });
                         }
                       }
-                      for(int i=0;i<(shuffledChoices).length;i++)
-                      {
-                        if(((widget.input['answer']).contains(shuffledChoices[i]))==false)
-                        {
+                      for (int i = 0; i < (shuffledChoices).length; i++) {
+                        if (((widget.input['answer'])
+                                .contains(shuffledChoices[i])) ==
+                            false) {
                           setState(() {
                             rightOrWrong[i] = true;
-                            correctChoices++;                          
+                            correctChoices++;
                           });
                         }
                       }
@@ -177,9 +181,9 @@ class CardListState extends State<CardList> {
 
                       if (text == widget.input['answer'].first) {
                         setState(() {
-                          rightOrWrong[k] = true;    
-                          correctChoices++;                      
-                        });                        
+                          rightOrWrong[k] = true;
+                          correctChoices++;
+                        });
                       }
                     });
                   }
@@ -187,8 +191,9 @@ class CardListState extends State<CardList> {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
                       clicked[k] = ClickedStatus.yes;
-                      clickedChoices.add(
-                          text); // storing the sequence in which the choices are clicked
+                      if ((clickedChoices.contains(text)) == false)
+                        clickedChoices.add(
+                            text); // storing the sequence in which the choices are clicked
                     });
 
                     if (clickedChoices.length == choice.length) {
@@ -199,36 +204,35 @@ class CardListState extends State<CardList> {
                           });
 
                           int index = choice.indexOf(clickedChoices[i]);
-                          if(i % 2 == 0 && index % 2 ==0){
+                          if (i % 2 == 0 && index % 2 == 0) {
                             if (clickedChoices[i + 1] == choice[index + 1]) {
                               setState(() {
                                 rightOrWrong[i] = true;
                                 correctChoices++;
                               });
-                              }
-                            } else if(i%2 == 0 && index%2 ==1){
-                              if (clickedChoices[i + 1] == choice[index - 1]) {
+                            }
+                          } else if (i % 2 == 0 && index % 2 == 1) {
+                            if (clickedChoices[i + 1] == choice[index - 1]) {
                               setState(() {
                                 rightOrWrong[i] = true;
                                 correctChoices++;
                               });
                             }
-                            } else if(i%2 == 1 && index%2 == 0){
-                              if (clickedChoices[i - 1] == choice[index + 1]) {
+                          } else if (i % 2 == 1 && index % 2 == 0) {
+                            if (clickedChoices[i - 1] == choice[index + 1]) {
                               setState(() {
                                 rightOrWrong[i] = true;
                                 correctChoices++;
                               });
                             }
-                            } else if(i%2 == 1 && index%2 == 1){
-                             if (clickedChoices[i - 1] == choice[index - 1]) {
+                          } else if (i % 2 == 1 && index % 2 == 1) {
+                            if (clickedChoices[i - 1] == choice[index - 1]) {
                               setState(() {
                                 rightOrWrong[i] = true;
                                 correctChoices++;
                               });
                             }
                           }
-                          
                         }
                         setState(() {
                           displayIcon = true;
@@ -262,8 +266,7 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new ListView(
-        children: <Widget>[
+      child: new ListView(children: <Widget>[
         // Row for Displaying the Question text
         new Row(
           children: <Widget>[
@@ -275,12 +278,12 @@ class CardListState extends State<CardList> {
         ),
 
         // Column for buttons
-        new Wrap(
-          children:<Widget>[
-        new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: cells)]),
+        new Wrap(children: <Widget>[
+          new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: cells)
+        ]),
 
         // Row to display icon to call onEnd Widget
         displayIcon == true
@@ -297,6 +300,13 @@ class CardListState extends State<CardList> {
                     child: new IconButton(
                         icon: new Icon(Icons.check),
                         onPressed: () {
+                          setState(() {
+                            choice = [];
+                            clickedChoices = [];
+                            shuffledChoices = [];
+                            clicked = [];
+                            rightOrWrong = [];
+                          });
                           //TODO: Call this when all the items have been chosen
                           widget.onEnd({
                             'correct': correctChoices,
