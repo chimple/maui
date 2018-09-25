@@ -80,44 +80,44 @@ class _HomePageViewState extends State<HomePageView> {
                       ),
                     ),
                   ),
-                  new Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: new RaisedButton(
-                        shape: new RoundedRectangleBorder(
-                            side: new BorderSide(
-                                color: Colors.brown,
-                                width: 1.0,
-                                style: BorderStyle.solid),
-                            borderRadius: new BorderRadius.circular(20.0)),
-                        padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                        child: new Row(
-                          children: <Widget>[
-                            new Expanded(
-                              flex: 1,
-                              child: new Icon(
-                                Icons.arrow_downward,
-                                size: 30.0,
-                                color: Colors.red,
-                              ),
-                            ),
-                            new Expanded(
-                              flex: 1,
-                              child: new Text(
-                                "0",
-                                style: new TextStyle(fontSize: 30.0),
-                              ),
-                            )
-                          ],
-                        ),
-                        elevation: 5.0,
-                        onPressed: () {
-                          print("disliked");
-                        },
-                      ),
-                    ),
-                  ),
+                  // new Expanded(
+                  //   flex: 1,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(right: 8.0),
+                  //     child: new RaisedButton(
+                  //       shape: new RoundedRectangleBorder(
+                  //           side: new BorderSide(
+                  //               color: Colors.brown,
+                  //               width: 1.0,
+                  //               style: BorderStyle.solid),
+                  //           borderRadius: new BorderRadius.circular(20.0)),
+                  //       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+                  //       child: new Row(
+                  //         children: <Widget>[
+                  //           new Expanded(
+                  //             flex: 1,
+                  //             child: new Icon(
+                  //               Icons.arrow_downward,
+                  //               size: 30.0,
+                  //               color: Colors.red,
+                  //             ),
+                  //           ),
+                  //           new Expanded(
+                  //             flex: 1,
+                  //             child: new Text(
+                  //               "0",
+                  //               style: new TextStyle(fontSize: 30.0),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //       elevation: 5.0,
+                  //       onPressed: () {
+                  //         print("disliked");
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   new Expanded(
                     flex: 2,
                     child: new RaisedButton(
