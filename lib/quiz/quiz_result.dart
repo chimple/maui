@@ -33,16 +33,12 @@ class QuizResultState extends State<QuizResult> {
   bool extentionTile = false;
 
   OptionCategory _optionsType(Quiz quiz) {
-    if (quiz.type == "trueOrFalse") {
+    if (quiz.optionsType == "oneAtAtime") {
       return OptionCategory.oneAtATime;
-    } else if (quiz.type == "matchTheFollowing") {
+    } else if (quiz.optionsType == "pair") {
       return OptionCategory.pair;
-    } else if (quiz.type == "grouping") {
+    } else if (quiz.optionsType == "many") {
       return OptionCategory.many;
-    } else if (quiz.type == "sequence") {
-      return OptionCategory.many;
-    } else {
-      return OptionCategory.oneAtATime;
     }
   }
 
@@ -218,7 +214,7 @@ class QuizResultState extends State<QuizResult> {
             Uuid().v4(),
             _user.id,
             quizzesMapList[0].topicId,
-            quizzesMapList[0].type,
+            quizzesMapList[0].optionsType,
             quizInputsMapList[0]["correct"],
             quizInputsMapList[0]["total"]));
       }

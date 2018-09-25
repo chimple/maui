@@ -12,7 +12,7 @@ class QuizDao {
           Quiz.idCol,
           Quiz.topicIdCol,
           Quiz.levelCol,
-          Quiz.typeCol,
+          Quiz.optionsTypeCol,
           Quiz.contentCol
         ],
         where: "${Quiz.idCol} = ?",
@@ -30,7 +30,7 @@ class QuizDao {
           Quiz.idCol,
           Quiz.topicIdCol,
           Quiz.levelCol,
-          Quiz.typeCol,
+          Quiz.optionsTypeCol,
           Quiz.contentCol
         ],
         where: "${Quiz.topicIdCol} = ?",
