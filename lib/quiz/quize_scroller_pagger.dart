@@ -25,8 +25,9 @@ class Quizscroller_pagger extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Widget huda;
+  final ralation;
 
-  Quizscroller_pagger({Key key, this.input, this.onEnd, this.huda})
+  Quizscroller_pagger({Key key, this.input, this.onEnd, this.huda,this.ralation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -76,7 +77,7 @@ class Quizscroller_paggerState extends State<Quizscroller_pagger>
     print("thius..... is....expandheight is.....$expheight");
 
 
-    print("hello this what i am trying to send to that....::${widget.input['image']}");
+    print("hello this what i am trying to send to that....::${widget.huda}");
     var size = media.size;
 
     List<String> choices = [
@@ -205,7 +206,7 @@ class Quizscroller_paggerState extends State<Quizscroller_pagger>
                                       topRight: const Radius.circular(40.0)),
                                 ),
                                 child: 
-                                CardList(input:widget.input,onEnd:widget.onEnd,optionsType:OptionCategory.oneAtATime),
+                                CardList(input:widget.input,onEnd:widget.onEnd,optionsType:widget.ralation),
                                 
                                 // new Column(
                                 //   mainAxisAlignment: MainAxisAlignment.start,
