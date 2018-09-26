@@ -11,18 +11,25 @@ class HomeDao {
       Home.table,
       columns: [
         Home.tileIdCol,
-        Home.disLikesCol,
-        Home.articleIdCol,
-        Home.likesCol,
-        Home.topicIdCol,
-        Home.quizIdCol,
+        Home.typeCol,
+        Home.typeCol,
         Home.userIdCol,
-        Home.activityIdCol
       ],
     );
     if (maps.length > 0) {
       return maps.map((el) => new Home.fromMap(el)).toList(growable: false);
     }
     return null;
+  }
+
+  Future<Null> insertAHomeTile(Home home, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.insert(Home.table, home.toMap());
+  }
+
+  Future<Null> deleteAHomeTile(Home home, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.delete(Home.table,
+        where: ''' ${Home.tileIdCol} = ? ''', whereArgs: [home.tileId]);
   }
 }

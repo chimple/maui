@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class HomePageView extends StatefulWidget {
+  const HomePageView();
   @override
   _HomePageViewState createState() => new _HomePageViewState();
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  _HomePageViewState();
   @override
   Widget build(BuildContext context) {
     return new RefreshIndicator(
