@@ -7,7 +7,7 @@ import 'package:maui/db/entity/quiz.dart';
 import 'match_the_following.dart';
 import 'multiple_choice.dart';
 import 'grouping_quiz.dart';
-import 'quize_scroller_pagger.dart';
+import 'quiz_scroller_pagger.dart';
 import 'true_or_false.dart';
 import 'sequence.dart';
 import 'quiz_result.dart';
