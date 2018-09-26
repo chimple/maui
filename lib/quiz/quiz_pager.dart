@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:maui/components/hud.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/quiz_repo.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'match_the_following.dart';
 import 'multiple_choice.dart';
 import 'grouping_quiz.dart';
+import 'quize_scroller_pagger.dart';
 import 'true_or_false.dart';
 import 'sequence.dart';
 import 'quiz_result.dart';
@@ -16,9 +18,13 @@ class QuizPager extends StatefulWidget {
   Function onEnd;
   Function onTurn;
   int iteration;
-  GameConfig gameConfig;
+ GameConfig gameConfig;
+ GameMode gameMode;
   bool isRotated;
-
+ double _myProgress = 0.0;
+   double _otherProgress = 0.0;
+   int playTime = 10000;
+   Function onGameEnd;
   QuizPager(
       {key,
       this.onScore,
@@ -34,36 +40,42 @@ class QuizPager extends StatefulWidget {
   State<StatefulWidget> createState() => new QuizPagerState();
 
   static Widget createQuiz(
-      {Quiz quiz, Map<String, dynamic> input, Function onEnd}) {
+      {Quiz quiz, Map<String, dynamic> input, Function onEnd, Size size, Widget huda}) {
+       
     switch (quiz.quizType) {
       case QuizType.multipleChoice:
-        return Multiplechoice(
+        return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
+          huda: huda,
         );
         break;
       case QuizType.matchTheFollowing:
-        return MatchingGame(
+        return Quizscroller_pagger(
           onEnd: onEnd,
-          gameData: input,
+          input: input,
+          huda: huda,
         );
         break;
       case QuizType.trueOrFalse:
-        return TrueOrFalse(
+        return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
+          huda: huda,
         );
         break;
       case QuizType.grouping:
-        return GroupingQuiz(
+        return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
+          huda: huda,
         );
         break;
       case QuizType.sequence:
-        return SequenceQuiz(
+         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
+          huda: huda,
         );
         break;
     }
@@ -103,6 +115,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new Center(
           child: new SizedBox(
@@ -114,8 +127,86 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     if (_currentQuiz < _quizzes.length) {
       Quiz quiz = _quizzes[_currentQuiz];
       final input = _quizInputs[_currentQuiz];
+      var size=media.size;
       print(input);
-      return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd);
+      final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
+    final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
+      Widget huda= Container(
+       
+        width:  widget.gameConfig.gameDisplay ==
+                                    GameDisplay.localTurnByTurn ||
+                                widget.gameConfig.gameDisplay ==
+                                    GameDisplay.networkTurnByTurn?400.0:120.0,
+        height: 140.0,
+           decoration: new BoxDecoration(
+                                  color: Colors.orange,
+                                  borderRadius: const BorderRadius.all(const Radius.circular(40.0)
+                                       ),
+                                ),
+        // height: 100.0,
+        child: Stack(
+          children: [Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Hud(
+                  user: widget.gameConfig.myUser,
+                  height: media.size.height / 10,
+                  gameMode: widget.gameMode,
+                  playTime: widget.playTime,
+                  onEnd: widget.onGameEnd,
+                  progress: widget.gameConfig.amICurrentPlayer ? widget._myProgress : null,
+                  start: !oh2h ,
+                  score: widget.gameConfig.myScore,
+                  backgroundColor: Colors.amber,
+                  foregroundColor: Colors.red),
+            ),
+
+                  widget.gameConfig.gameDisplay ==
+                                        GameDisplay.localTurnByTurn ||
+                                    widget.gameConfig.gameDisplay ==
+                                        GameDisplay.networkTurnByTurn?
+                                      Hud(
+                                        start: false,
+                                        amICurrentUser: false,
+                                        user: widget.gameConfig.otherUser,
+                                        height: media.size.height / 10,
+                                        gameMode: widget.gameMode,
+                                        playTime: widget.playTime,
+                                        onEnd: widget.onGameEnd,
+                                        progress: widget._otherProgress,
+                                        score:
+                                            widget.gameConfig.otherScore,
+                                        backgroundColor: Colors.red,
+                                        foregroundColor: Colors.amber):Container()
+            ]
+          ),
+             widget.gameConfig.gameDisplay ==
+                                    GameDisplay.localTurnByTurn ||
+                                widget.gameConfig.gameDisplay ==
+                                    GameDisplay.networkTurnByTurn
+                            ? new AnimatedPositioned(
+                                key: ValueKey<String>('currentPlayer'),
+                                left: widget.gameConfig.amICurrentPlayer
+                                    ? 70.0
+                                    : media.size.width -
+                                        32.0 -
+                                        media.size.height / 8.0 * 0.6,
+                               bottom: 8.0,
+                                duration: Duration(milliseconds: 1000),
+                                curve: Curves.elasticOut,
+                                child: Container(
+                                 
+                                  color: Colors.blue,
+                                  width: media.size.height / 9.0 * 0.3,
+                                  height: 8.0,
+                                ),
+                              )
+                            : Container(),
+          ]
+        ),
+      );
+      return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd,size:size,huda:huda);
     }
      else {
       return IntrinsicHeight(
