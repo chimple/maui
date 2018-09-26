@@ -48,6 +48,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
+          ralation: quiz.quizType,
         );
         break;
       case QuizType.pair:
@@ -55,6 +56,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
+          ralation: quiz.quizType,
         );
         break;
       case QuizType.oneAtAtime:
@@ -62,6 +64,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
+          ralation: quiz.quizType,
         );
         break;
       case QuizType.many:
@@ -69,6 +72,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
+          ralation: quiz.quizType,
         );
         break;
       case QuizType.many:
@@ -76,6 +80,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
+          ralation: quiz.quizType,
         );
         break;
     }
