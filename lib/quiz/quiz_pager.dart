@@ -43,36 +43,36 @@ class QuizPager extends StatefulWidget {
       {Quiz quiz, Map<String, dynamic> input, Function onEnd, Size size, Widget huda}) {
        
     switch (quiz.quizType) {
-      case QuizType.multipleChoice:
+      case QuizType.oneAtAtime:
         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
         );
         break;
-      case QuizType.matchTheFollowing:
+      case QuizType.pair:
         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
         );
         break;
-      case QuizType.trueOrFalse:
+      case QuizType.oneAtAtime:
         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
         );
         break;
-      case QuizType.grouping:
+      case QuizType.many:
         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
         );
         break;
-      case QuizType.sequence:
-         return Quizscroller_pagger(
+      case QuizType.many:
+        return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
