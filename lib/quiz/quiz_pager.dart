@@ -12,6 +12,8 @@ import 'true_or_false.dart';
 import 'sequence.dart';
 import 'quiz_result.dart';
 
+
+
 class QuizPager extends StatefulWidget {
   Function onScore;
   Function onProgress;
@@ -40,15 +42,19 @@ class QuizPager extends StatefulWidget {
   State<StatefulWidget> createState() => new QuizPagerState();
 
   static Widget createQuiz(
-      {Quiz quiz, Map<String, dynamic> input, Function onEnd, Size size, Widget huda}) {
-       
+      {Quiz quiz, Map<String, dynamic> input, Function onEnd, Size size, Widget huda, optionTypeis}) {
+        
+       print("here quize type isss.... what i ma getting is.......${quiz.quizType}");
+        print("inpu data is.......of from database is...$input");
     switch (quiz.quizType) {
+    
       case QuizType.oneAtAtime:
+     
         return Quizscroller_pagger(
           onEnd: onEnd,
           input: input,
           huda: huda,
-          ralation: quiz.quizType,
+          relation: optionTypeis,
         );
         break;
       case QuizType.pair:
@@ -56,7 +62,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
-          ralation: quiz.quizType,
+          relation: optionTypeis,
         );
         break;
       case QuizType.oneAtAtime:
@@ -64,7 +70,16 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
-          ralation: quiz.quizType,
+          relation: optionTypeis,
+        );
+        break;
+      case QuizType.many:
+      print("object");
+        return Quizscroller_pagger(
+          onEnd: onEnd,
+          input: input,
+          huda: huda,
+          relation: optionTypeis,
         );
         break;
       case QuizType.many:
@@ -72,15 +87,7 @@ class QuizPager extends StatefulWidget {
           onEnd: onEnd,
           input: input,
           huda: huda,
-          ralation: quiz.quizType,
-        );
-        break;
-      case QuizType.many:
-        return Quizscroller_pagger(
-          onEnd: onEnd,
-          input: input,
-          huda: huda,
-          ralation: quiz.quizType,
+          relation: optionTypeis,
         );
         break;
     }
@@ -92,6 +99,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Map<String, dynamic>> _quizInputs;
   bool _isLoading = true;
   int _currentQuiz = 0;
+  var optionType;
 
   @override
   void initState() {
@@ -102,6 +110,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   void _initState() async {
     widget.gameConfig.topicId = 'lion'; //TODO: Link to topic
     _quizzes = await QuizRepo().getQuizzesByTopicId(widget.gameConfig.topicId);
+
+    print("hello check the relation is....${_quizzes}");
     _quizInputs = _quizzes.map((quiz) {
       Map<String, dynamic> data;
       try {
@@ -112,7 +122,18 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       }
       return data;
     }).toList(growable: false);
-    print(_quizInputs);
+    optionType=  _quizzes.map((quiz) {
+      String dataoptional;
+      try {
+        print("this......is......quiz is.....${quiz.optionsType}");
+        dataoptional = quiz.optionsType;
+      } catch (e) {
+        print(e);
+        dataoptional =null;
+      }
+      return dataoptional;
+    }).toList(growable: false);
+    print("i am checking optional type is.....$optionType");
     setState(() {
       _isLoading = false;
     });
@@ -132,6 +153,10 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     if (_currentQuiz < _quizzes.length) {
       Quiz quiz = _quizzes[_currentQuiz];
       final input = _quizInputs[_currentQuiz];
+     final optionTypeis=optionType[_currentQuiz];
+
+
+      print("hello this.... is..data of database is...${input}");
       var size=media.size;
       print(input);
       final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
@@ -211,7 +236,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
           ]
         ),
       );
-      return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd,size:size,huda:huda);
+      return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd,size:size,huda:huda,optionTypeis:optionTypeis);
     }
      else {
       return IntrinsicHeight(
