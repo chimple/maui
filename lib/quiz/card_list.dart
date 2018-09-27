@@ -266,7 +266,7 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new ListView(children: <Widget>[
+      child: new Column(children: <Widget>[
         // Row for Displaying the Question text
         new Row(
           children: <Widget>[
