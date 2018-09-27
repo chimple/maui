@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:maui/db/entity/Comments.dart';
+import 'package:maui/db/entity/comments.dart';
 
 import 'package:maui/app_database.dart';
 
@@ -12,7 +12,6 @@ class CommentsDao {
       Comments.table,
       columns: [
         Comments.tileIdCol,
-        Comments.userIdCol,
         Comments.commentCol,
         Comments.timeStampCol,
         Comments.commentingUserIdCol
@@ -25,5 +24,24 @@ class CommentsDao {
       return maps.map((el) => new Comments.fromMap(el)).toList(growable: false);
     }
     return null;
+  }
+
+  Future<Null> insertAComment(Comments comments, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.insert(Comments.table, comments.toMap());
+  }
+
+  Future<Null> deleteAComment(Comments comments, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.delete(Comments.table,
+        where: ''' ${Comments.tileIdCol} = ? ''', whereArgs: [comments.tileId]);
+  }
+
+  Future<Null> updateAComment(Comments comments, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    await db.update(Comments.table, comments.toMap(),
+        where:
+            ''' ${Comments.tileIdCol} = ? AND ${Comments.commentingUserIdCol} = ?''',
+        whereArgs: [comments.tileId, comments.commentingUserId]);
   }
 }
