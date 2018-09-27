@@ -10,4 +10,23 @@ class LikesRepo {
     var likes = await likesDao.getLikesByTileId(tileId);
     return likes;
   }
+
+  Future<int> getNumberOfLikesByTileId(String tileId) async {
+    var likes = await likesDao.getLikesByTileId(tileId);
+    return likes.length;
+  }
+
+  Future<String> insertOrDeleteLike(String tileId, String likedUserId) async {
+    Likes like =
+        await likesDao.getLikesByTileIdAndLikedUserId(tileId, likedUserId);
+    if (like == null) {
+      await likesDao
+          .insertALike(new Likes(tileId: tileId, likedUserId: likedUserId));
+      return "Like inserted";
+    } else {
+      await likesDao
+          .deleteALike(new Likes(tileId: tileId, likedUserId: likedUserId));
+      return "Like deleted";
+    }
+  }
 }

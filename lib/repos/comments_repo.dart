@@ -10,4 +10,34 @@ class CommentsRepo {
     var comments = await commentsDao.getCommentsByTileId(tileId);
     return comments;
   }
+
+  Future<String> insertAComment(String tileId, String timeStamp,
+      String commentingUserId, String comment) async {
+    await commentsDao.insertAComment(new Comments(
+        timeStamp: timeStamp,
+        tileId: tileId,
+        comment: comment,
+        commentingUserId: commentingUserId));
+    return "Comment inserted";
+  }
+
+  Future<String> updateAComment(String tileId, String timeStamp,
+      String commentingUserId, String comment) async {
+    await commentsDao.updateAComment(new Comments(
+        timeStamp: timeStamp,
+        tileId: tileId,
+        comment: comment,
+        commentingUserId: commentingUserId));
+    return "Comment updated";
+  }
+
+  Future<String> deleteAComment(String tileId, String timeStamp,
+      String commentingUserId, String comment) async {
+    await commentsDao.deleteAComment(new Comments(
+        timeStamp: timeStamp,
+        tileId: tileId,
+        comment: comment,
+        commentingUserId: commentingUserId));
+    return "Comment Deleted";
+  }
 }
