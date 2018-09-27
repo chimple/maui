@@ -4,27 +4,27 @@ import 'dart:ui' as ui;
 import 'dart:async';
 import 'card_list.dart';
 
-class Quizscroller_pagger extends StatefulWidget {
+class QuizScrollerPager extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Widget huda;
   final relation;
 
-  Quizscroller_pagger(
-      {Key key, this.input, this.onEnd, this.huda, this.relation})
+  QuizScrollerPager({Key key, this.input, this.onEnd, this.huda, this.relation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return new Quizscroller_paggerState();
+    return new QuizScrollerPagerState();
   }
 }
 
-class Quizscroller_paggerState extends State<Quizscroller_pagger>
+class QuizScrollerPagerState extends State<QuizScrollerPager>
     with SingleTickerProviderStateMixin {
   bool showans = false;
   var top = 0.0;
   int playTime = 10000;
   var expheight;
+  bool showBottomBar = true;
 
   TabController tabController;
   var optionalType;
@@ -64,7 +64,7 @@ class Quizscroller_paggerState extends State<Quizscroller_pagger>
 
     return Scaffold(
         bottomNavigationBar: Container(
-          height: top == 0.0 ? 150.0 : 150.0,
+          height: showBottomBar ? 150.0 : 0.0,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -97,7 +97,15 @@ class Quizscroller_paggerState extends State<Quizscroller_pagger>
               return new NotificationListener(
                 onNotification: (v) {
                   if (v is ScrollUpdateNotification) {
-                    setState(() => top -= v.scrollDelta / 2);
+                    setState(() {
+                      top -= v.scrollDelta / 2;
+                      // if(top<0){
+                      //   showBottomBar=false;
+                      // }
+                      // else{
+                      //   showBottomBar=true;
+                      // }
+                    });
                   }
                 },
                 child: Stack(children: [
@@ -170,8 +178,6 @@ class Quizscroller_paggerState extends State<Quizscroller_pagger>
                   ),
                 ]),
               );
-            } else {
-              return new Text('Loading...');
             }
           },
         ));
