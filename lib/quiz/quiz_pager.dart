@@ -161,10 +161,10 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         child: Stack(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Hud(
                   user: widget.gameConfig.myUser,
-                  height: media.size.height / 10,
+                  height: media.size.height * 0.1,
                   gameMode: widget.gameMode,
                   playTime: widget.playTime,
                   onEnd: widget.onGameEnd,
@@ -183,7 +183,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
                     start: false,
                     amICurrentUser: false,
                     user: widget.gameConfig.otherUser,
-                    height: media.size.height / 10,
+                    height: media.size.height * 0.1,
                     gameMode: widget.gameMode,
                     playTime: widget.playTime,
                     onEnd: widget.onGameEnd,
@@ -198,14 +198,14 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
               ? new AnimatedPositioned(
                   key: ValueKey<String>('currentPlayer'),
                   left: widget.gameConfig.amICurrentPlayer
-                      ? 70.0
+                      ? 60.0
                       : media.size.width - 32.0 - media.size.height / 8.0 * 0.6,
                   bottom: 8.0,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.elasticOut,
                   child: Container(
                     color: Colors.blue,
-                    width: media.size.height / 9.0 * 0.3,
+                    width: media.size.height / 9.0 * 0.4,
                     height: 8.0,
                   ),
                 )

@@ -65,25 +65,28 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     return Scaffold(
         bottomNavigationBar: Container(
           height: showBottomBar ? 150.0 : 0.0,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              new Tab(
-                child: new Icon(
-                  Icons.arrow_back,
-                  semanticLabel: "previous",
+          child: Center(
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new Tab(
+                  child: new Icon(
+                    Icons.arrow_back,
+                    semanticLabel: "previous",
+                  ),
                 ),
-              ),
-              Container(
-                height: 100.0,
-                child: new Tab(
-                  child: widget.hud,
+                Container(
+                  height: 150 * 0.5,
+                  child: new Tab(
+                    child: widget.hud,
+                  ),
                 ),
-              ),
-              new Tab(
-                child: new Icon(Icons.arrow_forward),
-              ),
-            ],
+                new Tab(
+                  child: new Icon(Icons.arrow_forward),
+                ),
+              ],
+            ),
           ),
         ),
         body: new FutureBuilder<ui.Image>(
