@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/components/progress_circle.dart';
-import 'package:maui/components/progress_bar.dart';
 
 class Hud extends StatelessWidget {
   User user;
@@ -48,39 +47,38 @@ class Hud extends StatelessWidget {
 
     var headers = <Widget>[
       new Stack(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+     
         alignment: AlignmentDirectional.center,
         children: <Widget>[
-          
           new Container(
-              width: height/1.4,
-              height: height/1.4,
+              width: height / 1.4,
+              height: height / 1.4,
               decoration: new BoxDecoration(
                   shape: BoxShape.circle,
                   image: new DecorationImage(
                       image: new FileImage(new File(user.image)),
                       fit: BoxFit.fill))),
-                       new SizedBox(
-          width: height/1.4,
-          height: height/1.4,
-          child: new CircularProgressIndicator(
+          new SizedBox(
+              width: height / 1.4,
+              height: height / 1.4,
+              child: new CircularProgressIndicator(
                 strokeWidth: height / 8.5,
                 value: 1.0,
                 valueColor: new AlwaysStoppedAnimation<Color>(backgroundColor),
               )),
-                       new SizedBox(
-          width: height/1.4,
-          height:  height/1.4 ,
-          child: gameMode == GameMode.timed
-              ? new ProgressCircle(
-                  time: playTime,
-                  onEnd: () => onEnd(context),
-                  strokeWidth: height / 8.5,
-                )
-              : new ProgressCircle(
-                  progress: progress,
-                  strokeWidth: height / 8.5,
-                )),
+          new SizedBox(
+              width: height / 1.4,
+              height: height / 1.4,
+              child: gameMode == GameMode.timed
+                  ? new ProgressCircle(
+                      time: playTime,
+                      onEnd: () => onEnd(context),
+                      strokeWidth: height / 8.5,
+                    )
+                  : new ProgressCircle(
+                      progress: progress,
+                      strokeWidth: height / 8.5,
+                    )),
         ],
       ),
       Padding(
@@ -88,12 +86,10 @@ class Hud extends StatelessWidget {
         child: Stack(children: [
           Text(
             '$score',
-            style: new TextStyle(fontSize: 20.0, color: foregroundColor),
+            style: new TextStyle(fontSize: fontSize, color: foregroundColor),
           ),
         ]),
       ),
-     
-     
     ];
 
     return new Row(
