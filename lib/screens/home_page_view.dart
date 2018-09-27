@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:maui/db/entity/home.dart';
-import 'package:maui/db/entity/likes.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/quiz_repo.dart';
-import 'package:maui/repos/activity_repo.dart';
-import 'package:maui/repos/article_repo.dart';
+// import 'package:maui/repos/quiz_repo.dart';
+import 'package:maui/repos/user_repo.dart';
+// import 'package:maui/repos/activity_repo.dart';
+// import 'package:maui/repos/article_repo.dart';
 import 'package:maui/repos/home_page_repo.dart';
 import 'package:maui/repos/comments_repo.dart';
 import 'package:maui/repos/likes_repo.dart';
@@ -19,12 +20,14 @@ class HomePageView extends StatefulWidget {
 class _HomePageViewState extends State<HomePageView> {
   List<Home> _home = [];
   List<int> _likes = [];
+  List<User> _users = [];
   bool _isLoading;
   User _user;
   void _initHomeData() async {
     setState(() => _isLoading = true);
-    _user = AppStateContainer.of(context).state.loggedInUser;
+    // _user = AppStateContainer.of(context).state.loggedInUser;
     _home = await HomeRepo().getHomeTiles();
+    _initUserData();
     _initLikeData();
   }
 
@@ -33,6 +36,12 @@ class _HomePageViewState extends State<HomePageView> {
       _likes.add(await LikesRepo().getNumberOfLikesByTileId(tile.tileId));
     }
     setState(() => _isLoading = false);
+  }
+
+  void _initUserData() async {
+    for (var tile in _home) {
+      _users.add(await UserRepo().getUser(tile.userId));
+    }
   }
 
   @override
@@ -58,70 +67,81 @@ class _HomePageViewState extends State<HomePageView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.airport_shuttle,
-                    size: 50.0,
-                    semanticLabel: "just testing",
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  new Expanded(
+                    flex: 1,
+                    child: _users[index] == null
+                        ? new Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: new BorderRadius.circular(40.0),
+                                border: new Border.all(
+                                    width: 3.0, color: Colors.black)),
+                            child: new CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child:
+                                  new Image.asset('assets/chat_Bot_Icon.png'),
+                            ),
+                          )
+                        : new Container(
+                            decoration: new BoxDecoration(
+                              borderRadius: new BorderRadius.circular(40.0),
+                              border: new Border.all(
+                                  width: 3.0, color: Colors.black),
+                            ),
+                            child: new CircleAvatar(
+                              backgroundColor: Colors.white,
+                              backgroundImage: new FileImage(
+                                new File(_users[index].image),
+                              ),
+                            ),
+                          ),
                   ),
-                ),
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.access_alarm,
-                    size: 50.0,
-                    semanticLabel: "just testing",
+                  new Expanded(
+                    flex: 10,
+                    child: _users[index] == null
+                        ? new Container(
+                            child: new Center(
+                              child: new Text(
+                                "user not there",
+                                style: new TextStyle(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )
+                        : new Container(
+                            child: new Center(
+                            child: new Text("${_users[index].name}"),
+                          )),
                   ),
-                ),
-              ],
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.airport_shuttle,
-                    size: 50.0,
-                    semanticLabel: "just testing",
+                ]),
+            new Padding(
+              padding: const EdgeInsets.all(80.0),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  new Expanded(
+                    flex: 1,
+                    child: new Icon(
+                      Icons.airport_shuttle,
+                      size: 50.0,
+                      semanticLabel: "just testing",
+                    ),
                   ),
-                ),
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.access_alarm,
-                    size: 50.0,
-                    semanticLabel: "just testing",
+                  new Expanded(
+                    flex: 1,
+                    child: new Icon(
+                      Icons.access_alarm,
+                      size: 50.0,
+                      semanticLabel: "just testing",
+                    ),
                   ),
-                ),
-              ],
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.airport_shuttle,
-                    size: 50.0,
-                    semanticLabel: "just testing",
-                  ),
-                ),
-                new Expanded(
-                  flex: 1,
-                  child: new Icon(
-                    Icons.access_alarm,
-                    size: 50.0,
-                    semanticLabel: "just testing",
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -208,6 +228,7 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
+    _user = AppStateContainer.of(context).state.loggedInUser;
     return _isLoading
         ? new CircularProgressIndicator()
         : new RefreshIndicator(
