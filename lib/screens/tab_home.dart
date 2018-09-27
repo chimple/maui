@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:maui/components/gameaudio.dart';
+
+import 'category_list_view.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -58,7 +58,7 @@ class TabHomeState extends State<TabHome>
         new CurvedAnimation(parent: _imgController, curve: Curves.ease);
     animateImage1 =
         new CurvedAnimation(parent: _imgController1, curve: Curves.ease);
-    _controller = new TabController(length: 2, vsync: this);
+    _controller = new TabController(length: 3, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
     // _imgController1.forward();
@@ -214,6 +214,9 @@ class TabHomeState extends State<TabHome>
                     ),
                     new Tab(
                       text: Loca.of(context).game,
+                    ),
+                    new Tab(
+                      text: Loca.of(context).category,
                     )
                   ],
                 ),
@@ -222,26 +225,14 @@ class TabHomeState extends State<TabHome>
           },
           body: new TabBarView(
             controller: _controller,
-            children: <Widget>[new FriendListView(), new GameListView()],
+            children: <Widget>[new FriendListView(), new GameListView(),
+            new CategoryListView()],
           ),
         ),
       );
   }
 }
 
-// class ShowIcon extends StatelessWidget {
-//   ShowIcon({
-//     Key key,
-//     this.img,
-//   }) : super(key: key);
-//   final String img;
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Image.asset(
-//                           img,
-//                           scale: .3,
-//                         );  }
-// }
 
 class MyTabs {
   final String img1;

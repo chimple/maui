@@ -328,6 +328,8 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controllerShake, controllerDrag;
   Animation<double> animation, animationShake, animationDrag;
+  bool isDragging = false;
+
   String _displayText;
   initState() {
     super.initState();
@@ -395,8 +397,41 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
       return new ScaleTransition(
         scale: animation,
         child: new Draggable(
-            onDragStarted: widget.onDrag,
-            maxSimultaneousDrags: 1,
+            onDragStarted: () {
+              if (ButtonStateContainer.of(context).startUsingButton()) {
+                setState(() {
+                  isDragging = true;
+                });
+                print(
+                    'onDragStarted ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+                widget.onDrag();
+              }
+            },
+            onDragCompleted: () {
+              print(
+                  'onDragCompleted start ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+                print(
+                    'onDragCompleted end ${widget.text} $isDragging ${ButtonStateContainer.of(context).isButtonBeingUsed}');
+              }
+            },
+            onDraggableCanceled: (Velocity v, Offset o) {
+              print('onDraggableCanceled ${widget.text} $isDragging');
+              if (isDragging) {
+                setState(() {
+                  isDragging = false;
+                });
+                ButtonStateContainer.of(context).endUsingButton();
+              }
+            },
+            maxSimultaneousDrags: (isDragging ||
+                    !ButtonStateContainer.of(context).isButtonBeingUsed)
+                ? 1
+                : 0,
             data: '${widget.index}' + '_' + '${widget.code}',
             child: new UnitButton(
               key: new Key('A${widget.keys}'),

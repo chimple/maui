@@ -23,6 +23,7 @@ class Loca {
   String get title => Intl.message('Maui', name: 'title');
   String get chat => Intl.message('Chat', name: 'chat');
   String get game => Intl.message('Game', name: 'game');
+  String get category => Intl.message('Category', name: 'category');
   String get reflex => Intl.message('reflex', name: 'reflex');
   String get order_it => Intl.message('Order It', name: 'order_it');
   String get memory => Intl.message('Memory', name: 'memory');
@@ -44,6 +45,7 @@ class Loca {
   String get tables => Intl.message('Tables', name: 'tables');
   String get identify => Intl.message('identify', name: 'identify');
   String get hint => Intl.message('Type image', name: 'hint');
+  String get no_data => Intl.message('No Data', name: 'no_data');
   String get picture_sentence =>
       Intl.message('Picture Sentence', name: 'picture_sentence');
   String get fill_number => Intl.message('Fill Number', name: 'fill_number');
@@ -60,6 +62,7 @@ class Loca {
   String get friend_word => Intl.message('Friend Word', name: 'friend_word');
   String get dice => Intl.message('Dice', name: 'dice');
   String get circle_word => Intl.message('Circle Word', name: 'circle_word');
+  String get quiz_pager => Intl.message('Quiz', name: 'quiz_pager');
   String get family => Intl.message('Family', name: 'family');
   String get friends => Intl.message('Friends', name: 'friends');
   String get owl => Intl.message('owl', name: 'owl');
