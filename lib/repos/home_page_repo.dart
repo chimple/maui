@@ -10,4 +10,18 @@ class HomeRepo {
     var homeTiles = await homeDao.getHomeTiles();
     return homeTiles;
   }
+
+  Future<String> insertAHomeTile(
+      String tileId, String userId, String type, String typeId) async {
+    await homeDao.insertAHomeTile(
+        new Home(tileId: tileId, type: type, typeId: typeId, userId: userId));
+    return "hopme tile inserted";
+  }
+
+  Future<String> deleteAHomeTile(
+      String tileId, String userId, String type, String typeId) async {
+    await homeDao.deleteAHomeTile(
+        new Home(tileId: tileId, type: type, typeId: typeId, userId: userId));
+    return "hopme tile inserted";
+  }
 }
