@@ -7,10 +7,10 @@ import 'card_list.dart';
 class QuizScrollerPager extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
-  Widget huda;
+  Widget hud;
   final relation;
 
-  QuizScrollerPager({Key key, this.input, this.onEnd, this.huda, this.relation})
+  QuizScrollerPager({Key key, this.input, this.onEnd, this.hud, this.relation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -77,7 +77,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
               Container(
                 height: 100.0,
                 child: new Tab(
-                  child: widget.huda,
+                  child: widget.hud,
                 ),
               ),
               new Tab(
