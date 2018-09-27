@@ -53,7 +53,7 @@ class QuizPager extends StatefulWidget {
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-          huda: hud,
+          hud: hud,
           relation: quiz.optionsType,
         );
         break;
@@ -61,7 +61,7 @@ class QuizPager extends StatefulWidget {
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-          huda: hud,
+          hud: hud,
           relation: quiz.optionsType,
         );
         break;
@@ -69,7 +69,7 @@ class QuizPager extends StatefulWidget {
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-          huda: hud,
+          hud: hud,
           relation: quiz.optionsType,
         );
         break;
@@ -78,7 +78,7 @@ class QuizPager extends StatefulWidget {
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-          huda: hud,
+          hud: hud,
           relation: quiz.optionsType,
         );
         break;
@@ -86,7 +86,7 @@ class QuizPager extends StatefulWidget {
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-          huda: hud,
+          hud: hud,
           relation: quiz.optionsType,
         );
         break;
