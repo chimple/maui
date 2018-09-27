@@ -14,7 +14,7 @@ class LikesDao {
       whereArgs: [tileId],
     );
     if (maps.length > 0) {
-      return maps.map((el) => new Likes.fromMap(el)).toList(growable: false);
+      return maps.map((el) => new Likes.fromMap(el)).toList(growable: true);
     }
     return null;
   }

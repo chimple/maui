@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'package:maui/repos/topic_repo.dart';
+import 'package:maui/db/entity/home.dart';
+import 'package:maui/db/entity/likes.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/quiz_repo.dart';
 import 'package:maui/repos/activity_repo.dart';
 import 'package:maui/repos/article_repo.dart';
@@ -7,6 +9,7 @@ import 'package:maui/repos/home_page_repo.dart';
 import 'package:maui/repos/comments_repo.dart';
 import 'package:maui/repos/likes_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class HomePageView extends StatefulWidget {
   @override
@@ -14,186 +17,234 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  List<Home> _home = [];
+  List<int> _likes = [];
+  bool _isLoading;
+  User _user;
+  void _initHomeData() async {
+    setState(() => _isLoading = true);
+    _user = AppStateContainer.of(context).state.loggedInUser;
+    _home = await HomeRepo().getHomeTiles();
+    _initLikeData();
+  }
+
+  void _initLikeData() async {
+    for (var tile in _home) {
+      _likes.add(await LikesRepo().getNumberOfLikesByTileId(tile.tileId));
+    }
+    setState(() => _isLoading = false);
+  }
 
   @override
-    void didChangeDependencies() {
-      // TODO: implement didChangeDependencies
-      super.didChangeDependencies();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
-    }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _initHomeData();
+  }
+
+  Widget _homeTiles(int index) {
+    return new Padding(
+      padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+      child: new ListTile(
+        key: new Key(index.toString()),
+        title: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.airport_shuttle,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.access_alarm,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+              ],
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.airport_shuttle,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.access_alarm,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+              ],
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.airport_shuttle,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+                new Expanded(
+                  flex: 1,
+                  child: new Icon(
+                    Icons.access_alarm,
+                    size: 50.0,
+                    semanticLabel: "just testing",
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        subtitle: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            new Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: new RaisedButton(
+                  shape: new RoundedRectangleBorder(
+                      side: new BorderSide(
+                          color: Colors.brown,
+                          width: 1.0,
+                          style: BorderStyle.solid),
+                      borderRadius: new BorderRadius.circular(20.0)),
+                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+                  child: new Row(
+                    children: <Widget>[
+                      new Expanded(
+                        flex: 1,
+                        child: new Icon(
+                          Icons.thumb_up,
+                          size: 30.0,
+                          color: Colors.green,
+                        ),
+                      ),
+                      new Expanded(
+                        flex: 1,
+                        child: new Text(
+                          _likes[index].toString(),
+                          style: new TextStyle(fontSize: 30.0),
+                        ),
+                      )
+                    ],
+                  ),
+                  elevation: 5.0,
+                  onPressed: () async {
+                    await LikesRepo()
+                        .insertOrDeleteLike(_home[index].tileId, _user.id);
+                    _isLoading = true;
+                    _likes.clear();
+                    _initLikeData();
+                    print("liked");
+                  },
+                ),
+              ),
+            ),
+            new Expanded(
+              flex: 2,
+              child: new RaisedButton(
+                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+                  shape: new RoundedRectangleBorder(
+                      side: new BorderSide(
+                          color: Colors.brown,
+                          width: 1.0,
+                          style: BorderStyle.solid),
+                      borderRadius: new BorderRadius.circular(20.0)),
+                  elevation: 5.0,
+                  onPressed: () async {
+                    String timeStamp =
+                        (new DateTime.now().millisecondsSinceEpoch).toString();
+                    await CommentsRepo().insertAComment(_home[index].tileId,
+                        timeStamp, _user.id, "Hi i am testing comment");
+                    print("comment added");
+                  },
+                  child: new Text(
+                    "Comment",
+                    style: new TextStyle(fontSize: 30.0),
+                  )),
+            ),
+          ],
+        ),
+
+        // onTap: null,
+        contentPadding: const EdgeInsets.all(25.0),
+        isThreeLine: true,
+        enabled: true,
+        dense: false,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return new RefreshIndicator(
-      onRefresh: () async {
-        await new Future.delayed(
-            const Duration(
-              seconds: 5,
-            ), () {
-          Scaffold.of(context).showSnackBar(new SnackBar(
-            content: new Text(
-              " Refreshed",
-              style: new TextStyle(fontSize: 20.0, color: Colors.black),
-            ),
-            duration: const Duration(seconds: 5),
-            backgroundColor: Colors.white,
-          ));
-        });
-      },
-      child: new ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          return new Container(
-            color: Colors.grey,
-            height: 2.0,
-          );
-        },
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return new Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
-            child: new ListTile(
-              key: new Key(index.toString()),
-              subtitle: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  new Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: new RaisedButton(
-                        shape: new RoundedRectangleBorder(
-                            side: new BorderSide(
-                                color: Colors.brown,
-                                width: 1.0,
-                                style: BorderStyle.solid),
-                            borderRadius: new BorderRadius.circular(20.0)),
-                        padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                        child: new Row(
-                          children: <Widget>[
-                            new Expanded(
-                              flex: 1,
-                              child: new Icon(
-                                Icons.arrow_upward,
-                                size: 30.0,
-                                color: Colors.green,
-                              ),
-                            ),
-                            new Expanded(
-                              flex: 1,
-                              child: new Text(
-                                "2",
-                                style: new TextStyle(fontSize: 30.0),
-                              ),
-                            )
-                          ],
-                        ),
-                        elevation: 5.0,
-                        onPressed: () {
-                          print("liked");
-                        },
-                      ),
+    return _isLoading
+        ? new CircularProgressIndicator()
+        : new RefreshIndicator(
+            onRefresh: () async {
+              await new Future.delayed(
+                  const Duration(
+                    seconds: 5,
+                  ), () {
+                _initHomeData();
+                Scaffold.of(context).showSnackBar(new SnackBar(
+                  content: new Text(
+                    " Refreshed",
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  new Expanded(
-                    flex: 2,
-                    child: new RaisedButton(
-                        padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                        shape: new RoundedRectangleBorder(
-                            side: new BorderSide(
-                                color: Colors.brown,
-                                width: 1.0,
-                                style: BorderStyle.solid),
-                            borderRadius: new BorderRadius.circular(20.0)),
-                        elevation: 5.0,
-                        onPressed: () => print("Commented"),
-                        child: new Text(
-                          "Comment",
-                          style: new TextStyle(fontSize: 30.0),
-                        )),
+                  duration: const Duration(
+                    seconds: 5,
                   ),
-                ],
-              ),
-              title: new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.airport_shuttle,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.access_alarm,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.airport_shuttle,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.access_alarm,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.airport_shuttle,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 1,
-                        child: new Icon(
-                          Icons.access_alarm,
-                          size: 50.0,
-                          semanticLabel: "just testing",
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // onTap: null,
-              contentPadding: const EdgeInsets.all(25.0),
-              isThreeLine: true,
-              enabled: true,
-              dense: false,
+                  backgroundColor: Colors.white,
+                ));
+              });
+            },
+            child: new ListView.separated(
+              separatorBuilder: (BuildContext context, int index) {
+                return new Container(
+                  color: Colors.grey,
+                  height: 2.0,
+                );
+              },
+              itemCount: _home.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _homeTiles(index);
+              },
             ),
           );
-        },
-      ),
-    );
   }
 }
