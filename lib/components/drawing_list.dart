@@ -20,7 +20,7 @@ class DrawingList extends StatelessWidget {
       crossAxisSpacing: 8.0,
       children: drawings
           .map((d) => RaisedButton(
-                onPressed: () => Navigator.of(context).push(
+                onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute<void>(
                             builder: (BuildContext context) {
                       return DrawingScreen(
