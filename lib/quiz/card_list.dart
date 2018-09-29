@@ -54,6 +54,8 @@ class CardListState extends State<CardList> {
     if (widget.optionsType == OptionCategory.many ||
         widget.optionsType == OptionCategory.pair) {
       for (int i = 0; i < widget.input['answer'].length; i++) {
+        print(
+            "Widget.input['answer'] received by Card - ${widget.input['answer']}");
         choice.add(widget.input['answer'].cast<String>()[i]);
         shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
       }
