@@ -33,7 +33,7 @@ class QuizResultState extends State<QuizResult> {
   bool extentionTile = false;
 
   OptionCategory _optionsType(Quiz quiz) {
-    if (quiz.optionsType == "oneAtAtime") {
+    if (quiz.optionsType == "oneAtATime") {
       return OptionCategory.oneAtATime;
     } else if (quiz.optionsType == "pair") {
       return OptionCategory.pair;

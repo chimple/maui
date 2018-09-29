@@ -35,7 +35,7 @@ class CardListState extends State<CardList> {
   List<String> choice = [], clickedChoices = [], shuffledChoices = [];
   List<ClickedStatus> clicked = [];
   List<bool> rightOrWrong = [];
-  bool displayIcon = false;
+
   int correctChoices = 0;
   bool displayResults;
 
@@ -46,7 +46,7 @@ class CardListState extends State<CardList> {
     _initBoard();
   }
 
-  void _initBoard() {
+  void _initBoard() async {
     displayResults = widget.input['correct'] == null ? false : true;
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
@@ -54,8 +54,6 @@ class CardListState extends State<CardList> {
     if (widget.optionsType == OptionCategory.many ||
         widget.optionsType == OptionCategory.pair) {
       for (int i = 0; i < widget.input['answer'].length; i++) {
-        print(
-            "Widget.input['answer'] received by Card - ${widget.input['answer']}");
         choice.add(widget.input['answer'].cast<String>()[i]);
         shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
       }
@@ -82,6 +80,15 @@ class CardListState extends State<CardList> {
       for (var i = 0; i < widget.input['choicesRightOrWrong'].length; i++) {
         rightOrWrong.add(widget.input['choicesRightOrWrong'][i]);
       }
+    }
+  }
+
+  @override
+  void didUpdateWidget(CardList oldWidget) {
+    print(oldWidget);
+    print(widget.input);
+    if (widget.input != oldWidget.input) {
+      _initBoard();
     }
   }
 
@@ -117,7 +124,6 @@ class CardListState extends State<CardList> {
                       for (int i = 0; i < choice.length; i++) {
                         setState(() {
                           clicked[i] = ClickedStatus.done;
-                          displayIcon = true;
                         });
 
                         // checking if the element at choice and clicked choice array are same and mapping rightOrWrong array to true for performing the desired action
@@ -127,6 +133,9 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
+                    });
+                    new Future.delayed(const Duration(milliseconds: 2000), () {
+                      reset();
                     });
                   } else if (clickedChoices.length ==
                           widget.input['answer'].length &&
@@ -159,9 +168,9 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
-                      setState(() {
-                        displayIcon = true;
-                      });
+                    });
+                    new Future.delayed(const Duration(milliseconds: 2000), () {
+                      reset();
                     });
                   }
                 } else if (widget.optionsType == OptionCategory.oneAtATime) {
@@ -178,7 +187,6 @@ class CardListState extends State<CardList> {
                         clicked = choice
                             .map((e) => ClickedStatus.done)
                             .toList(growable: false);
-                        displayIcon = true;
                       });
 
                       if (text == widget.input['answer'].first) {
@@ -187,6 +195,9 @@ class CardListState extends State<CardList> {
                           correctChoices++;
                         });
                       }
+                    });
+                    new Future.delayed(const Duration(milliseconds: 2000), () {
+                      reset();
                     });
                   }
                 } else if (widget.optionsType == OptionCategory.pair) {
@@ -236,9 +247,10 @@ class CardListState extends State<CardList> {
                             }
                           }
                         }
-                        setState(() {
-                          displayIcon = true;
-                        });
+                      });
+                      new Future.delayed(const Duration(milliseconds: 2000),
+                          () {
+                        reset();
                       });
                     }
                   }
@@ -247,6 +259,24 @@ class CardListState extends State<CardList> {
                 print("This is the results Display section");
               }
             }));
+  }
+
+  void reset() {
+    setState(() {
+      choice = [];
+      clickedChoices = [];
+      shuffledChoices = [];
+      clicked = [];
+      rightOrWrong = [];
+    });
+    //TODO: Call this when all the items have been chosen
+    widget.onEnd({
+      'correct': correctChoices,
+      'total': choice.length,
+      'choices': "${widget.input['choices']}",
+      'answer': "${widget.input['answer']}",
+      'choicesRightOrWrong': rightOrWrong
+    });
   }
 
   @override
@@ -288,37 +318,37 @@ class CardListState extends State<CardList> {
         ]),
 
         // Row to display icon to call onEnd Widget
-        displayIcon == true
-            ? new Center(
-                child: new Container(
-                    height: 50.0,
-                    width: 50.0,
-                    decoration: new BoxDecoration(
-                      border: new Border.all(
-                        color: Colors.black,
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                    child: new IconButton(
-                        icon: new Icon(Icons.check),
-                        onPressed: () {
-                          setState(() {
-                            choice = [];
-                            clickedChoices = [];
-                            shuffledChoices = [];
-                            clicked = [];
-                            rightOrWrong = [];
-                          });
-                          //TODO: Call this when all the items have been chosen
-                          widget.onEnd({
-                            'correct': correctChoices,
-                            'total': choice.length,
-                            'choices': "${widget.input['choices']}",
-                            'answer': "${widget.input['answer']}",
-                            'choicesRightOrWrong': rightOrWrong
-                          });
-                        })))
-            : new Container(),
+        // displayIcon == true
+        //     ? new Center(
+        //         child: new Container(
+        //             height: 50.0,
+        //             width: 50.0,
+        //             decoration: new BoxDecoration(
+        //               border: new Border.all(
+        //                 color: Colors.black,
+        //               ),
+        //               shape: BoxShape.circle,
+        //             ),
+        //             child: new IconButton(
+        //                 icon: new Icon(Icons.check),
+        //                 onPressed: () {
+        //                   setState(() {
+        //                     choice = [];
+        //                     clickedChoices = [];
+        //                     shuffledChoices = [];
+        //                     clicked = [];
+        //                     rightOrWrong = [];
+        //                   });
+        //                   //TODO: Call this when all the items have been chosen
+        //                   widget.onEnd({
+        //                     'correct': correctChoices,
+        //                     'total': choice.length,
+        //                     'choices': "${widget.input['choices']}",
+        //                     'answer': "${widget.input['answer']}",
+        //                     'choicesRightOrWrong': rightOrWrong
+        //                   });
+        //                 })))
+        //     : new Container(),
       ]),
     );
   }
