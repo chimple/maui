@@ -36,7 +36,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     tabController = new TabController(length: 3, vsync: this);
 
     print("hello this should come first...");
-  
   }
 
   @override
@@ -45,7 +44,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     tabController.dispose();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     optionalType = widget.relation;
@@ -66,7 +64,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
     return Scaffold(
         bottomNavigationBar: Container(
-          height: showBottomBar ? size.height*0.1 : 0.0,
+          height: showBottomBar ? size.height * 0.1 : 0.0,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,7 +73,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: new Tab(
                   child: new Icon(
-                    
                     Icons.arrow_back,
                     size: 70.0,
                     semanticLabel: "previous",
@@ -83,7 +80,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                 ),
               ),
               Container(
-                height: size.height*0.1 * 0.8,
+                height: size.height * 0.1 * 0.8,
                 child: new Tab(
                   child: widget.hud,
                 ),
@@ -91,8 +88,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: new Tab(
-                  child: new Icon(Icons.arrow_forward,
-                   size: 70.0,),
+                  child: new Icon(
+                    Icons.arrow_forward,
+                    size: 70.0,
+                  ),
                 ),
               ),
             ],
@@ -191,9 +190,8 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                   ),
                 ]),
               );
-            }
-            else{
-                return const Center(
+            } else {
+              return const Center(
                 child: const Text('Loading...'),
               );
             }
@@ -201,13 +199,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
         ));
   }
 
-   Future<ui.Image> _getImage() async{
+  Future<ui.Image> _getImage() async {
     Image image = new Image.asset('assets/dict/cat.png');
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
-        print("this...is. _geteimage method is........::${completer.future}");
+    print("this...is. _geteimage method is........::${completer.future}");
     return completer.future;
   }
-
 }
