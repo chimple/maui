@@ -65,23 +65,7 @@ class QuizPager extends StatefulWidget {
           relation: quiz.optionsType,
         );
         break;
-      case QuizType.oneAtATime:
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
-      case QuizType.many:
-        print("object");
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
+
       case QuizType.many:
         return QuizScrollerPager(
           onEnd: onEnd,
