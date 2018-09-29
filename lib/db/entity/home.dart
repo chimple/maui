@@ -44,6 +44,6 @@ class Home {
 
   @override
   String toString() {
-    return 'GameCategory{userId: $userId, tileId: $tileId, type: $type , typeId: $typeId}';
+    return 'Home{userId: $userId, tileId: $tileId, type: $type , typeId: $typeId}';
   }
 }

@@ -2144,6 +2144,8 @@ flutter:
     - assets/category/rabbit.svg
     - assets/category/truck.svg
     - assets/category/vehicle.svg
+    - assets/team animals.svg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

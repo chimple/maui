@@ -49,7 +49,7 @@ class QuizPager extends StatefulWidget {
         "here quize type isss.... what i ma getting is.......${quiz.quizType}");
     print("inpu data is.......of from database is...$input");
     switch (quiz.quizType) {
-      case QuizType.oneAtAtime:
+      case QuizType.oneAtATime:
         return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
@@ -65,23 +65,7 @@ class QuizPager extends StatefulWidget {
           relation: quiz.optionsType,
         );
         break;
-      case QuizType.oneAtAtime:
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
-      case QuizType.many:
-        print("object");
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
+
       case QuizType.many:
         return QuizScrollerPager(
           onEnd: onEnd,
