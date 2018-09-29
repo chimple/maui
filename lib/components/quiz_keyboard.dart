@@ -15,7 +15,6 @@ class _QuizKeyboardState extends State<QuizKeyboard> {
   void _handleSubmitted(String text) {
     _textController.clear();
     widget.onSubmit(text);
-    setState(() {});
   }
 
   @override
