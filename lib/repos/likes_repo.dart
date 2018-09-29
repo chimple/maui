@@ -13,7 +13,11 @@ class LikesRepo {
 
   Future<int> getNumberOfLikesByTileId(String tileId) async {
     var likes = await likesDao.getLikesByTileId(tileId);
-    return likes.length;
+    if (likes == null) {
+      return 0;
+    } else {
+      return likes.length;
+    }
   }
 
   Future<String> insertOrDeleteLike(String tileId, String likedUserId) async {
