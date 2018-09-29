@@ -187,7 +187,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
         ));
   }
 
-  Future<ui.Image> _getImage() async {
+  Future<ui.Image> _getImage() {
     Image image = new Image.asset('assets/dict/cat.png');
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
