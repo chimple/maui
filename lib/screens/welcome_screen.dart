@@ -55,7 +55,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new AspectRatio(
-                          aspectRatio: 2.5,
+                          aspectRatio: size.height > size.width ? 1.5 : 3.8,
                           child: new SvgPicture.asset(
                             "assets/team animals.svg",
                             allowDrawingOutsideViewBox: false,
@@ -63,7 +63,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
                       new Text(
                         "Maui",
                         style: new TextStyle(
-                          fontSize: 72.0,
+                          fontSize: size.height > size.width ? 72.0 : 60.0,
                           color: Colors.amber,
                         ),
                       ),
@@ -71,7 +71,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
                   ),
                   animationStatus == 0
                       ? new Padding(
-                          padding: const EdgeInsets.only(bottom: 50.0),
+                          padding: size.height > size.width ? new EdgeInsets.all(50.0) : new EdgeInsets.all(10.0),
                           child: new InkWell(
                               onTap: () {
                                 setState(() {
