@@ -38,12 +38,9 @@ class _CommentListViewState extends State<CommentListView> {
   }
 
   void _initCommentData() async {
-    setState(() => _isLoading = true);
     _comments = await CommentsRepo().getCommentsByTileId(widget.tileId);
     if (_comments != null) {
       _initUserData();
-    } else {
-      _allUsers = null;
     }
     print(_allUsers);
     print(_comments);
@@ -112,6 +109,7 @@ class _CommentListViewState extends State<CommentListView> {
                             _comments[index].timeStamp,
                             _comments[index].commentingUserId,
                             _comments[index].comment);
+                        setState(() => _isLoading = true);
                         _initCommentData();
                       } else if (value == "edit") {
                         print(value);
@@ -142,6 +140,7 @@ class _CommentListViewState extends State<CommentListView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    myFocusNode.unfocus();
     myFocusNode.dispose();
   }
 
@@ -238,7 +237,7 @@ class _CommentListViewState extends State<CommentListView> {
                                 borderSide: BorderSide(
                                     color: Colors.brown,
                                     style: BorderStyle.solid,
-                                    width: 5.0),
+                                    width: 2.0),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(40.0),
                                 ),
@@ -268,12 +267,17 @@ class _CommentListViewState extends State<CommentListView> {
                             onPressed: () async {
                               String comment = _textController.text;
                               _textController.text = "";
+                              print("hvgf");
                               myFocusNode.unfocus();
+                              print("vf");
                               String timeStamp =
                                   (new DateTime.now().millisecondsSinceEpoch)
                                       .toString();
                               await CommentsRepo().insertAComment(widget.tileId,
                                   timeStamp, widget.loggedInUser.id, comment);
+
+                              setState(() => _isLoading = true);
+                              print("kjbgfib");
                               _initCommentData();
                             },
                           ),
