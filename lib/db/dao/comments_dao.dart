@@ -21,7 +21,7 @@ class CommentsDao {
       orderBy: "${Comments.timeStampCol}",
     );
     if (maps.length > 0) {
-      return maps.map((el) => new Comments.fromMap(el)).toList(growable: false);
+      return maps.map((el) => new Comments.fromMap(el)).toList(growable: true);
     }
     return null;
   }
