@@ -24,6 +24,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   var top = 0.0;
   int playTime = 10000;
   var expheight;
+
   bool showBottomBar = true;
 
   TabController tabController;
@@ -47,14 +48,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   @override
   Widget build(BuildContext context) {
     optionalType = widget.relation;
-    //  if (_isLoading) {
-    //   return new Center(
-    //       child: new SizedBox(
-    //     width: 20.0,
-    //     height: 20.0,
-    //     child: new CircularProgressIndicator(),
-    //   ));
-    // }
+
     MediaQueryData media = MediaQuery.of(context);
     print("thius..... is....expandheight is.....$expheight");
     print("Wiget relation type is......::${widget.relation}");
@@ -118,6 +112,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                       //   showBottomBar=true;
                       // }
                     });
+                    print("here comming");
                   }
                 },
                 child: Stack(children: [
@@ -187,7 +182,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
         ));
   }
 
-  Future<ui.Image> _getImage() async {
+  Future<ui.Image> _getImage() {
     Image image = new Image.asset('assets/dict/cat.png');
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
