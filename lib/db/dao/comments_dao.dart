@@ -18,7 +18,7 @@ class CommentsDao {
       ],
       where: " ${Comments.tileIdCol} = ? ",
       whereArgs: [tileId],
-      orderBy: "${Comments.timeStampCol}",
+      // orderBy: "${Comments.timeStampCol}",
     );
     if (maps.length > 0) {
       return maps.map((el) => new Comments.fromMap(el)).toList(growable: true);
@@ -34,14 +34,19 @@ class CommentsDao {
   Future<Null> deleteAComment(Comments comments, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     await db.delete(Comments.table,
-        where: ''' ${Comments.tileIdCol} = ? ''', whereArgs: [comments.tileId]);
+        where: ''' ${Comments.tileIdCol} = ? AND ${Comments.commentCol} = ?''',
+        whereArgs: [comments.tileId, comments.comment]);
   }
 
   Future<Null> updateAComment(Comments comments, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     await db.update(Comments.table, comments.toMap(),
         where:
-            ''' ${Comments.tileIdCol} = ? AND ${Comments.commentingUserIdCol} = ?''',
-        whereArgs: [comments.tileId, comments.commentingUserId]);
+            ''' ${Comments.tileIdCol} = ? AND ${Comments.commentingUserIdCol} = ? AND ${Comments.timeStampCol} = ?''',
+        whereArgs: [
+          comments.tileId,
+          comments.commentingUserId,
+          comments.timeStamp
+        ]);
   }
 }

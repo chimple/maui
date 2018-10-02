@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:maui/db/entity/home.dart';
 import 'package:maui/db/entity/user.dart';
-// import 'package:maui/repos/quiz_repo.dart';
+import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/repos/user_repo.dart';
-// import 'package:maui/repos/activity_repo.dart';
-// import 'package:maui/repos/article_repo.dart';
 import 'package:maui/repos/home_page_repo.dart';
-import 'package:maui/repos/comments_repo.dart';
+import 'package:maui/screens/comment_list_view.dart';
 import 'package:maui/repos/likes_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -20,12 +18,11 @@ class HomePageView extends StatefulWidget {
 class _HomePageViewState extends State<HomePageView> {
   List<Home> _home = [];
   List<int> _likes = [];
-  List<User> _users = [];
+  List<User> _allUsers = [];
   bool _isLoading;
-  User _user;
+  User _loggedInUser;
   void _initHomeData() async {
     setState(() => _isLoading = true);
-    // _user = AppStateContainer.of(context).state.loggedInUser;
     _home = await HomeRepo().getHomeTiles();
     _initUserData();
     _initLikeData();
@@ -40,7 +37,7 @@ class _HomePageViewState extends State<HomePageView> {
 
   void _initUserData() async {
     for (var tile in _home) {
-      _users.add(await UserRepo().getUser(tile.userId));
+      _allUsers.add(await UserRepo().getUser(tile.userId));
     }
   }
 
@@ -48,14 +45,15 @@ class _HomePageViewState extends State<HomePageView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
     _initHomeData();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   _initHomeData();
+  // }
 
   Widget _homeTiles(int index) {
     return new Padding(
@@ -72,7 +70,7 @@ class _HomePageViewState extends State<HomePageView> {
                 children: [
                   new Expanded(
                     flex: 1,
-                    child: _users[index] == null
+                    child: _allUsers[index] == null
                         ? new Container(
                             decoration: new BoxDecoration(
                                 borderRadius: new BorderRadius.circular(40.0),
@@ -93,14 +91,14 @@ class _HomePageViewState extends State<HomePageView> {
                             child: new CircleAvatar(
                               backgroundColor: Colors.white,
                               backgroundImage: new FileImage(
-                                new File(_users[index].image),
+                                new File(_allUsers[index].image),
                               ),
                             ),
                           ),
                   ),
                   new Expanded(
                     flex: 10,
-                    child: _users[index] == null
+                    child: _allUsers[index] == null
                         ? new Container(
                             child: new Center(
                               child: new Text(
@@ -114,7 +112,7 @@ class _HomePageViewState extends State<HomePageView> {
                           )
                         : new Container(
                             child: new Center(
-                            child: new Text("${_users[index].name}"),
+                            child: new Text("${_allUsers[index].name}"),
                           )),
                   ),
                 ]),
@@ -124,22 +122,26 @@ class _HomePageViewState extends State<HomePageView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  new Expanded(
-                    flex: 1,
-                    child: new Icon(
-                      Icons.airport_shuttle,
-                      size: 50.0,
-                      semanticLabel: "just testing",
-                    ),
-                  ),
-                  new Expanded(
-                    flex: 1,
-                    child: new Icon(
-                      Icons.access_alarm,
-                      size: 50.0,
-                      semanticLabel: "just testing",
-                    ),
-                  ),
+                  _home[index].type == "quiz"
+                      ? new Container(
+                          color: Colors.brown,
+                          height: 200.0,
+                          width: 200.0,
+                          child: new Text("quiz"),
+                        )
+                      : _home[index].type == "article"
+                          ? new Container(
+                              color: Colors.red,
+                              height: 200.0,
+                              width: 200.0,
+                              child: new Text("article"),
+                            )
+                          : new Container(
+                              color: Colors.green,
+                              height: 200.0,
+                              width: 200.0,
+                              child: new Text("Activity"),
+                            ),
                 ],
               ),
             ),
@@ -181,8 +183,8 @@ class _HomePageViewState extends State<HomePageView> {
                   ),
                   elevation: 5.0,
                   onPressed: () async {
-                    await LikesRepo()
-                        .insertOrDeleteLike(_home[index].tileId, _user.id);
+                    await LikesRepo().insertOrDeleteLike(
+                        _home[index].tileId, _loggedInUser.id);
                     _isLoading = true;
                     _likes.clear();
                     _initLikeData();
@@ -194,30 +196,47 @@ class _HomePageViewState extends State<HomePageView> {
             new Expanded(
               flex: 2,
               child: new RaisedButton(
-                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                  shape: new RoundedRectangleBorder(
-                      side: new BorderSide(
-                          color: Colors.brown,
-                          width: 1.0,
-                          style: BorderStyle.solid),
-                      borderRadius: new BorderRadius.circular(20.0)),
-                  elevation: 5.0,
-                  onPressed: () async {
-                    String timeStamp =
-                        (new DateTime.now().millisecondsSinceEpoch).toString();
-                    await CommentsRepo().insertAComment(_home[index].tileId,
-                        timeStamp, _user.id, "Hi i am testing comment");
-                    print("comment added");
-                  },
-                  child: new Text(
-                    "Comment",
-                    style: new TextStyle(fontSize: 30.0),
-                  )),
+                padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+                shape: new RoundedRectangleBorder(
+                    side: new BorderSide(
+                        color: Colors.brown,
+                        width: 1.0,
+                        style: BorderStyle.solid),
+                    borderRadius: new BorderRadius.circular(20.0)),
+                elevation: 5.0,
+                onPressed: () {
+                  print("objectffff");
+                  Navigator.of(context).push(
+                    new MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return new CommentListView(
+                          tileId: _home[index].tileId,
+                          loggedInUser: _loggedInUser,
+                        );
+                      },
+                    ),
+                  );
+                },
+                child: new Text(
+                  "Comment",
+                  style: new TextStyle(fontSize: 30.0),
+                ),
+              ),
             ),
           ],
         ),
-
-        // onTap: null,
+        onTap: () {
+          _home[index].type == "quiz"
+              ? print("vfn aayush agrawal")
+              : _home[index].type == "article"
+                  ? print("jhvfkbvgvbkbgkbrgkbg")
+                  : Navigator.of(context).push(new MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                      return DrawingListScreen(
+                        activityId: _home[index].typeId,
+                      );
+                    }));
+        },
         contentPadding: const EdgeInsets.all(25.0),
         isThreeLine: true,
         enabled: true,
@@ -228,7 +247,7 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    _user = AppStateContainer.of(context).state.loggedInUser;
+    _loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     return _isLoading
         ? new CircularProgressIndicator()
         : new RefreshIndicator(
