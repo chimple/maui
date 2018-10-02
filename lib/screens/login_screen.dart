@@ -122,7 +122,10 @@ class _LoginScreenState extends State<LoginScreen>
                   : (_users?.length ?? 0) == 0
                       ? new Container()
                       // : new UserList(users: _users),
-                      : Container(
+                      : ListView(
+                        children: <Widget>[
+                        
+                      Container(
                           padding: const EdgeInsets.all(20.0),
                           child: new Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -259,6 +262,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ],
                           ),
                         ),
+                        ],),
             ),
           );
   }

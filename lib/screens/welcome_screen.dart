@@ -20,6 +20,13 @@ class WelcomeScreenState extends State<WelcomeScreen>
     super.initState();
     _loginButtonController = new AnimationController(
         duration: new Duration(milliseconds: 3000), vsync: this);
+
+    new Future.delayed(const Duration(milliseconds: 2000), () {
+      setState(() {
+        animationStatus = 1;
+      });
+      _playAnimation();
+    });
   }
 
   @override
@@ -71,7 +78,9 @@ class WelcomeScreenState extends State<WelcomeScreen>
                   ),
                   animationStatus == 0
                       ? new Padding(
-                          padding: size.height > size.width ? new EdgeInsets.all(50.0) : new EdgeInsets.all(10.0),
+                          padding: size.height > size.width
+                              ? new EdgeInsets.all(50.0)
+                              : new EdgeInsets.all(10.0),
                           child: new InkWell(
                               onTap: () {
                                 setState(() {
