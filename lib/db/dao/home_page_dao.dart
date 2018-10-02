@@ -17,7 +17,7 @@ class HomeDao {
       ],
     );
     if (maps.length > 0) {
-      return maps.map((el) => new Home.fromMap(el)).toList(growable: false);
+      return maps.map((el) => new Home.fromMap(el)).toList(growable: true);
     }
     return null;
   }

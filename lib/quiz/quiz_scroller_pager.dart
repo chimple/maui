@@ -24,6 +24,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   var top = 0.0;
   int playTime = 10000;
   var expheight;
+
   bool showBottomBar = true;
 
   TabController tabController;
@@ -44,17 +45,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     tabController.dispose();
   }
 
-  Future<ui.Image> _getImage() {
-    Image image = new Image.asset('assets/dict/cat.png');
-    Completer<ui.Image> completer = new Completer<ui.Image>();
-    image.image.resolve(new ImageConfiguration()).addListener(
-        (ImageInfo info, bool _) => completer.complete(info.image));
-    return completer.future;
-  }
-
   @override
   Widget build(BuildContext context) {
     optionalType = widget.relation;
+
     MediaQueryData media = MediaQuery.of(context);
     print("thius..... is....expandheight is.....$expheight");
     print("Wiget relation type is......::${widget.relation}");
@@ -64,35 +58,44 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
     return Scaffold(
         bottomNavigationBar: Container(
-          height: showBottomBar ? 150.0 : 0.0,
-          child: Center(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Tab(
+          height: showBottomBar ? size.height * 0.1 : 0.0,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: new Tab(
                   child: new Icon(
                     Icons.arrow_back,
+                    size: 70.0,
                     semanticLabel: "previous",
                   ),
                 ),
-                Container(
-                  height: 150 * 0.5,
-                  child: new Tab(
-                    child: widget.hud,
+              ),
+              Container(
+                height: size.height * 0.1 * 0.8,
+                child: new Tab(
+                  child: widget.hud,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: new Tab(
+                  child: new Icon(
+                    Icons.arrow_forward,
+                    size: 70.0,
                   ),
                 ),
-                new Tab(
-                  child: new Icon(Icons.arrow_forward),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         body: new FutureBuilder<ui.Image>(
           future: _getImage(),
           builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
             if (snapshot.hasData) {
+              print("hello this changing or not");
               ui.Image image = snapshot.data;
 
               expheight = image.height;
@@ -109,6 +112,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                       //   showBottomBar=true;
                       // }
                     });
+                    print("here comming");
                   }
                 },
                 child: Stack(children: [
@@ -140,18 +144,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                                   // height: 500.0,
                                 ),
                               ),
-                              // const DecoratedBox(
-                              //   decoration: BoxDecoration(
-                              //     gradient: LinearGradient(
-                              //       begin: Alignment(0.0, -1.0),
-                              //       end: Alignment(0.0, -0.4),
-                              //       colors: <Color>[
-                              //         Color(0x60000000),
-                              //         Color(0x00000000)
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -181,8 +173,21 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                   ),
                 ]),
               );
+            } else {
+              return const Center(
+                child: const Text('Loading...'),
+              );
             }
           },
         ));
+  }
+
+  Future<ui.Image> _getImage() {
+    Image image = new Image.asset('assets/dict/cat.png');
+    Completer<ui.Image> completer = new Completer<ui.Image>();
+    image.image.resolve(new ImageConfiguration()).addListener(
+        (ImageInfo info, bool _) => completer.complete(info.image));
+    print("this...is. _geteimage method is........::${completer.future}");
+    return completer.future;
   }
 }

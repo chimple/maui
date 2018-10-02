@@ -1,8 +1,4 @@
-enum QuizType {
-  oneAtAtime,
-  many,
-  pair
-}
+enum QuizType { oneAtATime, many, pair }
 
 class Quiz {
   static const table = 'quiz';
@@ -63,7 +59,7 @@ class Quiz {
   }
 
   QuizType get quizType {
-    if (optionsType == 'oneAtAtime') return QuizType.oneAtAtime;
+    if (optionsType == 'oneAtATime') return QuizType.oneAtATime;
     if (optionsType == 'pair') return QuizType.pair;
     if (optionsType == 'many') return QuizType.many;
   }
