@@ -111,7 +111,7 @@ class _CommentListViewState extends State<CommentListView> {
                             _comments[index].comment);
                         setState(() => _isLoading = true);
                         _initCommentData();
-                      } else if (value == "edit") {
+                      } else {
                         print(value);
                       }
                     },
@@ -267,9 +267,7 @@ class _CommentListViewState extends State<CommentListView> {
                             onPressed: () async {
                               String comment = _textController.text;
                               _textController.text = "";
-                              print("hvgf");
                               myFocusNode.unfocus();
-                              print("vf");
                               String timeStamp =
                                   (new DateTime.now().millisecondsSinceEpoch)
                                       .toString();
@@ -277,7 +275,6 @@ class _CommentListViewState extends State<CommentListView> {
                                   timeStamp, widget.loggedInUser.id, comment);
 
                               setState(() => _isLoading = true);
-                              print("kjbgfib");
                               _initCommentData();
                             },
                           ),

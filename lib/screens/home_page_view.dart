@@ -225,9 +225,9 @@ class _HomePageViewState extends State<HomePageView> {
         ),
         onTap: () {
           _home[index].type == "quiz"
-              ? print("vfn aayush agrawal")
+              ? print("To the Quiz")
               : _home[index].type == "article"
-                  ? print("jhvfkbvgvbkbgkbrgkbg")
+                  ? print("To the article")
                   : Navigator.of(context).push(new MaterialPageRoute<void>(
                       builder: (BuildContext context) {
                       return DrawingListScreen(
