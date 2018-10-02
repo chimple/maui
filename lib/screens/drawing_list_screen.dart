@@ -5,6 +5,7 @@ import 'package:maui/db/entity/drawing.dart';
 import 'package:maui/db/entity/activity.dart';
 import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/components/drawing_list.dart';
+import 'package:maui/screens/drawing_screen.dart';
 
 class DrawingListScreen extends StatefulWidget {
   final String activityId;
@@ -30,6 +31,15 @@ class DrawingListScreenState extends State<DrawingListScreen> {
   void _initData() async {
     _activity = await ActivityRepo().getActivity(widget.activityId);
     _drawings = await DrawingRepo().getDrawingsByActivityId(widget.activityId);
+    if (_drawings?.length == 0)
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute<void>(builder: (BuildContext context) {
+          return DrawingScreen(
+            activityId: widget.activityId,
+          );
+        }));
+      });
     setState(() => _isLoading = false);
   }
 
@@ -49,6 +59,18 @@ class DrawingListScreenState extends State<DrawingListScreen> {
             _activity.text,
             overflow: TextOverflow.ellipsis,
           ),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.add_circle),
+              tooltip: 'Create new drawing',
+              onPressed: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return DrawingScreen(
+                      activityId: widget.activityId,
+                    );
+                  })),
+            )
+          ],
         ),
         body: DrawingList(
           drawings: _drawings,

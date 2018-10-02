@@ -9,11 +9,9 @@ import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/repos/activity_progress_repo.dart';
 
 class DrawingScreen extends StatefulWidget {
-  final String topicId;
   final String activityId;
   final String drawingId;
-  DrawingScreen({Key key, this.activityId, this.drawingId, this.topicId})
-      : super(key: key);
+  DrawingScreen({Key key, this.activityId, this.drawingId}) : super(key: key);
 
   @override
   DrawingScreenState createState() {
@@ -32,18 +30,20 @@ class DrawingScreenState extends State<DrawingScreen> {
     if (widget.drawingId != null)
       _drawingSelect = DrawingSelect.id;
     else
-      _drawingSelect = DrawingSelect.latest;
+      _drawingSelect = DrawingSelect.create;
     _initData();
   }
 
   void _initData() async {
     _activity = await ActivityRepo().getActivity(widget.activityId);
-    User _user = AppStateContainer.of(context).state.loggedInUser;
-    print(await ActivityProgressRepo().insertActivityProgress(
-        _user.id,
-        widget.topicId,
-        widget.activityId,
-        (new DateTime.now().millisecondsSinceEpoch).toString()));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      User user = AppStateContainer.of(context).state.loggedInUser;
+      await ActivityProgressRepo().insertActivityProgress(
+          user.id,
+          _activity.topicId,
+          widget.activityId,
+          (new DateTime.now().millisecondsSinceEpoch).toString());
+    });
     setState(() {
       _isLoading = false;
     });
@@ -65,27 +65,6 @@ class DrawingScreenState extends State<DrawingScreen> {
           _activity.text,
           overflow: TextOverflow.ellipsis,
         ),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.add_circle),
-            tooltip: 'Create new drawing',
-            onPressed: () =>
-                setState(() => _drawingSelect = DrawingSelect.create),
-          ),
-          new IconButton(
-            icon: new Icon(Icons.view_list),
-            tooltip: 'View all drawings',
-            onPressed: () {
-              _drawingSelect = DrawingSelect.none;
-              Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (BuildContext context) {
-                return DrawingListScreen(
-                  activityId: widget.activityId,
-                );
-              }));
-            },
-          ),
-        ],
       ),
       body: DrawingWrapper(
         activityId: widget.activityId,

@@ -23,10 +23,18 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
     setState(() => _isLoading = false);
   }
 
+  
+
+  @override
+    void didChangeDependencies() {
+      // TODO: implement didChangeDependencies
+      super.didChangeDependencies();
+      _initData();
+    }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading == true) {
-      _initData();
       return new Container(
         child: new LinearProgressIndicator(
           value: 0.0,
@@ -38,7 +46,7 @@ class ActivityProgressTrackerState extends State<ActivityProgressTracker> {
     return new Container(
       child: new LinearProgressIndicator(
         value: _activityProgress,
-          backgroundColor: Colors.orange,
+        backgroundColor: Colors.orange,
       ),
     );
   }

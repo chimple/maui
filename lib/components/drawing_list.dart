@@ -20,7 +20,7 @@ class DrawingList extends StatelessWidget {
       crossAxisSpacing: 8.0,
       children: drawings
           .map((d) => RaisedButton(
-                onPressed: () => Navigator.of(context).push(
+                onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute<void>(
                             builder: (BuildContext context) {
                       return DrawingScreen(
@@ -29,7 +29,8 @@ class DrawingList extends StatelessWidget {
                       );
                     })),
                 child: ScopedModel<ActivityModel>(
-                  model: ActivityModel.fromJson(json.decode(d.json))
+                  model: ActivityModel(
+                      paintData: PaintData.fromJson(json.decode(d.json)))
                     ..isInteractive = false,
                   child: Paper(),
                 ),
