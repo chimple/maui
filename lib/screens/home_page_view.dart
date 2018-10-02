@@ -45,15 +45,14 @@ class _HomePageViewState extends State<HomePageView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _initHomeData();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  //   _initHomeData();
-  // }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _initHomeData();
+  }
 
   Widget _homeTiles(int index) {
     return new Padding(
@@ -127,20 +126,20 @@ class _HomePageViewState extends State<HomePageView> {
                           color: Colors.brown,
                           height: 200.0,
                           width: 200.0,
-                          child: new Text("quiz"),
+                          child: new Text(_home[index].typeId),
                         )
                       : _home[index].type == "article"
                           ? new Container(
                               color: Colors.red,
                               height: 200.0,
                               width: 200.0,
-                              child: new Text("article"),
+                              child: new Text(_home[index].typeId),
                             )
                           : new Container(
                               color: Colors.green,
                               height: 200.0,
                               width: 200.0,
-                              child: new Text("Activity"),
+                              child: new Text(_home[index].typeId),
                             ),
                 ],
               ),
@@ -188,7 +187,6 @@ class _HomePageViewState extends State<HomePageView> {
                     _isLoading = true;
                     _likes.clear();
                     _initLikeData();
-                    print("liked");
                   },
                 ),
               ),
