@@ -35,6 +35,7 @@ class QuizButton extends StatelessWidget {
             : new Center(
                 child: new Text(text,
                     key: new Key("${key}"),
-                    style: new TextStyle(fontSize: size.height * 0.02 ,color: Colors.black))));
+                    style: new TextStyle(
+                        fontSize: size.height * 0.02, color: Colors.black))));
   }
 }

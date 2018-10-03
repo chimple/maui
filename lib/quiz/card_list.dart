@@ -266,13 +266,13 @@ class CardListState extends State<CardList> {
                       });
                       new Future.delayed(const Duration(milliseconds: 800), () {
                         var onedata = {
-                        'correct': correctChoices,
-                        'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
-                        'choicesRightOrWrong': rightOrWrong
-                      };
-                      widget.onPress(onedata, displayIcon = true);
+                          'correct': correctChoices,
+                          'total': choice.length,
+                          'choices': "${widget.input['choices']}",
+                          'answer': "${widget.input['answer']}",
+                          'choicesRightOrWrong': rightOrWrong
+                        };
+                        widget.onPress(onedata, displayIcon = true);
                       });
                     }
                   }
