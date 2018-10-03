@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/screens/tab_home.dart';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:async';
@@ -75,11 +76,17 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
-                child: new Tab(
-                  child: new Icon(
-                    Icons.arrow_back,
-                    size: 70.0,
-                    semanticLabel: "previous",
+                child: GestureDetector(
+                  onTap:()    => Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return TabHome();
+                  })),
+                  child: new Tab(
+                    child: new Icon(
+                      Icons.arrow_back,
+                      size: 70.0,
+                      semanticLabel: "previous",
+                    ),
                   ),
                 ),
               ),
