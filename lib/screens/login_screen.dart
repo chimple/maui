@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen>
   AnimationController controller;
   CameraDescription camera;
   final textEditController = TextEditingController();
-  double _size = 300.0;
+  double _size = 500.0;
   FocusNode _focusName;
 
   @override
@@ -71,13 +71,13 @@ class _LoginScreenState extends State<LoginScreen>
 
   _compressIcon() {
     setState(() {
-      _size = 100.0;
+      _size = 250.0;
     });
   }
 
   _decompressIcon() {
     setState(() {
-      _size = 300.0;
+      _size = 500.0;
     });
   }
 
@@ -161,8 +161,8 @@ class _LoginScreenState extends State<LoginScreen>
                                     child: Padding(
                                         padding: new EdgeInsets.symmetric(
                                             horizontal: 40.0),
-                                        child: new FittedBox(
-                                            fit: BoxFit.contain,
+                                        child: new AspectRatio(
+                                            aspectRatio: 2.0,
                                             child: new SvgPicture.asset(
                                               "assets/team animals.svg",
                                               allowDrawingOutsideViewBox: false,
@@ -254,66 +254,36 @@ class _LoginScreenState extends State<LoginScreen>
                                                       size.height * 0.1)
                                                   : new EdgeInsets.all(
                                                       size.height * 0.08),
-                                              child: new TextFormField(
+                                              child: new TextField(
                                                 focusNode: _focusName,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                decoration: new InputDecoration(
-                                                    hintText: Loca.of(context)
-                                                        .writeYourName,
+                                                  autocorrect: false,
+                                                  onSubmitted: _submit(userName),
+                                                  onChanged: _onTyping,
+                                                  controller:
+                                                      TextEditingController(
+                                                          text: userName),
+                                                  decoration: new InputDecoration(
                                                     labelStyle: TextStyle(
                                                         color: Colors.red),
                                                     isDense: true,
                                                     border: const OutlineInputBorder(
                                                         borderRadius:
                                                             const BorderRadius
-                                                                .all(const Radius
-                                                                    .circular(
-                                                                10.0)),
+                                                                    .all(
+                                                                const Radius
+                                                                        .circular(
+                                                                    10.0)),
                                                         borderSide:
                                                             const BorderSide(
                                                                 style: BorderStyle
                                                                     .solid,
                                                                 width: 100.0,
                                                                 color: Colors
-                                                                    .amber))),
-                                                maxLines: 1,
-                                                enabled: true,
-                                                onFieldSubmitted: _submit(userName),
-                                                onSaved: _onTyping,
-                                                controller: TextEditingController(text: userName),
-                                                  
-
-                                                // TextField(
-                                                //   autocorrect: false,
-                                                //   onSubmitted: _submit(userName),
-                                                //   onChanged: _onTyping,
-                                                //   controller:
-                                                //       TextEditingController(
-                                                //           text: userName),
-                                                //   decoration: new InputDecoration(
-                                                //     labelStyle: TextStyle(
-                                                //         color: Colors.red),
-                                                //     isDense: true,
-                                                //     border: const OutlineInputBorder(
-                                                //         borderRadius:
-                                                //             const BorderRadius
-                                                //                     .all(
-                                                //                 const Radius
-                                                //                         .circular(
-                                                //                     10.0)),
-                                                //         borderSide:
-                                                //             const BorderSide(
-                                                //                 style: BorderStyle
-                                                //                     .solid,
-                                                //                 width: 100.0,
-                                                //                 color: Colors
-                                                //                     .amber)),
-                                                //     hintText: Loca.of(context)
-                                                //         .writeYourName,
-                                                //   ),
-                                                // ),
-                                              ),
+                                                                    .amber)),
+                                                    hintText: Loca.of(context)
+                                                        .writeYourName,
+                                                  ),
+                                                ),
                                             ),
                                           ],
                                         ),

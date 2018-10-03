@@ -4,7 +4,7 @@ import 'package:maui/components/quiz_button.dart';
 
 enum OptionCategory { oneAtATime, many, pair }
 
-enum ClickedStatus { no, yes, done }
+enum ClickedStatus { no, yes, done, correct, incorrect, untouched }
 
 class CardList extends StatefulWidget {
   final Map<String, dynamic> input;
@@ -99,7 +99,7 @@ class CardListState extends State<CardList> {
                     ? Status.notSelected
                     : clicked[k] == ClickedStatus.yes
                         ? Status.disabled
-                        : rightOrWrong[k] ? Status.correct : Status.incorrect)
+                        : widget.optionsType == OptionCategory.oneAtATime ? clicked[k] == ClickedStatus.correct ? Status.correct : clicked[k] == ClickedStatus.incorrect ? Status.incorrect: Status.notSelected :rightOrWrong[k] ? Status.correct : Status.incorrect)
                 : rightOrWrong[k] == true ? Status.correct : Status.incorrect),
             onPress: () {
               // changing value of clicked array to yes when button is clicked
@@ -192,17 +192,21 @@ class CardListState extends State<CardList> {
                     });
 
                     new Future.delayed(const Duration(milliseconds: 300), () {
+                     
                       setState(() {
                         clicked = choice
-                            .map((e) => ClickedStatus.done)
+                            .map((e) => ClickedStatus.untouched)
                             .toList(growable: false);
                       });
 
                       if (text == widget.input['answer'].first) {
                         setState(() {
-                          rightOrWrong[k] = true;
+                          clicked[k] = ClickedStatus.correct;
                           correctChoices++;
                         });
+                      }
+                      else {
+                        clicked[k] = ClickedStatus.incorrect;
                       }
                     });
                     new Future.delayed(const Duration(milliseconds: 800), () {
