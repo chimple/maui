@@ -59,18 +59,12 @@ class DrawingScreenState extends State<DrawingScreen> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return new Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _activity.text,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
+    return Scaffold(
       body: DrawingWrapper(
-        activityId: widget.activityId,
-        drawingSelect: _drawingSelect,
-        drawingId: widget.drawingId,
-      ),
+          activityId: widget.activityId,
+          drawingSelect: _drawingSelect,
+          drawingId: widget.drawingId,
+          title: _activity.text),
     );
   }
 }

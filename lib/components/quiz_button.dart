@@ -15,12 +15,14 @@ class QuizButton extends StatelessWidget {
       : super(key: key);
 
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    var size = media.size;
     print("QuizButton.build");
     print("ButtonStatus - $buttonStatus");
 
     return new RaisedButton(
         onPressed: buttonStatus == Status.notSelected ? onPress : null,
-        color: Color(0xFFffffff),
+        color: Colors.amber,
         disabledColor: buttonStatus == Status.disabled
             ? Colors.grey
             : buttonStatus == Status.correct
@@ -33,6 +35,6 @@ class QuizButton extends StatelessWidget {
             : new Center(
                 child: new Text(text,
                     key: new Key("${key}"),
-                    style: new TextStyle(color: Colors.black))));
+                    style: new TextStyle(fontSize: size.height * 0.02 ,color: Colors.black))));
   }
 }

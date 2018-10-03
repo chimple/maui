@@ -17,6 +17,17 @@ class Activity {
   String audio;
   String video;
 
+  static const allCols = [
+    idCol,
+    topicIdCol,
+    textCol,
+    stickerPackCol,
+    serialCol,
+    imageCol,
+    audioCol,
+    videoCol
+  ];
+
   Activity(
       {this.id,
       this.topicId,

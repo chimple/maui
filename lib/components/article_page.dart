@@ -59,7 +59,7 @@ class _ArticlePageState extends State<ArticlePage>
   @override
   void initState() {
     playerState = PlayerState.paused;
-    articleProgressTracker();
+    //articleProgressTracker();
     super.initState();
     tabController = new TabController(length: 3, vsync: this);
     _isLoading = false;
@@ -378,29 +378,15 @@ class _ArticlePageState extends State<ArticlePage>
                                   topLeft: const Radius.circular(30.0),
                                   topRight: const Radius.circular(40.0)),
                             ),
-                            child: Column(
-                              children: [
-//                        _Markdown(),
-                                new MarkdownBody(
-                                  data: "${widget.text}",
-                                  onTapLink: (e) => Navigator.of(_ctx)
-                                      .pushReplacement(new MaterialPageRoute(
-                                          builder: (BuildContext _ctx) =>
-                                              new TopicScreen(
-                                                topicId: "fox",
-                                                topicName: "fox",
-                                              ))),
-                                ),
-                                new MarkdownBody(
-                                  data: "${widget.text}",
-                                  onTapLink: (e) => print(" this is $e"),
-                                ),
-                                new MarkdownBody(data: "${widget.text}"),
-                                new MarkdownBody(data: "${widget.text}"),
-                                new MarkdownBody(data: "${widget.text}"),
-                                new MarkdownBody(data: "${widget.text}"),
-                                new MarkdownBody(data: "${widget.text}"),
-                              ],
+                            child: MarkdownBody(
+                              data: "${widget.text}",
+                              onTapLink: (e) => Navigator.of(_ctx)
+                                  .pushReplacement(new MaterialPageRoute(
+                                      builder: (BuildContext _ctx) =>
+                                          new TopicScreen(
+                                            topicId: "fox",
+                                            topicName: "fox",
+                                          ))),
                             )),
                       ]),
                     ),

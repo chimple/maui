@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:maui/db/entity/activity_progress.dart';
 import 'package:maui/db/dao/activity_progress_dao.dart';
-import "package:maui/repos/activity_topic_repo.dart";
+import "package:maui/db/dao/activity_dao.dart";
 
 class ActivityProgressRepo {
   const ActivityProgressRepo();
@@ -12,9 +12,12 @@ class ActivityProgressRepo {
       String topicId, String userId) async {
     int activitiesAttempted = await activityProgressDao
         .getActivityProgressStatusByTopicIdAndUserId(topicId, userId);
-    int activitiesPresent =
-        await ActivityTopicRepo().getTopicActivitiesByTopicId(topicId);
-    double activitiesCompleted = (activitiesAttempted / activitiesPresent);
+    final activities = await ActivityDao().getActivitiesByTopicId(topicId);
+
+    int activitiesPresent = activities?.length ?? 0;
+    double activitiesCompleted = activitiesPresent == 0
+        ? 0.0
+        : (activitiesAttempted / activitiesPresent);
     return activitiesCompleted;
   }
 
