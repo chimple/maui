@@ -1,34 +1,27 @@
-enum QuizType {
-  unknown,
-  multipleChoice,
-  trueOrFalse,
-  matchTheFollowing,
-  grouping,
-  sequence
-}
+enum QuizType { oneAtATime, many, pair }
 
 class Quiz {
   static const table = 'quiz';
   static const idCol = 'id';
   static const topicIdCol = 'topicId';
   static const levelCol = 'level';
-  static const typeCol = 'type';
+  static const optionsTypeCol = 'optionsType';
   static const contentCol = 'content';
 
   String id;
   String topicId;
   int level;
-  String type;
+  String optionsType;
   String content;
 
-  Quiz({this.id, this.topicId, this.level, this.type, this.content});
+  Quiz({this.id, this.topicId, this.level, this.optionsType, this.content});
 
   Map<String, dynamic> toMap() {
     return {
       idCol: id,
       topicIdCol: topicId,
       levelCol: level,
-      typeCol: type,
+      optionsTypeCol: optionsType,
       contentCol: content
     };
   }
@@ -38,7 +31,7 @@ class Quiz {
             id: map[idCol],
             topicId: map[topicIdCol],
             level: map[levelCol],
-            type: map[typeCol],
+            optionsType: map[optionsTypeCol],
             content: map[contentCol]);
 
   @override
@@ -46,7 +39,7 @@ class Quiz {
       id.hashCode ^
       topicId.hashCode ^
       level.hashCode ^
-      type.hashCode ^
+      optionsType.hashCode ^
       content.hashCode;
 
   @override
@@ -57,20 +50,17 @@ class Quiz {
           id == other.id &&
           topicId == other.topicId &&
           level == other.level &&
-          type == other.type &&
+          optionsType == other.optionsType &&
           content == other.content;
 
   @override
   String toString() {
-    return 'Quiz{id: $id, topicId: $topicId, level: $level, type: $type, content: $content}';
+    return 'Quiz{id: $id, topicId: $topicId, level: $level, type: $optionsType, content: $content}';
   }
 
   QuizType get quizType {
-    if (type == 'multipleChoice') return QuizType.multipleChoice;
-    if (type == 'trueOrFalse') return QuizType.trueOrFalse;
-    if (type == 'matchTheFollowing') return QuizType.matchTheFollowing;
-    if (type == 'grouping') return QuizType.grouping;
-    if (type == 'sequence') return QuizType.sequence;
-    return QuizType.unknown;
+    if (optionsType == 'oneAtATime') return QuizType.oneAtATime;
+    if (optionsType == 'pair') return QuizType.pair;
+    if (optionsType == 'many') return QuizType.many;
   }
 }

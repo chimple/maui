@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/camera.dart';
@@ -94,6 +95,9 @@ class _LoginScreenState extends State<LoginScreen>
   Orientation ornt;
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+
+    var size = media.size;
     var user = AppStateContainer.of(context).state.loggedInUser;
     print("user detail ?::: $user");
     return (user != null)
@@ -105,96 +109,157 @@ class _LoginScreenState extends State<LoginScreen>
                     backgroundColor: new Color(0xff4C5C9E),
                     title: new Text(Loca.of(context).enterYourDetails),
                   ),
-            body: _isLoading
-                ? new SizedBox(
-                    width: 20.0,
-                    height: 20.0,
-                    child: new CircularProgressIndicator(),
-                  )
-                : (_users?.length ?? 0) == 0
-                    ? new Container()
-                    // : new UserList(users: _users),
-                    : Container(
-                        padding: const EdgeInsets.all(20.0),
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            imagePathStore == null
-                                ? Center(
-                                    child: Container(
-                                      height: 130.0,
-                                      width: 130.0,
-                                      child: RaisedButton(
-                                        splashColor: Colors.blue,
-                                        color: Colors.white,
-                                        shape: CircleBorder(
-                                            side: BorderSide(
-                                                width: 3.0,
-                                                color: new Color(0xff4C5C9E))),
-                                        onPressed: () => getImage(context),
-                                        child: new IconTheme(
-                                          data: IconThemeData(
-                                              size: 70.0,
-                                              color: new Color(0xff4C5C9E)),
-                                          child: Icon(Icons.add),
-                                        ),
+            body: new Container(
+              decoration: new BoxDecoration(
+                color: Colors.purple,
+              ),
+              child: _isLoading
+                  ? new SizedBox(
+                      width: 20.0,
+                      height: 20.0,
+                      child: new CircularProgressIndicator(),
+                    )
+                  : (_users?.length ?? 0) == 0
+                      ? new Container()
+                      // : new UserList(users: _users),
+                      : Container(
+                          padding: const EdgeInsets.all(20.0),
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              new AspectRatio(
+                                  aspectRatio: size.height > size.width ? 2.0 : 5.0,
+                                  child: new SvgPicture.asset(
+                                    "assets/team animals.svg",
+                                    allowDrawingOutsideViewBox: false,
+                                  )),
+                              new Stack(
+                                alignment: AlignmentDirectional.bottomCenter,
+                                children: <Widget>[
+                                  new Container(
+                                    decoration: new BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          new BorderRadius.circular(50.0),
+                                      border: new Border.all(
+                                        width: 6.0,
+                                        color: Colors.amber,
                                       ),
                                     ),
-                                  )
-                                : InkWell(
-                                    onTap: () => getImage(context),
-                                    child: new Container(
-                                        width: 130.0,
-                                        height: 130.0,
-                                        decoration: new BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: new DecorationImage(
-                                              image: FileImage(
-                                                  File(imagePathStore)),
-                                              fit: BoxFit.fill,
-                                            ))),
+                                    child: new Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Padding(
+                                          padding: size.height > size.width ? new EdgeInsets.all(10.0) : new EdgeInsets.all(5.0),
+                                        ),
+                                        imagePathStore == null
+                                            ? Center(
+                                                child: Container(
+                                                  height: size.height > size.width ? size.height * 0.2 : size.height * 0.1,
+                                                  width: size.height > size.width ? size.width * 0.2 : size.width * 0.1,
+                                                  child: RaisedButton(
+                                                    splashColor: Colors.amber,
+                                                    color: Colors.white,
+                                                    shape: CircleBorder(
+                                                        side: BorderSide(
+                                                            width: 3.0,
+                                                            color:
+                                                                Colors.amber)),
+                                                    onPressed: () =>
+                                                        getImage(context),
+                                                    child: new IconTheme(
+                                                      data: IconThemeData(
+                                                        size: size.height * 0.05,
+                                                          color: Colors.amber),
+                                                      child: Icon(Icons.add),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () => getImage(context),
+                                                child: new Container(
+                                                    width: 130.0,
+                                                    height: 130.0,
+                                                    decoration:
+                                                        new BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            image:
+                                                                new DecorationImage(
+                                                              image: FileImage(File(
+                                                                  imagePathStore)),
+                                                              fit: BoxFit.fill,
+                                                            ))),
+                                              ),
+                                        new Padding(
+                                          padding: size.height > size.width ? new EdgeInsets.all(
+                                              size.height * 0.1) : new EdgeInsets.all(size.height * 0.08),
+                                          child: new TextField(
+                                            autocorrect: false,
+                                            onSubmitted: _submit(userName),
+                                            onChanged: _onTyping,
+                                            controller: TextEditingController(
+                                                text: userName),
+                                            decoration: new InputDecoration(
+                                              labelStyle:
+                                                  TextStyle(color: Colors.red),
+                                              isDense: true,
+                                              border: const OutlineInputBorder(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          const Radius.circular(
+                                                              10.0)),
+                                                  borderSide: const BorderSide(
+                                                      style: BorderStyle.solid,
+                                                      width: 100.0,
+                                                      color: Colors.amber)),
+                                              hintText: Loca.of(context)
+                                                  .writeYourName,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                            new TextField(
-                              autocorrect: false,
-                              onSubmitted: _submit(userName),
-                              onChanged: _onTyping,
-                              controller: TextEditingController(text: userName),
-                              decoration: new InputDecoration(
-                                labelStyle: TextStyle(color: Colors.red),
-                                isDense: true,
-                                border: const OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0)),
-                                    borderSide: const BorderSide(
-                                        style: BorderStyle.solid,
-                                        width: 100.0,
-                                        color: const Color(0xff4C5C9E))),
-                                hintText: Loca.of(context).writeYourName,
+                                  new FractionalTranslation(
+                                    translation: size.height > size.width ? Offset(0.0, 0.5) : Offset(0.0, 0.5),
+                                    child: 
+                                  new Container(
+                                      alignment: new FractionalOffset(0.5, 0.5),
+                                      child: new Shake(
+                                        animation: shakeAnimation,
+                                        child: Container(
+                                          width: 100.0,
+                                          height: 50.0,
+                                          child: new RaisedButton(
+                                              splashColor: Colors.amber,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                  side: BorderSide(
+                                                      width: 3.0,
+                                                      color: Colors.amber)),
+                                              color: Colors.amber,
+                                              child: new Icon(
+                                                Icons.keyboard_arrow_right,
+                                                color: Colors.white,
+                                              ),
+                                              onPressed: tabSreen),
+                                        ),
+                                      )))
+                                ],
                               ),
-                            ),
-                            Shake(
-                              animation: shakeAnimation,
-                              child: Container(
-                                width: 100.0,
-                                height: 50.0,
-                                child: new RaisedButton(
-                                    splashColor: Colors.blueAccent,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        side: BorderSide(
-                                            width: 3.0,
-                                            color: new Color(0xff4C5C9E))),
-                                    color: new Color(0xffE3EB28),
-                                    child: new Icon(Icons.keyboard_arrow_right),
-                                    onPressed: tabSreen),
-                              ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
+            ),
           );
   }
 

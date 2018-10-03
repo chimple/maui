@@ -25,6 +25,7 @@ class Loca {
   String get gallery => Intl.message('Gallery', name: 'gallery');
   String get topic => Intl.message('Topic', name: 'topic');
   String get game => Intl.message('Game', name: 'game');
+  String get home => Intl.message("Home", name: 'home');
   String get category => Intl.message('Category', name: 'category');
   String get profile => Intl.message('Profile', name: 'profile');
   String get reflex => Intl.message('reflex', name: 'reflex');
