@@ -86,10 +86,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   }
 
   void _initState() async {
-    print("here comming but exception throwing here......>>");
-    // widget.gameConfig.topicId = 'lion'; //TODO: Link to topic
-    // print("here comming but exception throwing here..........${ widget.gameConfig.topicId}>>");
-    _quizzes = await QuizRepo().getQuizzesByTopicId("lion");
+    // widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
+    _quizzes = await QuizRepo().getQuizzesByTopicId('tiger');
 
     print("hello check the relation is....${_quizzes}");
     _quizInputs = _quizzes.map((quiz) {
