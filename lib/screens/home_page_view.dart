@@ -41,6 +41,25 @@ class _HomePageViewState extends State<HomePageView> {
     }
   }
 
+  Widget _initTileData(String type, String typeId) {
+    return new Container(
+      color: type == "quiz"
+          ? Colors.red
+          : type == "article" ? Colors.green : Colors.grey,
+      height: 400.0,
+      width: 400.0,
+      child: new Center(
+        child: new Text(
+          "$typeId" + " " + "$type",
+          style: new TextStyle(
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -122,25 +141,12 @@ class _HomePageViewState extends State<HomePageView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _home[index].type == "quiz"
-                      ? new Container(
-                          color: Colors.brown,
-                          height: 200.0,
-                          width: 200.0,
-                          child: new Text(_home[index].typeId),
-                        )
+                      ? _initTileData(_home[index].type, _home[index].typeId)
                       : _home[index].type == "article"
-                          ? new Container(
-                              color: Colors.red,
-                              height: 200.0,
-                              width: 200.0,
-                              child: new Text(_home[index].typeId),
-                            )
-                          : new Container(
-                              color: Colors.green,
-                              height: 200.0,
-                              width: 200.0,
-                              child: new Text(_home[index].typeId),
-                            ),
+                          ? _initTileData(
+                              _home[index].type, _home[index].typeId)
+                          : _initTileData(
+                              _home[index].type, _home[index].typeId),
                 ],
               ),
             ),
