@@ -12,7 +12,7 @@ class HomeDao {
       columns: [
         Home.tileIdCol,
         Home.typeCol,
-        Home.typeCol,
+        Home.typeIdCol,
         Home.userIdCol,
       ],
     );

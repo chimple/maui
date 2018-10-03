@@ -22,10 +22,12 @@ class LikesRepo {
     if (like == null) {
       await likesDao
           .insertALike(new Likes(tileId: tileId, likedUserId: likedUserId));
+      print("inserted");
       return "Like inserted";
     } else {
       await likesDao
           .deleteALike(new Likes(tileId: tileId, likedUserId: likedUserId));
+      print("deleted");
       return "Like deleted";
     }
   }
