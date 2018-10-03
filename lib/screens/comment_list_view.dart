@@ -38,6 +38,7 @@ class _CommentListViewState extends State<CommentListView> {
   }
 
   void _initCommentData() async {
+    setState(() => _isLoading = true);
     _comments = await CommentsRepo().getCommentsByTileId(widget.tileId);
     if (_comments != null) {
       _initUserData();
@@ -111,7 +112,7 @@ class _CommentListViewState extends State<CommentListView> {
                             _comments[index].comment);
                         setState(() => _isLoading = true);
                         _initCommentData();
-                      } else if (value == "edit") {
+                      } else {
                         print(value);
                       }
                     },
@@ -267,18 +268,20 @@ class _CommentListViewState extends State<CommentListView> {
                             onPressed: () async {
                               String comment = _textController.text;
                               _textController.text = "";
-                              print("hvgf");
                               myFocusNode.unfocus();
-                              print("vf");
-                              String timeStamp =
-                                  (new DateTime.now().millisecondsSinceEpoch)
-                                      .toString();
-                              await CommentsRepo().insertAComment(widget.tileId,
-                                  timeStamp, widget.loggedInUser.id, comment);
+                              if (comment != "") {
+                                String timeStamp =
+                                    (new DateTime.now().millisecondsSinceEpoch)
+                                        .toString();
+                                await CommentsRepo().insertAComment(
+                                    widget.tileId,
+                                    timeStamp,
+                                    widget.loggedInUser.id,
+                                    comment);
 
-                              setState(() => _isLoading = true);
-                              print("kjbgfib");
-                              _initCommentData();
+                                
+                                _initCommentData();
+                              }
                             },
                           ),
                         ),

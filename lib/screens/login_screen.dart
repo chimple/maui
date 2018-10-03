@@ -31,6 +31,10 @@ class _LoginScreenState extends State<LoginScreen>
   Animation shakeAnimation;
   AnimationController controller;
   CameraDescription camera;
+  final textEditController = TextEditingController();
+  double _size = 500.0;
+  FocusNode _focusName;
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +45,11 @@ class _LoginScreenState extends State<LoginScreen>
         duration: new Duration(milliseconds: 50), vsync: this);
     shakeAnimation = new Tween(begin: -4.0, end: 4.0).animate(controller);
     controller.addStatusListener((status) {});
+    _focusName = FocusNode()
+      ..addListener(() {
+        print('Name Input has focus');
+        _focusName.hasFocus ? _compressIcon() : _decompressIcon();
+      });
     _initData();
   }
 
@@ -60,6 +69,18 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  _compressIcon() {
+    setState(() {
+      _size = 250.0;
+    });
+  }
+
+  _decompressIcon() {
+    setState(() {
+      _size = 500.0;
+    });
+  }
+
   @override
   void didUpdateWidget(LoginScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -68,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([]);
+    _focusName.dispose();
     super.dispose();
   }
 
@@ -122,142 +144,189 @@ class _LoginScreenState extends State<LoginScreen>
                   : (_users?.length ?? 0) == 0
                       ? new Container()
                       // : new UserList(users: _users),
-                      : Container(
-                          padding: const EdgeInsets.all(20.0),
-                          child: new Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              new AspectRatio(
-                                  aspectRatio: size.height > size.width ? 2.0 : 5.0,
-                                  child: new SvgPicture.asset(
-                                    "assets/team animals.svg",
-                                    allowDrawingOutsideViewBox: false,
-                                  )),
-                              new Stack(
-                                alignment: AlignmentDirectional.bottomCenter,
+                      : ListView(
+                          children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.all(20.0),
+                              child: new Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisSize: MainAxisSize.max,
+                                // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  new Container(
-                                    decoration: new BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          new BorderRadius.circular(50.0),
-                                      border: new Border.all(
-                                        width: 6.0,
-                                        color: Colors.amber,
-                                      ),
-                                    ),
-                                    child: new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        new Padding(
-                                          padding: size.height > size.width ? new EdgeInsets.all(10.0) : new EdgeInsets.all(5.0),
-                                        ),
-                                        imagePathStore == null
-                                            ? Center(
-                                                child: Container(
-                                                  height: size.height > size.width ? size.height * 0.2 : size.height * 0.1,
-                                                  width: size.height > size.width ? size.width * 0.2 : size.width * 0.1,
-                                                  child: RaisedButton(
-                                                    splashColor: Colors.amber,
-                                                    color: Colors.white,
-                                                    shape: CircleBorder(
-                                                        side: BorderSide(
-                                                            width: 3.0,
-                                                            color:
-                                                                Colors.amber)),
-                                                    onPressed: () =>
-                                                        getImage(context),
-                                                    child: new IconTheme(
-                                                      data: IconThemeData(
-                                                        size: size.height * 0.05,
-                                                          color: Colors.amber),
-                                                      child: Icon(Icons.add),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            : InkWell(
-                                                onTap: () => getImage(context),
-                                                child: new Container(
-                                                    width: 130.0,
-                                                    height: 130.0,
-                                                    decoration:
-                                                        new BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            image:
-                                                                new DecorationImage(
-                                                              image: FileImage(File(
-                                                                  imagePathStore)),
-                                                              fit: BoxFit.fill,
-                                                            ))),
-                                              ),
-                                        new Padding(
-                                          padding: size.height > size.width ? new EdgeInsets.all(
-                                              size.height * 0.1) : new EdgeInsets.all(size.height * 0.08),
-                                          child: new TextField(
-                                            autocorrect: false,
-                                            onSubmitted: _submit(userName),
-                                            onChanged: _onTyping,
-                                            controller: TextEditingController(
-                                                text: userName),
-                                            decoration: new InputDecoration(
-                                              labelStyle:
-                                                  TextStyle(color: Colors.red),
-                                              isDense: true,
-                                              border: const OutlineInputBorder(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          const Radius.circular(
-                                                              10.0)),
-                                                  borderSide: const BorderSide(
-                                                      style: BorderStyle.solid,
-                                                      width: 100.0,
-                                                      color: Colors.amber)),
-                                              hintText: Loca.of(context)
-                                                  .writeYourName,
-                                            ),
+                                  AnimatedContainer(
+                                    height: _size,
+                                    width: _size,
+                                    curve: Curves.bounceOut,
+                                    child: Padding(
+                                        padding: new EdgeInsets.symmetric(
+                                            horizontal: 40.0),
+                                        child: new AspectRatio(
+                                            aspectRatio: 2.0,
+                                            child: new SvgPicture.asset(
+                                              "assets/team animals.svg",
+                                              allowDrawingOutsideViewBox: false,
+                                            ))),
+                                    duration: Duration(milliseconds: 1200),
+                                  ),
+                                  new Stack(
+                                    alignment:
+                                        AlignmentDirectional.bottomCenter,
+                                    children: <Widget>[
+                                      new Container(
+                                        decoration: new BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              new BorderRadius.circular(50.0),
+                                          border: new Border.all(
+                                            width: 6.0,
+                                            color: Colors.amber,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  new FractionalTranslation(
-                                    translation: size.height > size.width ? Offset(0.0, 0.5) : Offset(0.0, 0.5),
-                                    child: 
-                                  new Container(
-                                      alignment: new FractionalOffset(0.5, 0.5),
-                                      child: new Shake(
-                                        animation: shakeAnimation,
-                                        child: Container(
-                                          width: 100.0,
-                                          height: 50.0,
-                                          child: new RaisedButton(
-                                              splashColor: Colors.amber,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.0),
-                                                  side: BorderSide(
-                                                      width: 3.0,
-                                                      color: Colors.amber)),
-                                              color: Colors.amber,
-                                              child: new Icon(
-                                                Icons.keyboard_arrow_right,
-                                                color: Colors.white,
+                                        child: new Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            new Padding(
+                                              padding: size.height > size.width
+                                                  ? new EdgeInsets.all(10.0)
+                                                  : new EdgeInsets.all(5.0),
+                                            ),
+                                            imagePathStore == null
+                                                ? Center(
+                                                    child: Container(
+                                                      height: size.height >
+                                                              size.width
+                                                          ? size.height * 0.2
+                                                          : size.height * 0.1,
+                                                      width: size.height >
+                                                              size.width
+                                                          ? size.width * 0.2
+                                                          : size.width * 0.1,
+                                                      child: RaisedButton(
+                                                        splashColor:
+                                                            Colors.amber,
+                                                        color: Colors.white,
+                                                        shape: CircleBorder(
+                                                            side: BorderSide(
+                                                                width: 3.0,
+                                                                color: Colors
+                                                                    .amber)),
+                                                        onPressed: () =>
+                                                            getImage(context),
+                                                        child: new IconTheme(
+                                                          data: IconThemeData(
+                                                              size:
+                                                                  size.height *
+                                                                      0.05,
+                                                              color:
+                                                                  Colors.amber),
+                                                          child:
+                                                              Icon(Icons.add),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : InkWell(
+                                                    onTap: () =>
+                                                        getImage(context),
+                                                    child: new Container(
+                                                        width: 130.0,
+                                                        height: 130.0,
+                                                        decoration:
+                                                            new BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                image:
+                                                                    new DecorationImage(
+                                                                  image: FileImage(
+                                                                      File(
+                                                                          imagePathStore)),
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                ))),
+                                                  ),
+                                            new Padding(
+                                              padding: size.height > size.width
+                                                  ? new EdgeInsets.all(
+                                                      size.height * 0.1)
+                                                  : new EdgeInsets.all(
+                                                      size.height * 0.08),
+                                              child: new TextField(
+                                                focusNode: _focusName,
+                                                autocorrect: false,
+                                                onSubmitted: _submit(userName),
+                                                onChanged: _onTyping,
+                                                controller:
+                                                    TextEditingController(
+                                                        text: userName),
+                                                decoration: new InputDecoration(
+                                                  labelStyle: TextStyle(
+                                                      color: Colors.red),
+                                                  isDense: true,
+                                                  border: const OutlineInputBorder(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                                  .all(
+                                                              const Radius
+                                                                      .circular(
+                                                                  10.0)),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              style: BorderStyle
+                                                                  .solid,
+                                                              width: 100.0,
+                                                              color: Colors
+                                                                  .amber)),
+                                                  hintText: Loca.of(context)
+                                                      .writeYourName,
+                                                ),
                                               ),
-                                              onPressed: tabSreen),
+                                            ),
+                                          ],
                                         ),
-                                      )))
+                                      ),
+                                      new FractionalTranslation(
+                                          translation: size.height > size.width
+                                              ? Offset(0.0, 0.5)
+                                              : Offset(0.0, 0.5),
+                                          child: new Container(
+                                              alignment: new FractionalOffset(
+                                                  0.5, 0.5),
+                                              child: new Shake(
+                                                animation: shakeAnimation,
+                                                child: Container(
+                                                  width: 125.0,
+                                                  height: 75.0,
+                                                  child: new RaisedButton(
+                                                      splashColor: Colors.amber,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12.0),
+                                                              side: BorderSide(
+                                                                  width: 3.0,
+                                                                  color: Colors
+                                                                      .amber)),
+                                                      color: Colors.amber,
+                                                      child: new Icon(
+                                                        Icons
+                                                            .keyboard_arrow_right,
+                                                        color: Colors.white,
+                                                      ),
+                                                      onPressed: tabSreen),
+                                                ),
+                                              )))
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
             ),
           );

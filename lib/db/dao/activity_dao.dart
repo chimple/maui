@@ -26,22 +26,10 @@ class ActivityDao {
   Future<List<Activity>> getActivitiesByTopicId(String topicId,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps =
-        await db.query('${Activity.table} a,${Topic.table} t', columns: [
-      'a.${Activity.idCol}',
-      'a.${Activity.topicIdCol}',
-      'a.${Activity.serialCol}',
-      'a.${Activity.imageCol}',
-      'a.${Activity.videoCol}',
-      'a.${Activity.audioCol}',
-      'a.${Activity.textCol}',
-      'a.${Activity.stickerPackCol}',
-    ], where: '''
-      a.${Activity.topicIdCol} = t.${Topic.idCol} 
-      AND  a.${Activity.topicIdCol} = ?
-        ''', whereArgs: [
-      topicId
-    ]);
+    List<Map> maps = await db.query(Activity.table,
+        columns: Activity.allCols,
+        where: '${Activity.topicIdCol} = ? ',
+        whereArgs: [topicId]);
     return maps.map((el) => new Activity.fromMap(el)).toList();
   }
 }

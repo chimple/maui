@@ -24,9 +24,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   var top = 0.0;
   int playTime = 10000;
   var expheight;
+  bool displayIcon = false;
+  var jsonData;
 
   bool showBottomBar = true;
-
   TabController tabController;
   var optionalType;
   final _scrollController = TrackingScrollController();
@@ -45,6 +46,14 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     tabController.dispose();
   }
 
+  _gettingOnEndData(var onEndData, bool displayStatus) {
+    print("Test Function CallBack received $onEndData......::$displayStatus");
+    setState(() {
+      jsonData = onEndData;
+      displayIcon = displayStatus;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     optionalType = widget.relation;
@@ -59,6 +68,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
     return Scaffold(
         bottomNavigationBar: Container(
           height: showBottomBar ? size.height * 0.1 : 0.0,
+          color: Colors.amber[300],
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,21 +83,32 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                   ),
                 ),
               ),
-              Container(
-                height: size.height * 0.1 * 0.8,
-                child: new Tab(
-                  child: widget.hud,
-                ),
-              ),
+              // Container(
+              //   height: size.height * 0.1 * 0.8,
+              //   child: new Tab(
+              //     child: widget.hud,
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: new Tab(
-                  child: new Icon(
-                    Icons.arrow_forward,
-                    size: 70.0,
+                  child: GestureDetector(
+                    onTap: displayIcon == true
+                        ? () {
+                            setState(() {
+                              widget.onEnd(jsonData);
+                              displayIcon = false;
+                            });
+                          }
+                        : null,
+                    child: new Icon(
+                      Icons.arrow_forward,
+                      color: displayIcon == true ? Colors.black : Colors.grey,
+                      size: 70.0,
+                    ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -96,10 +117,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
           builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
             if (snapshot.hasData) {
               print("hello this changing or not");
+
               ui.Image image = snapshot.data;
 
               expheight = image.height;
-
+              print(
+                  "height of the image is how much iam getting in this.........::${image.height}");
               return new NotificationListener(
                 onNotification: (v) {
                   if (v is ScrollUpdateNotification) {
@@ -124,7 +147,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
                         backgroundColor: Colors.transparent,
                         automaticallyImplyLeading: false,
-                        expandedHeight: double.parse("${image.height}"),
+                        expandedHeight:
+                            double.parse("${image.height}") > size.height
+                                ? double.parse("${image.height}") / 2
+                                : double.parse("${image.height}"),
                         pinned: false,
                         floating: false,
                         // snap: true,
@@ -134,16 +160,27 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                           background: new Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Container(
-                                height: double.parse("$expheight"),
-                                //  color: Colors.red,
-                                child: new Image.asset(
-                                  "assets/dict/cat.png",
-                                  fit: BoxFit.fitHeight,
+                              new Container(
+                                  //  constraints:  BoxConstraints.expand(width:size.width),
+                                  // width: 100.00,
+                                  height: double.parse("$expheight"),
+                                  decoration: new BoxDecoration(
+                                    image: new DecorationImage(
+                                      image: ExactAssetImage(
+                                          "${widget.input["image"]}"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                              // Container(
+                              //   height: double.parse("$expheight"),
+                              //   //  color: Colors.red,
+                              //   child: new Image.asset(
+                              //     "${widget.input["image"]}",
+                              //     fit: BoxFit.fitHeight,
 
-                                  // height: 500.0,
-                                ),
-                              ),
+                              //     // height: 500.0,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -152,7 +189,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                         delegate: new SliverChildListDelegate(<Widget>[
                           Container(
                             decoration: new BoxDecoration(
-                              color: Colors.grey,
+                              color: Colors.amber,
                               borderRadius: const BorderRadius.only(
                                   topLeft: const Radius.circular(30.0),
                                   topRight: const Radius.circular(40.0)),
@@ -160,6 +197,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                             child: CardList(
                               input: widget.input,
                               onEnd: widget.onEnd,
+                              onPress: _gettingOnEndData,
                               optionsType: widget.relation == "many"
                                   ? OptionCategory.many
                                   : widget.relation == "pair"
@@ -183,7 +221,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   }
 
   Future<ui.Image> _getImage() {
-    Image image = new Image.asset('assets/dict/cat.png');
+    Image image = new Image.asset("${widget.input["image"]}");
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
