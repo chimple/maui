@@ -207,6 +207,8 @@ class CardListState extends State<CardList> {
                       }
                       else {
                         clicked[k] = ClickedStatus.incorrect;
+                        var correctChoiceIndex = shuffledChoices.indexOf(widget.input['answer'].first);
+                        clicked[correctChoiceIndex] = ClickedStatus.correct;
                       }
                     });
                     new Future.delayed(const Duration(milliseconds: 800), () {
