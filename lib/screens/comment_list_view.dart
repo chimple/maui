@@ -38,7 +38,7 @@ class _CommentListViewState extends State<CommentListView> {
   }
 
   void _initCommentData() async {
-    setState(() => _isLoading = true);
+    // setState(() => _isLoading = true);
     _comments = await CommentsRepo().getCommentsByTileId(widget.tileId);
     if (_comments != null) {
       _initUserData();
@@ -105,12 +105,13 @@ class _CommentListViewState extends State<CommentListView> {
                     hint: new Text("options"),
                     onChanged: (value) async {
                       if (value == "delete") {
+                        setState(() => _isLoading = true);
                         await CommentsRepo().deleteAComment(
                             _comments[index].tileId,
                             _comments[index].timeStamp,
                             _comments[index].commentingUserId,
                             _comments[index].comment);
-                        setState(() => _isLoading = true);
+                        
                         _initCommentData();
                       } else {
                         print(value);
@@ -270,6 +271,7 @@ class _CommentListViewState extends State<CommentListView> {
                               _textController.text = "";
                               myFocusNode.unfocus();
                               if (comment != "") {
+                                setState(() => _isLoading = true);
                                 String timeStamp =
                                     (new DateTime.now().millisecondsSinceEpoch)
                                         .toString();
