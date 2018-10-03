@@ -12,7 +12,7 @@ class ActivityTopicRepo {
     return await activityTopicDao.getActivityTopicByTopicId(topicId);
   }
 
-  Future<int> getTopicActivitiesByTopicId(String topicId) async {
+  Future<int> getTopicActivitiesCountByTopicId(String topicId) async {
     return (await (activityTopicDao.getActivityTopicByTopicId(topicId))).length;
   }
 }
