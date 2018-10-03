@@ -83,12 +83,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                   ),
                 ),
               ),
-              Container(
-                height: size.height * 0.1 * 0.8,
-                child: new Tab(
-                  child: widget.hud,
-                ),
-              ),
+              // Container(
+              //   height: size.height * 0.1 * 0.8,
+              //   child: new Tab(
+              //     child: widget.hud,
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: new Tab(
@@ -117,10 +117,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
           builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
             if (snapshot.hasData) {
               print("hello this changing or not");
+
               ui.Image image = snapshot.data;
 
               expheight = image.height;
-
+              print(
+                  "height of the image is how much iam getting in this.........::${image.height}");
               return new NotificationListener(
                 onNotification: (v) {
                   if (v is ScrollUpdateNotification) {
@@ -145,7 +147,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
                         backgroundColor: Colors.transparent,
                         automaticallyImplyLeading: false,
-                        expandedHeight: double.parse("${image.height}"),
+                        expandedHeight:
+                            double.parse("${image.height}") > size.height
+                                ? double.parse("${image.height}") / 2
+                                : double.parse("${image.height}"),
                         pinned: false,
                         floating: false,
                         // snap: true,
@@ -155,16 +160,27 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                           background: new Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Container(
-                                height: double.parse("$expheight"),
-                                //  color: Colors.red,
-                                child: new Image.asset(
-                                  "assets/dict/cat.png",
-                                  fit: BoxFit.fitHeight,
+                              new Container(
+                                  //  constraints:  BoxConstraints.expand(width:size.width),
+                                  // width: 100.00,
+                                  height: double.parse("$expheight"),
+                                  decoration: new BoxDecoration(
+                                    image: new DecorationImage(
+                                      image: ExactAssetImage(
+                                          "${widget.input["image"]}"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                              // Container(
+                              //   height: double.parse("$expheight"),
+                              //   //  color: Colors.red,
+                              //   child: new Image.asset(
+                              //     "${widget.input["image"]}",
+                              //     fit: BoxFit.fitHeight,
 
-                                  // height: 500.0,
-                                ),
-                              ),
+                              //     // height: 500.0,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -205,7 +221,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   }
 
   Future<ui.Image> _getImage() {
-    Image image = new Image.asset('assets/dict/cat.png');
+    Image image = new Image.asset("${widget.input["image"]}");
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
