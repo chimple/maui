@@ -21,8 +21,7 @@ class QuizPager extends StatefulWidget {
   GameConfig gameConfig;
   GameMode gameMode;
   bool isRotated;
-  double _myProgress = 0.0;
-  double _otherProgress = 0.0;
+
   int playTime = 10000;
   Function onGameEnd;
   QuizPager(
@@ -39,12 +38,13 @@ class QuizPager extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new QuizPagerState();
 
-  static Widget createQuiz(
-      {Quiz quiz,
-      Map<String, dynamic> input,
-      Function onEnd,
-      Size size,
-      Widget hud}) {
+  static Widget createQuiz({
+    Quiz quiz,
+    Map<String, dynamic> input,
+    Function onEnd,
+    Size size,
+    Widget hud,
+  }) {
     print(
         "here quize type isss.... what i ma getting is.......${quiz.quizType}");
     print("inpu data is.......of from database is...$input");
@@ -83,7 +83,9 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Map<String, dynamic>> _quizInputs;
   bool _isLoading = true;
   int _currentQuiz = 0;
-
+  int maxIterations = 2;
+  double _myProgress = 0.0;
+  double _otherProgress = 0.0;
   @override
   void initState() {
     super.initState();
@@ -144,6 +146,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         // height: 100.0,
         child: Stack(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            // _onProgress( progress),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Hud(
@@ -152,9 +155,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
                   gameMode: widget.gameMode,
                   playTime: widget.playTime,
                   onEnd: widget.onGameEnd,
-                  progress: widget.gameConfig.amICurrentPlayer
-                      ? widget._myProgress
-                      : null,
+                  progress:
+                      widget.gameConfig.amICurrentPlayer ? _myProgress : null,
                   start: !oh2h,
                   score: widget.gameConfig.myScore,
                   backgroundColor: Colors.amber,
@@ -171,7 +173,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
                     gameMode: widget.gameMode,
                     playTime: widget.playTime,
                     onEnd: widget.onGameEnd,
-                    progress: widget._otherProgress,
+                    progress: _otherProgress,
                     score: widget.gameConfig.otherScore,
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.amber)
@@ -216,8 +218,11 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
 
   _onEnd(Map<String, dynamic> resultData) {
     if (resultData != null) _quizInputs[_currentQuiz].addAll(resultData);
+    print(
+        "genereal game mode is.......::${widget.gameConfig.amICurrentPlayer}");
     setState(() {
-      widget.onProgress(++_currentQuiz / _quizzes.length);
+      _myProgress = (++_currentQuiz / _quizzes.length);
+      print("object...... the myprogress.. ::$_myProgress");
     });
   }
 }
