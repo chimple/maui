@@ -99,7 +99,15 @@ class CardListState extends State<CardList> {
                     ? Status.notSelected
                     : clicked[k] == ClickedStatus.yes
                         ? Status.disabled
-                        : widget.optionsType == OptionCategory.oneAtATime ? clicked[k] == ClickedStatus.correct ? Status.correct : clicked[k] == ClickedStatus.incorrect ? Status.incorrect: Status.notSelected :rightOrWrong[k] ? Status.correct : Status.incorrect)
+                        : widget.optionsType == OptionCategory.oneAtATime
+                            ? clicked[k] == ClickedStatus.correct
+                                ? Status.correct
+                                : clicked[k] == ClickedStatus.incorrect
+                                    ? Status.incorrect
+                                    : Status.notSelected
+                            : rightOrWrong[k]
+                                ? Status.correct
+                                : Status.incorrect)
                 : rightOrWrong[k] == true ? Status.correct : Status.incorrect),
             onPress: () {
               // changing value of clicked array to yes when button is clicked
@@ -192,7 +200,6 @@ class CardListState extends State<CardList> {
                     });
 
                     new Future.delayed(const Duration(milliseconds: 300), () {
-                     
                       setState(() {
                         clicked = choice
                             .map((e) => ClickedStatus.untouched)
@@ -204,10 +211,10 @@ class CardListState extends State<CardList> {
                           clicked[k] = ClickedStatus.correct;
                           correctChoices++;
                         });
-                      }
-                      else {
+                      } else {
                         clicked[k] = ClickedStatus.incorrect;
-                        var correctChoiceIndex = shuffledChoices.indexOf(widget.input['answer'].first);
+                        var correctChoiceIndex = shuffledChoices
+                            .indexOf(widget.input['answer'].first);
                         clicked[correctChoiceIndex] = ClickedStatus.correct;
                       }
                     });

@@ -256,34 +256,34 @@ class _LoginScreenState extends State<LoginScreen>
                                                       size.height * 0.08),
                                               child: new TextField(
                                                 focusNode: _focusName,
-                                                  autocorrect: false,
-                                                  onSubmitted: _submit(userName),
-                                                  onChanged: _onTyping,
-                                                  controller:
-                                                      TextEditingController(
-                                                          text: userName),
-                                                  decoration: new InputDecoration(
-                                                    labelStyle: TextStyle(
-                                                        color: Colors.red),
-                                                    isDense: true,
-                                                    border: const OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                const Radius
-                                                                        .circular(
-                                                                    10.0)),
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                style: BorderStyle
-                                                                    .solid,
-                                                                width: 100.0,
-                                                                color: Colors
-                                                                    .amber)),
-                                                    hintText: Loca.of(context)
-                                                        .writeYourName,
-                                                  ),
+                                                autocorrect: false,
+                                                onSubmitted: _submit(userName),
+                                                onChanged: _onTyping,
+                                                controller:
+                                                    TextEditingController(
+                                                        text: userName),
+                                                decoration: new InputDecoration(
+                                                  labelStyle: TextStyle(
+                                                      color: Colors.red),
+                                                  isDense: true,
+                                                  border: const OutlineInputBorder(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                                  .all(
+                                                              const Radius
+                                                                      .circular(
+                                                                  10.0)),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              style: BorderStyle
+                                                                  .solid,
+                                                              width: 100.0,
+                                                              color: Colors
+                                                                  .amber)),
+                                                  hintText: Loca.of(context)
+                                                      .writeYourName,
                                                 ),
+                                              ),
                                             ),
                                           ],
                                         ),
