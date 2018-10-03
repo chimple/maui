@@ -38,6 +38,7 @@ class _CommentListViewState extends State<CommentListView> {
   }
 
   void _initCommentData() async {
+    setState(() => _isLoading = true);
     _comments = await CommentsRepo().getCommentsByTileId(widget.tileId);
     if (_comments != null) {
       _initUserData();
@@ -268,14 +269,19 @@ class _CommentListViewState extends State<CommentListView> {
                               String comment = _textController.text;
                               _textController.text = "";
                               myFocusNode.unfocus();
-                              String timeStamp =
-                                  (new DateTime.now().millisecondsSinceEpoch)
-                                      .toString();
-                              await CommentsRepo().insertAComment(widget.tileId,
-                                  timeStamp, widget.loggedInUser.id, comment);
+                              if (comment != "") {
+                                String timeStamp =
+                                    (new DateTime.now().millisecondsSinceEpoch)
+                                        .toString();
+                                await CommentsRepo().insertAComment(
+                                    widget.tileId,
+                                    timeStamp,
+                                    widget.loggedInUser.id,
+                                    comment);
 
-                              setState(() => _isLoading = true);
-                              _initCommentData();
+                                
+                                _initCommentData();
+                              }
                             },
                           ),
                         ),
