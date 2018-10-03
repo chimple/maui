@@ -17,7 +17,7 @@ class QuizPager extends StatefulWidget {
   Function onProgress;
   Function onEnd;
   Function onTurn;
-int iteration;
+  int iteration;
   GameConfig gameConfig;
   GameMode gameMode;
   bool isRotated;
@@ -25,7 +25,12 @@ int iteration;
   int playTime = 10000;
   Function onGameEnd;
   QuizPager(
-      {key, this.onScore, this.onProgress,this.iteration, this.onEnd, this.isRotated = false})
+      {key,
+      this.onScore,
+      this.onProgress,
+      this.iteration,
+      this.onEnd,
+      this.isRotated = false})
       : super(key: key);
 
   @override

@@ -117,11 +117,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
           builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
             if (snapshot.hasData) {
               print("hello this changing or not");
-             
+
               ui.Image image = snapshot.data;
 
               expheight = image.height;
- print("height of the image is how much iam getting in this.........::${image.height}");
+              print(
+                  "height of the image is how much iam getting in this.........::${image.height}");
               return new NotificationListener(
                 onNotification: (v) {
                   if (v is ScrollUpdateNotification) {
@@ -146,7 +147,10 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
                         backgroundColor: Colors.transparent,
                         automaticallyImplyLeading: false,
-                        expandedHeight: double.parse("${image.height}")>size.height?double.parse("${image.height}")/2:double.parse("${image.height}"),
+                        expandedHeight:
+                            double.parse("${image.height}") > size.height
+                                ? double.parse("${image.height}") / 2
+                                : double.parse("${image.height}"),
                         pinned: false,
                         floating: false,
                         // snap: true,
@@ -157,7 +161,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                             fit: StackFit.expand,
                             children: <Widget>[
                               new Container(
-                                //  constraints:  BoxConstraints.expand(width:size.width),
+                                  //  constraints:  BoxConstraints.expand(width:size.width),
                                   // width: 100.00,
                                   height: double.parse("$expheight"),
                                   decoration: new BoxDecoration(
@@ -165,7 +169,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                                       image: ExactAssetImage(
                                           "${widget.input["image"]}"),
                                       fit: BoxFit.cover,
-                                    
                                     ),
                                   )),
                               // Container(

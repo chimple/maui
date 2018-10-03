@@ -199,8 +199,7 @@ class QuizResultState extends State<QuizResult> {
           ),
         ),
       ),
-    )
-    );
+    ));
 
     return _questionResults;
   }
