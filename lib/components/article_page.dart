@@ -127,7 +127,7 @@ class _ArticlePageState extends State<ArticlePage>
       new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
   Future<ui.Image> _getImage() {
-    Image image = new Image.asset('assets/dict/cat.png');
+    Image image = new Image.asset("${widget.image}");
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
@@ -267,7 +267,7 @@ class _ArticlePageState extends State<ArticlePage>
                       elevation: 0.0,
                       backgroundColor: Colors.transparent,
                       automaticallyImplyLeading: false,
-                      expandedHeight: size.height / 2,
+                      expandedHeight: double.parse("${image.height}"),
                       pinned: false,
                       floating: true,
                       // snap: true,
