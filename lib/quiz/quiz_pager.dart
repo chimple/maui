@@ -91,7 +91,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   }
 
   void _initState() async {
-    widget.gameConfig.topicId = 'lion'; //TODO: Link to topic
+    widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
     _quizzes = await QuizRepo().getQuizzesByTopicId(widget.gameConfig.topicId);
 
     print("hello check the relation is....${_quizzes}");
