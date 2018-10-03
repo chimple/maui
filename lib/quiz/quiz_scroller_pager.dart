@@ -83,12 +83,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                   ),
                 ),
               ),
-              Container(
-                height: size.height * 0.1 * 0.8,
-                child: new Tab(
-                  child: widget.hud,
-                ),
-              ),
+              // Container(
+              //   height: size.height * 0.1 * 0.8,
+              //   child: new Tab(
+              //     child: widget.hud,
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: new Tab(

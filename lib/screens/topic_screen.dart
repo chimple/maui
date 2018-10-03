@@ -5,13 +5,14 @@ import 'package:maui/screens/related_page.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/components/topic_page_view.dart';
 
+import '../quiz/quiz_game.dart';
 
 class TopicScreen extends StatelessWidget {
-    final String topicId;
+  final String topicId;
   final String topicName;
   TopicScreen({key, @required this.topicId, @required this.topicName})
       : super(key: key);
- @override
+  @override
   Widget build(BuildContext context) {
     print('loca topic_screen ${Loca.of(context)}');
     return new Scaffold(
@@ -35,9 +36,7 @@ class TopicScreen extends StatelessWidget {
             new IconButton(
               onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return SelectOpponentScreen(
-                      gameName: 'quiz_pager',
-                    );
+                    return QuizGame();
                   })),
               icon: new Icon(Icons.games),
             ),
