@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/card_button.dart';
 import 'package:maui/components/topic_button.dart';
 import 'package:maui/db/entity/activity.dart';
+import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/topic.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/activity_repo.dart';
 import 'package:maui/repos/article_repo.dart';
 import 'package:maui/db/entity/article.dart';
 import 'package:maui/components/article_page.dart';
+import 'package:maui/repos/quiz_repo.dart';
 import 'package:maui/repos/related_topic_repo.dart';
 
 class TopicCardView extends StatefulWidget {
@@ -21,6 +23,7 @@ class _TopicCardViewState extends State<TopicCardView> {
   List<Article> _articles;
   List<Activity> _activities;
   List<Topic> _topics;
+  List<Quiz> _quizzes;
   bool _isDataAvailable = false;
 //  bool _isForwardDisable = false;
 //  bool _isBackwardDisable = true;
@@ -32,6 +35,7 @@ class _TopicCardViewState extends State<TopicCardView> {
     _activities = await ActivityRepo().getActivitiesByTopicId(widget.topicId);
     _topics =
         await RelatedTopicRepo().getTopicsByRelatedTopicId(widget.topicId);
+    _quizzes = await QuizRepo().getQuizzesByTopicId(widget.topicId);
     setState(() {
       _isDataAvailable = true;
     });
@@ -56,7 +60,7 @@ class _TopicCardViewState extends State<TopicCardView> {
       crossAxisCount: media.size.height > media.size.width ? 3 : 4,
       childAspectRatio: 0.8,
       children: _isDataAvailable
-          ? [_activities, _articles, _topics]
+          ? [_activities, _articles, _topics, _quizzes]
               .expand((l) => l.map((o) {
                     if (o is Activity) {
                       Activity a = o as Activity;
@@ -84,6 +88,15 @@ class _TopicCardViewState extends State<TopicCardView> {
                         id: a.id,
                         topicId: widget.topicId,
                         cardType: CardType.topic,
+                      );
+                    } else if (o is Quiz) {
+                      Quiz a = o as Quiz;
+                      return CardButton(
+                        text: "Quiz",
+                        image: 'assets/background_image/quiz_small.png',
+                        id: a.id,
+                        topicId: widget.topicId,
+                        cardType: CardType.quiz,
                       );
                     }
                   }))

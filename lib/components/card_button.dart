@@ -3,13 +3,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/components/activity_progress_tracker.dart';
 import 'package:maui/components/article_progress_tracker.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
+import 'package:maui/quiz/quiz_game.dart';
 import 'package:maui/screens/article_screen.dart';
 import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/screens/topic_screen.dart';
 
 enum CardType { activity, topic, article, quiz }
 
-class CardButton extends StatefulWidget {
+final cardColors = [
+  Color(0xffffbc01),
+  Color(0xff3cc1ef),
+  Color(0xfff74674),
+  Color(0xff99ce34)
+];
+
+class CardButton extends StatelessWidget {
   final String text;
   final String image;
   final String id;
@@ -26,26 +34,22 @@ class CardButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  State createState() => new CardButtonState();
-}
-
-class CardButtonState extends State<CardButton> {
-  @override
   Widget build(BuildContext context) {
+    print(cardColors[cardType.index]);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () => goToCard(context),
         child: new Column(
           children: <Widget>[
-            widget.image == null
+            image == null
                 ? Container(color: Colors.red)
-                : widget.image.endsWith(".svg")
+                : image.endsWith(".svg")
                     ? new Container(
                         child: new AspectRatio(
                           aspectRatio: 1.0,
                           child: new SvgPicture.asset(
-                            widget.image,
+                            image,
                             allowDrawingOutsideViewBox: false,
                           ),
                         ),
@@ -53,18 +57,17 @@ class CardButtonState extends State<CardButton> {
                     : AspectRatio(
                         aspectRatio: 1.0,
                         child: Hero(
-                          tag: '${widget.cardType}/${widget.id}',
+                          tag: '${cardType}/${id}',
                           child: Container(
                             decoration: new BoxDecoration(
                               image: new DecorationImage(
-                                image: new AssetImage(widget.image),
+                                image: new AssetImage(image),
                                 fit: BoxFit.cover,
                               ),
-                              color: Colors.red,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16.0)),
                               border: new Border.all(
-                                color: Colors.red,
+                                color: cardColors[cardType.index],
                                 width: 4.0,
                               ),
                             ),
@@ -73,7 +76,7 @@ class CardButtonState extends State<CardButton> {
                       ),
             new Container(
               child: new Center(
-                child: new Text(widget.text,
+                child: new Text(text,
                     style: new TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
@@ -89,12 +92,12 @@ class CardButtonState extends State<CardButton> {
   }
 
   void goToCard(BuildContext context) {
-    switch (widget.cardType) {
+    switch (cardType) {
       case CardType.activity:
         Navigator.of(context).push(
           new MaterialPageRoute(
               builder: (BuildContext context) => DrawingListScreen(
-                    activityId: widget.id,
+                    activityId: id,
                   )),
         );
         break;
@@ -102,7 +105,7 @@ class CardButtonState extends State<CardButton> {
         Navigator.of(context).push(
           new MaterialPageRoute(
               builder: (BuildContext context) => ArticleScreen(
-                    topicId: widget.topicId,
+                    topicId: topicId,
                   )),
         );
         break;
@@ -110,20 +113,15 @@ class CardButtonState extends State<CardButton> {
         Navigator.of(context).push(
           new MaterialPageRoute(
               builder: (BuildContext context) => TopicScreen(
-                    topicId: widget.id,
-                    topicName: widget.text,
-                    topicImage: widget.image,
+                    topicId: id,
+                    topicName: text,
+                    topicImage: image,
                   )),
         );
         break;
       case CardType.quiz:
         Navigator.of(context).push(
-          new MaterialPageRoute(
-              builder: (BuildContext context) => TopicScreen(
-                    topicId: widget.id,
-                    topicName: widget.text,
-                    topicImage: widget.image,
-                  )),
+          new MaterialPageRoute(builder: (BuildContext context) => QuizGame()),
         );
     }
   }

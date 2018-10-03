@@ -5,6 +5,7 @@ import 'package:maui/screens/activity_list_view.dart';
 import 'package:maui/screens/related_page.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/components/topic_page_view.dart';
+import '../quiz/quiz_game.dart';
 
 class TopicScreen extends StatelessWidget {
   final String topicId;
@@ -19,45 +20,6 @@ class TopicScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-//        appBar: new AppBar(
-//          title: new Text(topicName),
-//          centerTitle: true,
-//          backgroundColor: Colors.teal[300],
-//          elevation: 5.0,
-//          actions: <Widget>[
-//            new IconButton(
-//              onPressed: () {
-//                Navigator.of(context).push(
-//                    MaterialPageRoute<void>(builder: (BuildContext context) {
-//                  return ActivityListView(
-//                    topicId: topicId,
-//                  );
-//                }));
-//              },
-//              icon: new Icon(Icons.local_activity),
-//            ),
-//            new IconButton(
-//              onPressed: () => Navigator.of(context).push(
-//                      MaterialPageRoute<void>(builder: (BuildContext context) {
-//                    return SelectOpponentScreen(
-//                      gameName: 'quiz_pager',
-//                    );
-//                  })),
-//              icon: new Icon(Icons.games),
-//            ),
-//            new IconButton(
-//              onPressed: () {
-//                Navigator.of(context).push(
-//                    MaterialPageRoute<void>(builder: (BuildContext context) {
-//                  return RelatedPage(
-//                    topicId: topicId,
-//                  );
-//                }));
-//              },
-//              icon: new Icon(Icons.find_replace),
-//            )
-//          ],
-//        ),
         body: CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
