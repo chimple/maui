@@ -111,7 +111,7 @@ class _CommentListViewState extends State<CommentListView> {
                             _comments[index].timeStamp,
                             _comments[index].commentingUserId,
                             _comments[index].comment);
-                        
+
                         _initCommentData();
                       } else {
                         print(value);
@@ -280,8 +280,6 @@ class _CommentListViewState extends State<CommentListView> {
                                     timeStamp,
                                     widget.loggedInUser.id,
                                     comment);
-
-                                
                                 _initCommentData();
                               }
                             },
