@@ -32,11 +32,8 @@ class RelatedTopicDao {
       't.${Topic.imageCol}',
       't.${Topic.colorCol}'
     ], where: '''
-  (r.${RelatedTopic.relTopicIdCol} = ? AND r.${RelatedTopic.topicIdCol} = t.${Topic.idCol})
-  OR
   (r.${RelatedTopic.topicIdCol} = ? AND r.${RelatedTopic.relTopicIdCol} = t.${Topic.idCol})
 ''', whereArgs: [
-      topicId,
       topicId
     ]);
     return maps.map((el) => new Topic.fromMap(el)).toList();
