@@ -35,7 +35,7 @@ class CardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(cardColors[cardType.index]);
+    print('card_button hero ${cardType}/${id}');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

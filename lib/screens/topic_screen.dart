@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/card_button.dart';
 import 'package:maui/components/topic_card_view.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/screens/activity_list_view.dart';
@@ -19,18 +20,22 @@ class TopicScreen extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print('topic_screen hero ${CardType.topic}/${topicId}');
     return new Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
           expandedHeight: 256.0,
+//          snap: true,
+//          floating: true,
+          pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(topicName),
             background: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 Hero(
-                  tag: 'topic/${topicId}',
+                  tag: '${CardType.topic}/${topicId}',
                   child: Container(
                     decoration: new BoxDecoration(
                       image: new DecorationImage(
@@ -58,7 +63,22 @@ class TopicScreen extends StatelessWidget {
             ),
           ),
         ),
-        TopicCardView(topicId: topicId)
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.activity,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.article,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.topic,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.quiz,
+        )
       ],
     ));
   }
