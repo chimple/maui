@@ -36,39 +36,35 @@ INSERT INTO `article` VALUES ('lion_fun_facts','Fun facts','lion',NULL,NULL,'ass
 *  The lion is the only social predator among the Big Cats.
 *  Lions can''t climb as well as leopards.
 *  Lions can steal food from other predators such as cheetahs.',7);
-INSERT INTO `topic` VALUES ('tiger','Tiger','assets/topic/Panthera_tigris_tigris.jpg',NULL);
-INSERT INTO `article` VALUES ('tiger_intro','Tiger','tiger',NULL,NULL,'assets/topic/Panthera_tigris_tigris.jpg','Their speed and agility give the tiger the title of "Top Predator," over the larger but slower grizzly bear. The tiger is the largest and most powerful cat species living today. A well rounded athlete, the tiger can climb (though not well), swim, leap great distances and pull with five times the force of a strong human. The tiger is in the same group (Genus Panthera) as lions, leopards, and jaguars. These four cats are the only ones who can roar. The tiger''s roar is not like the full-voiced roar of a lion, but more like a sentence of snarly, shouted words.',1);
-INSERT INTO `article` VALUES ('tiger_live','Where do tigers live?','tiger',NULL,NULL,'assets/topic/Tigers.png','Tigers live in forests and grasslands of eastern and southeastern Asia. They live in countries such as Bangladesh, Bhutan, China, India, Nepal, Cambodia, Laos, Malaysia, Myanmar, Thailand and Vietnam, Indonesia (Sumatra), and the Russian Far East. The Bengal Tiger is the national animal of Bangladesh and India.',2);
-INSERT INTO `article` VALUES ('tiger_look','What do tigers look like?','tiger',NULL,NULL,'assets/topic/tiger-2341920_960_720.jpg','Like the other big cats, tigers are built much like the much smaller domestic cats that people often have as pets; they are just much bigger and more powerful.
-
-Tigers are usually orange or reddish orange with very bold, uneven black stripes and white areas on the chest, neck, belly and inside of the legs. Their stripes act as camouflage, making it difficult for them to be seen when they are among the trees and shrubs of the jungle. The stripes will vary with each individual tiger.
-
-A tiger usually is about 6 ft to 9 ft in length from nose to tail tip. A large tiger might be 10 ft (3 meters) long. The tail is about 36 inches (91 cm or 3 ft). Tigers weigh about 350 to 550 pounds (160 to 250 kg).
-
-Tigers have very strong teeth and jaws. Their paws are soft and heavily padded, sheathing large, very sharp claws. They also have short, thick, and soft fur and thick long whiskers.
-',3);
-INSERT INTO `article` VALUES ('tiger_white','White tigers','tiger',NULL,NULL,'assets/topic/White_tigers_drinking.jpg','White tigers are those who are born with a certain genetic defect causing loss of pigment in their skin, eyes and fur. These tigers can be white with black, grey, very dark blue, or no stripes; they are not albino. This loss of pigment is unfortunate for tigers in the wild because their camouflage becomes inadequate. ',4);
-INSERT INTO `article` VALUES ('tiger_eat','What do tigers eat?','tiger',NULL,NULL,'assets/topic/1024px-Tigergebiss.jpg','Tigers mostly feed on plant-eaters, or herbivores, like elk, deer, wild pigs, and buffalo. Like the majority of cats, they are solitary hunters, meaning they hunt alone. When a tiger has spotted its prey, it may seek out a good location where it can hide, staying close to the ground, and wait for the perfect moment to pounce and ambush its prey. But when prey becomes scarce tigers also hunt peacocks and rabbits. Resourceful as they are, they also catch and eat fish, as tigers are good swimmers.',5);
-INSERT INTO `article` VALUES ('tiger_fun_facts','Fun facts','tiger',NULL,NULL,'assets/topic/Tigerwater_edit2.jpg','* Tigers are striped through and through. If you were to shave a tiger, and few ever have, you would see the stripes on the skin.
-* Tigers are superb swimmers, unlike most other cats. They have been known to board fishing boats from the waters in which they swim. Usually they swim because they want to cool off.
-* No two tigers have exactly the same pattern of stripes.
-* The Siberian tiger is the world''s largest naturally occurring cat.
-* A tiger was once measured to be 13 feet long.
-* Although the tiger is best known for killing with its jaws and teeth, a tiger is strong enough (like bears) to kill animals as large as cattle with a swipe of its paw.
-* A tiger named Shere Khan is the arch-villain of Rudyard Kipling''s The Jungle Book as the nemesis of the "man-cub" Mowgli.
-* A Bengal tiger named "Richard Parker" is a key character in the novel (and highly-successful movie) "The Life of Pi" who must share a boat with a young man cast adrift at sea after the sinking of a ship during a hurricane.',6);
-INSERT INTO `activity` VALUES ('tiger_stripes','tiger','Draw stripes on the tiger',NULL,1,'assets/topic/baby_tiger.png',NULL,NULL);
-INSERT INTO `activityTopic` VALUES ('tiger_stripes','tiger');
-INSERT INTO `activityTemplate` VALUES ('tiger_stripes','assets/topic/309914.svg');
-INSERT INTO `activityTemplate` VALUES ('tiger_stripes','assets/topic/2722150-3f51b5.svg');
-INSERT INTO `activityTemplate` VALUES ('tiger_stripes','assets/topic/Tiger_clipart.svg');
-INSERT INTO `activity` VALUES ('tiger_roar','tiger','Make a tiger roar',NULL,2,'assets/topic/tiger-1395131_960_720.png',NULL,NULL);
-INSERT INTO `activityTopic` VALUES ('tiger_roar','tiger');
-INSERT INTO `activityTemplate` VALUES ('tiger_roar','assets/topic/animal-animal-photography-big-cat-792381.jpg');
-INSERT INTO `activityTemplate` VALUES ('tiger_roar','assets/topic/Siberischer_tiger_de_edit02.jpg');
-INSERT INTO `activityTemplate` VALUES ('tiger_roar','assets/topic/tiger-2519637_960_720.jpg');
-INSERT INTO `quiz` VALUES ('tiger_1','tiger',1,'many','{"question": "Select the countries where tigers are found", "image": "assets/topic/Tigers.png", "answer": ["India", "Bangladesh", "China", "Thailand"], "choices": ["Tanzania", "Russia"]}');
-INSERT INTO `quiz` VALUES ('tiger_2','tiger',1,'many','{"question": "Select the animals from small to big", "image": "assets/topic/jungle-animals-colorful-art.jpg", "answer": ["tiger cub", "pig", "deer", "buffalo"], "choices": [""]}');
-INSERT INTO `quiz` VALUES ('tiger_3','tiger',1,'oneAtATime','{"question": "What is the color of the tiger''s fur?", "image": "assets/topic/Flickr_-_law_keven_-_Tiger,_Tiger,_Burning_bright.jpg", "answer": ["orange"], "choices": ["orange", "green", "violet", "pink"]}');
-INSERT INTO `quiz` VALUES ('tiger_4','tiger',1,'pair','{"question": "Match the body parts with the adjective", "image": "assets/topic/tiger_sleep.jpeg", "answer": ["fur", "striped", "jaws", "strong", "paws", "soft", "claws", "sharp", "whiskers", "long"], "choices": [""]}');
-INSERT INTO `quiz` VALUES ('tiger_5','tiger',1,'oneAtATime','{"question": "Tigers are superb swimmers", "image": "assets/topic/24868494306_84d2fd285b_b.jpg", "answer": ["true"], "choices": ["true", "false"]}');
+INSERT INTO `topic` VALUES ('giraffe','Giraffe','assets/topic/animals-2870416_960_720.jpg',NULL);
+INSERT INTO `topic` VALUES ('bear','Bear','assets/topic/bear.jpg',NULL);
+INSERT INTO `topic` VALUES ('zebra','Zebra','assets/topic/zebra-1422083_960_720.jpg',NULL);
+INSERT INTO `topic` VALUES ('leopard','Leopard','assets/topic/leopard-1422074_960_720.jpg',NULL);
+INSERT INTO `topic` VALUES ('duck','Duck','assets/topic/duck.jpg',NULL);
+INSERT INTO `topic` VALUES ('squirrel','Squirrel','assets/topic/squirrel.jpeg',NULL);
+INSERT INTO `topic` VALUES ('elephant','Elephant','assets/topic/10006-an-elephant-in-the-wild-pv.jpg',NULL);
+INSERT INTO `topic` VALUES ('rhino','Rhinoceros','assets/topic/indian_rhino_by_8twilightangel8-d6ffwyv.jpg',NULL);
+INSERT INTO `topic` VALUES ('panda','Panda','assets/topic/panda.jpeg',NULL);
+INSERT INTO `topic` VALUES ('wild_animals','Wild Animals','assets/topic/wild-animals-ii.jpg',NULL);
+INSERT INTO `relatedTopic` VALUES ('wild_animals','lion1');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','tiger');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','giraffe');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','bear');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','zebra');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','leopard');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','rhino');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','squirrel');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','panda');
+INSERT INTO `relatedTopic` VALUES ('wild_animals','elephant');
+INSERT INTO `topic` VALUES ('water','Water','assets/topic/water.jpg',NULL);
+INSERT INTO `topic` VALUES ('environment','Environment','assets/topic/environment.jpg',NULL);
+INSERT INTO `topic` VALUES ('food','Food','assets/topic/Foods_(cropped).jpg',NULL);
+INSERT INTO `topic` VALUES ('body','Body','assets/topic/body-parts-13.jpg',NULL);
+INSERT INTO `topic` VALUES ('house','House','assets/topic/house_PNG55.png',NULL);
+INSERT INTO `relatedTopic` VALUES ('main','water');
+INSERT INTO `relatedTopic` VALUES ('main','environment');
+INSERT INTO `relatedTopic` VALUES ('main','food');
+INSERT INTO `relatedTopic` VALUES ('main','body');
+INSERT INTO `relatedTopic` VALUES ('main','house');
+INSERT INTO `relatedTopic` VALUES ('tiger','lion1');
+INSERT INTO `relatedTopic` VALUES ('tiger','elephant');

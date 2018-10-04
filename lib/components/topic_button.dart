@@ -79,13 +79,16 @@ class TopicButtonState extends State<TopicButton> {
                         )
                       : new Expanded(
                           flex: 12,
-                          child: Container(
-                            decoration: new BoxDecoration(
-                                image: new DecorationImage(
-                                  image: new AssetImage(widget.image),
-                                  fit: BoxFit.cover,
-                                ),
-                                color: Colors.red),
+                          child: Hero(
+                            tag: 'topic/${widget.topicId}',
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: new AssetImage(widget.image),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  color: Colors.red),
+                            ),
                           ),
                         ),
               new Expanded(
