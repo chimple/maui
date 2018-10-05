@@ -10,25 +10,26 @@ dependencies:
   image_picker:
   cupertino_icons: ^0.1.0
   sqflite: any
-  uuid: ^0.5.0
+  uuid: ^1.0.3
   path_provider: ^0.4.0
   tuple: ^1.0.1
-  json_annotation: ^0.2.2
-  audioplayer: ^0.4.0
-  fluttery: "^0.0.6"
-  flutter_circular_chart: "^0.0.3"
+  json_annotation: ^1.1.0
+  audioplayers: ^0.7.5
+  fluttery:
+    git:
+      https://github.com/chimple/fluttery.git
+  flutter_circular_chart: "^0.1.0"
   shared_preferences: ^0.4.2
   camera: 0.2.1
-  nima: 1.0.0
-  flutter_local_notifications: 0.3.3
-  badge: 0.0.2
-  intl: 0.15.6
-  intl_translation: 0.16.8
-  simple_permissions: 0.1.5
-  flutter_svg: ^0.5.1
-  flores:
+  nima: ^1.0.1
+  flutter_local_notifications: ^0.3.7
+  badge:
     git:
-      https://github.com/chimple/flores.git
+      https://github.com/chimple/Flutter-Badge.git
+  intl: ^0.15.7
+  intl_translation: ^0.17.0
+  simple_permissions: ^0.1.6
+  flutter_svg: ^0.5.1
   flutter_localizations:
     sdk: flutter
 dev_dependencies:
@@ -37,9 +38,12 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   video_player: "^0.5.4"
-  build_runner: ^0.7.6
-  json_serializable: ^0.3.2
-  flutter_markdown: ^0.1.5
+  build_runner: ^0.10.1
+  json_serializable: ^1.2.1
+  flutter_markdown: ^0.2.0
+  tahiti:
+    path: ../tahiti
+
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
@@ -59,7 +63,11 @@ flutter:
   assets:
     - assets/right.wav
     - assets/wrong.wav
-    - assets/audio.wav
+    - assets/lion.ogg
+    - assets/monkey.ogg
+    - assets/duck.ogg
+    - assets/fox.ogg
+    - assets/rabbit.ogg
     
     - assets/tap.wav
     - assets/demo_video/video.mp4
@@ -2162,3 +2170,42 @@ flutter:
   #
   # For details regarding fonts from package dependencies, 
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+    - family: Bungee
+      fonts:
+        - asset: assets/fonts/Bungee-Regular.ttf
+    - family: Chela one
+      fonts:
+        - asset: assets/fonts/ChelaOne-Regular.ttf
+    - family: Gloria Hallelujah
+      fonts:
+        - asset: assets/fonts/GloriaHallelujah.ttf
+    - family: Great vibes
+      fonts:
+        - asset: assets/fonts/GreatVibes-Regular.ttf
+    - family: Homemade apple
+      fonts:
+        - asset: assets/fonts/HomemadeApple-Regular.ttf
+    - family: Indie Flower
+      fonts:
+        - asset: assets/fonts/IndieFlower.ttf
+    - family: Kirang Haerang
+      fonts:
+        - asset: assets/fonts/KirangHaerang-Regular.ttf
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf
+    - family: Patrick Hand
+      fonts:
+        - asset: assets/fonts/PatrickHand-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Rock salt
+      fonts:
+        - asset: assets/fonts/RockSalt-Regular.ttf
+    - family: Shadows into light
+      fonts:
+        - asset: assets/fonts/ShadowsIntoLight.ttf

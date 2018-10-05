@@ -53,15 +53,10 @@ class _MatchingGameState extends State<MatchingGame> {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     List<Widget> correctPairs = [];
     correctPairs.add(
-      // new Container(
-      //   height: (mediaQueryData.size.height - 300.0) / 6,
-      //   child: new Center(
-      //     child: new Text(widget.gameData["question"]),
-      //   ),
-      // ),
       new Container(
         height: (mediaQueryData.size.height - 300.0) / 6,
-              child: new QuizQuestion(
+        child: new QuizQuestion(
+          key: new Key("question"),
           text: widget.gameData["question"],
           // image: widget.gameData["image"],
         ),
@@ -79,6 +74,7 @@ class _MatchingGameState extends State<MatchingGame> {
             new Container(
               width: mediaQueryData.size.width / 3,
               child: new QuizButton(
+                key: new Key(k),
                 onPress: null,
                 text: k,
                 buttonStatus: (_selectedPairs[k] == widget.gameData["pairs"][k])
@@ -89,6 +85,7 @@ class _MatchingGameState extends State<MatchingGame> {
             new Container(
               width: mediaQueryData.size.width / 3,
               child: new QuizButton(
+                key: new Key(v),
                 onPress: null,
                 text: v,
                 buttonStatus: _checkForRightSideItemCorrectness(v)
@@ -151,6 +148,7 @@ class _MatchingGameState extends State<MatchingGame> {
                   new Expanded(
                     flex: 1,
                     child: new QuizQuestion(
+                      key: new Key("question"),
                       text: widget.gameData["question"],
                       // image: widget.gameData["image"],
                     ),
@@ -173,6 +171,7 @@ class _MatchingGameState extends State<MatchingGame> {
                               new Container(
                                 width: constraints.maxWidth / 3,
                                 child: new QuizButton(
+                                  key: new Key(_leftSideItems[index]),
                                   buttonStatus: (_rightSideDisabledItems
                                                   .length ==
                                               widget.gameData["pairs"].length &&
@@ -198,6 +197,7 @@ class _MatchingGameState extends State<MatchingGame> {
                               new Container(
                                 width: constraints.maxWidth / 3,
                                 child: new QuizButton(
+                                  key: new Key(_rightSideItems[index]) ,
                                   buttonStatus: (_rightSideDisabledItems
                                                   .length ==
                                               widget.gameData["pairs"].length &&
@@ -213,12 +213,16 @@ class _MatchingGameState extends State<MatchingGame> {
                                           ? Status.notSelected
                                           : Status.disabled),
                                   onPress: () {
-                                    print("correct");
                                     print(_leftItemSelected == ''
                                         ? "leftNotTapped"
                                         : _leftItemSelected);
                                     print(_rightSideItems[index]);
-                                    if (_leftItemSelected != '') {
+                                    if (_leftItemSelected != '' &&
+                                        _leftSideDisabledItems
+                                                .indexOf(_leftItemSelected) ==
+                                            -1) {
+                                      print(
+                                          "<><><><><><><><><><><><><><><><><><><><><><><><><><<>");
                                       setState(() {
                                         _leftSideDisabledItems
                                             .add(_leftItemSelected);
@@ -230,7 +234,7 @@ class _MatchingGameState extends State<MatchingGame> {
                                         if (_leftSideDisabledItems.length ==
                                             _leftSideItems.length) {
                                           new Future.delayed(
-                                              const Duration(seconds: 5), () {
+                                              const Duration(seconds: 2), () {
                                             widget.onEnd({
                                               'correct': numberOfCorrectChoices,
                                               'total': widget

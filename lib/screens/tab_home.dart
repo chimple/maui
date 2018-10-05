@@ -6,8 +6,9 @@ import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
-
+import 'package:maui/screens/home_page_view.dart';
 import 'category_list_view.dart';
+import 'profile_view.dart';
 // import 'package:maui/story/story_list_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -58,7 +59,7 @@ class TabHomeState extends State<TabHome>
         new CurvedAnimation(parent: _imgController, curve: Curves.ease);
     animateImage1 =
         new CurvedAnimation(parent: _imgController1, curve: Curves.ease);
-    _controller = new TabController(length: 3, vsync: this);
+    _controller = new TabController(length: 5, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_tabSelected);
     // _imgController1.forward();
@@ -216,8 +217,14 @@ class TabHomeState extends State<TabHome>
                       text: Loca.of(context).game,
                     ),
                     new Tab(
+                      text: Loca.of(context).home,
+                    ),
+                    new Tab(
                       text: Loca.of(context).category,
-                    )
+                    ),
+                    new Tab(
+                      text: Loca.of(context).profile,
+                    ),
                   ],
                 ),
               ),
@@ -225,14 +232,18 @@ class TabHomeState extends State<TabHome>
           },
           body: new TabBarView(
             controller: _controller,
-            children: <Widget>[new FriendListView(), new GameListView(),
-            new CategoryListView()],
+            children: <Widget>[
+              new FriendListView(),
+              new GameListView(),
+              new HomePageView(),
+              new CategoryListView(),
+              new ProfileView()
+            ],
           ),
         ),
       );
   }
 }
-
 
 class MyTabs {
   final String img1;

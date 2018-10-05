@@ -17,7 +17,7 @@ const Map<String, dynamic> testMap = {
 class GroupingQuiz extends StatefulWidget {
   final Map<String, dynamic> input;
   final Function onEnd;
-  GroupingQuiz({this.input = testMap, this.onEnd});
+  GroupingQuiz({Key key, this.input = testMap, this.onEnd}) : super(key: key);
 
   @override
   _GroupingQuizState createState() => new _GroupingQuizState();
@@ -74,8 +74,7 @@ class _GroupingQuizState extends State<GroupingQuiz> {
     showMode == true
         ? optionsOfGroupB = widget.input['optionsOfGroupB'].cast<String>()
         : null;
-    print(
-        "allOptions and showMode: ${allOptions.length} , ${showMode}");
+    print("allOptions and showMode: ${allOptions.length} , ${showMode}");
 
     showMode == false
         ? shuffledOptions.addAll(
@@ -148,7 +147,8 @@ class _GroupingQuizState extends State<GroupingQuiz> {
   }
 }
 
-class GameUI extends StatelessWidget {
+class GameUI extends StatefulWidget {
+  bool isDragging = false;
   final bool showMode;
   final Function() incrementCorrect;
   final Function(String) removeData;
@@ -163,8 +163,9 @@ class GameUI extends StatelessWidget {
   final List<String> optionsOfGroupB;
   final List<String> itemsOfgroupB;
 
-  const GameUI({
+  GameUI({
     Key key,
+    @required this.isDragging,
     @required this.showMode,
     @required this.incrementCorrect,
     @required this.removeData,
@@ -181,6 +182,32 @@ class GameUI extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  GameUIState createState() {
+    return new GameUIState();
+  }
+}
+
+class GameUIState extends State<GameUI> {
+  bool isDragging = false;
+  void onDragStarted() {
+    setState(() {
+      isDragging = true;
+    });
+  }
+
+  void onDragCompleted() {
+    setState(() {
+      isDragging = false;
+    });
+  }
+
+  void onDraggableCanceled() {
+    setState(() {
+      isDragging = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
@@ -193,11 +220,16 @@ class GameUI extends StatelessWidget {
         child: new Flex(
           direction: Axis.vertical,
           children: <Widget>[
-            showMode == false
+            widget.showMode == false
                 ? Expanded(
                     flex: 1,
-                    child: new QuizQuestion(
-                      text: question,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: constraints.maxHeight * 0.0871,
+                        child: new QuizQuestion(
+                          text: widget.question,
+                        ),
+                      ),
                     ),
                   )
                 : new Container(),
@@ -208,50 +240,59 @@ class GameUI extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     new GroupUI(
-                        showMode: showMode,
-                        incrementCorrect: incrementCorrect,
-                        removeData: removeData,
+                        showMode: widget.showMode,
+                        incrementCorrect: widget.incrementCorrect,
+                        removeData: widget.removeData,
                         maxHeight: constraints.maxHeight,
                         maxWidth: constraints.maxWidth,
-                        group: groupNames[0],
-                        optionsOfGroup: optionsOfGroupA,
-                        itemsOfgroup: itemsOfgroupA,
-                        scrollControllerForGroup: scrollControllerForGroupA,
-                        shuffledOptions: shuffledOptions,
-                        gameEnd: gameEnd),
+                        group: widget.groupNames[0],
+                        optionsOfGroup: widget.optionsOfGroupA,
+                        itemsOfgroup: widget.itemsOfgroupA,
+                        scrollControllerForGroup:
+                            widget.scrollControllerForGroupA,
+                        shuffledOptions: widget.shuffledOptions,
+                        gameEnd: widget.gameEnd),
                     new Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
                     new GroupUI(
-                        showMode: showMode,
-                        incrementCorrect: incrementCorrect,
-                        removeData: removeData,
+                        showMode: widget.showMode,
+                        incrementCorrect: widget.incrementCorrect,
+                        removeData: widget.removeData,
                         maxHeight: constraints.maxHeight,
                         maxWidth: constraints.maxWidth,
-                        group: groupNames[1],
-                        optionsOfGroup: optionsOfGroupB,
-                        itemsOfgroup: itemsOfgroupB,
-                        scrollControllerForGroup: scrollControllerForGroupB,
-                        shuffledOptions: shuffledOptions,
-                        gameEnd: gameEnd),
+                        group: widget.groupNames[1],
+                        optionsOfGroup: widget.optionsOfGroupB,
+                        itemsOfgroup: widget.itemsOfgroupB,
+                        scrollControllerForGroup:
+                            widget.scrollControllerForGroupB,
+                        shuffledOptions: widget.shuffledOptions,
+                        gameEnd: widget.gameEnd),
                   ],
                 ),
               ),
             ),
-            showMode == false
+            widget.showMode == false
                 ? Expanded(
                     flex: 3,
                     child: new Center(
                       child: new Container(
                         color: Colors.white,
                         child: GridView.count(
-                          childAspectRatio: 2.0,
+                          childAspectRatio:
+                              constraints.maxHeight > 1000 ? 3.0 : 2.0,
                           crossAxisCount: 2,
-                          children:
-                              new List.generate(shuffledOptions.length, (i) {
+                          children: new List.generate(
+                              widget.shuffledOptions.length, (i) {
                             return new Container(
                               margin: const EdgeInsets.all(8.0),
-                              child: new DragBox(shuffledOptions[i]),
+                              child: new DragBox(
+                                isDragging: isDragging,
+                                onDragStarted: onDragStarted,
+                                onDragCompleted: onDragCompleted,
+                                onDraggableCanceled: onDraggableCanceled,
+                                label: widget.shuffledOptions[i],
+                              ),
                             );
                           }),
                         ),
@@ -307,6 +348,7 @@ class GroupUI extends StatelessWidget {
           ),
         ),
         new DragTarget(
+          key: Key('Target'),
           onAccept: (String label) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
               scrollControllerForGroup.animateTo(
@@ -374,8 +416,18 @@ class GroupUI extends StatelessWidget {
 
 class DragBox extends StatefulWidget {
   final String label;
+  final bool isDragging;
+  final Function onDragStarted;
+  final Function onDragCompleted;
+  final Function onDraggableCanceled;
 
-  DragBox(this.label);
+  DragBox(
+      {this.isDragging,
+      this.onDragStarted,
+      this.onDragCompleted,
+      this.onDraggableCanceled,
+      this.label})
+      : super();
 
   @override
   _DragBoxState createState() => new _DragBoxState();
@@ -394,6 +446,17 @@ class _DragBoxState extends State<DragBox> {
     return new LayoutBuilder(builder: (context, constraints) {
       print("Size ${constraints.maxHeight} , ${constraints.maxWidth}");
       return Draggable(
+        key: Key('Source'),
+        onDragStarted: () {
+          widget.onDragStarted();
+        },
+        onDragCompleted: () {
+          widget.onDragCompleted();
+        },
+        onDraggableCanceled: (Velocity v, Offset o) {
+          widget.onDraggableCanceled();
+        },
+        maxSimultaneousDrags: widget.isDragging == true ? 0 : 1,
         data: widget.label,
         child: new QuizButton(
           text: widget.label,

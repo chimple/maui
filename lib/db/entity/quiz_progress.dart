@@ -4,15 +4,23 @@ class QuizProgress {
   static const userIdCol = 'userId';
   static const topicIdCol = 'topicId';
   static const quizIdCol = 'quizId';
-  static const doneCol = 'done';
+  static const maxScoreCol = 'maxScore';
+  static const outOfTotalCol = 'outOfTotal';
 
   String id;
   String userId;
   String topicId;
   String quizId;
-  String done;
+  int maxScore;
+  int outOfTotal;
 
-  QuizProgress({this.id, this.userId, this.topicId, this.quizId, this.done});
+  QuizProgress(
+      {this.id,
+      this.userId,
+      this.topicId,
+      this.quizId,
+      this.maxScore,
+      this.outOfTotal});
 
   Map<String, dynamic> toMap() {
     return {
@@ -20,7 +28,8 @@ class QuizProgress {
       userIdCol: userId,
       topicIdCol: topicId,
       quizIdCol: quizId,
-      doneCol: done
+      maxScoreCol: maxScore,
+      outOfTotalCol: outOfTotal
     };
   }
 
@@ -30,7 +39,8 @@ class QuizProgress {
             userId: map[userIdCol],
             topicId: map[topicIdCol],
             quizId: map[quizIdCol],
-            done: map[doneCol]);
+            maxScore: map[maxScoreCol],
+            outOfTotal: map[outOfTotalCol]);
 
   @override
   int get hashCode =>
@@ -38,7 +48,8 @@ class QuizProgress {
       userId.hashCode ^
       topicId.hashCode ^
       quizId.hashCode ^
-      done.hashCode;
+      maxScore.hashCode ^
+      outOfTotal.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -49,10 +60,11 @@ class QuizProgress {
           userId == other.userId &&
           topicId == other.topicId &&
           quizId == other.quizId &&
-          done == other.done;
+          maxScore == other.maxScore &&
+          outOfTotal == other.outOfTotal;
 
   @override
   String toString() {
-    return 'Quiz{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, done: $done}';
+    return 'QuizProgresss{id: $id, userId: $userId, topicId: $topicId, quizId: $quizId, maxScore: $maxScore, outOfTotal: $outOfTotal}';
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/friend_item.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:flores/flores.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/db/entity/notif.dart';
@@ -30,8 +30,10 @@ class _FriendListViewState extends State<FriendListView> {
   }
 
   void _initData() async {
-    await AppStateContainer.of(context).getUsers();
-    _isLoading = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await AppStateContainer.of(context).getUsers();
+      _isLoading = false;
+    });
   }
 
   @override

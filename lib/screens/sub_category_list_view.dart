@@ -124,17 +124,18 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
       mainAxisSpacing: 12.0,
       crossAxisCount: media.size.height > media.size.width ? 2 : 2,
       children: new List.generate(_topics.length, (j) {
+        print("Topic Id generated at subcategory list - ${_topics[j].id}");
         return TopicButton(
+            isDisplayingTopic: true,
             text: '${_topics[j].name}',
             image: '${_topics[j].image}',
+            topicId: '${_topics[j].id}',
             onPress: () {
               Navigator.of(context).push(
-                    new MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            new TopicScreen(topicId: _topics[j].id,
-                            topicName: _topics[j].name
-                            )),
-                  );
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => new TopicScreen(
+                        topicId: _topics[j].id, topicName: _topics[j].name)),
+              );
             });
       }).toList(),
     );
