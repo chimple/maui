@@ -69,6 +69,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
       _templates =
           activityTemplates.map((t) => t.image).toList(growable: false);
     } else {
+      print('drawing got: ${_drawing.json}');
       _jsonMap = json.decode(_drawing.json);
     }
     setState(() => _isLoading = false);
