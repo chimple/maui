@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'package:maui/components/topic_page_view.dart';
-import 'package:maui/components/videoplayer.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/article_progress_repo.dart';
 import 'package:maui/screens/topic_screen.dart';
@@ -50,6 +47,7 @@ class _ArticlePageState extends State<ArticlePage>
   VideoPlayerController _controller;
   bool _isPlaying = false;
   var expheight;
+  var _clicked = false;
   TabController tabController;
 
   User user;
@@ -72,6 +70,10 @@ class _ArticlePageState extends State<ArticlePage>
           setState(() {
             _isPlaying = isPlaying;
             _afterPress = true;
+            if (_clicked == true) {
+              AppStateContainer.of(context).pauseArticleAudio();
+              _clicked = false;
+            }
           });
         }
       })
@@ -109,6 +111,7 @@ class _ArticlePageState extends State<ArticlePage>
   @override
   void deactivate() {
     AppStateContainer.of(_ctx).stopArticleAudio();
+    _controller.dispose();
     super.deactivate();
   }
 
@@ -124,7 +127,7 @@ class _ArticlePageState extends State<ArticlePage>
       new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
   Future<ui.Image> _getImage() {
-    Image image = new Image.asset('assets/dict/cat.png');
+    Image image = new Image.asset("${widget.image}");
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
@@ -152,13 +155,14 @@ class _ArticlePageState extends State<ArticlePage>
             color: Colors.orange,
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new Tab(
-                    child: new IconButton(
-                      onPressed: () => _backwardButtonBehaviour(),
-                      icon: new Icon(
+                    child: new GestureDetector(
+                      onTap: () => _backwardButtonBehaviour(),
+                      child: new Icon(
                         Icons.arrow_back,
                         size: 70.0,
                         semanticLabel: "previous",
@@ -176,10 +180,12 @@ class _ArticlePageState extends State<ArticlePage>
                         highlightElevation: 5.0,
                         onPressed: () {
                           if (playerState == PlayerState.stopped ||
-                              playerState == PlayerState.playing) {
+                              playerState == PlayerState.playing &&
+                                  _clicked == true) {
                             AppStateContainer.of(context).pauseArticleAudio();
                             setState(() {
                               playerState = PlayerState.paused;
+                              _clicked = false;
 //                              _controller.pause();
                             });
                           } else {
@@ -188,12 +194,15 @@ class _ArticlePageState extends State<ArticlePage>
                             setState(() {
                               playerState = PlayerState.playing;
                               _controller.pause();
+                              _clicked = true;
+                              print("this is audio click $_clicked");
                             });
                           }
                         },
                         child: new Icon(
                           (playerState == PlayerState.stopped ||
-                                  playerState == PlayerState.playing)
+                                  playerState == PlayerState.playing &&
+                                      _clicked == true)
                               ? Icons.pause
                               : Icons.play_arrow,
                           color: Colors.purple,
@@ -205,9 +214,9 @@ class _ArticlePageState extends State<ArticlePage>
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new Tab(
-                    child: new IconButton(
-                      onPressed: () => _forwardButtonBehaviour(),
-                      icon: new Icon(
+                    child: new GestureDetector(
+                      onTap: () => _forwardButtonBehaviour(),
+                      child: new Icon(
                         Icons.arrow_forward,
                         semanticLabel: "previous",
                         size: 70.0,
@@ -250,136 +259,157 @@ class _ArticlePageState extends State<ArticlePage>
                     }
                   }
                 },
-                child: new CustomScrollView(
-                  controller: _scrollController,
-                  slivers: <Widget>[
-                    new SliverAppBar(
-                      titleSpacing: 0.0,
-                      elevation: 0.0,
-                      backgroundColor: Colors.transparent,
-                      automaticallyImplyLeading: false,
-                      expandedHeight: size.height / 2,
-                      pinned: false,
-                      floating: true,
-                      // snap: true,
+                child: Stack(
+                  children: <Widget>[
+                    new CustomScrollView(
+                      controller: _scrollController,
+                      slivers: <Widget>[
+                        new SliverAppBar(
+                          titleSpacing: 0.0,
+                          elevation: 0.0,
+                          backgroundColor: Colors.transparent,
+                          automaticallyImplyLeading: false,
+                          expandedHeight: double.parse("${image.height}"),
+                          pinned: false,
+                          floating: false,
+                          // snap: true,
 
-                      flexibleSpace: new FlexibleSpaceBar(
-                        centerTitle: true,
-                        background: new Column(
-                          children: <Widget>[
-                            widget.video == null
-                                ? new Image.asset(
-                                    "${widget.image}",
-                                    fit: BoxFit.fitWidth,
-                                  )
-                                : Expanded(
-                                    child: Stack(children: [
-                                      Container(
-                                        height: media.size.height,
-                                        width: media.size.width,
-                                        color: Colors.white,
-                                      ),
-                                      GestureDetector(
-                                        onTap: _controller.value.isPlaying
-                                            ? _controller.pause
-                                            : _controller.play,
-                                        child: Center(
-                                          child: _controller.value.initialized
-                                              ? Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Center(
-                                                    child: Container(
-                                                      height:
-                                                          media.size.height / 2,
-                                                      width: media.size.width /
-                                                          1.5,
-                                                      child: AspectRatio(
-                                                        aspectRatio: 16 / 9,
-                                                        child: VideoPlayer(
-                                                            _controller),
+                          flexibleSpace: new FlexibleSpaceBar(
+                            centerTitle: true,
+                            background: new Stack(
+                              fit: StackFit.expand,
+                              children: <Widget>[
+                                widget.video == null
+                                    ? new Image.asset(
+                                        "${widget.image}",
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Expanded(
+                                        child: Stack(children: [
+                                          Container(
+                                            height: media.size.height,
+                                            width: media.size.width,
+                                            color: Colors.white,
+                                          ),
+                                          GestureDetector(
+                                            onTap: _controller.value.isPlaying
+                                                ? _controller.pause
+                                                : _controller.play,
+                                            child: Center(
+                                              child: _controller
+                                                      .value.initialized
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Center(
+                                                        child: Container(
+                                                          height: media
+                                                                  .size.height /
+                                                              2,
+                                                          width:
+                                                              media.size.width /
+                                                                  1.5,
+                                                          child: AspectRatio(
+                                                            aspectRatio: 16 / 9,
+                                                            child: VideoPlayer(
+                                                                _controller),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Center(
+                                                        child: Container(
+                                                            height: media.size
+                                                                    .height /
+                                                                2,
+                                                            width: media.size
+                                                                    .width /
+                                                                1.5,
+                                                            child: VideoPlayer(
+                                                                _controller)),
                                                       ),
                                                     ),
-                                                  ),
-                                                )
-                                              : Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Center(
-                                                    child: Container(
-                                                        height:
-                                                            media.size.height /
-                                                                2,
-                                                        width:
-                                                            media.size.width /
-                                                                1.5,
-                                                        child: VideoPlayer(
-                                                            _controller)),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: _controller.value.isPlaying
+                                                ? _controller.pause
+                                                : _controller.play,
+                                            child: Center(
+                                              child: new Container(
+                                                height: 60.0,
+                                                width: 60.0,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: new Center(
+                                                  child: Icon(
+                                                    _controller.value.isPlaying
+                                                        ? Icons.pause
+                                                        : Icons.play_arrow,
+                                                    color: Colors.white,
+                                                    size: 100.0,
                                                   ),
                                                 ),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: _controller.value.isPlaying
-                                            ? _controller.pause
-                                            : _controller.play,
-                                        child: Center(
-                                          child: new Container(
-                                            height: 60.0,
-                                            width: 60.0,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: new Center(
-                                              child: Icon(
-                                                _controller.value.isPlaying
-                                                    ? Icons.pause
-                                                    : Icons.play_arrow,
-                                                color: Colors.white,
-                                                size: 100.0,
                                               ),
                                             ),
                                           ),
-                                        ),
+                                        ]),
                                       ),
-                                    ]),
+                                const DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment(0.0, -1.0),
+                                      end: Alignment(0.0, -0.4),
+                                      colors: <Color>[
+                                        Color(0x60000000),
+                                        Color(0x00000000)
+                                      ],
+                                    ),
                                   ),
-                            const DecoratedBox(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment(0.0, -1.0),
-                                  end: Alignment(0.0, -0.4),
-                                  colors: <Color>[
-                                    Color(0x60000000),
-                                    Color(0x00000000)
-                                  ],
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    new SliverList(
-                      delegate: new SliverChildListDelegate(<Widget>[
-                        Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: const Radius.circular(30.0),
-                                  topRight: const Radius.circular(40.0)),
-                            ),
-                            child: MarkdownBody(
-                              data: "${widget.text}",
-                              onTapLink: (e) => Navigator.of(_ctx)
-                                  .pushReplacement(new MaterialPageRoute(
-                                      builder: (BuildContext _ctx) =>
-                                          new TopicScreen(
-                                            topicId: "fox",
-                                            topicName: "fox",
-                                          ))),
-                            )),
-                      ]),
+                        new SliverList(
+                          delegate: new SliverChildListDelegate(<Widget>[
+                            Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: const Radius.circular(30.0),
+                                      topRight: const Radius.circular(40.0)),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    MarkdownBody(
+                                      data: "${widget.text}",
+                                      styleSheet: new MarkdownStyleSheet(
+                                          p: new TextStyle(
+                                              fontSize: 40.0,
+                                              color: Colors.black)),
+                                      onTapLink: (e) => Navigator.of(_ctx)
+                                          .pushReplacement(
+                                              new MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext _ctx) =>
+                                                          new TopicScreen(
+                                                            topicId: "fox",
+                                                            topicName: "fox",
+                                                          ))),
+                                    ),
+                                  ],
+                                )),
+                          ]),
+                        ),
+                      ],
                     ),
                   ],
                 ),

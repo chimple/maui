@@ -551,137 +551,122 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                             child: SlideTransition(
                                 position: _animation,
                                 child: ButtonStateContainer(child: game))),
-                        widget.gameName == "quiz_pager"
-                            ? Container()
-                            : SizedBox(
-                                height: media.size.height / 8.0,
-                                child: Material(
-                                  elevation: 8.0,
-                                  color: oh2h ? colors[2] : colors[0],
-                                  child: Stack(
-                                      alignment:
-                                          AlignmentDirectional.centerStart,
-                                      children: <Widget>[
-                                        new Positioned(
-                                            left: !oh2h ? 32.0 : null,
-                                            right: oh2h ? 32.0 : null,
+                        SizedBox(
+                            height: media.size.height / 8.0,
+                            child: Material(
+                              elevation: 8.0,
+                              color: oh2h ? colors[2] : colors[0],
+                              child: Stack(
+                                  alignment: AlignmentDirectional.centerStart,
+                                  children: <Widget>[
+                                    new Positioned(
+                                        left: !oh2h ? 32.0 : null,
+                                        right: oh2h ? 32.0 : null,
+                                        child: Hud(
+                                            user: widget.gameConfig.myUser,
+                                            height: media.size.height / 8,
+                                            width: media.size.width / 2,
+                                            gameMode: widget.gameMode,
+                                            playTime: playTime,
+                                            onEnd: widget.onGameEnd,
+                                            progress: _myProgress,
+                                            start: !oh2h,
+                                            score: widget.gameConfig.myScore,
+                                            backgroundColor:
+                                                oh2h ? colors[0] : colors[2],
+                                            foregroundColor: colors[1])),
+                                    //  game.runtimeType==QuizPager
+                                    //       ? Container()
+                                    //       : new Center(
+                                    //           child: Nima(
+                                    //               name: widget.gameName,
+                                    //               score: _cumulativeIncrement,
+                                    //               tag: !oh2h
+                                    //                   ? 'assets/hoodie/${widget.gameName}.png'
+                                    //                   : 'other.png'),
+                                    //         ),
+                                    !oh2h
+                                        ? Positioned(
+                                            left: 0.0,
+                                            top: 0.0,
+                                            child: IconButton(
+                                              icon: Icon(Icons.arrow_back),
+                                              color: Colors.white,
+                                              onPressed: () {
+                                                AppStateContainer.of(context)
+                                                    .play('_audiotap.mp3');
+                                                _onWillPop();
+                                              },
+                                            ))
+                                        : Container(),
+                                    !oh2h
+                                        ? Positioned(
+                                            right: 0.0,
+                                            top: 0.0,
+                                            child: IconButton(
+                                              icon: Icon(Icons.help_outline),
+                                              color: Colors.white,
+                                              onPressed: () {
+                                                print(
+                                                    "scaffold data is.......::${_scaffoldKey.currentState}");
+                                                _scaffoldKey.currentState
+                                                    .openEndDrawer();
+                                              },
+                                            ))
+                                        : Container(),
+                                    widget.gameConfig.gameDisplay ==
+                                                GameDisplay.localTurnByTurn ||
+                                            widget.gameConfig.gameDisplay ==
+                                                GameDisplay.networkTurnByTurn
+                                        ? Positioned(
+                                            right: 32.0,
                                             child: Hud(
-                                                user: widget.gameConfig.myUser,
-                                                height: media.size.height / 8,
+                                                start: false,
+                                                amICurrentUser: widget
+                                                    .gameConfig
+                                                    .amICurrentPlayer,
+                                                user:
+                                                    widget.gameConfig.otherUser,
                                                 width: media.size.width / 2,
+                                                height: media.size.height / 8.0,
                                                 gameMode: widget.gameMode,
                                                 playTime: playTime,
                                                 onEnd: widget.onGameEnd,
-                                                progress: _myProgress,
-                                                start: !oh2h,
-                                                score:
-                                                    widget.gameConfig.myScore,
-                                                backgroundColor: oh2h
-                                                    ? colors[0]
-                                                    : colors[2],
-                                                foregroundColor: colors[1])),
-                                        //  game.runtimeType==QuizPager
-                                        //       ? Container()
-                                        //       : new Center(
-                                        //           child: Nima(
-                                        //               name: widget.gameName,
-                                        //               score: _cumulativeIncrement,
-                                        //               tag: !oh2h
-                                        //                   ? 'assets/hoodie/${widget.gameName}.png'
-                                        //                   : 'other.png'),
-                                        //         ),
-                                        !oh2h
-                                            ? Positioned(
-                                                left: 0.0,
-                                                top: 0.0,
-                                                child: IconButton(
-                                                  icon: Icon(Icons.arrow_back),
-                                                  color: Colors.white,
-                                                  onPressed: () {
-                                                    AppStateContainer.of(
-                                                            context)
-                                                        .play('_audiotap.mp3');
-                                                    _onWillPop();
-                                                  },
-                                                ))
-                                            : Container(),
-                                        !oh2h
-                                            ? Positioned(
-                                                right: 0.0,
-                                                top: 0.0,
-                                                child: IconButton(
-                                                  icon:
-                                                      Icon(Icons.help_outline),
-                                                  color: Colors.white,
-                                                  onPressed: () {
-                                                    print(
-                                                        "scaffold data is.......::${_scaffoldKey.currentState}");
-                                                    _scaffoldKey.currentState
-                                                        .openEndDrawer();
-                                                  },
-                                                ))
-                                            : Container(),
-                                        widget.gameConfig
-                                                        .gameDisplay ==
-                                                    GameDisplay
-                                                        .localTurnByTurn ||
-                                                widget.gameConfig
-                                                        .gameDisplay ==
-                                                    GameDisplay
-                                                        .networkTurnByTurn
-                                            ? Positioned(
-                                                right: 32.0,
-                                                child: Hud(
-                                                    start: false,
-                                                    amICurrentUser: widget
-                                                        .gameConfig
-                                                        .amICurrentPlayer,
-                                                    user: widget
-                                                        .gameConfig.otherUser,
-                                                    width: media.size.width / 2,
-                                                    height:
-                                                        media.size.height / 8.0,
-                                                    gameMode: widget.gameMode,
-                                                    playTime: playTime,
-                                                    onEnd: widget.onGameEnd,
-                                                    progress: _otherProgress,
-                                                    score: widget
-                                                        .gameConfig.otherScore,
-                                                    backgroundColor: colors[2],
-                                                    foregroundColor: colors[1]))
-                                            : Container(),
-                                        widget.gameConfig.gameDisplay ==
-                                                    GameDisplay
-                                                        .localTurnByTurn ||
-                                                widget.gameConfig.gameDisplay ==
-                                                    GameDisplay
-                                                        .networkTurnByTurn
-                                            ? new AnimatedPositioned(
-                                                key: ValueKey<String>(
-                                                    'currentPlayer'),
-                                                left: widget.gameConfig
-                                                        .amICurrentPlayer
-                                                    ? 32.0
-                                                    : media.size.width -
-                                                        32.0 -
-                                                        media.size.height /
-                                                            8.0 *
-                                                            0.6,
-                                                bottom: 0.0,
-                                                duration: Duration(
-                                                    milliseconds: 1000),
-                                                curve: Curves.elasticOut,
-                                                child: Container(
-                                                  color: colors[1],
-                                                  width: media.size.height /
-                                                      8.0 *
-                                                      0.6,
-                                                  height: 8.0,
-                                                ),
-                                              )
-                                            : Container()
-                                      ]),
-                                ))
+                                                progress: _otherProgress,
+                                                score: widget
+                                                    .gameConfig.otherScore,
+                                                backgroundColor: colors[2],
+                                                foregroundColor: colors[1]))
+                                        : Container(),
+                                    widget.gameConfig.gameDisplay ==
+                                                GameDisplay.localTurnByTurn ||
+                                            widget.gameConfig.gameDisplay ==
+                                                GameDisplay.networkTurnByTurn
+                                        ? new AnimatedPositioned(
+                                            key: ValueKey<String>(
+                                                'currentPlayer'),
+                                            left: widget
+                                                    .gameConfig.amICurrentPlayer
+                                                ? 32.0
+                                                : media.size.width -
+                                                    32.0 -
+                                                    media.size.height /
+                                                        8.0 *
+                                                        0.6,
+                                            bottom: 0.0,
+                                            duration:
+                                                Duration(milliseconds: 1000),
+                                            curve: Curves.elasticOut,
+                                            child: Container(
+                                              color: colors[1],
+                                              width:
+                                                  media.size.height / 8.0 * 0.6,
+                                              height: 8.0,
+                                            ),
+                                          )
+                                        : Container()
+                                  ]),
+                            ))
                       ]),
                 ]))),
       ),
@@ -914,8 +899,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
-            isRotated: widget.isRotated,
-            gameConfig: widget.gameConfig);
+            isRotated: widget.isRotated);
         break;
       case 'order_it':
         playTime = 15000;

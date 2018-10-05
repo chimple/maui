@@ -28,10 +28,8 @@ class QuizPager extends StatefulWidget {
       {key,
       this.onScore,
       this.onProgress,
-      this.onEnd,
-      this.onTurn,
       this.iteration,
-      this.gameConfig,
+      this.onEnd,
       this.isRotated = false})
       : super(key: key);
 
@@ -93,8 +91,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   }
 
   void _initState() async {
-    widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
-    _quizzes = await QuizRepo().getQuizzesByTopicId(widget.gameConfig.topicId);
+    // widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
+    _quizzes = await QuizRepo().getQuizzesByTopicId('tiger');
 
     print("hello check the relation is....${_quizzes}");
     _quizInputs = _quizzes.map((quiz) {
@@ -131,13 +129,9 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       print("hello this.... is..data of database is...${input}");
       var size = media.size;
       print(input);
-      final mh2h = widget.gameConfig.gameDisplay == GameDisplay.myHeadToHead;
-      final oh2h = widget.gameConfig.gameDisplay == GameDisplay.otherHeadToHead;
+
       Widget hud = Container(
-        width: widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn ||
-                widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn
-            ? 400.0
-            : 120.0,
+        width: 120.0,
         height: 140.0,
         decoration: new BoxDecoration(
           color: Colors.orange,
@@ -149,53 +143,22 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
             // _onProgress( progress),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Hud(
-                  user: widget.gameConfig.myUser,
-                  height: media.size.height * 0.1,
-                  gameMode: widget.gameMode,
-                  playTime: widget.playTime,
-                  onEnd: widget.onGameEnd,
-                  progress:
-                      widget.gameConfig.amICurrentPlayer ? _myProgress : null,
-                  start: !oh2h,
-                  score: widget.gameConfig.myScore,
-                  backgroundColor: Colors.amber,
-                  foregroundColor: Colors.red),
+              child: Container(),
             ),
-            widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn ||
-                    widget.gameConfig.gameDisplay ==
-                        GameDisplay.networkTurnByTurn
-                ? Hud(
-                    start: false,
-                    amICurrentUser: false,
-                    user: widget.gameConfig.otherUser,
-                    height: media.size.height * 0.1,
-                    gameMode: widget.gameMode,
-                    playTime: widget.playTime,
-                    onEnd: widget.onGameEnd,
-                    progress: _otherProgress,
-                    score: widget.gameConfig.otherScore,
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.amber)
-                : Container()
+
+            // Hud(
+            //     start: false,
+            //     amICurrentUser: false,
+            //     user: widget.gameConfig.otherUser,
+            //     height: media.size.height * 0.1,
+            //     gameMode: widget.gameMode,
+            //     playTime: widget.playTime,
+            //     onEnd: widget.onGameEnd,
+            //     progress: _otherProgress,
+            //     score: widget.gameConfig.otherScore,
+            //     backgroundColor: Colors.red,
+            //     foregroundColor: Colors.amber)
           ]),
-          widget.gameConfig.gameDisplay == GameDisplay.localTurnByTurn ||
-                  widget.gameConfig.gameDisplay == GameDisplay.networkTurnByTurn
-              ? new AnimatedPositioned(
-                  key: ValueKey<String>('currentPlayer'),
-                  left: widget.gameConfig.amICurrentPlayer
-                      ? 60.0
-                      : media.size.width - 32.0 - media.size.height / 8.0 * 0.6,
-                  bottom: 8.0,
-                  duration: Duration(milliseconds: 1000),
-                  curve: Curves.elasticOut,
-                  child: Container(
-                    color: Colors.blue,
-                    width: media.size.height / 9.0 * 0.4,
-                    height: 8.0,
-                  ),
-                )
-              : Container(),
         ]),
       );
       return QuizPager.createQuiz(
@@ -207,19 +170,22 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       );
     } else {
       return IntrinsicHeight(
-        child: QuizResult(
-            quizInputs: _quizInputs,
-            quizzes: _quizzes,
-            onEnd: widget.onEnd,
-            onScore: widget.onScore),
+        child: Container(
+          height: media.size.height,
+          child: QuizResult(
+              quizInputs: _quizInputs,
+              quizzes: _quizzes,
+              onEnd: widget.onEnd,
+              onScore: widget.onScore),
+        ),
       );
     }
   }
 
   _onEnd(Map<String, dynamic> resultData) {
     if (resultData != null) _quizInputs[_currentQuiz].addAll(resultData);
-    print(
-        "genereal game mode is.......::${widget.gameConfig.amICurrentPlayer}");
+    // print(
+    //     "genereal game mode is.......::${widget.gameConfig.amICurrentPlayer}");
     setState(() {
       _myProgress = (++_currentQuiz / _quizzes.length);
       print("object...... the myprogress.. ::$_myProgress");

@@ -57,3 +57,5 @@ with open(topic_csv, 'r') as csvfile:
 				quiz_json = create_quiz_json(row[2], asset_dir+'/'+row[3], row[4], row[5] if len(row)>=6 else None)
 				sqlfile.write(f"INSERT INTO `quiz` VALUES ('{esc(topic)}_{quiz_num}','{esc(topic)}',1,'{esc(row[1])}','{esc(quiz_json)}');\n")
 				quiz_num = quiz_num + 1
+			elif(row[0] == 'related'):
+				sqlfile.write(f"INSERT INTO `relatedTopic` VALUES ('{esc(row[1])}','{esc(row[2])}');\n")

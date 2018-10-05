@@ -36,8 +36,11 @@ class _RelatedPageState extends State<RelatedPage> {
         image: topic[index].image,
         onPress: () => Navigator.of(context).push(
               new MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      new TopicScreen(topicId: topic[index].id)),
+                  builder: (BuildContext context) => new TopicScreen(
+                        topicId: topic[index].id,
+                        topicName: topic[index].name,
+                        topicImage: topic[index].image,
+                      )),
             ));
   }
 
