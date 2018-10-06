@@ -31,9 +31,9 @@ class MauiApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
-        // '/': (BuildContext context) => new WelcomeScreen(),
-        // '/login': (BuildContext context) => new LoginScreen(),
-        '/': (BuildContext context) => new TabHome(),
+        '/': (BuildContext context) => new WelcomeScreen(),
+        '/login': (BuildContext context) => new LoginScreen(),
+        '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen()
       },

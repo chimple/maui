@@ -166,7 +166,7 @@ class TabHomeState extends State<TabHome>
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = media.orientation;
     var _size = media.size;
-    if (user != null)
+    if (user == null)
       return Container(
         color: Colors.white,
       );
