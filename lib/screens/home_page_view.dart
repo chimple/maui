@@ -15,7 +15,9 @@ class HomePageView extends StatefulWidget {
   _HomePageViewState createState() => new _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<HomePageView>
+    with TickerProviderStateMixin {
+  AnimationController _commentButtonAnimationController;
   List<Home> _home = [];
   List<int> _likes = [];
   List<User> _allUsers = [];
@@ -64,6 +66,8 @@ class _HomePageViewState extends State<HomePageView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _commentButtonAnimationController = new AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
   }
 
   @override
@@ -89,28 +93,15 @@ class _HomePageViewState extends State<HomePageView> {
                   new Expanded(
                     flex: 1,
                     child: _allUsers[index] == null
-                        ? new Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: new BorderRadius.circular(40.0),
-                                border: new Border.all(
-                                    width: 3.0, color: Colors.black)),
-                            child: new CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child:
-                                  new Image.asset('assets/chat_Bot_Icon.png'),
-                            ),
+                        ? new CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: Colors.black,
+                            child: new Image.asset('assets/chat_Bot_Icon.png'),
                           )
-                        : new Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: new BorderRadius.circular(40.0),
-                              border: new Border.all(
-                                  width: 3.0, color: Colors.black),
-                            ),
-                            child: new CircleAvatar(
-                              backgroundColor: Colors.white,
-                              backgroundImage: new FileImage(
-                                new File(_allUsers[index].image),
-                              ),
+                        : new CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: new FileImage(
+                              new File(_allUsers[index].image),
                             ),
                           ),
                   ),
@@ -248,6 +239,13 @@ class _HomePageViewState extends State<HomePageView> {
       ),
     );
   }
+
+  @override
+    void dispose() {
+      // TODO: implement dispose
+      super.dispose();
+      _commentButtonAnimationController.dispose();
+    }
 
   @override
   Widget build(BuildContext context) {
