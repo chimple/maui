@@ -43,6 +43,13 @@ class _HomePageViewState extends State<HomePageView>
     }
   }
 
+  Future _startAnimation() async {
+    try {
+      await _commentButtonAnimationController.forward().orCancel;
+      await _commentButtonAnimationController.reverse().orCancel;
+    } on TickerCanceled {}
+  }
+
   Widget _initTileData(String type, String typeId) {
     return new Container(
       color: type == "quiz"
@@ -67,7 +74,8 @@ class _HomePageViewState extends State<HomePageView>
     // TODO: implement initState
     super.initState();
     _commentButtonAnimationController = new AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
+        vsync: this, duration: const Duration(milliseconds: 2000));
+    _commentButtonAnimationController.forward();
   }
 
   @override
@@ -190,17 +198,9 @@ class _HomePageViewState extends State<HomePageView>
             ),
             new Expanded(
               flex: 2,
-              child: new RaisedButton(
-                padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                shape: new RoundedRectangleBorder(
-                    side: new BorderSide(
-                        color: Colors.brown,
-                        width: 1.0,
-                        style: BorderStyle.solid),
-                    borderRadius: new BorderRadius.circular(20.0)),
-                elevation: 5.0,
-                onPressed: () {
-                  print("objectffff");
+              child: new GestureDetector(
+                onTap: () {
+                  _startAnimation();
                   Navigator.of(context).push(
                     new MaterialPageRoute(
                       builder: (BuildContext context) {
@@ -212,9 +212,8 @@ class _HomePageViewState extends State<HomePageView>
                     ),
                   );
                 },
-                child: new Text(
-                  "Comment",
-                  style: new TextStyle(fontSize: 30.0),
+                child: new AnimatedCommentBox(
+                  controller: _commentButtonAnimationController,
                 ),
               ),
             ),
@@ -241,11 +240,11 @@ class _HomePageViewState extends State<HomePageView>
   }
 
   @override
-    void dispose() {
-      // TODO: implement dispose
-      super.dispose();
-      _commentButtonAnimationController.dispose();
-    }
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _commentButtonAnimationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,5 +287,99 @@ class _HomePageViewState extends State<HomePageView>
               },
             ),
           );
+  }
+}
+
+class AnimatedCommentBox extends StatelessWidget {
+  AnimatedCommentBox({Key key, this.controller})
+      : opacity = new Tween<double>(begin: 0.0, end: 1.0).animate(
+            new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.0, 0.1, curve: Curves.fastOutSlowIn))),
+        rotate = new Tween<double>(begin: 0.0, end: 3.141 * 4).animate(
+            new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.1, 0.3, curve: Curves.ease))),
+        movement = new EdgeInsetsTween(
+                begin: EdgeInsets.only(
+                    bottom: 5.0, left: 0.0, right: 0.0, top: 5.0),
+                end: new EdgeInsets.only(bottom: 10.0, top: 10.0))
+            .animate(new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.3, 0.4, curve: Curves.fastOutSlowIn))),
+        width = new Tween<double>(
+          begin: 50.0,
+          end: 200.0,
+        ).animate(new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.4, 0.6, curve: Curves.fastOutSlowIn))),
+        height = new Tween<double>(
+          begin: 50.0,
+          end: 200.0,
+        ).animate(new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.4, 0.6, curve: Curves.fastOutSlowIn))),
+        radius = new BorderRadiusTween(
+                begin: new BorderRadius.circular(0.0),
+                end: new BorderRadius.circular(100.0))
+            .animate(new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.6, 0.75, curve: Curves.ease))),
+        color = new ColorTween(begin: Colors.grey, end: Colors.green).animate(
+            new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.0, 0.75, curve: Curves.linear))),
+        fontSize = new Tween(begin: 30.0, end: 0.0).animate(new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.3, 0.4, curve: Curves.fastOutSlowIn))),
+        super(key: key);
+  final Animation<double> controller;
+  final Animation<double> opacity;
+  final Animation<double> width;
+  final Animation<double> height;
+  final Animation<EdgeInsets> movement;
+  final Animation<double> rotate;
+  final Animation<Color> color;
+  final Animation<double> fontSize;
+  final Animation<BorderRadius> radius;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new AnimatedBuilder(
+      animation: controller,
+      builder: (BuildContext context, Widget child) {
+        return new Container(
+          padding: movement.value,
+          transform: Matrix4.identity()..rotateZ(rotate.value),
+          alignment: Alignment.center,
+          child: new Opacity(
+            opacity: opacity.value,
+            child: new Container(
+                width: width.value,
+                height: height.value,
+                child: new Text(
+                  "Comment",
+                  style: new TextStyle(fontSize: fontSize.value),
+                ),
+                decoration: new BoxDecoration(
+                  color: color.value,
+                  border: Border.all(color: Colors.black, width: 2.0),
+                  borderRadius: radius.value,
+                )),
+          ),
+          // shape: new RoundedRectangleBorder(
+          //     side: new BorderSide(
+          //         color: Colors.brown, width: 1.0, style: BorderStyle.solid),
+          //     borderRadius: new BorderRadius.circular(20.0)),
+          // elevation: 5.0,
+          // onPressed: () {},
+          // child: new Text(
+          //   "Comment",
+          //   style: new TextStyle(fontSize: fontSize.value),
+          // ),
+        );
+      },
+    );
   }
 }
