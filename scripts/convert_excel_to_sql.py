@@ -1,9 +1,20 @@
-import csv
+import openpyxl as px
 import sys
 import json
 import re
 
-topic_csv = sys.argv[1]
+types = {
+	'quiz': 0,
+	'activity': 1,
+	'topic': 2,
+	'article': 3,
+	'connection': 9,
+	'template': 100,
+	'answer': 101,
+	'choice': 102
+}
+
+xlsx_file = sys.argv[1]
 asset_dir = 'assets/topic'
 
 def create_quiz_json(question, image, answer, choices):
@@ -25,37 +36,43 @@ def normalize(a):
 		return a
 
 def esc(a):
-	return a.replace("'", "''")
+	if a == None:
+		return 'NULL'
+	if a.endswith(('.svg','.png','.jpg','.jpeg','.gif')):
+		prefix = asset_dir + '/'
+	else:
+		prefix = ''
+	return "'" + prefix + a.replace("'", "''") + "'"
 
-with open(topic_csv, 'r') as csvfile:
-	topic_reader = csv.reader(csvfile, delimiter=',', quoting=csv.QUOTE_ALL)
-	with open(topic_csv+'.sql', 'w') as sqlfile:
-		topic = ''
-		article_num = 1
-		activity = ''
-		activity_num = 1
-		quiz_num = 1
-		for row in topic_reader:
-			if(row[0] == 'topic'):
-				sqlfile.write(f"INSERT INTO `topic` VALUES ('{esc(row[1])}','{esc(row[2])}','{asset_dir}/{esc(row[3])}',NULL);\n")
-				topic = row[1]
-				article_num = 1
-				activity_num = 1
-				activity = ''
-				quiz_num = 1
-			elif(row[0] == 'article'):
-				sqlfile.write(f"INSERT INTO `article` VALUES ('{esc(row[1])}','{esc(row[2])}','{esc(topic)}',NULL,NULL,'{asset_dir}/{esc(row[3])}','{esc(row[4])}',{article_num});\n")
-				article_num = article_num + 1
-			elif(row[0] == 'activity'):
-				sqlfile.write(f"INSERT INTO `activity` VALUES ('{esc(row[1])}','{esc(topic)}','{esc(row[2])}',NULL,{activity_num},'{asset_dir}/{esc(row[3])}',NULL,NULL);\n")
-				sqlfile.write(f"INSERT INTO `activityTopic` VALUES ('{esc(row[1])}','{esc(topic)}');\n")
-				activity = row[1]
-				activity_num = activity_num + 1
-			elif(row[0] == 'template'):
-				sqlfile.write(f"INSERT INTO `activityTemplate` VALUES ('{esc(activity)}','{asset_dir}/{esc(row[3])}');\n")
-			elif(row[0] == 'quiz'):
-				quiz_json = create_quiz_json(row[2], asset_dir+'/'+row[3], row[4], row[5] if len(row)>=6 else None)
-				sqlfile.write(f"INSERT INTO `quiz` VALUES ('{esc(topic)}_{quiz_num}','{esc(topic)}',1,'{esc(row[1])}','{esc(quiz_json)}');\n")
-				quiz_num = quiz_num + 1
-			elif(row[0] == 'related'):
-				sqlfile.write(f"INSERT INTO `relatedTopic` VALUES ('{esc(row[1])}','{esc(row[2])}');\n")
+wb = px.load_workbook(xlsx_file, read_only=True)
+card_sheet = wb['card']
+
+collection_sql = ''
+with open(xlsx_file+'.sql', 'w') as sqlfile:
+	topic = ''
+	card = ''
+	extra = ''
+	card_number = 1
+	extra_number = 1
+	for row in card_sheet.iter_rows(row_offset=1):
+		if(row[0].value == None):
+			continue
+		type_data = types[row[0].value]
+		if(type_data <= 3):
+			card = row[2].value
+			sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(row[1].value)}, {esc(row[3].value)}, {esc(row[4].value)}, {esc(row[5].value)});\n")
+		if type_data == 2:
+			topic = row[2].value
+			card_number = 1
+			extra = ''
+		elif type_data <= 9:
+			collection_sql += f"INSERT INTO `collection` (id, serial, cardId) VALUES ({esc(topic)}, {card_number}, {esc(row[2].value)});\n"
+			card_number += 1
+			extra = ''
+		else:
+			if extra != row[0].value:
+				extra = row[0].value
+				extra_number = 1
+			sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {esc(extra)}, {extra_number}, {esc(row[1].value)});\n")
+			extra_number += 1
+	sqlfile.write(collection_sql)
