@@ -12,8 +12,9 @@ class CardExtraDao {
     List<Map> maps = await db.query(CardExtra.table,
         columns: CardExtra.allCols,
         where: '${CardExtra.cardIdCol} = ? AND ${CardExtra.typeCol} = ?',
-        whereArgs: [cardId, cardExtraType],
+        whereArgs: [cardId, cardExtraType.index],
         orderBy: CardExtra.serialCol);
+    print(maps);
     return maps.map((el) => new CardExtra.fromMap(el)).toList(growable: false);
   }
 }

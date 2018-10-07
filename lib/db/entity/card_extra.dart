@@ -10,7 +10,7 @@ class CardExtra {
 
   String cardId;
   CardExtraType type;
-  String serial;
+  int serial;
   String content;
   String contentAudio;
 

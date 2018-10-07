@@ -14,6 +14,14 @@ class CardProgress {
     outOfTotalCol
   ];
 
+  static const allPrefixedCols = [
+    '$table.$userIdCol',
+    '$table.$cardIdCol',
+    '$table.$updatedAtCol',
+    '$table.$maxScoreCol',
+    '$table.$outOfTotalCol'
+  ];
+
   String userId;
   String cardId;
   DateTime updatedAt;

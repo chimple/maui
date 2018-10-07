@@ -4,12 +4,13 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:async';
 import 'card_list.dart';
+import 'package:maui/db/entity/quiz.dart';
 
 class QuizScrollerPager extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Widget hud;
-  final relation;
+  final QuizType relation;
 
   QuizScrollerPager({Key key, this.input, this.onEnd, this.hud, this.relation})
       : super(key: key);
@@ -30,7 +31,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
   bool showBottomBar = true;
   TabController tabController;
-  var optionalType;
   final _scrollController = TrackingScrollController();
   // AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
   @override
@@ -57,8 +57,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
   @override
   Widget build(BuildContext context) {
-    optionalType = widget.relation;
-
     MediaQueryData media = MediaQuery.of(context);
     print("thius..... is....expandheight is.....$expheight");
     print("Wiget relation type is......::${widget.relation}");
@@ -210,11 +208,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                                 input: widget.input,
                                 onEnd: widget.onEnd,
                                 onPress: _gettingOnEndData,
-                                optionsType: widget.relation == "many"
-                                    ? OptionCategory.many
-                                    : widget.relation == "pair"
-                                        ? OptionCategory.pair
-                                        : OptionCategory.oneAtATime,
+                                optionsType: widget.relation,
                               ),
                             ),
                           ], addRepaintBoundaries: false),

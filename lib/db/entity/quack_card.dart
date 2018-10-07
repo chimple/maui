@@ -1,6 +1,6 @@
 enum CardType { question, activity, collection, knowledge }
 
-class Card {
+class QuackCard {
   static const table = 'card';
   static const idCol = 'id';
   static const typeCol = 'type';
@@ -42,7 +42,7 @@ class Card {
     '$table.$optionCol'
   ];
 
-  Card(
+  QuackCard(
       {this.id,
       this.type,
       this.title,
@@ -65,7 +65,7 @@ class Card {
     };
   }
 
-  Card.fromMap(Map<String, dynamic> map)
+  QuackCard.fromMap(Map<String, dynamic> map)
       : this(
             id: map[idCol],
             type: CardType.values[map[typeCol]],
@@ -90,7 +90,7 @@ class Card {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Card &&
+      other is QuackCard &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           type == other.type &&

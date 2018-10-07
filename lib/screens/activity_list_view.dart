@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/drawing_list.dart';
 import 'package:maui/components/topic_button.dart';
-import 'package:maui/db/entity/activity.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/screens/drawing_list_screen.dart';
-import '../repos/activity_repo.dart';
-import 'package:maui/screens/drawing_screen.dart';
 
 class ActivityListView extends StatefulWidget {
   final String topicId;
@@ -22,7 +21,7 @@ class ActivityListView extends StatefulWidget {
 }
 
 class _ActivityListViewState extends State<ActivityListView> {
-  List<Activity> _dataActivity;
+  List<Card> _dataActivity;
   bool _isLoading = true;
   @override
   void initState() {
@@ -32,7 +31,8 @@ class _ActivityListViewState extends State<ActivityListView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _dataActivity = await ActivityRepo().getActivitiesByTopicId(widget.topicId);
+    _dataActivity = await CollectionRepo()
+        .getCardsInCollectionByType(widget.topicId, CardType.activity);
 
     print("object...category data is......$_dataActivity");
     print("data of the ${_dataActivity}");

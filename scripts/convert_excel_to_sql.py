@@ -9,31 +9,13 @@ types = {
 	'topic': 2,
 	'article': 3,
 	'connection': 9,
-	'template': 100,
+	'choice': 100,
 	'answer': 101,
-	'choice': 102
+	'template': 102
 }
 
 xlsx_file = sys.argv[1]
 asset_dir = 'assets/topic'
-
-def create_quiz_json(question, image, answer, choices):
-	answer_list = [normalize(a) for a in answer.split(',')]
-	choices_list = [normalize(a) for a in choices.split(',')] if choices is not None else None
-	quiz_dict = {
-		"question": question,
-		"image": image,
-		"answer": answer_list,
-		"choices": choices_list
-	}
-	return json.dumps(quiz_dict)
-
-def normalize(a):
-	a = a.strip()
-	if re.match('(true|false)',a,re.IGNORECASE):
-		return a.lower()
-	else:
-		return a
 
 def esc(a):
 	if a == None:
@@ -51,7 +33,7 @@ collection_sql = ''
 with open(xlsx_file+'.sql', 'w') as sqlfile:
 	topic = ''
 	card = ''
-	extra = ''
+	extra = -1
 	card_number = 1
 	extra_number = 1
 	for row in card_sheet.iter_rows(row_offset=1):
@@ -64,15 +46,15 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 		if type_data == 2:
 			topic = row[2].value
 			card_number = 1
-			extra = ''
+			extra = -1
 		elif type_data <= 9:
 			collection_sql += f"INSERT INTO `collection` (id, serial, cardId) VALUES ({esc(topic)}, {card_number}, {esc(row[2].value)});\n"
 			card_number += 1
-			extra = ''
+			extra = -1
 		else:
-			if extra != row[0].value:
-				extra = row[0].value
+			if extra != type_data-100:
+				extra = type_data-100
 				extra_number = 1
-			sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {esc(extra)}, {extra_number}, {esc(row[1].value)});\n")
+			sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(row[1].value)});\n")
 			extra_number += 1
 	sqlfile.write(collection_sql)

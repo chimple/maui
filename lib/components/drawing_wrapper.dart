@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/drawing.dart';
+import 'package:maui/db/entity/card_extra.dart';
 import 'package:tahiti/tahiti.dart';
-import 'package:maui/repos/activity_template_repo.dart';
+import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/drawing_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
@@ -64,10 +65,11 @@ class DrawingWrapperState extends State<DrawingWrapper> {
       if (_drawing == null) _drawingSelect = DrawingSelect.create;
     }
     if (_drawingSelect == DrawingSelect.create) {
-      final activityTemplates = await ActivityTemplateRepo()
-          .getActivityTemplatesByActivityId(widget.activityId);
+      final activityTemplates = await CardExtraRepo()
+          .getCardExtrasByCardIdAndType(
+              widget.activityId, CardExtraType.template);
       _templates =
-          activityTemplates.map((t) => t.image).toList(growable: false);
+          activityTemplates.map((t) => t.content).toList(growable: false);
     } else {
       print('drawing got: ${_drawing.json}');
       _jsonMap = json.decode(_drawing.json);
