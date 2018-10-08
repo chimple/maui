@@ -81,6 +81,15 @@ class _HomePageViewState extends State<HomePageView>
   }
 
   @override
+  void didUpdateWidget(HomePageView oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget != this.widget) {
+      _commentButtonAnimationController.forward();
+    }
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _initHomeData();
