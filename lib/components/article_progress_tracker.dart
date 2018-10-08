@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/article_progress_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class ArticleProgressTracker extends StatefulWidget {
@@ -23,12 +24,13 @@ class ArticleProgressTrackerState extends State<ArticleProgressTracker> {
     articleProgressTracker();
   }
 
-   void articleProgressTracker() async {
+  void articleProgressTracker() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       user = AppStateContainer.of(context).state.loggedInUser;
-      _articleProgress = await ArticleProgressRepo()
-        .getArticleProgressStatus(widget.topicId, user.id);
-        setState(() => _isLoading = false);
+      _articleProgress = await CardProgressRepo()
+          .getProgressStatusByCollectionAndTypeAndUserId(
+              widget.topicId, CardType.knowledge, user.id);
+      setState(() => _isLoading = false);
     });
   }
 

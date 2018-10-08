@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:maui/repos/related_topic_repo.dart';
-import 'package:maui/db/entity/topic.dart';
+import 'package:maui/repos/collection_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/components/topic_button.dart';
 import 'package:maui/screens/topic_screen.dart';
 
@@ -14,7 +14,7 @@ class RelatedPage extends StatefulWidget {
 }
 
 class _RelatedPageState extends State<RelatedPage> {
-  List<Topic> topic = [];
+  List<Card> topic = [];
   bool _isLoading = true;
   @override
   void initState() {
@@ -24,7 +24,8 @@ class _RelatedPageState extends State<RelatedPage> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-    topic = await RelatedTopicRepo().getTopicsByRelatedTopicId(widget.topicId);
+    topic = await CollectionRepo()
+        .getCardsInCollectionByType(widget.topicId, CardType.collection);
     setState(() => _isLoading = false);
   }
 

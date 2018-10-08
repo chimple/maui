@@ -1,16 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:maui/components/card_button.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/components/topic_card_view.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/screens/topic_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/home_page_view.dart';
-import 'category_list_view.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'profile_view.dart';
 // import 'package:maui/story/story_list_view.dart';
 
@@ -242,8 +240,8 @@ class TabHomeState extends State<TabHome>
               CustomScrollView(
                 slivers: <Widget>[
                   TopicCardView(
-                    topicId: 'main',
-                    cardType: CardType.topic,
+                    topicId: 'lion',
+                    cardType: CardType.collection,
                   )
                 ],
               ),

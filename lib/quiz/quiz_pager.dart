@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:maui/components/hud.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/quiz_repo.dart';
+import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'match_the_following.dart';
 import 'multiple_choice.dart';
@@ -43,36 +43,12 @@ class QuizPager extends StatefulWidget {
     Size size,
     Widget hud,
   }) {
-    print(
-        "here quize type isss.... what i ma getting is.......${quiz.quizType}");
-    print("inpu data is.......of from database is...$input");
-    switch (quiz.quizType) {
-      case QuizType.oneAtATime:
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
-      case QuizType.pair:
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
-
-      case QuizType.many:
-        return QuizScrollerPager(
-          onEnd: onEnd,
-          input: input,
-          hud: hud,
-          relation: quiz.optionsType,
-        );
-        break;
-    }
+    return QuizScrollerPager(
+      onEnd: onEnd,
+      input: input,
+      hud: hud,
+      relation: quiz.type,
+    );
   }
 }
 
@@ -92,20 +68,15 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
 
   void _initState() async {
     // widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
-    _quizzes = await QuizRepo().getQuizzesByTopicId('tiger');
-
-    print("hello check the relation is....${_quizzes}");
-    _quizInputs = _quizzes.map((quiz) {
-      Map<String, dynamic> data;
-      try {
-        data = json.decode(quiz.content);
-      } catch (e) {
-        print(e);
-        data = {};
-      }
-      return data;
-    }).toList(growable: false);
-
+    _quizzes = await CollectionRepo().getQuizzesInCollection('tiger');
+    _quizInputs = _quizzes
+        .map((q) => {
+              'question': q.question,
+              'image': q.header,
+              'answer': q.answers,
+              'choices': q.choices
+            })
+        .toList(growable: false);
     setState(() {
       _isLoading = false;
     });

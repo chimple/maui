@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:tahiti/tahiti.dart';
-import 'package:maui/repos/activity_repo.dart';
-import 'package:maui/db/entity/activity.dart';
+import 'package:maui/repos/card_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/screens/drawing_list_screen.dart';
-import 'package:maui/repos/activity_progress_repo.dart';
+import 'package:maui/repos/card_progress_repo.dart';
 
 class DrawingScreen extends StatefulWidget {
   final String activityId;
@@ -21,7 +22,7 @@ class DrawingScreen extends StatefulWidget {
 
 class DrawingScreenState extends State<DrawingScreen> {
   bool _isLoading = true;
-  Activity _activity;
+  QuackCard _activity;
   DrawingSelect _drawingSelect;
 
   @override
@@ -35,14 +36,13 @@ class DrawingScreenState extends State<DrawingScreen> {
   }
 
   void _initData() async {
-    _activity = await ActivityRepo().getActivity(widget.activityId);
+    _activity = await CardRepo().getCard(widget.activityId);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       User user = AppStateContainer.of(context).state.loggedInUser;
-      await ActivityProgressRepo().insertActivityProgress(
-          user.id,
-          _activity.topicId,
-          widget.activityId,
-          (new DateTime.now().millisecondsSinceEpoch).toString());
+      await CardProgressRepo().upsert(CardProgress(
+          cardId: widget.activityId,
+          userId: user.id,
+          updatedAt: DateTime.now()));
     });
     setState(() {
       _isLoading = false;
@@ -64,7 +64,7 @@ class DrawingScreenState extends State<DrawingScreen> {
           activityId: widget.activityId,
           drawingSelect: _drawingSelect,
           drawingId: widget.drawingId,
-          title: _activity.text),
+          title: _activity.content),
     );
   }
 }
