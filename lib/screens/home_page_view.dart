@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/scheduler.dart';
 import 'package:maui/db/entity/home.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/screens/drawing_list_screen.dart';
@@ -76,7 +77,7 @@ class _HomePageViewState extends State<HomePageView>
   void initState() {
     super.initState();
     _commentButtonAnimationController = new AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 2000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
     _commentButtonAnimationController.forward();
   }
 
@@ -117,7 +118,8 @@ class _HomePageViewState extends State<HomePageView>
                             child: new Image.asset('assets/chat_Bot_Icon.png'),
                           )
                         : new CircleAvatar(
-                            backgroundColor: Colors.white,
+                            radius: 40.0,
+                            backgroundColor: Colors.black,
                             backgroundImage: new FileImage(
                               new File(_allUsers[index].image),
                             ),
@@ -220,6 +222,7 @@ class _HomePageViewState extends State<HomePageView>
                             return new CommentListView(
                               tileId: _home[index].tileId,
                               loggedInUser: _loggedInUser,
+                              tileUser: _allUsers[index],
                             );
                           },
                         ),
@@ -323,6 +326,7 @@ class AnimatedCommentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 2.0;
     // TODO: implement build
     return new AnimatedBuilder(
       animation: controller,

@@ -8,7 +8,9 @@ import 'package:maui/repos/user_repo.dart';
 class CommentListView extends StatefulWidget {
   final User loggedInUser;
   final String tileId;
-  const CommentListView({Key key, this.loggedInUser, this.tileId})
+  final User tileUser;
+  const CommentListView(
+      {Key key, this.loggedInUser, this.tileId, this.tileUser})
       : super(key: key);
   @override
   _CommentListViewState createState() => new _CommentListViewState();
@@ -61,26 +63,16 @@ class _CommentListViewState extends State<CommentListView> {
           new Expanded(
             flex: 1,
             child: _allUsers[index] == null
-                ? new Container(
-                    decoration: new BoxDecoration(
-                        borderRadius: new BorderRadius.circular(40.0),
-                        border:
-                            new Border.all(width: 3.0, color: Colors.black)),
-                    child: new CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: new Image.asset('assets/chat_Bot_Icon.png'),
-                    ),
+                ? new CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Colors.black,
+                    child: new Image.asset('assets/chat_Bot_Icon.png'),
                   )
-                : new Container(
-                    decoration: new BoxDecoration(
-                      borderRadius: new BorderRadius.circular(40.0),
-                      border: new Border.all(width: 3.0, color: Colors.black),
-                    ),
-                    child: new CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: new FileImage(
-                        new File(_allUsers[index].image),
-                      ),
+                : new CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Colors.black,
+                    backgroundImage: new FileImage(
+                      new File(_allUsers[index].image),
                     ),
                   ),
           ),
@@ -150,10 +142,37 @@ class _CommentListViewState extends State<CommentListView> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(
-          "Comments",
-          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-        ),
+        actions: <Widget>[
+          widget.tileUser == null
+              ? new CircleAvatar(
+                  radius: 40.0,
+                  backgroundColor: Colors.black,
+                  child: new Image.asset('assets/chat_Bot_Icon.png'),
+                )
+              : new CircleAvatar(
+                  radius: 40.0,
+                  backgroundColor: Colors.black,
+                  backgroundImage: new FileImage(
+                    new File(widget.tileUser.image),
+                  ),
+                ),
+        ],
+        title: widget.tileUser == null
+            ? new Container(
+                child: new Center(
+                  child: new Text(
+                    "user not there",
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            : new Container(
+                child: new Center(
+                child: new Text("${widget.tileUser.name}"),
+              )),
         centerTitle: true,
         backgroundColor: Colors.green,
         elevation: 3.0,
@@ -184,30 +203,17 @@ class _CommentListViewState extends State<CommentListView> {
                         new Expanded(
                           flex: 1,
                           child: widget.loggedInUser.image == null
-                              ? new Container(
-                                  decoration: new BoxDecoration(
-                                      borderRadius:
-                                          new BorderRadius.circular(40.0),
-                                      border: new Border.all(
-                                          width: 3.0, color: Colors.black)),
-                                  child: new CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: new Image.asset(
-                                        'assets/chat_Bot_Icon.png'),
-                                  ),
+                              ? new CircleAvatar(
+                                  radius: 40.0,
+                                  backgroundColor: Colors.black,
+                                  child: new Image.asset(
+                                      'assets/chat_Bot_Icon.png'),
                                 )
-                              : new Container(
-                                  decoration: new BoxDecoration(
-                                    borderRadius:
-                                        new BorderRadius.circular(40.0),
-                                    border: new Border.all(
-                                        width: 3.0, color: Colors.black),
-                                  ),
-                                  child: new CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    backgroundImage: new FileImage(
-                                      new File(widget.loggedInUser.image),
-                                    ),
+                              : new CircleAvatar(
+                                  radius: 40.0,
+                                  backgroundColor: Colors.black,
+                                  backgroundImage: new FileImage(
+                                    new File(widget.loggedInUser.image),
                                   ),
                                 ),
                         ),
