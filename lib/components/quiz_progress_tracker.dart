@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../repos/quiz_progress_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/card_progress_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class QuizProgressTracker extends StatefulWidget {
   final String topicId;
@@ -21,8 +24,10 @@ class QuizProgressTrackerState extends State<QuizProgressTracker> {
   }
 
   void _initData() async {
-    _quizProgress =
-        await QuizProgressRepo().getScoreSummaryByTopicId(widget.topicId);
+    User _user = AppStateContainer.of(context).state.loggedInUser;
+    _quizProgress = await CardProgressRepo()
+        .getProgressStatusByCollectionAndTypeAndUserId(
+            widget.topicId, CardType.question, _user.id);
     setState(() => _isLoading = false);
   }
 

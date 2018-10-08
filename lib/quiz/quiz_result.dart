@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/quiz_progress_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'card_list.dart';
@@ -31,16 +30,6 @@ class QuizResultState extends State<QuizResult> {
   double marginSide = 0.0;
   double marginTop = 0.0;
   bool extentionTile = false;
-
-  OptionCategory _optionsType(Quiz quiz) {
-    if (quiz.optionsType == "oneAtATime") {
-      return OptionCategory.oneAtATime;
-    } else if (quiz.optionsType == "pair") {
-      return OptionCategory.pair;
-    } else if (quiz.optionsType == "many") {
-      return OptionCategory.many;
-    }
-  }
 
   Widget _buildAskedQuestionExpandableTile(
       Map<String, dynamic> q, int _quizIndex, BuildContext context) {
@@ -119,7 +108,7 @@ class QuizResultState extends State<QuizResult> {
         children: <Widget>[
           new CardList(
             onEnd: null,
-            optionsType: _optionsType(widget.quizzes[_quizIndex]),
+            optionsType: widget.quizzes[_quizIndex].type,
             input: widget.quizInputs[_quizIndex],
           ),
         ],

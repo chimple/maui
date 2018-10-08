@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/article_progress_repo.dart';
+import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/screens/topic_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:ui' as ui;
 
@@ -14,24 +14,18 @@ enum PlayerState { playing, paused, stopped }
 class ArticlePage extends StatefulWidget {
   final String articleId;
   final String name;
-  final String topicId;
-  final String video;
   final String audio;
-  final String image;
+  final String header;
   final String text;
-  final int serial;
   PageController page;
 
   ArticlePage({
     Key key,
     @required this.articleId,
     @required this.name,
-    @required this.topicId,
-    @required this.video,
     @required this.audio,
-    @required this.image,
+    @required this.header,
     @required this.text,
-    @required this.serial,
     this.page,
   }) : super(key: key);
 
@@ -98,8 +92,10 @@ class _ArticlePageState extends State<ArticlePage>
   void articleProgressTracker() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       user = AppStateContainer.of(context).state.loggedInUser;
-      await ArticleProgressRepo().insertArticleProgress(
-          Uuid().v4(), user.id, widget.topicId, widget.articleId);
+      await CardProgressRepo().upsert(CardProgress(
+          userId: user.id,
+          cardId: widget.articleId,
+          updatedAt: DateTime.now()));
     });
   }
 
@@ -127,7 +123,7 @@ class _ArticlePageState extends State<ArticlePage>
       new ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
   Future<ui.Image> _getImage() {
-    Image image = new Image.asset("${widget.image}");
+    Image image = new Image.asset("${widget.header}");
     Completer<ui.Image> completer = new Completer<ui.Image>();
     image.image.resolve(new ImageConfiguration()).addListener(
         (ImageInfo info, bool _) => completer.complete(info.image));
@@ -279,9 +275,9 @@ class _ArticlePageState extends State<ArticlePage>
                             background: new Stack(
                               fit: StackFit.expand,
                               children: <Widget>[
-                                widget.video == null
+                                !widget.header.endsWith('.mp4')
                                     ? new Image.asset(
-                                        "${widget.image}",
+                                        "${widget.header}",
                                         fit: BoxFit.cover,
                                       )
                                     : Expanded(
