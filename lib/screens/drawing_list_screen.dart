@@ -5,7 +5,6 @@ import 'package:maui/db/entity/drawing.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/components/drawing_list.dart';
-import 'package:maui/screens/drawing_screen.dart';
 
 class DrawingListScreen extends StatefulWidget {
   final String activityId;
@@ -35,7 +34,7 @@ class DrawingListScreenState extends State<DrawingListScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute<void>(builder: (BuildContext context) {
-          return DrawingScreen(
+          return DrawingWrapper(
             activityId: widget.activityId,
           );
         }));
@@ -65,7 +64,7 @@ class DrawingListScreenState extends State<DrawingListScreen> {
               tooltip: 'Create new drawing',
               onPressed: () => Navigator.of(context).pushReplacement(
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return DrawingScreen(
+                    return DrawingWrapper(
                       activityId: widget.activityId,
                     );
                   })),
