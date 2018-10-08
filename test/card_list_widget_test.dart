@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:maui/quiz/card_list.dart';
+import 'package:maui/db/entity/quiz.dart';
 
 const Map<String, dynamic> testMap = {
   'question': 'Select the animals from small to big', 
@@ -22,7 +23,7 @@ void main() {
             child: new CardList(
               input: testMap,
               key: inputKey,
-              optionsType: OptionCategory.many,
+              optionsType: QuizType.many,
             ),
           ),
         ));
