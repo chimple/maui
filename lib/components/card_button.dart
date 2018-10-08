@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maui/components/activity_progress_tracker.dart';
-import 'package:maui/components/article_progress_tracker.dart';
-import 'package:maui/components/quiz_progress_tracker.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quiz/quiz_game.dart';
 import 'package:maui/screens/article_screen.dart';
 import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/screens/topic_screen.dart';
-
-enum CardType { activity, topic, article, quiz }
 
 final cardColors = [
   Color(0xffffbc01),
@@ -101,7 +97,7 @@ class CardButton extends StatelessWidget {
                   )),
         );
         break;
-      case CardType.article:
+      case CardType.knowledge:
         Navigator.of(context).push(
           new MaterialPageRoute(
               builder: (BuildContext context) => ArticleScreen(
@@ -109,7 +105,7 @@ class CardButton extends StatelessWidget {
                   )),
         );
         break;
-      case CardType.topic:
+      case CardType.collection:
         Navigator.of(context).push(
           new MaterialPageRoute(
               builder: (BuildContext context) => TopicScreen(
@@ -119,7 +115,7 @@ class CardButton extends StatelessWidget {
                   )),
         );
         break;
-      case CardType.quiz:
+      case CardType.question:
         Navigator.of(context).push(
           new MaterialPageRoute(builder: (BuildContext context) => QuizGame()),
         );

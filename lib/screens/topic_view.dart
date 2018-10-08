@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_progress_tracker.dart';
-import '../repos/topic_repo.dart';
-import 'package:maui/db/entity/topic.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/repos/collection_repo.dart';
 
 class TopicView extends StatefulWidget {
   final List quiz;
@@ -13,7 +13,7 @@ class TopicView extends StatefulWidget {
 }
 
 class _TopicViewState extends State<TopicView> {
-  List<Topic> _topics;
+  List<QuackCard> _topics;
   bool _isLoading = true;
 
   @override
@@ -25,7 +25,7 @@ class _TopicViewState extends State<TopicView> {
 
   void _initData() async {
     setState(() => _isLoading = true);
-    _topics = await TopicRepo().getAllTopics();
+    _topics = await CollectionRepo().getCardsInCollection('main');
     print("list quizes is.......::$_topics");
     setState(() => _isLoading = false);
   }
