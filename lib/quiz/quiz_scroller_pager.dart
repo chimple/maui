@@ -16,7 +16,16 @@ class QuizScrollerPager extends StatefulWidget {
   String image;
   final QuizType relation;
 
-  QuizScrollerPager({Key key, this.input, this.question, this.answer, this.choices, this.image, this.onEnd, this.hud, this.relation})
+  QuizScrollerPager(
+      {Key key,
+      this.input,
+      this.question,
+      this.answer,
+      this.choices,
+      this.image,
+      this.onEnd,
+      this.hud,
+      this.relation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -41,7 +50,8 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   void initState() {
     super.initState();
     tabController = new TabController(length: 3, vsync: this);
-    print("Data received by QuizScrollerPager from QuizPager - ${widget.question}.....${widget.answer}......${widget.choices}.....${widget.image}");
+    print(
+        "Data received by QuizScrollerPager from QuizPager - ${widget.question}.....${widget.answer}......${widget.choices}.....${widget.image}");
 
     print("hello this should come first...");
   }

@@ -63,7 +63,7 @@ class QuizPager extends StatefulWidget {
 class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Quiz> _quizzes;
   List<Map<String, dynamic>> _quizInputs;
-  List<String> question; 
+  List<String> question;
   List<List<String>> answer, choices;
   List<String> image;
   bool _isLoading = true;
@@ -99,7 +99,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     }
     if (_currentQuiz < _quizzes.length) {
       Quiz quiz = _quizzes[_currentQuiz];
-      
+
       final input = _quizzes[_currentQuiz].quizInputs;
 
       print("hello this.... is..data of database is...${input}");
