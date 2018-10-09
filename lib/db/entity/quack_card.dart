@@ -1,4 +1,4 @@
-enum CardType { question, activity, collection, knowledge }
+enum CardType { question, activity, concept, knowledge }
 
 class QuackCard {
   static const table = 'card';
