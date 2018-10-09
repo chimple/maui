@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:maui/repos/drawing_repo.dart';
 import 'package:maui/db/entity/drawing.dart';
-import 'package:maui/screens/drawing_screen.dart';
+import 'package:maui/components/drawing_wrapper.dart';
 import 'package:tahiti/paper.dart';
 import 'package:tahiti/activity_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -23,7 +23,7 @@ class DrawingList extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute<void>(
                             builder: (BuildContext context) {
-                      return DrawingScreen(
+                      return DrawingWrapper(
                         activityId: d.activityId,
                         drawingId: d.id,
                       );

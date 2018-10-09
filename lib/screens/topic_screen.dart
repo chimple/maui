@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/components/topic_card_view.dart';
-import 'package:maui/loca.dart';
-import 'package:maui/screens/activity_list_view.dart';
-import 'package:maui/screens/related_page.dart';
-import 'package:maui/screens/select_opponent_screen.dart';
-import 'package:maui/components/topic_page_view.dart';
-import '../quiz/quiz_game.dart';
+import 'package:maui/db/entity/quack_card.dart';
 
 class TopicScreen extends StatelessWidget {
   final String topicId;
@@ -19,18 +14,22 @@ class TopicScreen extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print('topic_screen hero ${CardType.collection}/${topicId}');
     return new Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
           expandedHeight: 256.0,
+//          snap: true,
+//          floating: true,
+          pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(topicName),
             background: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 Hero(
-                  tag: 'topic/${topicId}',
+                  tag: '${CardType.collection}/${topicId}',
                   child: Container(
                     decoration: new BoxDecoration(
                       image: new DecorationImage(
@@ -58,7 +57,22 @@ class TopicScreen extends StatelessWidget {
             ),
           ),
         ),
-        TopicCardView(topicId: topicId)
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.activity,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.knowledge,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.collection,
+        ),
+        TopicCardView(
+          topicId: topicId,
+          cardType: CardType.question,
+        )
       ],
     ));
   }

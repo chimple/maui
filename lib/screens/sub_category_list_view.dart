@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/category.dart';
-import 'package:maui/db/entity/topic.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/screens/topic_screen.dart';
 import '../components/topic_button.dart';
-import '../repos/topic_repo.dart';
 import '../repos/category_repo.dart';
 
 class SubcategoryList extends StatefulWidget {
@@ -86,7 +86,7 @@ class TabcontrollerView extends StatefulWidget {
 }
 
 class TabcontrollerViewState extends State<TabcontrollerView> {
-  List<Topic> _topics;
+  List<Card> _topics;
 
   bool _isLoading = true;
 
@@ -101,7 +101,8 @@ class TabcontrollerViewState extends State<TabcontrollerView> {
     String id = widget.id;
     print(";;;;;id of the subcatgory isss....;:$id");
 
-    _topics = await TopicRepo().getTopicsForCategoryId(id);
+    _topics = await CollectionRepo()
+        .getCardsInCollectionByType(id, CardType.collection);
     print("topic data to dilspy is....::$_topics");
 
     setState(() => _isLoading = false);

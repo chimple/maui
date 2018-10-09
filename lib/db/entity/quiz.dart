@@ -1,66 +1,62 @@
 enum QuizType { oneAtATime, many, pair }
 
+final quizTypeMap = {
+  'oneAtATime': QuizType.oneAtATime,
+  'many': QuizType.many,
+  'pair': QuizType.pair
+};
+
 class Quiz {
-  static const table = 'quiz';
-  static const idCol = 'id';
-  static const topicIdCol = 'topicId';
-  static const levelCol = 'level';
-  static const optionsTypeCol = 'optionsType';
-  static const contentCol = 'content';
-
   String id;
-  String topicId;
-  int level;
-  String optionsType;
-  String content;
+  QuizType type;
+  String question;
+  String questionAudio;
+  String header;
+  List<String> answers;
+  List<String> answerAudios;
+  List<String> choices;
+  List<String> choiceAudios;
 
-  Quiz({this.id, this.topicId, this.level, this.optionsType, this.content});
-
-  Map<String, dynamic> toMap() {
-    return {
-      idCol: id,
-      topicIdCol: topicId,
-      levelCol: level,
-      optionsTypeCol: optionsType,
-      contentCol: content
-    };
-  }
-
-  Quiz.fromMap(Map<String, dynamic> map)
-      : this(
-            id: map[idCol],
-            topicId: map[topicIdCol],
-            level: map[levelCol],
-            optionsType: map[optionsTypeCol],
-            content: map[contentCol]);
+  Quiz(
+      {this.id,
+      this.type,
+      this.question,
+      this.questionAudio,
+      this.header,
+      this.answers,
+      this.answerAudios,
+      this.choices,
+      this.choiceAudios});
 
   @override
   int get hashCode =>
       id.hashCode ^
-      topicId.hashCode ^
-      level.hashCode ^
-      optionsType.hashCode ^
-      content.hashCode;
+      type.hashCode ^
+      question.hashCode ^
+      questionAudio.hashCode ^
+      header.hashCode ^
+      answers.hashCode ^
+      answerAudios.hashCode ^
+      choices.hashCode ^
+      choiceAudios.hashCode;
 
   @override
-  bool operator ==(Object other) =>
+  bool operator ==(other) =>
       identical(this, other) ||
       other is Quiz &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          topicId == other.topicId &&
-          level == other.level &&
-          optionsType == other.optionsType &&
-          content == other.content;
+          type == other.type &&
+          question == other.question &&
+          questionAudio == other.questionAudio &&
+          header == other.header &&
+          answers == other.answers &&
+          answerAudios == other.answerAudios &&
+          choices == other.choices &&
+          choiceAudios == other.choiceAudios;
 
   @override
   String toString() {
-    return 'Quiz{id: $id, topicId: $topicId, level: $level, type: $optionsType, content: $content}';
-  }
-
-  QuizType get quizType {
-    if (optionsType == 'oneAtATime') return QuizType.oneAtATime;
-    if (optionsType == 'pair') return QuizType.pair;
-    if (optionsType == 'many') return QuizType.many;
+    return 'Quiz{id: $id, type: $type, question: $question, questionAudio: $questionAudio, header: $header,answers: $answers,answerAudios: $answerAudios,choiceAudios: $choiceAudios}';
   }
 }

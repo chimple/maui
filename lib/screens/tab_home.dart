@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
+import 'package:maui/components/topic_card_view.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/home_page_view.dart';
-import 'category_list_view.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'profile_view.dart';
 // import 'package:maui/story/story_list_view.dart';
 
@@ -236,7 +237,14 @@ class TabHomeState extends State<TabHome>
               new FriendListView(),
               new GameListView(),
               new HomePageView(),
-              new CategoryListView(),
+              CustomScrollView(
+                slivers: <Widget>[
+                  TopicCardView(
+                    topicId: 'lion',
+                    cardType: CardType.collection,
+                  )
+                ],
+              ),
               new ProfileView()
             ],
           ),

@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/components/quiz_button.dart';
-
-enum OptionCategory { oneAtATime, many, pair }
+import 'package:maui/db/entity/quiz.dart';
 
 enum ClickedStatus { no, yes, done, correct, incorrect, untouched }
 
 class CardList extends StatefulWidget {
   final Map<String, dynamic> input;
-  final OptionCategory optionsType;
+  final QuizType optionsType;
   final Function onEnd;
   Function onPress;
 
@@ -46,16 +45,16 @@ class CardListState extends State<CardList> {
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
 
-    if (widget.optionsType == OptionCategory.many ||
-        widget.optionsType == OptionCategory.pair) {
+    if (widget.optionsType == QuizType.many ||
+        widget.optionsType == QuizType.pair) {
       for (int i = 0; i < widget.input['answer'].length; i++) {
         choice.add(widget.input['answer'].cast<String>()[i]);
         shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
       }
     }
     if (widget.input['choices'] != null &&
-            widget.optionsType == OptionCategory.many ||
-        widget.optionsType == OptionCategory.oneAtATime) {
+            widget.optionsType == QuizType.many ||
+        widget.optionsType == QuizType.oneAtATime) {
       for (int i = 0; i < widget.input['choices'].length; i++) {
         choice.add(widget.input['choices'].cast<String>()[i]);
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
@@ -99,7 +98,7 @@ class CardListState extends State<CardList> {
                     ? Status.notSelected
                     : clicked[k] == ClickedStatus.yes
                         ? Status.disabled
-                        : widget.optionsType == OptionCategory.oneAtATime
+                        : widget.optionsType == QuizType.oneAtATime
                             ? clicked[k] == ClickedStatus.correct
                                 ? Status.correct
                                 : clicked[k] == ClickedStatus.incorrect
@@ -112,7 +111,7 @@ class CardListState extends State<CardList> {
             onPress: () {
               // changing value of clicked array to yes when button is clicked
               if (displayResults == false) {
-                if (widget.optionsType == OptionCategory.many) {
+                if (widget.optionsType == QuizType.many) {
                   setState(() {
                     clicked[k] = ClickedStatus.yes;
                     if ((clickedChoices.contains(text)) == false) {
@@ -190,7 +189,7 @@ class CardListState extends State<CardList> {
                       widget.onPress(onedata, displayIcon = true);
                     });
                   }
-                } else if (widget.optionsType == OptionCategory.oneAtATime) {
+                } else if (widget.optionsType == QuizType.oneAtATime) {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
                       clicked = choice
@@ -229,7 +228,7 @@ class CardListState extends State<CardList> {
                       widget.onPress(onedata, displayIcon = true);
                     });
                   }
-                } else if (widget.optionsType == OptionCategory.pair) {
+                } else if (widget.optionsType == QuizType.pair) {
                   if (clicked[k] == ClickedStatus.no) {
                     setState(() {
                       clicked[k] = ClickedStatus.yes;

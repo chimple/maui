@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/repos/article_repo.dart';
-import 'package:maui/db/entity/article.dart';
+import 'package:maui/repos/collection_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/components/article_page.dart';
 
 class TopicPageView extends StatefulWidget {
@@ -12,7 +12,7 @@ class TopicPageView extends StatefulWidget {
 }
 
 class _TopicPageViewState extends State<TopicPageView> {
-  List<Article> _articles;
+  List<QuackCard> _articles;
   bool _isDataAvailable = false;
 //  bool _isForwardDisable = false;
 //  bool _isBackwardDisable = true;
@@ -20,11 +20,10 @@ class _TopicPageViewState extends State<TopicPageView> {
   PageController pageController = new PageController(initialPage: 0);
 
   void _initArticles() async {
-    await new ArticleRepo()
-        .getArticlesByTopicId(widget.topicId)
+    await new CollectionRepo()
+        .getCardsInCollectionByType(widget.topicId, CardType.knowledge)
         .then((articles) async {
       setState(() {
-        articles.sort((a, b) => a.serial.compareTo(b.serial));
         _articles = articles;
         _articles.length != 0
             ? _isDataAvailable = true
@@ -96,14 +95,11 @@ class _TopicPageViewState extends State<TopicPageView> {
                 controller: pageController,
                 itemBuilder: (context, index) {
                   return new ArticlePage(
-                    topicId: _articles[index].topicId,
                     articleId: _articles[index].id,
-                    name: _articles[index].name,
-                    text: _articles[index].text,
-                    audio: _articles[index].audio,
-                    video: _articles[index].video,
-                    image: _articles[index].image,
-                    serial: _articles[index].serial,
+                    name: _articles[index].title,
+                    text: _articles[index].content,
+                    audio: _articles[index].contentAudio,
+                    header: _articles[index].header,
                     page: pageController,
                   );
                 },
