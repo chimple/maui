@@ -39,12 +39,20 @@ class QuizPager extends StatefulWidget {
   static Widget createQuiz({
     Quiz quiz,
     Map<String, dynamic> input,
+    String question,
+    List<String> answer,
+    List<String> choices,
+    String image,
     Function onEnd,
     Size size,
     Widget hud,
   }) {
     return QuizScrollerPager(
       onEnd: onEnd,
+      question: question,
+      answer: answer,
+      choices: choices,
+      image: image,
       input: input,
       hud: hud,
       relation: quiz.type,
@@ -55,6 +63,9 @@ class QuizPager extends StatefulWidget {
 class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Quiz> _quizzes;
   List<Map<String, dynamic>> _quizInputs;
+  List<String> question; 
+  List<List<String>> answer, choices;
+  List<String> image;
   bool _isLoading = true;
   int _currentQuiz = 0;
   int maxIterations = 2;
@@ -69,14 +80,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   void _initState() async {
     // widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
     _quizzes = await CollectionRepo().getQuizzesInCollection('tiger');
-    _quizInputs = _quizzes
-        .map((q) => {
-              'question': q.question,
-              'image': q.header,
-              'answer': q.answers,
-              'choices': q.choices
-            })
-        .toList(growable: false);
+    _quizInputs = _quizzes.map((q) => q.quizInputs).toList(growable: false);
     setState(() {
       _isLoading = false;
     });
@@ -95,7 +99,8 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     }
     if (_currentQuiz < _quizzes.length) {
       Quiz quiz = _quizzes[_currentQuiz];
-      final input = _quizInputs[_currentQuiz];
+      
+      final input = _quizzes[_currentQuiz].quizInputs;
 
       print("hello this.... is..data of database is...${input}");
       var size = media.size;
@@ -136,6 +141,10 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
         quiz: quiz,
         input: input,
         onEnd: _onEnd,
+        question: _quizzes[_currentQuiz].question,
+        answer: _quizzes[_currentQuiz].answers,
+        choices: _quizzes[_currentQuiz].choices,
+        image: _quizzes[_currentQuiz].header,
         size: size,
         hud: hud,
       );

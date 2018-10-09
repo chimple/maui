@@ -7,11 +7,14 @@ enum ClickedStatus { no, yes, done, correct, incorrect, untouched }
 
 class CardList extends StatefulWidget {
   final Map<String, dynamic> input;
+  final String question;
+  List<String> answer;
+  List<String> choices;
   final QuizType optionsType;
   final Function onEnd;
   Function onPress;
 
-  CardList({Key key, this.input, this.optionsType, this.onPress, this.onEnd})
+  CardList({Key key, this.input, this.question, this.answer, this.choices, this.optionsType, this.onPress, this.onEnd})
       : super(key: key);
 
   @override
@@ -30,6 +33,7 @@ class CardListState extends State<CardList> {
   void initState() {
     super.initState();
     print("Card List Initstate");
+    print("Data received by CardList from QuizScrollPager - ${widget.question}.....${widget.answer}......${widget.choices}");
     _initBoard();
   }
 
@@ -44,10 +48,35 @@ class CardListState extends State<CardList> {
     displayIcon = false;
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
-
+    if(displayResults == false){
     if (widget.optionsType == QuizType.many ||
         widget.optionsType == QuizType.pair) {
-      for (int i = 0; i < widget.input['answer'].length; i++) {
+      for (int i = 0; i < widget.answer.length; i++) {
+        choice.add(widget.answer.cast<String>()[i]);
+        shuffledChoices.add(widget.answer.cast<String>()[i]);
+      }
+    }
+    if (widget.choices != null &&
+            widget.optionsType == QuizType.many ||
+        widget.optionsType == QuizType.oneAtATime) {
+      for (int i = 0; i < widget.choices.length; i++) {
+        choice.add(widget.choices.cast<String>()[i]);
+        shuffledChoices.add(widget.choices.cast<String>()[i]);
+      }
+    }
+
+    // Shuffling choices
+    shuffledChoices.shuffle();
+
+    // Array to keep track if a choice is clicked or not
+    clicked = choice.map((e) => ClickedStatus.no).toList(growable: false);
+
+    // Array to keep track if choice is correct or incorrect
+    rightOrWrong = choice.map((i) => false).toList(growable: false);
+    } else {
+      if (widget.optionsType == QuizType.many ||
+        widget.optionsType == QuizType.pair) {
+      for (int i = 0; i < widget.answer.length; i++) {
         choice.add(widget.input['answer'].cast<String>()[i]);
         shuffledChoices.add(widget.input['answer'].cast<String>()[i]);
       }
@@ -60,17 +89,7 @@ class CardListState extends State<CardList> {
         shuffledChoices.add(widget.input['choices'].cast<String>()[i]);
       }
     }
-
-    // Shuffling choices
-    shuffledChoices.shuffle();
-
-    // Array to keep track if a choice is clicked or not
-    clicked = choice.map((e) => ClickedStatus.no).toList(growable: false);
-
-    // Array to keep track if choice is correct or incorrect
-    if (displayResults == false) {
-      rightOrWrong = choice.map((i) => false).toList(growable: false);
-    } else {
+    clicked = choice.map((e) => ClickedStatus.done).toList(growable: false);
       for (var i = 0; i < widget.input['choicesRightOrWrong'].length; i++) {
         rightOrWrong.add(widget.input['choicesRightOrWrong'][i]);
       }
@@ -81,7 +100,7 @@ class CardListState extends State<CardList> {
   void didUpdateWidget(CardList oldWidget) {
     print(oldWidget);
     print(widget.input);
-    if (widget.input != oldWidget.input) {
+    if (widget.question != oldWidget.question) {
       _initBoard();
     }
   }
@@ -121,7 +140,7 @@ class CardListState extends State<CardList> {
                   });
 
                   if (clickedChoices.length == choice.length &&
-                      widget.input['choices'] == null) {
+                      widget.choices == null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       for (int i = 0; i < choice.length; i++) {
                         setState(() {
@@ -140,15 +159,15 @@ class CardListState extends State<CardList> {
                       var onedata = {
                         'correct': correctChoices,
                         'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.choices}",
+                        'answer': "${widget.answer}",
                         'choicesRightOrWrong': rightOrWrong
                       };
                       widget.onPress(onedata, displayIcon = true);
                     });
                   } else if (clickedChoices.length ==
-                          widget.input['answer'].length &&
-                      widget.input['choices'] != null) {
+                          widget.answer.length &&
+                      widget.choices != null) {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       for (int i = 0; i < choice.length; i++) {
                         setState(() {
@@ -157,7 +176,7 @@ class CardListState extends State<CardList> {
                       }
 
                       for (int i = 0; i < clickedChoices.length; i++) {
-                        if ((widget.input['answer'])
+                        if ((widget.answer)
                             .contains(clickedChoices[i])) {
                           int index =
                               shuffledChoices.indexOf(clickedChoices[i]);
@@ -168,7 +187,7 @@ class CardListState extends State<CardList> {
                         }
                       }
                       for (int i = 0; i < (shuffledChoices).length; i++) {
-                        if (((widget.input['answer'])
+                        if (((widget.answer)
                                 .contains(shuffledChoices[i])) ==
                             false) {
                           setState(() {
@@ -182,8 +201,8 @@ class CardListState extends State<CardList> {
                       var onedata = {
                         'correct': correctChoices,
                         'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.choices}",
+                        'answer': "${widget.answer}",
                         'choicesRightOrWrong': rightOrWrong
                       };
                       widget.onPress(onedata, displayIcon = true);
@@ -205,7 +224,7 @@ class CardListState extends State<CardList> {
                             .toList(growable: false);
                       });
 
-                      if (text == widget.input['answer'].first) {
+                      if (text == widget.answer.first) {
                         setState(() {
                           clicked[k] = ClickedStatus.correct;
                           correctChoices++;
@@ -213,7 +232,7 @@ class CardListState extends State<CardList> {
                       } else {
                         clicked[k] = ClickedStatus.incorrect;
                         var correctChoiceIndex = shuffledChoices
-                            .indexOf(widget.input['answer'].first);
+                            .indexOf(widget.answer.first);
                         clicked[correctChoiceIndex] = ClickedStatus.correct;
                       }
                     });
@@ -221,8 +240,8 @@ class CardListState extends State<CardList> {
                       var onedata = {
                         'correct': correctChoices,
                         'total': choice.length,
-                        'choices': "${widget.input['choices']}",
-                        'answer': "${widget.input['answer']}",
+                        'choices': "${widget.choices}",
+                        'answer': "${widget.answer}",
                         'choicesRightOrWrong': rightOrWrong
                       };
                       widget.onPress(onedata, displayIcon = true);
@@ -280,8 +299,8 @@ class CardListState extends State<CardList> {
                         var onedata = {
                           'correct': correctChoices,
                           'total': choice.length,
-                          'choices': "${widget.input['choices']}",
-                          'answer': "${widget.input['answer']}",
+                          'choices': "${widget.choices}",
+                          'answer': "${widget.answer}",
                           'choicesRightOrWrong': rightOrWrong
                         };
                         widget.onPress(onedata, displayIcon = true);
@@ -324,7 +343,7 @@ class CardListState extends State<CardList> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text(widget.input['question'],
+                    new Text(widget.question,
                         style: new TextStyle(
                             fontSize: size.height > size.width
                                 ? size.height * 0.04
@@ -344,25 +363,6 @@ class CardListState extends State<CardList> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: cells)
         ]),
-
-        // Row to display icon to call onEnd Widget
-        // displayIcon == true
-        //     ? new Center(
-        //         child: new Container(
-        //             height: 50.0,
-        //             width: 50.0,
-        //             decoration: new BoxDecoration(
-        //               border: new Border.all(
-        //                 color: Colors.black,
-        //               ),
-        //               shape: BoxShape.circle,
-        //             ),
-        //             child: new IconButton(
-        //                 icon: new Icon(Icons.arrow_forward),
-        //                 onPressed: () {
-        //                   reset();
-        //                 })))
-        //     : new Container(),
       ]),
     );
   }

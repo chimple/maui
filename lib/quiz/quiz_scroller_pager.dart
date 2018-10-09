@@ -10,9 +10,13 @@ class QuizScrollerPager extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Widget hud;
+  String question;
+  List<String> answer;
+  List<String> choices;
+  String image;
   final QuizType relation;
 
-  QuizScrollerPager({Key key, this.input, this.onEnd, this.hud, this.relation})
+  QuizScrollerPager({Key key, this.input, this.question, this.answer, this.choices, this.image, this.onEnd, this.hud, this.relation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -37,6 +41,7 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
   void initState() {
     super.initState();
     tabController = new TabController(length: 3, vsync: this);
+    print("Data received by QuizScrollerPager from QuizPager - ${widget.question}.....${widget.answer}......${widget.choices}.....${widget.image}");
 
     print("hello this should come first...");
   }
@@ -206,6 +211,9 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                               ),
                               child: CardList(
                                 input: widget.input,
+                                question: widget.question,
+                                answer: widget.answer,
+                                choices: widget.choices,
                                 onEnd: widget.onEnd,
                                 onPress: _gettingOnEndData,
                                 optionsType: widget.relation,
