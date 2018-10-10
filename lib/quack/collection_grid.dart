@@ -46,19 +46,18 @@ class _CollectionGridState extends State<CollectionGrid> {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.count(
-      crossAxisCount: widget.cardType == CardType.knowledge ? 2 : 3,
-      childAspectRatio: widget.cardType == CardType.knowledge ? 3.0 : 1.0,
-      children: _isLoading
-          ? _buildList()
-          : <Widget>[
-              Center(
-                child: SizedBox(
-                  width: 20.0,
-                  height: 20.0,
-                  child: new CircularProgressIndicator(),
-                ),
-              )
-            ],
-    );
+        crossAxisCount: widget.cardType == CardType.knowledge ? 2 : 3,
+        childAspectRatio: widget.cardType == CardType.knowledge ? 3.0 : 1.0,
+        children: _isLoading
+            ? <Widget>[
+                Center(
+                  child: SizedBox(
+                    width: 20.0,
+                    height: 20.0,
+                    child: new CircularProgressIndicator(),
+                  ),
+                )
+              ]
+            : _buildList());
   }
 }

@@ -24,7 +24,8 @@ class CardPagerState extends State<CardPager> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: widget.initialPage);
+    _pageController =
+        PageController(initialPage: widget.initialPage, viewportFraction: 0.9);
     _initData();
   }
 
