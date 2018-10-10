@@ -230,6 +230,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       case InputType.choices:
         return SelectTextChoice(
             onUserPress: _addTextChoice, texts: message['choices']);
+        break;
+      case InputType.hidden:
+        break;
+      case InputType.keyboard:
+        break;
     }
   }
 
