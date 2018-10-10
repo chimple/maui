@@ -20,12 +20,9 @@ class CardHeader extends StatelessWidget {
     } else if (card.header?.endsWith('png') ||
         card.header?.endsWith('jpg') ||
         card.header?.endsWith('jpeg')) {
-      return Hero(
-        tag: '${card.type}/${card.id}',
-        child: Image.asset(
-          card.header,
-          fit: BoxFit.cover,
-        ),
+      return Image.asset(
+        card.header,
+        fit: BoxFit.cover,
       );
     }
     return Container();
