@@ -15,8 +15,10 @@ import 'package:maui/state/app_state_container.dart';
 class DrawingWrapper extends StatefulWidget {
   final String activityId;
   final String drawingId;
+  final String template;
 
-  const DrawingWrapper({Key key, @required this.activityId, this.drawingId})
+  const DrawingWrapper(
+      {Key key, @required this.activityId, this.drawingId, this.template})
       : super(key: key);
 
   @override
@@ -28,7 +30,6 @@ class DrawingWrapper extends StatefulWidget {
 class DrawingWrapperState extends State<DrawingWrapper> {
   bool _isLoading = true;
   Drawing _drawing;
-  List<String> _templates;
   Map<String, dynamic> _jsonMap;
   QuackCard _activity;
 
@@ -38,31 +39,11 @@ class DrawingWrapperState extends State<DrawingWrapper> {
     _initData();
   }
 
-//  @override
-//  void didUpdateWidget(DrawingWrapper oldWidget) {
-//    if (oldWidget.drawingSelect != widget.drawingSelect ||
-//        widget.drawingSelect == DrawingSelect.create) {
-//      print('hi didupdate');
-//      _initData();
-//    }
-//  }
-
   void _initData() async {
-    setState(() => _isLoading = true);
-    _jsonMap = null;
     _activity = await CardRepo().getCard(widget.activityId);
 
     if (widget.drawingId != null) {
       _drawing = await DrawingRepo().getDrawing(widget.drawingId);
-    }
-    if (_drawing == null) {
-      final activityTemplates = await CardExtraRepo()
-          .getCardExtrasByCardIdAndType(
-              widget.activityId, CardExtraType.template);
-      _templates =
-          activityTemplates.map((t) => t.content).toList(growable: false);
-    } else {
-      print('drawing got: ${_drawing.json}');
       _jsonMap = json.decode(_drawing.json);
     }
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -88,7 +69,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
     return Scaffold(
       body: ActivityBoard(
         json: _jsonMap,
-        templates: _templates,
+        template: widget.template,
         title: _activity.title,
         saveCallback: ({Map<String, dynamic> jsonMap}) => DrawingRepo().upsert(
             jsonMap: jsonMap,
