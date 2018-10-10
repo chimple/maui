@@ -50,6 +50,7 @@ class CardPagerState extends State<CardPager> {
         itemCount: _cards.length,
         itemBuilder: (context, index) => CardDetail(
               card: _cards[index],
+              parentCardId: widget.cardId,
               showBackButton: widget.cardId != 'main',
             ));
   }

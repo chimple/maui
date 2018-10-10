@@ -7,9 +7,11 @@ import 'package:maui/quack/drawing_grid.dart';
 
 class CardDetail extends StatelessWidget {
   final QuackCard card;
+  final String parentCardId;
   bool showBackButton;
 
-  CardDetail({key, @required this.card, this.showBackButton = true})
+  CardDetail(
+      {key, @required this.card, this.parentCardId, this.showBackButton = true})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,10 @@ class CardDetail extends StatelessWidget {
             background: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                CardHeader(card: card),
+                CardHeader(
+                  card: card,
+                  parentCardId: parentCardId,
+                ),
                 DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(

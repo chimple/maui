@@ -26,12 +26,16 @@ class ActivityCard extends StatelessWidget {
             new MaterialPageRoute(
                 builder: (BuildContext context) => CardDetail(
                       card: card,
+                      parentCardId: parentCardId,
                     )),
           ),
       child: Column(
         children: <Widget>[
           AspectRatio(
-            child: CardHeader(card: card),
+            child: CardHeader(
+              card: card,
+              parentCardId: parentCardId,
+            ),
             aspectRatio: 1.78,
           ),
           Expanded(
