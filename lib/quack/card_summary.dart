@@ -34,11 +34,13 @@ class CardSummary extends StatelessWidget {
       case CardType.concept:
         return ConceptCard(
           card: card,
+          parentCardId: parentCardId,
         );
         break;
       case CardType.activity:
         return ActivityCard(
           card: card,
+          parentCardId: parentCardId,
         );
         break;
       case CardType.knowledge:
