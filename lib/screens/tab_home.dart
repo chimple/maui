@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
+import 'package:maui/home/home_screen.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/screens/friend_list_view.dart';
@@ -63,7 +64,7 @@ class TabHomeState extends State<TabHome> {
       _currentIndex = i;
       switch (i) {
         case 0:
-          _body = HomePageView();
+          _body = HomeScreen();
           break;
         case 1:
           _body = FriendListView();

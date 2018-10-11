@@ -2,6 +2,7 @@ enum CardType { question, activity, concept, knowledge }
 
 class QuackCard {
   static const table = 'card';
+
   static const idCol = 'id';
   static const typeCol = 'type';
   static const titleCol = 'title';
@@ -10,6 +11,15 @@ class QuackCard {
   static const contentCol = 'content';
   static const contentAudioCol = 'contentAudio';
   static const optionCol = 'option';
+
+  static const idSel = '${table}_id';
+  static const typeSel = '${table}_type';
+  static const titleSel = '${table}_title';
+  static const titleAudioSel = '${table}_titleAudio';
+  static const headerSel = '${table}_header';
+  static const contentSel = '${table}_content';
+  static const contentAudioSel = '${table}_contentAudio';
+  static const optionSel = '${table}_option';
 
   String id;
   CardType type;
@@ -21,25 +31,14 @@ class QuackCard {
   String option;
 
   static const allCols = [
-    idCol,
-    typeCol,
-    titleCol,
-    titleAudioCol,
-    headerCol,
-    contentCol,
-    contentAudioCol,
-    optionCol
-  ];
-
-  static const allPrefixedCols = [
-    '$table.$idCol',
-    '$table.$typeCol',
-    '$table.$titleCol',
-    '$table.$titleAudioCol',
-    '$table.$headerCol',
-    '$table.$contentCol',
-    '$table.$contentAudioCol',
-    '$table.$optionCol'
+    '${table}.$idCol AS $idSel',
+    '${table}.$typeCol AS $typeSel',
+    '${table}.$titleCol AS $titleSel',
+    '${table}.$titleAudioCol AS $titleAudioSel',
+    '${table}.$headerCol AS $headerSel',
+    '${table}.$contentCol AS $contentSel',
+    '${table}.$contentAudioCol AS $contentAudioSel',
+    '${table}.$optionCol AS $optionSel'
   ];
 
   QuackCard(
@@ -67,14 +66,14 @@ class QuackCard {
 
   QuackCard.fromMap(Map<String, dynamic> map)
       : this(
-            id: map[idCol],
-            type: CardType.values[map[typeCol]],
-            title: map[titleCol],
-            titleAudio: map[titleAudioCol],
-            header: map[headerCol],
-            content: map[contentCol],
-            contentAudio: map[contentAudioCol],
-            option: map[optionCol]);
+            id: map[idSel],
+            type: CardType.values[map[typeSel]],
+            title: map[titleSel],
+            titleAudio: map[titleAudioSel],
+            header: map[headerSel],
+            content: map[contentSel],
+            contentAudio: map[contentAudioSel],
+            option: map[optionSel]);
 
   @override
   int get hashCode =>

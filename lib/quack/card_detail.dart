@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:maui/db/entity/card_progress.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/drawing_grid.dart';
+import 'package:maui/repos/card_progress_repo.dart';
+import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
-class CardDetail extends StatelessWidget {
+class CardDetail extends StatefulWidget {
   final QuackCard card;
   final String parentCardId;
   bool showBackButton;
@@ -13,6 +18,26 @@ class CardDetail extends StatelessWidget {
   CardDetail(
       {key, @required this.card, this.parentCardId, this.showBackButton = true})
       : super(key: key);
+
+  @override
+  CardDetailState createState() {
+    return new CardDetailState();
+  }
+}
+
+class CardDetailState extends State<CardDetail> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final user = AppStateContainer.of(context).state.loggedInUser;
+      CardProgressRepo().upsert(CardProgress(
+          userId: user.id, cardId: widget.card.id, updatedAt: DateTime.now()));
+      TileRepo().upsertByCardIdAndUserIdAndType(
+          widget.card.id, user.id, TileType.card);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
@@ -20,17 +45,17 @@ class CardDetail extends StatelessWidget {
         body: CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          automaticallyImplyLeading: showBackButton,
+          automaticallyImplyLeading: widget.showBackButton,
           expandedHeight: media.size.height / 4,
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
-            title: Text(card.title),
+            title: Text(widget.card.title),
             background: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 CardHeader(
-                  card: card,
-                  parentCardId: parentCardId,
+                  card: widget.card,
+                  parentCardId: widget.parentCardId,
                 ),
                 DecoratedBox(
                   decoration: BoxDecoration(
@@ -45,29 +70,29 @@ class CardDetail extends StatelessWidget {
             ),
           ),
         ),
-        card.type == CardType.activity
+        widget.card.type == CardType.activity
             ? DrawingGrid(
-                cardId: card.id,
+                cardId: widget.card.id,
               )
             : SliverToBoxAdapter(child: Container()),
         SliverToBoxAdapter(
             child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: MarkdownBody(
-              data: card.content ?? '',
+              data: widget.card.content ?? '',
               styleSheet: new MarkdownStyleSheet(
                   p: new TextStyle(fontSize: 16.0, color: Colors.black))),
         )),
         CollectionGrid(
-          cardId: card.id,
+          cardId: widget.card.id,
           cardType: CardType.activity,
         ),
         CollectionGrid(
-          cardId: card.id,
+          cardId: widget.card.id,
           cardType: CardType.knowledge,
         ),
         CollectionGrid(
-          cardId: card.id,
+          cardId: widget.card.id,
           cardType: CardType.concept,
         )
       ],

@@ -16,8 +16,7 @@ class CardSummary extends StatelessWidget {
   final int index;
   final String parentCardId;
 
-  CardSummary(
-      {Key key, @required this.card, @required this.index, this.parentCardId})
+  CardSummary({Key key, @required this.card, this.index, this.parentCardId})
       : super(key: key);
 
   @override
