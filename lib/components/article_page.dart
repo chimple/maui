@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:maui/db/entity/card_progress.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/card_progress_repo.dart';
-import 'package:maui/screens/topic_screen.dart';
+import 'package:maui/quack/card_detail.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
@@ -396,9 +397,10 @@ class _ArticlePageState extends State<ArticlePage>
                                               new MaterialPageRoute(
                                                   builder:
                                                       (BuildContext _ctx) =>
-                                                          new TopicScreen(
-                                                            topicId: "fox",
-                                                            topicName: "fox",
+                                                          new CardDetail(
+                                                            card: QuackCard(
+                                                                id: 'fox',
+                                                                title: 'fox'),
                                                           ))),
                                     ),
                                   ],

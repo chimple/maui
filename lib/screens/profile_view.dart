@@ -2,7 +2,6 @@ import 'dart:io';
 import '../loca.dart';
 import 'package:flutter/material.dart';
 import '../state/app_state_container.dart';
-import 'topic_view.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -94,7 +93,7 @@ class ProfileViewState extends State<ProfileView>
           controller: _controller,
           children: <Widget>[
             new Text("i have to show gallery here"),
-            new TopicView(),
+            new Text("i have to show topic here"),
           ],
         ),
       ),

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/scheduler.dart';
 import 'package:maui/db/entity/home.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/repos/home_page_repo.dart';
 import 'package:maui/screens/comment_list_view.dart';
@@ -242,12 +241,7 @@ class _HomePageViewState extends State<HomePageView>
               ? print("To the Quiz")
               : _home[index].type == "article"
                   ? print("To the article")
-                  : Navigator.of(context).push(new MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                      return DrawingListScreen(
-                        activityId: _home[index].typeId,
-                      );
-                    }));
+                  : print("to the activity");
         },
         contentPadding: const EdgeInsets.all(25.0),
         isThreeLine: true,
