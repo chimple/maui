@@ -4,14 +4,28 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:async';
 import 'card_list.dart';
+import 'package:maui/db/entity/quiz.dart';
 
 class QuizScrollerPager extends StatefulWidget {
   final Map<String, dynamic> input;
   Function onEnd;
   Widget hud;
-  final relation;
+  String question;
+  List<String> answer;
+  List<String> choices;
+  String image;
+  final QuizType relation;
 
-  QuizScrollerPager({Key key, this.input, this.onEnd, this.hud, this.relation})
+  QuizScrollerPager(
+      {Key key,
+      this.input,
+      this.question,
+      this.answer,
+      this.choices,
+      this.image,
+      this.onEnd,
+      this.hud,
+      this.relation})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -30,13 +44,14 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
   bool showBottomBar = true;
   TabController tabController;
-  var optionalType;
   final _scrollController = TrackingScrollController();
   // AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
   @override
   void initState() {
     super.initState();
     tabController = new TabController(length: 3, vsync: this);
+    print(
+        "Data received by QuizScrollerPager from QuizPager - ${widget.question}.....${widget.answer}......${widget.choices}.....${widget.image}");
 
     print("hello this should come first...");
   }
@@ -57,8 +72,6 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
 
   @override
   Widget build(BuildContext context) {
-    optionalType = widget.relation;
-
     MediaQueryData media = MediaQuery.of(context);
     print("thius..... is....expandheight is.....$expheight");
     print("Wiget relation type is......::${widget.relation}");
@@ -208,13 +221,12 @@ class QuizScrollerPagerState extends State<QuizScrollerPager>
                               ),
                               child: CardList(
                                 input: widget.input,
+                                question: widget.question,
+                                answer: widget.answer,
+                                choices: widget.choices,
                                 onEnd: widget.onEnd,
                                 onPress: _gettingOnEndData,
-                                optionsType: widget.relation == "many"
-                                    ? OptionCategory.many
-                                    : widget.relation == "pair"
-                                        ? OptionCategory.pair
-                                        : OptionCategory.oneAtATime,
+                                optionsType: widget.relation,
                               ),
                             ),
                           ], addRepaintBoundaries: false),

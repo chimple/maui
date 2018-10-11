@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maui/components/topic_page_view.dart';
+import 'package:maui/quack/card_detail_wrapper.dart';
 
 class ShowHelp extends StatelessWidget {
- final String topicId;
+  final String topicId;
   const ShowHelp({
     Key key,
     @required this.topicId,
@@ -15,7 +15,10 @@ class ShowHelp extends StatelessWidget {
         height: constraints.maxHeight,
         width: constraints.maxWidth * 0.89,
         child: new Drawer(
-          child: new TopicPageView(topicId: topicId,),
+          child: new CardDetailWrapper(
+            cardId: topicId,
+            showBackButton: false,
+          ),
         ),
       );
     });
