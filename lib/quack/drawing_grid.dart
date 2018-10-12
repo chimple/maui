@@ -13,8 +13,10 @@ import 'package:scoped_model/scoped_model.dart';
 
 class DrawingGrid extends StatefulWidget {
   final String cardId;
+  final List<Tile> drawings;
 
-  const DrawingGrid({Key key, @required this.cardId}) : super(key: key);
+  const DrawingGrid({Key key, @required this.cardId, @required this.drawings})
+      : super(key: key);
 
   @override
   DrawingGridState createState() {
@@ -24,7 +26,6 @@ class DrawingGrid extends StatefulWidget {
 
 class DrawingGridState extends State<DrawingGrid> {
   bool _isLoading = true;
-  List<Tile> _drawings;
   List<String> _templates;
 
   @override
@@ -34,7 +35,6 @@ class DrawingGridState extends State<DrawingGrid> {
   }
 
   void _initData() async {
-    _drawings = await TileRepo().getTilesByCardId(widget.cardId);
     final activityTemplates = await CardExtraRepo()
         .getCardExtrasByCardIdAndType(widget.cardId, CardExtraType.template);
     _templates =
@@ -95,7 +95,7 @@ class DrawingGridState extends State<DrawingGrid> {
           child: Icon(Icons.add_circle),
         ),
       )
-    ]..addAll(_drawings.map((d) => Padding(
+    ]..addAll(widget.drawings.map((d) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: DrawingCard(tile: d),
         )));

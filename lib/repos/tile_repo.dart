@@ -62,4 +62,12 @@ class TileRepo {
       return existingTile;
     }
   }
+
+  Future<Null> incrementComments(String id, int comments) async {
+    return tileDao.incrementComments(id, comments);
+  }
+
+  Future<Null> incrementLikes(String id, int likes) async {
+    return tileDao.incrementLikes(id, likes);
+  }
 }

@@ -22,7 +22,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   void _initData() async {
     _tiles = await TileRepo().getTiles();
-    print(_tiles);
+    print('tiles:$_tiles');
     setState(() => _isLoading = false);
   }
 

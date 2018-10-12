@@ -13,6 +13,8 @@ import 'components/camera.dart';
 import 'package:maui/screens/welcome_screen.dart';
 import 'loca.dart';
 
+final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
+
 class MauiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class MauiApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
+      navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new WelcomeScreen(),
         '/login': (BuildContext context) => new LoginScreen(),

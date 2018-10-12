@@ -11,6 +11,8 @@ class QuackCard {
   static const contentCol = 'content';
   static const contentAudioCol = 'contentAudio';
   static const optionCol = 'option';
+  static const likesCol = 'likes';
+  static const commentsCol = 'comments';
 
   static const idSel = '${table}_id';
   static const typeSel = '${table}_type';
@@ -20,6 +22,8 @@ class QuackCard {
   static const contentSel = '${table}_content';
   static const contentAudioSel = '${table}_contentAudio';
   static const optionSel = '${table}_option';
+  static const likesSel = '${table}_likes';
+  static const commentsSel = '${table}_comments';
 
   String id;
   CardType type;
@@ -29,6 +33,8 @@ class QuackCard {
   String content;
   String contentAudio;
   String option;
+  int likes;
+  int comments;
 
   static const allCols = [
     '${table}.$idCol AS $idSel',
@@ -38,7 +44,9 @@ class QuackCard {
     '${table}.$headerCol AS $headerSel',
     '${table}.$contentCol AS $contentSel',
     '${table}.$contentAudioCol AS $contentAudioSel',
-    '${table}.$optionCol AS $optionSel'
+    '${table}.$optionCol AS $optionSel',
+    '${table}.$likesCol AS $likesSel',
+    '${table}.$commentsCol AS $commentsSel'
   ];
 
   QuackCard(
@@ -49,7 +57,9 @@ class QuackCard {
       this.header,
       this.content,
       this.contentAudio,
-      this.option});
+      this.option,
+      this.likes,
+      this.comments});
 
   Map<String, dynamic> toMap() {
     return {
@@ -60,7 +70,9 @@ class QuackCard {
       headerCol: header,
       contentCol: content,
       contentAudioCol: contentAudio,
-      optionCol: option
+      optionCol: option,
+      likesCol: likes,
+      commentsCol: comments
     };
   }
 
@@ -73,7 +85,9 @@ class QuackCard {
             header: map[headerSel],
             content: map[contentSel],
             contentAudio: map[contentAudioSel],
-            option: map[optionSel]);
+            option: map[optionSel],
+            likes: map[likesSel],
+            comments: map[commentsSel]);
 
   @override
   int get hashCode =>
@@ -84,7 +98,9 @@ class QuackCard {
       header.hashCode ^
       content.hashCode ^
       contentAudio.hashCode ^
-      option.hashCode;
+      option.hashCode ^
+      likes.hashCode ^
+      comments.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -98,10 +114,12 @@ class QuackCard {
           header == other.header &&
           content == other.content &&
           contentAudio == other.contentAudio &&
-          option == other.option;
+          option == other.option &&
+          likes == other.likes &&
+          comments == other.comments;
 
   @override
   String toString() {
-    return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option}';
+    return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option, likes: $likes, comments: $comments}';
   }
 }
