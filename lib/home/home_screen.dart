@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/tile_card.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/app.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> with RouteAware {
   bool _isLoading = true;
   List<Tile> _tiles;
 
@@ -41,5 +42,21 @@ class HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) => TileCard(
               tile: _tiles[index],
             ));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context));
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  void didPopNext() {
+    _initData();
   }
 }

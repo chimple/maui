@@ -41,6 +41,8 @@ class Tile {
     '${QuackCard.table}.${QuackCard.contentCol} AS ${QuackCard.contentSel}',
     '${QuackCard.table}.${QuackCard.contentAudioCol} AS ${QuackCard.contentAudioSel}',
     '${QuackCard.table}.${QuackCard.optionCol} AS ${QuackCard.optionSel}',
+    '${QuackCard.table}.${QuackCard.commentsCol} AS ${QuackCard.commentsSel}',
+    '${QuackCard.table}.${QuackCard.likesCol} AS ${QuackCard.likesSel}',
     '${User.table}.${User.idCol} AS ${User.idSel}',
     '${User.table}.${User.deviceIdCol} AS ${User.deviceIdSel}',
     '${User.table}.${User.nameCol} AS ${User.nameSel}',
