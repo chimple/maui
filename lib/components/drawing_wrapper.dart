@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/drawing.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/user.dart';
@@ -9,7 +9,7 @@ import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/card_repo.dart';
 import 'package:tahiti/tahiti.dart';
 import 'package:maui/repos/card_extra_repo.dart';
-import 'package:maui/repos/drawing_repo.dart';
+import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class DrawingWrapper extends StatefulWidget {
@@ -29,7 +29,7 @@ class DrawingWrapper extends StatefulWidget {
 
 class DrawingWrapperState extends State<DrawingWrapper> {
   bool _isLoading = true;
-  Drawing _drawing;
+  Tile _drawing;
   Map<String, dynamic> _jsonMap;
   QuackCard _activity;
 
@@ -43,8 +43,8 @@ class DrawingWrapperState extends State<DrawingWrapper> {
     _activity = await CardRepo().getCard(widget.activityId);
 
     if (widget.drawingId != null) {
-      _drawing = await DrawingRepo().getDrawing(widget.drawingId);
-      _jsonMap = json.decode(_drawing.json);
+      _drawing = await TileRepo().getTile(widget.drawingId);
+      _jsonMap = json.decode(_drawing.content);
     }
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       User user = AppStateContainer.of(context).state.loggedInUser;
@@ -71,10 +71,15 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         json: _jsonMap,
         template: widget.template,
         title: _activity.title,
-        saveCallback: ({Map<String, dynamic> jsonMap}) => DrawingRepo().upsert(
-            jsonMap: jsonMap,
-            activityId: widget.activityId,
-            userId: AppStateContainer.of(context).state.loggedInUser.id),
+        saveCallback: ({Map<String, dynamic> jsonMap}) => TileRepo().upsert(
+              Tile(
+                  id: jsonMap['id'],
+                  cardId: widget.activityId,
+                  type: TileType.drawing,
+                  content: json.encode(jsonMap),
+                  updatedAt: DateTime.now(),
+                  userId: AppStateContainer.of(context).state.loggedInUser.id),
+            ),
       ),
     );
   }

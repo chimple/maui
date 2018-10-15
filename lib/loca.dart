@@ -193,6 +193,7 @@ class Loca {
       Intl.message('Enter your details', name: 'enterYourDetails');
   String get writeYourName =>
       Intl.message('Write your name...', name: 'writeYourName');
+  String get addAComment => Intl.message('Add a comment', name: 'addAComment');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {

@@ -1,0 +1,33 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:tahiti/activity_model.dart';
+import 'package:tahiti/paper.dart';
+
+class DrawingCard extends StatelessWidget {
+  final Tile tile;
+
+  const DrawingCard({Key key, this.tile}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return DrawingWrapper(
+              activityId: tile.cardId,
+              drawingId: tile.id,
+            );
+          })),
+      child: ScopedModel<ActivityModel>(
+        model: ActivityModel(
+            paintData: PaintData.fromJson(json.decode(tile.content)))
+          ..isInteractive = false,
+        child: Paper(),
+      ),
+    );
+  }
+}

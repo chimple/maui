@@ -51,6 +51,19 @@ class ConceptCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(Icons.favorite_border),
+                Text("${card.likes ?? ''}"),
+              ]),
+              Row(children: <Widget>[
+                Icon(Icons.comment),
+                Text("${card.comments ?? ''}")
+              ])
+            ],
           )
         ],
       ),
