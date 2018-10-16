@@ -132,10 +132,9 @@ class _CommentListViewState extends State<CommentListView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     myFocusNode.unfocus();
     myFocusNode.dispose();
+    super.dispose();
   }
 
   @override

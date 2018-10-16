@@ -17,10 +17,15 @@ import 'package:maui/state/app_state_container.dart';
 class CardDetail extends StatefulWidget {
   final QuackCard card;
   final String parentCardId;
-  bool showBackButton;
+  final bool showBackButton;
+  final GlobalKey<CommentListState> commentListKey;
 
   CardDetail(
-      {key, @required this.card, this.parentCardId, this.showBackButton = true})
+      {key,
+      @required this.card,
+      this.parentCardId,
+      this.showBackButton = true,
+      this.commentListKey})
       : super(key: key);
 
   @override
@@ -33,13 +38,13 @@ class CardDetailState extends State<CardDetail> with RouteAware {
   List<QuackCard> _cards;
   List<Tile> _drawings;
   bool _isLoading = true;
-  final GlobalKey<CommentListState> _commentListKey =
-      new GlobalKey<CommentListState>();
+  GlobalKey<CommentListState> _commentListKey;
 
   @override
   void initState() {
     super.initState();
     _initData();
+    _commentListKey = widget.commentListKey ?? GlobalKey<CommentListState>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final user = AppStateContainer.of(context).state.loggedInUser;
       CardProgressRepo().upsert(CardProgress(
@@ -55,6 +60,10 @@ class CardDetailState extends State<CardDetail> with RouteAware {
       _drawings = await TileRepo().getTilesByCardId(widget.card.id);
     }
     setState(() => _isLoading = false);
+  }
+
+  void initComments() async {
+    _commentListKey.currentState.initData();
   }
 
   @override
@@ -150,11 +159,15 @@ class CardDetailState extends State<CardDetail> with RouteAware {
           addComment: (comment) =>
               _commentListKey.currentState.addComment(comment)));
     }
-    return new Scaffold(
-      body: Column(
-        children: widgets,
-      ),
-    );
+    return widget.card.type == CardType.knowledge
+        ? Column(
+            children: widgets,
+          )
+        : Scaffold(
+            body: Column(
+              children: widgets,
+            ),
+          );
   }
 
   @override

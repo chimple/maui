@@ -23,7 +23,7 @@ class CommentListState extends State<CommentList> {
   @override
   void initState() {
     super.initState();
-    _initData();
+    initData();
   }
 
   void addComment(Comment comment) {
@@ -35,10 +35,10 @@ class CommentListState extends State<CommentList> {
     });
   }
 
-  void _initData() async {
+  void initData() async {
     _comments = await CommentRepo()
         .getCommentsByParentId(widget.parentId, widget.tileType);
-    setState(() => _isLoading = false);
+    if (mounted) setState(() => _isLoading = false);
   }
 
   @override

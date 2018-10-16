@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/drawing_card.dart';
@@ -33,7 +34,8 @@ class TileCard extends StatelessWidget {
     switch (tile.type) {
       case TileType.card:
         return AspectRatio(
-            aspectRatio: 1.0, child: CardSummary(card: tile.card));
+            aspectRatio: tile.card.type == CardType.knowledge ? 3.0 : 1.0,
+            child: CardSummary(card: tile.card));
         break;
       case TileType.drawing:
         return DrawingCard(tile: tile);
