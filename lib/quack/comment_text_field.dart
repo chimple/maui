@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/quack/like_button.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
@@ -45,6 +46,13 @@ class CommentTextFieldState extends State<CommentTextField> {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
+      Container(
+          margin: new EdgeInsets.symmetric(horizontal: 4.0),
+          child: LikeButton(
+            parentId: widget.parentId,
+            tileType: widget.tileType,
+            userId: AppStateContainer.of(context).state.loggedInUser.id,
+          )),
       Flexible(
         child: new TextField(
           maxLength: null,
