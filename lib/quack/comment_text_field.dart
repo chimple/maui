@@ -72,7 +72,7 @@ class CommentTextFieldState extends State<CommentTextField> {
       Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: IconButton(
-            icon: new Icon(Icons.insert_comment),
+            icon: new Icon(Icons.check_circle),
             onPressed: _isComposing
                 ? () => _handleSubmitted(context, _textController.text)
                 : null,
