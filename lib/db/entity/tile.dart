@@ -128,6 +128,7 @@ class Tile {
   @override
   String toString() {
     return '''Tile{id: $id, cardId: $cardId, type: $type, userId: $userId, likes: $likes, comments: $comments, updatedAt: $updatedAt}
+content: $content
 card: $card
 user: $user'
 ''';
