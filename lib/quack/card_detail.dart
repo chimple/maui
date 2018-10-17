@@ -9,6 +9,7 @@ import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/quack/drawing_grid.dart';
+import 'package:maui/quack/header_app_bar.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
@@ -68,33 +69,11 @@ class CardDetailState extends State<CardDetail> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
     final scrollViewWidgets = <Widget>[
-      SliverAppBar(
-        automaticallyImplyLeading: widget.showBackButton,
-        expandedHeight: media.size.height / 4,
-        pinned: true,
-        flexibleSpace: FlexibleSpaceBar(
-          title: Text(widget.card.title),
-          background: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              CardHeader(
-                card: widget.card,
-                parentCardId: widget.parentCardId,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment(0.0, -1.0),
-                    end: Alignment(0.0, -0.4),
-                    colors: <Color>[Color(0x60000000), Color(0x00000000)],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+      HeaderAppBar(
+        card: widget.card,
+        parentCardId: widget.parentCardId,
+        showBackButton: widget.showBackButton,
       )
     ];
 

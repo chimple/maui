@@ -4,6 +4,7 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
+import 'package:maui/quack/quiz_navigator.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
@@ -57,18 +58,27 @@ class CardPagerState extends State<CardPager> {
         child: PageView.builder(
             controller: _pageController,
             scrollDirection: Axis.horizontal,
-            itemCount: _cards.length,
-            itemBuilder: (context, index) => CardDetail(
-                  key: _cardDetailKeys[index],
-                  card: _cards[index],
-                  parentCardId: widget.cardId,
-                  showBackButton: widget.cardId != 'main',
-                ),
+            itemCount: _cards.length + 1,
+            itemBuilder: (context, index) => index >= _cards.length
+                ? RaisedButton(
+                    child: Text('Quiz'),
+                    onPressed: () =>
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => QuizNavigator(
+                                  cardId: widget.cardId,
+                                ))),
+                  )
+                : CardDetail(
+                    key: _cardDetailKeys[index],
+                    card: _cards[index],
+                    parentCardId: widget.cardId,
+                    showBackButton: widget.cardId != 'main',
+                  ),
             onPageChanged: (index) =>
                 setState(() => _currentPageIndex = index)),
       )
     ];
-    if (widget.cardId != 'main') {
+    if (widget.cardId != 'main' && _currentPageIndex < _cards.length) {
       widgets.add(Row(
         children: <Widget>[
           IconButton(
@@ -90,7 +100,7 @@ class CardPagerState extends State<CardPager> {
           ),
           IconButton(
             icon: Icon(Icons.chevron_right),
-            onPressed: _currentPageIndex + 1 >= _cards.length
+            onPressed: _currentPageIndex >= _cards.length
                 ? null
                 : () async => await _pageController.nextPage(
                     duration: Duration(milliseconds: 250),
