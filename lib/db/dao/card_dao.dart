@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:maui/app_database.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,5 +16,21 @@ class CardDao {
       return QuackCard.fromMap(maps.first);
     }
     return null;
+  }
+
+  Future<Null> incrementComments(String id, int amount, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    QuackCard card = await getCard(id, db: db);
+    card.comments = (card.comments ?? 0) + amount;
+    await db.update(QuackCard.table, card.toMap(),
+        where: '${QuackCard.idCol} = ?', whereArgs: [card.id]);
+  }
+
+  Future<Null> incrementLikes(String id, int amount, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    QuackCard card = await getCard(id, db: db);
+    card.likes = (card.likes ?? 0) + amount;
+    await db.update(QuackCard.table, card.toMap(),
+        where: '${QuackCard.idCol} = ?', whereArgs: [card.id]);
   }
 }

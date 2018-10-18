@@ -320,7 +320,7 @@ class AnimatedCommentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 2.0;
+    //timeDilation = 2.0;
     // TODO: implement build
     return new AnimatedBuilder(
       animation: controller,

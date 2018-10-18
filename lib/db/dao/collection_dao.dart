@@ -21,13 +21,13 @@ class CollectionDao {
   Future<List<QuackCard>> getCardsInCollection(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
-        columns: QuackCard.allPrefixedCols,
+        columns: QuackCard.allCols,
         where: '''
-${Collection.table}.${Collection.idCol} = ? 
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 ''',
         whereArgs: [id],
-        orderBy: '${Collection.table}.${Collection.serialCol}');
+        orderBy: '${Collection.serialCol}');
     return maps.map((el) => QuackCard.fromMap(el)).toList();
   }
 
@@ -36,14 +36,14 @@ AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
-        columns: QuackCard.allPrefixedCols,
+        columns: QuackCard.allCols,
         where: '''
-${Collection.table}.${Collection.idCol} = ? 
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${QuackCard.table}.${QuackCard.typeCol} = ?
 ''',
         whereArgs: [id, cardType.index],
-        orderBy: '${Collection.table}.${Collection.serialCol}');
+        orderBy: '${Collection.serialCol}');
     return maps.map((el) => QuackCard.fromMap(el)).toList();
   }
 
@@ -51,11 +51,11 @@ AND ${QuackCard.table}.${QuackCard.typeCol} = ?
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
         columns: ['count(${QuackCard.idCol})'], where: '''
-${Collection.table}.${Collection.idCol} = ? 
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 ''', whereArgs: [id]);
     if (maps.length > 0) {
-      return maps.first['count(${QuackCard.idCol})'];
+      return maps.first['count(${QuackCard.table}.${QuackCard.idCol})'];
     }
     return 0;
   }
@@ -65,12 +65,12 @@ AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
         columns: ['count(${QuackCard.idCol})'], where: '''
-${Collection.table}.${Collection.idCol} = ? 
+${Collection.idCol} = ? 
 AND ${QuackCard.table}.${QuackCard.typeCol} = ?
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 ''', whereArgs: [id, cardType.index]);
     if (maps.length > 0) {
-      return maps.first['count(${QuackCard.idCol})'];
+      return maps.first['count(${QuackCard.table}.${QuackCard.idCol})'];
     }
     return 0;
   }

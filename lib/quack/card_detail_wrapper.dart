@@ -43,6 +43,7 @@ class CardDetailWrapperState extends State<CardDetailWrapper> {
     }
     return CardDetail(
       card: _card,
+      parentCardId: widget.cardId,
       showBackButton: widget.showBackButton,
     );
   }

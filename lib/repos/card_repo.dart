@@ -35,4 +35,12 @@ class CardRepo {
       choiceAudios: answers.map((a) => a.contentAudio).toList(growable: false),
     );
   }
+
+  Future<Null> incrementComments(String id, int comments) async {
+    return cardDao.incrementComments(id, comments);
+  }
+
+  Future<Null> incrementLikes(String id, int likes) async {
+    return cardDao.incrementLikes(id, likes);
+  }
 }
