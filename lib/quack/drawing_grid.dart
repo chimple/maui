@@ -53,7 +53,7 @@ class DrawingGridState extends State<DrawingGrid> {
             new MaterialPageRoute(
                 builder: (BuildContext context) => DrawingWrapper(
                       activityId: widget.cardId,
-                      template: result,
+                      template: result.isEmpty ? null : result,
                     )),
           );
         }

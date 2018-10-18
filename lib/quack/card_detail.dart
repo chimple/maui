@@ -58,7 +58,8 @@ class CardDetailState extends State<CardDetail> with RouteAware {
   void _initData() async {
     _cards = await CollectionRepo().getCardsInCollection(widget.card.id);
     if (widget.card.type == CardType.activity) {
-      _drawings = await TileRepo().getTilesByCardId(widget.card.id);
+      _drawings = await TileRepo()
+          .getTilesByCardIdAndType(widget.card.id, TileType.drawing);
     }
     setState(() => _isLoading = false);
   }
