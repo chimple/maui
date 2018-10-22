@@ -266,8 +266,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       msgs ??= List<Map<String, String>>();
       await NotifRepo().delete(fId, 'chat');
       setState(() {
-//        messages = msgs.reversed.toList(growable: true);
-        messages = msgs;
+        messages = msgs.reversed.toList(growable: true);
       });
     }
   }
@@ -306,8 +305,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
-    print(
-        '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
+    print('_onReceiveMessage $message');
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
@@ -319,7 +317,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (activity == 'friends') {
         getUsers();
       }
-    } else if (message['recipientUserId'] == state.loggedInUser.id) {
+    } else if (message['recipientUserId'] == state.loggedInUser?.id) {
       NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
         showNotification(

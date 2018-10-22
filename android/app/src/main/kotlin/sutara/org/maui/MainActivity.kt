@@ -107,6 +107,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       tts!!.stop()
       tts!!.shutdown()
     }
+    MulticastManager.getInstance(this).onCleanUp()
     super.onDestroy()
   }
 
