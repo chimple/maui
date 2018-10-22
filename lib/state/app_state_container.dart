@@ -266,7 +266,8 @@ class AppStateContainerState extends State<AppStateContainer> {
       msgs ??= List<Map<String, String>>();
       await NotifRepo().delete(fId, 'chat');
       setState(() {
-        messages = msgs.reversed.toList(growable: true);
+//        messages = msgs.reversed.toList(growable: true);
+        messages = msgs;
       });
     }
   }
