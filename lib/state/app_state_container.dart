@@ -196,8 +196,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-   void playArticleAudio(
-      String audio, Function onComplete) async {
+  void playArticleAudio(String audio, Function onComplete) async {
     audio = audio.toLowerCase();
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -472,14 +471,14 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Stack trace:\n $s');
       }
     }
-    try {
-      p2p.start();
-    } on PlatformException {
-      print('Flores: Failed start');
-    } catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-    }
+//    try {
+//      p2p.start();
+//    } on PlatformException {
+//      print('Flores: Failed start');
+//    } catch (e, s) {
+//      print('Exception details:\n $e');
+//      print('Stack trace:\n $s');
+//    }
     _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
     _lesson = await new LessonRepo().getLesson(56);
 //    _lessonUnits = await new LessonUnitRepo()

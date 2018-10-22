@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
 
     <uses-feature android:name="android.hardware.camera2" />
 
@@ -32,11 +34,6 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="maui"
         android:icon="@mipmap/ic_launcher">
-        <service android:name="org.chimple.flores.scheduler.P2PIntentService" />
-        <service
-            android:name="org.chimple.flores.scheduler.P2PHandShakingJobService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
