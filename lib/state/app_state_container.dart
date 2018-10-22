@@ -52,7 +52,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   String activity;
   String friendId;
   List<User> users;
-  List<Notif> notifs;
+  List<Notif> notifs = [];
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
@@ -318,7 +318,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         getUsers();
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
-      NotifRepo().increment(message['userId'], message['messageType'], 1);
+//      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
         showNotification(
             message['userId'],
@@ -341,10 +341,10 @@ class AppStateContainerState extends State<AppStateContainer> {
     final userList = await UserRepo().getRemoteUsers();
     final botUser = await UserRepo().getUser(User.botId);
     userList.insert(0, botUser);
-    final notifList = await NotifRepo().getNotifsByType('chat');
+//    final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
-      notifs = notifList;
+//      notifs = notifList;
     });
     print('getUsers end');
   }

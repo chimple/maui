@@ -36,6 +36,14 @@ class TileRepo {
     return tiles;
   }
 
+  Future<List<Tile>> getTilesByUserIdAndType(String userId, TileType type) async {
+    final tiles = await tileDao.getTilesByUserIdAndType(userId, type);
+    await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
+            (t) async => t.content = await _readFile(id: t.id));
+    print('getTilesByCardIdAndType: $tiles');
+    return tiles;
+  }
+
   Future<List<Tile>> getTiles() async {
     final tiles = await tileDao.getTiles();
     await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
