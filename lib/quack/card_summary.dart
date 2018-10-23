@@ -16,6 +16,13 @@ class CardSummary extends StatelessWidget {
   final int index;
   final String parentCardId;
 
+  static final cardTypeAspectRatio = {
+    CardType.knowledge: 3.0,
+    CardType.concept: 1.0,
+    CardType.activity: 1.0,
+    CardType.question: 3.0
+  };
+
   CardSummary({Key key, @required this.card, this.index, this.parentCardId})
       : super(key: key);
 
