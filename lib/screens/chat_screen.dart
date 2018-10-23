@@ -56,6 +56,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   static final chatMessageType = 'chat';
   bool _isLoading = true;
   AppStateContainerState appStateContainerState;
+  bool _canSend = true;
 
   @override
   void initState() {
@@ -224,12 +225,13 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         break;
       case InputType.sticker:
         return SelectSticker(
-          onUserPress: _addSticker,
+          onUserPress: _canSend ? _addSticker : null,
         );
         break;
       case InputType.choices:
         return SelectTextChoice(
-            onUserPress: _addTextChoice, texts: message['choices']);
+            onUserPress: _canSend ? _addTextChoice : null,
+            texts: message['choices']);
         break;
       case InputType.hidden:
         break;
@@ -307,8 +309,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                               : null,
                         )
                       : new IconButton(
-                          icon: new Icon(Icons.send),
-                          onPressed: _isComposing
+                          icon: _canSend
+                              ? Icon(Icons.send)
+                              : Icon(Icons.hourglass_empty),
+                          onPressed: _isComposing && _canSend
                               ? () => _handleSubmitted(_textController.text)
                               : null,
                         )),
@@ -343,5 +347,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _sendMessage({String text, String imageUrl}) async {
     AppStateContainer.of(context).addChat(text);
+    setState(() {
+      _canSend = false;
+    });
+
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      setState(() {
+        _canSend = true;
+      });
+    });
   }
 }

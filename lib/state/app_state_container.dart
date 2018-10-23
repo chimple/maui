@@ -320,17 +320,17 @@ class AppStateContainerState extends State<AppStateContainer> {
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
-        showNotification(
-            message['userId'],
-            message['messageType'],
-            message['message'],
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(
+//            message['userId'],
+//            message['messageType'],
+//            message['message'],
+//            message['messageType'] + ':' + message['userId']);
         if (message['userId'] == friendId && activity == 'chat') {
           beginChat(friendId);
         }
       } else {
-        showNotification(message['userId'], message['messageType'], '',
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(message['userId'], message['messageType'], '',
+//            message['messageType'] + ':' + message['userId']);
       }
     }
   }
@@ -450,6 +450,7 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   @override
   Widget build(BuildContext context) {
+    print('AppStateContainer:build');
     return new _InheritedAppStateContainer(
       data: this,
       child: widget.child,
