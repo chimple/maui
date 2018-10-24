@@ -347,14 +347,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _sendMessage({String text, String imageUrl}) async {
     AppStateContainer.of(context).addChat(text);
-    setState(() {
-      _canSend = false;
-    });
-
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      setState(() {
-        _canSend = true;
-      });
-    });
+//    setState(() {
+//      _canSend = false;
+//    });
+//
+//    Future.delayed(const Duration(milliseconds: 3000), () {
+//      setState(() {
+//        _canSend = true;
+//      });
+//    });
   }
 }

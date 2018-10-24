@@ -36,7 +36,7 @@ class ActivityCard extends StatelessWidget {
               card: card,
               parentCardId: parentCardId,
             ),
-            aspectRatio: 1.0,
+            aspectRatio: 1.78,
           ),
           Expanded(
             child: Padding(
