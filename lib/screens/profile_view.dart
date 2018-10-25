@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:maui/quack/user_drawing_grid.dart';
+
 import '../loca.dart';
 import 'package:flutter/material.dart';
 import '../state/app_state_container.dart';
@@ -92,7 +94,7 @@ class ProfileViewState extends State<ProfileView>
         body: new TabBarView(
           controller: _controller,
           children: <Widget>[
-            new Text("i have to show gallery here"),
+            UserDrawingGrid(userId: user.id),
             new Text("i have to show topic here"),
           ],
         ),

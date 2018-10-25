@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/quack/collection_progress_indicator.dart';
+import 'package:maui/quack/like_button.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class ConceptCard extends StatelessWidget {
   final QuackCard card;
@@ -21,6 +25,7 @@ class ConceptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userId = AppStateContainer.of(context).state.loggedInUser.id;
     return InkWell(
       onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
@@ -39,6 +44,7 @@ class ConceptCard extends StatelessWidget {
             ),
             aspectRatio: 1.78,
           ),
+          CollectionProgressIndicator(collectionId: card.id, userId: userId),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(8.0),
@@ -56,7 +62,11 @@ class ConceptCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(children: <Widget>[
-                Icon(Icons.favorite_border),
+                LikeButton(
+                  parentId: card.id,
+                  tileType: TileType.card,
+                  userId: userId,
+                ),
                 Text("${card.likes ?? ''}"),
               ]),
               Row(children: <Widget>[

@@ -18,13 +18,15 @@ class TemplateGrid extends StatelessWidget {
         onTap: () => Navigator.pop(context, template),
         child: new AspectRatio(
           aspectRatio: 1.0,
-          child: template.endsWith('.svg')
-              ? new SvgPicture.asset(
-                  template,
-                )
-              : Image.asset(
-                  template,
-                ),
+          child: template.isEmpty
+              ? Icon(Icons.check_box_outline_blank)
+              : template.endsWith('.svg')
+                  ? new SvgPicture.asset(
+                      template,
+                    )
+                  : Image.asset(
+                      template,
+                    ),
         ),
       ),
     );
@@ -34,8 +36,8 @@ class TemplateGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 3,
-      children:
-          templates.map((t) => _buildTile(context, t)).toList(growable: false),
+      children: templates.map((t) => _buildTile(context, t)).toList()
+        ..add(_buildTile(context, '')),
     );
   }
 }

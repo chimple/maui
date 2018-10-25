@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/quack/comment_list.dart';
+import 'package:maui/quack/comment_text_field.dart';
+import 'package:maui/quack/quiz_navigator.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
@@ -20,23 +24,28 @@ class CardPagerState extends State<CardPager> {
   PageController _pageController;
   bool _isLoading = true;
   List<QuackCard> _cards;
+  int _currentPageIndex;
+  List<GlobalKey<CardDetailState>> _cardDetailKeys;
 
   @override
   void initState() {
     super.initState();
-    _pageController =
-        PageController(initialPage: widget.initialPage, viewportFraction: 0.9);
+    _pageController = PageController(initialPage: widget.initialPage);
+    _currentPageIndex = widget.initialPage;
     _initData();
   }
 
   void _initData() async {
     _cards = await new CollectionRepo()
         .getCardsInCollectionByType(widget.cardId, widget.cardType);
+    _cardDetailKeys =
+        _cards.map((c) => GlobalKey<CardDetailState>()).toList(growable: false);
     setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('_currentPageIndex: $_currentPageIndex');
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -44,15 +53,65 @@ class CardPagerState extends State<CardPager> {
         child: new CircularProgressIndicator(),
       );
     }
-    return PageView.builder(
-        controller: _pageController,
-        scrollDirection: Axis.horizontal,
-        itemCount: _cards.length,
-        itemBuilder: (context, index) => CardDetail(
-              card: _cards[index],
-              parentCardId: widget.cardId,
-              showBackButton: widget.cardId != 'main',
-            ));
+    final widgets = <Widget>[
+      Expanded(
+        child: PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: _cards.length + 1,
+            itemBuilder: (context, index) => index >= _cards.length
+                ? RaisedButton(
+                    child: Text('Quiz'),
+                    onPressed: () =>
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => QuizNavigator(
+                                  cardId: widget.cardId,
+                                ))),
+                  )
+                : CardDetail(
+                    key: _cardDetailKeys[index],
+                    card: _cards[index],
+                    parentCardId: widget.cardId,
+                    showBackButton: widget.cardId != 'main',
+                  ),
+            onPageChanged: (index) =>
+                setState(() => _currentPageIndex = index)),
+      )
+    ];
+    if (widget.cardId != 'main' && _currentPageIndex < _cards.length) {
+      widgets.add(Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.chevron_left),
+            onPressed: _currentPageIndex == 0
+                ? null
+                : () async => await _pageController.previousPage(
+                    duration: Duration(milliseconds: 250),
+                    curve: Curves.fastOutSlowIn),
+          ),
+          Expanded(
+            child: CommentTextField(
+              parentId: _cards[_currentPageIndex].id,
+              tileType: TileType.card,
+              addComment: (comment) => _cardDetailKeys[_currentPageIndex]
+                  .currentState
+                  .initComments(),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.chevron_right),
+            onPressed: _currentPageIndex >= _cards.length
+                ? null
+                : () async => await _pageController.nextPage(
+                    duration: Duration(milliseconds: 250),
+                    curve: Curves.fastOutSlowIn),
+          ),
+        ],
+      ));
+    }
+    return Scaffold(
+      body: Column(children: widgets),
+    );
   }
 
   @override

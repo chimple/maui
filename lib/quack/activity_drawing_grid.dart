@@ -11,20 +11,21 @@ import 'package:tahiti/paper.dart';
 import 'package:tahiti/activity_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class DrawingGrid extends StatefulWidget {
+class ActivityDrawingGrid extends StatefulWidget {
   final String cardId;
   final List<Tile> drawings;
 
-  const DrawingGrid({Key key, @required this.cardId, @required this.drawings})
+  const ActivityDrawingGrid(
+      {Key key, @required this.cardId, @required this.drawings})
       : super(key: key);
 
   @override
-  DrawingGridState createState() {
-    return new DrawingGridState();
+  ActivityDrawingGridState createState() {
+    return new ActivityDrawingGridState();
   }
 }
 
-class DrawingGridState extends State<DrawingGrid> {
+class ActivityDrawingGridState extends State<ActivityDrawingGrid> {
   bool _isLoading = true;
   List<String> _templates;
 
@@ -53,7 +54,7 @@ class DrawingGridState extends State<DrawingGrid> {
             new MaterialPageRoute(
                 builder: (BuildContext context) => DrawingWrapper(
                       activityId: widget.cardId,
-                      template: result,
+                      template: result.isEmpty ? null : result,
                     )),
           );
         }

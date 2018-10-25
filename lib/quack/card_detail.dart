@@ -8,7 +8,8 @@ import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
-import 'package:maui/quack/drawing_grid.dart';
+import 'package:maui/quack/activity_drawing_grid.dart';
+import 'package:maui/quack/header_app_bar.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
@@ -17,10 +18,15 @@ import 'package:maui/state/app_state_container.dart';
 class CardDetail extends StatefulWidget {
   final QuackCard card;
   final String parentCardId;
-  bool showBackButton;
+  final bool showBackButton;
+  final GlobalKey<CommentListState> commentListKey;
 
   CardDetail(
-      {key, @required this.card, this.parentCardId, this.showBackButton = true})
+      {key,
+      @required this.card,
+      this.parentCardId,
+      this.showBackButton = true,
+      this.commentListKey})
       : super(key: key);
 
   @override
@@ -33,13 +39,13 @@ class CardDetailState extends State<CardDetail> with RouteAware {
   List<QuackCard> _cards;
   List<Tile> _drawings;
   bool _isLoading = true;
-  final GlobalKey<CommentListState> _commentListKey =
-      new GlobalKey<CommentListState>();
+  GlobalKey<CommentListState> _commentListKey;
 
   @override
   void initState() {
     super.initState();
     _initData();
+    _commentListKey = widget.commentListKey ?? GlobalKey<CommentListState>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final user = AppStateContainer.of(context).state.loggedInUser;
       CardProgressRepo().upsert(CardProgress(
@@ -52,45 +58,28 @@ class CardDetailState extends State<CardDetail> with RouteAware {
   void _initData() async {
     _cards = await CollectionRepo().getCardsInCollection(widget.card.id);
     if (widget.card.type == CardType.activity) {
-      _drawings = await TileRepo().getTilesByCardId(widget.card.id);
+      _drawings = await TileRepo()
+          .getTilesByCardIdAndType(widget.card.id, TileType.drawing);
     }
     setState(() => _isLoading = false);
   }
 
+  void initComments() async {
+    _commentListKey.currentState.initData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
     final scrollViewWidgets = <Widget>[
-      SliverAppBar(
-        automaticallyImplyLeading: widget.showBackButton,
-        expandedHeight: media.size.height / 4,
-        pinned: true,
-        flexibleSpace: FlexibleSpaceBar(
-          title: Text(widget.card.title),
-          background: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              CardHeader(
-                card: widget.card,
-                parentCardId: widget.parentCardId,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment(0.0, -1.0),
-                    end: Alignment(0.0, -0.4),
-                    colors: <Color>[Color(0x60000000), Color(0x00000000)],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+      HeaderAppBar(
+        card: widget.card,
+        parentCardId: widget.parentCardId,
+        showBackButton: widget.showBackButton,
       )
     ];
 
     if (!_isLoading && widget.card.type == CardType.activity) {
-      scrollViewWidgets.add(DrawingGrid(
+      scrollViewWidgets.add(ActivityDrawingGrid(
         cardId: widget.card.id,
         drawings: _drawings,
       ));
@@ -150,11 +139,15 @@ class CardDetailState extends State<CardDetail> with RouteAware {
           addComment: (comment) =>
               _commentListKey.currentState.addComment(comment)));
     }
-    return new Scaffold(
-      body: Column(
-        children: widgets,
-      ),
-    );
+    return widget.card.type == CardType.knowledge
+        ? Column(
+            children: widgets,
+          )
+        : Scaffold(
+            body: Column(
+              children: widgets,
+            ),
+          );
   }
 
   @override

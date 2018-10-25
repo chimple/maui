@@ -40,16 +40,17 @@ class LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading || _like == null) {
-      return IconButton(
-        icon: Icon(Icons.favorite_border),
-        color: Colors.red,
-        onPressed: _isLoading ? null : () => _onPressed(context),
+      return InkWell(
+        child: Icon(
+          Icons.favorite_border,
+          color: Colors.red,
+        ),
+        onTap: _isLoading ? null : () => _onPressed(context),
       );
     } else {
-      return IconButton(
-        icon: Icon(Icons.favorite),
-        onPressed: null,
-        disabledColor: Colors.red,
+      return Icon(
+        Icons.favorite,
+        color: Colors.red,
       );
     }
   }
