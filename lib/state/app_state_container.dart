@@ -52,7 +52,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   String activity;
   String friendId;
   List<User> users;
-  List<Notif> notifs;
+  List<Notif> notifs = [];
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
@@ -196,8 +196,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-   void playArticleAudio(
-      String audio, Function onComplete) async {
+  void playArticleAudio(String audio, Function onComplete) async {
     audio = audio.toLowerCase();
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -306,8 +305,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
-    print(
-        '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
+    print('_onReceiveMessage $message');
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
@@ -319,20 +317,20 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (activity == 'friends') {
         getUsers();
       }
-    } else if (message['recipientUserId'] == state.loggedInUser.id) {
-      NotifRepo().increment(message['userId'], message['messageType'], 1);
+    } else if (message['recipientUserId'] == state.loggedInUser?.id) {
+//      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
-        showNotification(
-            message['userId'],
-            message['messageType'],
-            message['message'],
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(
+//            message['userId'],
+//            message['messageType'],
+//            message['message'],
+//            message['messageType'] + ':' + message['userId']);
         if (message['userId'] == friendId && activity == 'chat') {
           beginChat(friendId);
         }
       } else {
-        showNotification(message['userId'], message['messageType'], '',
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(message['userId'], message['messageType'], '',
+//            message['messageType'] + ':' + message['userId']);
       }
     }
   }
@@ -343,10 +341,10 @@ class AppStateContainerState extends State<AppStateContainer> {
     final userList = await UserRepo().getRemoteUsers();
     final botUser = await UserRepo().getUser(User.botId);
     userList.insert(0, botUser);
-    final notifList = await NotifRepo().getNotifsByType('chat');
+//    final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
-      notifs = notifList;
+//      notifs = notifList;
     });
     print('getUsers end');
   }
@@ -452,6 +450,7 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   @override
   Widget build(BuildContext context) {
+    print('AppStateContainer:build');
     return new _InheritedAppStateContainer(
       data: this,
       child: widget.child,
@@ -472,14 +471,14 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Stack trace:\n $s');
       }
     }
-    try {
-      p2p.start();
-    } on PlatformException {
-      print('Flores: Failed start');
-    } catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-    }
+//    try {
+//      p2p.start();
+//    } on PlatformException {
+//      print('Flores: Failed start');
+//    } catch (e, s) {
+//      print('Exception details:\n $e');
+//      print('Stack trace:\n $s');
+//    }
     _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
     _lesson = await new LessonRepo().getLesson(56);
 //    _lessonUnits = await new LessonUnitRepo()

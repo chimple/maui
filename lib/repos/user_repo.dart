@@ -35,17 +35,19 @@ class UserRepo {
       String userId, String deviceId, String txnText) async {
     print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
     final userInfo = txnText.split('*');
-    String base64Image = userInfo.last;
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    List<int> memoryImage;
-    try {
-      memoryImage = base64.decode(base64Image);
-    } catch (e) {
-      print(e);
+    String imagePath;
+    if (userInfo.length == 3) {
+      String base64Image = userInfo.last;
+      Directory documentsDirectory = await getApplicationDocumentsDirectory();
+      List<int> memoryImage;
+      try {
+        memoryImage = base64.decode(base64Image);
+      } catch (e) {
+        print(e);
+      }
+      imagePath = join(documentsDirectory.path, '$userId.png');
+      await new File(imagePath).writeAsBytes(memoryImage);
     }
-    String imagePath = join(documentsDirectory.path, '$userId.png');
-    await new File(imagePath).writeAsBytes(memoryImage);
-
     User user = await userDao.getUser(userId);
     if (user == null) {
       await userDao.insert(User(

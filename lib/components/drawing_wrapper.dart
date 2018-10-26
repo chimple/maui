@@ -1,25 +1,24 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:maui/db/entity/drawing.dart';
+import 'package:maui/db/entity/card_progress.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/db/entity/card_extra.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/card_progress_repo.dart';
+import 'package:maui/repos/card_repo.dart';
 import 'package:tahiti/tahiti.dart';
-import 'package:maui/repos/activity_template_repo.dart';
-import 'package:maui/repos/drawing_repo.dart';
+import 'package:maui/repos/card_extra_repo.dart';
+import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-
-enum DrawingSelect { create, latest, id, none }
 
 class DrawingWrapper extends StatefulWidget {
   final String activityId;
-  final DrawingSelect drawingSelect;
   final String drawingId;
-  final String title;
+  final String template;
 
   const DrawingWrapper(
-      {Key key,
-      @required this.activityId,
-      this.drawingSelect = DrawingSelect.latest,
-      this.title,
-      this.drawingId})
+      {Key key, @required this.activityId, this.drawingId, this.template})
       : super(key: key);
 
   @override
@@ -30,10 +29,9 @@ class DrawingWrapper extends StatefulWidget {
 
 class DrawingWrapperState extends State<DrawingWrapper> {
   bool _isLoading = true;
-  DrawingSelect _drawingSelect;
-  Drawing _drawing;
-  List<String> _templates;
+  Tile _drawing;
   Map<String, dynamic> _jsonMap;
+  QuackCard _activity;
 
   @override
   void initState() {
@@ -41,37 +39,20 @@ class DrawingWrapperState extends State<DrawingWrapper> {
     _initData();
   }
 
-  @override
-  void didUpdateWidget(DrawingWrapper oldWidget) {
-    if (oldWidget.drawingSelect != widget.drawingSelect ||
-        widget.drawingSelect == DrawingSelect.create) {
-      print('hi didupdate');
-      _initData();
-    }
-  }
-
   void _initData() async {
-    setState(() => _isLoading = true);
-    _drawingSelect = widget.drawingSelect;
-    _jsonMap = null;
-    if (widget.drawingSelect == DrawingSelect.latest) {
-      _drawing =
-          await DrawingRepo().getLatestDrawingByActivityId(widget.activityId);
-      if (_drawing == null) _drawingSelect = DrawingSelect.create;
-    } else if (widget.drawingSelect == DrawingSelect.id) {
-      if (widget.drawingId != null)
-        _drawing = await DrawingRepo().getDrawing(widget.drawingId);
-      if (_drawing == null) _drawingSelect = DrawingSelect.create;
+    _activity = await CardRepo().getCard(widget.activityId);
+
+    if (widget.drawingId != null) {
+      _drawing = await TileRepo().getTile(widget.drawingId);
+      _jsonMap = json.decode(_drawing.content);
     }
-    if (_drawingSelect == DrawingSelect.create) {
-      final activityTemplates = await ActivityTemplateRepo()
-          .getActivityTemplatesByActivityId(widget.activityId);
-      _templates =
-          activityTemplates.map((t) => t.image).toList(growable: false);
-    } else {
-      print('drawing got: ${_drawing.json}');
-      _jsonMap = json.decode(_drawing.json);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      User user = AppStateContainer.of(context).state.loggedInUser;
+      await CardProgressRepo().upsert(CardProgress(
+          cardId: widget.activityId,
+          userId: user.id,
+          updatedAt: DateTime.now()));
+    });
     setState(() => _isLoading = false);
   }
 
@@ -85,14 +66,21 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return ActivityBoard(
-      json: _jsonMap,
-      templates: _templates,
-      title: widget.title,
-      saveCallback: ({Map<String, dynamic> jsonMap}) => DrawingRepo().upsert(
-          jsonMap: jsonMap,
-          activityId: widget.activityId,
-          userId: AppStateContainer.of(context).state.loggedInUser.id),
+    return Scaffold(
+      body: ActivityBoard(
+        json: _jsonMap,
+        template: widget.template,
+        title: _activity.title,
+        saveCallback: ({Map<String, dynamic> jsonMap}) => TileRepo().upsert(
+              Tile(
+                  id: jsonMap['id'],
+                  cardId: widget.activityId,
+                  type: TileType.drawing,
+                  content: json.encode(jsonMap),
+                  updatedAt: DateTime.now(),
+                  userId: AppStateContainer.of(context).state.loggedInUser.id),
+            ),
+      ),
     );
   }
 }
