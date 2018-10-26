@@ -33,7 +33,8 @@ class FriendItem extends StatelessWidget {
     var user = AppStateContainer.of(context).state.loggedInUser;
     print('FriendItem: $id $imageUrl');
 
-    final encImageUrl = imageUrl.replaceAll(new RegExp(r'/'), '&#x2F;');
+//    final encImageUrl = imageUrl.replaceAll(new RegExp(r'/'), '&#x2F;')
+// ;
     return new Padding(
         padding: const EdgeInsets.all(0.0),
         child: new Column(

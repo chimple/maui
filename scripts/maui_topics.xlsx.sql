@@ -74,7 +74,7 @@ INSERT INTO `card` (id, type, title, header, content, option) VALUES ('tiger_fun
 * A Bengal tiger named "Richard Parker" is a key character in the novel (and highly-successful movie) "The Life of Pi" who must share a boat with a young man cast adrift at sea after the sinking of a ship during a hurricane."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('tiger_countries', 0, NULL, 'assets/topic/Tigers.png', 'Select the countries where tigers are found', 'many');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 1, 1, 'India');
-INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 1, 2, 'Bangladesh');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 1, 2, 'Most of Bangladesh is covered by the Bengal Delta, the largest delta on Earth. The country has 700 rivers and 8,046 km (5,000 mi) of inland waterways. Highlands with evergreen forests are found in the northeastern and southeastern regions of the country. Bangladesh has many islands and a coral reef. The longest unbroken sea beach of the world, Cox''s Bazar Beach, is located in the southeast. It is home to the Sundarbans, the largest mangrove forest in the world. The country''s biodiversity includes a vast array of plant and wildlife, including endangered Bengal tigers, the national animal.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 1, 3, 'China');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 1, 4, 'Thailand');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_countries', 0, 1, 'Tanzania');
@@ -87,11 +87,11 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_small_big
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('tiger_fur_color', 0, NULL, 'assets/topic/Flickr_-_law_keven_-_Tiger,_Tiger,_Burning_bright.jpg', 'What is the color of the tiger''s fur?', 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_fur_color', 1, 1, 'orange');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_fur_color', 0, 1, 'green');
-INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_fur_color', 0, 2, 'violet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_fur_color', 0, 2, 'The Greeks and Romans identified the region as Gangaridai, a powerful kingdom of the historical Indian subcontinent, in the 3rd century BCE. Archaeological research has unearthed several ancient cities in Bangladesh, which enjoyed international trade links for millennia.[15] The Bengal Sultanate and Mughal Bengal transformed the region into a cosmopolitan Islamic imperial power between the 14th and 18th centuries. The region was home to many principalities that made use of their inland naval prowess');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_fur_color', 0, 3, 'pink');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('tiger_body_parts', 0, NULL, 'assets/topic/tiger_sleep.jpeg', 'Match the body parts with the adjective', 'pair');
-INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 1, 'fur');
-INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 2, 'striped');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 1, 'assets/topic/tiger_sleep.jpeg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 2, 'assets/topic/24868494306_84d2fd285b_b.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 3, 'jaws');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 4, 'strong');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('tiger_body_parts', 1, 5, 'paws');

@@ -8,7 +8,7 @@ import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
-import 'package:maui/quack/drawing_grid.dart';
+import 'package:maui/quack/activity_drawing_grid.dart';
 import 'package:maui/quack/header_app_bar.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
@@ -79,7 +79,7 @@ class CardDetailState extends State<CardDetail> with RouteAware {
     ];
 
     if (!_isLoading && widget.card.type == CardType.activity) {
-      scrollViewWidgets.add(DrawingGrid(
+      scrollViewWidgets.add(ActivityDrawingGrid(
         cardId: widget.card.id,
         drawings: _drawings,
       ));
