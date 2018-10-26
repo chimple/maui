@@ -50,7 +50,7 @@ AND ${QuackCard.table}.${QuackCard.typeCol} = ?
   Future<int> getCardCountInCollection(String id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
-        columns: ['count(${QuackCard.idCol})'], where: '''
+        columns: ['count(${QuackCard.table}.${QuackCard.idCol})'], where: '''
 ${Collection.idCol} = ? 
 AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 ''', whereArgs: [id]);
@@ -64,7 +64,7 @@ AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
-        columns: ['count(${QuackCard.idCol})'], where: '''
+        columns: ['count(${QuackCard.table}.${QuackCard.idCol})'], where: '''
 ${Collection.idCol} = ? 
 AND ${QuackCard.table}.${QuackCard.typeCol} = ?
 AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}

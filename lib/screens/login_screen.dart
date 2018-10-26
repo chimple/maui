@@ -288,39 +288,33 @@ class _LoginScreenState extends State<LoginScreen>
                                           ],
                                         ),
                                       ),
-                                      new FractionalTranslation(
-                                          translation: size.height > size.width
-                                              ? Offset(0.0, 0.5)
-                                              : Offset(0.0, 0.5),
-                                          child: new Container(
-                                              alignment: new FractionalOffset(
-                                                  0.5, 0.5),
-                                              child: new Shake(
-                                                animation: shakeAnimation,
-                                                child: Container(
-                                                  width: 125.0,
+                                      Padding(
+                                        padding: new EdgeInsets.all(20.0),
+                                        child: new InkWell(
+                                          onTap: tabSreen,
+                                          splashColor: Colors.amber,
+                                          child: new Shake(
+                                              animation: shakeAnimation,
+                                              child: new Container(
+                                                  // alignment:
+                                                  //     Alignment(0.0, 0.5),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            const Radius
+                                                                    .circular(
+                                                                16.0)),
+                                                    color: Colors.amber,
+                                                  ),
                                                   height: 75.0,
-                                                  child: new RaisedButton(
-                                                      splashColor: Colors.amber,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12.0),
-                                                              side: BorderSide(
-                                                                  width: 3.0,
-                                                                  color: Colors
-                                                                      .amber)),
-                                                      color: Colors.amber,
-                                                      child: new Icon(
-                                                        Icons
-                                                            .keyboard_arrow_right,
-                                                        color: Colors.white,
-                                                      ),
-                                                      onPressed: tabSreen),
-                                                ),
-                                              )))
+                                                  width:100.0,
+                                                  child: new Icon(
+                                                    Icons.keyboard_arrow_right,
+                                                    color: Colors.white,
+                                                    size: 50.0
+                                                  ))),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ],
