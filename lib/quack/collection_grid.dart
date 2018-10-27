@@ -14,22 +14,21 @@ class CollectionGrid extends StatelessWidget {
       @required this.cards})
       : super(key: key);
 
-  List<Widget> _buildList() {
-    int index = 0;
-    return cards
-        .map((a) => CardSummary(
-              card: a,
-              index: index++,
-              parentCardId: cardId,
-            ))
-        .toList(growable: false);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.count(
-        crossAxisCount: cardType == CardType.knowledge ? 2 : 3,
-        childAspectRatio: CardSummary.cardTypeAspectRatio[cardType],
-        children: _buildList());
+    final media = MediaQuery.of(context);
+    return SizedBox(
+      height: media.size.width / 3.5,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => CardSummary(
+              card: cards[index],
+              index: index,
+              parentCardId: cardId,
+            ),
+        itemCount: cards.length,
+        itemExtent: media.size.width / 3.5,
+      ),
+    );
   }
 }

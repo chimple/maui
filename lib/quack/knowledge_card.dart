@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/card_pager.dart';
 
 class KnowledgeCard extends StatelessWidget {
   final QuackCard card;
   final int index;
   final String parentCardId;
+  final int likes;
+  final int points;
 
   const KnowledgeCard(
       {Key key,
       @required this.card,
-      @required this.index,
-      @required this.parentCardId})
+      this.index,
+      this.parentCardId,
+      this.likes,
+      this.points})
       : super(key: key);
 
   @override
@@ -20,20 +24,19 @@ class KnowledgeCard extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.of(context).push(
             new MaterialPageRoute(
-                builder: (BuildContext context) => CardPager(
-                      cardId: parentCardId,
-                      initialPage: index,
-                      cardType: CardType.knowledge,
+                builder: (BuildContext context) => CardDetail(
+                      card: card,
+                      parentCardId: parentCardId,
                     )),
           ),
-      child: Row(
+      child: Column(
         children: <Widget>[
           AspectRatio(
             child: CardHeader(
               card: card,
               parentCardId: parentCardId,
             ),
-            aspectRatio: 1.0,
+            aspectRatio: 1.78,
           ),
           Expanded(
             child: Padding(
@@ -41,12 +44,25 @@ class KnowledgeCard extends StatelessWidget {
               child: Text(card.title,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 12.0,
+                    fontSize: 16.0,
                   ),
                   textAlign: TextAlign.start,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(Icons.favorite_border),
+                Text("${card.likes ?? ''}"),
+              ]),
+              Row(children: <Widget>[
+                Icon(Icons.comment),
+                Text("${card.comments ?? ''}")
+              ])
+            ],
           )
         ],
       ),
