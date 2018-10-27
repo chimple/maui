@@ -98,27 +98,18 @@ class CardDetailState extends State<CardDetail> with RouteAware {
           child: CollectionGrid(
             cardId: widget.card.id,
             cardType: CardType.activity,
-            cards: _cards
-                .where((c) => c.type == CardType.activity)
-                .toList(growable: false),
           ),
         ),
         SliverToBoxAdapter(
           child: CollectionGrid(
             cardId: widget.card.id,
             cardType: CardType.knowledge,
-            cards: _cards
-                .where((c) => c.type == CardType.knowledge)
-                .toList(growable: false),
           ),
         ),
         SliverToBoxAdapter(
           child: CollectionGrid(
             cardId: widget.card.id,
             cardType: CardType.concept,
-            cards: _cards
-                .where((c) => c.type == CardType.concept)
-                .toList(growable: false),
           ),
         )
       ]);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/activity_card.dart';
 import 'package:maui/quack/concept_card.dart';
 import 'package:maui/quack/knowledge_card.dart';
@@ -12,7 +14,7 @@ final cardTypeColors = {
 };
 
 class CardSummary extends StatelessWidget {
-  final QuackCard card;
+  final String cardId;
   final int index;
   final String parentCardId;
 
@@ -23,19 +25,25 @@ class CardSummary extends StatelessWidget {
     CardType.question: 1.0
   };
 
-  CardSummary({Key key, @required this.card, this.index, this.parentCardId})
+  CardSummary({Key key, @required this.cardId, this.index, this.parentCardId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: cardTypeColors[card.type],
-      margin: EdgeInsets.all(8.0),
-      child: _buildCard(),
+    return Connect<RootState, QuackCard>(
+      convert: (state) => state.cardMap[cardId],
+      where: (prev, next) => next != prev,
+      builder: (card) {
+        return Card(
+          color: cardTypeColors[card.type],
+          margin: EdgeInsets.all(8.0),
+          child: _buildCard(card),
+        );
+      },
     );
   }
 
-  Widget _buildCard() {
+  Widget _buildCard(QuackCard card) {
     switch (card.type) {
       case CardType.concept:
         return ConceptCard(

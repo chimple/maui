@@ -24,11 +24,11 @@ class FetchCollections implements AsyncAction<RootState> {
 
     await Future.forEach(mainCards, (mc) async {
       final cardNames =
-          (await _collectionRepo.getCardsInCollection(mc.id)).map((c) {
+          (await _collectionRepo.getCardsInCollection(mc)).map((c) {
         cardMap[c.id] = c;
         return c.id;
       }).toList(growable: false);
-      collectionMap[mc.id] = cardNames;
+      collectionMap[mc] = cardNames;
     });
 
     return (RootState state) => RootState(
