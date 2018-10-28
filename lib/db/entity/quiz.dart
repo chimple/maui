@@ -16,6 +16,7 @@ class Quiz {
   List<String> answerAudios;
   List<String> choices;
   List<String> choiceAudios;
+  Map<String, dynamic> quizInputs;
 
   Quiz(
       {this.id,
@@ -26,7 +27,8 @@ class Quiz {
       this.answers,
       this.answerAudios,
       this.choices,
-      this.choiceAudios});
+      this.choiceAudios,
+      this.quizInputs});
 
   @override
   int get hashCode =>
@@ -38,7 +40,8 @@ class Quiz {
       answers.hashCode ^
       answerAudios.hashCode ^
       choices.hashCode ^
-      choiceAudios.hashCode;
+      choiceAudios.hashCode ^
+      quizInputs.hashCode;
 
   @override
   bool operator ==(other) =>
@@ -53,10 +56,11 @@ class Quiz {
           answers == other.answers &&
           answerAudios == other.answerAudios &&
           choices == other.choices &&
-          choiceAudios == other.choiceAudios;
+          choiceAudios == other.choiceAudios &&
+          quizInputs == other.quizInputs;
 
   @override
   String toString() {
-    return 'Quiz{id: $id, type: $type, question: $question, questionAudio: $questionAudio, header: $header,answers: $answers,answerAudios: $answerAudios,choiceAudios: $choiceAudios}';
+    return 'Quiz{id: $id, type: $type, question: $question, questionAudio: $questionAudio, header: $header,answers: $answers,answerAudios: $answerAudios,choiceAudios: $choiceAudios, quizInputs: $quizInputs}';
   }
 }

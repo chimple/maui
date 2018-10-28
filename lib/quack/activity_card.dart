@@ -26,12 +26,16 @@ class ActivityCard extends StatelessWidget {
             new MaterialPageRoute(
                 builder: (BuildContext context) => CardDetail(
                       card: card,
+                      parentCardId: parentCardId,
                     )),
           ),
       child: Column(
         children: <Widget>[
           AspectRatio(
-            child: CardHeader(card: card),
+            child: CardHeader(
+              card: card,
+              parentCardId: parentCardId,
+            ),
             aspectRatio: 1.78,
           ),
           Expanded(
@@ -46,6 +50,19 @@ class ActivityCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(Icons.favorite_border),
+                Text("${card.likes ?? ''}"),
+              ]),
+              Row(children: <Widget>[
+                Icon(Icons.comment),
+                Text("${card.comments ?? ''}")
+              ])
+            ],
           )
         ],
       ),

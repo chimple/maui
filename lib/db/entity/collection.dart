@@ -1,14 +1,23 @@
 class Collection {
   static const table = 'collection';
-  static const idCol = 'id';
-  static const cardIdCol = 'cardId';
-  static const serialCol = 'serial';
+
+  static const idCol = '${table}.id';
+  static const cardIdCol = '${table}.cardId';
+  static const serialCol = '${table}.serial';
+
+  static const idSel = '${table}_id';
+  static const cardIdSel = '${table}_cardId';
+  static const serialSel = '${table}_serial';
 
   String id;
   String cardId;
   int serial;
 
-  static const allCols = [idCol, cardIdCol, serialCol];
+  static const allCols = [
+    '$idCol AS $idSel',
+    '$cardIdCol AS $cardIdSel',
+    '$serialCol AS $serialSel'
+  ];
 
   Collection({this.id, this.cardId, this.serial});
 

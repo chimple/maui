@@ -2,6 +2,7 @@ enum CardType { question, activity, concept, knowledge }
 
 class QuackCard {
   static const table = 'card';
+
   static const idCol = 'id';
   static const typeCol = 'type';
   static const titleCol = 'title';
@@ -10,6 +11,19 @@ class QuackCard {
   static const contentCol = 'content';
   static const contentAudioCol = 'contentAudio';
   static const optionCol = 'option';
+  static const likesCol = 'likes';
+  static const commentsCol = 'comments';
+
+  static const idSel = '${table}_id';
+  static const typeSel = '${table}_type';
+  static const titleSel = '${table}_title';
+  static const titleAudioSel = '${table}_titleAudio';
+  static const headerSel = '${table}_header';
+  static const contentSel = '${table}_content';
+  static const contentAudioSel = '${table}_contentAudio';
+  static const optionSel = '${table}_option';
+  static const likesSel = '${table}_likes';
+  static const commentsSel = '${table}_comments';
 
   String id;
   CardType type;
@@ -19,27 +33,20 @@ class QuackCard {
   String content;
   String contentAudio;
   String option;
+  int likes;
+  int comments;
 
   static const allCols = [
-    idCol,
-    typeCol,
-    titleCol,
-    titleAudioCol,
-    headerCol,
-    contentCol,
-    contentAudioCol,
-    optionCol
-  ];
-
-  static const allPrefixedCols = [
-    '$table.$idCol',
-    '$table.$typeCol',
-    '$table.$titleCol',
-    '$table.$titleAudioCol',
-    '$table.$headerCol',
-    '$table.$contentCol',
-    '$table.$contentAudioCol',
-    '$table.$optionCol'
+    '${table}.$idCol AS $idSel',
+    '${table}.$typeCol AS $typeSel',
+    '${table}.$titleCol AS $titleSel',
+    '${table}.$titleAudioCol AS $titleAudioSel',
+    '${table}.$headerCol AS $headerSel',
+    '${table}.$contentCol AS $contentSel',
+    '${table}.$contentAudioCol AS $contentAudioSel',
+    '${table}.$optionCol AS $optionSel',
+    '${table}.$likesCol AS $likesSel',
+    '${table}.$commentsCol AS $commentsSel'
   ];
 
   QuackCard(
@@ -50,7 +57,9 @@ class QuackCard {
       this.header,
       this.content,
       this.contentAudio,
-      this.option});
+      this.option,
+      this.likes,
+      this.comments});
 
   Map<String, dynamic> toMap() {
     return {
@@ -61,20 +70,24 @@ class QuackCard {
       headerCol: header,
       contentCol: content,
       contentAudioCol: contentAudio,
-      optionCol: option
+      optionCol: option,
+      likesCol: likes,
+      commentsCol: comments
     };
   }
 
   QuackCard.fromMap(Map<String, dynamic> map)
       : this(
-            id: map[idCol],
-            type: CardType.values[map[typeCol]],
-            title: map[titleCol],
-            titleAudio: map[titleAudioCol],
-            header: map[headerCol],
-            content: map[contentCol],
-            contentAudio: map[contentAudioCol],
-            option: map[optionCol]);
+            id: map[idSel],
+            type: CardType.values[map[typeSel]],
+            title: map[titleSel],
+            titleAudio: map[titleAudioSel],
+            header: map[headerSel],
+            content: map[contentSel],
+            contentAudio: map[contentAudioSel],
+            option: map[optionSel],
+            likes: map[likesSel],
+            comments: map[commentsSel]);
 
   @override
   int get hashCode =>
@@ -85,7 +98,9 @@ class QuackCard {
       header.hashCode ^
       content.hashCode ^
       contentAudio.hashCode ^
-      option.hashCode;
+      option.hashCode ^
+      likes.hashCode ^
+      comments.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -99,10 +114,12 @@ class QuackCard {
           header == other.header &&
           content == other.content &&
           contentAudio == other.contentAudio &&
-          option == other.option;
+          option == other.option &&
+          likes == other.likes &&
+          comments == other.comments;
 
   @override
   String toString() {
-    return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option}';
+    return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option, likes: $likes, comments: $comments}';
   }
 }

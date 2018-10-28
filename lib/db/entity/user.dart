@@ -31,14 +31,32 @@ final Map<int, int> userColors = {
 };
 
 class User {
-  static const table = 'user';
-  static const columnId = 'id';
-  static const columnDeviceId = 'deviceId';
-  static const columnName = 'name';
-  static const columnColor = 'color';
-  static const columnImage = 'image';
-  static const columnCurrentLessonId = 'currentLessonId';
   static const botId = 'bot';
+
+  static const table = 'user';
+
+  static const idCol = 'id';
+  static const deviceIdCol = 'deviceId';
+  static const nameCol = 'name';
+  static const colorCol = 'color';
+  static const imageCol = 'image';
+  static const currentLessonIdCol = 'currentLessonId';
+
+  static const idSel = '${table}_id';
+  static const deviceIdSel = '${table}_deviceId';
+  static const nameSel = '${table}_name';
+  static const colorSel = '${table}_color';
+  static const imageSel = '${table}_image';
+  static const currentLessonIdSel = '${table}_currentLessonId';
+
+  static const allCols = [
+    '${table}.$idCol AS $idSel',
+    '${table}.$deviceIdCol AS $deviceIdSel',
+    '${table}.$nameCol AS $nameSel',
+    '${table}.$colorCol AS $colorSel',
+    '${table}.$imageCol AS $imageSel',
+    '${table}.$currentLessonIdCol AS $currentLessonIdSel',
+  ];
 
   String id;
   String deviceId;
@@ -63,23 +81,23 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      columnId: id,
-      columnDeviceId: deviceId,
-      columnName: name,
-      columnColor: color,
-      columnImage: image,
-      columnCurrentLessonId: currentLessonId
+      idCol: id,
+      deviceIdCol: deviceId,
+      nameCol: name,
+      colorCol: color,
+      imageCol: image,
+      currentLessonIdCol: currentLessonId
     };
   }
 
   User.fromMap(Map<String, dynamic> map)
       : this(
-            id: map[columnId],
-            deviceId: map[columnDeviceId],
-            name: map[columnName],
-            color: map[columnColor],
-            image: map[columnImage],
-            currentLessonId: map[columnCurrentLessonId]);
+            id: map[idSel],
+            deviceId: map[deviceIdSel],
+            name: map[nameSel],
+            color: map[colorSel],
+            image: map[imageSel],
+            currentLessonId: map[currentLessonIdSel]);
 
   @override
   int get hashCode =>

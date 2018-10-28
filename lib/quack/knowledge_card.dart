@@ -29,7 +29,10 @@ class KnowledgeCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           AspectRatio(
-            child: CardHeader(card: card),
+            child: CardHeader(
+              card: card,
+              parentCardId: parentCardId,
+            ),
             aspectRatio: 1.78,
           ),
           Expanded(
