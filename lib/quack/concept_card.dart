@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/quack/like_button.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
 
 class ConceptCard extends StatelessWidget {
   final QuackCard card;
@@ -27,14 +30,17 @@ class ConceptCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final userId = AppStateContainer.of(context).state.loggedInUser.id;
     return InkWell(
-      onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) => CardDetail(
-                    card: card,
-                    parentCardId: parentCardId,
-                  ),
-            ),
+      onTap: () {
+        Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => CardDetail(
+                  card: card,
+                  parentCardId: parentCardId,
+                ),
           ),
+        );
+      },
       child: Column(
         children: <Widget>[
           AspectRatio(
@@ -65,7 +71,6 @@ class ConceptCard extends StatelessWidget {
                 LikeButton(
                   parentId: card.id,
                   tileType: TileType.card,
-                  userId: userId,
                 ),
                 Text("${card.likes ?? ''}"),
               ]),

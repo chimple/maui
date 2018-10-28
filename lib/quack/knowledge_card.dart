@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_progress.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
+import 'package:maui/quack/like_button.dart';
 
 class KnowledgeCard extends StatelessWidget {
   final QuackCard card;
@@ -23,11 +29,14 @@ class KnowledgeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).push(
-            new MaterialPageRoute(
-                builder: (BuildContext context) => CardDetail(
-                      card: card,
-                      parentCardId: parentCardId,
-                    )),
+            new MaterialPageRoute(builder: (BuildContext context) {
+              Provider.dispatch<RootState>(
+                  context, AddProgress(card: card, parentCardId: parentCardId));
+              return CardDetail(
+                card: card,
+                parentCardId: parentCardId,
+              );
+            }),
           ),
       child: Column(
         children: <Widget>[
@@ -55,7 +64,10 @@ class KnowledgeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(children: <Widget>[
-                Icon(Icons.favorite_border),
+                LikeButton(
+                  parentId: card.id,
+                  tileType: TileType.card,
+                ),
                 Text("${card.likes ?? ''}"),
               ]),
               Row(children: <Widget>[

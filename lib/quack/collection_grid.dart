@@ -18,19 +18,27 @@ class CollectionGrid extends StatelessWidget {
         convert: (state) => state.collectionMap[cardId],
         where: (prev, next) => next != prev,
         builder: (cardIdList) {
-          return SizedBox(
-            height: media.size.width / 3.5,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => CardSummary(
-                    cardId: cardIdList[index],
-                    index: index,
-                    parentCardId: cardId,
+          return Connect<RootState, List<QuackCard>>(
+              convert: (state) => state.collectionMap[cardId]
+                  .map((id) => state.cardMap[id])
+                  .where((c) => c.type == cardType)
+                  .toList(growable: false),
+              where: (prev, next) => next != prev,
+              builder: (cardList) {
+                return SizedBox(
+                  height: media.size.width / 3.5,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => CardSummary(
+                          cardId: cardList[index].id,
+                          index: index,
+                          parentCardId: cardId,
+                        ),
+                    itemCount: cardList.length,
+                    itemExtent: media.size.width / 3.5,
                   ),
-              itemCount: cardIdList.length,
-              itemExtent: media.size.width / 3.5,
-            ),
-          );
+                );
+              });
         });
   }
 }

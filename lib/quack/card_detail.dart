@@ -15,110 +15,66 @@ import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 
-class CardDetail extends StatefulWidget {
+class CardDetail extends StatelessWidget {
   final QuackCard card;
   final String parentCardId;
   final bool showBackButton;
-  final GlobalKey<CommentListState> commentListKey;
+//  final GlobalKey<CommentListState> commentListKey;
 
   CardDetail(
-      {key,
-      @required this.card,
-      this.parentCardId,
-      this.showBackButton = true,
-      this.commentListKey})
+      {key, @required this.card, this.parentCardId, this.showBackButton = true})
       : super(key: key);
-
-  @override
-  CardDetailState createState() {
-    return new CardDetailState();
-  }
-}
-
-class CardDetailState extends State<CardDetail> with RouteAware {
-  List<QuackCard> _cards;
-  List<Tile> _drawings;
-  bool _isLoading = true;
-  GlobalKey<CommentListState> _commentListKey;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-    _commentListKey = widget.commentListKey ?? GlobalKey<CommentListState>();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final user = AppStateContainer.of(context).state.loggedInUser;
-      CardProgressRepo().upsert(CardProgress(
-          userId: user.id, cardId: widget.card.id, updatedAt: DateTime.now()));
-      TileRepo().upsertByCardIdAndUserIdAndType(
-          widget.card.id, user.id, TileType.card);
-    });
-  }
-
-  void _initData() async {
-    _cards = await CollectionRepo().getCardsInCollection(widget.card.id);
-    if (widget.card.type == CardType.activity) {
-      _drawings = await TileRepo()
-          .getTilesByCardIdAndType(widget.card.id, TileType.drawing);
-    }
-    setState(() => _isLoading = false);
-  }
-
-  void initComments() async {
-    _commentListKey.currentState.initData();
-  }
 
   @override
   Widget build(BuildContext context) {
     final scrollViewWidgets = <Widget>[
       HeaderAppBar(
-        card: widget.card,
-        parentCardId: widget.parentCardId,
-        showBackButton: widget.showBackButton,
+        card: card,
+        parentCardId: parentCardId,
+        showBackButton: showBackButton,
       )
     ];
 
-    if (!_isLoading && widget.card.type == CardType.activity) {
-      scrollViewWidgets.add(ActivityDrawingGrid(
-        cardId: widget.card.id,
-        drawings: _drawings,
-      ));
-    }
+//    if (!_isLoading && widget.card.type == CardType.activity) {
+//      scrollViewWidgets.add(ActivityDrawingGrid(
+//        cardId: widget.card.id,
+//        drawings: _drawings,
+//      ));
+//    }
     scrollViewWidgets.add(SliverToBoxAdapter(
         child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: MarkdownBody(
-          data: widget.card.content ?? '',
+          data: card.content ?? '',
           styleSheet: new MarkdownStyleSheet(
               p: new TextStyle(fontSize: 16.0, color: Colors.black))),
     )));
-    if (!_isLoading) {
-      scrollViewWidgets.addAll([
-        SliverToBoxAdapter(
-          child: CollectionGrid(
-            cardId: widget.card.id,
-            cardType: CardType.activity,
-          ),
+    scrollViewWidgets.addAll([
+      SliverToBoxAdapter(
+        child: CollectionGrid(
+          cardId: card.id,
+          cardType: CardType.activity,
         ),
-        SliverToBoxAdapter(
-          child: CollectionGrid(
-            cardId: widget.card.id,
-            cardType: CardType.knowledge,
-          ),
+      ),
+      SliverToBoxAdapter(
+        child: CollectionGrid(
+          cardId: card.id,
+          cardType: CardType.knowledge,
         ),
-        SliverToBoxAdapter(
-          child: CollectionGrid(
-            cardId: widget.card.id,
-            cardType: CardType.concept,
-          ),
-        )
-      ]);
-    }
-    scrollViewWidgets.add(CommentList(
-      key: _commentListKey,
-      parentId: widget.card.id,
+      ),
+      SliverToBoxAdapter(
+        child: CollectionGrid(
+          cardId: card.id,
+          cardType: CardType.concept,
+        ),
+      )
+    ]);
+    final commentList = CommentList(
+      parentId: card.id,
       tileType: TileType.card,
-    ));
+    );
+    print('commentList: created: $commentList');
+    scrollViewWidgets.add(commentList);
 
     final widgets = <Widget>[
       Expanded(
@@ -127,16 +83,11 @@ class CardDetailState extends State<CardDetail> with RouteAware {
         ),
       )
     ];
-    if (widget.showBackButton &&
-        (widget.card.type == CardType.concept ||
-            widget.card.type == CardType.activity)) {
-      widgets.add(CommentTextField(
-          parentId: widget.card.id,
-          tileType: TileType.card,
-          addComment: (comment) =>
-              _commentListKey.currentState.addComment(comment)));
+    if (showBackButton &&
+        (card.type == CardType.concept || card.type == CardType.activity)) {
+      widgets.add(CommentTextField(parentId: card.id, tileType: TileType.card));
     }
-    return widget.card.type == CardType.knowledge
+    return card.type == CardType.knowledge
         ? Column(
             children: widgets,
           )
@@ -147,19 +98,19 @@ class CardDetailState extends State<CardDetail> with RouteAware {
           );
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context));
-  }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
-
-  void didPopNext() {
-    _initData();
-  }
+//  @override
+//  void didChangeDependencies() {
+//    super.didChangeDependencies();
+//    routeObserver.subscribe(this, ModalRoute.of(context));
+//  }
+//
+//  @override
+//  void dispose() {
+//    routeObserver.unsubscribe(this);
+//    super.dispose();
+//  }
+//
+//  void didPopNext() {
+//    _initData();
+//  }
 }

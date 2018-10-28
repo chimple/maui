@@ -17,6 +17,12 @@ class CardProgressRepo {
         cardId, userId);
   }
 
+  Future<List<CardProgress>> getCardProgressesByCollectionAndTypeAndUserId(
+      String cardId, CardType cardType, String userId) async {
+    return await cardProgressDao.getCardProgressesByCollectionAndTypeAndUserId(
+        cardId, cardType, userId);
+  }
+
   Future<CardProgress> upsert(CardProgress cardProgress) async {
     CardProgress existingCardProgress =
         await cardProgressDao.getCardProgressByCardIdAndUserId(

@@ -14,17 +14,19 @@ class MainCollection extends StatelessWidget {
       convert: (state) => state.collectionMap['main'],
       where: (prev, next) => next != prev,
       builder: (cardIdList) {
-        return ListView(
-            primary: true,
-            itemExtent: media.size.width / 3.5,
-            children: cardIdList
-                .map(
-                  (c) => CollectionGrid(
-                        cardId: c,
-                        cardType: CardType.concept,
-                      ),
-                )
-                .toList(growable: false));
+        return cardIdList == null
+            ? Container()
+            : ListView(
+                primary: true,
+                itemExtent: media.size.width / 3.5,
+                children: cardIdList
+                    .map(
+                      (c) => CollectionGrid(
+                            cardId: c,
+                            cardType: CardType.concept,
+                          ),
+                    )
+                    .toList(growable: false));
       },
     );
   }

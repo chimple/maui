@@ -55,9 +55,7 @@ class MauiApp extends StatelessWidget {
         builder: (BuildContext context) =>
             new GameCategoryListScreen(game: path[2]),
       );
-    }
-
-    if (path[1] == 'games' && path.length == 6) {
+    } else if (path[1] == 'games' && path.length == 6) {
       int gameCategoryId = int.parse(path[4], onError: (source) => null);
       Random random = new Random();
       final textMode = random.nextBool();
@@ -138,7 +136,8 @@ class MauiApp extends StatelessWidget {
                 ),
           );
       }
-    }
+    } else if (path[1] == 'card' && path.length == 4) {}
+
     return null;
   }
 }

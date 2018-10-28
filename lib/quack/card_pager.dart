@@ -25,7 +25,7 @@ class CardPagerState extends State<CardPager> {
   bool _isLoading = true;
   List<QuackCard> _cards;
   int _currentPageIndex;
-  List<GlobalKey<CardDetailState>> _cardDetailKeys;
+//  List<GlobalKey<CardDetailState>> _cardDetailKeys;
 
   @override
   void initState() {
@@ -38,8 +38,8 @@ class CardPagerState extends State<CardPager> {
   void _initData() async {
     _cards = await new CollectionRepo()
         .getCardsInCollectionByType(widget.cardId, widget.cardType);
-    _cardDetailKeys =
-        _cards.map((c) => GlobalKey<CardDetailState>()).toList(growable: false);
+//    _cardDetailKeys =
+//        _cards.map((c) => GlobalKey<CardDetailState>()).toList(growable: false);
     setState(() => _isLoading = false);
   }
 
@@ -69,7 +69,7 @@ class CardPagerState extends State<CardPager> {
                                 ))),
                   )
                 : CardDetail(
-                    key: _cardDetailKeys[index],
+//                    key: _cardDetailKeys[index],
                     card: _cards[index],
                     parentCardId: widget.cardId,
                     showBackButton: widget.cardId != 'main',
@@ -93,9 +93,10 @@ class CardPagerState extends State<CardPager> {
             child: CommentTextField(
               parentId: _cards[_currentPageIndex].id,
               tileType: TileType.card,
-              addComment: (comment) => _cardDetailKeys[_currentPageIndex]
-                  .currentState
-                  .initComments(),
+//              addComment: (comment) => _cardDetailKeys[_currentPageIndex]
+//                  .currentState
+//                  .initComments(),
+//              addComment: (comment) => {}, //TODO
             ),
           ),
           IconButton(
