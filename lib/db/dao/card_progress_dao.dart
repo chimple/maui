@@ -30,17 +30,18 @@ class CardProgressDao {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
         '${CardProgress.table}, ${QuackCard.table}, ${Collection.table}',
-        columns: ['count(${CardProgress.cardIdCol})'],
+        columns: ['count(${CardProgress.table}.${CardProgress.cardIdCol})'],
         where: '''
-${Collection.table}.${Collection.idCol} = ? 
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${QuackCard.table}.${QuackCard.typeCol} = ?
 AND ${CardProgress.table}.${CardProgress.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${CardProgress.table}.${CardProgress.userIdCol} = ?
 ''',
         whereArgs: [cardId, cardType.index, userId]);
     if (maps.length > 0) {
-      return maps.first['count(${CardProgress.cardIdCol})'];
+      return maps
+          .first['count(${CardProgress.table}.${CardProgress.cardIdCol})'];
     }
     return 0;
   }
@@ -51,16 +52,17 @@ AND ${CardProgress.table}.${CardProgress.userIdCol} = ?
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
         '${CardProgress.table}, ${QuackCard.table}, ${Collection.table}',
-        columns: ['count(${CardProgress.cardIdCol})'],
+        columns: ['count(${CardProgress.table}.${CardProgress.cardIdCol})'],
         where: '''
-${Collection.table}.${Collection.idCol} = ? 
-AND ${Collection.table}.${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${CardProgress.table}.${CardProgress.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${CardProgress.table}.${CardProgress.userIdCol} = ?
 ''',
         whereArgs: [cardId, userId]);
     if (maps.length > 0) {
-      return maps.first['count(${CardProgress.cardIdCol})'];
+      return maps
+          .first['count(${CardProgress.table}.${CardProgress.cardIdCol})'];
     }
     return 0;
   }

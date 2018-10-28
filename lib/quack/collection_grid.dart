@@ -29,7 +29,7 @@ class CollectionGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid.count(
         crossAxisCount: cardType == CardType.knowledge ? 2 : 3,
-        childAspectRatio: cardType == CardType.knowledge ? 3.0 : 1.0,
+        childAspectRatio: CardSummary.cardTypeAspectRatio[cardType],
         children: _buildList());
   }
 }

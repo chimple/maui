@@ -24,6 +24,10 @@ class QuizNavigatorState extends State<QuizNavigator> {
   bool _isLoading = true;
   List<QuackCard> _quizzes;
   Map<String, List<QuizItem>> _quizItemMap = {};
+  Map<String, List<QuizItem>> _answersMap = {};
+  Map<String, List<QuizItem>> _startChoicesMap = {};
+  Map<String, List<QuizItem>> _endChoicesMap = {};
+
   int _currentPageIndex = 0;
   NavigatorMode mode = NavigatorMode.disabled;
 
@@ -52,6 +56,9 @@ class QuizNavigatorState extends State<QuizNavigator> {
           ? QuizResult(
               quizzes: _quizzes,
               quizItemMap: _quizItemMap,
+              answersMap: _answersMap,
+              startChoicesMap: _startChoicesMap,
+              endChoicesMap: _endChoicesMap,
             )
           : Navigator(
               onGenerateRoute: (RouteSettings settings) => MaterialPageRoute(
@@ -60,12 +67,26 @@ class QuizNavigatorState extends State<QuizNavigator> {
                             Expanded(
                               child: QuizCardDetail(
                                 card: _quizzes[_currentPageIndex],
-                                quizItems: _quizItemMap[
+                                answers:
+                                    _answersMap[_quizzes[_currentPageIndex].id],
+                                startChoices: _startChoicesMap[
+                                    _quizzes[_currentPageIndex].id],
+                                endChoices: _endChoicesMap[
                                     _quizzes[_currentPageIndex].id],
                                 parentCardId: widget.cardId,
-                                canProceed: (List<QuizItem> quizItems) {
+                                canProceed: (
+                                    {List<QuizItem> quizItems,
+                                    List<QuizItem> answers,
+                                    List<QuizItem> startChoices,
+                                    List<QuizItem> endChoices}) {
                                   _quizItemMap[_quizzes[_currentPageIndex].id] =
                                       quizItems;
+                                  _answersMap[_quizzes[_currentPageIndex].id] =
+                                      answers;
+                                  _startChoicesMap[_quizzes[_currentPageIndex]
+                                      .id] = startChoices;
+                                  _endChoicesMap[_quizzes[_currentPageIndex]
+                                      .id] = endChoices;
                                   setState(() {
                                     mode = NavigatorMode.checkable;
                                   });

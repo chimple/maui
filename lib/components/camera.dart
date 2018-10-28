@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:maui/loca.dart';
+import 'package:image/image.dart' as Img;
 
 String imagePathStore;
 String userNameStore;
@@ -202,6 +203,14 @@ class _CameraScreenState extends State<CameraScreen> {
       onTakePicture = false;
     });
     takePicture().then((String filePath) async {
+      final image = Img.decodeImage(new File(filePath).readAsBytesSync());
+
+      // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
+      final thumbnail = Img.copyResize(image, 64);
+
+      // Save the thumbnail as a PNG.
+      new File(filePath)..writeAsBytesSync(Img.encodePng(thumbnail));
+
       if (mounted) {
         Future.delayed(Duration(milliseconds: 300), () {
           setState(() {
