@@ -36,10 +36,11 @@ class TileRepo {
     return tiles;
   }
 
-  Future<List<Tile>> getTilesByUserIdAndType(String userId, TileType type) async {
+  Future<List<Tile>> getTilesByUserIdAndType(
+      String userId, TileType type) async {
     final tiles = await tileDao.getTilesByUserIdAndType(userId, type);
     await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
-            (t) async => t.content = await _readFile(id: t.id));
+        (t) async => t.content = await _readFile(id: t.id));
     print('getTilesByCardIdAndType: $tiles');
     return tiles;
   }
@@ -54,6 +55,10 @@ class TileRepo {
 
   Future<int> delete(int id) async {
     return await tileDao.delete(id);
+  }
+
+  Future<Tile> insert(Tile tile) async {
+    return await tileDao.insert(tile);
   }
 
   Future<Tile> upsert(Tile tile) async {

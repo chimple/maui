@@ -41,7 +41,7 @@ class ConceptCard extends StatelessWidget {
               ),
               aspectRatio: 1.78,
             ),
-            CollectionProgressIndicator(collectionId: card.id, userId: userId),
+            CollectionProgressIndicator(collectionId: card.id),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(8.0),

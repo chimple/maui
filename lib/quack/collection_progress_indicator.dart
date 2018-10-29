@@ -6,9 +6,8 @@ import 'package:maui/repos/card_progress_repo.dart';
 
 class CollectionProgressIndicator extends StatelessWidget {
   final String collectionId;
-  final String userId;
 
-  const CollectionProgressIndicator({Key key, this.collectionId, this.userId})
+  const CollectionProgressIndicator({Key key, this.collectionId})
       : super(key: key);
 
   @override

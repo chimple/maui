@@ -90,8 +90,7 @@ class CardSummary extends StatelessWidget {
                       aspectRatio: 1.78,
                     ),
                   ),
-                  CollectionProgressIndicator(
-                      collectionId: card.id, userId: userId),
+                  CollectionProgressIndicator(collectionId: card.id),
                   Flexible(
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
