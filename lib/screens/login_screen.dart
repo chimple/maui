@@ -307,12 +307,12 @@ class _LoginScreenState extends State<LoginScreen>
                                                     color: Colors.amber,
                                                   ),
                                                   height: 75.0,
-                                                  width:100.0,
+                                                  width: 100.0,
                                                   child: new Icon(
-                                                    Icons.keyboard_arrow_right,
-                                                    color: Colors.white,
-                                                    size: 50.0
-                                                  ))),
+                                                      Icons
+                                                          .keyboard_arrow_right,
+                                                      color: Colors.white,
+                                                      size: 50.0))),
                                         ),
                                       )
                                     ],
@@ -339,8 +339,11 @@ class _LoginScreenState extends State<LoginScreen>
 
   void tabSreen() async {
     if (imagePathStore != '' && userName != '' && userName != null) {
-      var user = await new UserRepo().insertLocalUser(
-          new User(image: imagePathStore, currentLessonId: 1, name: userName));
+      var user = await new UserRepo().insertLocalUser(new User(
+          image: imagePathStore,
+          currentLessonId: 1,
+          name: userName,
+          points: 10));
       AppStateContainer.of(context).setLoggedInUser(user);
       Navigator.of(context).pushReplacementNamed('/tab');
     } else {

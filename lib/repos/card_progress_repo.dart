@@ -42,6 +42,9 @@ class CardProgressRepo {
 
   Future<double> getProgressStatusByCollectionAndTypeAndUserId(
       String cardId, CardType cardType, String userId) async {
+    final cardProgress =
+        await cardProgressDao.getCardProgressByCardIdAndUserId(cardId, userId);
+    if (cardProgress == null) return null;
     final cardProgressCount =
         await cardProgressDao.getCardProgressCountByCollectionAndTypeAndUserId(
             cardId, cardType, userId);
