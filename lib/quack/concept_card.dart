@@ -59,7 +59,7 @@ class ConceptCard extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Text(card.title,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 16.0,
                   ),
                   textAlign: TextAlign.start,

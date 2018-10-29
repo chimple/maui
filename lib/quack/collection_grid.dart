@@ -14,31 +14,26 @@ class CollectionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    return Connect<RootState, List<String>>(
-        convert: (state) => state.collectionMap[cardId],
+    return Connect<RootState, List<QuackCard>>(
+        convert: (state) => state.collectionMap[cardId]
+            .map((id) => state.cardMap[id])
+            .where((c) => c.type == cardType)
+            .toList(growable: false),
         where: (prev, next) => next != prev,
-        builder: (cardIdList) {
-          return Connect<RootState, List<QuackCard>>(
-              convert: (state) => state.collectionMap[cardId]
-                  .map((id) => state.cardMap[id])
-                  .where((c) => c.type == cardType)
-                  .toList(growable: false),
-              where: (prev, next) => next != prev,
-              builder: (cardList) {
-                return SizedBox(
-                  height: media.size.width / 3.5,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => CardSummary(
-                          cardId: cardList[index].id,
-                          index: index,
-                          parentCardId: cardId,
-                        ),
-                    itemCount: cardList.length,
-                    itemExtent: media.size.width / 3.5,
+        builder: (cardList) {
+          return SizedBox(
+            height: media.size.width / 3.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => CardSummary(
+                    card: cardList[index],
+                    index: index,
+                    parentCardId: cardId,
                   ),
-                );
-              });
+              itemCount: cardList.length,
+              itemExtent: media.size.width / 3.5,
+            ),
+          );
         });
   }
 }

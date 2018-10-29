@@ -35,7 +35,7 @@ class TileCard extends StatelessWidget {
       case TileType.card:
         return AspectRatio(
             aspectRatio: CardSummary.cardTypeAspectRatio[tile.card.type],
-            child: CardSummary(cardId: tile.card.id));
+            child: CardSummary(card: tile.card));
         break;
       case TileType.drawing:
         return DrawingCard(tile: tile);
