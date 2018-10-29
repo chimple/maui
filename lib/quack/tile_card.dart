@@ -40,6 +40,8 @@ class TileCard extends StatelessWidget {
       case TileType.drawing:
         return DrawingCard(tile: tile);
         break;
+      case TileType.message:
+        return Text(tile.content);
     }
   }
 }

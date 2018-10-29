@@ -1,71 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_progress.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 
-class CardLock extends StatefulWidget {
+class CardLock extends StatelessWidget {
   final QuackCard card;
   final String parentCardId;
-  final String userId;
 
-  const CardLock({Key key, this.card, this.parentCardId, this.userId})
-      : super(key: key);
-  @override
-  CardLockState createState() {
-    return new CardLockState();
-  }
-}
-
-class CardLockState extends State<CardLock> {
-  bool _isLoading = true;
-  CardProgress _cardProgress;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  @override
-  void didUpdateWidget(CardLock oldWidget) {
-    if (widget.card != oldWidget.card) {
-      _isLoading = true;
-      _initData();
-    }
-  }
-
-  void _initData() async {
-    print('CardLock:_initData ${widget.card.id}');
-    _cardProgress = await CardProgressRepo()
-        .getCardProgressByCardIdAndUserId(widget.card.id, widget.userId);
-    setState(() {
-      _isLoading = false;
-    });
-  }
+  const CardLock({Key key, this.card, this.parentCardId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _isLoading
-          ? null
-          : _cardProgress == null
-              ? _askToUnlock(context)
-              : _goToCardDetail(context),
-      child: Container(
-        constraints: BoxConstraints.expand(),
-      ),
+    return Connect<RootState, double>(
+      convert: (state) => state.progressMap[card.id],
+      where: (prev, next) => next != prev,
+      builder: (progress) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: progress == null
+              ? InkWell(
+                  onTap: () => _askToUnlock(context),
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: Container(
+                      constraints: BoxConstraints.expand(),
+                      color: Color(0x99999999),
+                      child: Icon(
+                        Icons.lock,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ),
+                )
+              : Center(
+                  child: CollectionProgressIndicator(collectionId: card.id)),
+        );
+      },
+      nullable: true,
     );
   }
 
   void _goToCardDetail(BuildContext context) {
+    Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+    Provider.dispatch<RootState>(
+        context, AddProgress(card: card, parentCardId: card.id));
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => CardDetail(
-              card: widget.card,
-              parentCardId: widget.parentCardId,
-            ),
-      ),
+          builder: (BuildContext context) => CardDetail(
+                card: card,
+                parentCardId: parentCardId,
+              )),
     );
   }
 
