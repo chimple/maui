@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
@@ -24,35 +25,140 @@ class TabHome extends StatefulWidget {
 
 class TabHomeState extends State<TabHome> {
   int _currentIndex = 0;
-
+  List<Color> tabsColorList = [
+    Color(0xFFEF823F),
+    Color(0xFF5BBB93),
+    Color(0xFFF5C851),
+    Color(0xFF7CC5F2),
+    Color(0xFFEF3F69)
+  ];
+  List<String> appBarTitleList = [
+    "News Feed",
+    "Friend's Messenger",
+    "Quack",
+    "Games",
+    "Profile"
+  ];
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    var user = AppStateContainer.of(context).state.loggedInUser;
+    final _currentUserImage = new Container(
+      height: 28.0,
+      width: 28.0,
+      child: CircleAvatar(
+        backgroundImage: FileImage(File(user.image)),
+      ),
+    );
+
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
+      appBar: new AppBar(
+        title: new Text(appBarTitleList[_currentIndex]),
+        centerTitle: true,
+        leading: new FlatButton(
+          child: new Center(
+            child: new Image.asset("assets/quack_header.png"),
+          ),
+          onPressed: () {
+            print("object");
+          },
+        ),
+        backgroundColor: tabsColorList[_currentIndex],
+      ),
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(canvasColor: Color(0xFF0E4476)),
+        child: new BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                title: Text(Loca.of(context).home),
-                backgroundColor: Colors.redAccent),
+              title: Container(
+                width: (mediaQuery.size.width) / 5,
+                color: _currentIndex == 0
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+                child: new Image.asset(
+                  "assets/news_feed.png",
+                  height: 28.0,
+                  width: 28.0,
+                ),
+              ),
+              // title: Text(Loca.of(context).home),
+              icon: new Text(""),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
-                title: Text(Loca.of(context).chat),
-                backgroundColor: Colors.pinkAccent),
+              title: Container(
+                width: (mediaQuery.size.width) / 5,
+                color: _currentIndex == 1
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+                child: new Image.asset(
+                  "assets/messenger.png",
+                  height: 28.0,
+                  width: 28.0,
+                ),
+              ),
+              // title: Text(Loca.of(context).chat),
+              icon: new Text(""),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.local_library),
-                title: Text(Loca.of(context).category),
-                backgroundColor: Colors.greenAccent),
+              title: Container(
+                width: (mediaQuery.size.width) / 5,
+                color: _currentIndex == 2
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+                child: new Image.asset(
+                  "assets/quack.png",
+                  height: 28.0,
+                  width: 28.0,
+                ),
+              ),
+              // title: Text(Loca.of(context).category),
+              icon: new Text(""),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.gamepad),
-                title: Text(Loca.of(context).game),
-                backgroundColor: Colors.blueAccent),
+              title: Container(
+                width: (mediaQuery.size.width) / 5,
+                color: _currentIndex == 3
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+                child: new Image.asset(
+                  "assets/games.png",
+                  height: 28.0,
+                  width: 28.0,
+                ),
+              ),
+              // title: Text(Loca.of(context).game),
+              icon: new Text(""),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                title: Text(Loca.of(context).profile),
-                backgroundColor: Colors.orangeAccent),
+              // activeIcon: _currentUserImage,
+              title: _currentIndex == 4
+                  ? Container(
+                      width: (mediaQuery.size.width) / 5,
+                      color: _currentIndex == 4
+                          ? tabsColorList[_currentIndex]
+                          : Color(0xFF0E4476),
+                      child: _currentUserImage,
+                    )
+                  : Container(
+                      width: (mediaQuery.size.width) / 5,
+                      color: _currentIndex == 4
+                          ? tabsColorList[_currentIndex]
+                          : Color(0xFF0E4476),
+                      child: new Image.asset(
+                        "assets/profile.png",
+                        height: 28.0,
+                        width: 28.0,
+                      ),
+                    ),
+              // title: Text(Loca.of(context).profile),
+              icon: new Text(""),
+            ),
           ],
-          onTap: (int i) => setState(() => _currentIndex = i)),
+          onTap: (int i) => setState(() => _currentIndex = i),
+        ),
+      ),
       body: _buildBody(),
     );
   }

@@ -82,6 +82,12 @@ flutter:
     - assets/father.png
     - assets/mother.png
     - assets/sister.png
+    - assets/quack_header.png
+    - assets/games.png
+    - assets/profile.png
+    - assets/quack.png
+    - assets/news_feed.png
+    - assets/messenger.png
     - assets/brother.png
     - assets/star.png
     - assets/star_gained.png
