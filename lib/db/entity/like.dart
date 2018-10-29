@@ -26,6 +26,7 @@ class Like {
     '${User.table}.${User.nameCol} AS ${User.nameSel}',
     '${User.table}.${User.colorCol} AS ${User.colorSel}',
     '${User.table}.${User.imageCol} AS ${User.imageSel}',
+    '${User.table}.${User.pointsCol} AS ${User.pointsSel}',
     '${User.table}.${User.currentLessonIdCol} AS ${User.currentLessonIdSel}'
   ];
 

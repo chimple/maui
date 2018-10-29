@@ -6,6 +6,7 @@ import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/home/home_screen.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/collection_grid.dart';
+import 'package:maui/quack/main_collection.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
@@ -216,11 +217,7 @@ class TabHomeState extends State<TabHome> {
         return FriendListView();
         break;
       case 2:
-        return CardPager(
-          cardId: 'main',
-          cardType: CardType.concept,
-          initialPage: 0,
-        );
+        return MainCollection();
         break;
       case 3:
         return GameListView();

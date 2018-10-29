@@ -1,54 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/comment_card.dart';
 import 'package:maui/repos/comment_repo.dart';
 
-class CommentList extends StatefulWidget {
+class CommentList extends StatelessWidget {
   final String parentId;
   final TileType tileType;
 
   const CommentList({Key key, this.parentId, this.tileType}) : super(key: key);
 
   @override
-  CommentListState createState() {
-    return new CommentListState();
-  }
-}
-
-class CommentListState extends State<CommentList> {
-  bool _isLoading = true;
-  List<Comment> _comments;
-
-  @override
-  void initState() {
-    super.initState();
-    initData();
-  }
-
-  void addComment(Comment comment) {
-    setState(() {
-      if (_comments == null) {
-        _comments = [];
-      }
-      _comments.add(comment);
-    });
-  }
-
-  void initData() async {
-    _comments = await CommentRepo()
-        .getCommentsByParentId(widget.parentId, widget.tileType);
-    if (mounted) setState(() => _isLoading = false);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-          (context, index) => CommentCard(
-                comment: _comments[index],
-              ),
-          childCount: _comments?.length ?? 0),
+    print('CommentList:build');
+    return Connect<RootState, List<Comment>>(
+      convert: (state) => state.commentMap[parentId],
+      where: (prev, next) {
+        print('CommentList:where "$prev" "$next"');
+        return next != prev;
+      },
+      builder: (comments) {
+        print('CommentList:builder: $comments');
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+              (context, index) => CommentCard(
+                    comment: comments[index],
+                  ),
+              childCount: comments?.length ?? 0),
+        );
+      },
+      nullable: true,
     );
   }
 }

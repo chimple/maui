@@ -1,23 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_comment.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/loca.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/like_button.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
-typedef void AddComment(Comment comment);
-
 class CommentTextField extends StatefulWidget {
   final String parentId;
   final TileType tileType;
-  final AddComment addComment;
 
-  const CommentTextField(
-      {Key key, this.parentId, this.tileType, this.addComment})
+  const CommentTextField({Key key, this.parentId, this.tileType})
       : super(key: key);
 
   @override
@@ -51,7 +50,6 @@ class CommentTextFieldState extends State<CommentTextField> {
           child: LikeButton(
             parentId: widget.parentId,
             tileType: widget.tileType,
-            userId: AppStateContainer.of(context).state.loggedInUser.id,
           )),
       Flexible(
         child: new TextField(
@@ -85,15 +83,10 @@ class CommentTextFieldState extends State<CommentTextField> {
     setState(() {
       _isComposing = false;
     });
-    final comment = Comment(
-        id: Uuid().v4(),
-        parentId: widget.parentId,
-        userId: AppStateContainer.of(context).state.loggedInUser.id,
-        comment: text,
-        timeStamp: DateTime.now(),
-        user: AppStateContainer.of(context).state.loggedInUser);
-    await CommentRepo().insert(comment, widget.tileType);
-    widget.addComment(comment);
+    Provider.dispatch<RootState>(
+        context,
+        AddComment(
+            parentId: widget.parentId, tileType: TileType.card, text: text));
     _focusNode.unfocus();
   }
 }

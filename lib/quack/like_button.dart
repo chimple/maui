@@ -1,68 +1,44 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_like.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
-class LikeButton extends StatefulWidget {
+class LikeButton extends StatelessWidget {
   final String parentId;
   final TileType tileType;
-  final String userId;
 
-  const LikeButton({Key key, this.parentId, this.tileType, this.userId})
-      : super(key: key);
-
-  @override
-  LikeButtonState createState() {
-    return new LikeButtonState();
-  }
-}
-
-class LikeButtonState extends State<LikeButton> {
-  bool _isLoading = true;
-  Like _like;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  void _initData() async {
-    _like = await LikeRepo().getLikeByParentIdAndUserId(
-        widget.parentId, widget.userId, widget.tileType);
-    setState(() => _isLoading = false);
-  }
+  const LikeButton({Key key, this.parentId, this.tileType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading || _like == null) {
-      return InkWell(
-        child: Icon(
-          Icons.favorite_border,
-          color: Colors.red,
-        ),
-        onTap: _isLoading ? null : () => _onPressed(context),
-      );
-    } else {
-      return Icon(
-        Icons.favorite,
-        color: Colors.red,
-      );
-    }
-  }
-
-  Future<Null> _onPressed(BuildContext context) async {
-    setState(() => _like = Like(
-        id: Uuid().v4(),
-        parentId: widget.parentId,
-        userId: widget.userId,
-        timeStamp: DateTime.now(),
-        type: 0,
-        user: AppStateContainer.of(context).state.loggedInUser));
-    LikeRepo().insert(_like, widget.tileType);
+    return Connect<RootState, bool>(
+      convert: (state) => state.likeMap[parentId] != null,
+      where: (prev, next) => next != prev,
+      builder: (like) {
+        return like ?? false
+            ? Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )
+            : InkWell(
+                child: Icon(
+                  Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                onTap: () => like == null
+                    ? null
+                    : Provider.dispatch<RootState>(context,
+                        AddLike(parentId: parentId, tileType: TileType.card)),
+              );
+      },
+      nullable: true,
+    );
   }
 }

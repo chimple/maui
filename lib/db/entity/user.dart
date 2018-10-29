@@ -41,6 +41,7 @@ class User {
   static const colorCol = 'color';
   static const imageCol = 'image';
   static const currentLessonIdCol = 'currentLessonId';
+  static const pointsCol = 'points';
 
   static const idSel = '${table}_id';
   static const deviceIdSel = '${table}_deviceId';
@@ -48,6 +49,7 @@ class User {
   static const colorSel = '${table}_color';
   static const imageSel = '${table}_image';
   static const currentLessonIdSel = '${table}_currentLessonId';
+  static const pointsSel = '${table}_points';
 
   static const allCols = [
     '${table}.$idCol AS $idSel',
@@ -56,6 +58,7 @@ class User {
     '${table}.$colorCol AS $colorSel',
     '${table}.$imageCol AS $imageSel',
     '${table}.$currentLessonIdCol AS $currentLessonIdSel',
+    '${table}.$pointsCol AS $pointsSel',
   ];
 
   String id;
@@ -63,6 +66,7 @@ class User {
   String name;
   int color;
   String image;
+  int points;
   int currentLessonId;
 
   User(
@@ -71,6 +75,7 @@ class User {
       String name,
       int color,
       this.image,
+      this.points,
       this.currentLessonId})
       : this.id = id ?? new Uuid().v4(),
         this.color = color ??
@@ -86,6 +91,7 @@ class User {
       nameCol: name,
       colorCol: color,
       imageCol: image,
+      pointsCol: points,
       currentLessonIdCol: currentLessonId
     };
   }
@@ -97,6 +103,7 @@ class User {
             name: map[nameSel],
             color: map[colorSel],
             image: map[imageSel],
+            points: map[pointsSel],
             currentLessonId: map[currentLessonIdSel]);
 
   @override
@@ -106,6 +113,7 @@ class User {
       name.hashCode ^
       color.hashCode ^
       image.hashCode ^
+      points.hashCode ^
       currentLessonId.hashCode;
 
   @override
@@ -118,10 +126,11 @@ class User {
           name == other.name &&
           color == other.color &&
           image == other.image &&
+          points == other.points &&
           currentLessonId == other.currentLessonId;
 
   @override
   String toString() {
-    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, currentLessonId: $currentLessonId}';
+    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, points: $points, currentLessonId: $currentLessonId}';
   }
 }
