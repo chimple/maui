@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
 
@@ -22,13 +25,16 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(
-            new MaterialPageRoute(
-                builder: (BuildContext context) => CardDetail(
-                      card: card,
-                      parentCardId: parentCardId,
-                    )),
-          ),
+      onTap: () {
+        Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+              builder: (BuildContext context) => CardDetail(
+                    card: card,
+                    parentCardId: parentCardId,
+                  )),
+        );
+      },
       child: Column(
         children: <Widget>[
           AspectRatio(

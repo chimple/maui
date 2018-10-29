@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/card_extra.dart';
+import 'package:maui/db/entity/comment.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/template_grid.dart';
 import 'package:maui/repos/card_extra_repo.dart';
@@ -10,50 +13,24 @@ import 'package:maui/components/drawing_wrapper.dart';
 import 'package:tahiti/paper.dart';
 import 'package:tahiti/activity_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:tuple/tuple.dart';
 
-class ActivityDrawingGrid extends StatefulWidget {
+class ActivityDrawingGrid extends StatelessWidget {
   final String cardId;
-  final List<Tile> drawings;
 
-  const ActivityDrawingGrid(
-      {Key key, @required this.cardId, @required this.drawings})
-      : super(key: key);
+  const ActivityDrawingGrid({Key key, this.cardId}) : super(key: key);
 
-  @override
-  ActivityDrawingGridState createState() {
-    return new ActivityDrawingGridState();
-  }
-}
-
-class ActivityDrawingGridState extends State<ActivityDrawingGrid> {
-  bool _isLoading = true;
-  List<String> _templates;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  void _initData() async {
-    final activityTemplates = await CardExtraRepo()
-        .getCardExtrasByCardIdAndType(widget.cardId, CardExtraType.template);
-    _templates =
-        activityTemplates.map((t) => t.content).toList(growable: false);
-    setState(() => _isLoading = false);
-  }
-
-  void _onPressed(BuildContext context) async {
-    if ((_templates?.length ?? 0) > 0) {
+  void _onPressed(BuildContext context, List<CardExtra> templates) async {
+    if ((templates?.length ?? 0) > 0) {
       await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => _buildDialog(context),
+        builder: (BuildContext context) => _buildDialog(context, templates),
       ).then((result) {
         if (result != null) {
           Navigator.of(context).push(
             new MaterialPageRoute(
                 builder: (BuildContext context) => DrawingWrapper(
-                      activityId: widget.cardId,
+                      activityId: cardId,
                       template: result.isEmpty ? null : result,
                     )),
           );
@@ -63,13 +40,13 @@ class ActivityDrawingGridState extends State<ActivityDrawingGrid> {
       Navigator.of(context)
           .push(MaterialPageRoute<void>(builder: (BuildContext context) {
         return DrawingWrapper(
-          activityId: widget.cardId,
+          activityId: cardId,
         );
       }));
     }
   }
 
-  Widget _buildDialog(BuildContext context) {
+  Widget _buildDialog(BuildContext context, List<CardExtra> templates) {
     return SimpleDialog(
       titlePadding: EdgeInsets.all(0.0),
       title: new Container(
@@ -81,22 +58,24 @@ class ActivityDrawingGridState extends State<ActivityDrawingGrid> {
             width: MediaQuery.of(context).size.width / 1.5,
             height: MediaQuery.of(context).size.height / 1.6,
             child: TemplateGrid(
-              templates: _templates,
+              templates:
+                  templates.map((c) => c.content).toList(growable: false),
             )),
       ],
     );
   }
 
-  List<Widget> _buildList(BuildContext context) {
+  List<Widget> _buildList(
+      BuildContext context, List<Tile> drawings, List<CardExtra> templates) {
     return <Widget>[
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: RaisedButton(
-          onPressed: () => _onPressed(context),
+          onPressed: () => _onPressed(context, templates),
           child: Icon(Icons.add_circle),
         ),
       )
-    ]..addAll(widget.drawings.map((d) => Padding(
+    ]..addAll(drawings.map((d) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: DrawingCard(tile: d),
         )));
@@ -104,18 +83,17 @@ class ActivityDrawingGridState extends State<ActivityDrawingGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.count(
-        crossAxisCount: 3,
-        childAspectRatio: 1.0,
-        children: _isLoading
-            ? <Widget>[
-                Center(
-                    child: new SizedBox(
-                  width: 20.0,
-                  height: 20.0,
-                  child: new CircularProgressIndicator(),
-                ))
-              ]
-            : _buildList(context));
+    return Connect<RootState, Tuple2<List<Tile>, List<CardExtra>>>(
+      convert: (state) => Tuple2(state.tiles, state.templates),
+      where: (prev, next) => next != prev,
+      builder: (props) {
+        print('activity_drawing_grid:build');
+        return SliverGrid.count(
+            crossAxisCount: 3,
+            childAspectRatio: 1.0,
+            children: _buildList(context, props?.item1 ?? [], props?.item2));
+      },
+      nullable: true,
+    );
   }
 }
