@@ -94,7 +94,7 @@ class ProfileViewState extends State<ProfileView>
         body: new TabBarView(
           controller: _controller,
           children: <Widget>[
-            UserDrawingGrid(userId: user.id),
+            UserDrawingGrid(),
             new Text("i have to show topic here"),
           ],
         ),
