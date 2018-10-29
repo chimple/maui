@@ -11,6 +11,7 @@ import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -32,6 +33,7 @@ void main() async {
       cardRepo: CardRepo(),
       tileRepo: TileRepo(),
       cardExtraRepo: CardExtraRepo(),
+      userRepo: UserRepo(),
       commentRepo: CommentRepo()));
 
   runApp(Provider(
