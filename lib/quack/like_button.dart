@@ -18,12 +18,10 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('LikeButton:build:$parentId');
     return Connect<RootState, bool>(
       convert: (state) => state.likeMap[parentId] != null,
       where: (prev, next) => next != prev,
       builder: (like) {
-        print('LikeButton:builder:$parentId');
         return like ?? false
             ? Icon(
                 Icons.favorite,
