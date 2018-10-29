@@ -2,6 +2,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_comment.dart';
 import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/add_progress.dart';
+import 'package:maui/actions/deduct_points.dart';
 import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
@@ -14,6 +15,7 @@ import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 
 class CollectionMiddleware extends Middleware<RootState> {
   final CollectionRepo collectionRepo;
@@ -23,6 +25,7 @@ class CollectionMiddleware extends Middleware<RootState> {
   final CardRepo cardRepo;
   final TileRepo tileRepo;
   final CardExtraRepo cardExtraRepo;
+  final UserRepo userRepo;
 
   CollectionMiddleware(
       {this.collectionRepo,
@@ -31,6 +34,7 @@ class CollectionMiddleware extends Middleware<RootState> {
       this.commentRepo,
       this.tileRepo,
       this.cardExtraRepo,
+      this.userRepo,
       this.cardRepo});
 
   @override
@@ -51,12 +55,15 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.cardProgressRepo = cardProgressRepo;
     } else if (action is AddLike) {
       action.likeRepo = likeRepo;
+      action.tileRepo = tileRepo;
     } else if (action is AddComment) {
       action.commentRepo = commentRepo;
     } else if (action is SaveDrawing) {
       action.tileRepo = tileRepo;
     } else if (action is FetchComments) {
       action.commentRepo = commentRepo;
+    } else if (action is DeductPoints) {
+      action.userRepo = userRepo;
     }
 
     return state;

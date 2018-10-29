@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_progress.dart';
 import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
@@ -83,6 +84,10 @@ class CardPagerState extends State<CardPager> {
                   if (index < cardList.length)
                     Provider.dispatch<RootState>(
                         context, FetchComments(cardList[index].id));
+                  Provider.dispatch<RootState>(
+                      context,
+                      AddProgress(
+                          card: cardList[index], parentCardId: widget.cardId));
                   setState(() => _currentPageIndex = index);
                 }),
           )

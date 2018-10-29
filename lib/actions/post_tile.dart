@@ -10,44 +10,26 @@ import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:uuid/uuid.dart';
 
-class AddLike implements AsyncAction<RootState> {
-  final String parentId;
-  final TileType tileType;
+class PostTile implements AsyncAction<RootState> {
+  final Tile tile;
 
-  LikeRepo likeRepo;
   TileRepo tileRepo;
 
-  AddLike({this.parentId, this.tileType});
+  PostTile({this.tile});
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
-    assert(likeRepo != null, 'likeRepo not injected');
     assert(tileRepo != null, 'tileRepo not injected');
 
-    final like = Like(
-        id: Uuid().v4(),
-        parentId: parentId,
-        userId: state.user.id,
-        timeStamp: DateTime.now(),
-        type: 0,
-        user: state.user);
-    likeRepo.insert(like, tileType);
-    state.cardMap[parentId].likes = (state.cardMap[parentId].likes ?? 0) + 1;
+    tileRepo.insert(tile);
 
-    tileRepo.insert(Tile(
-        id: Uuid().v4(),
-        cardId: parentId,
-        content: '${state.user.name} liked this topic',
-        type: TileType.card,
-        updatedAt: DateTime.now(),
-        userId: state.user.id));
     return (RootState state) => RootState(
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        likeMap: state.likeMap..[parentId] = like,
+        likeMap: state.likeMap,
         commentMap: state.commentMap,
-        tiles: state.tiles,
+        tiles: state.tiles..add(tile),
         templates: state.templates,
         progressMap: state.progressMap);
   }
