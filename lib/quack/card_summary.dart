@@ -5,15 +5,11 @@ import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/activity_card.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
+import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/card_pager.dart';
-import 'package:maui/quack/collection_progress_indicator.dart';
-import 'package:maui/quack/concept_card.dart';
-import 'package:maui/quack/knowledge_card.dart';
 import 'package:maui/quack/like_button.dart';
-import 'package:maui/state/app_state_container.dart';
 
 final cardTypeColors = {
   CardType.knowledge: Color(0xff99CE34),
@@ -39,8 +35,7 @@ class CardSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userId = AppStateContainer.of(context).state.loggedInUser.id;
-    return Column(
+    final summary = Column(
       children: <Widget>[
         AspectRatio(
           aspectRatio: 1.0,
@@ -90,7 +85,6 @@ class CardSummary extends StatelessWidget {
                       aspectRatio: 1.78,
                     ),
                   ),
-                  CollectionProgressIndicator(collectionId: card.id),
                   Flexible(
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
@@ -133,5 +127,16 @@ class CardSummary extends StatelessWidget {
         )
       ],
     );
+    return card.type == CardType.concept
+        ? Stack(
+            children: <Widget>[
+              summary,
+              CardLock(
+                card: card,
+                parentCardId: parentCardId,
+              ),
+            ],
+          )
+        : summary;
   }
 }
