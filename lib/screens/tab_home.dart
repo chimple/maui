@@ -42,14 +42,6 @@ class TabHomeState extends State<TabHome> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-    var user = AppStateContainer.of(context).state.loggedInUser;
-    final _currentUserImage = new Container(
-      height: 28.0,
-      width: 28.0,
-      child: CircleAvatar(
-        backgroundImage: FileImage(File(user.image)),
-      ),
-    );
 
     return Scaffold(
       appBar: new AppBar(
@@ -72,88 +64,140 @@ class TabHomeState extends State<TabHome> {
           currentIndex: _currentIndex,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              title: Container(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: _currentIndex == 0
+                        ? tabsColorList[_currentIndex]
+                        : Color(0xFF0E4476),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
                 width: (mediaQuery.size.width) / 5,
-                color: _currentIndex == 0
-                    ? tabsColorList[_currentIndex]
-                    : Color(0xFF0E4476),
-                child: new Image.asset(
-                  "assets/news_feed.png",
-                  height: 28.0,
-                  width: 28.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Center(
+                    child: new Image.asset(
+                      "assets/news_feed.png",
+                      height: 28.0,
+                      width: 28.0,
+                    ),
+                  ),
                 ),
               ),
               // title: Text(Loca.of(context).home),
-              icon: new Text(""),
-            ),
-            BottomNavigationBarItem(
-              title: Container(
-                width: (mediaQuery.size.width) / 5,
-                color: _currentIndex == 1
+              title: new Container(
+                color: _currentIndex == 0
                     ? tabsColorList[_currentIndex]
                     : Color(0xFF0E4476),
-                child: new Image.asset(
-                  "assets/messenger.png",
-                  height: 28.0,
-                  width: 28.0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: _currentIndex == 1
+                        ? tabsColorList[_currentIndex]
+                        : Color(0xFF0E4476),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                width: (mediaQuery.size.width) / 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Center(
+                    child: new Image.asset(
+                      "assets/messenger.png",
+                      height: 28.0,
+                      width: 28.0,
+                    ),
+                  ),
                 ),
               ),
               // title: Text(Loca.of(context).chat),
-              icon: new Text(""),
-            ),
-            BottomNavigationBarItem(
-              title: Container(
-                width: (mediaQuery.size.width) / 5,
-                color: _currentIndex == 2
+              title: new Container(
+                color: _currentIndex == 1
                     ? tabsColorList[_currentIndex]
                     : Color(0xFF0E4476),
-                child: new Image.asset(
-                  "assets/quack.png",
-                  height: 28.0,
-                  width: 28.0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: _currentIndex == 2
+                        ? tabsColorList[_currentIndex]
+                        : Color(0xFF0E4476),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                width: (mediaQuery.size.width) / 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Center(
+                    child: new Image.asset(
+                      "assets/quack.png",
+                      height: 28.0,
+                      width: 28.0,
+                    ),
+                  ),
                 ),
               ),
               // title: Text(Loca.of(context).category),
-              icon: new Text(""),
-            ),
-            BottomNavigationBarItem(
-              title: Container(
-                width: (mediaQuery.size.width) / 5,
-                color: _currentIndex == 3
+              title: new Container(
+                color: _currentIndex == 2
                     ? tabsColorList[_currentIndex]
                     : Color(0xFF0E4476),
-                child: new Image.asset(
-                  "assets/games.png",
-                  height: 28.0,
-                  width: 28.0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: _currentIndex == 3
+                        ? tabsColorList[_currentIndex]
+                        : Color(0xFF0E4476),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                width: (mediaQuery.size.width) / 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Center(
+                    child: new Image.asset(
+                      "assets/games.png",
+                      height: 28.0,
+                      width: 28.0,
+                    ),
+                  ),
                 ),
               ),
               // title: Text(Loca.of(context).game),
-              icon: new Text(""),
+              title: new Container(
+                color: _currentIndex == 3
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+              ),
             ),
             BottomNavigationBarItem(
               // activeIcon: _currentUserImage,
-              title: _currentIndex == 4
-                  ? Container(
-                      width: (mediaQuery.size.width) / 5,
-                      color: _currentIndex == 4
-                          ? tabsColorList[_currentIndex]
-                          : Color(0xFF0E4476),
-                      child: _currentUserImage,
-                    )
-                  : Container(
-                      width: (mediaQuery.size.width) / 5,
-                      color: _currentIndex == 4
-                          ? tabsColorList[_currentIndex]
-                          : Color(0xFF0E4476),
-                      child: new Image.asset(
-                        "assets/profile.png",
-                        height: 28.0,
-                        width: 28.0,
-                      ),
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: _currentIndex == 4
+                        ? tabsColorList[_currentIndex]
+                        : Color(0xFF0E4476),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                width: (mediaQuery.size.width) / 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Center(
+                    child: new Image.asset(
+                      "assets/profile.png",
+                      height: 28.0,
+                      width: 28.0,
                     ),
+                  ),
+                ),
+              ),
               // title: Text(Loca.of(context).profile),
-              icon: new Text(""),
+              title: new Container(
+                color: _currentIndex == 4
+                    ? tabsColorList[_currentIndex]
+                    : Color(0xFF0E4476),
+              ),
             ),
           ],
           onTap: (int i) => setState(() => _currentIndex = i),
