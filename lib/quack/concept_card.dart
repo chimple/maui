@@ -55,23 +55,23 @@ class ConceptCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(children: <Widget>[
-                  LikeButton(
-                    parentId: card.id,
-                    tileType: TileType.card,
-                    userId: userId,
-                  ),
-                  Text("${card.likes ?? ''}"),
-                ]),
-                Row(children: <Widget>[
-                  Icon(Icons.comment),
-                  Text("${card.comments ?? ''}")
-                ])
-              ],
-            )
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              children: <Widget>[
+//                Row(children: <Widget>[
+//                  LikeButton(
+//                    parentId: card.id,
+//                    tileType: TileType.card,
+//                    userId: userId,
+//                  ),
+//                  Text("${card.likes ?? ''}"),
+//                ]),
+//                Row(children: <Widget>[
+//                  Icon(Icons.comment),
+//                  Text("${card.comments ?? ''}")
+//                ])
+//              ],
+//            )
           ],
         ),
         CardLock(card: card, parentCardId: parentCardId, userId: userId),
