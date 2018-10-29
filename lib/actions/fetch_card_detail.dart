@@ -1,15 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/card_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/like_repo.dart';
+import 'package:maui/repos/tile_repo.dart';
 
 class FetchCardDetail implements AsyncAction<RootState> {
   final String cardId;
@@ -18,6 +22,8 @@ class FetchCardDetail implements AsyncAction<RootState> {
   CardRepo cardRepo;
   CommentRepo commentRepo;
   LikeRepo likeRepo;
+  TileRepo tileRepo;
+  CardExtraRepo cardExtraRepo;
 
   FetchCardDetail(this.cardId);
 
@@ -28,11 +34,15 @@ class FetchCardDetail implements AsyncAction<RootState> {
     assert(cardRepo != null, 'cardRepo not injected');
     assert(commentRepo != null, 'commentRepo not injected');
     assert(likeRepo != null, 'likeRepo not injected');
+    assert(tileRepo != null, 'tileRepo not injected');
+    assert(cardExtraRepo != null, 'cardExtraRepo not injected');
 
     final cardMap = Map<String, QuackCard>();
     final progressMap = Map<String, double>();
     final collectionMap = Map<String, List<String>>();
     final likeMap = Map<String, Like>();
+    var drawings = List<Tile>();
+    var templates = List<CardExtra>();
 
     final card = state.cardMap[cardId];
     if (card == null) {
@@ -56,6 +66,11 @@ class FetchCardDetail implements AsyncAction<RootState> {
         likeMap[mc] = await likeRepo.getLikeByParentIdAndUserId(
             mc, state.user.id, TileType.card);
       });
+    } else if (card.type == CardType.activity) {
+      drawings =
+          await tileRepo.getTilesByCardIdAndType(card.id, TileType.drawing);
+      templates = await cardExtraRepo.getCardExtrasByCardIdAndType(
+          card.id, CardExtraType.template);
     }
 
     final comments =
@@ -67,6 +82,8 @@ class FetchCardDetail implements AsyncAction<RootState> {
         cardMap: state.cardMap..addAll(cardMap),
         progressMap: state.progressMap..addAll(progressMap),
         likeMap: state.likeMap..addAll(likeMap),
-        comments: comments);
+        tiles: drawings,
+        templates: templates,
+        commentMap: state.commentMap..[cardId] = comments);
   }
 }

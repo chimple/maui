@@ -2,14 +2,18 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_comment.dart';
 import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/add_progress.dart';
+import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
+import 'package:maui/actions/save_drawing.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/card_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/like_repo.dart';
+import 'package:maui/repos/tile_repo.dart';
 
 class CollectionMiddleware extends Middleware<RootState> {
   final CollectionRepo collectionRepo;
@@ -17,12 +21,16 @@ class CollectionMiddleware extends Middleware<RootState> {
   final LikeRepo likeRepo;
   final CommentRepo commentRepo;
   final CardRepo cardRepo;
+  final TileRepo tileRepo;
+  final CardExtraRepo cardExtraRepo;
 
   CollectionMiddleware(
       {this.collectionRepo,
       this.cardProgressRepo,
       this.likeRepo,
       this.commentRepo,
+      this.tileRepo,
+      this.cardExtraRepo,
       this.cardRepo});
 
   @override
@@ -37,11 +45,17 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.likeRepo = likeRepo;
       action.commentRepo = commentRepo;
       action.cardRepo = cardRepo;
+      action.tileRepo = tileRepo;
+      action.cardExtraRepo = cardExtraRepo;
     } else if (action is AddProgress) {
       action.cardProgressRepo = cardProgressRepo;
     } else if (action is AddLike) {
       action.likeRepo = likeRepo;
     } else if (action is AddComment) {
+      action.commentRepo = commentRepo;
+    } else if (action is SaveDrawing) {
+      action.tileRepo = tileRepo;
+    } else if (action is FetchComments) {
       action.commentRepo = commentRepo;
     }
 

@@ -7,6 +7,7 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
+import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/like_button.dart';
 
 class KnowledgeCard extends StatelessWidget {
@@ -32,9 +33,10 @@ class KnowledgeCard extends StatelessWidget {
             new MaterialPageRoute(builder: (BuildContext context) {
               Provider.dispatch<RootState>(
                   context, AddProgress(card: card, parentCardId: parentCardId));
-              return CardDetail(
-                card: card,
-                parentCardId: parentCardId,
+              return CardPager(
+                cardId: parentCardId,
+                cardType: CardType.knowledge,
+                initialPage: index,
               );
             }),
           ),

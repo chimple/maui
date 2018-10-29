@@ -35,12 +35,9 @@ class CardDetail extends StatelessWidget {
       )
     ];
 
-//    if (!_isLoading && widget.card.type == CardType.activity) {
-//      scrollViewWidgets.add(ActivityDrawingGrid(
-//        cardId: widget.card.id,
-//        drawings: _drawings,
-//      ));
-//    }
+    if (card.type == CardType.activity) {
+      scrollViewWidgets.add(ActivityDrawingGrid(cardId: card.id));
+    }
     scrollViewWidgets.add(SliverToBoxAdapter(
         child: Padding(
       padding: const EdgeInsets.all(8.0),
@@ -69,12 +66,10 @@ class CardDetail extends StatelessWidget {
         ),
       )
     ]);
-    final commentList = CommentList(
+    scrollViewWidgets.add(CommentList(
       parentId: card.id,
       tileType: TileType.card,
-    );
-    print('commentList: created: $commentList');
-    scrollViewWidgets.add(commentList);
+    ));
 
     final widgets = <Widget>[
       Expanded(

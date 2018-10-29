@@ -34,10 +34,13 @@ class ConceptCard extends StatelessWidget {
         Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (BuildContext context) => CardDetail(
-                  card: card,
-                  parentCardId: parentCardId,
-                ),
+            builder: (BuildContext context) {
+              print('MaterialPageRoute: CardDetail: $card');
+              return CardDetail(
+                card: card,
+                parentCardId: parentCardId,
+              );
+            },
           ),
         );
       },

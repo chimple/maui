@@ -18,24 +18,29 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('LikeButton:build:$parentId');
     return Connect<RootState, bool>(
-        convert: (state) => state.likeMap[parentId] != null,
-        where: (prev, next) => next != prev,
-        builder: (like) {
-          print('LikeButton: $like');
-          return like
-              ? Icon(
-                  Icons.favorite,
+      convert: (state) => state.likeMap[parentId] != null,
+      where: (prev, next) => next != prev,
+      builder: (like) {
+        print('LikeButton:builder:$parentId');
+        return like ?? false
+            ? Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )
+            : InkWell(
+                child: Icon(
+                  Icons.favorite_border,
                   color: Colors.red,
-                )
-              : InkWell(
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Colors.red,
-                  ),
-                  onTap: () => Provider.dispatch<RootState>(context,
-                      AddLike(parentId: parentId, tileType: TileType.card)),
-                );
-        });
+                ),
+                onTap: () => like == null
+                    ? null
+                    : Provider.dispatch<RootState>(context,
+                        AddLike(parentId: parentId, tileType: TileType.card)),
+              );
+      },
+      nullable: true,
+    );
   }
 }

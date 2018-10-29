@@ -11,7 +11,6 @@ class CardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$parentCardId/${card.type}/${card.id}');
     if (card.header?.endsWith('.svg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',

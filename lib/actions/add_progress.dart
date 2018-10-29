@@ -28,7 +28,9 @@ class AddProgress implements AsyncAction<RootState> {
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
         likeMap: state.likeMap,
-        comments: state.comments,
+        commentMap: state.commentMap,
+        tiles: state.tiles,
+        templates: state.templates,
         progressMap: state.progressMap..[parentCardId] = progress);
   }
 }

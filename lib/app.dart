@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/quack/card_detail.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
@@ -136,7 +137,14 @@ class MauiApp extends StatelessWidget {
                 ),
           );
       }
-    } else if (path[1] == 'card' && path.length == 4) {}
+    } else if (path[1] == 'card' && path.length == 4) {
+//      Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+
+      return new MaterialPageRoute<Null>(
+        settings: settings,
+        builder: (BuildContext context) => new CardDetail(),
+      );
+    }
 
     return null;
   }

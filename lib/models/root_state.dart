@@ -1,8 +1,10 @@
+import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/collection.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/user.dart';
 
 class RootState {
@@ -11,8 +13,10 @@ class RootState {
   final Map<String, List<String>> collectionMap;
   final Map<String, QuackCard> cardMap;
   final Map<String, double> progressMap;
-  final List<Comment> comments;
+  final Map<String, List<Comment>> commentMap;
   final Map<String, Like> likeMap;
+  final List<Tile> tiles;
+  final List<CardExtra> templates;
 
   RootState(
       {this.isLoading,
@@ -21,7 +25,7 @@ class RootState {
       this.cardMap,
       this.progressMap,
       this.likeMap,
-      this.comments}) {
-    print('RootState: comments: $comments');
-  }
+      this.tiles,
+      this.templates,
+      this.commentMap});
 }

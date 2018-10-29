@@ -16,7 +16,7 @@ class CommentList extends StatelessWidget {
   Widget build(BuildContext context) {
     print('CommentList:build');
     return Connect<RootState, List<Comment>>(
-      convert: (state) => state.comments,
+      convert: (state) => state.commentMap[parentId],
       where: (prev, next) {
         print('CommentList:where "$prev" "$next"');
         return next != prev;

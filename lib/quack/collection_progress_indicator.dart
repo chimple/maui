@@ -13,13 +13,13 @@ class CollectionProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('CollectionProgressIndicator:build: $collectionId');
     return Connect<RootState, double>(
-        convert: (state) => state.progressMap[collectionId] ?? 0.0,
-        where: (prev, next) => next != prev,
-        builder: (progress) {
-          print('CollectionProgressIndicator:progress: $progress');
-          return LinearProgressIndicator(value: progress);
-        });
+      convert: (state) => state.progressMap[collectionId],
+      where: (prev, next) => next != prev,
+      builder: (progress) {
+        return LinearProgressIndicator(value: progress ?? 0.0);
+      },
+      nullable: true,
+    );
   }
 }
