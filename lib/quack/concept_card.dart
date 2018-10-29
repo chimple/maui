@@ -5,6 +5,7 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/quack/like_button.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -29,62 +30,52 @@ class ConceptCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = AppStateContainer.of(context).state.loggedInUser.id;
-    return InkWell(
-      onTap: () {
-        Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              print('MaterialPageRoute: CardDetail: $card');
-              return CardDetail(
+    return Stack(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            AspectRatio(
+              child: CardHeader(
                 card: card,
                 parentCardId: parentCardId,
-              );
-            },
-          ),
-        );
-      },
-      child: Column(
-        children: <Widget>[
-          AspectRatio(
-            child: CardHeader(
-              card: card,
-              parentCardId: parentCardId,
+              ),
+              aspectRatio: 1.78,
             ),
-            aspectRatio: 1.78,
-          ),
-          CollectionProgressIndicator(collectionId: card.id, userId: userId),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(card.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
+            CollectionProgressIndicator(collectionId: card.id, userId: userId),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(card.title,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                    ),
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  LikeButton(
+                    parentId: card.id,
+                    tileType: TileType.card,
+                    userId: userId,
                   ),
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(children: <Widget>[
-                LikeButton(
-                  parentId: card.id,
-                  tileType: TileType.card,
-                ),
-                Text("${card.likes ?? ''}"),
-              ]),
-              Row(children: <Widget>[
-                Icon(Icons.comment),
-                Text("${card.comments ?? ''}")
-              ])
-            ],
-          )
-        ],
-      ),
+                  Text("${card.likes ?? ''}"),
+                ]),
+                Row(children: <Widget>[
+                  Icon(Icons.comment),
+                  Text("${card.comments ?? ''}")
+                ])
+              ],
+            )
+          ],
+        ),
+        CardLock(card: card, parentCardId: parentCardId, userId: userId),
+      ],
     );
   }
 }
