@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/quack/like_button.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
 
 class ConceptCard extends StatelessWidget {
   final QuackCard card;

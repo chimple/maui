@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/save_drawing.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/user.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/card_repo.dart';
 import 'package:tahiti/tahiti.dart';
@@ -71,15 +74,9 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         json: _jsonMap,
         template: widget.template,
         title: _activity.title,
-        saveCallback: ({Map<String, dynamic> jsonMap}) => TileRepo().upsert(
-              Tile(
-                  id: jsonMap['id'],
-                  cardId: widget.activityId,
-                  type: TileType.drawing,
-                  content: json.encode(jsonMap),
-                  updatedAt: DateTime.now(),
-                  userId: AppStateContainer.of(context).state.loggedInUser.id),
-            ),
+        saveCallback: ({Map<String, dynamic> jsonMap}) =>
+            Provider.dispatch<RootState>(context,
+                SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap)),
       ),
     );
   }

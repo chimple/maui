@@ -26,10 +26,7 @@ AND ${Comment.table}.${Comment.userIdCol} = ${User.table}.${User.idCol}
       whereArgs: [parentId],
       orderBy: "${Comment.timeStampCol}",
     );
-    if (maps.length > 0) {
-      return maps.map((el) => new Comment.fromMap(el)).toList(growable: true);
-    }
-    return null;
+    return maps.map((el) => new Comment.fromMap(el)).toList(growable: true);
   }
 
   Future<Null> insert(Comment tileComment, TileType tileType,

@@ -5,6 +5,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -471,6 +475,8 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Stack trace:\n $s');
       }
     }
+    Provider.dispatch<RootState>(context, FetchInitialData(user));
+
 //    try {
 //      p2p.start();
 //    } on PlatformException {

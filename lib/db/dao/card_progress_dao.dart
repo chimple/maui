@@ -24,6 +24,24 @@ class CardProgressDao {
     return null;
   }
 
+  Future<List<CardProgress>> getCardProgressesByCollectionAndTypeAndUserId(
+      String cardId, CardType cardType, String userId,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(
+        '${CardProgress.table}, ${QuackCard.table}, ${Collection.table}',
+        columns: CardProgress.allCols,
+        where: '''
+${Collection.idCol} = ? 
+AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+AND ${QuackCard.table}.${QuackCard.typeCol} = ?
+AND ${CardProgress.table}.${CardProgress.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+AND ${CardProgress.table}.${CardProgress.userIdCol} = ?
+''',
+        whereArgs: [cardId, cardType.index, userId]);
+    return maps.map((el) => CardProgress.fromMap(el)).toList();
+  }
+
   Future<int> getCardProgressCountByCollectionAndTypeAndUserId(
       String cardId, CardType cardType, String userId,
       {Database db}) async {
