@@ -65,6 +65,8 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/quack.nima
+    - assets/quack.png
     - assets/right.wav
     - assets/wrong.wav
     - assets/lion.ogg

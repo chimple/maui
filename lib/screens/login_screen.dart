@@ -306,8 +306,8 @@ class _LoginScreenState extends State<LoginScreen>
                                                                 16.0)),
                                                     color: Colors.amber,
                                                   ),
-                                                  height: 75.0,
-                                                  width: 100.0,
+                                                  height: size.height * 0.06,
+                                                  width: size.width * 0.2,
                                                   child: new Icon(
                                                       Icons
                                                           .keyboard_arrow_right,

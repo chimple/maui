@@ -4,8 +4,12 @@ import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/models/root_state.dart';
+// import 'package:maui/components/animations.dart';
+// import 'package:nima/nima_actor.dart';
 
 class MainCollection extends StatelessWidget {
+
+  
   @override
   Widget build(BuildContext context) {
     print('mainCollection: build');
@@ -35,6 +39,21 @@ class MainCollection extends StatelessWidget {
                                   style: Theme.of(context).textTheme.title,
                                 ),
                               )),
+
+                              // new Container(
+                              //   height: 100.0,
+                              //   width: 200.0,
+                              // child: new RaisedButton(
+                              //   onPressed: () {
+                              //     showDialog(
+                              //       context: context,
+                              //       builder: (BuildContext context) => Animations(),
+                              //     );
+                              //     // Perform some action
+                              //   },
+                              //   child: Icon(Icons.home, size: 50.0,),
+                              // )),
+
                               CollectionGrid(
                                 cardId: c.id,
                                 cardType: CardType.concept,
