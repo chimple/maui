@@ -37,11 +37,14 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
         child: new CircularProgressIndicator(),
       ));
     }
-    return ListView.builder(
-        itemCount: _tiles.length,
-        itemBuilder: (context, index) => TileCard(
-              tile: _tiles[index],
-            ));
+    return new Container(
+          color: Color(0xFFFFFFFF),
+          child: ListView.builder(
+          itemCount: _tiles.length,
+          itemBuilder: (context, index) => TileCard(
+                tile: _tiles[index],
+              )),
+    );
   }
 
   @override

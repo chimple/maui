@@ -88,7 +88,7 @@ class CardSummary extends StatelessWidget {
                   Flexible(
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(card.title,
+                      child: Text(card.title ?? '',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
