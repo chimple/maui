@@ -25,12 +25,14 @@ class LikeButton extends StatelessWidget {
         return like ?? false
             ? Icon(
                 Icons.favorite,
+                size: 40.0,
                 color: Colors.red,
               )
             : InkWell(
                 child: Icon(
                   Icons.favorite_border,
-                  color: Colors.red,
+                  size: 40.0,
+                  color: Colors.black,
                 ),
                 onTap: () => like == null
                     ? null

@@ -10,20 +10,35 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundImage: FileImage(File(comment.user.image)),
-          ),
-        ),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(comment.comment),
-        ))
-      ],
-    );
+    return new Container(
+        margin: const EdgeInsets.symmetric(vertical: 10.0),
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Container(
+              margin: const EdgeInsets.only(right: 16.0),
+              child: new CircleAvatar(
+                backgroundImage: FileImage(File(comment.user.image)),
+              ),
+            ),
+            Expanded(
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(comment.user.name, style: TextStyle(fontSize: 30.0)),
+                  new Container(
+                    margin: const EdgeInsets.only(top: 10.0),
+                    child: new Text(
+                      comment.comment,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
