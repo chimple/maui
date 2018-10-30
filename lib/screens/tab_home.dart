@@ -48,8 +48,18 @@ class TabHomeState extends State<TabHome> {
       appBar: new AppBar(
         title: new Text(appBarTitleList[_currentIndex]),
         centerTitle: true,
-        leading: new FlatButton(
-          child: new Center(
+        actions: <Widget>[
+          new IconButton(
+            icon: Center(
+              child: new Image.asset("assets/profile.png"),
+            ),
+            onPressed: () {
+              print("object");
+            },
+          ),
+        ],
+        leading: new IconButton(
+          icon: new Center(
             child: new Image.asset("assets/quack_header.png"),
           ),
           onPressed: () {
@@ -186,7 +196,7 @@ class TabHomeState extends State<TabHome> {
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
                     child: new Image.asset(
-                      "assets/profile.png",
+                      "assets/story.png",
                       height: 28.0,
                       width: 28.0,
                     ),
