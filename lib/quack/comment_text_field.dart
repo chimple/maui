@@ -44,38 +44,51 @@ class CommentTextFieldState extends State<CommentTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      Container(
-          margin: new EdgeInsets.symmetric(horizontal: 4.0),
-          child: LikeButton(
-            parentId: widget.parentId,
-            tileType: widget.tileType,
-          )),
-      Flexible(
-        child: new TextField(
-          maxLength: null,
-          keyboardType: TextInputType.multiline,
-          controller: _textController,
-          focusNode: _focusNode,
-          onChanged: (String text) {
-            setState(() {
-              _isComposing = text.trim().isNotEmpty;
-            });
-          },
-          onSubmitted: (String text) => _handleSubmitted(context, text),
-          decoration:
-              new InputDecoration.collapsed(hintText: Loca().addAComment),
-        ),
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(5.0),
+      decoration: ShapeDecoration(
+        color: Colors.deepPurple,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+                left: Radius.circular(40.0), right: Radius.circular(40.0))),
       ),
-      Container(
-          margin: new EdgeInsets.symmetric(horizontal: 4.0),
-          child: IconButton(
-            icon: new Icon(Icons.check_circle),
-            onPressed: _isComposing
-                ? () => _handleSubmitted(context, _textController.text)
-                : null,
-          )),
-    ]);
+      child: Row(children: <Widget>[
+        Container(
+            margin: new EdgeInsets.symmetric(horizontal: 4.0),
+            child: LikeButton(
+              parentId: widget.parentId,
+              tileType: widget.tileType,
+            )),
+        Flexible(
+          child: new TextField(
+            style: TextStyle(color: Colors.white),
+            maxLength: null,
+            keyboardType: TextInputType.multiline,
+            controller: _textController,
+            focusNode: _focusNode,
+            onChanged: (String text) {
+              setState(() {
+                _isComposing = text.trim().isNotEmpty;
+              });
+            },
+            onSubmitted: (String text) => _handleSubmitted(context, text),
+            decoration:
+                new InputDecoration.collapsed(hintText: Loca().addAComment),
+          ),
+        ),
+        Container(
+            margin: new EdgeInsets.symmetric(horizontal: 4.0),
+            child: IconButton(
+              iconSize: 40.0,
+              color: Colors.white,
+              icon: new Icon(Icons.send),
+              onPressed: _isComposing
+                  ? () => _handleSubmitted(context, _textController.text)
+                  : null,
+            )),
+      ]),
+    );
   }
 
   Future<Null> _handleSubmitted(BuildContext context, String text) async {
