@@ -4,27 +4,15 @@ import 'package:maui/components/quiz_button.dart';
 
 enum OptionCategory { oneAtATime, many, pair }
 
-enum ClickedStatus { no, yes, done }
-
-const Map<String, dynamic> testMap = {
-  'question': 'Match the following according to the habitat of each animal',
-  'choices': ["abc", "def", "stickers/giraffe/giraffe.png", "lmn"],
-  'answer': ['a', 'b', 'c', 'd'],
-  'correct': null,
-  'total': null,
-  'choicesRightOrWrong': null
-};
+enum ClickedStatus { no, yes, done, correct, incorrect, untouched }
 
 class CardList extends StatefulWidget {
   final Map<String, dynamic> input;
   final OptionCategory optionsType;
   final Function onEnd;
+  Function onPress;
 
-  const CardList(
-      {Key key,
-      this.input = testMap,
-      this.optionsType = OptionCategory.many,
-      this.onEnd})
+  CardList({Key key, this.input, this.optionsType, this.onPress, this.onEnd})
       : super(key: key);
 
   @override
@@ -35,9 +23,9 @@ class CardListState extends State<CardList> {
   List<String> choice = [], clickedChoices = [], shuffledChoices = [];
   List<ClickedStatus> clicked = [];
   List<bool> rightOrWrong = [];
-  bool displayIcon = false;
+
   int correctChoices = 0;
-  bool displayResults;
+  bool displayResults, displayIcon;
 
   @override
   void initState() {
@@ -46,8 +34,15 @@ class CardListState extends State<CardList> {
     _initBoard();
   }
 
-  void _initBoard() {
+  void _initBoard() async {
+    choice = [];
+    clickedChoices = [];
+    shuffledChoices = [];
+    clicked = [];
+    rightOrWrong = [];
+
     displayResults = widget.input['correct'] == null ? false : true;
+    displayIcon = false;
 
     // Adding data of choices given by parent class to the choices and shuffledchoices variable
 
@@ -83,6 +78,15 @@ class CardListState extends State<CardList> {
     }
   }
 
+  @override
+  void didUpdateWidget(CardList oldWidget) {
+    print(oldWidget);
+    print(widget.input);
+    if (widget.input != oldWidget.input) {
+      _initBoard();
+    }
+  }
+
   Widget _buildItem(String text, int k, double ht) {
     // Universal Button for mapping keys, text/image to be shown, Button's present status and a function to perform desired actions
     return new Container(
@@ -95,7 +99,15 @@ class CardListState extends State<CardList> {
                     ? Status.notSelected
                     : clicked[k] == ClickedStatus.yes
                         ? Status.disabled
-                        : rightOrWrong[k] ? Status.correct : Status.incorrect)
+                        : widget.optionsType == OptionCategory.oneAtATime
+                            ? clicked[k] == ClickedStatus.correct
+                                ? Status.correct
+                                : clicked[k] == ClickedStatus.incorrect
+                                    ? Status.incorrect
+                                    : Status.notSelected
+                            : rightOrWrong[k]
+                                ? Status.correct
+                                : Status.incorrect)
                 : rightOrWrong[k] == true ? Status.correct : Status.incorrect),
             onPress: () {
               // changing value of clicked array to yes when button is clicked
@@ -115,7 +127,6 @@ class CardListState extends State<CardList> {
                       for (int i = 0; i < choice.length; i++) {
                         setState(() {
                           clicked[i] = ClickedStatus.done;
-                          displayIcon = true;
                         });
 
                         // checking if the element at choice and clicked choice array are same and mapping rightOrWrong array to true for performing the desired action
@@ -125,6 +136,16 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
+                    });
+                    new Future.delayed(const Duration(milliseconds: 800), () {
+                      var onedata = {
+                        'correct': correctChoices,
+                        'total': choice.length,
+                        'choices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
+                        'choicesRightOrWrong': rightOrWrong
+                      };
+                      widget.onPress(onedata, displayIcon = true);
                     });
                   } else if (clickedChoices.length ==
                           widget.input['answer'].length &&
@@ -157,9 +178,16 @@ class CardListState extends State<CardList> {
                           });
                         }
                       }
-                      setState(() {
-                        displayIcon = true;
-                      });
+                    });
+                    new Future.delayed(const Duration(milliseconds: 800), () {
+                      var onedata = {
+                        'correct': correctChoices,
+                        'total': choice.length,
+                        'choices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
+                        'choicesRightOrWrong': rightOrWrong
+                      };
+                      widget.onPress(onedata, displayIcon = true);
                     });
                   }
                 } else if (widget.optionsType == OptionCategory.oneAtATime) {
@@ -174,17 +202,31 @@ class CardListState extends State<CardList> {
                     new Future.delayed(const Duration(milliseconds: 300), () {
                       setState(() {
                         clicked = choice
-                            .map((e) => ClickedStatus.done)
+                            .map((e) => ClickedStatus.untouched)
                             .toList(growable: false);
-                        displayIcon = true;
                       });
 
                       if (text == widget.input['answer'].first) {
                         setState(() {
-                          rightOrWrong[k] = true;
+                          clicked[k] = ClickedStatus.correct;
                           correctChoices++;
                         });
+                      } else {
+                        clicked[k] = ClickedStatus.incorrect;
+                        var correctChoiceIndex = shuffledChoices
+                            .indexOf(widget.input['answer'].first);
+                        clicked[correctChoiceIndex] = ClickedStatus.correct;
                       }
+                    });
+                    new Future.delayed(const Duration(milliseconds: 800), () {
+                      var onedata = {
+                        'correct': correctChoices,
+                        'total': choice.length,
+                        'choices': "${widget.input['choices']}",
+                        'answer': "${widget.input['answer']}",
+                        'choicesRightOrWrong': rightOrWrong
+                      };
+                      widget.onPress(onedata, displayIcon = true);
                     });
                   }
                 } else if (widget.optionsType == OptionCategory.pair) {
@@ -234,9 +276,16 @@ class CardListState extends State<CardList> {
                             }
                           }
                         }
-                        setState(() {
-                          displayIcon = true;
-                        });
+                      });
+                      new Future.delayed(const Duration(milliseconds: 800), () {
+                        var onedata = {
+                          'correct': correctChoices,
+                          'total': choice.length,
+                          'choices': "${widget.input['choices']}",
+                          'answer': "${widget.input['answer']}",
+                          'choicesRightOrWrong': rightOrWrong
+                        };
+                        widget.onPress(onedata, displayIcon = true);
                       });
                     }
                   }
@@ -266,15 +315,27 @@ class CardListState extends State<CardList> {
     return new Container(
       decoration: new BoxDecoration(
           borderRadius: const BorderRadius.all(const Radius.circular(16.0))),
-      child: new ListView(children: <Widget>[
+      child: new Column(children: <Widget>[
         // Row for Displaying the Question text
-        new Row(
-          children: <Widget>[
-            new Text(
-              widget.input['question'],
-              style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            )
-          ],
+        new Padding(
+          padding: new EdgeInsets.only(top: 10.0),
+          child: new Row(
+            children: <Widget>[
+              new Flexible(
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(widget.input['question'],
+                        style: new TextStyle(
+                            fontSize: size.height > size.width
+                                ? size.height * 0.04
+                                : size.height * 0.04,
+                            fontWeight: FontWeight.bold))
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
 
         // Column for buttons
@@ -286,37 +347,23 @@ class CardListState extends State<CardList> {
         ]),
 
         // Row to display icon to call onEnd Widget
-        displayIcon == true
-            ? new Center(
-                child: new Container(
-                    height: 50.0,
-                    width: 50.0,
-                    decoration: new BoxDecoration(
-                      border: new Border.all(
-                        color: Colors.black,
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                    child: new IconButton(
-                        icon: new Icon(Icons.check),
-                        onPressed: () {
-                          setState(() {
-                            choice = [];
-                            clickedChoices = [];
-                            shuffledChoices = [];
-                            clicked = [];
-                            rightOrWrong = [];
-                          });
-                          //TODO: Call this when all the items have been chosen
-                          widget.onEnd({
-                            'correct': correctChoices,
-                            'total': choice.length,
-                            'choices': "${widget.input['choices']}",
-                            'answer': "${widget.input['answer']}",
-                            'choicesRightOrWrong': rightOrWrong
-                          });
-                        })))
-            : new Container(),
+        // displayIcon == true
+        //     ? new Center(
+        //         child: new Container(
+        //             height: 50.0,
+        //             width: 50.0,
+        //             decoration: new BoxDecoration(
+        //               border: new Border.all(
+        //                 color: Colors.black,
+        //               ),
+        //               shape: BoxShape.circle,
+        //             ),
+        //             child: new IconButton(
+        //                 icon: new Icon(Icons.arrow_forward),
+        //                 onPressed: () {
+        //                   reset();
+        //                 })))
+        //     : new Container(),
       ]),
     );
   }

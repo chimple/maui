@@ -6,7 +6,6 @@ import 'package:maui/components/article_page.dart';
 
 class TopicPageView extends StatefulWidget {
   final String topicId;
-
   TopicPageView({key, @required this.topicId}) : super(key: key);
   @override
   _TopicPageViewState createState() => new _TopicPageViewState();
@@ -15,8 +14,9 @@ class TopicPageView extends StatefulWidget {
 class _TopicPageViewState extends State<TopicPageView> {
   List<Article> _articles;
   bool _isDataAvailable = false;
-  bool _isForwardDisable = false;
-  bool _isBackwardDisable = true;
+//  bool _isForwardDisable = false;
+//  bool _isBackwardDisable = true;
+
   PageController pageController = new PageController(initialPage: 0);
 
   void _initArticles() async {
@@ -38,36 +38,35 @@ class _TopicPageViewState extends State<TopicPageView> {
     super.initState();
     _initArticles();
   }
-
-  void _forwardButtonBehaviour() {
-    pageController.nextPage(
-        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
-    if (pageController.page == 0.0) {
-      setState(() {
-        _isBackwardDisable = false;
-      });
-    }
-    if ((pageController.page + 1.0).toInt() == (_articles.length - 1)) {
-      setState(() {
-        _isForwardDisable = true;
-      });
-    }
-  }
-
-  void _backwardButtonBehaviour() {
-    pageController.previousPage(
-        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
-    if ((pageController.page).toInt() == (_articles.length - 1)) {
-      setState(() {
-        _isForwardDisable = false;
-      });
-    }
-    if (pageController.page - 1.0 == 0.0) {
-      setState(() {
-        _isBackwardDisable = true;
-      });
-    }
-  }
+//  _forwardButtonBehaviour(forward) {
+//    pageController.nextPage(
+//        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+//    if (pageController.page == 0.0) {
+//      setState(() {
+//        _isBackwardDisable = false;
+//      });
+//    }
+//    if ((pageController.page + 1.0).toInt() == (_articles.length - 1)) {
+//      setState(() {
+//        _isForwardDisable = true;
+//      });
+//    }
+//  }
+//
+//  void _backwardButtonBehaviour(bool backward) {
+//    pageController.previousPage(
+//        duration: new Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+//    if ((pageController.page).toInt() == (_articles.length - 1)) {
+//      setState(() {
+//        _isForwardDisable = false;
+//      });
+//    }
+//    if (pageController.page - 1.0 == 0.0) {
+//      setState(() {
+//        _isBackwardDisable = true;
+//      });
+//    }
+//  }
 
   @override
   void dispose() {
@@ -105,44 +104,10 @@ class _TopicPageViewState extends State<TopicPageView> {
                     video: _articles[index].video,
                     image: _articles[index].image,
                     serial: _articles[index].serial,
+                    page: pageController,
                   );
                 },
               ),
-              _articles.length > 1
-                  ? new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new Expanded(
-                          flex: 2,
-                          child: _isBackwardDisable
-                              ? new Container()
-                              : new IconButton(
-                                  onPressed: () => _backwardButtonBehaviour(),
-                                  icon: new Icon(
-                                    Icons.arrow_left,
-                                    color: Colors.black,
-                                  ),
-                                  iconSize: 50.0,
-                                ),
-                        ),
-                        new Expanded(flex: 10, child: new Container()),
-                        new Expanded(
-                          flex: 2,
-                          child: _isForwardDisable
-                              ? new Container()
-                              : new IconButton(
-                                  onPressed: () => _forwardButtonBehaviour(),
-                                  icon: new Icon(
-                                    Icons.arrow_right,
-                                    color: Colors.black,
-                                  ),
-                                  iconSize: 50.0,
-                                ),
-                        ),
-                      ],
-                    )
-                  : new Container(),
             ],
           );
   }

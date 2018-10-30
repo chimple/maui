@@ -12,6 +12,6 @@ class ActivityRepo {
   }
 
   Future<List<Activity>> getActivitiesByTopicId(String topicId) async {
-    return await activityDao.getActivitiesByTopicId(topicId);
+    return activityDao.getActivitiesByTopicId(topicId);
   }
 }

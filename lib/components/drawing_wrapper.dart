@@ -12,11 +12,13 @@ class DrawingWrapper extends StatefulWidget {
   final String activityId;
   final DrawingSelect drawingSelect;
   final String drawingId;
+  final String title;
 
   const DrawingWrapper(
       {Key key,
       @required this.activityId,
       this.drawingSelect = DrawingSelect.latest,
+      this.title,
       this.drawingId})
       : super(key: key);
 
@@ -67,6 +69,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
       _templates =
           activityTemplates.map((t) => t.image).toList(growable: false);
     } else {
+      print('drawing got: ${_drawing.json}');
       _jsonMap = json.decode(_drawing.json);
     }
     setState(() => _isLoading = false);
@@ -85,6 +88,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
     return ActivityBoard(
       json: _jsonMap,
       templates: _templates,
+      title: widget.title,
       saveCallback: ({Map<String, dynamic> jsonMap}) => DrawingRepo().upsert(
           jsonMap: jsonMap,
           activityId: widget.activityId,

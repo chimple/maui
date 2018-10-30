@@ -33,7 +33,7 @@ class QuizResultState extends State<QuizResult> {
   bool extentionTile = false;
 
   OptionCategory _optionsType(Quiz quiz) {
-    if (quiz.optionsType == "oneAtAtime") {
+    if (quiz.optionsType == "oneAtATime") {
       return OptionCategory.oneAtATime;
     } else if (quiz.optionsType == "pair") {
       return OptionCategory.pair;
@@ -204,28 +204,28 @@ class QuizResultState extends State<QuizResult> {
     return _questionResults;
   }
 
-  void _initQuizProgressTable() async {
-    List<Map> quizInputsMapList = widget.quizInputs;
-    List<Quiz> quizzesMapList = widget.quizzes;
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      User _user = AppStateContainer.of(context).state.loggedInUser;
-      for (var i = 0; i < quizInputsMapList.length; i++) {
-        print(await new QuizProgressRepo().insertOrUpdateQuizProgress(
-            Uuid().v4(),
-            _user.id,
-            quizzesMapList[0].topicId,
-            quizzesMapList[0].optionsType,
-            quizInputsMapList[0]["correct"],
-            quizInputsMapList[0]["total"]));
-      }
-    });
-  }
+  // void _initQuizProgressTable() async {
+  //   List<Map> quizInputsMapList = widget.quizInputs;
+  //   List<Quiz> quizzesMapList = widget.quizzes;
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     // User _user = AppStateContainer.of(context).state.loggedInUser;
+  //     for (var i = 0; i < quizInputsMapList.length; i++) {
+  //       // print(await new QuizProgressRepo().insertOrUpdateQuizProgress(
+  //       //     Uuid().v4(),
+  //       //     // _user.id,
+  //       //     quizzesMapList[0].topicId,
+  //       //     quizzesMapList[0].optionsType,
+  //       //     quizInputsMapList[0]["correct"],
+  //       //     quizInputsMapList[0]["total"]));
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _initQuizProgressTable();
+    // _initQuizProgressTable();
   }
 
   @override

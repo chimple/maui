@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:maui/components/hud.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/quiz_repo.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'match_the_following.dart';
 import 'multiple_choice.dart';
 import 'grouping_quiz.dart';
+import 'quiz_scroller_pager.dart';
 import 'true_or_false.dart';
 import 'sequence.dart';
 import 'quiz_result.dart';
@@ -17,53 +19,57 @@ class QuizPager extends StatefulWidget {
   Function onTurn;
   int iteration;
   GameConfig gameConfig;
+  GameMode gameMode;
   bool isRotated;
 
+  int playTime = 10000;
+  Function onGameEnd;
   QuizPager(
       {key,
       this.onScore,
       this.onProgress,
-      this.onEnd,
-      this.onTurn,
       this.iteration,
-      this.gameConfig,
+      this.onEnd,
       this.isRotated = false})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new QuizPagerState();
 
-  static Widget createQuiz(
-      {Quiz quiz, Map<String, dynamic> input, Function onEnd}) {
+  static Widget createQuiz({
+    Quiz quiz,
+    Map<String, dynamic> input,
+    Function onEnd,
+    Size size,
+    Widget hud,
+  }) {
+    print(
+        "here quize type isss.... what i ma getting is.......${quiz.quizType}");
+    print("inpu data is.......of from database is...$input");
     switch (quiz.quizType) {
-      case QuizType.oneAtAtime:
-        return Multiplechoice(
+      case QuizType.oneAtATime:
+        return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
+          hud: hud,
+          relation: quiz.optionsType,
         );
         break;
       case QuizType.pair:
-        return MatchingGame(
-          onEnd: onEnd,
-          gameData: input,
-        );
-        break;
-      case QuizType.oneAtAtime:
-        return TrueOrFalse(
+        return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
+          hud: hud,
+          relation: quiz.optionsType,
         );
         break;
+
       case QuizType.many:
-        return GroupingQuiz(
+        return QuizScrollerPager(
           onEnd: onEnd,
           input: input,
-        );
-        break;
-      case QuizType.many:
-        return SequenceQuiz(
-          onEnd: onEnd,
-          input: input,
+          hud: hud,
+          relation: quiz.optionsType,
         );
         break;
     }
@@ -75,7 +81,9 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   List<Map<String, dynamic>> _quizInputs;
   bool _isLoading = true;
   int _currentQuiz = 0;
-
+  int maxIterations = 2;
+  double _myProgress = 0.0;
+  double _otherProgress = 0.0;
   @override
   void initState() {
     super.initState();
@@ -83,8 +91,10 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
   }
 
   void _initState() async {
-    widget.gameConfig.topicId = 'lion'; //TODO: Link to topic
-    _quizzes = await QuizRepo().getQuizzesByTopicId(widget.gameConfig.topicId);
+    // widget.gameConfig.topicId = 'tiger'; //TODO: Link to topic
+    _quizzes = await QuizRepo().getQuizzesByTopicId('tiger');
+
+    print("hello check the relation is....${_quizzes}");
     _quizInputs = _quizzes.map((quiz) {
       Map<String, dynamic> data;
       try {
@@ -95,7 +105,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
       }
       return data;
     }).toList(growable: false);
-    print(_quizInputs);
+
     setState(() {
       _isLoading = false;
     });
@@ -103,6 +113,7 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new Center(
           child: new SizedBox(
@@ -114,16 +125,58 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
     if (_currentQuiz < _quizzes.length) {
       Quiz quiz = _quizzes[_currentQuiz];
       final input = _quizInputs[_currentQuiz];
+
+      print("hello this.... is..data of database is...${input}");
+      var size = media.size;
       print(input);
-      return QuizPager.createQuiz(quiz: quiz, input: input, onEnd: _onEnd);
-    }
-     else {
+
+      Widget hud = Container(
+        width: 120.0,
+        height: 140.0,
+        decoration: new BoxDecoration(
+          color: Colors.orange,
+          borderRadius: const BorderRadius.all(const Radius.circular(40.0)),
+        ),
+        // height: 100.0,
+        child: Stack(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            // _onProgress( progress),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(),
+            ),
+
+            // Hud(
+            //     start: false,
+            //     amICurrentUser: false,
+            //     user: widget.gameConfig.otherUser,
+            //     height: media.size.height * 0.1,
+            //     gameMode: widget.gameMode,
+            //     playTime: widget.playTime,
+            //     onEnd: widget.onGameEnd,
+            //     progress: _otherProgress,
+            //     score: widget.gameConfig.otherScore,
+            //     backgroundColor: Colors.red,
+            //     foregroundColor: Colors.amber)
+          ]),
+        ]),
+      );
+      return QuizPager.createQuiz(
+        quiz: quiz,
+        input: input,
+        onEnd: _onEnd,
+        size: size,
+        hud: hud,
+      );
+    } else {
       return IntrinsicHeight(
-        child: QuizResult(
-          quizInputs: _quizInputs,
-          quizzes: _quizzes,
-           onEnd: widget.onEnd,
-           onScore:widget.onScore
+        child: Container(
+          height: media.size.height,
+          child: QuizResult(
+              quizInputs: _quizInputs,
+              quizzes: _quizzes,
+              onEnd: widget.onEnd,
+              onScore: widget.onScore),
         ),
       );
     }
@@ -131,8 +184,11 @@ class QuizPagerState extends State<QuizPager> with TickerProviderStateMixin {
 
   _onEnd(Map<String, dynamic> resultData) {
     if (resultData != null) _quizInputs[_currentQuiz].addAll(resultData);
+    // print(
+    //     "genereal game mode is.......::${widget.gameConfig.amICurrentPlayer}");
     setState(() {
-      widget.onProgress(++_currentQuiz / _quizzes.length);
+      _myProgress = (++_currentQuiz / _quizzes.length);
+      print("object...... the myprogress.. ::$_myProgress");
     });
   }
 }

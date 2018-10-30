@@ -10,6 +10,7 @@ import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'components/camera.dart';
+import 'package:maui/screens/welcome_screen.dart';
 import 'loca.dart';
 
 class MauiApp extends StatelessWidget {
@@ -30,7 +31,8 @@ class MauiApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new LoginScreen(),
+        '/': (BuildContext context) => new WelcomeScreen(),
+        '/login': (BuildContext context) => new LoginScreen(),
         '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen()

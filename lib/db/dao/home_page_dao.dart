@@ -12,12 +12,12 @@ class HomeDao {
       columns: [
         Home.tileIdCol,
         Home.typeCol,
-        Home.typeCol,
+        Home.typeIdCol,
         Home.userIdCol,
       ],
     );
     if (maps.length > 0) {
-      return maps.map((el) => new Home.fromMap(el)).toList(growable: false);
+      return maps.map((el) => new Home.fromMap(el)).toList(growable: true);
     }
     return null;
   }
