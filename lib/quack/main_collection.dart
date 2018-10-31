@@ -47,6 +47,7 @@ class MainCollection extends StatelessWidget {
                               //   onPressed: () {
                               //     showDialog(
                               //       context: context,
+                              //       barrierDismissible: false,
                               //       builder: (BuildContext context) => Animations(),
                               //     );
                               //     // Perform some action
