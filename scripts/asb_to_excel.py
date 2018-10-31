@@ -3,6 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 from urllib import request
 import re
+import os.path
 
 #story_id = sys.argv[1]
 #with urllib.request.urlopen('https://www.africanstorybook.org/read/readbook.php?id='+story_id+'&d=0&a=1') as f:
@@ -27,7 +28,8 @@ with open(story_file) as f:
     title = soup.find('div',class_='cover_title').text
     content = soup.find('div',class_='cover_author').text
     content += '\n'+soup.find('div',class_='cover_artist').text
-    request.urlretrieve("https://www.africanstorybook.org/"+title_img, 'asb/'+img_name)
+    if not os.path.isfile('asb/'+img_name):
+        request.urlretrieve("https://www.africanstorybook.org/"+title_img, 'asb/'+img_name)
 
     print(title_img,',',title,',',content)
     ws.cell(row=row, column=1).value = 'topic'
@@ -53,13 +55,27 @@ with open(story_file) as f:
         if img != '' or text != '':
             if img != '':
                 img_name = img.split('/')[-1]
-                request.urlretrieve("https://www.africanstorybook.org/"+img, 'asb/'+img_name)
+                if not os.path.isfile('asb/'+img_name):
+                    request.urlretrieve("https://www.africanstorybook.org/"+img, 'asb/'+img_name)
 
             print(img, ',', text)
             ws.cell(row=row, column=1).value = 'article'
-            ws.cell(row=row, column=2).value = 'asb/'+img_name
+            if img_name:
+                ws.cell(row=row, column=2).value = 'asb/'+img_name
+            else:
+                ws.cell(row=row, column=2).value = ''
             ws.cell(row=row, column=3).value = ''
             ws.cell(row=row, column=4).value = text
             ws.cell(row=row, column=5).value = ''
             row = row+1
+    back_cover = soup.find('div',class_='backcover_wrapper')
+    if back_cover:
+        back_cover_text = back_cover.get_text("\n", strip=True)
+        print(back_cover_text)
+        ws.cell(row=row, column=1).value = 'article'
+        ws.cell(row=row, column=2).value = ''
+        ws.cell(row=row, column=3).value = ''
+        ws.cell(row=row, column=4).value = back_cover_text
+        ws.cell(row=row, column=5).value = ''
+
 wb.save(story_file+'.xlsx')

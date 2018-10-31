@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
@@ -320,6 +322,17 @@ class AppStateContainerState extends State<AppStateContainer> {
           message['userId'], message['deviceId'], message['message']);
       if (activity == 'friends') {
         getUsers();
+      }
+    } else if (message['messageType'] == 'tile') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length == 2) {
+        Provider.dispatch<RootState>(
+            context,
+            AddLike(
+                parentId: msgList[0],
+                tileType: TileType.values[int.parse(msgList[1])],
+                userId: message['userId']));
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
