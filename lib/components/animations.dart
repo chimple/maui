@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/quack/post_comments.dart';
 import 'package:nima/nima_actor.dart';
 
 class Animations extends StatefulWidget {
@@ -121,13 +122,17 @@ class AnimationsState extends State<Animations> {
                       color: Colors.amber,
                     ),
                     child: new FlatButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostComments())),
                         child: new Text(
-                      'Post',
-                      style: new TextStyle(
-                          fontSize: 40.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    )))
+                          'Post',
+                          style: new TextStyle(
+                              fontSize: 40.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        )))
               ]),
         ]);
   }
