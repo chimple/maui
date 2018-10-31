@@ -1,6 +1,7 @@
 import 'dart:io';
+import 'package:maui/quack/user_collection.dart';
 import 'package:maui/quack/user_drawing_grid.dart';
-
+import 'package:maui/quack/user_progress.dart';
 import '../loca.dart';
 import 'package:flutter/material.dart';
 import '../state/app_state_container.dart';
@@ -12,10 +13,7 @@ class ProfileView extends StatefulWidget {
 
 class ProfileViewState extends State<ProfileView>
     with TickerProviderStateMixin {
-  List<String> categories = [
-    "gallery",
-    "topic",
-  ];
+  List<String> categories = ["gallery", "collection", "progress"];
   TabController _controller;
 
   @override
@@ -84,7 +82,10 @@ class ProfileViewState extends State<ProfileView>
                     text: Loca.of(context).gallery,
                   ),
                   new Tab(
-                    text: Loca.of(context).topic,
+                    text: Loca.of(context).collection,
+                  ),
+                  new Tab(
+                    text: Loca.of(context).progress,
                   ),
                 ],
               ),
@@ -95,7 +96,8 @@ class ProfileViewState extends State<ProfileView>
           controller: _controller,
           children: <Widget>[
             UserDrawingGrid(),
-            new Text("i have to show topic here"),
+            UserCollection(),
+            UserProgress(),
           ],
         ),
       ),
