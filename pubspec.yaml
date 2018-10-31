@@ -15,6 +15,7 @@ dependencies:
   tuple: ^1.0.1
   json_annotation: ^1.1.0
   audioplayers: ^0.7.5
+  percent_indicator: ^1.0.9
   fluttery:
     git:
       https://github.com/chimple/fluttery.git

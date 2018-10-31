@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
@@ -33,13 +35,13 @@ class CardLock extends StatelessWidget {
                       color: Color(0x99999999),
                       child: Icon(
                         Icons.lock,
-                        color: Colors.white54,
+                        color: Colors.white24,
                       ),
                     ),
                   ),
                 )
               : Center(
-                  child: CollectionProgressIndicator(collectionId: card.id)),
+                  child: CollectionProgressIndicator(card: card)),
         );
       },
       nullable: true,
