@@ -330,8 +330,8 @@ class AppStateContainerState extends State<AppStateContainer> {
         Provider.dispatch<RootState>(
             context,
             AddLike(
-                parentId: msgList[0],
-                tileType: TileType.values[int.parse(msgList[1])],
+                parentId: msgList[1],
+                tileType: TileType.values[int.parse(msgList[0])],
                 userId: message['userId']));
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
