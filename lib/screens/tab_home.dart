@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
 import 'package:maui/home/home_screen.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/quack/main_collection.dart';
+import 'package:maui/screens/Page_Route.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/loca.dart';
@@ -31,19 +33,16 @@ class TabHomeState extends State<TabHome> {
     Color(0xFF5BBB93),
     Color(0xFFF5C851),
     Color(0xFF7CC5F2),
-    Color(0xFFEF3F69)
   ];
   List<String> appBarTitleList = [
     "News Feed",
     "Friend's Messenger",
     "Quack",
     "Games",
-    "Profile"
   ];
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-
     return Scaffold(
       appBar: new AppBar(
         title: new Text(appBarTitleList[_currentIndex]),
@@ -54,7 +53,7 @@ class TabHomeState extends State<TabHome> {
               child: new Image.asset("assets/profile.png"),
             ),
             onPressed: () {
-              print("object");
+               Navigator.of(context).push(new NewPageRoute());
             },
           ),
         ],
@@ -182,34 +181,6 @@ class TabHomeState extends State<TabHome> {
                     : Color(0xFF0E4476),
               ),
             ),
-            BottomNavigationBarItem(
-              // activeIcon: _currentUserImage,
-              icon: Container(
-                decoration: BoxDecoration(
-                    color: _currentIndex == 4
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                width: (mediaQuery.size.width) / 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Center(
-                    child: new Image.asset(
-                      "assets/story.png",
-                      height: 28.0,
-                      width: 28.0,
-                    ),
-                  ),
-                ),
-              ),
-              // title: Text(Loca.of(context).profile),
-              title: new Container(
-                color: _currentIndex == 4
-                    ? tabsColorList[_currentIndex]
-                    : Color(0xFF0E4476),
-              ),
-            ),
           ],
           onTap: (int i) => setState(() => _currentIndex = i),
         ),
@@ -231,9 +202,6 @@ class TabHomeState extends State<TabHome> {
         break;
       case 3:
         return GameListView();
-        break;
-      case 4:
-        return ProfileView();
         break;
     }
   }
