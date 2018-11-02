@@ -6,6 +6,7 @@ import 'package:maui/actions/deduct_points.dart';
 import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
+import 'package:maui/actions/post_tile.dart';
 import 'package:maui/actions/save_drawing.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_extra_repo.dart';
@@ -56,6 +57,7 @@ class CollectionMiddleware extends Middleware<RootState> {
     } else if (action is AddLike) {
       action.likeRepo = likeRepo;
       action.tileRepo = tileRepo;
+      action.userRepo = userRepo;
     } else if (action is AddComment) {
       action.commentRepo = commentRepo;
     } else if (action is SaveDrawing) {
@@ -64,6 +66,8 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.commentRepo = commentRepo;
     } else if (action is DeductPoints) {
       action.userRepo = userRepo;
+    } else if(action is PostTile) {
+      action.tileRepo = tileRepo;
     }
 
     return state;
