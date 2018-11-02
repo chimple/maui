@@ -64,13 +64,13 @@ class TabHomeState extends State<TabHome> {
             child: new Image.asset("assets/quack_header.png"),
           ),
           onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) => Animations(),
-                                  );
-                                  // Perform some action
-                                },
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) => Animations(),
+            );
+            // Perform some action
+          },
         ),
         backgroundColor: tabsColorList[_currentIndex],
       ),
