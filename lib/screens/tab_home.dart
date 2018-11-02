@@ -69,7 +69,9 @@ class TabHomeState extends State<TabHome> {
         backgroundColor: tabsColorList[_currentIndex],
       ),
       bottomNavigationBar: new Theme(
-        data: Theme.of(context).copyWith(canvasColor: Color(0xFF0E4476)),
+        data: Theme.of(context).copyWith(
+          canvasColor: Color(0xFFD8D7D7),
+        ),
         child: new BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
@@ -77,11 +79,12 @@ class TabHomeState extends State<TabHome> {
             BottomNavigationBarItem(
               icon: Container(
                 decoration: BoxDecoration(
-                    color: _currentIndex == 0
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                  color: _currentIndex == 0
+                      ? tabsColorList[_currentIndex]
+                      : Color(0xFF0E4476),
+                  shape: BoxShape.rectangle,
+                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -104,11 +107,12 @@ class TabHomeState extends State<TabHome> {
             BottomNavigationBarItem(
               icon: Container(
                 decoration: BoxDecoration(
-                    color: _currentIndex == 1
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                  color: _currentIndex == 1
+                      ? tabsColorList[_currentIndex]
+                      : Color(0xFF0E4476),
+                  shape: BoxShape.rectangle,
+                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -131,11 +135,12 @@ class TabHomeState extends State<TabHome> {
             BottomNavigationBarItem(
               icon: Container(
                 decoration: BoxDecoration(
-                    color: _currentIndex == 2
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                  color: _currentIndex == 2
+                      ? tabsColorList[_currentIndex]
+                      : Color(0xFF0E4476),
+                  shape: BoxShape.rectangle,
+                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -158,11 +163,12 @@ class TabHomeState extends State<TabHome> {
             BottomNavigationBarItem(
               icon: Container(
                 decoration: BoxDecoration(
-                    color: _currentIndex == 3
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                  color: _currentIndex == 3
+                      ? tabsColorList[_currentIndex]
+                      : Color(0xFF0E4476),
+                  shape: BoxShape.rectangle,
+                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -186,11 +192,12 @@ class TabHomeState extends State<TabHome> {
               // activeIcon: _currentUserImage,
               icon: Container(
                 decoration: BoxDecoration(
-                    color: _currentIndex == 4
-                        ? tabsColorList[_currentIndex]
-                        : Color(0xFF0E4476),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                  color: _currentIndex == 4
+                      ? tabsColorList[_currentIndex]
+                      : Color(0xFF0E4476),
+                  shape: BoxShape.rectangle,
+                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),

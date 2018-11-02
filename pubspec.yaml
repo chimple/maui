@@ -15,6 +15,7 @@ dependencies:
   tuple: ^1.0.1
   json_annotation: ^1.1.0
   audioplayers: ^0.7.5
+  percent_indicator: ^1.0.9
   fluttery:
     git:
       https://github.com/chimple/fluttery.git
@@ -65,6 +66,8 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
+    - assets/quack.nima
+    - assets/quack.png
     - assets/right.wav
     - assets/wrong.wav
     - assets/lion.ogg
