@@ -85,10 +85,10 @@ class ProfileViewState extends State<ProfileView>
           new Text(
             "${user.name}",
             style: new TextStyle(
-              fontSize: 20.0, 
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
               color: Colors.blueAccent,
-              ),
+            ),
           ),
           getTabBar(),
           getTabBarPages()
