@@ -13,6 +13,7 @@ import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/screens/home_page_view.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/components/animations.dart';
 import 'profile_view.dart';
 
 class TabHome extends StatefulWidget {
@@ -63,8 +64,13 @@ class TabHomeState extends State<TabHome> {
             child: new Image.asset("assets/quack_header.png"),
           ),
           onPressed: () {
-            print("object");
-          },
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) => Animations(),
+                                  );
+                                  // Perform some action
+                                },
         ),
         backgroundColor: tabsColorList[_currentIndex],
       ),
