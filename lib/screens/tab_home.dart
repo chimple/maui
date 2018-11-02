@@ -78,12 +78,14 @@ class TabHomeState extends State<TabHome> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Container(
+                margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                 decoration: BoxDecoration(
                   color: _currentIndex == 0
                       ? tabsColorList[_currentIndex]
                       : Color(0xFF0E4476),
                   shape: BoxShape.rectangle,
-                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(10.0)),
                 ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
@@ -191,12 +193,14 @@ class TabHomeState extends State<TabHome> {
             BottomNavigationBarItem(
               // activeIcon: _currentUserImage,
               icon: Container(
+                margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
                 decoration: BoxDecoration(
                   color: _currentIndex == 4
                       ? tabsColorList[_currentIndex]
                       : Color(0xFF0E4476),
                   shape: BoxShape.rectangle,
-                  // borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                  borderRadius:
+                      BorderRadius.horizontal(right: Radius.circular(10.0)),
                 ),
                 width: (mediaQuery.size.width) / 5,
                 child: Padding(
