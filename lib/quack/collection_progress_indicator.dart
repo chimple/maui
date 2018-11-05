@@ -10,10 +10,14 @@ class CollectionProgressIndicator extends StatelessWidget {
   const CollectionProgressIndicator({Key key, this.card}) : super(key: key);
 
   int hexStringToHexInt(String hex) {
-    hex = hex.replaceFirst('#', '');
-    hex = hex.length == 6 ? 'ff' + hex : hex;
-    int val = int.parse(hex, radix: 16);
-    return val;
+    if (hex != null) {
+      hex = hex.replaceFirst('#', '');
+      hex = hex.length == 6 ? 'ff' + hex : hex;
+      int val = int.parse(hex, radix: 16);
+      return val;
+    } else {
+      return 0xffffffff;
+    }
   }
 
   @override
