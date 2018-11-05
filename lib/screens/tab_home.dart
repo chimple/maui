@@ -8,6 +8,7 @@ import 'package:maui/home/home_screen.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/quack/main_collection.dart';
+import 'package:maui/quack/story_page.dart';
 import 'package:maui/screens/Page_Route.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_list_view.dart';
@@ -33,12 +34,14 @@ class TabHomeState extends State<TabHome> {
     Color(0xFF5BBB93),
     Color(0xFFF5C851),
     Color(0xFF7CC5F2),
+    Color(0xFF0E4476)
   ];
   List<String> appBarTitleList = [
     "News Feed",
     "Friend's Messenger",
     "Quack",
     "Games",
+    "Story"
   ];
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class TabHomeState extends State<TabHome> {
               child: new Image.asset("assets/profile.png"),
             ),
             onPressed: () {
-               Navigator.of(context).push(new NewPageRoute());
+              Navigator.of(context).push(new NewPageRoute());
             },
           ),
         ],
@@ -241,6 +244,9 @@ class TabHomeState extends State<TabHome> {
         break;
       case 3:
         return GameListView();
+        break;
+      case 4:
+        return StoryPage();
         break;
     }
   }
