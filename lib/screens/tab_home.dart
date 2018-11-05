@@ -156,7 +156,7 @@ class TabHomeState extends State<TabHome> {
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
                     child: new Image.asset(
-                      "assets/quack.png",
+                      "assets/quackicon.png",
                       height: 28.0,
                       width: 28.0,
                     ),

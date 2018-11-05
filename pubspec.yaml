@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/quack.nima
     - assets/quack.png
+    - assets/quackicon.png
     - assets/right.wav
     - assets/wrong.wav
     - assets/lion.ogg
