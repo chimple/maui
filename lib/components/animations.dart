@@ -54,7 +54,7 @@ class AnimationsState extends State<Animations> {
               children: <Widget>[
                 FlatButton(
                   onPressed: () {Navigator.of(context).pop();},
-                  child: new Icon(Icons.close, size: size.height * 0.05, color: Colors.white)
+                  child: new Icon(Icons.arrow_back, size: size.height * 0.05, color: Colors.white)
                 ),
               ],
             ),
