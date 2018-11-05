@@ -14,6 +14,7 @@ class TileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -22,10 +23,8 @@ class TileCard extends StatelessWidget {
           ),
         ),
         Expanded(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
           child: _buildTile(context),
-        ))
+        ),
       ],
     );
   }
@@ -33,15 +32,49 @@ class TileCard extends StatelessWidget {
   Widget _buildTile(BuildContext context) {
     switch (tile.type) {
       case TileType.card:
-        return AspectRatio(
-            aspectRatio: CardSummary.cardTypeAspectRatio[tile.card.type],
-            child: CardSummary(card: tile.card));
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  tile.content,
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+              Container(
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(8.0),
+                  border: new Border.all(
+                    width: 1.0,
+                    color: Colors.red,
+                  ),
+                ),
+                constraints: BoxConstraints.tightFor(height: 120.0),
+                child: CardSummary(
+                  card: tile.card,
+                  orientation: Orientation.landscape,
+                ),
+              )
+            ],
+          ),
+        );
         break;
       case TileType.drawing:
-        return DrawingCard(tile: tile);
+        return Row(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              constraints: BoxConstraints.tightFor(height: 120.0),
+              child: DrawingCard(tile: tile),
+            )
+          ],
+        );
         break;
       case TileType.message:
-        return Text(tile.content);
+        return Card(child: Text(tile.content));
     }
   }
 }
