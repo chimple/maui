@@ -13,8 +13,11 @@ import 'package:uuid/uuid.dart';
 class LikeButton extends StatelessWidget {
   final String parentId;
   final TileType tileType;
+  final bool isInteractive;
 
-  const LikeButton({Key key, this.parentId, this.tileType}) : super(key: key);
+  const LikeButton(
+      {Key key, this.parentId, this.tileType, this.isInteractive = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +25,25 @@ class LikeButton extends StatelessWidget {
       convert: (state) => state.likeMap[parentId] != null,
       where: (prev, next) => next != prev,
       builder: (like) {
-        return like ?? false
-            ? Icon(
-                Icons.favorite,
-                size: 40.0,
-                color: Colors.red,
-              )
-            : InkWell(
-                child: Icon(
-                  Icons.favorite_border,
-                  size: 40.0,
-                  color: Colors.black,
-                ),
-                onTap: () => like == null
-                    ? null
-                    : Provider.dispatch<RootState>(context,
-                        AddLike(parentId: parentId, tileType: TileType.card)),
-              );
+        if (like ?? false)
+          return Icon(
+            Icons.favorite,
+            color: Colors.red,
+          );
+        else if (!isInteractive) {
+          return Icon(Icons.favorite_border, color: Colors.black);
+        } else {
+          return InkWell(
+            child: Icon(
+              Icons.favorite_border,
+              color: Colors.black,
+            ),
+            onTap: () => (!isInteractive || like == null)
+                ? null
+                : Provider.dispatch<RootState>(context,
+                    AddLike(parentId: parentId, tileType: TileType.card)),
+          );
+        }
       },
       nullable: true,
     );

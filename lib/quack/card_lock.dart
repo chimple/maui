@@ -25,25 +25,33 @@ class CardLock extends StatelessWidget {
       convert: (state) => state.progressMap[card.id],
       where: (prev, next) => next != prev,
       builder: (progress) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: progress == null
-              ? InkWell(
-                  onTap: () => _askToUnlock(context),
-                  child: AspectRatio(
-                    aspectRatio: 1.0,
-                    child: Container(
-                      constraints: BoxConstraints.expand(),
-                      color: Color(0x99999999),
-                      child: Icon(
-                        Icons.lock,
-                        color: Colors.white24,
-                      ),
+        return progress == null
+            ? InkWell(
+                onTap: () => _askToUnlock(context),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: Container(
+                    constraints: BoxConstraints.expand(),
+                    color: Color(0x99999999),
+                    child: Icon(
+                      Icons.lock,
+                      color: Colors.white24,
                     ),
                   ),
-                )
-              : Center(child: CollectionProgressIndicator(card: card)),
-        );
+                ),
+              )
+            : AspectRatio(
+                aspectRatio: 1.0,
+                child: Container(
+                  constraints: BoxConstraints.expand(),
+                  child: Align(
+                    alignment: Alignment(0.0, 1.0),
+                    child: CollectionProgressIndicator(
+                      card: card,
+                    ),
+                  ),
+                ),
+              );
       },
       nullable: true,
     );

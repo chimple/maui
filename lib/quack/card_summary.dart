@@ -11,132 +11,114 @@ import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/like_button.dart';
 
-final cardTypeColors = {
-  CardType.knowledge: Color(0xff99CE34),
-  CardType.concept: Color(0xffF5C851),
-  CardType.activity: Color(0xffE84D4D),
-  CardType.question: Color(0xff3CC1EF)
-};
-
 class CardSummary extends StatelessWidget {
   final QuackCard card;
   final int index;
   final String parentCardId;
+  final Orientation orientation;
 
-  static final cardTypeAspectRatio = {
-    CardType.knowledge: 1.0,
-    CardType.concept: 1.0,
-    CardType.activity: 1.0,
-    CardType.question: 1.0
-  };
-
-  CardSummary({Key key, @required this.card, this.index, this.parentCardId})
+  CardSummary(
+      {Key key,
+      @required this.card,
+      this.index,
+      this.parentCardId,
+      this.orientation = Orientation.portrait})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final summary = Column(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.0,
-          child: Card(
-            color: cardTypeColors[card.type],
-            margin: EdgeInsets.all(8.0),
-            elevation: 8.0,
-            child: InkWell(
-              onTap: () {
-                if (card.type == CardType.knowledge) {
-                  Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
-                      Provider.dispatch<RootState>(context,
-                          AddProgress(card: card, parentCardId: parentCardId));
-                      return CardPager(
-                        cardId: parentCardId,
-                        cardType: CardType.knowledge,
-                        initialPage: index,
-                      );
-                    }),
-                  );
-                } else {
-                  Provider.dispatch<RootState>(
-                      context, FetchCardDetail(card.id));
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        print('MaterialPageRoute: CardDetail: $card');
-                        return CardDetail(
-                          card: card,
-                          parentCardId: parentCardId,
-                        );
-                      },
-                    ),
-                  );
-                }
+    final widget = InkWell(
+      onTap: () {
+        if (card.type == CardType.knowledge) {
+          Navigator.of(context).push(
+            new MaterialPageRoute(builder: (BuildContext context) {
+              Provider.dispatch<RootState>(
+                  context, AddProgress(card: card, parentCardId: parentCardId));
+              return CardPager(
+                cardId: parentCardId,
+                cardType: CardType.knowledge,
+                initialPage: index,
+              );
+            }),
+          );
+        } else {
+          Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                print('MaterialPageRoute: CardDetail: $card');
+                return CardDetail(
+                  card: card,
+                  parentCardId: parentCardId,
+                );
               },
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    child: AspectRatio(
-                      child: CardHeader(
-                        card: card,
-                        parentCardId: parentCardId,
-                      ),
-                      aspectRatio: 1.78,
-                    ),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(card.title ?? '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
+          );
+        }
+      },
+      child: AspectRatio(
+        child: CardHeader(
+          card: card,
+          parentCardId: parentCardId,
         ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
+        aspectRatio: 1.0,
+      ),
+    );
+
+    final header = Material(
+        elevation: 8.0,
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        child: card.type == CardType.concept
+            ? Stack(
                 children: <Widget>[
-                  LikeButton(
-                    parentId: card.id,
-                    tileType: TileType.card,
+                  widget,
+                  CardLock(
+                    card: card,
+                    parentCardId: parentCardId,
                   ),
-                  Text("${card.likes ?? ''}"),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.comment),
-                  Text("${card.comments ?? ''}")
                 ],
               )
-            ],
-          ),
-        )
+            : widget);
+    final desc = Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(card.title ?? '',
+              style: Theme.of(context).textTheme.subhead,
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                LikeButton(
+                  parentId: card.id,
+                  tileType: TileType.card,
+                  isInteractive: false,
+                ),
+                Text("${card.likes ?? ''}"),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.comment),
+                Text("${card.comments ?? ''}")
+              ],
+            )
+          ],
+        ),
       ],
     );
-    return card.type == CardType.concept
-        ? Stack(
-            children: <Widget>[
-              summary,
-              CardLock(
-                card: card,
-                parentCardId: parentCardId,
-              ),
-            ],
+    return orientation == Orientation.portrait
+        ? Column(
+            children: <Widget>[header, desc],
           )
-        : summary;
+        : Row(
+            children: <Widget>[header, Expanded(child: desc)],
+          );
   }
 }

@@ -8,8 +8,6 @@ import 'package:maui/models/root_state.dart';
 // import 'package:nima/nima_actor.dart';
 
 class MainCollection extends StatelessWidget {
-
-  
   @override
   Widget build(BuildContext context) {
     print('mainCollection: build');
@@ -20,50 +18,34 @@ class MainCollection extends StatelessWidget {
           .toList(growable: false),
       where: (prev, next) => next != prev,
       builder: (cards) {
+        List<Widget> widgets = [];
+        cards.forEach((c) {
+          widgets.add(SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                c.title,
+                textAlign: TextAlign.start,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+          ));
+          widgets.add(SliverToBoxAdapter(
+            child: CollectionGrid(
+              cardId: c.id,
+              cardType: CardType.concept,
+            ),
+          ));
+          widgets.add(SliverToBoxAdapter(
+            child: Divider(),
+          ));
+        });
         return cards == null
             ? Container()
-            : ListView(
+            : CustomScrollView(
                 primary: true,
-                itemExtent: media.size.width / 2.0,
-                children: cards
-                    .map(
-                      (c) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Flexible(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  c.title,
-                                  textAlign: TextAlign.start,
-                                  style: Theme.of(context).textTheme.title,
-                                ),
-                              )),
-
-                              // new Container(
-                              //   height: 100.0,
-                              //   width: 200.0,
-                              // child: new RaisedButton(
-                              //   onPressed: () {
-                              //     showDialog(
-                              //       context: context,
-                              //       barrierDismissible: false,
-                              //       builder: (BuildContext context) => Animations(),
-                              //     );
-                              //     // Perform some action
-                              //   },
-                              //   child: Icon(Icons.home, size: 50.0,),
-                              // )),
-
-                              CollectionGrid(
-                                cardId: c.id,
-                                cardType: CardType.concept,
-                              ),
-                              Divider()
-                            ],
-                          ),
-                    )
-                    .toList(growable: false));
+//                itemExtent: media.size.width / 2.0,
+                slivers: widgets);
       },
     );
   }
