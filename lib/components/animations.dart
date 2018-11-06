@@ -59,7 +59,7 @@ class AnimationsState extends State<Animations> {
               ],
             ),
             Container(
-              height: size.height * 0.84,
+              height: size.height > size.width ? size.height * 0.8 : size.height * 0.70,
               child: Row(
                 children: <Widget>[
                   FlatButton(
@@ -72,6 +72,7 @@ class AnimationsState extends State<Animations> {
                         color: count == 0 ? Colors.grey : Colors.white,
                       )),
                   Expanded(
+                    flex: 1,
                       child: PageView.builder(
                           controller: _pageController,
                           scrollDirection: Axis.horizontal,
@@ -87,25 +88,23 @@ class AnimationsState extends State<Animations> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Flexible(
-                                            child: Container(
-                                                // height: double.maxFinite,
-                                                // width: double.maxFinite,
-                                                height: size.height > size.width
-                                                    ? size.height * 0.8
-                                                    : size.height * 0.85,
-                                                width: size.height > size.width
-                                                    ? size.width * 0.8
-                                                    : size.width * 0.5,
-                                                child: new NimaActor(
-                                                  "assets/quack",
-                                                  alignment: Alignment.center,
-                                                  fit: BoxFit.scaleDown,
-                                                  animation:
-                                                      '${emotions[count]}',
-                                                  mixSeconds: 0.2,
-                                                )),
-                                          ),
+                                          Container(
+                                              // height: double.,
+                                              // width: double.maxFinite,
+                                              height: size.height > size.width
+                                                  ? size.height * 0.8
+                                                  : size.height * 0.70,
+                                              width: size.height > size.width
+                                                  ? size.width * 0.56
+                                                  : size.width * 0.48,
+                                              child: new NimaActor(
+                                                "assets/quack",
+                                                alignment: Alignment.center,
+                                                fit: BoxFit.scaleDown,
+                                                animation:
+                                                    '${emotions[count]}',
+                                                mixSeconds: 0.2,
+                                              )),
                                         ]),
                                   ]),
                           onPageChanged: (index) {
@@ -130,14 +129,14 @@ class AnimationsState extends State<Animations> {
                 ],
               ),
             ),
-            new Padding(padding: new EdgeInsets.only(top: 25.0)),
+           
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   new Container(
                       height: size.height * 0.08,
-                      width: size.width * 0.3,
+                      width: size.width * 0.35,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         borderRadius: new BorderRadius.circular(12.0),
@@ -153,7 +152,7 @@ class AnimationsState extends State<Animations> {
                       ))),
                   new Container(
                       height: size.height * 0.08,
-                      width: size.width * 0.3,
+                      width: size.width * 0.35,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         borderRadius: new BorderRadius.circular(12.0),
