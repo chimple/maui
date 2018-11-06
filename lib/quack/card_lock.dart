@@ -12,6 +12,7 @@ import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import '../actions/deduct_points.dart';
+import 'package:nima/nima_actor.dart';
 
 class CardLock extends StatelessWidget {
   final QuackCard card;
@@ -71,81 +72,183 @@ class CardLock extends StatelessWidget {
   }
 
   Future<Null> _askToUnlock(BuildContext context) async {
+    MediaQueryData media = MediaQuery.of(context);
+    var size = media.size;
     await showDialog<bool>(
-            context: context,
-            builder: (BuildContext context) {
-              return Connect<RootState, int>(
-                  convert: (state) => state.user.points,
-                  where: (prev, next) => next != prev,
-                  builder: (points) {
-                    return SimpleDialog(
-                      titlePadding: EdgeInsets.all(0.0),
-                      title: Container(
-                          height: 60.0,
-                          //             decoration: new BoxDecoration(
-                          // shape: BoxShape.rectangle,
-                          // // color: const Color(0xFFFFFF),
-                          // borderRadius:
-                          //     new BorderRadius.all(new Radius.circular(32.0)),
-                          // ),
-                          color: Colors.blue,
-                          child: Center(child: Text('your points-$points'))),
-                      children: <Widget>[
-                        // SimpleDialogOption(
-                        //   onPressed: () {
-                        //     Navigator.pop(context, true);
-                        //   },
-                        //   child: const Text('Yes'),
-                        // ),
-                        // SimpleDialogOption(
-                        //   onPressed: () {
-                        //     Navigator.pop(context, false);
-                        //   },
-                        //   child: const Text('No'),
-                        // ),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                width: 200.0,
-                                height: 200.0,
-                                child: Card(
-                                  child: new Image.asset(
-                                    'assets/Fruits.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                )),
-                            Container(
-                              height: 200.0,
-                              width: 200.0,
-                              child: Card(
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      new Text(
-                                        "cost- 1",
-                                      ),
-                                      new RaisedButton(
-                                        onPressed: points >= 5
-                                            ? () {
-                                                // new DeductPoints(points: 1);
-                                                Provider.dispatch<RootState>(
-                                                    context,
-                                                    DeductPoints(points: 1));
-                                                Navigator.pop(context, true);
-                                              }
-                                            : null,
-                                        child: Text("buy"),
-                                      )
-                                    ]),
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        var prevV, nextV;
+        return Connect<RootState, int>(
+            convert: (state) => state.user.points,
+            where: (prev, next) {
+              print(
+                  "data vlaues of previous and next is...... $next.......$prev");
+              prevV = prev;
+              nextV = next;
+              return next != prev || next == prev;
+            },
+            builder: (
+              points,
+            ) {
+              return new Center(
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: new Container(
+                    height: size.height * 0.3,
+                    width: size.width * 0.7,
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    child: Container(
+                      child: new Column(
+                        children: <Widget>[
+                          Container(
+                            decoration: new BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Colors.blue,
+                              borderRadius: new BorderRadius.only(
+                                  topLeft: new Radius.circular(20.0),
+                                  topRight: new Radius.circular(20.0)),
+                            ),
+                            height: 60.0,
+                            width: size.width * 0.7,
+                            child: Center(
+                              child: new Text(
+                                'Your Points-$points',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            )
-                          ],
-                        ),
-                      ],
-                    );
-                  });
-            })
+                            ),
+                          ),
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Container(
+                                height: size.height * 0.3 - 90,
+                                width: (size.width * 0.7) * 0.5,
+                                child: Center(
+                                  child: prevV != null
+                                      ? AspectRatio(
+                                          aspectRatio: 0.5,
+                                          child: Container(
+                                            height: size.height * 0.25 - 90,
+                                            width: (size.width * 0.7) * 0.5,
+                                            child: new NimaActor(
+                                              "assets/quack",
+                                              alignment: Alignment.center,
+                                              fit: BoxFit.scaleDown,
+                                              animation: points + prevV > 3
+                                                  ? 'happy'
+                                                  : 'sad',
+                                              mixSeconds: 0.02,
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: size.height * 0.25 - 90,
+                                          width: (size.width * 0.7) * 0.5,
+                                          child: new NimaActor(
+                                            "assets/quack",
+                                            alignment: Alignment.center,
+                                            fit: BoxFit.scaleDown,
+                                            // animation: 'hello',
+                                            // mixSeconds: 0.0,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              Container(
+                                height: size.height * 0.3 - 75,
+                                width: (size.width * 0.7) * 0.5,
+                                child: Center(
+                                  child: Column(
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Center(
+                                          child: new Text(
+                                        "Cost is - 3",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                      Container(
+                                          // margin: EdgeInsets.only(top: 80.0),
+                                          width:
+                                              ((size.width * 0.7) * 0.5) / 1.8,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              color: points > 3
+                                                  ? Colors.blue
+                                                  : Colors.grey[400]),
+                                          child: new FlatButton(
+                                            onPressed: points > 3 &&
+                                                    prevV == null
+                                                ? () {
+                                                    // new DeductPoints(points: 1);
+                                                    Provider.dispatch<
+                                                            RootState>(
+                                                        context,
+                                                        DeductPoints(
+                                                            points: 1));
+
+                                                    new Future.delayed(
+                                                        const Duration(
+                                                            seconds: 4), () {
+                                                      Navigator.pop(
+                                                          context, true);
+                                                    });
+                                                  }
+                                                : () {
+                                                    // new DeductPoints(points: 1);
+                                                    Provider.dispatch<
+                                                            RootState>(
+                                                        context,
+                                                        DeductPoints(
+                                                            points: 0));
+
+                                                    // new Future.delayed(
+                                                    //     const Duration(
+                                                    //         seconds: 4), () {
+
+                                                    // });
+                                                  },
+                                            child: Center(
+                                              child: Text(
+                                                "Buy",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            });
+      },
+    )
         ? _goToCardDetail(context)
         : {};
   }
