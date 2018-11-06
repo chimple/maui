@@ -60,14 +60,18 @@ class AddLike implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
 
-    return (RootState state) => RootState(
-        user: state.user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        likeMap: state.likeMap..[parentId] = like,
-        commentMap: state.commentMap,
-        tiles: state.tiles,
-        templates: state.templates,
-        progressMap: state.progressMap);
+    return (RootState state) {
+      final likeMap = state.likeMap;
+      if (userId == null) likeMap[parentId] = like;
+      return RootState(
+          user: state.user,
+          collectionMap: state.collectionMap,
+          cardMap: state.cardMap,
+          likeMap: likeMap,
+          commentMap: state.commentMap,
+          tiles: state.tiles,
+          templates: state.templates,
+          progressMap: state.progressMap);
+    };
   }
 }
