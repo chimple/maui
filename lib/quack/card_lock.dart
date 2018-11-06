@@ -77,20 +77,12 @@ class CardLock extends StatelessWidget {
     await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
-        var prevV, nextV;
         return Connect<RootState, int>(
             convert: (state) => state.user.points,
             where: (prev, next) {
-              print(
-                  "data vlaues of previous and next is...... $next.......$prev");
-              prevV = prev;
-              nextV = next;
-              return next != prev || next == prev;
+              return next != prev;
             },
-            builder: (
-              points,
-            ) {
+            builder: (points) {
               return new Center(
                 child: Material(
                   type: MaterialType.transparency,
@@ -132,34 +124,20 @@ class CardLock extends StatelessWidget {
                                 height: size.height * 0.3 - 90,
                                 width: (size.width * 0.7) * 0.5,
                                 child: Center(
-                                  child: prevV != null
-                                      ? AspectRatio(
-                                          aspectRatio: 0.5,
-                                          child: Container(
-                                            height: size.height * 0.25 - 90,
-                                            width: (size.width * 0.7) * 0.5,
-                                            child: new NimaActor(
-                                              "assets/quack",
-                                              alignment: Alignment.center,
-                                              fit: BoxFit.scaleDown,
-                                              animation: points + prevV > 3
-                                                  ? 'happy'
-                                                  : 'sad',
-                                              mixSeconds: 0.02,
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
-                                          height: size.height * 0.25 - 90,
-                                          width: (size.width * 0.7) * 0.5,
-                                          child: new NimaActor(
-                                            "assets/quack",
-                                            alignment: Alignment.center,
-                                            fit: BoxFit.scaleDown,
-                                            // animation: 'hello',
-                                            // mixSeconds: 0.0,
-                                          ),
-                                        ),
+                                  child: AspectRatio(
+                                    aspectRatio: 0.5,
+                                    child: Container(
+                                      height: size.height * 0.25 - 90,
+                                      width: (size.width * 0.7) * 0.5,
+                                      child: new NimaActor(
+                                        "assets/quack",
+                                        alignment: Alignment.center,
+                                        fit: BoxFit.scaleDown,
+                                        animation: points > 3 ? 'happy' : 'sad',
+                                        mixSeconds: 0.02,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Container(
@@ -191,8 +169,7 @@ class CardLock extends StatelessWidget {
                                                   ? Colors.blue
                                                   : Colors.grey[400]),
                                           child: new FlatButton(
-                                            onPressed: points > 3 &&
-                                                    prevV == null
+                                            onPressed: points > 3
                                                 ? () {
                                                     // new DeductPoints(points: 1);
                                                     Provider.dispatch<
@@ -203,25 +180,11 @@ class CardLock extends StatelessWidget {
 
                                                     new Future.delayed(
                                                         const Duration(
-                                                            seconds: 4), () {
-                                                      Navigator.pop(
-                                                          context, true);
-                                                    });
+                                                            seconds: 4),
+                                                        () => _goToCardDetail(
+                                                            context));
                                                   }
-                                                : () {
-                                                    // new DeductPoints(points: 1);
-                                                    Provider.dispatch<
-                                                            RootState>(
-                                                        context,
-                                                        DeductPoints(
-                                                            points: 0));
-
-                                                    // new Future.delayed(
-                                                    //     const Duration(
-                                                    //         seconds: 4), () {
-
-                                                    // });
-                                                  },
+                                                : null,
                                             child: Center(
                                               child: Text(
                                                 "Buy",

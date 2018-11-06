@@ -18,7 +18,9 @@ type = 0
 header = 1
 title = 2
 content = 3
-option = 4
+#title_sw = 4
+#content_sw = 5
+option = 6
 
 xlsx_file = sys.argv[1]
 asset_dir = 'assets/topic'
