@@ -21,7 +21,7 @@ class PostTile implements AsyncAction<RootState> {
   Future<Computation<RootState>> reduce(RootState state) async {
     assert(tileRepo != null, 'tileRepo not injected');
 
-    tileRepo.insert(tile);
+    await tileRepo.insert(tile);
 
     return (RootState state) => RootState(
         user: state.user,
@@ -29,7 +29,7 @@ class PostTile implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         likeMap: state.likeMap,
         commentMap: state.commentMap,
-        tiles: state.tiles..add(tile),
+        tiles: state.tiles,
         templates: state.templates,
         progressMap: state.progressMap);
   }

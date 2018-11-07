@@ -14,7 +14,8 @@ class PostComments extends StatelessWidget {
 
   void post(BuildContext context) {
     tile = Tile(
-        userId: user.id,
+        userId: AppStateContainer.of(context).state.loggedInUser.id,
+        cardId: 'dummy',
         content: _textController.text,
         updatedAt: DateTime.now(),
         type: TileType.message);

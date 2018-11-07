@@ -53,13 +53,17 @@ class AnimationsState extends State<Animations> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FlatButton(
-                  onPressed: () {Navigator.of(context).pop();},
-                  child: new Icon(Icons.arrow_back, size: size.height * 0.05, color: Colors.white)
-                ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: new Icon(Icons.arrow_back,
+                        size: size.height * 0.05, color: Colors.white)),
               ],
             ),
             Container(
-              height: size.height > size.width ? size.height * 0.8 : size.height * 0.70,
+              height: size.height > size.width
+                  ? size.height * 0.8
+                  : size.height * 0.70,
               child: Row(
                 children: <Widget>[
                   FlatButton(
@@ -72,7 +76,7 @@ class AnimationsState extends State<Animations> {
                         color: count == 0 ? Colors.grey : Colors.white,
                       )),
                   Expanded(
-                    flex: 1,
+                      flex: 1,
                       child: PageView.builder(
                           controller: _pageController,
                           scrollDirection: Axis.horizontal,
@@ -101,8 +105,7 @@ class AnimationsState extends State<Animations> {
                                                 "assets/quack",
                                                 alignment: Alignment.center,
                                                 fit: BoxFit.scaleDown,
-                                                animation:
-                                                    '${emotions[count]}',
+                                                animation: '${emotions[count]}',
                                                 mixSeconds: 0.2,
                                               )),
                                         ]),
@@ -110,7 +113,7 @@ class AnimationsState extends State<Animations> {
                           onPageChanged: (index) {
                             print('onPageChanged: $index');
                             print(
-                                'OnPageChanged Emotion: ${emotions[0 + index]}');                                
+                                'OnPageChanged Emotion: ${emotions[0 + index]}');
                             setState(() {
                               count = 0 + index;
                             });
@@ -129,7 +132,6 @@ class AnimationsState extends State<Animations> {
                 ],
               ),
             ),
-           
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,13 +161,17 @@ class AnimationsState extends State<Animations> {
                         color: Colors.amber,
                       ),
                       child: new FlatButton(
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      PostComments())),
                           child: new Text(
-                        'Post',
-                        style: new TextStyle(
-                            fontSize: 40.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      )))
+                            'Post',
+                            style: new TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )))
                 ]),
           ],
         ),
