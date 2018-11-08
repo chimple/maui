@@ -74,7 +74,32 @@ class TileCard extends StatelessWidget {
         );
         break;
       case TileType.message:
-        return Card(child: Text(tile.content));
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  tile.user.name,
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+              Card(
+                elevation: 8.0,
+                margin: EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    tile.content,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
     }
   }
 }
