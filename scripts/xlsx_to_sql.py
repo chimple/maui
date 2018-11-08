@@ -4,10 +4,11 @@ import json
 import re
 
 types = {
-	'quiz': 0,
+	'select': 0,
 	'activity': 1,
 	'topic': 2,
 	'article': 3,
+	'match': 4,
 	'connection': 9,
 	'choice': 100,
 	'answer': 101,
@@ -17,8 +18,8 @@ types = {
 type = 0
 header = 1
 title = 2
-content = 3
-#title_sw = 4
+content = 4
+#title_sw = 3
 #content_sw = 5
 option = 6
 
@@ -51,7 +52,9 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 			if(row[type].value == None):
 				continue
 			type_data = types[row[type].value]
-			if(type_data <= 3):
+			if type_data == 4:
+				type_data = 0
+			if(type_data <= 4):
 				if type_data == 2:
 					card = sheet.title
 				else:
@@ -69,7 +72,10 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 				if extra != type_data-100:
 					extra = type_data-100
 					extra_number = 1
-				sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(row[1].value)});\n")
+				extra_content = row[1].value
+				if extra_content == None:
+					extra_content = row[2].value
+				sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(extra_content)});\n")
 				extra_number += 1
 
 	sqlfile.write(collection_sql)
