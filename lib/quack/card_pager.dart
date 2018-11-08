@@ -9,6 +9,7 @@ import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/quack/quiz_navigator.dart';
+import 'package:maui/components/quiz_welcome.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
@@ -50,6 +51,8 @@ class CardPagerState extends State<CardPager> {
   @override
   Widget build(BuildContext context) {
     debugPrint('_currentPageIndex: $_currentPageIndex');
+    
+    
     return Connect<RootState, List<QuackCard>>(
       convert: (state) => state.collectionMap[widget.cardId]
           .map((id) => state.cardMap[id])
@@ -64,15 +67,7 @@ class CardPagerState extends State<CardPager> {
                 scrollDirection: Axis.horizontal,
                 itemCount: cardList.length + 1,
                 itemBuilder: (context, index) => index >= cardList.length
-                    ? RaisedButton(
-                        child: Text('Quiz'),
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    QuizNavigator(
-                                      cardId: widget.cardId,
-                                    ))),
-                      )
+                    ? QuizWelcome(cardId: widget.cardId,)
                     : CardDetail(
 //                    key: _cardDetailKeys[index],
                         card: cardList[index],
@@ -81,18 +76,22 @@ class CardPagerState extends State<CardPager> {
                       ),
                 onPageChanged: (index) {
                   print('onPageChanged: $index');
-                  if (index < cardList.length)
+                  if (index < cardList.length){
                     Provider.dispatch<RootState>(
                         context, FetchComments(cardList[index].id));
                   Provider.dispatch<RootState>(
                       context,
                       AddProgress(
                           card: cardList[index], parentCardId: widget.cardId));
+                  }
                   setState(() => _currentPageIndex = index);
+                  print("Current page index update - ${_currentPageIndex}");
                 }),
           )
         ];
         if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
+          print("CardList length - ${cardList.length}");
+          print("Current Page Index - $_currentPageIndex");
           widgets.add(Row(
             children: <Widget>[
               IconButton(
