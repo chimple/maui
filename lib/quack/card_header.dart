@@ -11,12 +11,14 @@ class CardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (card.header == null) return Container();
     if (card.header?.endsWith('.svg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',
         child: SvgPicture.asset(
           card.header,
           allowDrawingOutsideViewBox: false,
+          package: 'maui_assets',
         ),
       );
     } else if (card.header?.endsWith('png') ||
@@ -27,6 +29,7 @@ class CardHeader extends StatelessWidget {
         child: Image.asset(
           card.header,
           fit: BoxFit.cover,
+          package: 'maui_assets',
         ),
       );
     }
