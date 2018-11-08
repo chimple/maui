@@ -35,6 +35,12 @@ dependencies:
   flutter_redurx: ^0.4.3
   flutter_localizations:
     sdk: flutter
+  tahiti:
+    path: ../tahiti
+  flores:
+    path: ../flores
+  maui_assets:
+    path: ../maui_assets
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -44,10 +50,6 @@ dev_dependencies:
   build_runner: ^0.10.1
   json_serializable: ^1.2.1
   flutter_markdown: ^0.2.0
-  tahiti:
-    path: ../tahiti
-  flores:
-    path: ../flores
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -66,100 +68,15 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-    - assets/quack.nima
-    - assets/quack.png
-    - assets/quackicon.png
-    - assets/right.wav
-    - assets/wrong.wav
-    - assets/lion.ogg
-    - assets/monkey.ogg
-    - assets/duck.ogg
-    - assets/fox.ogg
-    - assets/rabbit.ogg
-    
-    - assets/tap.wav
+    - assets/
     - assets/demo_video/
-    - assets/videohelp.png
-    - assets/database.db
-    - assets/solo.nima
-    - assets/solo.png
-    - assets/chimple_logo.png
-    - assets/father.png
-    - assets/mother.png
-    - assets/sister.png
-    - assets/quack_header.png
-    - assets/story.png
-    - assets/games.png
-    - assets/profile.png
-    - assets/quack.png
-    - assets/news_feed.png
-    - assets/messenger.png
-    - assets/brother.png
-    - assets/star.png
-    - assets/star_gained.png
-    - assets/apple.png
-    - assets/Colors.png
-    - assets/Flowers.png
-    - assets/Fruits.png
-    - assets/Clothes.png
-    - assets/Fruits.json
-    - assets/Clothes.json
-    - assets/HouseItems.png
-    - assets/Boy.png
-    - assets/Body.png
-    - assets/Scene.png
-    - assets/Scene.json
-    - assets/Colors.json
-    - assets/Flowers.json
-    - assets/HouseItems.json
-    - assets/Shapes.json
-    - assets/Boy.json
-    - assets/Body.json
-    - assets/Work.json
-    - assets/Hospital.json
-    - assets/Animals.json
-    - assets/BedRoom.json
-    - assets/Birds.json
-    - assets/Work.png
-    - assets/Hospital.png
-    - assets/Animals.png
-    - assets/BedRoom.png
-    - assets/chat_Bot_Icon.png
-    - assets/Birds.png
-    - assets/apple.ogg
     - assets/dice_game/
     - assets/background_image/
-    - assets/background_gif/Win_loop.gif
+    - assets/background_gif/
     - assets/chat_image/
-    - assets/games.png
-    - assets/chat.png
-    - assets/chatBig.png
-    - assets/chatSmall.png
-    - assets/gameBig.png
-    - assets/gameSmall.png
-    - assets/Shapes.png
     - assets/hoodie/
-    - assets/hoodie_fb.png
-    - assets/hoodie_bear.png
-    - assets/koala_neutral.png
-    - assets/koala_happy.png
-    - assets/koala_sad.png
     - assets/animations/
-    - assets/forward_button.png
-    - assets/home_button.png
-    - assets/dice.png
-    - assets/wordgrid.png
-    - assets/picture_sentence.png
-    - assets/dice_happy.png
-    - assets/wordgrid_happy.png
-    - assets/picture_sentence_happy.png
-    - assets/background_tile.png
-    - assets/dice_sad.png
-    - assets/wordgrid_sad.png
-    - assets/picture_sentence_sad.png
-    # dictionary
     - assets/dict/
-    - assets/star_music.mp3
     - assets/stickers/pig/
     - assets/stickers/giraffe/
     - assets/stickers/monkey/
@@ -168,9 +85,6 @@ flutter:
     - assets/stickers/emoguy/
     - assets/category/
     - assets/nima_animation/
-    - assets/team animals.svg
-    - assets/topic/
-    - assets/topic/asb/
     - assets/masking/
 
   # An image asset can refer to one or more resolution-specific "variants", see

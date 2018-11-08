@@ -9,12 +9,12 @@ import 'package:maui/state/app_state_container.dart';
 
 class PostComments extends StatelessWidget {
   Tile tile;
-  var user;
   final TextEditingController _textController = new TextEditingController();
 
   void post(BuildContext context) {
     tile = Tile(
-        userId: user.id,
+        userId: AppStateContainer.of(context).state.loggedInUser.id,
+        cardId: 'dummy',
         content: _textController.text,
         updatedAt: DateTime.now(),
         type: TileType.message);
@@ -26,7 +26,7 @@ class PostComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    user = AppStateContainer.of(context).state.loggedInUser;
+    final user = AppStateContainer.of(context).state.loggedInUser;
 
     return Scaffold(
       appBar: new AppBar(
