@@ -9,6 +9,7 @@ import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/quack/quiz_navigator.dart';
+import 'package:maui/components/quiz_welcome.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
@@ -64,15 +65,7 @@ class CardPagerState extends State<CardPager> {
                 scrollDirection: Axis.horizontal,
                 itemCount: cardList.length + 1,
                 itemBuilder: (context, index) => index >= cardList.length
-                    ? RaisedButton(
-                        child: Text('Quiz'),
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    QuizNavigator(
-                                      cardId: widget.cardId,
-                                    ))),
-                      )
+                    ? QuizWelcome(cardId: widget.cardId)
                     : CardDetail(
 //                    key: _cardDetailKeys[index],
                         card: cardList[index],
