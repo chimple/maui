@@ -8,9 +8,11 @@ types = {
 	'activity': 1,
 	'topic': 2,
 	'article': 3,
-	'match': 4,
+	'many': 4,
+	'match': 5,
 	'connection': 9,
 	'choice': 100,
+	'option': 100,
 	'answer': 101,
 	'template': 102
 }
@@ -52,14 +54,21 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 			if(row[type].value == None):
 				continue
 			type_data = types[row[type].value]
+			option_value = row[option].value
+			if type_data == 0:
+				option_value = 'oneAtATime'
 			if type_data == 4:
+				option_value = 'many'
+				type_data = 0
+			elif type_data == 5:
+				option_value = 'pair'
 				type_data = 0
 			if(type_data <= 4):
 				if type_data == 2:
 					card = sheet.title
 				else:
 					card = sheet.title+str(row_num)
-				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(row[title].value)}, {esc(row[header].value)}, {esc(row[content].value)}, {esc(row[option].value)});\n")
+				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(row[title].value)}, {esc(row[header].value)}, {esc(row[content].value)}, {esc(option_value)});\n")
 			if type_data == 2:
 				topic = card
 				card_number = 1
