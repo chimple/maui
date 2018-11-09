@@ -4,12 +4,15 @@ import json
 import re
 
 types = {
-	'quiz': 0,
+	'select': 0,
 	'activity': 1,
 	'topic': 2,
 	'article': 3,
+	'many': 4,
+	'match': 5,
 	'connection': 9,
 	'choice': 100,
+	'option': 100,
 	'answer': 101,
 	'template': 102
 }
@@ -17,8 +20,8 @@ types = {
 type = 0
 header = 1
 title = 2
-content = 3
-#title_sw = 4
+content = 4
+#title_sw = 3
 #content_sw = 5
 option = 6
 
@@ -51,12 +54,21 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 			if(row[type].value == None):
 				continue
 			type_data = types[row[type].value]
-			if(type_data <= 3):
+			option_value = row[option].value
+			if type_data == 0:
+				option_value = 'oneAtATime'
+			if type_data == 4:
+				option_value = 'many'
+				type_data = 0
+			elif type_data == 5:
+				option_value = 'pair'
+				type_data = 0
+			if(type_data <= 4):
 				if type_data == 2:
 					card = sheet.title
 				else:
 					card = sheet.title+str(row_num)
-				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(row[title].value)}, {esc(row[header].value)}, {esc(row[content].value)}, {esc(row[option].value)});\n")
+				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(row[title].value)}, {esc(row[header].value)}, {esc(row[content].value)}, {esc(option_value)});\n")
 			if type_data == 2:
 				topic = card
 				card_number = 1
@@ -69,7 +81,10 @@ with open(xlsx_file+'.sql', 'w') as sqlfile:
 				if extra != type_data-100:
 					extra = type_data-100
 					extra_number = 1
-				sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(row[1].value)});\n")
+				extra_content = row[1].value
+				if extra_content == None:
+					extra_content = row[2].value
+				sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(extra_content)});\n")
 				extra_number += 1
 
 	sqlfile.write(collection_sql)

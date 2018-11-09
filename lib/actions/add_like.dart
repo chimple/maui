@@ -51,7 +51,7 @@ class AddLike implements AsyncAction<RootState> {
 
     if (userId == null)
       try {
-        await p2p.addMessage(state.user.id, '0', 'tile',
+        await p2p.addMessage(state.user.id, '0', 'like',
             '${tileType.index}*$parentId', true, '');
       } on PlatformException {
         print('Flores: Failed addChat');

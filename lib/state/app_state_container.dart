@@ -9,6 +9,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -323,7 +324,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (activity == 'friends') {
         getUsers();
       }
-    } else if (message['messageType'] == 'tile') {
+    } else if (message['messageType'] == 'like') {
       String content = message['message'];
       final msgList = content.split('*');
       if (msgList?.length == 2) {
@@ -333,6 +334,19 @@ class AppStateContainerState extends State<AppStateContainer> {
                 parentId: msgList[1],
                 tileType: TileType.values[int.parse(msgList[0])],
                 userId: message['userId']));
+      }
+    } else if (message['messageType'] == 'tile') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length >= 4) {
+        final tile = Tile(
+            id: msgList[0],
+            type: TileType.values[int.parse(msgList[1])],
+            cardId: msgList[2],
+            content: msgList[3],
+            userId: message['userId'],
+            updatedAt: DateTime.now());
+        Provider.dispatch<RootState>(context, PostTile(tile: tile));
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
