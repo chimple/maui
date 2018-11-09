@@ -7,30 +7,30 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  image_picker:
-  cupertino_icons: ^0.1.0
-  sqflite: any
+  image_picker: ^0.4.10
+  cupertino_icons: ^0.1.2
+  sqflite: ^0.12.2+1
   uuid: ^1.0.3
-  path_provider: ^0.4.0
-  tuple: ^1.0.1
-  json_annotation: ^1.1.0
-  audioplayers: ^0.7.5
-  percent_indicator: ^1.0.9
+  path_provider: ^0.4.1
+  tuple: ^1.0.2
+  json_annotation: ^2.0.0
+  audioplayers: ^0.7.8
+  percent_indicator: ^1.0.10
   fluttery:
     git:
       https://github.com/chimple/fluttery.git
   flutter_circular_chart: "^0.1.0"
-  shared_preferences: ^0.4.2
+  shared_preferences: ^0.4.3
   camera: 0.2.1
   nima: ^1.0.1
-  flutter_local_notifications: ^0.3.7
+  flutter_local_notifications: ^0.4.0
   badge:
     git:
       https://github.com/chimple/Flutter-Badge.git
   intl: ^0.15.7
-  intl_translation: ^0.17.0
-  simple_permissions: ^0.1.6
-  flutter_svg: ^0.5.1
+  intl_translation: ^0.17.2
+  simple_permissions: ^0.1.9
+  flutter_svg: ^0.6.3
   image: ^2.0.4
   flutter_redurx: ^0.4.3
   flutter_localizations:
@@ -46,9 +46,9 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  video_player: "^0.5.4"
-  build_runner: ^0.10.1
-  json_serializable: ^1.2.1
+  video_player: "^0.7.2"
+  build_runner: ^1.1.1
+  json_serializable: ^2.0.0
   flutter_markdown: ^0.2.0
 
 # For information on the generic Dart part of this file, see the
