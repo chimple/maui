@@ -3,7 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 from urllib import request
 import re
-import os.path
+import os
 
 def parse_story(soup, lang):
     row = 1
@@ -16,11 +16,6 @@ def parse_story(soup, lang):
         'option': 'option'
     }
     ]
-    # ws.cell(row=row, column=1).value = 'type'
-    # ws.cell(row=row, column=2).value = 'header'
-    # ws.cell(row=row, column=3).value = 'title'
-    # ws.cell(row=row, column=4).value = 'content'
-    # ws.cell(row=row, column=5).value = 'option'
     row = row+1
     title_img_el = soup.find('div',class_='cover-image')['style']
     m = re.search(r"\(.*\)", title_img_el)
@@ -30,9 +25,9 @@ def parse_story(soup, lang):
     content = soup.find('div',class_='cover_author').text
     content += '\n'+soup.find('div',class_='cover_artist').text
     if not os.path.isfile('asb/'+img_name):
-        request.urlretrieve("https://www.africanstorybook.org/"+title_img, 'asb/'+img_name)
+        url_get("https://www.africanstorybook.org/"+title_img, 'asb/'+img_name)
 
-    print(title_img,',',title,',',content)
+    # print(title_img,',',title,',',content)
     ws_list.append({
         'type': 'topic',
         'header': 'asb/'+img_name,
@@ -40,11 +35,6 @@ def parse_story(soup, lang):
         'content': content,
         'option': ''
     })
-    # ws.cell(row=row, column=1).value = 'topic'
-    # ws.cell(row=row, column=2).value = 'asb/'+img_name
-    # ws.cell(row=row, column=3).value = title
-    # ws.cell(row=row, column=4).value = content
-    # ws.cell(row=row, column=5).value = ''
     row = row+1
 
     for tag in soup.find_all('div',class_='swiper-slide'):
@@ -64,22 +54,16 @@ def parse_story(soup, lang):
             if img != '':
                 img_name = img.split('/')[-1]
                 if not os.path.isfile('asb/'+img_name):
-                    request.urlretrieve("https://www.africanstorybook.org/"+img, 'asb/'+img_name)
+                    url_get("https://www.africanstorybook.org/"+img, 'asb/'+img_name)
 
-            print(img, ',', text)
+            # print(img, ',', text)
             row_dict = {
                 'type': 'article'
             }
-            # ws.cell(row=row, column=1).value = 'article'
             if img_name:
-                # ws.cell(row=row, column=2).value = 'asb/'+img_name
                 row_dict['header'] = 'asb/'+img_name
             else:
-                # ws.cell(row=row, column=2).value = ''
                 row_dict['header'] = ''
-            # ws.cell(row=row, column=3).value = ''
-            # ws.cell(row=row, column=4).value = text
-            # ws.cell(row=row, column=5).value = ''
             row_dict['title'] = ''
             row_dict['content'] = text
             row_dict['option'] = ''
@@ -88,12 +72,7 @@ def parse_story(soup, lang):
     back_cover = soup.find('div',class_='backcover_wrapper')
     if back_cover:
         back_cover_text = back_cover.get_text("\n", strip=True)
-        print(back_cover_text)
-        # ws.cell(row=row, column=1).value = 'article'
-        # ws.cell(row=row, column=2).value = ''
-        # ws.cell(row=row, column=3).value = ''
-        # ws.cell(row=row, column=4).value = back_cover_text
-        # ws.cell(row=row, column=5).value = ''
+        # print(back_cover_text)
         ws_list.append({
             'type': 'article',
             'header': '',
@@ -103,49 +82,84 @@ def parse_story(soup, lang):
         })
     return ws_list
 
-#story_id = sys.argv[1]
+
+def url_get(url, file):
+    print("downloading "+ url)
+    remaining_download_tries = 15
+    while remaining_download_tries > 0:
+        try:
+            s = request.urlretrieve(url, file)
+        except Exception as e:
+            print("error downloading " + url +" on trial no: " + str(15 - remaining_download_tries))
+            remaining_download_tries = remaining_download_tries - 1
+            continue
+        else:
+            break
+
 story_file = sys.argv[1]
-wb = px.load_workbook(story_file+'.xlsx')
-worksheets = wb.worksheets;
+story_name = os.path.splitext(story_file)[0]
+
+wb = px.load_workbook(story_name+'.xlsx')
+worksheets = [s.title for s in wb.worksheets];
 with open(story_file) as f:
     for story_id in f:
         story_id = story_id.rstrip()
         print(story_id)
         ws = wb.active
         if story_id in worksheets:
-            ws = wb[story_id]
+            # ws = wb[story_id]
+            continue
         else:
             ws = wb.create_sheet(story_id)
         with request.urlopen('https://www.africanstorybook.org/read/readbook.php?id='+story_id+'&d=0&a=1') as f:
             soup = BeautifulSoup(f, features="html.parser")
+            try:
+                s = soup.find('div',class_='list-bliock').find(string=re.compile('English'))
+                if s == None:
+                    print('Skipping '+story_id)
+                    continue
+            except Exception as e:
+                print('Skipping '+story_id)
+                continue
+
             sw_list = parse_story(soup, 'sw')
 
-            s = soup.find('div',class_='list-bliock').find(string=re.compile('English'))
-            if s:
-                link = s.parent.parent.parent.parent['onclick']
-                m = re.search(r"\d+",link)
-                eng_story_id = m.group(0)
-                with request.urlopen('https://www.africanstorybook.org/read/readbook.php?id='+eng_story_id+'&d=0&a=1') as eng_f:
-                    soup = BeautifulSoup(eng_f, features="html.parser")
-                    en_list = parse_story(soup, 'en')
-                    if len(sw_list) == len(en_list):
-                        for i in range(len(en_list)):
-                            en_row = en_list[i]
-                            sw_row = sw_list[i]
-                            if sw_row['type'] == en_row['type'] and sw_row['header'] == en_row['header']:
-                                sw_list[i]['title_en'] = en_row['title']
-                                sw_list[i]['content_en'] = en_row['content']
-                                print(sw_list[i])
-            row = 1
-            for row_dict in sw_list:
-                print(row_dict)
-                ws.cell(row=row, column=1).value = row_dict['type']
-                ws.cell(row=row, column=2).value = row_dict['header']
-                ws.cell(row=row, column=3).value = row_dict['title_en']
-                ws.cell(row=row, column=4).value = row_dict['content_en']
-                ws.cell(row=row, column=5).value = row_dict['title']
-                ws.cell(row=row, column=6).value = row_dict['content']
-                ws.cell(row=row, column=7).value = row_dict['option']
-                row = row+1
+            try:
+                s = soup.find('div',class_='list-bliock').find(string=re.compile('English'))
 
-wb.save(story_file+'.xlsx')
+                if s:
+                    link = s.parent.parent.parent.parent['onclick']
+                    m = re.search(r"\d+",link)
+                    eng_story_id = m.group(0)
+                    with request.urlopen('https://www.africanstorybook.org/read/readbook.php?id='+eng_story_id+'&d=0&a=1') as eng_f:
+                        soup = BeautifulSoup(eng_f, features="html.parser")
+                        en_list = parse_story(soup, 'en')
+                        eng_swa_same = False
+                        if len(sw_list) == len(en_list):
+                            eng_swa_same = True
+                            for i in range(len(en_list)):
+                                en_row = en_list[i]
+                                sw_row = sw_list[i]
+                                if sw_row['type'] == en_row['type'] and sw_row['header'] == en_row['header']:
+                                    sw_list[i]['title_en'] = en_row['title']
+                                    sw_list[i]['content_en'] = en_row['content']
+                                else:
+                                    print('Skipping',en_row, sw_row)
+                                    eng_swa_same = False
+                        if not eng_swa_same:
+                            print('Skipping',en_list, sw_list)
+                            continue
+                row = 1
+                for row_dict in sw_list:
+                    # print(row_dict)
+                    ws.cell(row=row, column=1).value = row_dict['type']
+                    ws.cell(row=row, column=2).value = row_dict['header']
+                    ws.cell(row=row, column=3).value = row_dict['title_en']
+                    ws.cell(row=row, column=4).value = row_dict['title']
+                    ws.cell(row=row, column=5).value = row_dict['content_en']
+                    ws.cell(row=row, column=6).value = row_dict['content']
+                    ws.cell(row=row, column=7).value = row_dict['option']
+                    row = row+1
+            except Exception as e:
+                print('Error downloading: ' +story_id + e)
+        wb.save(story_name+'.xlsx')

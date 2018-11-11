@@ -173,6 +173,7 @@ class QuizSelectionState extends State<QuizSelection> {
                   child: Image.asset(
                     quizItem.text,
                     fit: BoxFit.contain,
+                    package: 'maui_assets',
                   ))
               : Text(
                   quizItem.text,
