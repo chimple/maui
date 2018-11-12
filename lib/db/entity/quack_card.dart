@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 enum CardType { question, activity, concept, knowledge }
 
 class QuackCard {
@@ -122,4 +126,7 @@ class QuackCard {
   String toString() {
     return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option, likes: $likes, comments: $comments}';
   }
+
+  Color get backgroundColor =>
+      Color(int.tryParse(option ?? 'ffccccff', radix: 16)) ?? Color(0xffccccff);
 }
