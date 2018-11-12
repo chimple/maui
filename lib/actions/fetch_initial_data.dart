@@ -79,8 +79,9 @@ class FetchInitialData implements AsyncAction<RootState> {
         likeMap[c] = await likeRepo.getLikeByParentIdAndUserId(
             c, user.id, TileType.card);
       });
-
       collectionMap[mc] = cardNames;
     });
+//    print(progressMap);
+//    print(likeMap);
   }
 }

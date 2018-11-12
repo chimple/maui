@@ -32,10 +32,12 @@ class CardLock extends StatelessWidget {
                   aspectRatio: 1.0,
                   child: Container(
                     constraints: BoxConstraints.expand(),
-                    color: Color(0x99999999),
+                    alignment: AlignmentDirectional(1.2, -1.2),
+//                    color: Color(0x99999999),
                     child: Icon(
                       Icons.lock,
-                      color: Colors.white24,
+                      color: Colors.blue,
+                      size: 24.0,
                     ),
                   ),
                 ),
