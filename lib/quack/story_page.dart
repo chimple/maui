@@ -9,6 +9,7 @@ import 'package:maui/models/root_state.dart';
 class StoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
     return Connect<RootState, List<QuackCard>>(
       convert: (state) => state.collectionMap['story']
           .map((cardId) => state.cardMap[cardId])
@@ -16,7 +17,7 @@ class StoryPage extends StatelessWidget {
       where: (prev, next) => next != prev,
       builder: (cards) {
         return GridView.count(
-            crossAxisCount: 3,
+            crossAxisCount: (media.size.width / 150.0).ceil(),
             childAspectRatio: 0.67,
             children: cards
                 .map((c) => Center(

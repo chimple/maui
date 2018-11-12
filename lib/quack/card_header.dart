@@ -15,8 +15,9 @@ class CardHeader extends StatelessWidget {
     if (card.header?.endsWith('.svg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.all(8.0),
+          color: card.backgroundColor,
           child: SvgPicture.asset(
             card.header,
             allowDrawingOutsideViewBox: false,

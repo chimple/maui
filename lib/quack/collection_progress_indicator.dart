@@ -9,17 +9,6 @@ class CollectionProgressIndicator extends StatelessWidget {
 
   const CollectionProgressIndicator({Key key, this.card}) : super(key: key);
 
-  int hexStringToHexInt(String hex) {
-    if (hex != null) {
-      hex = hex.replaceFirst('#', '');
-      hex = hex.length == 6 ? 'ff' + hex : hex;
-      int val = int.parse(hex, radix: 16);
-      return val;
-    } else {
-      return 0xffffffff;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
@@ -34,7 +23,7 @@ class CollectionProgressIndicator extends StatelessWidget {
             lineHeight: constraints.maxWidth * 0.0743,
             percent: progress ?? 0.0,
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Color(hexStringToHexInt(card.option)),
+            progressColor: card.backgroundColor,
             backgroundColor: Colors.grey,
           );
         },

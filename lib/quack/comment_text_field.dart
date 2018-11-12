@@ -97,9 +97,17 @@ class CommentTextFieldState extends State<CommentTextField> {
       _isComposing = false;
     });
     Provider.dispatch<RootState>(
-        context,
-        AddComment(
-            parentId: widget.parentId, tileType: TileType.card, text: text));
+      context,
+      AddComment(
+          comment: Comment(
+              id: Uuid().v4(),
+              parentId: widget.parentId,
+              userId: AppStateContainer.of(context).state.loggedInUser.id,
+              timeStamp: DateTime.now(),
+              comment: text,
+              user: AppStateContainer.of(context).state.loggedInUser),
+          tileType: TileType.card),
+    );
     _focusNode.unfocus();
   }
 }
