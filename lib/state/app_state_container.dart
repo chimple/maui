@@ -102,7 +102,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        selectNotification: onSelectNotification);
+        onSelectNotification: onSelectNotification);
     botMessages = List<dynamic>();
   }
 
