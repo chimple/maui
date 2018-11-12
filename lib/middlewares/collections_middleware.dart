@@ -60,13 +60,14 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.userRepo = userRepo;
     } else if (action is AddComment) {
       action.commentRepo = commentRepo;
+      action.tileRepo = tileRepo;
     } else if (action is SaveDrawing) {
       action.tileRepo = tileRepo;
     } else if (action is FetchComments) {
       action.commentRepo = commentRepo;
     } else if (action is DeductPoints) {
       action.userRepo = userRepo;
-    } else if(action is PostTile) {
+    } else if (action is PostTile) {
       action.tileRepo = tileRepo;
     }
 
