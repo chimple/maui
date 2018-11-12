@@ -91,7 +91,20 @@ class CardSummary extends StatelessWidget {
             children: <Widget>[stackHeader, desc],
           )
         : Row(
-            children: <Widget>[stackHeader, Expanded(child: desc)],
+            children: <Widget>[
+              stackHeader,
+              Expanded(
+                  child: Column(children: <Widget>[
+                desc,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(card.content ?? '',
+                      textAlign: TextAlign.start,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ]))
+            ],
           );
   }
 }
