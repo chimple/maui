@@ -37,8 +37,8 @@ class KnowledgeDetail extends StatelessWidget {
             parentCardId: parentCardId,
           ),
         ),
-        Text(card.title),
-        Text(card.content)
+        Text(card.title ?? ''),
+        Text(card.content ?? '')
       ],
     );
   }

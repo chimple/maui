@@ -29,32 +29,18 @@ class CardSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final widget = InkWell(
       onTap: () {
-        if (card.type == CardType.knowledge) {
-          Navigator.of(context).push(
-            new MaterialPageRoute(builder: (BuildContext context) {
-              Provider.dispatch<RootState>(
-                  context, AddProgress(card: card, parentCardId: parentCardId));
-              return CardPager(
-                cardId: parentCardId,
-                cardType: CardType.knowledge,
-                initialPage: index,
+        Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              print('MaterialPageRoute: CardDetail: $card');
+              return CardDetail(
+                card: card,
+                parentCardId: parentCardId,
               );
-            }),
-          );
-        } else {
-          Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                print('MaterialPageRoute: CardDetail: $card');
-                return CardDetail(
-                  card: card,
-                  parentCardId: parentCardId,
-                );
-              },
-            ),
-          );
-        }
+            },
+          ),
+        );
       },
       child: AspectRatio(
         child: CardHeader(
@@ -69,56 +55,43 @@ class CardSummary extends StatelessWidget {
         elevation: 8.0,
         clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        child: card.type == CardType.concept
-            ? Stack(
-                children: <Widget>[
-                  widget,
-                  CardLock(
-                    card: card,
-                    parentCardId: parentCardId,
-                  ),
-                ],
-              )
-            : widget);
-    final desc = Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(card.title ?? '',
-              style: Theme.of(context).textTheme.subhead,
-              textAlign: TextAlign.start,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis),
+        child: widget);
+    final stackChildren = <Widget>[
+      header,
+      Positioned(
+        right: -8.0,
+        top: -8.0,
+        child: LikeButton(
+          parentId: card.id,
+          tileType: TileType.card,
+          isInteractive: false,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                LikeButton(
-                  parentId: card.id,
-                  tileType: TileType.card,
-                  isInteractive: false,
-                ),
-                Text("${card.likes ?? ''}"),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Icon(Icons.comment),
-                Text("${card.comments ?? ''}")
-              ],
-            )
-          ],
-        ),
-      ],
+      )
+    ];
+    if (card.type == CardType.concept) {
+      stackChildren.add(CardLock(
+        card: card,
+        parentCardId: parentCardId,
+      ));
+    }
+    final stackHeader = Stack(
+      children: stackChildren,
+      overflow: Overflow.visible,
+    );
+    final desc = Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(card.title ?? '',
+          style: Theme.of(context).textTheme.subhead,
+          textAlign: TextAlign.start,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis),
     );
     return orientation == Orientation.portrait
         ? Column(
-            children: <Widget>[header, desc],
+            children: <Widget>[stackHeader, desc],
           )
         : Row(
-            children: <Widget>[header, Expanded(child: desc)],
+            children: <Widget>[stackHeader, Expanded(child: desc)],
           );
   }
 }

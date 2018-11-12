@@ -31,7 +31,7 @@ class LikeButton extends StatelessWidget {
             color: Colors.red,
           );
         else if (!isInteractive) {
-          return Icon(Icons.favorite_border, color: Colors.black);
+          return Container();
         } else {
           return InkWell(
             child: Icon(

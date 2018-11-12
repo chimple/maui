@@ -15,10 +15,13 @@ class CardHeader extends StatelessWidget {
     if (card.header?.endsWith('.svg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',
-        child: SvgPicture.asset(
-          card.header,
-          allowDrawingOutsideViewBox: false,
-          package: 'maui_assets',
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset(
+            card.header,
+            allowDrawingOutsideViewBox: false,
+            package: 'maui_assets',
+          ),
         ),
       );
     } else if (card.header?.endsWith('png') ||
