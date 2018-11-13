@@ -26,20 +26,70 @@ class KnowledgeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        LimitedBox(
-          maxHeight: size.height * 0.75,
-          child: CardHeader(
-            card: card,
-            parentCardId: parentCardId,
-          ),
-        ),
-        Text(card.title ?? ''),
-        Text(card.content ?? '')
-      ],
+    final media = MediaQuery.of(context);
+    return OrientationBuilder(
+      builder: (context, orientation) => orientation == Orientation.portrait
+          ? ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                LimitedBox(
+                  maxHeight: media.size.height * 0.75,
+                  child: CardHeader(
+                    card: card,
+                    parentCardId: parentCardId,
+                    minHeight: media.padding.top,
+                  ),
+                ),
+                card.title == null
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 8.0),
+                        child: Text(
+                          card.title ?? '',
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                      ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(card.content ?? ''),
+                )
+              ],
+            )
+          : Row(
+              children: <Widget>[
+                card.header == null
+                    ? Container()
+                    : Flexible(
+                        flex: 1,
+                        child:
+                            CardHeader(card: card, parentCardId: parentCardId)),
+                Flexible(
+                  flex: 1,
+                  child: SafeArea(
+                    child: ListView(
+                      padding: EdgeInsets.all(8.0),
+                      children: <Widget>[
+                        card.title == null
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 8.0),
+                                child: Text(
+                                  card.title ?? '',
+                                  style: Theme.of(context).textTheme.subhead,
+                                ),
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(card.content ?? ''),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
     );
   }
 }

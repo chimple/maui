@@ -46,10 +46,9 @@ class CardDetail extends StatelessWidget {
     scrollViewWidgets.add(SliverToBoxAdapter(
         child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MarkdownBody(
-          data: card.content ?? '',
-          styleSheet: new MarkdownStyleSheet(
-              p: new TextStyle(fontSize: 16.0, color: Colors.black))),
+      child: Text(
+        card.content ?? '',
+      ),
     )));
     if (card.type == CardType.concept) {
       scrollViewWidgets.add(SliverToBoxAdapter(

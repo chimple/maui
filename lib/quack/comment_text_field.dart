@@ -45,8 +45,6 @@ class CommentTextFieldState extends State<CommentTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.all(5.0),
       decoration: ShapeDecoration(
         color: Colors.deepPurple,
         shape: RoundedRectangleBorder(
@@ -62,7 +60,9 @@ class CommentTextFieldState extends State<CommentTextField> {
             )),
         Flexible(
           child: new TextField(
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+            ),
             maxLength: null,
             keyboardType: TextInputType.multiline,
             controller: _textController,
@@ -80,7 +80,7 @@ class CommentTextFieldState extends State<CommentTextField> {
         Container(
             margin: new EdgeInsets.symmetric(horizontal: 4.0),
             child: IconButton(
-              iconSize: 40.0,
+//              iconSize: 20.0,
               color: Colors.white,
               icon: new Icon(Icons.send),
               onPressed: _isComposing

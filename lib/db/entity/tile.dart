@@ -1,7 +1,7 @@
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/user.dart';
 
-enum TileType { drawing, card, message }
+enum TileType { drawing, card, message, dot }
 
 class Tile {
   static const table = 'tile';
@@ -84,7 +84,7 @@ class Tile {
       userIdCol: userId,
       likesCol: likes,
       commentsCol: comments,
-      updatedAtCol: updatedAt.millisecondsSinceEpoch
+      updatedAtCol: updatedAt == null ? null : updatedAt.millisecondsSinceEpoch
     };
   }
 
@@ -97,7 +97,9 @@ class Tile {
             userId: map[userIdSel],
             likes: map[likesSel],
             comments: map[commentsSel],
-            updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAtSel]),
+            updatedAt: map[updatedAtSel] == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(map[updatedAtSel]),
             card: QuackCard.fromMap(map),
             user: User.fromMap(map));
 

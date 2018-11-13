@@ -18,6 +18,7 @@ class DrawingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     print('drawing_card:build: $tile');
     return RaisedButton(
+      padding: EdgeInsets.zero,
       onPressed: () => Navigator.of(context)
               .push(MaterialPageRoute<void>(builder: (BuildContext context) {
             return DrawingWrapper(

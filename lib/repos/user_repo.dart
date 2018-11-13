@@ -3,6 +3,9 @@ import 'dart:core';
 import 'dart:io';
 import 'dart:convert';
 import 'dart:io';
+import 'package:maui/db/dao/tile_dao.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/repos/tile_repo.dart';
 import 'package:meta/meta.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
@@ -11,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class UserRepo {
   static final UserDao userDao = new UserDao();
@@ -87,6 +91,25 @@ class UserRepo {
       print('Exception details:\n $e');
       print('Stack trace:\n $s');
     }
+
+    final tileRepo = TileRepo();
+    var id = Uuid().v4();
+    tileRepo.upsert(Tile(
+        id: id,
+        cardId: 'dummy',
+        content:
+            '{"id":"$id","pathHistory":{"paths":[],"startX":null,"startY":null,"x":null,"y":null},"things":[{"id":"dot","type":"dot","dotData":{"x":[128, 150, 180, 200, 220, 240, 260, 280, 300, 340],"y":[256, 340, 220, 160, 170, 180, 200, 230, 300, 340],"c":[1,1,0,0,0,0,0,0,0,0]}}]}',
+        type: TileType.dot,
+        userId: user.id));
+
+    id = Uuid().v4();
+    tileRepo.upsert(Tile(
+        id: id,
+        cardId: 'dummy',
+        content:
+            '{"id":"$id","pathHistory":{"paths":[],"startX":null,"startY":null,"x":null,"y":null},"things":[{"id":"dot","type":"dot","dotData":{"x":[36,14,58,75,50,54,79,103,94,61,66,110,128,137,157,207,223,186,171,177,225,201,163,216,271,325,376,419,452,479,493,495,482,457,421,439,459,468,463,442,407,368,361,359,345,309,264,225,200,182,146,99,63],"y":[86,129,153,192,240,292,341,388,440,473,503,483,431,379,330,301,330,348,382,429,453,474,498,502,503,502,487,455,412,364,315,260,209,160,129,171,218,269,321,367,407,436,388,339,288,248,217,181,135,84,44,9,41],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}]}',
+        type: TileType.dot,
+        userId: user.id));
 
     print('Added main user: $user');
     return await userDao.insert(user);
