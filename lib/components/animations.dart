@@ -90,12 +90,12 @@ class AnimationsState extends State<Animations> {
                   ),
                   Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: FlatButton(
+                    child: IconButton(
                         onPressed: () async =>
                             await _pageController.previousPage(
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.fastOutSlowIn),
-                        child: new Icon(
+                        icon: new Icon(
                           Icons.keyboard_arrow_left,
                           size: size.height * 0.08,
                           color: count == 0 ? Colors.grey : Colors.white,
@@ -103,11 +103,11 @@ class AnimationsState extends State<Animations> {
                   ),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: FlatButton(
+                    child: IconButton(
                         onPressed: () async => await _pageController.nextPage(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.fastOutSlowIn),
-                        child: new Icon(
+                        icon: new Icon(
                           Icons.keyboard_arrow_right,
                           size: size.height * 0.08,
                           color: count == emotions.length - 1

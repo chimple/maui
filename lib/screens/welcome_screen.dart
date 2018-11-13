@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'stagger_animation.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:maui/components/signin_button.dart';
+import 'package:nima/nima_actor.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -63,10 +64,13 @@ class WelcomeScreenState extends State<WelcomeScreen>
                     children: <Widget>[
                       new AspectRatio(
                           aspectRatio: size.height > size.width ? 1.5 : 3.8,
-                          child: new SvgPicture.asset(
-                            "assets/team animals.svg",
-                            allowDrawingOutsideViewBox: false,
-                          )),
+                          child: new NimaActor(
+                              "assets/quack",
+                              alignment: Alignment.center,
+                              fit: BoxFit.scaleDown,
+                              animation: 'welcome with hello',
+                              mixSeconds: 0.2,
+                            ),),
                       new Text(
                         "Maui",
                         style: new TextStyle(
@@ -86,7 +90,9 @@ class WelcomeScreenState extends State<WelcomeScreen>
                                 setState(() {
                                   animationStatus = 1;
                                 });
-                                _playAnimation();
+                                new Future.delayed(const Duration(milliseconds: 4000), (){
+                                  _playAnimation();
+                                });                                
                               },
                               child: new SignIn()),
                         )
