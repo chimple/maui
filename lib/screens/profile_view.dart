@@ -78,7 +78,8 @@ class ProfileViewState extends State<ProfileView>
                 height: 125.0,
                 width: 125.0,
                 decoration: new BoxDecoration(
-                    border: new Border.all(width: 3.0, color: Colors.blueAccent),
+                    border:
+                        new Border.all(width: 3.0, color: Colors.blueAccent),
                     shape: BoxShape.circle,
                     image: new DecorationImage(
                         image: new FileImage(new File(user.image)),
