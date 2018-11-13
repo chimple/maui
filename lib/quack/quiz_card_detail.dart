@@ -106,13 +106,18 @@ class QuizCardDetailState extends State<QuizCardDetail> {
             parentCardId: widget.parentCardId,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MarkdownBody(
-              data: widget.card.content ?? '',
-              styleSheet: new MarkdownStyleSheet(
-                  p: new TextStyle(fontSize: 16.0, color: Colors.black))),
-        ),
+        widget.card.title == null
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.card.title ?? ''),
+              ),
+        widget.card.content == null
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.card.content ?? ''),
+              ),
         Expanded(
           child: _isLoading
               ? Center(

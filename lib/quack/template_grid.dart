@@ -23,9 +23,11 @@ class TemplateGrid extends StatelessWidget {
               : template.endsWith('.svg')
                   ? new SvgPicture.asset(
                       template,
+                      package: 'maui_assets',
                     )
                   : Image.asset(
                       template,
+                      package: 'maui_assets',
                     ),
         ),
       ),

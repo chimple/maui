@@ -49,7 +49,7 @@ class TileCard extends StatelessWidget {
                   borderRadius: new BorderRadius.circular(8.0),
                   border: new Border.all(
                     width: 1.0,
-                    color: Colors.red,
+                    color: Color(0xFFEF823F),
                   ),
                 ),
                 constraints: BoxConstraints.tightFor(height: 120.0),
@@ -63,10 +63,17 @@ class TileCard extends StatelessWidget {
         );
         break;
       case TileType.drawing:
-        return Row(
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
+            Padding(
               padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${tile.user.name} made a drawing',
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            Container(
               constraints: BoxConstraints.tightFor(height: 120.0),
               child: DrawingCard(tile: tile),
             )
@@ -74,7 +81,37 @@ class TileCard extends StatelessWidget {
         );
         break;
       case TileType.message:
-        return Card(child: Text(tile.content));
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  '${tile.user.name} wrote',
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+              Container(
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(8.0),
+                  border: new Border.all(
+                    width: 1.0,
+                    color: Color(0xFFEF823F),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    tile.content,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
     }
   }
 }

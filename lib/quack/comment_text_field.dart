@@ -45,8 +45,6 @@ class CommentTextFieldState extends State<CommentTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.all(5.0),
       decoration: ShapeDecoration(
         color: Colors.deepPurple,
         shape: RoundedRectangleBorder(
@@ -62,7 +60,9 @@ class CommentTextFieldState extends State<CommentTextField> {
             )),
         Flexible(
           child: new TextField(
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+            ),
             maxLength: null,
             keyboardType: TextInputType.multiline,
             controller: _textController,
@@ -80,7 +80,7 @@ class CommentTextFieldState extends State<CommentTextField> {
         Container(
             margin: new EdgeInsets.symmetric(horizontal: 4.0),
             child: IconButton(
-              iconSize: 40.0,
+//              iconSize: 20.0,
               color: Colors.white,
               icon: new Icon(Icons.send),
               onPressed: _isComposing
@@ -97,9 +97,17 @@ class CommentTextFieldState extends State<CommentTextField> {
       _isComposing = false;
     });
     Provider.dispatch<RootState>(
-        context,
-        AddComment(
-            parentId: widget.parentId, tileType: TileType.card, text: text));
+      context,
+      AddComment(
+          comment: Comment(
+              id: Uuid().v4(),
+              parentId: widget.parentId,
+              userId: AppStateContainer.of(context).state.loggedInUser.id,
+              timeStamp: DateTime.now(),
+              comment: text,
+              user: AppStateContainer.of(context).state.loggedInUser),
+          tileType: TileType.card),
+    );
     _focusNode.unfocus();
   }
 }
