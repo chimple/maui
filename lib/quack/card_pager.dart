@@ -92,36 +92,34 @@ class CardPagerState extends State<CardPager> {
                 }),
           )
         ];
-        if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
-          print("CardList length - ${cardList.length}");
-          print("Current Page Index - $_currentPageIndex");
-          widgets.add(Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.chevron_left),
-                onPressed: _currentPageIndex == 0
-                    ? null
-                    : () async => await _pageController.previousPage(
-                        duration: Duration(milliseconds: 250),
-                        curve: Curves.fastOutSlowIn),
-              ),
-              Expanded(
-                child: CommentTextField(
-                  parentId: cardList[_currentPageIndex].id,
-                  tileType: TileType.card,
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: _currentPageIndex >= cardList.length
-                    ? null
-                    : () async => await _pageController.nextPage(
-                        duration: Duration(milliseconds: 250),
-                        curve: Curves.fastOutSlowIn),
-              ),
-            ],
-          ));
-        }
+//        if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
+//          widgets.add(Row(
+//            children: <Widget>[
+//              IconButton(
+//                icon: Icon(Icons.chevron_left),
+//                onPressed: _currentPageIndex == 0
+//                    ? null
+//                    : () async => await _pageController.previousPage(
+//                        duration: Duration(milliseconds: 250),
+//                        curve: Curves.fastOutSlowIn),
+//              ),
+//              Expanded(
+//                child: CommentTextField(
+//                  parentId: cardList[_currentPageIndex].id,
+//                  tileType: TileType.card,
+//                ),
+//              ),
+//              IconButton(
+//                icon: Icon(Icons.chevron_right),
+//                onPressed: _currentPageIndex >= cardList.length
+//                    ? null
+//                    : () async => await _pageController.nextPage(
+//                        duration: Duration(milliseconds: 250),
+//                        curve: Curves.fastOutSlowIn),
+//              ),
+//            ],
+//          ));
+//        }
         return Scaffold(
           body: Column(children: widgets),
         );
