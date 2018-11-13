@@ -29,13 +29,41 @@ class FetchInitialData implements AsyncAction<RootState> {
     final collectionMap = Map<String, List<String>>();
     final progressMap = Map<String, double>();
     final likeMap = Map<String, Like>();
+    await fetchCollection(
+        name: 'main',
+        cardMap: cardMap,
+        collectionMap: collectionMap,
+        progressMap: progressMap,
+        likeMap: likeMap);
+    await fetchCollection(
+        name: 'story',
+        cardMap: cardMap,
+        collectionMap: collectionMap,
+        progressMap: progressMap,
+        likeMap: likeMap);
+    return (RootState state) => RootState(
+        user: user,
+        collectionMap: state.collectionMap..addAll(collectionMap),
+        cardMap: state.cardMap..addAll(cardMap),
+        progressMap: state.progressMap..addAll(progressMap),
+        likeMap: likeMap,
+        tiles: state.tiles,
+        templates: state.templates,
+        commentMap: {});
+  }
 
+  Future<void> fetchCollection(
+      {String name,
+      Map<String, QuackCard> cardMap,
+      Map<String, List<String>> collectionMap,
+      Map<String, double> progressMap,
+      Map<String, Like> likeMap}) async {
     final mainCards =
-        (await collectionRepo.getCardsInCollection('main')).map((c) {
+        (await collectionRepo.getCardsInCollection(name)).map((c) {
       cardMap[c.id] = c;
       return c.id;
     }).toList(growable: false);
-    collectionMap['main'] = mainCards;
+    collectionMap[name] = mainCards;
 
     await Future.forEach(mainCards, (mc) async {
       final cardNames =
@@ -51,19 +79,9 @@ class FetchInitialData implements AsyncAction<RootState> {
         likeMap[c] = await likeRepo.getLikeByParentIdAndUserId(
             c, user.id, TileType.card);
       });
-
       collectionMap[mc] = cardNames;
     });
-
-    print('FetchInitialData: $progressMap');
-    return (RootState state) => RootState(
-        user: user,
-        collectionMap: state.collectionMap..addAll(collectionMap),
-        cardMap: state.cardMap..addAll(cardMap),
-        progressMap: state.progressMap..addAll(progressMap),
-        likeMap: likeMap,
-        tiles: state.tiles,
-        templates: state.templates,
-        commentMap: {});
+//    print(progressMap);
+//    print(likeMap);
   }
 }

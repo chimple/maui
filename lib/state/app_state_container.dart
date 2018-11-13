@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_comment.dart';
 import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/actions/post_tile.dart';
+import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,7 +104,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        selectNotification: onSelectNotification);
+        onSelectNotification: onSelectNotification);
     botMessages = List<dynamic>();
   }
 
@@ -323,7 +326,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (activity == 'friends') {
         getUsers();
       }
-    } else if (message['messageType'] == 'tile') {
+    } else if (message['messageType'] == 'like') {
       String content = message['message'];
       final msgList = content.split('*');
       if (msgList?.length == 2) {
@@ -333,6 +336,35 @@ class AppStateContainerState extends State<AppStateContainer> {
                 parentId: msgList[1],
                 tileType: TileType.values[int.parse(msgList[0])],
                 userId: message['userId']));
+      }
+    } else if (message['messageType'] == 'tile') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length >= 4) {
+        final tile = Tile(
+            id: msgList[0],
+            type: TileType.values[int.parse(msgList[1])],
+            cardId: msgList[2],
+            content: msgList[3],
+            userId: message['userId'],
+            updatedAt: DateTime.now());
+        Provider.dispatch<RootState>(context, PostTile(tile: tile));
+      }
+    } else if (message['messageType'] == 'comment') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length >= 4) {
+        final comment = Comment(
+            id: msgList[0],
+            parentId: msgList[2],
+            comment: msgList[3],
+            userId: message['userId'],
+            timeStamp: DateTime.now());
+        Provider.dispatch<RootState>(
+            context,
+            AddComment(
+                comment: comment,
+                tileType: TileType.values[int.parse(msgList[1])]));
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);

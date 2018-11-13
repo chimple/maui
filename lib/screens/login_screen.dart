@@ -343,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen>
           image: imagePathStore,
           currentLessonId: 1,
           name: userName,
-          points: 10));
+          points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
       Navigator.of(context).pushReplacementNamed('/tab');
     } else {

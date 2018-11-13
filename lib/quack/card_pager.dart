@@ -8,7 +8,9 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
+import 'package:maui/quack/knowledge_detail.dart';
 import 'package:maui/quack/quiz_navigator.dart';
+import 'package:maui/components/quiz_welcome.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
@@ -50,6 +52,7 @@ class CardPagerState extends State<CardPager> {
   @override
   Widget build(BuildContext context) {
     debugPrint('_currentPageIndex: $_currentPageIndex');
+
     return Connect<RootState, List<QuackCard>>(
       convert: (state) => state.collectionMap[widget.cardId]
           .map((id) => state.cardMap[id])
@@ -64,16 +67,10 @@ class CardPagerState extends State<CardPager> {
                 scrollDirection: Axis.horizontal,
                 itemCount: cardList.length + 1,
                 itemBuilder: (context, index) => index >= cardList.length
-                    ? RaisedButton(
-                        child: Text('Quiz'),
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    QuizNavigator(
-                                      cardId: widget.cardId,
-                                    ))),
+                    ? QuizWelcome(
+                        cardId: widget.cardId,
                       )
-                    : CardDetail(
+                    : KnowledgeDetail(
 //                    key: _cardDetailKeys[index],
                         card: cardList[index],
                         parentCardId: widget.cardId,
@@ -81,45 +78,48 @@ class CardPagerState extends State<CardPager> {
                       ),
                 onPageChanged: (index) {
                   print('onPageChanged: $index');
-                  if (index < cardList.length)
+                  if (index < cardList.length) {
                     Provider.dispatch<RootState>(
                         context, FetchComments(cardList[index].id));
-                  Provider.dispatch<RootState>(
-                      context,
-                      AddProgress(
-                          card: cardList[index], parentCardId: widget.cardId));
+                    Provider.dispatch<RootState>(
+                        context,
+                        AddProgress(
+                            card: cardList[index],
+                            parentCardId: widget.cardId));
+                  }
                   setState(() => _currentPageIndex = index);
+                  print("Current page index update - ${_currentPageIndex}");
                 }),
           )
         ];
-        if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
-          widgets.add(Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.chevron_left),
-                onPressed: _currentPageIndex == 0
-                    ? null
-                    : () async => await _pageController.previousPage(
-                        duration: Duration(milliseconds: 250),
-                        curve: Curves.fastOutSlowIn),
-              ),
-              Expanded(
-                child: CommentTextField(
-                  parentId: cardList[_currentPageIndex].id,
-                  tileType: TileType.card,
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: _currentPageIndex >= cardList.length
-                    ? null
-                    : () async => await _pageController.nextPage(
-                        duration: Duration(milliseconds: 250),
-                        curve: Curves.fastOutSlowIn),
-              ),
-            ],
-          ));
-        }
+//        if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
+//          widgets.add(Row(
+//            children: <Widget>[
+//              IconButton(
+//                icon: Icon(Icons.chevron_left),
+//                onPressed: _currentPageIndex == 0
+//                    ? null
+//                    : () async => await _pageController.previousPage(
+//                        duration: Duration(milliseconds: 250),
+//                        curve: Curves.fastOutSlowIn),
+//              ),
+//              Expanded(
+//                child: CommentTextField(
+//                  parentId: cardList[_currentPageIndex].id,
+//                  tileType: TileType.card,
+//                ),
+//              ),
+//              IconButton(
+//                icon: Icon(Icons.chevron_right),
+//                onPressed: _currentPageIndex >= cardList.length
+//                    ? null
+//                    : () async => await _pageController.nextPage(
+//                        duration: Duration(milliseconds: 250),
+//                        curve: Curves.fastOutSlowIn),
+//              ),
+//            ],
+//          ));
+//        }
         return Scaffold(
           body: Column(children: widgets),
         );

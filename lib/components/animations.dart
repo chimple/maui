@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/quack/post_comments.dart';
 import 'package:nima/nima_actor.dart';
+import 'package:maui/components/drawing_wrapper.dart';
 import 'dart:ui';
 
 class Animations extends StatefulWidget {
@@ -48,88 +49,75 @@ class AnimationsState extends State<Animations> {
         ),
         Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FlatButton(
-                  onPressed: () {Navigator.of(context).pop();},
-                  child: new Icon(Icons.arrow_back, size: size.height * 0.05, color: Colors.white)
-                ),
-              ],
-            ),
             Container(
-              height: size.height > size.width ? size.height * 0.8 : size.height * 0.70,
-              child: Row(
+              height: size.height > size.width
+                  ? size.height * 0.88
+                  : size.height * 0.70,
+              width: double.maxFinite - size.width * 0.1,
+              child: Stack(
                 children: <Widget>[
-                  FlatButton(
-                      onPressed: () async => await _pageController.previousPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.fastOutSlowIn),
-                      child: new Icon(
-                        Icons.keyboard_arrow_left,
-                        size: size.height * 0.08,
-                        color: count == 0 ? Colors.grey : Colors.white,
-                      )),
-                  Expanded(
-                    flex: 1,
-                      child: PageView.builder(
-                          controller: _pageController,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: emotions.length,
-                          itemBuilder: (context, index) => new Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                              // height: double.,
-                                              // width: double.maxFinite,
-                                              height: size.height > size.width
-                                                  ? size.height * 0.8
-                                                  : size.height * 0.70,
-                                              width: size.height > size.width
-                                                  ? size.width * 0.56
-                                                  : size.width * 0.48,
-                                              child: new NimaActor(
-                                                "assets/quack",
-                                                alignment: Alignment.center,
-                                                fit: BoxFit.scaleDown,
-                                                animation:
-                                                    '${emotions[count]}',
-                                                mixSeconds: 0.2,
-                                              )),
-                                        ]),
-                                  ]),
-                          onPageChanged: (index) {
-                            print('onPageChanged: $index');
-                            print(
-                                'OnPageChanged Emotion: ${emotions[0 + index]}');                                
-                            setState(() {
-                              count = 0 + index;
-                            });
-                          })),
-                  FlatButton(
-                      onPressed: () async => await _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.fastOutSlowIn),
-                      child: new Icon(
-                        Icons.keyboard_arrow_right,
-                        size: size.height * 0.08,
-                        color: count == emotions.length - 1
-                            ? Colors.grey
-                            : Colors.white,
-                      )),
+                  PageView.builder(
+                      controller: _pageController,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: emotions.length,
+                      itemBuilder: (context, index) => Container(
+                            height: double.maxFinite - size.height * 0.1,
+                            width: double.maxFinite - size.height * 0.4,
+                            //color: Colors.red,
+                            child: new NimaActor(
+                              "assets/quack",
+                              alignment: Alignment.center,
+                              fit: BoxFit.scaleDown,
+                              animation: '${emotions[count]}',
+                              mixSeconds: 0.2,
+                            ),
+                          ),
+                      onPageChanged: (index) {
+                        print('onPageChanged: $index');
+                        print('OnPageChanged Emotion: ${emotions[0 + index]}');
+                        setState(() {
+                          count = 0 + index;
+                        });
+                      }),
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: new Icon(Icons.arrow_back,
+                            size: size.height * 0.05, color: Colors.white)),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: FlatButton(
+                        onPressed: () async =>
+                            await _pageController.previousPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.fastOutSlowIn),
+                        child: new Icon(
+                          Icons.keyboard_arrow_left,
+                          size: size.height * 0.08,
+                          color: count == 0 ? Colors.grey : Colors.white,
+                        )),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: FlatButton(
+                        onPressed: () async => await _pageController.nextPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.fastOutSlowIn),
+                        child: new Icon(
+                          Icons.keyboard_arrow_right,
+                          size: size.height * 0.08,
+                          color: count == emotions.length - 1
+                              ? Colors.grey
+                              : Colors.white,
+                        )),
+                  ),
                 ],
               ),
             ),
-           
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,13 +131,23 @@ class AnimationsState extends State<Animations> {
                         color: Colors.amber,
                       ),
                       child: new FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      DrawingWrapper(
+                                        activityId: 'lion_roar',
+                                        template: null,
+                                      )),
+                            );
+                          },
                           child: new Text(
-                        'Draw',
-                        style: new TextStyle(
-                            fontSize: 40.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ))),
+                            'Draw',
+                            style: new TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ))),
                   new Container(
                       height: size.height * 0.08,
                       width: size.width * 0.35,
@@ -159,13 +157,19 @@ class AnimationsState extends State<Animations> {
                         color: Colors.amber,
                       ),
                       child: new FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) => PostComments()),
+                            );
+                          },
                           child: new Text(
-                        'Post',
-                        style: new TextStyle(
-                            fontSize: 40.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      )))
+                            'Post',
+                            style: new TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )))
                 ]),
           ],
         ),

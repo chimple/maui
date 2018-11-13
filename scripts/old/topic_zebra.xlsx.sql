@@ -1,0 +1,61 @@
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra', 2, 'Zebra', NULL, 'With their signature black and white stripes who cannot recognize a zebra! Zebras are single-hoofed animals that are native of Africa. Zebras belong to horse family and are very closely realted to horses and donkeys. Zebras are now in the endangered animals list with only 2500 - 2700 population in the world. ', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra3', 1, 'I can draw a Zebra', 'Image of Zebra without stripes(Not available under CC0)', 'Draw stripes using the black color on the animal to create a zebra.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra4', 1, 'Creating a Zebra', 'assets/topic/zebrahandprint_4.jpg', 'Create a zebra on the given hand print.', NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra4', 2, 1, 'assets/topic/zebra_hand_template_1.png');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra6', 1, 'My creative park of Zebras', 'assets/topic/zebra_5.jpg', 'Using the pictures, create your park of Zebras.', 'zebra');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra7', 1, 'Zebra Crossing on the Road', 'assets/topic/CrossRoadWithoutZebra_6.jpg', 'Draw zebra crossing to help the people cross the road. ', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra8', 3, 'Looking between the lines of their family', NULL, 'Zebras are native to the African Continent. Often times we think zebras are just horses with stripes. No, you are wrong. Zebras belong to horse family but they are very much unique.  But horses and donkeys are their close relatives. There are three different types of zebras. The plains zebra, the mountain zebra and the grevvy''s zebra. The plains zebra are found in the treeless grasslands and woodlands of eastern and southern Africa. The mountain zebras are native to mountainous regions of southwestern Africa. The Grevvy''s zebra are found in small areas of Kenya and Ethopia. The Gravvy''s zebra weighs around 350 - 450 kilograms. The mountain zebra weighs around 240 to 372 kilograms and the Plains zebra weighs around 350 kilograms. Wow! that''s truly a heavy weight.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra9', 3, 'Unique habits of the striped friend', NULL, 'Zebras live in family groups led by a male zebra with several female zebras and offsprings. The male zebra is known as a stallion. The female zebra is known as a mare. The baby zebra is known as a foal.
+Zebras mostly eat grass and will travel upto 1800 miles in search of food. Being herbivorous they sometimes eat barks, twigs and also leaves. Female zebras carry their youngones in womb for a period of 12 to 14 months. The baby zebras will weigh from 25 to 40 kgs at their birth. Soon after the birth the baby zebras are able to walk and run. Zebras will become fully independant at 3 to 6 years old.  Zebras will have a life span of 30 to 40 years. Aren''t these habits unique!', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra10', 3, 'Social bonding of Zebras', NULL, 'Zebras are often found among other animal groups, especially the wild beasts for safety in numbers. A large herd of animals are usually confusing to the predators. Zebras have several ways to communicate with one another. Facial expressions, such as wide-open eyes or barred teeth, all mean something. They also bark, bray, snort or huff to get their point across. Even the position of their ears signal their feelings. They can rotate their ears to almost any direction. Zebras sleep standing up and its really cool. Do you think you will be able to fall asleep standing up? and, they sleep only when they are in the safety of their group. Aren''t their social bonding amazing!', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra11', 3, 'Important facts that Zebra carry', NULL, 'The swahili name of a zebra is "Punda Milia"
+This is super cool! No two zebras, ever have the same 2 stripes. They are just like our fingerprints. Wow! there must be loads of different patterns!
+Zebra crossings are named after the black and white stripes of zebras. Zebra crossings are also known as pedestrian crossings. Now isn''t that an inspiration!
+Zebras are super speedy animals. In fact, they can run upto 65 miles per hour. Now that is seriously fast!
+Zebras look cute and friendly, but they can be aggressive animals too! The piercing bites and powerful kicks are strong enough to cause serious damage and sometimes even kill! That''s a caution! Keep yourself away from the striped animal. ', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra12', 0, 'Does zebra belong to a horse family?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra12', 1, 1, 'yes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra12', 0, 1, 'no');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra15', 0, 'A zebra is a super cute animal, but can be _______________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra15', 1, 1, 'very aggressive');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra15', 0, 1, 'very friendly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra15', 0, 2, 'very mild');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra19', 0, 'No two _____________________ are identical.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra19', 1, 1, 'stripes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra19', 0, 1, 'tails');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra19', 0, 2, 'patterns');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra23', 0, 'Is zebra a herbivore?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra23', 1, 1, 'yes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra23', 0, 1, 'no');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra26', 0, 'Match the parts to complete the picture', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra26', 1, 1, 'assets/topic/zebraEars_35.jpg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra26', 1, 2, 'assets/topic/zebraLegs_36.jpg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra26', 1, 3, 'assets/topic/zebraTail_37.jpg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra33', 0, 'Choose the correct word', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra33', 1, 1, 'herbivorous');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra33', 0, 1, 'bivorherous');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra33', 0, 2, 'vorousherbi');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra37', 0, 'Choose the correct word', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra37', 1, 1, 'africa');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra37', 0, 1, 'ricafa');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra37', 0, 2, 'carifa');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Zebra41', 0, 'Choose the correct word', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra41', 1, 1, 'zebra');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra41', 0, 1, 'braez');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Zebra41', 0, 2, 'rabez');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 1, 'Zebra3');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 2, 'Zebra4');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 3, 'Zebra6');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 4, 'Zebra7');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 5, 'Zebra8');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 6, 'Zebra9');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 7, 'Zebra10');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 8, 'Zebra11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 9, 'Zebra12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 10, 'Zebra15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 11, 'Zebra19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 12, 'Zebra23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 13, 'Zebra26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 14, 'Zebra33');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 15, 'Zebra37');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('Zebra', 16, 'Zebra41');
