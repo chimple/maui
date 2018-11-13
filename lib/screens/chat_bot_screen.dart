@@ -61,6 +61,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
   bool _isKeyboard = false;
+  bool _canSend = true;
 
   @override
   void initState() {
@@ -125,7 +126,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   Widget _buildInput() {
-    print(_isComposing);
+    print('_buildInput: $_isComposing $_canSend');
     if (_currentMode == ChatMode.conversation) {
       return new IconTheme(
         data: IconThemeData(color: Theme.of(context).accentColor),
@@ -159,8 +160,10 @@ class ChatBotScreenState extends State<ChatBotScreen> {
                 new Container(
                     margin: new EdgeInsets.symmetric(horizontal: 4.0),
                     child: new IconButton(
-                      icon: new Icon(Icons.send),
-                      onPressed: _isComposing
+                      icon: _canSend
+                          ? Icon(Icons.send)
+                          : Icon(Icons.hourglass_empty),
+                      onPressed: _isComposing && _canSend
                           ? () => _handleTextInput(_textController.text)
                           : null,
                     ))
@@ -257,6 +260,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   _handleSubmitted(ChatItem chatItem) {
     setState(() {
       _chatItems.insert(0, chatItem);
+      _canSend = false;
     });
     _animatedListKey.currentState
         .insertItem(0, duration: new Duration(milliseconds: 250));
@@ -283,6 +287,11 @@ class ChatBotScreenState extends State<ChatBotScreen> {
     }
     new Future.delayed(const Duration(milliseconds: 1000), () {
       if (mounted) _displayNextChat(chatItem);
+    });
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      setState(() {
+        _canSend = true;
+      });
     });
   }
 

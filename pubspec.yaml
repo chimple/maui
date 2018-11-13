@@ -7,42 +7,49 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  image_picker:
-  cupertino_icons: ^0.1.0
-  sqflite: any
+  image_picker: ^0.4.10
+  cupertino_icons: ^0.1.2
+  sqflite: ^0.12.2+1
   uuid: ^1.0.3
-  path_provider: ^0.4.0
-  tuple: ^1.0.1
-  json_annotation: ^1.1.0
-  audioplayers: ^0.7.5
+  path_provider: ^0.4.1
+  tuple: ^1.0.2
+  json_annotation: ^2.0.0
+  audioplayers: ^0.7.8
+  percent_indicator: ^1.0.10
   fluttery:
     git:
       https://github.com/chimple/fluttery.git
   flutter_circular_chart: "^0.1.0"
-  shared_preferences: ^0.4.2
+  shared_preferences: ^0.4.3
   camera: 0.2.1
   nima: ^1.0.1
-  flutter_local_notifications: ^0.3.7
+  flutter_local_notifications: ^0.4.0
   badge:
     git:
       https://github.com/chimple/Flutter-Badge.git
   intl: ^0.15.7
-  intl_translation: ^0.17.0
-  simple_permissions: ^0.1.6
-  flutter_svg: ^0.5.1
+  intl_translation: ^0.17.2
+  simple_permissions: ^0.1.9
+  flutter_svg: ^0.6.3
+  image: ^2.0.4
+  flutter_redurx: ^0.4.3
   flutter_localizations:
     sdk: flutter
+  tahiti:
+    path: ../tahiti
+  flores:
+    path: ../flores
+  maui_assets:
+    path: ../maui_assets
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  video_player: "^0.5.4"
-  build_runner: ^0.10.1
-  json_serializable: ^1.2.1
+  video_player: "^0.7.2"
+  build_runner: ^1.1.1
+  json_serializable: ^2.0.0
   flutter_markdown: ^0.2.0
-  tahiti:
-    path: ../tahiti
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -61,91 +68,15 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-    - assets/right.wav
-    - assets/wrong.wav
-    - assets/lion.ogg
-    - assets/monkey.ogg
-    - assets/duck.ogg
-    - assets/fox.ogg
-    - assets/rabbit.ogg
-    
-    - assets/tap.wav
+    - assets/
     - assets/demo_video/
-    - assets/videohelp.png
-    - assets/database.db
-    - assets/solo.nima
-    - assets/solo.png
-    - assets/chimple_logo.png
-    - assets/father.png
-    - assets/mother.png
-    - assets/sister.png
-    - assets/brother.png
-    - assets/star.png
-    - assets/star_gained.png
-    - assets/apple.png
-    - assets/Colors.png
-    - assets/Flowers.png
-    - assets/Fruits.png
-    - assets/Clothes.png
-    - assets/Fruits.json
-    - assets/Clothes.json
-    - assets/HouseItems.png
-    - assets/Boy.png
-    - assets/Body.png
-    - assets/Scene.png
-    - assets/Scene.json
-    - assets/Colors.json
-    - assets/Flowers.json
-    - assets/HouseItems.json
-    - assets/Shapes.json
-    - assets/Boy.json
-    - assets/Body.json
-    - assets/Work.json
-    - assets/Hospital.json
-    - assets/Animals.json
-    - assets/BedRoom.json
-    - assets/Birds.json
-    - assets/Work.png
-    - assets/Hospital.png
-    - assets/Animals.png
-    - assets/BedRoom.png
-    - assets/chat_Bot_Icon.png
-    - assets/Birds.png
-    - assets/apple.ogg
     - assets/dice_game/
     - assets/background_image/
-    - assets/background_gif/Win_loop.gif
+    - assets/background_gif/
     - assets/chat_image/
-    - assets/games.png
-    - assets/chat.png
-    - assets/chatBig.png
-    - assets/chatSmall.png
-    - assets/gameBig.png
-    - assets/gameSmall.png
-    - assets/story.png
-    - assets/Shapes.png
     - assets/hoodie/
-    - assets/hoodie_fb.png
-    - assets/hoodie_bear.png
-    - assets/koala_neutral.png
-    - assets/koala_happy.png
-    - assets/koala_sad.png
     - assets/animations/
-    - assets/forward_button.png
-    - assets/home_button.png
-    - assets/dice.png
-    - assets/wordgrid.png
-    - assets/picture_sentence.png
-    - assets/dice_happy.png
-    - assets/wordgrid_happy.png
-    - assets/picture_sentence_happy.png
-    - assets/background_tile.png
-    - assets/dice_sad.png
-    - assets/wordgrid_sad.png
-    - assets/picture_sentence_sad.png
-    # dictionary
     - assets/dict/
-    - assets/star_music.mp3
     - assets/stickers/pig/
     - assets/stickers/giraffe/
     - assets/stickers/monkey/
@@ -154,9 +85,7 @@ flutter:
     - assets/stickers/emoguy/
     - assets/category/
     - assets/nima_animation/
-    - assets/team animals.svg
-    - assets/topic/
-    
+    - assets/masking/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

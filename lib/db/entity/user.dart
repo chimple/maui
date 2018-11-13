@@ -31,20 +31,42 @@ final Map<int, int> userColors = {
 };
 
 class User {
-  static const table = 'user';
-  static const columnId = 'id';
-  static const columnDeviceId = 'deviceId';
-  static const columnName = 'name';
-  static const columnColor = 'color';
-  static const columnImage = 'image';
-  static const columnCurrentLessonId = 'currentLessonId';
   static const botId = 'bot';
+
+  static const table = 'user';
+
+  static const idCol = 'id';
+  static const deviceIdCol = 'deviceId';
+  static const nameCol = 'name';
+  static const colorCol = 'color';
+  static const imageCol = 'image';
+  static const currentLessonIdCol = 'currentLessonId';
+  static const pointsCol = 'points';
+
+  static const idSel = '${table}_id';
+  static const deviceIdSel = '${table}_deviceId';
+  static const nameSel = '${table}_name';
+  static const colorSel = '${table}_color';
+  static const imageSel = '${table}_image';
+  static const currentLessonIdSel = '${table}_currentLessonId';
+  static const pointsSel = '${table}_points';
+
+  static const allCols = [
+    '${table}.$idCol AS $idSel',
+    '${table}.$deviceIdCol AS $deviceIdSel',
+    '${table}.$nameCol AS $nameSel',
+    '${table}.$colorCol AS $colorSel',
+    '${table}.$imageCol AS $imageSel',
+    '${table}.$currentLessonIdCol AS $currentLessonIdSel',
+    '${table}.$pointsCol AS $pointsSel',
+  ];
 
   String id;
   String deviceId;
   String name;
   int color;
   String image;
+  int points;
   int currentLessonId;
 
   User(
@@ -53,6 +75,7 @@ class User {
       String name,
       int color,
       this.image,
+      this.points,
       this.currentLessonId})
       : this.id = id ?? new Uuid().v4(),
         this.color = color ??
@@ -63,23 +86,25 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      columnId: id,
-      columnDeviceId: deviceId,
-      columnName: name,
-      columnColor: color,
-      columnImage: image,
-      columnCurrentLessonId: currentLessonId
+      idCol: id,
+      deviceIdCol: deviceId,
+      nameCol: name,
+      colorCol: color,
+      imageCol: image,
+      pointsCol: points,
+      currentLessonIdCol: currentLessonId
     };
   }
 
   User.fromMap(Map<String, dynamic> map)
       : this(
-            id: map[columnId],
-            deviceId: map[columnDeviceId],
-            name: map[columnName],
-            color: map[columnColor],
-            image: map[columnImage],
-            currentLessonId: map[columnCurrentLessonId]);
+            id: map[idSel],
+            deviceId: map[deviceIdSel],
+            name: map[nameSel],
+            color: map[colorSel],
+            image: map[imageSel],
+            points: map[pointsSel],
+            currentLessonId: map[currentLessonIdSel]);
 
   @override
   int get hashCode =>
@@ -88,6 +113,7 @@ class User {
       name.hashCode ^
       color.hashCode ^
       image.hashCode ^
+      points.hashCode ^
       currentLessonId.hashCode;
 
   @override
@@ -100,10 +126,11 @@ class User {
           name == other.name &&
           color == other.color &&
           image == other.image &&
+          points == other.points &&
           currentLessonId == other.currentLessonId;
 
   @override
   String toString() {
-    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, currentLessonId: $currentLessonId}';
+    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, points: $points, currentLessonId: $currentLessonId}';
   }
 }

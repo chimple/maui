@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/quack/card_detail.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
@@ -12,6 +13,8 @@ import 'package:maui/state/app_state_container.dart';
 import 'components/camera.dart';
 import 'package:maui/screens/welcome_screen.dart';
 import 'loca.dart';
+
+final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
 
 class MauiApp extends StatelessWidget {
   @override
@@ -29,7 +32,9 @@ class MauiApp extends StatelessWidget {
       ],
       theme: new ThemeData(
         primarySwatch: Colors.blue,
+//        textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.2),
       ),
+      navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => new WelcomeScreen(),
         '/login': (BuildContext context) => new LoginScreen(),
@@ -52,9 +57,7 @@ class MauiApp extends StatelessWidget {
         builder: (BuildContext context) =>
             new GameCategoryListScreen(game: path[2]),
       );
-    }
-
-    if (path[1] == 'games' && path.length == 6) {
+    } else if (path[1] == 'games' && path.length == 6) {
       int gameCategoryId = int.parse(path[4], onError: (source) => null);
       Random random = new Random();
       final textMode = random.nextBool();
@@ -135,7 +138,15 @@ class MauiApp extends StatelessWidget {
                 ),
           );
       }
+    } else if (path[1] == 'card' && path.length == 4) {
+//      Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
+
+      return new MaterialPageRoute<Null>(
+        settings: settings,
+        builder: (BuildContext context) => new CardDetail(),
+      );
     }
+
     return null;
   }
 }

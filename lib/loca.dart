@@ -23,7 +23,8 @@ class Loca {
   String get title => Intl.message('Maui', name: 'title');
   String get chat => Intl.message('Chat', name: 'chat');
   String get gallery => Intl.message('Gallery', name: 'gallery');
-  String get topic => Intl.message('Topic', name: 'topic');
+  String get collection => Intl.message('Collection', name: 'collection');
+  String get progress => Intl.message('Progress', name: 'progress');
   String get game => Intl.message('Game', name: 'game');
   String get home => Intl.message("Home", name: 'home');
   String get category => Intl.message('Category', name: 'category');
@@ -193,6 +194,7 @@ class Loca {
       Intl.message('Enter your details', name: 'enterYourDetails');
   String get writeYourName =>
       Intl.message('Write your name...', name: 'writeYourName');
+  String get addAComment => Intl.message('Add a comment', name: 'addAComment');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {

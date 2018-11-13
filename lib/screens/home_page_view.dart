@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/scheduler.dart';
 import 'package:maui/db/entity/home.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/screens/drawing_list_screen.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/repos/home_page_repo.dart';
 import 'package:maui/screens/comment_list_view.dart';
@@ -15,7 +15,9 @@ class HomePageView extends StatefulWidget {
   _HomePageViewState createState() => new _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<HomePageView>
+    with TickerProviderStateMixin {
+  AnimationController _commentButtonAnimationController;
   List<Home> _home = [];
   List<int> _likes = [];
   List<User> _allUsers = [];
@@ -41,6 +43,16 @@ class _HomePageViewState extends State<HomePageView> {
     }
   }
 
+  Future<Null> _startAnimation() async {
+    try {
+      print(":");
+      await _commentButtonAnimationController.reverse().orCancel;
+      print("forward");
+      // await _commentButtonAnimationController.forward().orCancel;
+      print("reversed");
+    } on TickerCanceled {}
+  }
+
   Widget _initTileData(String type, String typeId) {
     return new Container(
       color: type == "quiz"
@@ -62,13 +74,23 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _commentButtonAnimationController = new AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+    _commentButtonAnimationController.forward();
+  }
+
+  @override
+  void didUpdateWidget(HomePageView oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget != this.widget) {
+      _commentButtonAnimationController.forward();
+    }
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _initHomeData();
   }
@@ -89,28 +111,16 @@ class _HomePageViewState extends State<HomePageView> {
                   new Expanded(
                     flex: 1,
                     child: _allUsers[index] == null
-                        ? new Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: new BorderRadius.circular(40.0),
-                                border: new Border.all(
-                                    width: 3.0, color: Colors.black)),
-                            child: new CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child:
-                                  new Image.asset('assets/chat_Bot_Icon.png'),
-                            ),
+                        ? new CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: Colors.black,
+                            child: new Image.asset('assets/chat_Bot_Icon.png'),
                           )
-                        : new Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: new BorderRadius.circular(40.0),
-                              border: new Border.all(
-                                  width: 3.0, color: Colors.black),
-                            ),
-                            child: new CircleAvatar(
-                              backgroundColor: Colors.white,
-                              backgroundImage: new FileImage(
-                                new File(_allUsers[index].image),
-                              ),
+                        : new CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: Colors.black,
+                            backgroundImage: new FileImage(
+                              new File(_allUsers[index].image),
                             ),
                           ),
                   ),
@@ -199,31 +209,28 @@ class _HomePageViewState extends State<HomePageView> {
             ),
             new Expanded(
               flex: 2,
-              child: new RaisedButton(
-                padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                shape: new RoundedRectangleBorder(
-                    side: new BorderSide(
-                        color: Colors.brown,
-                        width: 1.0,
-                        style: BorderStyle.solid),
-                    borderRadius: new BorderRadius.circular(20.0)),
-                elevation: 5.0,
-                onPressed: () {
-                  print("objectffff");
-                  Navigator.of(context).push(
-                    new MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return new CommentListView(
-                          tileId: _home[index].tileId,
-                          loggedInUser: _loggedInUser,
-                        );
-                      },
-                    ),
-                  );
-                },
-                child: new Text(
-                  "Comment",
-                  style: new TextStyle(fontSize: 30.0),
+              child: new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new GestureDetector(
+                  onTap: () {
+                    _startAnimation();
+                    Future.delayed(const Duration(milliseconds: 1000), () {
+                      Navigator.of(context).push(
+                        new MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return new CommentListView(
+                              tileId: _home[index].tileId,
+                              loggedInUser: _loggedInUser,
+                              tileUser: _allUsers[index],
+                            );
+                          },
+                        ),
+                      );
+                    });
+                  },
+                  child: new AnimatedCommentBox(
+                    controller: _commentButtonAnimationController,
+                  ),
                 ),
               ),
             ),
@@ -234,12 +241,7 @@ class _HomePageViewState extends State<HomePageView> {
               ? print("To the Quiz")
               : _home[index].type == "article"
                   ? print("To the article")
-                  : Navigator.of(context).push(new MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                      return DrawingListScreen(
-                        activityId: _home[index].typeId,
-                      );
-                    }));
+                  : print("to the activity");
         },
         contentPadding: const EdgeInsets.all(25.0),
         isThreeLine: true,
@@ -247,6 +249,12 @@ class _HomePageViewState extends State<HomePageView> {
         dense: false,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _commentButtonAnimationController.dispose();
   }
 
   @override
@@ -290,5 +298,55 @@ class _HomePageViewState extends State<HomePageView> {
               },
             ),
           );
+  }
+}
+
+class AnimatedCommentBox extends StatelessWidget {
+  AnimatedCommentBox({Key key, this.controller})
+      : opacity = new Tween<double>(begin: 0.0, end: 1.0).animate(
+            new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(0.0, 1.0, curve: Curves.bounceInOut))),
+        radius = new Tween<double>(
+          begin: 10.0,
+          end: 0.0,
+        ).animate(new CurvedAnimation(
+            parent: controller,
+            curve: new Interval(0.0, 1.0, curve: Curves.linear))),
+        super(key: key);
+  final Animation<double> controller;
+  final Animation<double> opacity;
+  final Animation<double> radius;
+
+  @override
+  Widget build(BuildContext context) {
+    //timeDilation = 2.0;
+    // TODO: implement build
+    return new AnimatedBuilder(
+      animation: controller,
+      builder: (BuildContext context, Widget child) {
+        return new Opacity(
+          opacity: opacity.value,
+          child: new Container(
+              child: new Center(
+                child: new Text(
+                  "Comment",
+                  style: new TextStyle(fontSize: 30.0),
+                ),
+              ),
+              decoration: new BoxDecoration(
+                color: Colors.yellow,
+                border: Border.all(color: Colors.black, width: 1.0),
+                borderRadius: new BorderRadius.circular(10.0),
+                boxShadow: [
+                  new BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: radius.value,
+                  )
+                ],
+              )),
+        );
+      },
+    );
   }
 }

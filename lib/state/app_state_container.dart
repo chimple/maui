@@ -5,6 +5,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_comment.dart';
+import 'package:maui/actions/add_like.dart';
+import 'package:maui/actions/fetch_card_detail.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/actions/post_tile.dart';
+import 'package:maui/db/entity/comment.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -52,7 +61,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   String activity;
   String friendId;
   List<User> users;
-  List<Notif> notifs;
+  List<Notif> notifs = [];
   AudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool isShowingFlashCard = true;
@@ -95,7 +104,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        selectNotification: onSelectNotification);
+        onSelectNotification: onSelectNotification);
     botMessages = List<dynamic>();
   }
 
@@ -196,8 +205,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-   void playArticleAudio(
-      String audio, Function onComplete) async {
+  void playArticleAudio(String audio, Function onComplete) async {
     audio = audio.toLowerCase();
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -306,8 +314,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
-    print(
-        '_onReceiveMessage $message ${state.loggedInUser.id} $friendId $activity');
+    print('_onReceiveMessage $message');
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
@@ -319,20 +326,60 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (activity == 'friends') {
         getUsers();
       }
-    } else if (message['recipientUserId'] == state.loggedInUser.id) {
-      NotifRepo().increment(message['userId'], message['messageType'], 1);
+    } else if (message['messageType'] == 'like') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length == 2) {
+        Provider.dispatch<RootState>(
+            context,
+            AddLike(
+                parentId: msgList[1],
+                tileType: TileType.values[int.parse(msgList[0])],
+                userId: message['userId']));
+      }
+    } else if (message['messageType'] == 'tile') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length >= 4) {
+        final tile = Tile(
+            id: msgList[0],
+            type: TileType.values[int.parse(msgList[1])],
+            cardId: msgList[2],
+            content: msgList[3],
+            userId: message['userId'],
+            updatedAt: DateTime.now());
+        Provider.dispatch<RootState>(context, PostTile(tile: tile));
+      }
+    } else if (message['messageType'] == 'comment') {
+      String content = message['message'];
+      final msgList = content.split('*');
+      if (msgList?.length >= 4) {
+        final comment = Comment(
+            id: msgList[0],
+            parentId: msgList[2],
+            comment: msgList[3],
+            userId: message['userId'],
+            timeStamp: DateTime.now());
+        Provider.dispatch<RootState>(
+            context,
+            AddComment(
+                comment: comment,
+                tileType: TileType.values[int.parse(msgList[1])]));
+      }
+    } else if (message['recipientUserId'] == state.loggedInUser?.id) {
+//      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
-        showNotification(
-            message['userId'],
-            message['messageType'],
-            message['message'],
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(
+//            message['userId'],
+//            message['messageType'],
+//            message['message'],
+//            message['messageType'] + ':' + message['userId']);
         if (message['userId'] == friendId && activity == 'chat') {
           beginChat(friendId);
         }
       } else {
-        showNotification(message['userId'], message['messageType'], '',
-            message['messageType'] + ':' + message['userId']);
+//        showNotification(message['userId'], message['messageType'], '',
+//            message['messageType'] + ':' + message['userId']);
       }
     }
   }
@@ -343,10 +390,10 @@ class AppStateContainerState extends State<AppStateContainer> {
     final userList = await UserRepo().getRemoteUsers();
     final botUser = await UserRepo().getUser(User.botId);
     userList.insert(0, botUser);
-    final notifList = await NotifRepo().getNotifsByType('chat');
+//    final notifList = await NotifRepo().getNotifsByType('chat');
     setState(() {
       users = userList;
-      notifs = notifList;
+//      notifs = notifList;
     });
     print('getUsers end');
   }
@@ -452,6 +499,7 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   @override
   Widget build(BuildContext context) {
+    print('AppStateContainer:build');
     return new _InheritedAppStateContainer(
       data: this,
       child: widget.child,
@@ -472,14 +520,16 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Stack trace:\n $s');
       }
     }
-    try {
-      p2p.start();
-    } on PlatformException {
-      print('Flores: Failed start');
-    } catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-    }
+    Provider.dispatch<RootState>(context, FetchInitialData(user));
+
+//    try {
+//      p2p.start();
+//    } on PlatformException {
+//      print('Flores: Failed start');
+//    } catch (e, s) {
+//      print('Exception details:\n $e');
+//      print('Stack trace:\n $s');
+//    }
     _lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(56);
     _lesson = await new LessonRepo().getLesson(56);
 //    _lessonUnits = await new LessonUnitRepo()

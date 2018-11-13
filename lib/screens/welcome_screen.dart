@@ -44,7 +44,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 0.4;
+    //timeDilation = 0.4;
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
