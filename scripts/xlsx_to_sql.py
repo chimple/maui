@@ -93,7 +93,7 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				if type_data == 2:
 					card = sheet.title
 				else:
-					card = sheet.title+str(row_num)
+					card = sheet.title+'_'+str(row_num)
 				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
 			if type_data == 2:
 				topic = card
