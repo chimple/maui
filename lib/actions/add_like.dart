@@ -41,13 +41,16 @@ class AddLike implements AsyncAction<RootState> {
     likeRepo.insert(like, tileType);
     state.cardMap[parentId].likes = (state.cardMap[parentId].likes ?? 0) + 1;
 
-    tileRepo.insert(Tile(
-        id: Uuid().v4(),
-        cardId: parentId,
-        content: '${user.name} liked this topic',
-        type: TileType.card,
-        updatedAt: DateTime.now(),
-        userId: userId ?? state.user.id));
+    final tiles = await tileRepo.getTilesByCardId(parentId);
+    if (tiles.length == 0) {
+      await tileRepo.insert(Tile(
+          id: Uuid().v4(),
+          cardId: parentId,
+          content: '${user.name} liked this',
+          type: TileType.card,
+          userId: userId ?? state.user.id,
+          updatedAt: DateTime.now()));
+    }
 
     if (userId == null)
       try {
