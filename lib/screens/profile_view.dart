@@ -60,7 +60,6 @@ class ProfileViewState extends State<ProfileView>
 
     return Scaffold(
       body: SafeArea(
-        // top: false,
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

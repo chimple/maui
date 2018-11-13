@@ -61,7 +61,7 @@ class UserProgress extends StatelessWidget {
                                           c.title,
                                           overflow: TextOverflow.ellipsis,
                                           style: new TextStyle(
-                                              fontSize: 26.0,
+                                              fontSize: 25.0,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
