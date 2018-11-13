@@ -42,11 +42,15 @@ class ProfileViewState extends State<ProfileView>
         ]);
   }
 
-  Widget getTabBarPages() {
+  Widget getTabBarPages(BuildContext context) {
     return Expanded(
       child: TabBarView(controller: tabController, children: <Widget>[
-        UserDrawingGrid(),
-        UserCollection(),
+        UserDrawingGrid(
+          userId: AppStateContainer.of(context).state.loggedInUser.id,
+        ),
+        UserCollection(
+          userId: AppStateContainer.of(context).state.loggedInUser.id,
+        ),
         UserProgress(),
       ]),
     );
@@ -93,7 +97,7 @@ class ProfileViewState extends State<ProfileView>
               ),
             ),
             getTabBar(),
-            getTabBarPages()
+            getTabBarPages(context)
           ],
         ),
       ),
