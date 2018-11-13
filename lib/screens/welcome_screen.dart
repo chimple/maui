@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/animation.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'stagger_animation.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:maui/components/signin_button.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// import 'stagger_animation.dart';
+// import 'package:flutter/scheduler.dart' show timeDilation;
+// import 'package:maui/components/signin_button.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:nima/nima_actor.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,33 +18,23 @@ class WelcomeScreen extends StatefulWidget {
 
 class WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
-  AnimationController _loginButtonController;
-  var animationStatus = 0;
+      var user;
+  // AnimationController _loginButtonController;
+  // var animationStatus = 0;
 
   void initState() {
     super.initState();
-    _loginButtonController = new AnimationController(
-        duration: new Duration(milliseconds: 3000), vsync: this);
-
-    new Future.delayed(const Duration(milliseconds: 2000), () {
-      setState(() {
-        animationStatus = 1;
-      });
-      _playAnimation();
-    });
+    _initData();
   }
 
-  @override
-  void dispose() {
-    _loginButtonController.dispose();
-    super.dispose();
-  }
-
-  Future<Null> _playAnimation() async {
-    try {
-      await _loginButtonController.forward();
-      await _loginButtonController.reverse();
-    } on TickerCanceled {}
+  void _initData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');    
+      User user = await UserRepo().getUser(userId);
+      await AppStateContainer.of(context).setLoggedInUser(user);
+      new Future.delayed(const Duration(milliseconds: 7000), (){
+        Navigator.of(context).pushReplacementNamed('/tab');
+      });   
   }
 
   @override
@@ -71,33 +65,33 @@ class WelcomeScreenState extends State<WelcomeScreen>
                               animation: 'welcome with hello',
                               mixSeconds: 0.2,
                             ),),
-                      new Text(
-                        "Maui",
-                        style: new TextStyle(
-                          fontSize: size.height > size.width ? 72.0 : 60.0,
-                          color: Colors.amber,
-                        ),
-                      ),
-                    ],
-                  ),
-                  animationStatus == 0
-                      ? new Padding(
-                          padding: size.height > size.width
-                              ? new EdgeInsets.all(50.0)
-                              : new EdgeInsets.all(10.0),
-                          child: new InkWell(
-                              onTap: () {
-                                setState(() {
-                                  animationStatus = 1;
-                                });
-                                new Future.delayed(const Duration(milliseconds: 4000), (){
-                                  _playAnimation();
-                                });                                
-                              },
-                              child: new SignIn()),
-                        )
-                      : new StaggerAnimation(
-                          buttonController: _loginButtonController.view),
-                ])));
+                  //     new Text(
+                  //       "Maui",
+                  //       style: new TextStyle(
+                  //         fontSize: size.height > size.width ? 72.0 : 60.0,
+                  //         color: Colors.amber,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // animationStatus == 0
+                  //     ? new Padding(
+                  //         padding: size.height > size.width
+                  //             ? new EdgeInsets.all(50.0)
+                  //             : new EdgeInsets.all(10.0),
+                  //         child: new InkWell(
+                  //             onTap: () {
+                  //               setState(() {
+                  //                 animationStatus = 1;
+                  //               });
+                  //               new Future.delayed(const Duration(milliseconds: 4000), (){
+                  //                 _playAnimation();
+                  //               });                                
+                  //             },
+                  //             child: new SignIn()),
+                  //       )
+                  //     : new StaggerAnimation(
+                  //         buttonController: _loginButtonController.view),
+                ])])));
   }
 }

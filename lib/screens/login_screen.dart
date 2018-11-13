@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
     if (userId != null) {
+      Navigator.of(context).pushReplacementNamed('/welcome');
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
       Navigator.of(context).pushReplacementNamed('/tab');
