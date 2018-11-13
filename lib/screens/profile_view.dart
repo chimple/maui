@@ -63,40 +63,43 @@ class ProfileViewState extends State<ProfileView>
     var user = AppStateContainer.of(context).state.loggedInUser;
 
     return Scaffold(
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new Container(
-            alignment: new FractionalOffset(0.0, 1.0),
-            child: new IconButton(
-                icon: new Icon(Icons.cancel),
-                iconSize: 40.0,
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-          ),
-          new Container(
-              height: 125.0,
-              width: 125.0,
-              decoration: new BoxDecoration(
-                  border: new Border.all(width: 3.0, color: Colors.blueAccent),
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                      image: new FileImage(new File(user.image)),
-                      fit: BoxFit.fill))),
-          new SizedBox(height: 25.0),
-          new Text(
-            "${user.name}",
-            style: new TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.blueAccent,
+      body: SafeArea(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            new Container(
+              alignment: new FractionalOffset(0.0, 1.0),
+              child: new IconButton(
+                  icon: new Icon(Icons.cancel),
+                  iconSize: 40.0,
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ),
-          ),
-          getTabBar(),
-          getTabBarPages(context)
-        ],
+            new Container(
+                height: 125.0,
+                width: 125.0,
+                decoration: new BoxDecoration(
+                    border:
+                        new Border.all(width: 3.0, color: Colors.blueAccent),
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        image: new FileImage(new File(user.image)),
+                        fit: BoxFit.fill))),
+            new SizedBox(height: 25.0),
+            new Text(
+              "${user.name}",
+              style: new TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              ),
+            ),
+            getTabBar(),
+            getTabBarPages(context)
+          ],
+        ),
       ),
     );
   }
