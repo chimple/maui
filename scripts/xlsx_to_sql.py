@@ -82,19 +82,19 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 			if type_data == -1:
 				continue
 			elif type_data == 0:
-				quiz_type = 'oneAtATime'
+				option_value = 'oneAtATime'
 			elif type_data == 4:
-				quiz_type = 'many'
+				option_value = 'many'
 				type_data = 0
 			elif type_data == 5:
-				quiz_type = 'pair'
+				option_value = 'pair'
 				type_data = 0
 			if(type_data <= 4):
 				if type_data == 2:
 					card = sheet.title
 				else:
-					card = sheet.title+str(row_num)
-				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, NULL);\n")
+					card = sheet.title+'_'+str(row_num)
+				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
 			if type_data == 2:
 				topic = card
 				card_number = 1
