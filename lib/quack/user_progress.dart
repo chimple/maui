@@ -56,10 +56,12 @@ class UserProgress extends StatelessWidget {
                                       new Container(
                                         margin: const EdgeInsets.only(
                                             top: 4.0, bottom: 4.0, left: 15.0),
+                                        width: constraints.maxWidth * 0.21875,
                                         child: new Text(
                                           c.title,
+                                          overflow: TextOverflow.ellipsis,
                                           style: new TextStyle(
-                                              fontSize: 16.0,
+                                              fontSize: 25.0,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
