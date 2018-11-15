@@ -71,6 +71,24 @@ AND ${Tile.table}.${Tile.typeCol} = ?
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
 
+  Future<List<Tile>> getTilesByCardIdAndUserIdAndType(
+      String cardId, String userId, TileType type,
+      {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List<Map> maps = await db.query(
+        '${Tile.table}, ${QuackCard.table}, ${User.table}',
+        columns: Tile.allCols,
+        where: '''
+${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
+AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
+AND ${Tile.table}.${Tile.cardIdCol} = ?
+AND ${Tile.table}.${Tile.userIdCol} = ?
+AND ${Tile.table}.${Tile.typeCol} = ?
+''',
+        whereArgs: [cardId, userId, type.index]);
+    return maps.map((el) => new Tile.fromMap(el)).toList();
+  }
+
   Future<List<Tile>> getTilesByUserIdAndType(String userId, TileType type,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
@@ -88,14 +106,16 @@ AND ${Tile.table}.${Tile.typeCol} = ?
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
 
-  Future<List<Tile>> getTiles({Database db}) async {
+  Future<List<Tile>> getTilesOtherThanDots({Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps =
         await db.query('${Tile.table}, ${QuackCard.table}, ${User.table}',
             where: '''
 ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
+AND ${Tile.table}.${Tile.typeCol} != ?
 ''',
+            whereArgs: [TileType.dot.index],
             columns: Tile.allCols);
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }

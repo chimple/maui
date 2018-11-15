@@ -12,7 +12,7 @@ class TileRepo {
 
   Future<Tile> getTile(String id) async {
     final tile = await tileDao.getTile(id);
-    if (tile.type == TileType.drawing) {
+    if (tile.type == TileType.drawing || tile.type == TileType.dot) {
       tile.content = await _readFile(id: tile.id);
     }
     print('getTile: $tile');
@@ -21,7 +21,9 @@ class TileRepo {
 
   Future<List<Tile>> getTilesByCardId(String cardId) async {
     final tiles = await tileDao.getTilesByCardId(cardId);
-    await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
+    await Future.forEach(
+        tiles
+            .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
     print('getTilesByCardId: $tiles');
     return tiles;
@@ -30,7 +32,9 @@ class TileRepo {
   Future<List<Tile>> getTilesByCardIdAndType(
       String cardId, TileType type) async {
     final tiles = await tileDao.getTilesByCardIdAndType(cardId, type);
-    await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
+    await Future.forEach(
+        tiles
+            .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
     print('getTilesByCardIdAndType: $tiles');
     return tiles;
@@ -39,15 +43,31 @@ class TileRepo {
   Future<List<Tile>> getTilesByUserIdAndType(
       String userId, TileType type) async {
     final tiles = await tileDao.getTilesByUserIdAndType(userId, type);
-    await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
+    await Future.forEach(
+        tiles
+            .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
     print('getTilesByCardIdAndType: $tiles');
     return tiles;
   }
 
-  Future<List<Tile>> getTiles() async {
-    final tiles = await tileDao.getTiles();
-    await Future.forEach(tiles.where((t) => t.type == TileType.drawing),
+  Future<List<Tile>> getTilesByCardIdAndUserIdAndType(
+      String cardId, String userId, TileType type) async {
+    final tiles =
+        await tileDao.getTilesByCardIdAndUserIdAndType(cardId, userId, type);
+    await Future.forEach(
+        tiles
+            .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
+        (t) async => t.content = await _readFile(id: t.id));
+    print('getTilesByCardIdAndType: $tiles');
+    return tiles;
+  }
+
+  Future<List<Tile>> getTilesOtherThanDots() async {
+    final tiles = await tileDao.getTilesOtherThanDots();
+    await Future.forEach(
+        tiles
+            .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
     print('getTiles: $tiles');
     return tiles;
@@ -72,7 +92,8 @@ class TileRepo {
 
   Future<Tile> _upsert({Tile updatedTile, Tile existingTile}) async {
     if (existingTile == null) {
-      if (updatedTile.type == TileType.drawing) {
+      if (updatedTile.type == TileType.drawing ||
+          updatedTile.type == TileType.dot) {
         await _saveFile(id: updatedTile.id, contents: updatedTile.content);
         final content = updatedTile.content;
         updatedTile.content = '';

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:maui/db/dao/tile_dao.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
