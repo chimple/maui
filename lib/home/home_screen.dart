@@ -22,7 +22,7 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
   }
 
   void _initData() async {
-    _tiles = await TileRepo().getTiles();
+    _tiles = await TileRepo().getTilesOtherThanDots();
     print('tiles:$_tiles');
     setState(() => _isLoading = false);
   }
@@ -38,8 +38,8 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
       ));
     }
     return new Container(
-          color: Color(0xFFFFFFFF),
-          child: ListView.builder(
+      color: Color(0xFFFFFFFF),
+      child: ListView.builder(
           itemCount: _tiles.length,
           itemBuilder: (context, index) => TileCard(
                 tile: _tiles[index],
