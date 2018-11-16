@@ -17,13 +17,13 @@ class StoryPage extends StatelessWidget {
       where: (prev, next) => next != prev,
       builder: (cards) {
         return GridView.count(
-            crossAxisCount: (media.size.width / 150.0).ceil(),
+            crossAxisCount: (media.size.width / 210.0).ceil(),
             childAspectRatio: 0.67,
             children: cards
                 .map((c) => Center(
                       child: SizedBox(
-                        height: 180.0,
-                        width: 120.0,
+                        height: 250.0,
+                        width: 160.0,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CardSummary(card: c),
