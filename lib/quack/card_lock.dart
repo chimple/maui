@@ -146,62 +146,66 @@ class DialogContent extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: new BorderRadius.circular(25.0),
                 ),
-                child: Container(
-                  child: new Column(
-                    children: <Widget>[
-                      Container(
-                        decoration: new BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: Colors.blue,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: new Radius.circular(20.0),
-                              topRight: new Radius.circular(20.0)),
-                        ),
-                        height: 60.0,
-                        width: size.width * 0.7,
-                        child: Center(
-                          child: new Text(
-                            'Your Points-$points',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
+                child: new Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxHeight: 60.0,
+                          ),
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Colors.blue,
+                            borderRadius: new BorderRadius.only(
+                                topLeft: new Radius.circular(20.0),
+                                topRight: new Radius.circular(20.0)),
+                          ),
+                          child: Center(
+                            child: new Text(
+                              'Your Points-$points',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
-                      shouldDisplayNima
-                          ? Container(
-                              height: size.height * 0.3 - 90,
-                              width: (size.width * 0.7) * 0.5,
-                              child: Center(
-                                child: AspectRatio(
-                                  aspectRatio: 0.5,
-                                  child: Container(
-                                    height: size.height * 0.25 - 90,
-                                    width: (size.width * 0.7) * 0.5,
-                                    child: new NimaActor(
-                                      "assets/quack",
-                                      alignment: Alignment.center,
-                                      fit: BoxFit.scaleDown,
-                                      animation:
-                                          initialPoints > 3 ? 'happy' : 'sad',
-                                      mixSeconds: 0.02,
-                                    ),
+                    ),
+                    shouldDisplayNima
+                        ? Expanded(
+                            flex: 4,
+                            child: Center(
+                              child: AspectRatio(
+                                aspectRatio: 0.5,
+                                child: Container(
+                                  height: size.height * 0.25 - 90,
+                                  width: (size.width * 0.7) * 0.5,
+                                  child: new NimaActor(
+                                    "assets/quack",
+                                    alignment: Alignment.center,
+                                    fit: BoxFit.scaleDown,
+                                    animation:
+                                        initialPoints > 3 ? 'happy' : 'sad',
+                                    mixSeconds: 0.02,
                                   ),
                                 ),
                               ),
-                            )
-                          : Container(
-                              height: size.height * 0.3 - 75,
-                              width: (size.width * 0.7) * 0.5,
-                              child: Center(
-                                child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Center(
+                            ),
+                          )
+                        : Expanded(
+                            flex: 4,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Center(
                                         child: new Text(
                                       "Cost is - 3",
                                       style: TextStyle(
@@ -210,32 +214,39 @@ class DialogContent extends StatelessWidget {
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                    Container(
-                                        // margin: EdgeInsets.only(top: 80.0),
-                                        width: ((size.width * 0.7) * 0.5) / 1.8,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            color: Colors.blue),
-                                        child: new FlatButton(
-                                          onPressed: onPressed,
-                                          child: Center(
-                                            child: Text(
-                                              "Buy",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.bold),
+                                  ),
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Container(
+                                          margin: EdgeInsets.only(bottom: 5),
+                                          constraints: BoxConstraints(
+                                              maxWidth: 150, maxHeight: 50),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              color: Colors.blue),
+                                          child: new FlatButton(
+                                            onPressed: onPressed,
+                                            child: Center(
+                                              child: Text(
+                                                "Buy",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ),
-                                          ),
-                                        )),
-                                  ],
-                                ),
+                                          )),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                    ],
-                  ),
+                            ),
+                          )
+                  ],
                 ),
               ),
             ),
