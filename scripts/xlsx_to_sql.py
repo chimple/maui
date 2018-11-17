@@ -3,6 +3,7 @@ import sys
 import json
 import re
 import os
+import random
 
 types = {
 	'select': 0,
@@ -20,6 +21,16 @@ types = {
 	'template': 102,
 	'sticker': -1,
 }
+
+colors = [
+'FFB3C8FF',
+'FF9DEDE3',
+'FFF4E1B5',
+'FF9DEDE3',
+'FFB3C8FF',
+'FFCFB5DD',
+'FF9DEDE3',
+]
 
 type = 0
 header = 1
@@ -89,6 +100,8 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 			elif type_data == 5:
 				option_value = 'pair'
 				type_data = 0
+			elif type_data == 2:
+				option_value = colors[random.randint(0, len(colors)-1)]
 			if(type_data <= 4):
 				if type_data == 2:
 					card = sheet.title

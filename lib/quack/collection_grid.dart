@@ -24,13 +24,13 @@ class CollectionGrid extends StatelessWidget {
       builder: (cardList) {
         int index = 0;
         return SizedBox(
-          height: 180.0,
+          height: 250.0,
           child: CustomScrollView(
             scrollDirection: Axis.horizontal,
             slivers: cardList
                 .map((c) => SliverToBoxAdapter(
                       child: Container(
-                        constraints: BoxConstraints.tightFor(width: 120.0),
+                        constraints: BoxConstraints.tightFor(width: 160.0),
                         padding: const EdgeInsets.all(8.0),
                         child: CardSummary(
                           card: c,
