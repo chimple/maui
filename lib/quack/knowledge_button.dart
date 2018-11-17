@@ -23,6 +23,11 @@ class KnowledgeButton extends StatelessWidget {
       builder: (cardList) {
         return cardList.length > 0
             ? RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(16.0))),
+                color: Color(0xFF0E4476),
+                padding: EdgeInsets.all(16.0),
                 onPressed: () {
                   Navigator.of(context).push(
                       new MaterialPageRoute(builder: (BuildContext context) {
@@ -35,7 +40,10 @@ class KnowledgeButton extends StatelessWidget {
                     );
                   }));
                 },
-                child: Text('Read'),
+                child: Text(
+                  'Read',
+                  style: TextStyle(color: Colors.white),
+                ),
               )
             : Container();
       },

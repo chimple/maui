@@ -23,8 +23,8 @@ class DeductPoints implements AsyncAction<RootState> {
 
     final user = state.user;
     print("before detecting the score is....${user.points}");
-    user.points = (user.points ?? 0) - points;
-    userRepo.update(user);
+//    user.points = (user.points ?? 0) - points;
+//    userRepo.update(user);
     print("afterdetecting the score is....${user.points}");
     return (RootState state) => RootState(
         user: user,
