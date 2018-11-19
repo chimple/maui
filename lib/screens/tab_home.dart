@@ -72,13 +72,13 @@ class TabHomeState extends State<TabHome> {
             // Perform some action
           },
         ),
-            padding: EdgeInsets.only(top: 20.0, right: 20.0),
+            // padding: EdgeInsets.only(top: 20.0, right: 20.0),
           ),
           Container(
             child: Text(
               "${user.points}",
               style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             ),
