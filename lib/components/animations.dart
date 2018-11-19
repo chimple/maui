@@ -12,7 +12,7 @@ class Animations extends StatefulWidget {
 }
 
 class AnimationsState extends State<Animations> {
-  List<String> emotions = ["happy", "joy", "hello", "sad", "bored"];
+  List<String> emotions = ["happy", "joy", "hello", "sad", "bored", "welcome with hello"];
   String emotion;
   int count;
   PageController _pageController;
@@ -90,12 +90,12 @@ class AnimationsState extends State<Animations> {
                   ),
                   Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: IconButton(
+                    child: FlatButton(
                         onPressed: () async =>
                             await _pageController.previousPage(
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.fastOutSlowIn),
-                        icon: new Icon(
+                        child: new Icon(
                           Icons.keyboard_arrow_left,
                           size: size.height * 0.08,
                           color: count == 0 ? Colors.grey : Colors.white,
@@ -103,11 +103,11 @@ class AnimationsState extends State<Animations> {
                   ),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: IconButton(
+                    child: FlatButton(
                         onPressed: () async => await _pageController.nextPage(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.fastOutSlowIn),
-                        icon: new Icon(
+                        child: new Icon(
                           Icons.keyboard_arrow_right,
                           size: size.height * 0.08,
                           color: count == emotions.length - 1
@@ -137,7 +137,7 @@ class AnimationsState extends State<Animations> {
                                   builder: (BuildContext context) =>
                                       DrawingWrapper(
                                         activityId: 'lion_roar',
-                                        template: null,
+                                        template: null,                                        
                                       )),
                             );
                           },
