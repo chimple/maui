@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
+import 'package:nima/nima_actor.dart';
 
 class QuizResult extends StatefulWidget {
   final List<QuackCard> quizzes;
@@ -27,38 +28,239 @@ class QuizResult extends StatefulWidget {
 
 class QuizResultState extends State<QuizResult> {
   int _expandedPanel = -1;
+  int _textpanel = 0;
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
+    print("this is height ${media.size}");
     int index = 0;
-    return SingleChildScrollView(
-      child: ExpansionPanelList(
-        expansionCallback: (int panelIndex, bool isExpanded) {
-          setState(() {
-            _expandedPanel = isExpanded ? -1 : panelIndex;
-          });
-        },
-        children: widget.quizzes
-            .map(
-              (q) => ExpansionPanel(
-                    isExpanded: _expandedPanel == index++ ? true : false,
-                    headerBuilder: (BuildContext context, bool isExpanded) =>
-                        Text(q.content ?? ''),
-                    body: SizedBox(
-                      height: media.size.height * 3 / 4,
-                      child: QuizSelection(
-                        quizItems: widget.quizItemMap[q.id],
-                        answers: widget.answersMap[q.id],
-                        startChoices: widget.startChoicesMap[q.id],
-                        endChoices: widget.endChoicesMap[q.id],
-                        resultMode: true,
+    bool tileClick = false;
+    return SafeArea(
+      bottom: false,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  // color: Colors.green,
+
+                  padding: EdgeInsets.only(bottom: 20.0),
+
+                  height: media.size.height * .55,
+
+                  // margin: EdgeInsets.all(3.0),
+
+                  child: Stack(
+                    // overflow: Overflow.clip,
+
+                    // fit: StackFit.expand,
+
+                    children: <Widget>[
+                      Transform.scale(
+                        alignment: Alignment.center,
+                        scale: .85,
+                        child: new NimaActor(
+                          "assets/quack",
+
+                          alignment: Alignment.center,
+
+                          fit: BoxFit.scaleDown,
+
+                          animation: 'joy',
+
+                          mixSeconds: 0.0,
+
+                          // paused: true,
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        child: Container(
+                          height: 100.0,
+
+                          width: 200.0,
+
+                          // padding: EdgeInsets.only(bottom: 30.0),
+
+                          decoration: ShapeDecoration(
+                              color: Colors.orangeAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.horizontal(
+                                    left: Radius.circular(40.0),
+                                    right: Radius.circular(40.0)),
+                              )),
+                          child: Center(
+                              child: Text(
+                            "50",
+                            style:
+                                TextStyle(fontSize: 40.0, color: Colors.white),
+                          )),
+                        ),
+                      )
+                    ],
                   ),
-            )
-            .toList(growable: false),
-        animationDuration: Duration(milliseconds: 250),
+                ),
+                Container(
+                  height: media.size.height * .8,
+                  child: ListView(
+                    children: <Widget>[
+                      Container(
+                        child: ExpansionPanelList(
+                          expansionCallback: (int panelIndex, bool isExpanded) {
+                            setState(() {
+                              _expandedPanel = isExpanded ? -1 : panelIndex;
+                              _textpanel = isExpanded ? -1 : panelIndex;
+                            });
+                          },
+                          children: widget.quizzes
+                              .map(
+                                (q) => ExpansionPanel(
+                                      isExpanded: (_expandedPanel == index++ || _textpanel == index++)
+                                          ? true
+                                          : false,
+                                      headerBuilder: (BuildContext context,
+                                              bool isExpanded) =>
+                                          InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  _textpanel = -1;
+
+                                                  print(
+                                                      "this is on click $_textpanel");
+                                                });
+                                              },
+                                              child: Container(
+                                                  height: 100.0,
+                                                  child: Center(
+                                                      child: Text(
+                                                          q.title ?? '')))),
+                                      body: Container(
+                                        color: Colors.blueAccent,
+                                        child: SizedBox(
+                                          height: media.size.height,
+                                          child: QuizSelection(
+                                            quizItems: widget.quizItemMap[q.id],
+                                            answers: widget.answersMap[q.id],
+                                            startChoices:
+                                                widget.startChoicesMap[q.id],
+                                            endChoices:
+                                                widget.endChoicesMap[q.id],
+                                            resultMode: true,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                              )
+                              .toList(growable: false),
+                          animationDuration: Duration(milliseconds: 250),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Container(
+          //   // color: Colors.green,
+
+          //   padding: EdgeInsets.only(bottom: 20.0),
+          //   height: media.size.height * .55,
+          //   // margin: EdgeInsets.all(3.0),
+          //   child: Stack(
+          //     // overflow: Overflow.clip,
+
+          //     // fit: StackFit.expand,
+          //     children: <Widget>[
+          //       Transform.scale(
+          //         alignment: Alignment.center,
+          //         scale: .85,
+          //         child: new NimaActor(
+          //           "assets/quack",
+
+          //           alignment: Alignment.center,
+
+          //           fit: BoxFit.scaleDown,
+
+          //           animation: 'joy',
+
+          //           mixSeconds: 0.0,
+
+          //           // paused: true,
+          //         ),
+          //       ),
+          //       Align(
+          //         alignment: AlignmentDirectional.bottomCenter,
+          //         child: Container(
+          //           height: 100.0,
+
+          //           width: 200.0,
+
+          //           // padding: EdgeInsets.only(bottom: 30.0),
+
+          //           decoration: ShapeDecoration(
+          //               color: Colors.orangeAccent,
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.horizontal(
+          //                     left: Radius.circular(40.0),
+          //                     right: Radius.circular(40.0)),
+          //               )),
+
+          //           child: Center(
+          //               child: Text(
+          //             "50",
+          //             style: TextStyle(fontSize: 40.0, color: Colors.white),
+          //           )),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // Expanded(
+          //   flex: 1,
+          //   child: SingleChildScrollView(
+          //     child: ExpansionPanelList(
+          //       expansionCallback: (int panelIndex, bool isExpanded) {
+          //         setState(() {
+          //           _expandedPanel = isExpanded ? -1 : panelIndex;
+          //         });
+          //       },
+          //       children: widget.quizzes
+          //           .map(
+          //             (q) => ExpansionPanel(
+          //                   isExpanded: _expandedPanel == index++ ? true : false,
+          //                   headerBuilder: (BuildContext context,
+          //                           bool isExpanded) =>
+          //                       InkWell(
+          //                           onTap: () {
+          //                             setState(() {
+          //                               isExpanded = false;
+          //                             });
+          //                           },
+          //                           child: Container(
+          //                               height: 100.0,
+          //                               child:
+          //                                   Center(child: Text(q.title ?? '')))),
+          //                   body: SizedBox(
+          //                     height: media.size.height,
+          //                     child: QuizSelection(
+          //                       quizItems: widget.quizItemMap[q.id],
+          //                       answers: widget.answersMap[q.id],
+          //                       startChoices: widget.startChoicesMap[q.id],
+          //                       endChoices: widget.endChoicesMap[q.id],
+          //                       resultMode: true,
+          //                     ),
+          //                   ),
+          //                 ),
+          //           )
+          //           .toList(growable: false),
+          //       animationDuration: Duration(milliseconds: 250),
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     );
   }
