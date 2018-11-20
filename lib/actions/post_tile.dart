@@ -25,7 +25,7 @@ class PostTile implements AsyncAction<RootState> {
 
     await tileRepo.insert(tile);
 
-    if (tile.userId == state.user.id)
+    if (tile.userId == state.user?.id)
       try {
         await p2p.addMessage(
             state.user.id,
