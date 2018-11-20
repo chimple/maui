@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/components/profile_drawer.dart';
@@ -46,6 +47,7 @@ class TabHomeState extends State<TabHome> {
   ];
   @override
   Widget build(BuildContext context) {
+    getExternalStorageDirectory().then((d) => print('path: ${d.path}'));
     MediaQueryData mediaQuery = MediaQuery.of(context);
     var user = AppStateContainer.of(context).state.loggedInUser;
 
@@ -58,27 +60,27 @@ class TabHomeState extends State<TabHome> {
         centerTitle: true,
         actions: <Widget>[
           Container(
-            child:  new IconButton(
+            child: new IconButton(
               iconSize: 38.0,
-          icon: new Center(
-            child: new Image.asset("assets/Wallet.png"),
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) => Animations(),
-            );
-            // Perform some action
-          },
-        ),
-            padding: EdgeInsets.only(top: 20.0, right: 20.0),
+              icon: new Center(
+                child: new Image.asset("assets/Wallet.png"),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => Animations(),
+                );
+                // Perform some action
+              },
+            ),
+            // padding: EdgeInsets.only(top: 20.0, right: 20.0),
           ),
           Container(
             child: Text(
               "${user.points}",
               style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -101,8 +103,7 @@ class TabHomeState extends State<TabHome> {
                               style: BorderStyle.solid)),
                       image: new DecorationImage(
                           image: new FileImage(new File(user.image)),
-                          fit: BoxFit.fill))
-                  ),
+                          fit: BoxFit.fill))),
               radius: 20.0,
             ),
           ),

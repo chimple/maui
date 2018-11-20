@@ -29,6 +29,9 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final crossAxisCount = (media.size.width / 400.0).ceil();
+    final aspectRatio = media.size.width / (120.0 * crossAxisCount);
     if (_isLoading) {
       return Center(
           child: new SizedBox(
@@ -39,11 +42,15 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
     }
     return new Container(
       color: Color(0xFFFFFFFF),
-      child: ListView.builder(
-          itemCount: _tiles.length,
-          itemBuilder: (context, index) => TileCard(
-                tile: _tiles[index],
-              )),
+      child: GridView.count(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: aspectRatio,
+        children: _tiles
+            .map((t) => TileCard(
+                  tile: t,
+                ))
+            .toList(growable: false),
+      ),
     );
   }
 
