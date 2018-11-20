@@ -133,20 +133,21 @@ class DisplayStoryState extends State<DisplayStory> {
                     child: ListView(
                       padding: EdgeInsets.all(8.0),
                       children: <Widget>[
-                        widget.card.title == null
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16.0, horizontal: 8.0),
-                                child: Text(
-                                  widget.card.title ?? '',
-                                  style: Theme.of(context).textTheme.subhead,
-                                ),
-                              ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(widget.card.content ?? ''),
-                        )
+                        AudioTextBold( card: widget.card)
+                        // widget.card.title == null
+                        //     ? Container()
+                        //     : Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             vertical: 16.0, horizontal: 8.0),
+                        //         child: Text(
+                        //           widget.card.title ?? '',
+                        //           style: Theme.of(context).textTheme.subhead,
+                        //         ),
+                        //       ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Text(widget.card.content ?? ''),
+                        // )
                       ],
                     ),
                   ),
