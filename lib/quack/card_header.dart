@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class CardHeader extends StatelessWidget {
   final QuackCard card;
@@ -23,10 +26,9 @@ class CardHeader extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8.0),
           color: card.backgroundColor,
-          child: SvgPicture.asset(
-            card.header,
+          child: SvgPicture.file(
+            File(AppStateContainer.of(context).extStorageDir + card.header),
             allowDrawingOutsideViewBox: false,
-            package: 'maui_assets',
           ),
         ),
       );
@@ -35,10 +37,9 @@ class CardHeader extends StatelessWidget {
         card.header?.endsWith('jpeg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',
-        child: Image.asset(
-          card.header,
+        child: Image.file(
+          File(AppStateContainer.of(context).extStorageDir + card.header),
           fit: BoxFit.cover,
-          package: 'maui_assets',
         ),
       );
     }
