@@ -18,6 +18,7 @@ class PostComments extends StatefulWidget {
 class PostCommentsState extends State<PostComments> {
   Tile tile;
   final TextEditingController _textController = new TextEditingController();
+  Color _textColor = Colors.grey[400];
 
   void post(BuildContext context) {
     tile = Tile(
@@ -41,16 +42,20 @@ class PostCommentsState extends State<PostComments> {
       appBar: new AppBar(
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 6.0,horizontal: 12.0),
-                      child: new RaisedButton(
-              color: Colors.orange[400],
-                onPressed: () => _textController.text.isEmpty ? {} : post(context),
-                textColor: Colors.white,
-                child: new Text(
-                  " Post ",
-                  style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.w800),
-                ),
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
+            child: new RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
+              color: Colors.orange,
+              onPressed: () =>
+                  _textController.text.trim().isEmpty ? {} : post(context),
+              textColor: _textColor,
+              child: new Text(
+                " Post ",
+                style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
+              ),
+            ),
           ),
         ],
         leading: new IconButton(
@@ -63,7 +68,7 @@ class PostCommentsState extends State<PostComments> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow[700],
       ),
       body: Container(
         margin: EdgeInsets.all(size.width * .02),
@@ -86,6 +91,13 @@ class PostCommentsState extends State<PostComments> {
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: new TextField(
+                        onChanged: (str) {
+                          setState(() {
+                            _textColor = str.trim().isNotEmpty
+                                ? Colors.white
+                                : Colors.grey[400];
+                          });
+                        },
                         autocorrect: false,
                         controller: _textController,
                         keyboardType: TextInputType.multiline,
