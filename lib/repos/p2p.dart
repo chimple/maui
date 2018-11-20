@@ -37,8 +37,8 @@ Future<bool> addUser(String userId, String deviceId, String message) async {
 }
 
 Future<bool> start() async {
-  return await Flores().start();
-//  return true;
+//  return await Flores().start();
+  return true;
 }
 
 Future<bool> connectTo(String neighbor) async {

@@ -14,9 +14,9 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 import io.flutter.plugin.common.MethodChannel
 import com.rivescript.Config
 import com.rivescript.RiveScript
-import org.chimple.flores.db.AppDatabase
-import org.chimple.flores.multicast.MulticastManager
-import org.chimple.flores.application.P2PContext
+//import org.chimple.flores.db.AppDatabase
+//import org.chimple.flores.multicast.MulticastManager
+//import org.chimple.flores.application.P2PContext
 
 
 
@@ -63,7 +63,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
         result.notImplemented()
       }
     }
-    P2PContext.getInstance().initialize(this);
+//    P2PContext.getInstance().initialize(this);
 
 
 
@@ -107,7 +107,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       tts!!.stop()
       tts!!.shutdown()
     }
-    MulticastManager.getInstance(this).onCleanUp()
+//    MulticastManager.getInstance(this).onCleanUp()
     super.onDestroy()
   }
 
