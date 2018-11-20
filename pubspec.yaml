@@ -67,14 +67,12 @@ flutter:
 
   assets:
     - assets/
-    - assets/demo_video/
     - assets/dice_game/
     - assets/background_image/
     - assets/background_gif/
     - assets/chat_image/
     - assets/hoodie/
     - assets/animations/
-    - assets/dict/
     - assets/stickers/pig/
     - assets/stickers/giraffe/
     - assets/stickers/monkey/
