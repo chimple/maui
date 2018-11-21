@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_stack.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class QuizSelection extends StatefulWidget {
   final Quiz quiz;
@@ -108,6 +110,7 @@ class QuizSelectionState extends State<QuizSelection> {
         int i = 0;
         for (; i < answersLength; i = i + 2) {
           widgets.add(_quizButton(
+              context: context,
               quizItem: _answers[i],
               row: i ~/ 2,
               col: 0,
@@ -115,6 +118,7 @@ class QuizSelectionState extends State<QuizSelection> {
               height: height));
           if (i + 1 < answersLength)
             widgets.add(_quizButton(
+                context: context,
                 quizItem: _answers[i + 1],
                 row: i ~/ 2,
                 col: 1,
@@ -125,6 +129,7 @@ class QuizSelectionState extends State<QuizSelection> {
         for (int j = 0; j < choicesLength; j++) {
           if (_startChoices.length > j)
             widgets.add(_quizButton(
+                context: context,
                 quizItem: _startChoices[j],
                 row: _numRows - j - 1,
                 col: 0,
@@ -132,6 +137,7 @@ class QuizSelectionState extends State<QuizSelection> {
                 height: height));
           if (_endChoices.length > j)
             widgets.add(_quizButton(
+                context: context,
                 quizItem: _endChoices[j],
                 row: _numRows - j - 1,
                 col: 1,
@@ -146,7 +152,12 @@ class QuizSelectionState extends State<QuizSelection> {
   }
 
   Widget _quizButton(
-      {QuizItem quizItem, int row, int col, double width, double height}) {
+      {BuildContext context,
+      QuizItem quizItem,
+      int row,
+      int col,
+      double width,
+      double height}) {
 //    print(
 //        '_quizButton: ${quizItem.text} row: $row, col: $col, top: ${row * height}');
     return AnimatedPositioned(
@@ -170,10 +181,10 @@ class QuizSelectionState extends State<QuizSelection> {
                   quizItem.text?.endsWith('gif'))
               ? AspectRatio(
                   aspectRatio: 1.0,
-                  child: Image.asset(
-                    quizItem.text,
+                  child: Image.file(
+                    File(AppStateContainer.of(context).extStorageDir +
+                        quizItem.text),
                     fit: BoxFit.contain,
-                    package: 'maui_assets',
                   ))
               : Text(
                   quizItem.text,

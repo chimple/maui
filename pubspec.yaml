@@ -39,8 +39,6 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
-  maui_assets:
-    path: ../maui_assets
 dev_dependencies:
   flutter_test:
     sdk: flutter
