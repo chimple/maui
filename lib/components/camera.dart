@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maui/screens/login_screen.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:maui/loca.dart';
 import 'package:image/image.dart' as Img;
@@ -13,6 +14,8 @@ String imagePathStore;
 String userNameStore;
 
 class CameraScreen extends StatefulWidget {
+   CameraScreen(this.editImage);
+   bool editImage = false;
   @override
   _CameraScreenState createState() {
     return new _CameraScreenState();
@@ -24,16 +27,23 @@ class _CameraScreenState extends State<CameraScreen> {
   CameraController controller;
   String imagePath = '';
   String _deviceId;
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool onTakePicture = true, onTakePicture1 = false;
   Orientation ornt;
   int mode = -1;
+
+  @override
+  void didUpdateWidget(CameraScreen oldwidget) {
+    super.didUpdateWidget(oldwidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
-
+    var user = AppStateContainer.of(context).state.loggedInUser;
+    
+    print("image path checking wether its working or not... $imagePath");
     return Scaffold(
         backgroundColor: Colors.black87,
         key: _scaffoldKey,
@@ -55,7 +65,7 @@ class _CameraScreenState extends State<CameraScreen> {
             Container(
                 color: Colors.black87,
                 height: 120.0,
-                child: Center(child: _captureControlRowWidget())),
+                child: Center(child: _captureControlRowWidget(user))),
           ],
         ));
   }
@@ -85,7 +95,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   /// Display the control bar with buttons to take pictures and record videos.
-  Widget _captureControlRowWidget() {
+  Widget _captureControlRowWidget(User user) {
     if (onTakePicture)
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,14 +182,13 @@ class _CameraScreenState extends State<CameraScreen> {
                     color: Colors.black54,
                     iconSize: 30.0,
                     onPressed: () {
+                      if (widget.editImage == true) {
+                    print("object is fine ${widget.editImage}");
+                          _changeState(user);
+                      }
                       imagePathStore = imagePath;
+
                       Navigator.of(context).pop();
-                      // Navigator.pushReplacementNamed(context, '/login_screen');
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                      // );
-                      //Navigator.of(context).pop();
                     },
                     icon: Icon(Icons.done),
                   ),
@@ -291,6 +300,18 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {});
     }
     print("contloafasfsa ${controller.value.aspectRatio}");
+  }
+
+  void _changeState(User user) {
+    String name = user.name;
+    print(
+        "hello checking both the 66666666666 images $imagePath.......${user.image}");
+    if (imagePathStore != user.image && user.image != null) {
+      print("here its comming or not");
+      setState(() {
+        user.image = imagePathStore;
+      });
+    }
   }
 }
 
