@@ -12,7 +12,7 @@ class Animations extends StatefulWidget {
 }
 
 class AnimationsState extends State<Animations> {
-  List<String> emotions = ["happy", "joy", "hello", "sad", "bored"];
+  List<String> emotions = ["happy", "joy", "hello", "sad", "bored", "welcome with hello"];
   String emotion;
   int count;
   PageController _pageController;
@@ -137,7 +137,7 @@ class AnimationsState extends State<Animations> {
                                   builder: (BuildContext context) =>
                                       DrawingWrapper(
                                         activityId: 'lion_roar',
-                                        template: null,
+                                        template: null,                                        
                                       )),
                             );
                           },
