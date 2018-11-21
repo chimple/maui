@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:maui/loca.dart';
@@ -14,8 +15,8 @@ String imagePathStore;
 String userNameStore;
 
 class CameraScreen extends StatefulWidget {
-   CameraScreen(this.editImage);
-   bool editImage = false;
+  CameraScreen(this.editImage);
+  bool editImage = false;
   @override
   _CameraScreenState createState() {
     return new _CameraScreenState();
@@ -42,7 +43,7 @@ class _CameraScreenState extends State<CameraScreen> {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
     var user = AppStateContainer.of(context).state.loggedInUser;
-    
+
     print("image path checking wether its working or not... $imagePath");
     return Scaffold(
         backgroundColor: Colors.black87,
@@ -183,8 +184,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     iconSize: 30.0,
                     onPressed: () {
                       if (widget.editImage == true) {
-                    print("object is fine ${widget.editImage}");
-                          _changeState(user);
+                        print("object is fine ${widget.editImage}");
+                        _changeState(user);
                       }
                       imagePathStore = imagePath;
 
@@ -302,15 +303,11 @@ class _CameraScreenState extends State<CameraScreen> {
     print("contloafasfsa ${controller.value.aspectRatio}");
   }
 
-  void _changeState(User user) {
-    String name = user.name;
-    print(
-        "hello checking both the 66666666666 images $imagePath.......${user.image}");
+  void _changeState(User user) async {
     if (imagePathStore != user.image && user.image != null) {
-      print("here its comming or not");
-      setState(() {
-        user.image = imagePathStore;
-      });
+      var user1 = user;
+      user1.image = imagePathStore;
+      UserRepo().update(user1);
     }
   }
 }

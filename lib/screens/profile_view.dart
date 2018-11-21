@@ -3,6 +3,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/quack/user_collection.dart';
 import 'package:maui/quack/user_drawing_grid.dart';
 import 'package:maui/quack/user_progress.dart';
+import 'package:maui/repos/user_repo.dart';
 import '../loca.dart';
 import 'package:flutter/material.dart';
 import '../state/app_state_container.dart';
@@ -32,9 +33,11 @@ class ProfileViewState extends State<ProfileView>
       imagePathStore = '';
     });
 
- Navigator.push(context, new MaterialPageRoute(
-              builder: (BuildContext context) => new CameraScreen(true)),
-            );
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+          builder: (BuildContext context) => new CameraScreen(true)),
+    );
     // imagePathStore = "assets/solo.png" ;
   }
 
@@ -94,7 +97,7 @@ class ProfileViewState extends State<ProfileView>
           radius: 30.0,
           child: Center(
             child: new IconButton(
-              color: Colors.white,
+              // color: Colors.blue,
               icon: Icon(
                 Icons.photo_camera,
                 color: Colors.white,
@@ -136,7 +139,7 @@ class ProfileViewState extends State<ProfileView>
             // color: Colors.transparent,
             icon: Icon(
               Icons.edit,
-              color: Colors.teal,
+              color: Colors.red,
               size: 30.0,
             ),
             onPressed: () {
@@ -193,18 +196,20 @@ class ProfileViewState extends State<ProfileView>
                           ),
                         ),
                       ),
-                      Container(
-                          margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                          child: IconButton(
-                            color: Colors.black,
-                            icon: new Icon(
-                              Icons.send,
-                              color: Colors.orange,
-                            ),
-                            onPressed: () {
-                              editbutton(user);
-                            },
-                          )),
+                      CircleAvatar(
+                        backgroundColor: Colors.redAccent,
+                        radius: 30,
+                        child: IconButton(
+                          color: Colors.black,
+                          icon: new Icon(
+                            Icons.send,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            editbutton(user);
+                          },
+                        ),
+                      ),
                     ],
                   )
                 : Container()
@@ -226,12 +231,16 @@ class ProfileViewState extends State<ProfileView>
     });
   }
 
-  void editbutton(User user) {
-    if (user.name != null && userName != '' && userName != null) {
+  void editbutton(User user) async {
+    if (user.name != null && user.name != userName && userName != null) {
       setState(() {
         user.name = userName;
         setflag = false;
       });
+      var user1 = user;
+      user1.name = userName;
+
+      UserRepo().update(user1);
     }
   }
 }
