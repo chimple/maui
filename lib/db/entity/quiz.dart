@@ -1,9 +1,10 @@
-enum QuizType { oneAtATime, many, pair }
+enum QuizType { oneAtATime, many, pair, open }
 
 final quizTypeMap = {
   'oneAtATime': QuizType.oneAtATime,
   'many': QuizType.many,
-  'pair': QuizType.pair
+  'pair': QuizType.pair,
+  'open': QuizType.open
 };
 
 class Quiz {

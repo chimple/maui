@@ -10,6 +10,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maui/screens/welcome_screen.dart';
 import 'tab_home.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/loca.dart';
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/tab');
+      Navigator.of(context).pushReplacementNamed('/welcome');
     }
     var users = await UserRepo().getLocalUsers();
 
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen>
     var user = AppStateContainer.of(context).state.loggedInUser;
     print("user detail ?::: $user");
     return (user != null)
-        ? new TabHome()
+        ? new WelcomeScreen()
         : new Scaffold(
             appBar: _isLoading
                 ? null
@@ -259,9 +260,9 @@ class _LoginScreenState extends State<LoginScreen>
                                                 autocorrect: false,
                                                 onSubmitted: _submit(userName),
                                                 onChanged: _onTyping,
-                                                controller:
-                                                    TextEditingController(
-                                                        text: userName),
+                                                // controller:
+                                                //     TextEditingController(
+                                                //         text: userName),
                                                 decoration: new InputDecoration(
                                                   labelStyle: TextStyle(
                                                       color: Colors.red),
@@ -338,14 +339,13 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tabSreen() async {
-    if (imagePathStore != '' && userName != '' && userName != null) {
+    if (imagePathStore != '' && userName.trim().isNotEmpty && userName != null) {
       var user = await new UserRepo().insertLocalUser(new User(
           image: imagePathStore,
           currentLessonId: 1,
           name: userName,
           points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");
       controller.addStatusListener((status) {

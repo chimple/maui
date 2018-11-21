@@ -72,13 +72,6 @@ class AppDatabase {
           .asUint8List(imageData3.offsetInBytes, imageData3.lengthInBytes);
       await new File(imagePath3).writeAsBytes(imageBytes3);
 
-      String imagePath4 = join(documentsDirectory.path, "face.png");
-      ByteData imageData4 =
-          await rootBundle.load(join("assets", "dict/face.png"));
-      List<int> imageBytes4 = imageData4.buffer
-          .asUint8List(imageData4.offsetInBytes, imageData4.lengthInBytes);
-      await new File(imagePath4).writeAsBytes(imageBytes4);
-
       String imagePath5 = join(documentsDirectory.path, "chat_Bot_Icon.png");
       ByteData imageData5 =
           await rootBundle.load(join("assets", "chat_Bot_Icon.png"));

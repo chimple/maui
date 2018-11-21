@@ -27,12 +27,15 @@ class QuizWelcomeState extends State<QuizWelcome> {
         Container(
           height: size.height * 0.69,
           width: size.width * 0.9,
-          child: new NimaActor(
-            "assets/quack",
-            alignment: Alignment.center,
-            fit: BoxFit.scaleDown,
-            animation: 'joy',
-            mixSeconds: 0.2,
+          child: AspectRatio(
+            aspectRatio: 2.0,
+                      child: new NimaActor(
+              "assets/quack",
+              alignment: Alignment.center,
+              fit: BoxFit.scaleDown,
+              animation: 'joy',
+              mixSeconds: 0.2,
+            ),
           ),
         ),
         Center(

@@ -1,55 +1,35 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/animation.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'stagger_animation.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:maui/components/signin_button.dart';
+import 'package:maui/screens/tab_home.dart';
+import 'package:nima/nima_actor.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
   State createState() => new WelcomeScreenState();
 }
 
-class WelcomeScreenState extends State<WelcomeScreen>
-    with TickerProviderStateMixin {
-  AnimationController _loginButtonController;
-  var animationStatus = 0;
+class WelcomeScreenState extends State<WelcomeScreen> {
 
+      bool delayed;
+  
   void initState() {
     super.initState();
-    _loginButtonController = new AnimationController(
-        duration: new Duration(milliseconds: 3000), vsync: this);
-
-    new Future.delayed(const Duration(milliseconds: 2000), () {
-      setState(() {
-        animationStatus = 1;
-      });
-      _playAnimation();
-    });
-  }
-
-  @override
-  void dispose() {
-    _loginButtonController.dispose();
-    super.dispose();
-  }
-
-  Future<Null> _playAnimation() async {
-    try {
-      await _loginButtonController.forward();
-      await _loginButtonController.reverse();
-    } on TickerCanceled {}
+    new Future.delayed(const Duration(milliseconds: 7000), (){
+        Navigator.of(context).pushReplacementNamed('/tab');
+        setState(() {
+                  delayed = true;
+                });
+      });  
   }
 
   @override
   Widget build(BuildContext context) {
-    //timeDilation = 0.4;
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
+
     // TODO: implement build
-    return new Scaffold(
+    return (delayed == true ) ? new TabHome() : new Scaffold(
         body: new Container(
             decoration: new BoxDecoration(
               color: Colors.purple,
@@ -63,35 +43,13 @@ class WelcomeScreenState extends State<WelcomeScreen>
                     children: <Widget>[
                       new AspectRatio(
                           aspectRatio: size.height > size.width ? 1.5 : 3.8,
-                          child: new SvgPicture.asset(
-                            "assets/team animals.svg",
-                            allowDrawingOutsideViewBox: false,
-                          )),
-                      new Text(
-                        "Maui",
-                        style: new TextStyle(
-                          fontSize: size.height > size.width ? 72.0 : 60.0,
-                          color: Colors.amber,
-                        ),
-                      ),
-                    ],
-                  ),
-                  animationStatus == 0
-                      ? new Padding(
-                          padding: size.height > size.width
-                              ? new EdgeInsets.all(50.0)
-                              : new EdgeInsets.all(10.0),
-                          child: new InkWell(
-                              onTap: () {
-                                setState(() {
-                                  animationStatus = 1;
-                                });
-                                _playAnimation();
-                              },
-                              child: new SignIn()),
-                        )
-                      : new StaggerAnimation(
-                          buttonController: _loginButtonController.view),
-                ])));
+                          child: new NimaActor(
+                              "assets/quack",
+                              alignment: Alignment.center,
+                              fit: BoxFit.scaleDown,
+                              animation: 'welcome with hello',
+                              mixSeconds: 0.2,
+                            ),),
+                ])])));
   }
 }

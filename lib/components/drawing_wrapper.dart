@@ -74,6 +74,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         json: _jsonMap,
         template: widget.template,
         title: _activity.title,
+        extStorageDir: AppStateContainer.of(context).extStorageDir,
         saveCallback: ({Map<String, dynamic> jsonMap}) =>
             Provider.dispatch<RootState>(context,
                 SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap)),
