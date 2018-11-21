@@ -10,6 +10,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maui/screens/welcome_screen.dart';
 import 'tab_home.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/loca.dart';
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/tab');
+      Navigator.of(context).pushReplacementNamed('/welcome');
     }
     var users = await UserRepo().getLocalUsers();
 
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen>
     var user = AppStateContainer.of(context).state.loggedInUser;
     print("user detail ?::: $user");
     return (user != null)
-        ? new TabHome()
+        ? new WelcomeScreen()
         : new Scaffold(
             appBar: _isLoading
                 ? null
