@@ -10,6 +10,7 @@ import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/like_button.dart';
+import 'package:maui/quack/social_summary.dart';
 
 class CardSummary extends StatelessWidget {
   final QuackCard card;
@@ -78,7 +79,14 @@ class CardSummary extends StatelessWidget {
           overflow: TextOverflow.ellipsis),
     );
     return Column(
-      children: <Widget>[stackHeader, desc],
+      children: <Widget>[
+        stackHeader,
+        desc,
+        SocialSummary(
+          card: card,
+          tileType: TileType.card,
+        )
+      ],
     );
   }
 }

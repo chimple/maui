@@ -345,7 +345,6 @@ class _LoginScreenState extends State<LoginScreen>
           name: userName,
           points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/tab');
     } else {
       print("false");
       controller.addStatusListener((status) {
