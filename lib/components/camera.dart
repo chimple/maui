@@ -33,8 +33,8 @@ class _CameraScreenState extends State<CameraScreen> {
   int mode = -1;
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
-    final bool isLandscape = orientation == Orientation.landscape;
+    // final Orientation orientation = MediaQuery.of(context).orientation;
+    // final bool isLandscape = orientation == Orientation.landscape;
 
     return Scaffold(
         backgroundColor: Colors.black87,
@@ -203,14 +203,9 @@ class _CameraScreenState extends State<CameraScreen> {
       final bigImage = Img.decodeImage(new File(bigFilePath).readAsBytesSync());
       new File(bigFilePath)..writeAsBytesSync(Img.encodePng(bigImage));
       if(mounted){
-        print("Image path received - $bigFilePath");
-        // Future.delayed(Duration(milliseconds: 300), (){
           setState(() {
                       bigImagePath = bigFilePath;
                     });
-                    print("BigImagePath Value - $bigImagePath");
-                    print("Value of ImagePath before setting value - $imagePath");
-        // });
         onTakePictureButtonPressed();
       }
     });
@@ -225,24 +220,13 @@ class _CameraScreenState extends State<CameraScreen> {
     takePicture().then((String filePath) async {
       final image = Img.decodeImage(new File(filePath).readAsBytesSync());
 
-      // new File(filePath)..writeAsBytesSync(Img.encodePng(image));
-      // if(mounted){
-      //   print("Image path received - $filePath");
-      //   // Future.delayed(Duration(milliseconds: 300), (){
-      //     setState(() {
-      //                 bigImagePath = filePath;
-      //               });
-      //               print("BigImagePath Value - $bigImagePath");
-      //               print("Value of ImagePath before setting value - $imagePath");
-      //   // });
-      // }
+      
       // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
       final thumbnail = Img.copyResize(image, 64);
 
       // Save the thumbnail as a PNG.
       new File(filePath)..writeAsBytesSync(Img.encodePng(thumbnail));
       
-
       if (mounted) {
         Future.delayed(Duration(milliseconds: 300), () {
           setState(() {
@@ -252,7 +236,6 @@ class _CameraScreenState extends State<CameraScreen> {
             onTakePicture1 = false;
           });
         });
-        print("Value of ImagePath - $imagePath");
       }
     });
   }
