@@ -11,8 +11,10 @@ import 'package:image/image.dart' as Img;
 
 String imagePathStore;
 String userNameStore;
+String bigImagePath, tempFilePath;
 
-class CameraScreen extends StatefulWidget {
+class 
+CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() {
     return new _CameraScreenState();
@@ -40,8 +42,8 @@ class _CameraScreenState extends State<CameraScreen> {
         body: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: <Widget>[
-            onTakePicture
-                ? new Center(
+            onTakePicture?
+                 new Center(
                     child: RotatedBox(
                         quarterTurns: 1, child: _cameraPreviewWidget()),
                   )
@@ -50,7 +52,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         ? Center(
                             child: onTakePicture1
                                 ? null
-                                : Image.file(new File(imagePath)))
+                                : Image.file(new File(bigImagePath)))
                         : new Container()),
             Container(
                 color: Colors.black87,
@@ -124,7 +126,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 onPressed: controller != null &&
                         controller.value.isInitialized &&
                         !controller.value.isRecordingVideo
-                    ? onTakePictureButtonPressed
+                    ? onTakenPicture
                     : null,
               ),
             ),
@@ -154,9 +156,9 @@ class _CameraScreenState extends State<CameraScreen> {
                     onPressed: () {
                       setState(() {
                         imagePathStore = '';
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                        ]);
+                        // SystemChrome.setPreferredOrientations([
+                        //   DeviceOrientation.portraitUp,
+                        // ]);
                         onTakePicture = true;
                         onTakePicture1 = true;
                       });
@@ -196,8 +198,26 @@ class _CameraScreenState extends State<CameraScreen> {
         .showSnackBar(new SnackBar(content: new Text(message)));
   }
 
+  void onTakenPicture() {
+    takePicture().then((String bigFilePath) async {
+      final bigImage = Img.decodeImage(new File(bigFilePath).readAsBytesSync());
+      new File(bigFilePath)..writeAsBytesSync(Img.encodePng(bigImage));
+      if(mounted){
+        print("Image path received - $bigFilePath");
+        // Future.delayed(Duration(milliseconds: 300), (){
+          setState(() {
+                      bigImagePath = bigFilePath;
+                    });
+                    print("BigImagePath Value - $bigImagePath");
+                    print("Value of ImagePath before setting value - $imagePath");
+        // });
+        onTakePictureButtonPressed();
+      }
+    });
+  }
+
   void onTakePictureButtonPressed() {
-    SystemChrome.setPreferredOrientations([]);
+    // SystemChrome.setPreferredOrientations([]);
     setState(() {
       onTakePicture1 = true;
       onTakePicture = false;
@@ -205,11 +225,23 @@ class _CameraScreenState extends State<CameraScreen> {
     takePicture().then((String filePath) async {
       final image = Img.decodeImage(new File(filePath).readAsBytesSync());
 
+      // new File(filePath)..writeAsBytesSync(Img.encodePng(image));
+      // if(mounted){
+      //   print("Image path received - $filePath");
+      //   // Future.delayed(Duration(milliseconds: 300), (){
+      //     setState(() {
+      //                 bigImagePath = filePath;
+      //               });
+      //               print("BigImagePath Value - $bigImagePath");
+      //               print("Value of ImagePath before setting value - $imagePath");
+      //   // });
+      // }
       // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
       final thumbnail = Img.copyResize(image, 64);
 
       // Save the thumbnail as a PNG.
       new File(filePath)..writeAsBytesSync(Img.encodePng(thumbnail));
+      
 
       if (mounted) {
         Future.delayed(Duration(milliseconds: 300), () {
@@ -220,6 +252,7 @@ class _CameraScreenState extends State<CameraScreen> {
             onTakePicture1 = false;
           });
         });
+        print("Value of ImagePath - $imagePath");
       }
     });
   }
@@ -261,14 +294,14 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([]);
+    // SystemChrome.setPreferredOrientations([]);
     super.dispose();
   }
 
   void initCamera() async {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    // ]);
     cameras = await availableCameras();
     print("print camera lenafa$cameras");
     controller = new CameraController(cameras[1], ResolutionPreset.medium);
