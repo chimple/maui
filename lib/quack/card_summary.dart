@@ -10,6 +10,7 @@ import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/like_button.dart';
+import 'package:maui/quack/social_summary.dart';
 
 class CardSummary extends StatelessWidget {
   final QuackCard card;
@@ -58,15 +59,6 @@ class CardSummary extends StatelessWidget {
         child: widget);
     final stackChildren = <Widget>[
       header,
-      Positioned(
-        right: -8.0,
-        top: -8.0,
-        child: LikeButton(
-          parentId: card.id,
-          tileType: TileType.card,
-          isInteractive: false,
-        ),
-      )
     ];
     if (card.type == CardType.concept) {
       stackChildren.add(CardLock(
@@ -86,25 +78,15 @@ class CardSummary extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis),
     );
-    return orientation == Orientation.portrait
-        ? Column(
-            children: <Widget>[stackHeader, desc],
-          )
-        : Row(
-            children: <Widget>[
-              stackHeader,
-              Expanded(
-                  child: Column(children: <Widget>[
-                desc,
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(card.content ?? '',
-                      textAlign: TextAlign.start,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ]))
-            ],
-          );
+    return Column(
+      children: <Widget>[
+        stackHeader,
+        desc,
+        SocialSummary(
+          card: card,
+          tileType: TileType.card,
+        )
+      ],
+    );
   }
 }
