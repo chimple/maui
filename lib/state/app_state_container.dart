@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -75,6 +76,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   int _currentQuizUnit;
   ChatMode _currentMode = ChatMode.conversation;
   String _expectedAnswer;
+  String extStorageDir;
 
   @override
   void initState() {
@@ -106,6 +108,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
     botMessages = List<dynamic>();
+    getExternalStorageDirectory().then((d) => extStorageDir = '${d.path}/');
   }
 
   @override
