@@ -3,6 +3,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class CollectionProgressIndicator extends StatelessWidget {
   final QuackCard card;
@@ -13,7 +14,7 @@ class CollectionProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
       print(
-          "Collection_Progress_Indicator Layout Builder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
+          "Collection_Progress_Indicator Layout Builder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");   
       return Connect<RootState, double>(
         convert: (state) => state.progressMap[card.id],
         where: (prev, next) => next != prev,
@@ -23,8 +24,8 @@ class CollectionProgressIndicator extends StatelessWidget {
             lineHeight: constraints.maxWidth * 0.0743,
             percent: progress ?? 0.0,
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: card.backgroundColor,
-            backgroundColor: Colors.grey,
+            progressColor:  TinyColor(card.backgroundColor).darken(20).color,
+            backgroundColor: Colors.white,
           );
         },
         nullable: true,
