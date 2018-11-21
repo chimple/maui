@@ -8,9 +8,17 @@ import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
-class PostComments extends StatelessWidget {
+class PostComments extends StatefulWidget {
+  PostComments({Key key}) : super(key: key);
+
+  @override
+  State createState() => new PostCommentsState();
+}
+
+class PostCommentsState extends State<PostComments> {
   Tile tile;
   final TextEditingController _textController = new TextEditingController();
+  Color _textColor = Colors.grey[400];
 
   void post(BuildContext context) {
     tile = Tile(
@@ -23,22 +31,30 @@ class PostComments extends StatelessWidget {
 
     Provider.dispatch<RootState>(context, PostTile(tile: tile));
     Navigator.push(context, MaterialPageRoute(builder: (context) => TabHome()));
+    _textController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final user = AppStateContainer.of(context).state.loggedInUser;
-
     return Scaffold(
       appBar: new AppBar(
         actions: <Widget>[
-          new FlatButton(
-            onPressed: () => _textController.text.isEmpty ? {} : post(context),
-            textColor: Colors.white,
-            child: new Text(
-              "Post  ",
-              style: TextStyle(fontSize: 25.0),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
+            child: new RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              color: Colors.orange,
+              onPressed: () =>
+                  _textController.text.trim().isEmpty ? {} : post(context),
+              textColor: _textColor,
+              child: new Text(
+                " Post ",
+                style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
+              ),
             ),
           ),
         ],
@@ -52,7 +68,7 @@ class PostComments extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow[700],
       ),
       body: Container(
         margin: EdgeInsets.all(size.width * .02),
@@ -75,6 +91,14 @@ class PostComments extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: new TextField(
+                        onChanged: (str) {
+                          setState(() {
+                            _textColor = str.trim().isNotEmpty
+                                ? Colors.white
+                                : Colors.grey[400];
+                          });
+                        },
+                        autocorrect: false,
                         controller: _textController,
                         keyboardType: TextInputType.multiline,
                         style: new TextStyle(

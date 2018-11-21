@@ -259,9 +259,9 @@ class _LoginScreenState extends State<LoginScreen>
                                                 autocorrect: false,
                                                 onSubmitted: _submit(userName),
                                                 onChanged: _onTyping,
-                                                controller:
-                                                    TextEditingController(
-                                                        text: userName),
+                                                // controller:
+                                                //     TextEditingController(
+                                                //         text: userName),
                                                 decoration: new InputDecoration(
                                                   labelStyle: TextStyle(
                                                       color: Colors.red),
@@ -338,7 +338,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tabSreen() async {
-    if (imagePathStore != '' && userName != '' && userName != null) {
+    if (imagePathStore != '' && userName.trim().isNotEmpty && userName != null) {
       var user = await new UserRepo().insertLocalUser(new User(
           image: imagePathStore,
           currentLessonId: 1,
