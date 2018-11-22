@@ -16,8 +16,8 @@ String userNameStore;
 String bigImagePath, tempFilePath;
 
 class CameraScreen extends StatefulWidget {
-  CameraScreen(this.editImage = false);
-  bool editImage;
+  CameraScreen(this.editImage);
+  bool editImage = false;
   @override
   _CameraScreenState createState() {
     return new _CameraScreenState();
@@ -52,8 +52,8 @@ class _CameraScreenState extends State<CameraScreen> {
         body: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: <Widget>[
-            onTakePicture?
-                 new Center(
+            onTakePicture
+                ? new Center(
                     child: RotatedBox(
                         quarterTurns: 1, child: _cameraPreviewWidget()),
                   )
@@ -234,13 +234,12 @@ class _CameraScreenState extends State<CameraScreen> {
     takePicture().then((String filePath) async {
       final image = Img.decodeImage(new File(filePath).readAsBytesSync());
 
-      
       // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
       final thumbnail = Img.copyResize(image, 64);
 
       // Save the thumbnail as a PNG.
       new File(filePath)..writeAsBytesSync(Img.encodePng(thumbnail));
-      
+
       if (mounted) {
         Future.delayed(Duration(milliseconds: 300), () {
           setState(() {
