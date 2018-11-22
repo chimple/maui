@@ -4,10 +4,14 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/like_button.dart';
 
 class SocialSummary extends StatelessWidget {
-  final QuackCard card;
+  final String parentId;
   final TileType tileType;
+  final int likes;
+  final int comments;
 
-  const SocialSummary({Key key, this.card, this.tileType}) : super(key: key);
+  const SocialSummary(
+      {Key key, this.parentId, this.tileType, this.likes, this.comments})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +21,15 @@ class SocialSummary extends StatelessWidget {
         Row(
           children: <Widget>[
             LikeButton(
-              parentId: card.id,
+              parentId: parentId,
               tileType: TileType.card,
               isInteractive: false,
             ),
-            Text("${card.likes ?? ''}"),
+            Text("${likes ?? ''}"),
           ],
         ),
         Row(
-          children: <Widget>[
-            Icon(Icons.comment),
-            Text("${card.comments ?? ''}")
-          ],
+          children: <Widget>[Icon(Icons.comment), Text("${comments ?? ''}")],
         )
       ],
     );

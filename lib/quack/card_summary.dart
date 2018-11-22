@@ -81,11 +81,16 @@ class CardSummary extends StatelessWidget {
     return Column(
       children: <Widget>[
         stackHeader,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SocialSummary(
+            parentId: card.id,
+            likes: card.likes,
+            comments: card.comments,
+            tileType: TileType.card,
+          ),
+        ),
         desc,
-        SocialSummary(
-          card: card,
-          tileType: TileType.card,
-        )
       ],
     );
   }

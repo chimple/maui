@@ -24,7 +24,7 @@ class CollectionGrid extends StatelessWidget {
       builder: (cardList) {
         int index = 0;
         return SizedBox(
-          height: 250.0,
+          height: 300.0,
           child: CustomScrollView(
             scrollDirection: Axis.horizontal,
             slivers: cardList
