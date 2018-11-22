@@ -78,11 +78,6 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   void dispose() {
     SystemChrome.setPreferredOrientations([]);
     _focusName.dispose();
