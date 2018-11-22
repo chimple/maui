@@ -212,8 +212,8 @@ class _CameraScreenState extends State<CameraScreen> {
       final bigImage = Img.decodeImage(new File(bigFilePath).readAsBytesSync());
       int ht = bigImage.height;
       int wd = bigImage.width;
-      int reducedHt = ht * 0.9 as int;
-      int reducedWd = wd * 0.9 as int;
+      int reducedHt = (ht * 0.1).toInt();
+      int reducedWd = (wd * 0.1).toInt();
       final croppedImage = Img.copyCrop(bigImage, reducedHt, reducedWd, wd, ht);
       new File(bigFilePath)..writeAsBytesSync(Img.encodePng(croppedImage));
       if(mounted){
