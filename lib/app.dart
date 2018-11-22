@@ -10,6 +10,7 @@ import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/login_screen.dart';
+import 'package:maui/screens/switch_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'components/camera.dart';
@@ -38,7 +39,8 @@ class MauiApp extends StatelessWidget {
       ),
       navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new LoginScreen(),
+        '/': (BuildContext context) => new SwitchScreen(),
+        '/login': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
