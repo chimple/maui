@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
@@ -137,8 +139,7 @@ class _UnitButtonState extends State<UnitButton> {
             onPressed: widget.disabled
                 ? null
                 : () {
-                    AppStateContainer
-                        .of(context)
+                    AppStateContainer.of(context)
                         .play(widget.text.toLowerCase());
                     widget.onPress();
                   },
@@ -151,8 +152,8 @@ class _UnitButtonState extends State<UnitButton> {
                             ? Theme.of(context).primaryColor
                             : Colors.white,
                     width: 4.0),
-                borderRadius: BorderRadius
-                    .all(Radius.circular(buttonConfig?.radius ?? 8.0))),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(buttonConfig?.radius ?? 8.0))),
             child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)));
   }
 
@@ -160,7 +161,12 @@ class _UnitButtonState extends State<UnitButton> {
     if (_unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (_unitMode == UnitMode.image) {
-      return _isLoading ? new Container() : new Image.asset(_unit.image);
+      return _isLoading
+          ? new Container()
+          : new Image.file(
+              File(AppStateContainer.of(context).extStorageDir + _unit.image),
+              fit: BoxFit.cover,
+            );
     }
     return Center(
         child: Text(widget.text,

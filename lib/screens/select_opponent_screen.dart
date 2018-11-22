@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:maui/components/videoplayer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -145,7 +146,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           padding: const EdgeInsets.all(1.0),
                           child: GestureDetector(
                             onTap: () {
-                              button3(context, gamename);
+                              videoPlayButton(context, gamename);
                               print("valueme incresing");
                             },
                             child: Container(
@@ -297,9 +298,11 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
     );
   }
 
-  void button3(BuildContext context, String gamename) {
-    print("Button 1");
+  void videoPlayButton(BuildContext context, String gamename) {
+    print("videoPlayButton");
+    final name = "assets/demo_video/$gamename.mp4";
+    File file = File(AppStateContainer.of(context).extStorageDir + name);
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => new VideoApp(gamename: gamename)));
+        builder: (BuildContext context) => new VideoApp(file: file)));
   }
 }
