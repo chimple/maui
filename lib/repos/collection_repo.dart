@@ -20,14 +20,14 @@ class CollectionRepo {
     return collectionDao.getCardsInCollection(id);
   }
 
-  Future<List<QuackCard>> getCardsInCollectionByType(
+  Future<List<QuackCard>> getKnowledgeAndQuizCardsInCollection(
       String id, CardType cardType) async {
-    return collectionDao.getCardsInCollectionByType(id, cardType);
+    return await collectionDao.getKnowledgeAndQuizCardsInCollection(id);
   }
 
   Future<List<Quiz>> getQuizzesInCollection(String id) async {
     final quizCards =
-        await collectionDao.getCardsInCollectionByType(id, CardType.question);
+        await collectionDao.getKnowledgeAndQuizCardsInCollection(id);
     return Future.wait(quizCards
         .map((c) async => CardRepo().getQuiz(c.id))
         .toList(growable: false));

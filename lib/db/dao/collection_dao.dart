@@ -31,8 +31,7 @@ AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
     return maps.map((el) => QuackCard.fromMap(el)).toList();
   }
 
-  Future<List<QuackCard>> getCardsInCollectionByType(
-      String id, CardType cardType,
+  Future<List<QuackCard>> getKnowledgeAndQuizCardsInCollection(String id,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query('${QuackCard.table}, ${Collection.table}',
@@ -40,9 +39,9 @@ AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
         where: '''
 ${Collection.idCol} = ? 
 AND ${Collection.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
-AND ${QuackCard.table}.${QuackCard.typeCol} = ?
+AND ${QuackCard.table}.${QuackCard.typeCol} in (?, ?)
 ''',
-        whereArgs: [id, cardType.index],
+        whereArgs: [id, CardType.knowledge.index, CardType.question.index],
         orderBy: '${Collection.serialCol}');
     return maps.map((el) => QuackCard.fromMap(el)).toList();
   }
