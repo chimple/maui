@@ -44,7 +44,7 @@ class MauiApp extends StatelessWidget {
         '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
-        '/camera': (BuildContext context) => CameraScreen(false)
+        '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),
         '/topics': (BuildContext context) => MainCollection(),
       },
