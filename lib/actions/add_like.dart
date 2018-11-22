@@ -79,7 +79,7 @@ class AddLike implements AsyncAction<RootState> {
           activityMap: userId != null ? state.activityMap : state.activityMap
             ..[parentId] = userActivity,
           commentMap: state.commentMap,
-          tiles: state.tiles,
+          drawings: state.drawings,
           templates: state.templates);
     };
   }

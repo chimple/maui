@@ -15,7 +15,7 @@ class RootState {
   final Map<String, QuackCard> cardMap;
   final Map<String, List<Comment>> commentMap;
   final Map<String, UserActivity> activityMap;
-  final List<Tile> tiles;
+  final List<Tile> drawings;
   final List<CardExtra> templates;
 
   RootState(
@@ -24,7 +24,7 @@ class RootState {
       this.collectionMap,
       this.cardMap,
       this.activityMap,
-      this.tiles,
+      this.drawings,
       this.templates,
       this.commentMap});
 }

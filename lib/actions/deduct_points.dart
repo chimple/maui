@@ -32,7 +32,7 @@ class DeductPoints implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         activityMap: state.activityMap,
         commentMap: state.commentMap,
-        tiles: state.tiles,
+        drawings: state.drawings,
         templates: state.templates);
   }
 }

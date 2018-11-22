@@ -58,7 +58,7 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
         activityMap: activityMap,
-        tiles: state.tiles,
+        drawings: state.drawings,
         templates: state.templates,
         commentMap: {});
   }

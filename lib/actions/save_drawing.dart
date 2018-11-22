@@ -32,7 +32,7 @@ class SaveDrawing implements AsyncAction<RootState> {
         userId: state.user.id);
 
     final updatedTile = await tileRepo.upsert(tile);
-    final updatedTiles = state.tiles;
+    final updatedTiles = state.drawings;
     final index = updatedTiles.indexWhere((t) => t.id == tileId);
     if (index >= 0) {
       print('save_drawing: saving index $index');
@@ -47,7 +47,7 @@ class SaveDrawing implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         activityMap: state.activityMap,
         commentMap: state.commentMap,
-        tiles: updatedTiles,
+        drawings: updatedTiles,
         templates: state.templates);
   }
 }
