@@ -6,6 +6,7 @@ import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/quack/quiz_navigator.dart';
 
 class KnowledgeButton extends StatelessWidget {
   final String cardId;
@@ -21,31 +22,32 @@ class KnowledgeButton extends StatelessWidget {
           .toList(growable: false),
       where: (prev, next) => next != prev,
       builder: (cardList) {
-        return cardList.length > 0
-            ? RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(16.0))),
-                color: Color(0xFF0E4476),
-                padding: EdgeInsets.all(16.0),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      new MaterialPageRoute(builder: (BuildContext context) {
-                    Provider.dispatch<RootState>(context,
-                        AddProgress(card: cardList[0], parentCardId: cardId));
-                    return CardPager(
-                      cardId: cardId,
-                      cardType: CardType.knowledge,
-                      initialPage: 0,
-                    );
-                  }));
-                },
-                child: Text(
-                  'Read',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            : Container();
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: cardList.length > 0
+              ? RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          const BorderRadius.all(const Radius.circular(32.0))),
+                  color: Color(0xFF0E4476),
+                  padding: EdgeInsets.all(8.0),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (BuildContext context) {
+                      Provider.dispatch<RootState>(context,
+                          AddProgress(card: cardList[0], parentCardId: cardId));
+                      return QuizNavigator(
+                        cardId: cardId,
+                      );
+                    }));
+                  },
+                  child: Text(
+                    'Next',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : Container(),
+        );
       },
     );
   }
