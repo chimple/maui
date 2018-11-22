@@ -15,8 +15,8 @@ import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 
-class FetchCardDetail implements AsyncAction<RootState> {
-  final String cardId;
+class FetchTileDetail implements AsyncAction<RootState> {
+  final String tileId;
   CollectionRepo collectionRepo;
   CardProgressRepo cardProgressRepo;
   CardRepo cardRepo;
@@ -25,7 +25,7 @@ class FetchCardDetail implements AsyncAction<RootState> {
   TileRepo tileRepo;
   CardExtraRepo cardExtraRepo;
 
-  FetchCardDetail(this.cardId);
+  FetchTileDetail(this.tileId);
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
@@ -38,34 +38,22 @@ class FetchCardDetail implements AsyncAction<RootState> {
     assert(cardExtraRepo != null, 'cardExtraRepo not injected');
 
     final cardMap = Map<String, QuackCard>();
-    final progressMap = Map<String, double>();
     final collectionMap = Map<String, List<String>>();
-    final likeMap = Map<String, Like>();
     var drawings = List<Tile>();
     var templates = List<CardExtra>();
 
-    final card = state.cardMap[cardId];
+    final card = state.cardMap[tileId];
     if (card == null) {
-      cardMap[cardId] = await cardRepo.getCard(cardId);
-      likeMap[cardId] = await likeRepo.getLikeByParentIdAndUserId(
-          cardId, state.user.id, TileType.card);
+      cardMap[tileId] = await cardRepo.getCard(tileId);
     }
 
     if (card.type == CardType.concept) {
       final mainCards =
-          (await collectionRepo.getCardsInCollection(cardId)).map((c) {
+          (await collectionRepo.getCardsInCollection(tileId)).map((c) {
         cardMap[c.id] = c;
         return c.id;
       }).toList(growable: false);
-      collectionMap[cardId] = mainCards;
-
-      await Future.forEach(mainCards, (mc) async {
-        progressMap[mc] = await cardProgressRepo
-            .getProgressStatusByCollectionAndTypeAndUserId(
-                mc, CardType.knowledge, state.user.id);
-        likeMap[mc] = await likeRepo.getLikeByParentIdAndUserId(
-            mc, state.user.id, TileType.card);
-      });
+      collectionMap[tileId] = mainCards;
     } else if (card.type == CardType.activity) {
       drawings =
           await tileRepo.getTilesByCardIdAndType(card.id, TileType.drawing);
@@ -74,7 +62,7 @@ class FetchCardDetail implements AsyncAction<RootState> {
     }
 
     final comments =
-        await commentRepo.getCommentsByParentId(cardId, TileType.card);
+        await commentRepo.getCommentsByParentId(tileId, TileType.card);
 
     return (RootState state) => RootState(
         user: state.user,
@@ -83,6 +71,6 @@ class FetchCardDetail implements AsyncAction<RootState> {
         activityMap: state.activityMap,
         tiles: drawings,
         templates: templates,
-        commentMap: state.commentMap..[cardId] = comments);
+        commentMap: state.commentMap..[tileId] = comments);
   }
 }

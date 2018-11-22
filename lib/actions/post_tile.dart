@@ -45,10 +45,9 @@ class PostTile implements AsyncAction<RootState> {
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        likeMap: state.likeMap,
         commentMap: state.commentMap,
+        activityMap: state.activityMap,
         tiles: state.tiles,
-        templates: state.templates,
-        progressMap: state.progressMap);
+        templates: state.templates);
   }
 }

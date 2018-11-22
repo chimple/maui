@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:maui/quack/user_activity.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -29,6 +33,7 @@ class FetchInitialData implements AsyncAction<RootState> {
     final collectionMap = Map<String, List<String>>();
     final progressMap = Map<String, double>();
     final likeMap = Map<String, Like>();
+    var activityMap = Map<String, UserActivity>();
     await fetchCollection(
         name: 'main',
         cardMap: cardMap,
@@ -41,12 +46,18 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: collectionMap,
         progressMap: progressMap,
         likeMap: likeMap);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userActivity = prefs.getString('userActivity');
+    if (userActivity != null) {
+      activityMap = Map.fromIterable(json.decode(userActivity).entries,
+          key: (me) => me.key, value: (me) => UserActivity.fromJson(me.value));
+    }
+
     return (RootState state) => RootState(
         user: user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
-        progressMap: state.progressMap..addAll(progressMap),
-        likeMap: likeMap,
+        activityMap: activityMap,
         tiles: state.tiles,
         templates: state.templates,
         commentMap: {});
@@ -72,16 +83,7 @@ class FetchInitialData implements AsyncAction<RootState> {
         return c.id;
       }).toList(growable: false);
 
-      await Future.forEach(cardNames, (c) async {
-        progressMap[c] = await cardProgressRepo
-            .getProgressStatusByCollectionAndTypeAndUserId(
-                c, CardType.knowledge, user.id);
-        likeMap[c] = await likeRepo.getLikeByParentIdAndUserId(
-            c, user.id, TileType.card);
-      });
       collectionMap[mc] = cardNames;
     });
-//    print(progressMap);
-//    print(likeMap);
   }
 }

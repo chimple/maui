@@ -32,8 +32,7 @@ class FetchComments implements AsyncAction<RootState> {
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        progressMap: state.progressMap,
-        likeMap: state.likeMap,
+        activityMap: state.activityMap,
         tiles: state.tiles,
         templates: state.templates,
         commentMap: state.commentMap..[cardId] = comments);

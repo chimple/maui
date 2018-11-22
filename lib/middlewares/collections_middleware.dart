@@ -54,6 +54,7 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.cardExtraRepo = cardExtraRepo;
     } else if (action is AddProgress) {
       action.cardProgressRepo = cardProgressRepo;
+      action.collectionRepo = collectionRepo;
     } else if (action is AddLike) {
       action.likeRepo = likeRepo;
       action.tileRepo = tileRepo;

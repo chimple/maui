@@ -59,10 +59,9 @@ class AddComment implements AsyncAction<RootState> {
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        likeMap: state.likeMap,
+        activityMap: state.activityMap,
         commentMap: state.commentMap..[comment.parentId].add(comment),
         tiles: state.tiles,
-        templates: state.templates,
-        progressMap: state.progressMap);
+        templates: state.templates);
   }
 }

@@ -84,8 +84,9 @@ class CardPagerState extends State<CardPager> {
                     Provider.dispatch<RootState>(
                         context,
                         AddProgress(
-                            card: cardList[index],
-                            parentCardId: widget.cardId));
+                            cardId: cardList[index].id,
+                            parentCardId: widget.cardId,
+                            index: index));
                   }
                   setState(() => _currentPageIndex = index);
                   print("Current page index update - ${_currentPageIndex}");
