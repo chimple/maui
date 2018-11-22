@@ -93,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen>
   void dispose() {
     SystemChrome.setPreferredOrientations([]);
     _focusName.dispose();
+    controller.dispose();
     super.dispose();
   }
 
