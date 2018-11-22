@@ -50,7 +50,9 @@ class QuizResultState extends State<QuizResult> {
 
                   padding: EdgeInsets.only(bottom: 20.0),
 
-                  height:Orientation.landscape == orientation ? media.size.height * .9:media.size.height *.55,
+                  height: Orientation.landscape == orientation
+                      ? media.size.height * .9
+                      : media.size.height * .55,
 
                   // margin: EdgeInsets.all(3.0),
 
@@ -117,6 +119,7 @@ class QuizResultState extends State<QuizResult> {
                             });
                           },
                           children: widget.quizzes
+                              .where((q) => q.type == CardType.question)
                               .map(
                                 (q) => ExpansionPanel(
                                       isExpanded: (_expandedPanel == index++)
@@ -127,8 +130,7 @@ class QuizResultState extends State<QuizResult> {
                                           Container(
                                               height: 100.0,
                                               child: Center(
-                                                  child: Text(
-                                                      q.title ?? ''))),
+                                                  child: Text(q.title ?? ''))),
                                       body: Container(
                                         color: Colors.blueAccent,
                                         child: SizedBox(

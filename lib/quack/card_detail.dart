@@ -50,14 +50,6 @@ class CardDetail extends StatelessWidget {
         card.content ?? '',
       ),
     )));
-    if (card.type == CardType.concept) {
-      scrollViewWidgets.add(SliverToBoxAdapter(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: KnowledgeButton(cardId: card.id),
-        ),
-      ));
-    }
     scrollViewWidgets.addAll([
       SliverToBoxAdapter(
         child: CollectionGrid(
@@ -65,18 +57,14 @@ class CardDetail extends StatelessWidget {
           cardType: CardType.activity,
         ),
       ),
-      SliverToBoxAdapter(
-        child: CollectionGrid(
-          cardId: card.id,
-          cardType: CardType.concept,
-        ),
-      )
     ]);
-    scrollViewWidgets.add(CommentList(
-      parentId: card.id,
-      tileType: TileType.card,
-    ));
-
+    if (showBackButton &&
+        (card.type == CardType.concept || card.type == CardType.activity)) {
+      scrollViewWidgets.add(CommentList(
+        parentId: card.id,
+        tileType: TileType.card,
+      ));
+    }
     final widgets = <Widget>[
       Expanded(
         child: CustomScrollView(
@@ -84,16 +72,17 @@ class CardDetail extends StatelessWidget {
         ),
       )
     ];
-    if (showBackButton &&
-        (card.type == CardType.concept || card.type == CardType.activity)) {
-      widgets.add(CommentTextField(parentId: card.id, tileType: TileType.card));
+    if (card.type == CardType.concept) {
+      widgets.add(KnowledgeButton(cardId: card.id));
     }
+
     return card.type == CardType.knowledge
         ? Column(
             children: widgets,
           )
         : Scaffold(
             body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: widgets,
             ),
           );
