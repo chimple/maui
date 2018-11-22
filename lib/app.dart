@@ -4,6 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/quack/main_collection.dart';
+import 'package:maui/quack/story_page.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
@@ -36,11 +38,13 @@ class MauiApp extends StatelessWidget {
       ),
       navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new WelcomeScreen(),
-        '/login': (BuildContext context) => new LoginScreen(),
+        '/': (BuildContext context) => new LoginScreen(),
+        '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
-        '/camera': (BuildContext context) => CameraScreen()
+        '/camera': (BuildContext context) => CameraScreen(false)
+        '/stories': (BuildContext context) => StoryPage(),
+        '/topics': (BuildContext context) => MainCollection(),
       },
       onGenerateRoute: _getRoute,
     );

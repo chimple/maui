@@ -33,7 +33,9 @@ class QuizResultState extends State<QuizResult> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    print("this is height ${media.size}");
+    Orientation orientation = MediaQuery.of(context).orientation;
+    print("this is height $orientation");
+    // var orient = orientation;
     int index = 0;
     bool tileClick = false;
     return SafeArea(
@@ -48,7 +50,9 @@ class QuizResultState extends State<QuizResult> {
 
                   padding: EdgeInsets.only(bottom: 20.0),
 
-                  height: media.size.height * .55,
+                  height: Orientation.landscape == orientation
+                      ? media.size.height * .9
+                      : media.size.height * .55,
 
                   // margin: EdgeInsets.all(3.0),
 
@@ -115,27 +119,18 @@ class QuizResultState extends State<QuizResult> {
                             });
                           },
                           children: widget.quizzes
+                              .where((q) => q.type == CardType.question)
                               .map(
                                 (q) => ExpansionPanel(
-                                      isExpanded: (_expandedPanel == index++ || _textpanel == index++)
+                                      isExpanded: (_expandedPanel == index++)
                                           ? true
                                           : false,
                                       headerBuilder: (BuildContext context,
                                               bool isExpanded) =>
-                                          InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  _textpanel = -1;
-
-                                                  print(
-                                                      "this is on click $_textpanel");
-                                                });
-                                              },
-                                              child: Container(
-                                                  height: 100.0,
-                                                  child: Center(
-                                                      child: Text(
-                                                          q.title ?? '')))),
+                                          Container(
+                                              height: 100.0,
+                                              child: Center(
+                                                  child: Text(q.title ?? ''))),
                                       body: Container(
                                         color: Colors.blueAccent,
                                         child: SizedBox(
