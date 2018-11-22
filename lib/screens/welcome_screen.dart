@@ -14,7 +14,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   
   void initState() {
     super.initState();
-    new Future.delayed(const Duration(milliseconds: 7000), (){
+    new Future.delayed(const Duration(milliseconds: 6200), (){
         Navigator.of(context).pushReplacementNamed('/tab');
         setState(() {
                   delayed = true;
