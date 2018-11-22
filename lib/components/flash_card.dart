@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/repos/unit_repo.dart';
@@ -122,7 +124,11 @@ class _FlashCardState extends State<FlashCard> {
                                                     constraints.maxHeight *
                                                         0.11,
                                                 fontWeight: FontWeight.bold)))
-                                    : Image.asset(_unit.image))),
+                                    : Image.file(
+                                        File(AppStateContainer.of(context)
+                                                .extStorageDir +
+                                            _unit.image),
+                                      ))),
                     new IconButton(
                       icon: new Icon(Icons.arrow_right),
                       onPressed: () {

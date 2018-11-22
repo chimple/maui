@@ -196,9 +196,10 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (await file.exists()) {
         await _audioPlayer.play(file.path, isLocal: true);
       } else {
-        await file.writeAsBytes((await rootBundle.load('assets/dict/$word.ogg'))
-            .buffer
-            .asUint8List());
+        final name = "assets/dict/$word.ogg";
+        File file1 = File(AppStateContainer.of(context).extStorageDir + name);
+        await file.writeAsBytes(
+            (await rootBundle.load("$file1")).buffer.asUint8List());
         await _audioPlayer.play(file.path, isLocal: true);
       }
     } catch (e) {
