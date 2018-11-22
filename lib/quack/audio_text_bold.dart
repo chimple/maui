@@ -94,7 +94,6 @@ class AudioTextBoldState extends State<AudioTextBold> {
   // }
 
   Future playaudio(String fileName) async {
-    fileName = fileName.toLowerCase();
     try {
       final file =
           new File(AppStateContainer.of(context).extStorageDir + fileName);
