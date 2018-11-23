@@ -123,7 +123,10 @@ class TileCard extends StatelessWidget {
           }
           columnWidgets.add(Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Text(title),
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+            ),
           ));
           widgets.add(Expanded(
             child: Column(
