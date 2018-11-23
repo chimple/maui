@@ -13,7 +13,7 @@ class Animations extends StatefulWidget {
 
 class AnimationsState extends State<Animations> {
   List<String> emotions = ["happy", "joy", "hello", "sad", "bored", "welcome with hello"];
-  String emotion;
+  String emotion, _animationName;
   int count;
   PageController _pageController;
   int _currentPageIndex;
@@ -23,6 +23,7 @@ class AnimationsState extends State<Animations> {
     count = 0;
     _pageController = PageController(initialPage: 0);
     _currentPageIndex = 0;
+    _animationName = emotions[0];
   }
 
   @override
@@ -70,6 +71,12 @@ class AnimationsState extends State<Animations> {
                               fit: BoxFit.scaleDown,
                               animation: '${emotions[count]}',
                               mixSeconds: 0.2,
+                              completed: (String animationName) {
+                                    setState(() {
+                                      // Return to idle.
+                                      _animationName = "idle";
+                                    });
+                                  },
                             ),
                           ),
                       onPageChanged: (index) {
