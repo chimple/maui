@@ -6,6 +6,7 @@ import 'package:maui/actions/add_like.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/quack/user_activity.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
@@ -22,12 +23,12 @@ class LikeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Connect<RootState, bool>(
-      convert: (state) => state.likeMap[parentId] != null,
+      convert: (state) => state.activityMap[parentId]?.like,
       where: (prev, next) => next != prev,
       builder: (like) {
         if (like ?? false)
           return Icon(
-            Icons.favorite,
+            Icons.favorite_border,
             color: Colors.red,
           );
         else if (!isInteractive) {
@@ -41,10 +42,10 @@ class LikeButton extends StatelessWidget {
               Icons.favorite_border,
               color: Colors.black,
             ),
-            onTap: () => (!isInteractive || like == null)
+            onTap: () => (!isInteractive)
                 ? null
-                : Provider.dispatch<RootState>(context,
-                    AddLike(parentId: parentId, tileType: TileType.card)),
+                : Provider.dispatch<RootState>(
+                    context, AddLike(parentId: parentId, tileType: tileType)),
           );
         }
       },

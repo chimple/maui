@@ -32,10 +32,14 @@ class KnowledgeButton extends StatelessWidget {
                   color: Color(0xFF0E4476),
                   padding: EdgeInsets.all(8.0),
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                         new MaterialPageRoute(builder: (BuildContext context) {
-                      Provider.dispatch<RootState>(context,
-                          AddProgress(card: cardList[0], parentCardId: cardId));
+                      Provider.dispatch<RootState>(
+                          context,
+                          AddProgress(
+                              cardId: cardList[0].id,
+                              parentCardId: cardId,
+                              index: 1));
                       return QuizNavigator(
                         cardId: cardId,
                       );

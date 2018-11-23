@@ -22,6 +22,8 @@ class LoginScreen extends StatefulWidget {
   }
 }
 
+
+
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   List<User> _users;
@@ -83,14 +85,10 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   void dispose() {
     SystemChrome.setPreferredOrientations([]);
     _focusName.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -122,7 +120,6 @@ class _LoginScreenState extends State<LoginScreen>
 
     var size = media.size;
     var user = AppStateContainer.of(context).state.loggedInUser;
-    print("user detail ?::: $user");
     return (user != null)
         ? new WelcomeScreen()
         : new Scaffold(
@@ -339,8 +336,10 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tabSreen() async {
-    if (imagePathStore != '' && userName.trim().isNotEmpty && userName != null) {
-      var user = await new UserRepo().insertLocalUser(new User(
+    if (imagePathStore != '' &&
+        userName.trim().isNotEmpty &&
+        userName != null) {
+      user = await new UserRepo().insertLocalUser(new User(
           image: imagePathStore,
           currentLessonId: 1,
           name: userName,

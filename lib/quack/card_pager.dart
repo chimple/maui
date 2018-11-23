@@ -80,12 +80,16 @@ class CardPagerState extends State<CardPager> {
                   print('onPageChanged: $index');
                   if (index < cardList.length) {
                     Provider.dispatch<RootState>(
-                        context, FetchComments(cardList[index].id));
+                        context,
+                        FetchComments(
+                            parentId: cardList[index].id,
+                            tileType: TileType.card));
                     Provider.dispatch<RootState>(
                         context,
                         AddProgress(
-                            card: cardList[index],
-                            parentCardId: widget.cardId));
+                            cardId: cardList[index].id,
+                            parentCardId: widget.cardId,
+                            index: index));
                   }
                   setState(() => _currentPageIndex = index);
                   print("Current page index update - ${_currentPageIndex}");

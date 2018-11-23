@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/card_progress.dart';
@@ -6,10 +7,12 @@ import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/quack/user_activity.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 
@@ -39,20 +42,46 @@ class AddLike implements AsyncAction<RootState> {
         type: 0,
         user: user);
     likeRepo.insert(like, tileType);
-    state.cardMap[parentId].likes = (state.cardMap[parentId].likes ?? 0) + 1;
+    //TODO maybe update card in db also
+    switch (tileType) {
+      case TileType.card:
+        state.cardMap[parentId].likes =
+            (state.cardMap[parentId].likes ?? 0) + 1;
+        break;
+      case TileType.drawing:
+        final likeTile =
+            state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+        if (likeTile != null) likeTile.likes = (likeTile.likes ?? 0) + 1;
+        break;
+      case TileType.message:
+        final likeTile =
+            state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+        if (likeTile != null) likeTile.likes = (likeTile.likes ?? 0) + 1;
+        break;
+    }
 
-    final tiles = await tileRepo.getTilesByCardId(parentId);
-    if (tiles.length == 0) {
-      await tileRepo.insert(Tile(
+    var tile =
+        state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+    print('tile: $tile');
+    if (tile == null) {
+      tile = Tile(
           id: Uuid().v4(),
           cardId: parentId,
           content: '${user.name} liked this',
           type: TileType.card,
           userId: userId ?? state.user.id,
-          updatedAt: DateTime.now()));
+          updatedAt: DateTime.now(),
+          card: state.cardMap[parentId],
+          user: state.user); //TODO put real user
+      await tileRepo.insert(tile);
     }
 
-    if (userId == null)
+    final userActivity = state.activityMap[parentId] ?? UserActivity();
+    if (userId == null) {
+      userActivity.like = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userActivity', json.encode(state.activityMap));
+
       try {
         await p2p.addMessage(state.user.id, '0', 'like',
             '${tileType.index}*$parentId', true, '');
@@ -62,19 +91,19 @@ class AddLike implements AsyncAction<RootState> {
         print('Exception details:\n $e');
         print('Stack trace:\n $s');
       }
-
+    }
     return (RootState state) {
-      final likeMap = state.likeMap;
-      if (userId == null) likeMap[parentId] = like;
       return RootState(
           user: state.user,
           collectionMap: state.collectionMap,
           cardMap: state.cardMap,
-          likeMap: likeMap,
+          activityMap: userId != null ? state.activityMap : state.activityMap
+            ..[parentId] = userActivity,
           commentMap: state.commentMap,
           tiles: state.tiles,
-          templates: state.templates,
-          progressMap: state.progressMap);
+          drawings: state.drawings,
+          userMap: state.userMap,
+          templates: state.templates);
     };
   }
 }

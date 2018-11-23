@@ -24,6 +24,9 @@ class PostTile implements AsyncAction<RootState> {
     assert(tileRepo != null, 'tileRepo not injected');
 
     await tileRepo.insert(tile);
+    tile
+      ..card = state.cardMap[tile.cardId]
+      ..user = state.user;
 
     if (tile.userId == state.user?.id)
       try {
@@ -45,10 +48,11 @@ class PostTile implements AsyncAction<RootState> {
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        likeMap: state.likeMap,
         commentMap: state.commentMap,
-        tiles: state.tiles,
-        templates: state.templates,
-        progressMap: state.progressMap);
+        activityMap: state.activityMap,
+        tiles: state.tiles..insert(0, tile),
+        userMap: state.userMap,
+        drawings: state.drawings,
+        templates: state.templates);
   }
 }
