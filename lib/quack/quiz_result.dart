@@ -29,6 +29,7 @@ class QuizResult extends StatefulWidget {
 class QuizResultState extends State<QuizResult> {
   int _expandedPanel = -1;
   int _textpanel = 0;
+  String _animation = 'joy';
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +73,14 @@ class QuizResultState extends State<QuizResult> {
 
                           fit: BoxFit.scaleDown,
 
-                          animation: 'joy',
+                          animation: _animation,
 
                           mixSeconds: 0.0,
-
+                          completed: (String animationName) {
+                            setState(() {
+                              _animation = 'idle';
+                            });
+                          },
                           // paused: true,
                         ),
                       ),
