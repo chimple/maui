@@ -28,7 +28,7 @@ class LikeButton extends StatelessWidget {
       builder: (like) {
         if (like ?? false)
           return Icon(
-            Icons.favorite,
+            Icons.favorite_border,
             color: Colors.red,
           );
         else if (!isInteractive) {

@@ -35,7 +35,6 @@ class MauiApp extends StatelessWidget {
       ],
       theme: new ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.5),
       ),
       navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{

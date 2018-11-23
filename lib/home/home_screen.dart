@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                         childAspectRatio: aspectRatio),
                     delegate: SliverChildListDelegate(tiles
                         .map((t) => Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(16.0),
                             child: Material(
                                 elevation: 8.0,
                                 clipBehavior: Clip.antiAlias,
