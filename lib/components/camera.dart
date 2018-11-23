@@ -210,11 +210,16 @@ class _CameraScreenState extends State<CameraScreen> {
   void onTakenPicture() {
     takePicture().then((String bigFilePath) async {
       final bigImage = Img.decodeImage(new File(bigFilePath).readAsBytesSync());
-      new File(bigFilePath)..writeAsBytesSync(Img.encodePng(bigImage));
-      if (mounted) {
-        setState(() {
-          bigImagePath = bigFilePath;
-        });
+      int ht = bigImage.height;
+      int wd = bigImage.width;
+      int reducedHt = (ht * 0.1).toInt();
+      int reducedWd = (wd * 0.1).toInt();
+      final croppedImage = Img.copyCrop(bigImage, reducedHt, reducedWd, wd, ht);
+      new File(bigFilePath)..writeAsBytesSync(Img.encodePng(croppedImage));
+      if(mounted){
+          setState(() {
+                      bigImagePath = bigFilePath;
+                    });
         onTakePictureButtonPressed();
       }
     });
@@ -286,6 +291,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     // SystemChrome.setPreferredOrientations([]);
+    controller.dispose();
     super.dispose();
   }
 

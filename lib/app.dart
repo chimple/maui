@@ -39,8 +39,8 @@ class MauiApp extends StatelessWidget {
       ),
       navigatorObservers: <NavigatorObserver>[routeObserver],
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new SwitchScreen(),
-        '/login': (BuildContext context) => new LoginScreen(),
+        // '/': (BuildContext context) => new SwitchScreen(),
+        '/': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
