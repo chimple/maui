@@ -22,8 +22,7 @@ void main() async {
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());
   }
-  final initialState =
-      RootState(collectionMap: {}, cardMap: {}, progressMap: {});
+  final initialState = RootState(collectionMap: {}, cardMap: {});
   final store = Store<RootState>(initialState);
 
   store.add(CollectionMiddleware(

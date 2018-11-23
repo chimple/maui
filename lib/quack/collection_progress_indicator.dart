@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -14,17 +16,17 @@ class CollectionProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
       print(
-          "Collection_Progress_Indicator Layout Builder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");   
+          "Collection_Progress_Indicator Layout Builder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return Connect<RootState, double>(
-        convert: (state) => state.progressMap[card.id],
+        convert: (state) => state.activityMap[card.id]?.progress,
         where: (prev, next) => next != prev,
         builder: (progress) {
           return LinearPercentIndicator(
             width: constraints.maxWidth * 0.9805,
             lineHeight: constraints.maxWidth * 0.0743,
-            percent: progress ?? 0.0,
+            percent: min(progress ?? 0.0, 1.0),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor:  TinyColor(card.backgroundColor).darken(20).color,
+            progressColor: TinyColor(card.backgroundColor).darken(20).color,
             backgroundColor: Colors.white,
           );
         },

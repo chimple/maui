@@ -22,7 +22,7 @@ class StoryPage extends StatelessWidget {
             children: cards
                 .map((c) => Center(
                       child: SizedBox(
-                        height: 250.0,
+                        height: 300.0,
                         width: 160.0,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

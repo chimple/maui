@@ -84,7 +84,7 @@ class ActivityDrawingGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Connect<RootState, Tuple2<List<Tile>, List<CardExtra>>>(
-      convert: (state) => Tuple2(state.tiles, state.templates),
+      convert: (state) => Tuple2(state.drawings, state.templates),
       where: (prev, next) => next != prev,
       builder: (props) {
         print('activity_drawing_grid:build');

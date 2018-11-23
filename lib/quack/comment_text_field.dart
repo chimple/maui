@@ -44,50 +44,52 @@ class CommentTextFieldState extends State<CommentTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(
-        color: Colors.deepPurple,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(40.0), right: Radius.circular(40.0))),
-      ),
-      child: Row(children: <Widget>[
-        Container(
-            margin: new EdgeInsets.symmetric(horizontal: 4.0),
-            child: LikeButton(
-              parentId: widget.parentId,
-              tileType: widget.tileType,
-            )),
-        Flexible(
-          child: new TextField(
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            maxLength: null,
-            keyboardType: TextInputType.multiline,
-            controller: _textController,
-            focusNode: _focusNode,
-            onChanged: (String text) {
-              setState(() {
-                _isComposing = text.trim().isNotEmpty;
-              });
-            },
-            onSubmitted: (String text) => _handleSubmitted(context, text),
-            decoration:
-                new InputDecoration.collapsed(hintText: Loca().addAComment),
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.deepPurple),
+          borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(40.0), right: Radius.circular(40.0)),
         ),
-        Container(
-            margin: new EdgeInsets.symmetric(horizontal: 4.0),
-            child: IconButton(
+        child: Row(children: <Widget>[
+          Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: LikeButton(
+                parentId: widget.parentId,
+                tileType: widget.tileType,
+              )),
+          Flexible(
+            child: new TextField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              maxLength: null,
+              keyboardType: TextInputType.multiline,
+              controller: _textController,
+              focusNode: _focusNode,
+              onChanged: (String text) {
+                setState(() {
+                  _isComposing = text.trim().isNotEmpty;
+                });
+              },
+              onSubmitted: (String text) => _handleSubmitted(context, text),
+              decoration:
+                  new InputDecoration.collapsed(hintText: Loca().addAComment),
+            ),
+          ),
+          Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: IconButton(
 //              iconSize: 20.0,
-              color: Colors.white,
-              icon: new Icon(Icons.send),
-              onPressed: _isComposing
-                  ? () => _handleSubmitted(context, _textController.text)
-                  : null,
-            )),
-      ]),
+                color: Colors.white,
+                icon: new Icon(Icons.send),
+                onPressed: _isComposing
+                    ? () => _handleSubmitted(context, _textController.text)
+                    : null,
+              )),
+        ]),
+      ),
     );
   }
 
@@ -106,7 +108,7 @@ class CommentTextFieldState extends State<CommentTextField> {
               timeStamp: DateTime.now(),
               comment: text,
               user: AppStateContainer.of(context).state.loggedInUser),
-          tileType: TileType.card),
+          tileType: widget.tileType),
     );
     _focusNode.unfocus();
   }

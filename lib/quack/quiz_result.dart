@@ -29,6 +29,7 @@ class QuizResult extends StatefulWidget {
 class QuizResultState extends State<QuizResult> {
   int _expandedPanel = -1;
   int _textpanel = 0;
+  String _animation = 'joy';
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,9 @@ class QuizResultState extends State<QuizResult> {
 
                   padding: EdgeInsets.only(bottom: 20.0),
 
-                  height:Orientation.landscape == orientation ? media.size.height * .9:media.size.height *.55,
+                  height: Orientation.landscape == orientation
+                      ? media.size.height * .9
+                      : media.size.height * .55,
 
                   // margin: EdgeInsets.all(3.0),
 
@@ -70,10 +73,14 @@ class QuizResultState extends State<QuizResult> {
 
                           fit: BoxFit.scaleDown,
 
-                          animation: 'joy',
+                          animation: _animation,
 
                           mixSeconds: 0.0,
-
+                          completed: (String animationName) {
+                            setState(() {
+                              _animation = 'idle';
+                            });
+                          },
                           // paused: true,
                         ),
                       ),
@@ -117,6 +124,7 @@ class QuizResultState extends State<QuizResult> {
                             });
                           },
                           children: widget.quizzes
+                              .where((q) => q.type == CardType.question)
                               .map(
                                 (q) => ExpansionPanel(
                                       isExpanded: (_expandedPanel == index++)
@@ -127,8 +135,7 @@ class QuizResultState extends State<QuizResult> {
                                           Container(
                                               height: 100.0,
                                               child: Center(
-                                                  child: Text(
-                                                      q.title ?? ''))),
+                                                  child: Text(q.title ?? ''))),
                                       body: Container(
                                         color: Colors.blueAccent,
                                         child: SizedBox(

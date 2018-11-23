@@ -14,3 +14,4 @@ local.properties
 pubspec.lock
 pubspec.lock
 scripts/asb/
+.dart_tool/
