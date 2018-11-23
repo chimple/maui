@@ -29,16 +29,26 @@ class SaveDrawing implements AsyncAction<RootState> {
         type: TileType.drawing,
         content: json.encode(jsonMap),
         updatedAt: DateTime.now(),
-        userId: state.user.id);
+        userId: state.user.id,
+        card: state.cardMap[cardId],
+        user: state.user);
 
     final updatedTile = await tileRepo.upsert(tile);
-    final updatedTiles = state.drawings;
-    final index = updatedTiles.indexWhere((t) => t.id == tileId);
+    final updatedDrawings = state.drawings;
+    final index = updatedDrawings.indexWhere((t) => t.id == tileId);
     if (index >= 0) {
       print('save_drawing: saving index $index');
+      updatedDrawings[index] = updatedTile;
+    } else {
+      updatedDrawings.add(updatedTile);
+    }
+
+    final updatedTiles = state.tiles;
+    final tileIndex = updatedTiles.indexWhere((t) => t.id == tileId);
+    if (tileIndex >= 0) {
       updatedTiles[index] = updatedTile;
     } else {
-      updatedTiles.add(updatedTile);
+      updatedTiles.insert(0, updatedTile);
     }
 
     return (RootState state) => RootState(
@@ -47,7 +57,9 @@ class SaveDrawing implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         activityMap: state.activityMap,
         commentMap: state.commentMap,
-        drawings: updatedTiles,
+        tiles: updatedTiles,
+        userMap: state.userMap,
+        drawings: updatedDrawings,
         templates: state.templates);
   }
 }

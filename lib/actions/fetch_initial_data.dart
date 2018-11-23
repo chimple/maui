@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:maui/quack/user_activity.dart';
+import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/repos/user_repo.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
@@ -20,6 +22,8 @@ class FetchInitialData implements AsyncAction<RootState> {
   CollectionRepo collectionRepo;
   CardProgressRepo cardProgressRepo;
   LikeRepo likeRepo;
+  TileRepo tileRepo;
+  UserRepo userRepo;
 
   FetchInitialData(this.user);
 
@@ -28,6 +32,8 @@ class FetchInitialData implements AsyncAction<RootState> {
     assert(collectionRepo != null, 'collectionRepo not injected');
     assert(cardProgressRepo != null, 'cardProgressRepo not injected');
     assert(likeRepo != null, 'likeRepo not injected');
+    assert(tileRepo != null, 'tileRepo not injected');
+    assert(userRepo != null, 'userRepo not injected');
 
     final cardMap = Map<String, QuackCard>();
     final collectionMap = Map<String, List<String>>();
@@ -46,6 +52,8 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: collectionMap,
         progressMap: progressMap,
         likeMap: likeMap);
+
+    final tiles = await tileRepo.getTilesOtherThanDots();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userActivity = prefs.getString('userActivity');
     if (userActivity != null) {
@@ -53,12 +61,20 @@ class FetchInitialData implements AsyncAction<RootState> {
           key: (me) => me.key, value: (me) => UserActivity.fromJson(me.value));
     }
 
+    final userList = await userRepo.getRemoteUsers();
+    final botUser = await userRepo.getUser(User.botId);
+    userList.insert(0, botUser);
+    Map<User, int> userMap =
+        Map.fromIterable(userList, key: (u) => u, value: (u) => 0);
+
     return (RootState state) => RootState(
         user: user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
         activityMap: activityMap,
+        tiles: tiles,
         drawings: state.drawings,
+        userMap: userMap,
         templates: state.templates,
         commentMap: {});
   }

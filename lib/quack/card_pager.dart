@@ -80,7 +80,10 @@ class CardPagerState extends State<CardPager> {
                   print('onPageChanged: $index');
                   if (index < cardList.length) {
                     Provider.dispatch<RootState>(
-                        context, FetchComments(cardList[index].id));
+                        context,
+                        FetchComments(
+                            parentId: cardList[index].id,
+                            tileType: TileType.card));
                     Provider.dispatch<RootState>(
                         context,
                         AddProgress(

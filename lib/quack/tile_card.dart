@@ -1,12 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/social_summary.dart';
+import 'package:maui/quack/tile_detail.dart';
 
 class TileCard extends StatelessWidget {
   final Tile tile;
@@ -19,6 +23,7 @@ class TileCard extends StatelessWidget {
       case TileType.card:
         return _buildTile(
             context: context,
+            tile: tile,
             header: CardHeader(card: tile.card),
             title: tile.card.title,
             trailer: SocialSummary(
@@ -31,7 +36,11 @@ class TileCard extends StatelessWidget {
       case TileType.drawing:
         return _buildTile(
             context: context,
-            header: DrawingCard(tile: tile),
+            tile: tile,
+            header: DrawingCard(
+              tile: tile,
+              isInteractive: false,
+            ),
             title: tile.card.title,
             trailer: SocialSummary(
               parentId: tile.id,
@@ -43,6 +52,7 @@ class TileCard extends StatelessWidget {
       case TileType.message:
         return _buildTile(
             context: context,
+            tile: tile,
             title: tile.content,
             trailer: SocialSummary(
               parentId: tile.id,
@@ -58,24 +68,36 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildTile(
-      {BuildContext context, Widget header, String title, Widget trailer}) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        print(constraints);
-        final widgets = <Widget>[];
-        if (header != null) {
-          widgets.add(SizedBox(
-              height: constraints.maxHeight,
-              width: constraints.maxHeight,
-              child: header));
-        }
-        widgets.add(Expanded(
-            child: Column(
-          children: <Widget>[Expanded(child: Text(title)), trailer],
-        )));
-        return Row(
-            crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
+      {BuildContext context,
+      Tile tile,
+      Widget header,
+      String title,
+      Widget trailer}) {
+    return InkWell(
+      onTap: () {
+        Provider.dispatch<RootState>(
+            context, FetchComments(parentId: tile.id, tileType: tile.type));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => TileDetail(tile: tile)));
       },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          print(constraints);
+          final widgets = <Widget>[];
+          if (header != null) {
+            widgets.add(SizedBox(
+                height: constraints.maxHeight,
+                width: constraints.maxHeight,
+                child: header));
+          }
+          widgets.add(Expanded(
+              child: Column(
+            children: <Widget>[Expanded(child: Text(title)), trailer],
+          )));
+          return Row(
+              crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
+        },
+      ),
     );
 //    switch (tile.type) {
 //      case TileType.card:

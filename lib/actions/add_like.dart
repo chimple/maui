@@ -42,17 +42,38 @@ class AddLike implements AsyncAction<RootState> {
         type: 0,
         user: user);
     likeRepo.insert(like, tileType);
-    state.cardMap[parentId].likes = (state.cardMap[parentId].likes ?? 0) + 1;
+    //TODO maybe update card in db also
+    switch (tileType) {
+      case TileType.card:
+        state.cardMap[parentId].likes =
+            (state.cardMap[parentId].likes ?? 0) + 1;
+        break;
+      case TileType.drawing:
+        final likeTile =
+            state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+        if (likeTile != null) likeTile.likes = (likeTile.likes ?? 0) + 1;
+        break;
+      case TileType.message:
+        final likeTile =
+            state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+        if (likeTile != null) likeTile.likes = (likeTile.likes ?? 0) + 1;
+        break;
+    }
 
-    final tiles = await tileRepo.getTilesByCardId(parentId);
-    if (tiles.length == 0) {
-      await tileRepo.insert(Tile(
+    var tile =
+        state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+    print('tile: $tile');
+    if (tile == null) {
+      tile = Tile(
           id: Uuid().v4(),
           cardId: parentId,
           content: '${user.name} liked this',
           type: TileType.card,
           userId: userId ?? state.user.id,
-          updatedAt: DateTime.now()));
+          updatedAt: DateTime.now(),
+          card: state.cardMap[parentId],
+          user: state.user); //TODO put real user
+      await tileRepo.insert(tile);
     }
 
     final userActivity = state.activityMap[parentId] ?? UserActivity();
@@ -79,7 +100,9 @@ class AddLike implements AsyncAction<RootState> {
           activityMap: userId != null ? state.activityMap : state.activityMap
             ..[parentId] = userActivity,
           commentMap: state.commentMap,
+          tiles: state.tiles,
           drawings: state.drawings,
+          userMap: state.userMap,
           templates: state.templates);
     };
   }

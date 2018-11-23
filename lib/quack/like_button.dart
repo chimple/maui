@@ -44,8 +44,8 @@ class LikeButton extends StatelessWidget {
             ),
             onTap: () => (!isInteractive)
                 ? null
-                : Provider.dispatch<RootState>(context,
-                    AddLike(parentId: parentId, tileType: TileType.card)),
+                : Provider.dispatch<RootState>(
+                    context, AddLike(parentId: parentId, tileType: tileType)),
           );
         }
       },
