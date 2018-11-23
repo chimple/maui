@@ -7,6 +7,7 @@ import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/text_audio.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:path_provider/path_provider.dart';
 
 typedef void OnError(Exception exception);
@@ -93,18 +94,20 @@ class AudioTextBoldState extends State<AudioTextBold> {
   // }
 
   Future playaudio(String fileName) async {
-    fileName = fileName.toLowerCase();
     try {
-      final directory = await getApplicationDocumentsDirectory();
-      final path = directory.path;
-      final file = new File('$path/$fileName.m4a');
+      final file =
+          new File(AppStateContainer.of(context).extStorageDir + fileName);
       print('Playing ${file.path}');
       if (await file.exists()) {
         await audioPlayer.play(file.path, isLocal: true);
+        setState(() {
+          playerState = PlayerState.playing;
+        });
       } else {
-        await file.writeAsBytes(
-            (await rootBundle.load('assets/$fileName')).buffer.asUint8List());
-        await audioPlayer.play(file.path, isLocal: true);
+        print("file doesnt exist in storage");
+        // await file.writeAsBytes(
+        //     (await rootBundle.load('assets/$fileName')).buffer.asUint8List());
+        // await audioPlayer.play(file.path, isLocal: true);
       }
     } catch (e) {
       print('Failed playing $fileName: $e');
@@ -133,17 +136,17 @@ class AudioTextBoldState extends State<AudioTextBold> {
     setState(() => playerState = PlayerState.stopped);
   }
 
-  Future _loadFile() async {
-    final dir = await getExternalStorageDirectory();
-    final file = new File('${dir.path}/2.m4a');
+  // Future _loadFile() async {
+  //   final dir = await getExternalStorageDirectory();
+  //   final file = new File('${dir.path}/2.m4a');
 
-    // await file.writeAsBytes(bytes);
-    if (await file.exists())
-      setState(() {
-        localFilePath = file.path;
-      });
-    _playLocal();
-  }
+  //   // await file.writeAsBytes(bytes);
+  //   if (await file.exists())
+  //     setState(() {
+  //       localFilePath = file.path;
+  //     });
+  //   _playLocal();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,10 +155,6 @@ class AudioTextBoldState extends State<AudioTextBold> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // new Material(child: _buildPlayer()),
-            // localFilePath != null
-            //     ? new Text(localFilePath)
-            //     : new Container(),
             new Padding(
               padding: const EdgeInsets.all(8.0),
               child: new Row(
@@ -169,13 +168,7 @@ class AudioTextBoldState extends State<AudioTextBold> {
                         color: Colors.red,
                         size: 50,
                       ),
-
-                      // child: new Text('Play audio'),
-                    ): Container(),
-                    // new RaisedButton(
-                    //   onPressed: () => _playLocal(),
-                    //   child: new Text('play local'),
-                    // ),
+                    ) : Container(),
                   ]),
             ),
             widget.card.title == null
@@ -188,17 +181,11 @@ class AudioTextBoldState extends State<AudioTextBold> {
                       style: Theme.of(context).textTheme.subhead,
                     ),
                   ),
-
-            // isPlaying
-            //     ? TextAudio(
-            //         duration: durationText,
-            //         fulltext: firsttext,
-            //       )
-            //     : Text(firsttext),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: !isPlaying
-                  ? Text(widget.card.content ?? '')
+                  ? Text(widget.card.content ?? '',
+                  style: Theme.of(context).textTheme.body2)
                   : TextAudio(
                       audiofile: widget.card.contentAudio,
                       fulltext: widget.card.content ?? '',
@@ -208,16 +195,4 @@ class AudioTextBoldState extends State<AudioTextBold> {
           ]),
     );
   }
-
-  // Widget _buildPlayer() => new Container(
-  //     padding: new EdgeInsets.all(16.0),
-  //     child: new Column(mainAxisSize: MainAxisSize.min, children: [
-  //       new Row(mainAxisSize: MainAxisSize.min, children: [
-  //         new Text(
-  //             position != null
-  //                 ? "${positionText ?? ''} / ${durationText ?? ''}"
-  //                 : duration != null ? durationText : '',
-  //             style: new TextStyle(fontSize: 24.0))
-  //       ])
-  //     ]));
 }

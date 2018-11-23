@@ -57,6 +57,13 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   _initData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');
+    if (userId != null) {
+      User user = await UserRepo().getUser(userId);
+      await AppStateContainer.of(context).setLoggedInUser(user);
+      Navigator.of(context).pushReplacementNamed('/welcome');
+    }
     var users = await UserRepo().getLocalUsers();
 
     setState(() {
@@ -75,11 +82,6 @@ class _LoginScreenState extends State<LoginScreen>
     setState(() {
       _size = 500.0;
     });
-  }
-
-  @override
-  void didUpdateWidget(LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -117,8 +119,9 @@ class _LoginScreenState extends State<LoginScreen>
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
+    var user = AppStateContainer.of(context).state.loggedInUser;
     return (user != null)
-        ? new TabHome()
+        ? new WelcomeScreen()
         : new Scaffold(
             appBar: _isLoading
                 ? null
