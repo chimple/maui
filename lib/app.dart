@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/quack/bento.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/main_collection.dart';
 import 'package:maui/quack/story_page.dart';
@@ -41,7 +42,7 @@ class MauiApp extends StatelessWidget {
         // '/': (BuildContext context) => new SwitchScreen(),
         '/': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
-        '/tab': (BuildContext context) => new TabHome(),
+        '/tab': (BuildContext context) => new Bento(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),

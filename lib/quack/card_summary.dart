@@ -88,7 +88,7 @@ class CardSummary extends StatelessWidget {
         Material(
             elevation: 8.0,
             clipBehavior: Clip.antiAlias,
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
             child: stackHeader),
         desc,
       ],

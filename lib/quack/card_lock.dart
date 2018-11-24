@@ -88,7 +88,7 @@ class CardLockState extends State<CardLock> {
                   aspectRatio: 1.0,
                   child: Container(
                     constraints: BoxConstraints.expand(),
-                    color: Color(0x77ffffff),
+                    color: Color(0x88888888),
                   ),
                 ),
               )

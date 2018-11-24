@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     print(media);
-    final crossAxisCount = (media.size.width / 300.0).floor();
+    final crossAxisCount = (media.size.width / 400.0).floor();
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
     return CustomScrollView(
       slivers: <Widget>[
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   convert: (state) => state.collectionMap['story']
                       .map((cardId) => state.cardMap[cardId])
                       .toList(growable: false),
-                  where: (prev, next) => next != prev,
+                  where: (prev, next) => true,
                   builder: (cards) {
                     return Expanded(
                       flex: 1,
@@ -42,14 +42,14 @@ class HomeScreen extends StatelessWidget {
                 convert: (state) => state.collectionMap['Animals']
                     .map((cardId) => state.cardMap[cardId])
                     .toList(growable: false),
-                where: (prev, next) => next != prev,
+                where: (prev, next) => true,
                 builder: (cards) {
                   return Expanded(
                     flex: 1,
                     child: _buildBox(
                       context: context,
                       name: 'Topic',
-                      routeName: '/collections',
+                      routeName: '/topics',
                       child: CardSummary(
                         card: cards[0],
                       ),
@@ -61,14 +61,14 @@ class HomeScreen extends StatelessWidget {
                 convert: (state) => state.collectionMap['Occupations']
                     .map((cardId) => state.cardMap[cardId])
                     .toList(growable: false),
-                where: (prev, next) => next != prev,
+                where: (prev, next) => true,
                 builder: (cards) {
                   return Expanded(
                     flex: 1,
                     child: _buildBox(
                       context: context,
                       name: 'Topic',
-                      routeName: '/collections',
+                      routeName: '/topics',
                       child: CardSummary(
                         card: cards[0],
                       ),
@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
         ),
         Connect<RootState, List<Tile>>(
           convert: (state) => state.tiles,
-          where: (prev, next) => next != prev,
+          where: (prev, next) => true,
           nullable: true,
           builder: (tiles) {
             return tiles == null
@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                                 elevation: 8.0,
                                 clipBehavior: Clip.antiAlias,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                                    BorderRadius.all(Radius.circular(16.0)),
                                 child: TileCard(
                                   tile: t,
                                 ))))
@@ -124,12 +124,24 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              FlatButton(
-//                onPressed: () => Navigator.of(context).pushNamed(routeName),
-                child: Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.of(context).pushNamed(routeName),
+                  child: Text(
+                    'See All',
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
               ),
             ],
