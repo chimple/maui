@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
@@ -42,6 +44,27 @@ class DrawingDetail extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: CustomScrollView(slivers: <Widget>[
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundImage: FileImage(
+                            File(tile.user.image),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          tile.user.name,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 SliverToBoxAdapter(
                   child: DrawingCard(
                     tile: tile,
@@ -90,7 +113,31 @@ class PostDetail extends StatelessWidget {
       appBar: AppBar(title: Text('Post')),
       body: CustomScrollView(slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Text(tile.content),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  backgroundImage: FileImage(
+                    File(tile.user.image),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  tile.user.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
+            ],
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(tile.content),
+          ),
         ),
         CommentList(
           parentId: tile.id,

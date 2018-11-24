@@ -5,6 +5,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_summary.dart';
@@ -42,6 +43,7 @@ class TileCard extends StatelessWidget {
               isInteractive: false,
             ),
             title: tile.card.title,
+            user: tile.user,
             trailer: SocialSummary(
               parentId: tile.id,
               likes: tile.likes,
@@ -53,7 +55,9 @@ class TileCard extends StatelessWidget {
         return _buildTile(
             context: context,
             tile: tile,
+            header: Image.asset('assets/forest.png'),
             title: tile.content,
+            user: tile.user,
             trailer: SocialSummary(
               parentId: tile.id,
               likes: tile.likes,
@@ -72,7 +76,8 @@ class TileCard extends StatelessWidget {
       Tile tile,
       Widget header,
       String title,
-      Widget trailer}) {
+      Widget trailer,
+      User user}) {
     return InkWell(
       onTap: () {
         Provider.dispatch<RootState>(
@@ -84,62 +89,55 @@ class TileCard extends StatelessWidget {
         builder: (context, constraints) {
           print(constraints);
           final widgets = <Widget>[];
-          if (header != null) {
-            widgets.add(SizedBox(
-                height: constraints.maxHeight,
-                width: constraints.maxHeight,
-                child: header));
+          widgets.add(Stack(
+            children: <Widget>[
+              SizedBox(
+                  height: constraints.maxHeight,
+                  width: constraints.maxHeight,
+                  child: header),
+              Positioned(bottom: 0, left: 0, right: 0, child: trailer)
+            ],
+          ));
+          final columnWidgets = <Widget>[];
+          if (user != null) {
+            columnWidgets.add(Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundImage: FileImage(
+                      File(user.image),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
+                  child: Text(
+                    user.name,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              ],
+            ));
           }
+          columnWidgets.add(Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ));
           widgets.add(Expanded(
-              child: Column(
-            children: <Widget>[Expanded(child: Text(title)), trailer],
-          )));
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: columnWidgets,
+            ),
+          ));
           return Row(
               crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
         },
       ),
     );
-//    switch (tile.type) {
-//      case TileType.card:
-//        return Container(
-//          decoration: new BoxDecoration(
-//            borderRadius: new BorderRadius.circular(8.0),
-//            border: new Border.all(
-//              width: 1.0,
-//              color: Color(0xFFEF823F),
-//            ),
-//          ),
-////          constraints: BoxConstraints.tightFor(height: 120.0),
-//          child: CardSummary(
-//            card: tile.card,
-//            orientation: Orientation.landscape,
-//          ),
-//        );
-//        break;
-//      case TileType.drawing:
-//        return Container(
-//          constraints: BoxConstraints.tightFor(height: 120.0),
-//          child: DrawingCard(tile: tile),
-//        );
-//        break;
-//      case TileType.message:
-//        return Container(
-//          decoration: new BoxDecoration(
-//            borderRadius: new BorderRadius.circular(8.0),
-//            border: new Border.all(
-//              width: 1.0,
-//              color: Color(0xFFEF823F),
-//            ),
-//          ),
-//          child: Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: Text(
-//              tile.content,
-//              style: Theme.of(context).textTheme.title,
-//              overflow: TextOverflow.ellipsis,
-//            ),
-//          ),
-//        );
-//    }
   }
 }

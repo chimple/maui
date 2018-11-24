@@ -88,29 +88,11 @@ class CardLockState extends State<CardLock> {
                   aspectRatio: 1.0,
                   child: Container(
                     constraints: BoxConstraints.expand(),
-                    color: Color(0x77ffffff),
-                    alignment: Alignment.center,
-//                    color: Color(0x99999999),
-                    child: Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                      size: 48.0,
-                    ),
+                    color: Color(0x88888888),
                   ),
                 ),
               )
-            : AspectRatio(
-                aspectRatio: 1.0,
-                child: Container(
-                  constraints: BoxConstraints.expand(),
-                  child: Align(
-                    alignment: Alignment(0.0, 1.0),
-                    child: CollectionProgressIndicator(
-                      card: widget.card,
-                    ),
-                  ),
-                ),
-              );
+            : Container();
       },
       nullable: true,
     );

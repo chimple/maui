@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/friend_item.dart';
+import 'package:maui/screens/Page_Route.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/db/entity/user.dart';
@@ -39,7 +40,7 @@ class _FriendStripState extends State<FriendStrip> {
   @override
   Widget build(BuildContext context) {
     final user = AppStateContainer.of(context).state.loggedInUser;
-    var users = AppStateContainer.of(context).users;
+    var users = List.from(AppStateContainer.of(context).users);
     print('FriendListView.users $users');
     var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
@@ -51,23 +52,59 @@ class _FriendStripState extends State<FriendStrip> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: users.map((u) {
-        var notif = notifs.firstWhere((n) => n.userId == u.id,
-            orElse: () => Notif(userId: u.id, numNotifs: 0));
-        return FriendItem(
-            id: u.id,
-            name: u.name,
-            imageUrl: u.image,
-            color: u.color,
-            numNotifs: notif.numNotifs,
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute<Null>(
-                  builder: (BuildContext context) => new ChatScreen(
-                      myId: user.id, friend: u, friendImageUrl: u.image)));
-            });
-      }).toList(growable: false),
+    users.addAll([user, user, user, user]);
+    return Material(
+      elevation: 8.0,
+      color: Color(0xFFEF823F),
+      child: SafeArea(
+        child: SizedBox(
+          height: 80.0,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: users.map((u) {
+                    var notif = notifs.firstWhere((n) => n.userId == u.id,
+                        orElse: () => Notif(userId: u.id, numNotifs: 0));
+                    return SizedBox(
+                      width: 80.0,
+                      child: FriendItem(
+                          id: u.id,
+                          name: u.name,
+                          imageUrl: u.image,
+                          color: u.color,
+                          numNotifs: notif.numNotifs,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute<Null>(
+                                builder: (BuildContext context) =>
+                                    new ChatScreen(
+                                        myId: user.id,
+                                        friend: u,
+                                        friendImageUrl: u.image)));
+                          }),
+                    );
+                  }).toList(growable: false),
+                ),
+              ),
+              SizedBox(
+                width: 80.0,
+                child: FriendItem(
+                  replaceWithHoodie: false,
+                  id: user.id,
+                  name: user.name,
+                  imageUrl: user.image,
+                  color: user.color,
+                  numNotifs: user.points,
+                  onTap: () {
+                    Navigator.of(context).push(NewPageRoute());
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
