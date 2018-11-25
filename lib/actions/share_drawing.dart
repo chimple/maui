@@ -11,13 +11,13 @@ import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:uuid/uuid.dart';
 
-class SaveDrawing implements AsyncAction<RootState> {
+class ShareDrawing implements AsyncAction<RootState> {
   final String cardId;
   final Map<String, dynamic> jsonMap;
 
   TileRepo tileRepo;
 
-  SaveDrawing({this.cardId, this.jsonMap});
+  ShareDrawing({this.cardId, this.jsonMap});
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
@@ -37,6 +37,7 @@ class SaveDrawing implements AsyncAction<RootState> {
     final updatedDrawings = state.drawings;
     final index = updatedDrawings.indexWhere((t) => t.id == tileId);
     if (index >= 0) {
+      print('save_drawing: saving index $index');
       updatedDrawings[index] = updatedTile;
     } else {
       updatedDrawings.add(updatedTile);
