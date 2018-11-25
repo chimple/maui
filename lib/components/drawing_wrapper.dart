@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/post_tile.dart';
 import 'package:maui/actions/save_drawing.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/tile.dart';
@@ -35,6 +37,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
   Tile _drawing;
   Map<String, dynamic> _jsonMap;
   QuackCard _activity;
+  String tileId;
 
   @override
   void initState() {
@@ -69,16 +72,35 @@ class DrawingWrapperState extends State<DrawingWrapper> {
         child: new CircularProgressIndicator(),
       ));
     }
-    return Scaffold(
-      body: ActivityBoard(
-        json: _jsonMap,
-        template: widget.template,
-        title: _activity.title,
-        extStorageDir: AppStateContainer.of(context).extStorageDir,
-        saveCallback: ({Map<String, dynamic> jsonMap}) =>
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
+      child: Scaffold(
+        body: ActivityBoard(
+          json: _jsonMap,
+          template: widget.template,
+          title: _activity.title,
+          extStorageDir: AppStateContainer.of(context).extStorageDir,
+          saveCallback: ({Map<String, dynamic> jsonMap}) {
+            tileId = jsonMap['id'];
             Provider.dispatch<RootState>(context,
-                SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap)),
+                SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap));
+          },
+          backCallback: () {
+            print('backCallback: $_jsonMap');
+            if (tileId != null)
+              Provider.dispatch<RootState>(context, PostTile(tileId: tileId));
+            Navigator.of(context).pop();
+            print('backCallback: end');
+          },
+        ),
       ),
     );
+  }
+
+  Future<bool> _onWillPop(BuildContext context) {
+    final completer = Completer<bool>();
+    completer.complete(true);
+    Provider.dispatch<RootState>(context, PostTile(tileId: _jsonMap['id']));
+    return completer.future;
   }
 }

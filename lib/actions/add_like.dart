@@ -60,21 +60,21 @@ class AddLike implements AsyncAction<RootState> {
         break;
     }
 
-    var tile =
-        state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
-    print('tile: $tile');
-    if (tile == null) {
-      tile = Tile(
-          id: Uuid().v4(),
-          cardId: parentId,
-          content: '${user.name} liked this',
-          type: TileType.card,
-          userId: userId ?? state.user.id,
-          updatedAt: DateTime.now(),
-          card: state.cardMap[parentId],
-          user: state.user); //TODO put real user
-      await tileRepo.insert(tile);
-    }
+//    var tile =
+//        state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
+//    print('tile: $tile');
+//    if (tile == null) {
+//      tile = Tile(
+//          id: Uuid().v4(),
+//          cardId: parentId,
+//          content: '${user.name} liked this',
+//          type: TileType.card,
+//          userId: userId ?? state.user.id,
+//          updatedAt: DateTime.now(),
+//          card: state.cardMap[parentId],
+//          user: state.user); //TODO put real user
+//      await tileRepo.insert(tile);
+//    }
 
     final userActivity = state.activityMap[parentId] ?? UserActivity();
     if (userId == null) {
