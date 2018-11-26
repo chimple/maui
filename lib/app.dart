@@ -10,6 +10,7 @@ import 'package:maui/quack/story_page.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
+import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/switch_screen.dart';
 import 'package:maui/screens/tab_home.dart';
@@ -47,6 +48,7 @@ class MauiApp extends StatelessWidget {
         '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),
         '/topics': (BuildContext context) => MainCollection(),
+        '/games': (BuildContext context) => GameListView()
       },
       onGenerateRoute: _getRoute,
     );
