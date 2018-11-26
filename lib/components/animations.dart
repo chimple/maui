@@ -17,6 +17,7 @@ class AnimationsState extends State<Animations> {
   int count;
   PageController _pageController;
   int _currentPageIndex;
+  bool paused = false;
 
   @override
   void initState() {
@@ -30,6 +31,15 @@ class AnimationsState extends State<Animations> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _complete(bool mounted) {
+   if (mounted) {
+      setState(() {
+        paused = true;
+        _animationName = null;
+      });
+   }
   }
 
   @override
@@ -71,11 +81,9 @@ class AnimationsState extends State<Animations> {
                               fit: BoxFit.scaleDown,
                               animation: '${emotions[count]}',
                               mixSeconds: 0.2,
+                              paused: paused,
                               completed: (String animationName) {
-                                    setState(() {
-                                      // Return to idle.
-                                      _animationName = "idle";
-                                    });
+                                    _complete(mounted);
                                   },
                             ),
                           ),
@@ -84,6 +92,7 @@ class AnimationsState extends State<Animations> {
                         print('OnPageChanged Emotion: ${emotions[0 + index]}');
                         setState(() {
                           count = 0 + index;
+                          paused = false;
                         });
                       }),
                   Align(
