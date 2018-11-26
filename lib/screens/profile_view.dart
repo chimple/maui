@@ -117,23 +117,39 @@ class ProfileViewState extends State<ProfileView>
           Container(
             width: media.size.width,
             height: media.size.height * .05,
-            color: Colors.white,
-            child: Center(
-              child: new Text(
-                "${user.name}",
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+            color: Colors.transparent,
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: new Text(
+                    "${user.name}",
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+                Center(
+                  child: new Text(
+                    "${user.points}",
+                    maxLines: 1,
+                    textDirection: TextDirection.ltr,
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
       Positioned(
         right: 1.0,
-        bottom: -1.0,
+        bottom: 20.0,
         child: Center(
           child: new IconButton(
             // color: Colors.transparent,
@@ -165,9 +181,21 @@ class ProfileViewState extends State<ProfileView>
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            new Container(
+              alignment: new FractionalOffset(0.0, 1.0),
+              child: new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  iconSize: 40.0,
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+            new SizedBox(height: 50.0),
             stackHeader,
-            new SizedBox(height: 45.0),
+            new SizedBox(height: 40.0),
             stackText,
+            new SizedBox(height: 30.0),
             getTabBar(),
             getTabBarPages(context),
             setflag == true
@@ -178,11 +206,13 @@ class ProfileViewState extends State<ProfileView>
                           // focusNode: _focusName,
                           autocorrect: false,
                           autofocus: true,
+                          maxLength: 20,
                           textInputAction: TextInputAction.none,
                           onSubmitted: _submit(userName),
                           onChanged: _onTyping,
                           controller: _textController,
                           decoration: new InputDecoration(
+                            counterText: '',
                             labelStyle: TextStyle(color: Colors.red),
                             isDense: true,
                             border: const OutlineInputBorder(
@@ -196,18 +226,22 @@ class ProfileViewState extends State<ProfileView>
                           ),
                         ),
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.redAccent,
-                        radius: 30,
-                        child: IconButton(
-                          color: Colors.black,
-                          icon: new Icon(
-                            Icons.send,
-                            color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom:25.0),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.redAccent,
+                          radius: 30,
+                          child: IconButton(
+                            color: Colors.black,
+                            icon: new Icon(
+                              Icons.send,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              editbutton(user);
+                            },
                           ),
-                          onPressed: () {
-                            editbutton(user);
-                          },
+                          
                         ),
                       ),
                     ],
