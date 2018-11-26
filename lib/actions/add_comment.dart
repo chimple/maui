@@ -45,20 +45,19 @@ class AddComment implements AsyncAction<RootState> {
         break;
     }
 
-//    var tile = state.tiles
-//        .firstWhere((t) => t.id == comment.parentId, orElse: () => null);
-//    if (tile == null) {
-//      tile = Tile(
-//          id: Uuid().v4(),
-//          cardId: comment.parentId,
-//          content: '${comment.user.name} commented on this',
-//          type: TileType.card,
-//          userId: comment.userId,
-//          updatedAt: DateTime.now(),
-//          card: state.cardMap[comment.parentId],
-//          user: state.user); //TODO put real user
-//      await tileRepo.insert(tile);
-//    }
+    var tiles = await tileRepo.getTilesByCardId(comment.parentId);
+    var tile;
+    if (tiles.length == 0) {
+      tile = Tile(
+          id: Uuid().v4(),
+          cardId: comment.parentId,
+          type: TileType.card,
+          userId: comment.userId,
+          updatedAt: DateTime.now(),
+          card: state.cardMap[comment.parentId],
+          user: state.user); //TODO put real user
+      await tileRepo.insert(tile);
+    }
     if (comment.userId == state.user.id)
       try {
         await p2p.addMessage(
@@ -81,7 +80,7 @@ class AddComment implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         activityMap: state.activityMap,
         commentMap: state.commentMap..[comment.parentId].insert(0, comment),
-        tiles: state.tiles,
+        tiles: tile == null ? state.tiles : (state.tiles..insert(0, tile)),
         drawings: state.drawings,
         userMap: state.userMap,
         templates: state.templates);

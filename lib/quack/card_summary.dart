@@ -19,12 +19,14 @@ class CardSummary extends StatelessWidget {
   final int index;
   final String parentCardId;
   final Orientation orientation;
+  final bool showSocialSummary;
 
   CardSummary(
       {Key key,
       @required this.card,
       this.index,
       this.parentCardId,
+      this.showSocialSummary = true,
       this.orientation = Orientation.portrait})
       : super(key: key);
 
