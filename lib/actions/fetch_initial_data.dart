@@ -52,7 +52,13 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: collectionMap,
         progressMap: progressMap,
         likeMap: likeMap);
-
+    await fetchCollection(
+        name: 'open',
+        cardMap: cardMap,
+        collectionMap: collectionMap,
+        progressMap: progressMap,
+        likeMap: likeMap);
+    print('open ${collectionMap['open']}');
     final tiles = await tileRepo.getTilesOtherThanDots();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userActivity = prefs.getString('userActivity');

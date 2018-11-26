@@ -76,6 +76,26 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
+              Connect<RootState, List<QuackCard>>(
+                convert: (state) => state.collectionMap['open']
+                    .map((cardId) => state.cardMap[cardId])
+                    .toList(growable: false),
+                where: (prev, next) => true,
+                builder: (cards) {
+                  print('open $cards');
+                  return Expanded(
+                    flex: 1,
+                    child: _buildBox(
+                      context: context,
+                      name: 'Discuss',
+                      routeName: '/topics',
+                      child: CardSummary(
+                        card: cards[0],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
