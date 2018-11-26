@@ -26,7 +26,6 @@ class Bento extends StatelessWidget {
         backgroundColor: Color(0xffeeeeee),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -42,6 +41,7 @@ class Bento extends StatelessWidget {
                     );
                   }),
             ),
+            Padding(padding: EdgeInsets.all(2.0),),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
