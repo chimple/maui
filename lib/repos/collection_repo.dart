@@ -25,6 +25,10 @@ class CollectionRepo {
     return await collectionDao.getKnowledgeAndQuizCardsInCollection(id);
   }
 
+  Future<int> getKnowledgeAndQuizCardCountInCollection(String id) async {
+    return await collectionDao.getKnowledgeAndQuizCardCountInCollection(id);
+  }
+
   Future<List<Quiz>> getQuizzesInCollection(String id) async {
     final quizCards =
         await collectionDao.getKnowledgeAndQuizCardsInCollection(id);

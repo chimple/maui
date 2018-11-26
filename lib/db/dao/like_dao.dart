@@ -9,7 +9,8 @@ import 'package:maui/app_database.dart';
 class LikeDao {
   static const Map<TileType, String> tableMap = {
     TileType.card: 'cardLike',
-    TileType.drawing: 'tileLike'
+    TileType.drawing: 'tileLike',
+    TileType.message: 'tileLike'
   };
 
   Future<List<Like>> getLikesByParentId(String parentId, TileType tileType,

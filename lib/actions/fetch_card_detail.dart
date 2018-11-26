@@ -80,9 +80,10 @@ class FetchCardDetail implements AsyncAction<RootState> {
         user: state.user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
-        progressMap: state.progressMap..addAll(progressMap),
-        likeMap: state.likeMap..addAll(likeMap),
-        tiles: drawings,
+        activityMap: state.activityMap,
+        tiles: state.tiles,
+        drawings: drawings,
+        userMap: state.userMap,
         templates: templates,
         commentMap: state.commentMap..[cardId] = comments);
   }

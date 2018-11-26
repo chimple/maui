@@ -108,7 +108,7 @@ class CommentTextFieldState extends State<CommentTextField> {
               timeStamp: DateTime.now(),
               comment: text,
               user: AppStateContainer.of(context).state.loggedInUser),
-          tileType: TileType.card),
+          tileType: widget.tileType),
     );
     _focusNode.unfocus();
   }

@@ -8,43 +8,13 @@ import 'package:maui/quack/tile_card.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/app.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  HomeScreenState createState() {
-    return new HomeScreenState();
-  }
-}
-
-class HomeScreenState extends State<HomeScreen> with RouteAware {
-  bool _isLoading = true;
-  List<Tile> _tiles;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  void _initData() async {
-    _tiles = await TileRepo().getTilesOtherThanDots();
-    print('tiles:$_tiles');
-    setState(() => _isLoading = false);
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     print(media);
-    final crossAxisCount = (media.size.width / 300.0).floor();
+    final crossAxisCount = (media.size.width / 400.0).floor();
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
-    if (_isLoading) {
-      return Center(
-          child: new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      ));
-    }
     return CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
@@ -55,7 +25,7 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
                   convert: (state) => state.collectionMap['story']
                       .map((cardId) => state.cardMap[cardId])
                       .toList(growable: false),
-                  where: (prev, next) => next != prev,
+                  where: (prev, next) => true,
                   builder: (cards) {
                     return Expanded(
                       flex: 1,
@@ -72,14 +42,14 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
                 convert: (state) => state.collectionMap['Animals']
                     .map((cardId) => state.cardMap[cardId])
                     .toList(growable: false),
-                where: (prev, next) => next != prev,
+                where: (prev, next) => true,
                 builder: (cards) {
                   return Expanded(
                     flex: 1,
                     child: _buildBox(
                       context: context,
                       name: 'Topic',
-                      routeName: '/collections',
+                      routeName: '/topics',
                       child: CardSummary(
                         card: cards[0],
                       ),
@@ -91,14 +61,14 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
                 convert: (state) => state.collectionMap['Occupations']
                     .map((cardId) => state.cardMap[cardId])
                     .toList(growable: false),
-                where: (prev, next) => next != prev,
+                where: (prev, next) => true,
                 builder: (cards) {
                   return Expanded(
                     flex: 1,
                     child: _buildBox(
                       context: context,
                       name: 'Topic',
-                      routeName: '/collections',
+                      routeName: '/topics',
                       child: CardSummary(
                         card: cards[0],
                       ),
@@ -109,21 +79,39 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
             ],
           ),
         ),
-        SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount, childAspectRatio: aspectRatio),
-          delegate: SliverChildListDelegate(_tiles
-              .map((t) => Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Material(
-                      elevation: 8.0,
-                      clipBehavior: Clip.antiAlias,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      child: TileCard(
-                        tile: t,
-                      ))))
-              .toList(growable: false)),
-        ),
+        Connect<RootState, List<Tile>>(
+          convert: (state) => state.tiles,
+          where: (prev, next) => true,
+          nullable: true,
+          builder: (tiles) {
+            return tiles == null
+                ? SliverToBoxAdapter(
+                    child: Center(
+                        child: new SizedBox(
+                      width: 20.0,
+                      height: 20.0,
+                      child: new CircularProgressIndicator(),
+                    )),
+                  )
+                : SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
+                        childAspectRatio: aspectRatio),
+                    delegate: SliverChildListDelegate(tiles
+                        .map((t) => Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Material(
+                                elevation: 8.0,
+                                clipBehavior: Clip.antiAlias,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16.0)),
+                                child: TileCard(
+                                  tile: t,
+                                ))))
+                        .toList(growable: false)),
+                  );
+          },
+        )
       ],
     );
   }
@@ -136,12 +124,24 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
         children: <Widget>[
           Row(
             children: <Widget>[
-              FlatButton(
-//                onPressed: () => Navigator.of(context).pushNamed(routeName),
-                child: Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.of(context).pushNamed(routeName),
+                  child: Text(
+                    'See All',
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
               ),
             ],
@@ -150,21 +150,5 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
         ],
       ),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context));
-  }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
-
-  void didPopNext() {
-    _initData();
   }
 }
