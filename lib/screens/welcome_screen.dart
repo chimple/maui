@@ -48,18 +48,21 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                               child: new AspectRatio(
                                 aspectRatio:
                                     size.height > size.width ? 1.5 : 3.8,
-                                child: new NimaActor(
-                                  "assets/quack",
-                                  alignment: Alignment.center,
-                                  fit: BoxFit.scaleDown,
-                                  animation: _animationName,
-                                  mixSeconds: 0.2,
-                                  completed: (String animationName) {
-                                    setState(() {
-                                      // Return to idle.
-                                      _animationName = "idle";
-                                    });
-                                  },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
+                                  child: new NimaActor(
+                                    "assets/quack",
+                                    alignment: Alignment.center,
+                                    fit: BoxFit.scaleDown,
+                                    animation: _animationName,
+                                    mixSeconds: 0.2,
+                                    completed: (String animationName) {
+                                      setState(() {
+                                        // Return to idle.
+                                        _animationName = "idle";
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
