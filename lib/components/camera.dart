@@ -4,15 +4,20 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maui/screens/login_screen.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:maui/loca.dart';
 import 'package:image/image.dart' as Img;
 
 String imagePathStore;
 String userNameStore;
+String bigImagePath, tempFilePath;
 
 class CameraScreen extends StatefulWidget {
+  CameraScreen(this.editImage);
+  bool editImage = false;
   @override
   _CameraScreenState createState() {
     return new _CameraScreenState();
@@ -24,16 +29,23 @@ class _CameraScreenState extends State<CameraScreen> {
   CameraController controller;
   String imagePath = '';
   String _deviceId;
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool onTakePicture = true, onTakePicture1 = false;
   Orientation ornt;
   int mode = -1;
+
+  @override
+  void didUpdateWidget(CameraScreen oldwidget) {
+    super.didUpdateWidget(oldwidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
+    var user = AppStateContainer.of(context).state.loggedInUser;
 
+    print("image path checking wether its working or not... $imagePath");
     return Scaffold(
         backgroundColor: Colors.black87,
         key: _scaffoldKey,
@@ -46,7 +58,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         quarterTurns: 1, child: _cameraPreviewWidget()),
                   )
                 : Container(
-                    child: imagePath != ''
+                    child: bigImagePath != ''
                         ? Center(
                             child: onTakePicture1
                                 ? null
@@ -55,7 +67,7 @@ class _CameraScreenState extends State<CameraScreen> {
             Container(
                 color: Colors.black87,
                 height: 120.0,
-                child: Center(child: _captureControlRowWidget())),
+                child: Center(child: _captureControlRowWidget(user))),
           ],
         ));
   }
@@ -85,7 +97,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   /// Display the control bar with buttons to take pictures and record videos.
-  Widget _captureControlRowWidget() {
+  Widget _captureControlRowWidget(User user) {
     if (onTakePicture)
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,14 +184,13 @@ class _CameraScreenState extends State<CameraScreen> {
                     color: Colors.black54,
                     iconSize: 30.0,
                     onPressed: () {
+                      if (widget.editImage == true) {
+                        print("object is fine ${widget.editImage}");
+                        _changeState(user);
+                      }
                       imagePathStore = imagePath;
+
                       Navigator.of(context).pop();
-                      // Navigator.pushReplacementNamed(context, '/login_screen');
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                      // );
-                      //Navigator.of(context).pop();
                     },
                     icon: Icon(Icons.done),
                   ),
@@ -195,6 +206,56 @@ class _CameraScreenState extends State<CameraScreen> {
     _scaffoldKey.currentState
         .showSnackBar(new SnackBar(content: new Text(message)));
   }
+
+  // void onTakenPicture() {
+  //   SystemChrome.setPreferredOrientations([]);
+  //     setState(() {
+  //     onTakePicture1 = true;
+  //     onTakePicture = false;
+  //   });
+  //   takePicture().then((String bigFilePath) async {
+  //     String filePath;
+  //     final bigImage = Img.decodeImage(new File(bigFilePath).readAsBytesSync());
+  //     // int ht = bigImage.height;
+  //     // int wd = bigImage.width;
+  //     // int reducedHt = ((ht - wd)/2).toInt();
+  //     // int reducedWd = 0;
+  //     // print("Values of Reduced height and Width - $reducedHt.........$reducedWd");
+  //     // final croppedImage = bigImage.width > bigImage.height
+  //     //     ? Img.copyCrop(
+  //     //         bigImage,
+  //     //         ((bigImage.height - bigImage.width)/2).toInt(),
+  //     //         ((bigImage.height - bigImage.width)/2).toInt(),
+  //     //         bigImage.height,
+  //     //         bigImage.width)
+  //     //     : Img.copyCrop(
+  //     //         bigImage,
+  //     //         ((bigImage.height - bigImage.width)/2).toInt(),
+  //     //         ((bigImage.height - bigImage.width)/2).toInt(),
+  //     //         bigImage.width,
+  //     //         bigImage.height);
+  //     new File(bigFilePath)..writeAsBytesSync(Img.encodePng(bigImage));
+      
+  //     if (mounted) {
+  //       setState(() {
+  //         bigImagePath = bigFilePath;
+  //         imagePath = bigImagePath;
+  //         onTakePicture = false;
+  //         onTakePicture1 = false;
+  //       });
+  //       onTakePictureButtonPressed();
+  //       // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
+  //       // final thumbnail = Img.copyResize(bigImage, 64);
+
+  //       // // // Save the thumbnail as a PNG.
+  //       // new File(imagePath)..writeAsBytesSync(Img.encodePng(thumbnail));
+  //       //  setState(() {
+  //       //     // imagePath = bigFilePath;
+  //       //     imagePathStore = imagePath;            
+  //       //   });
+  //     }
+  //   });
+  // }
 
   void onTakePictureButtonPressed() {
     SystemChrome.setPreferredOrientations([]);
@@ -262,6 +323,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([]);
+    controller.dispose();
     super.dispose();
   }
 
@@ -291,6 +353,14 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {});
     }
     print("contloafasfsa ${controller.value.aspectRatio}");
+  }
+
+  void _changeState(User user) async {
+    if (imagePathStore != user.image && user.image != null) {
+      var user1 = user;
+      user1.image = imagePathStore;
+      UserRepo().update(user1);
+    }
   }
 }
 

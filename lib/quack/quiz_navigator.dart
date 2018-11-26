@@ -1,7 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_progress.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
+import 'package:maui/quack/knowledge_detail.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_result.dart';
 import 'package:maui/quack/quiz_selection.dart';
@@ -38,7 +43,8 @@ class QuizNavigatorState extends State<QuizNavigator> {
 
   void _initData() async {
     _quizzes = await CollectionRepo()
-        .getCardsInCollectionByType(widget.cardId, CardType.question);
+        .getKnowledgeAndQuizCardsInCollection(widget.cardId, CardType.question);
+    if (_quizzes.first?.type == CardType.knowledge) mode = NavigatorMode.result;
     setState(() => _isLoading = false);
   }
 
@@ -51,58 +57,72 @@ class QuizNavigatorState extends State<QuizNavigator> {
         child: new CircularProgressIndicator(),
       );
     }
-    return Scaffold(
-      body: _currentPageIndex >= _quizzes.length
-          ? QuizResult(
-              quizzes: _quizzes,
-              quizItemMap: _quizItemMap,
-              answersMap: _answersMap,
-              startChoicesMap: _startChoicesMap,
-              endChoicesMap: _endChoicesMap,
-            )
-          : Navigator(
-              onGenerateRoute: (RouteSettings settings) => MaterialPageRoute(
-                    builder: (BuildContext context) => Column(
-                          children: <Widget>[
-                            Expanded(
-                              child: QuizCardDetail(
-                                card: _quizzes[_currentPageIndex],
-                                answers:
-                                    _answersMap[_quizzes[_currentPageIndex].id],
-                                startChoices: _startChoicesMap[
-                                    _quizzes[_currentPageIndex].id],
-                                endChoices: _endChoicesMap[
-                                    _quizzes[_currentPageIndex].id],
-                                parentCardId: widget.cardId,
-                                canProceed: (
-                                    {List<QuizItem> quizItems,
-                                    List<QuizItem> answers,
-                                    List<QuizItem> startChoices,
-                                    List<QuizItem> endChoices}) {
-                                  _quizItemMap[_quizzes[_currentPageIndex].id] =
-                                      quizItems;
-                                  _answersMap[_quizzes[_currentPageIndex].id] =
-                                      answers;
-                                  _startChoicesMap[_quizzes[_currentPageIndex]
-                                      .id] = startChoices;
-                                  _endChoicesMap[_quizzes[_currentPageIndex]
-                                      .id] = endChoices;
-                                  setState(() {
-                                    mode = NavigatorMode.checkable;
-                                  });
-                                },
-                                resultMode: mode == NavigatorMode.result,
+    return _currentPageIndex >= _quizzes.length
+        ? Scaffold(
+            body: QuizResult(
+            quizzes: _quizzes,
+            quizItemMap: _quizItemMap,
+            answersMap: _answersMap,
+            startChoicesMap: _startChoicesMap,
+            endChoicesMap: _endChoicesMap,
+          ))
+        : Navigator(
+            onGenerateRoute: (RouteSettings settings) => CupertinoPageRoute(
+                  builder: (BuildContext context) {
+                    final card = _quizzes[_currentPageIndex];
+                    return Scaffold(
+                      body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Expanded(
+                            child: card.type == CardType.knowledge
+                                ? KnowledgeDetail(
+                                    card: card,
+                                    parentCardId: widget.cardId,
+                                  )
+                                : QuizCardDetail(
+                                    card: card,
+                                    answers: _answersMap[card.id],
+                                    startChoices: _startChoicesMap[card.id],
+                                    endChoices: _endChoicesMap[card.id],
+                                    parentCardId: widget.cardId,
+                                    canProceed: (
+                                        {List<QuizItem> quizItems,
+                                        List<QuizItem> answers,
+                                        List<QuizItem> startChoices,
+                                        List<QuizItem> endChoices}) {
+                                      _quizItemMap[card.id] = quizItems;
+                                      _answersMap[card.id] = answers;
+                                      _startChoicesMap[card.id] = startChoices;
+                                      _endChoicesMap[card.id] = endChoices;
+                                      setState(() {
+                                        mode = NavigatorMode.checkable;
+                                      });
+                                    },
+                                    resultMode: mode == NavigatorMode.result,
+                                  ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      const Radius.circular(32.0))),
+                              color: Color(0xFF0E4476),
+                              padding: EdgeInsets.all(8.0),
+                              onPressed: _onPressed(context),
+                              child: Text(
+                                mode == NavigatorMode.result ? 'Next' : 'Check',
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.chevron_right),
-                              onPressed: _onPressed(context),
-                            )
-                          ],
-                        ),
-                  ),
-            ),
-    );
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+          );
   }
 
   Function _onPressed(BuildContext context) {
@@ -117,8 +137,18 @@ class QuizNavigatorState extends State<QuizNavigator> {
         return () {
           setState(() {
             _currentPageIndex++;
+            mode = _currentPageIndex < _quizzes.length &&
+                    _quizzes[_currentPageIndex].type == CardType.knowledge
+                ? NavigatorMode.result
+                : NavigatorMode.disabled;
           });
-          mode = NavigatorMode.disabled;
+          Provider.dispatch<RootState>(
+              context,
+              AddProgress(
+                  cardId: _quizzes[_currentPageIndex].id,
+                  parentCardId: widget.cardId,
+                  index: _currentPageIndex + 1));
+
           Navigator.of(context).pushReplacementNamed('/current_quiz');
         };
     }

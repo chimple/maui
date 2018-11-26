@@ -14,12 +14,22 @@ class QuizWelcome extends StatefulWidget {
 }
 
 class QuizWelcomeState extends State<QuizWelcome> {
+  String _animation = 'joy';
+  bool paused = false;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
+    void _complete() {
+      setState(() {
+        paused = true;
+        _animation = null;
+      });
+    }
+
     return new Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,13 +37,16 @@ class QuizWelcomeState extends State<QuizWelcome> {
         Container(
           height: size.height * 0.69,
           width: size.width * 0.9,
-          child: new NimaActor(
-            "assets/quack",
-            alignment: Alignment.center,
-            fit: BoxFit.scaleDown,
-            animation: 'joy',
-            mixSeconds: 0.2,
-          ),
+          child: AspectRatio(
+              aspectRatio: 2.0,
+              child: new NimaActor("assets/quack",
+                  alignment: Alignment.center,
+                  paused: paused,
+                  fit: BoxFit.scaleDown,
+                  animation: _animation,
+                  mixSeconds: 0.2, completed: (String animtionName) {
+                _complete();
+              })),
         ),
         Center(
           child: Container(
@@ -48,7 +61,15 @@ class QuizWelcomeState extends State<QuizWelcome> {
             width: size.width * 0.4,
             child: FlatButton(
               color: Colors.amber,
-              child: Text('Quiz', style: new TextStyle(fontSize: size.height > size.width ? size.height * 0.06 : size.height * 0.1, fontWeight: FontWeight.bold,),),
+              child: Text(
+                'Quiz',
+                style: new TextStyle(
+                  fontSize: size.height > size.width
+                      ? size.height * 0.06
+                      : size.height * 0.1,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () =>
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) => QuizNavigator(

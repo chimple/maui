@@ -10,28 +10,33 @@ class StoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    return Connect<RootState, List<QuackCard>>(
-      convert: (state) => state.collectionMap['story']
-          .map((cardId) => state.cardMap[cardId])
-          .toList(growable: false),
-      where: (prev, next) => next != prev,
-      builder: (cards) {
-        return GridView.count(
-            crossAxisCount: (media.size.width / 210.0).ceil(),
-            childAspectRatio: 0.67,
-            children: cards
-                .map((c) => Center(
-                      child: SizedBox(
-                        height: 250.0,
-                        width: 160.0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CardSummary(card: c),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Stories'),
+      ),
+      body: Connect<RootState, List<QuackCard>>(
+        convert: (state) => state.collectionMap['story']
+            .map((cardId) => state.cardMap[cardId])
+            .toList(growable: false),
+        where: (prev, next) => next != prev,
+        builder: (cards) {
+          return GridView.count(
+              crossAxisCount: (media.size.width / 210.0).ceil(),
+              childAspectRatio: 0.75,
+              children: cards
+                  .map((c) => Center(
+                        child: SizedBox(
+                          height: 240.0,
+                          width: 160.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CardSummary(card: c),
+                          ),
                         ),
-                      ),
-                    ))
-                .toList(growable: false));
-      },
+                      ))
+                  .toList(growable: false));
+        },
+      ),
     );
   }
 }

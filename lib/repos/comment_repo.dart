@@ -26,6 +26,9 @@ class CommentRepo {
       case TileType.drawing:
         await TileRepo().incrementComments(tileComment.parentId, 1);
         break;
+      case TileType.message:
+        await TileRepo().incrementComments(tileComment.parentId, 1);
+        break;
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/comment_card.dart';
+import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/repos/comment_repo.dart';
 
 class CommentList extends StatelessWidget {
@@ -25,10 +26,21 @@ class CommentList extends StatelessWidget {
         print('CommentList:builder: $comments');
         return SliverList(
           delegate: SliverChildBuilderDelegate(
-              (context, index) => CommentCard(
-                    comment: comments[index],
-                  ),
-              childCount: comments?.length ?? 0),
+              (context, index) => index == 0
+                  ? Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CommentTextField(
+                        parentId: parentId,
+                        tileType: tileType,
+                      ),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CommentCard(
+                        comment: comments[index - 1],
+                      ),
+                    ),
+              childCount: (comments?.length ?? 0) + 1),
         );
       },
       nullable: true,

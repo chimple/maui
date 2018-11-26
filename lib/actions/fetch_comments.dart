@@ -16,26 +16,29 @@ import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 
 class FetchComments implements AsyncAction<RootState> {
-  final String cardId;
+  final String parentId;
+  final TileType tileType;
+
   CommentRepo commentRepo;
 
-  FetchComments(this.cardId);
+  FetchComments({this.parentId, this.tileType});
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
     assert(commentRepo != null, 'commentRepo not injected');
 
     final comments =
-        await commentRepo.getCommentsByParentId(cardId, TileType.card);
+        await commentRepo.getCommentsByParentId(parentId, tileType);
 
     return (RootState state) => RootState(
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
-        progressMap: state.progressMap,
-        likeMap: state.likeMap,
+        activityMap: state.activityMap,
         tiles: state.tiles,
+        drawings: state.drawings,
+        userMap: state.userMap,
         templates: state.templates,
-        commentMap: state.commentMap..[cardId] = comments);
+        commentMap: state.commentMap..[parentId] = comments);
   }
 }

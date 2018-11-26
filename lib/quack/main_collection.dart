@@ -12,41 +12,46 @@ class MainCollection extends StatelessWidget {
   Widget build(BuildContext context) {
     print('mainCollection: build');
     final media = MediaQuery.of(context);
-    return Connect<RootState, List<QuackCard>>(
-      convert: (state) => state.collectionMap['main']
-          .map((cardId) => state.cardMap[cardId])
-          .toList(growable: false),
-      where: (prev, next) => next != prev,
-      builder: (cards) {
-        List<Widget> widgets = [];
-        cards.forEach((c) {
-          widgets.add(SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                c.title,
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.title,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Topics'),
+      ),
+      body: Connect<RootState, List<QuackCard>>(
+        convert: (state) => state.collectionMap['main']
+            .map((cardId) => state.cardMap[cardId])
+            .toList(growable: false),
+        where: (prev, next) => next != prev,
+        builder: (cards) {
+          List<Widget> widgets = [];
+          cards.forEach((c) {
+            widgets.add(SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  c.title,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.title,
+                ),
               ),
-            ),
-          ));
-          widgets.add(SliverToBoxAdapter(
-            child: CollectionGrid(
-              cardId: c.id,
-              cardType: CardType.concept,
-            ),
-          ));
-          widgets.add(SliverToBoxAdapter(
-            child: Divider(),
-          ));
-        });
-        return cards == null
-            ? Container()
-            : CustomScrollView(
-                primary: true,
+            ));
+            widgets.add(SliverToBoxAdapter(
+              child: CollectionGrid(
+                cardId: c.id,
+                cardType: CardType.concept,
+              ),
+            ));
+            widgets.add(SliverToBoxAdapter(
+              child: Divider(),
+            ));
+          });
+          return cards == null
+              ? Container()
+              : CustomScrollView(
+                  primary: true,
 //                itemExtent: media.size.width / 2.0,
-                slivers: widgets);
-      },
+                  slivers: widgets);
+        },
+      ),
     );
   }
 }

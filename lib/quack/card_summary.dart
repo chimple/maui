@@ -52,13 +52,19 @@ class CardSummary extends StatelessWidget {
       ),
     );
 
-    final header = Material(
-        elevation: 8.0,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        child: widget);
     final stackChildren = <Widget>[
-      header,
+      widget,
+      Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: SocialSummary(
+          parentId: card.id,
+          likes: card.likes,
+          comments: card.comments,
+          tileType: TileType.card,
+        ),
+      )
     ];
     if (card.type == CardType.concept) {
       stackChildren.add(CardLock(
@@ -68,7 +74,6 @@ class CardSummary extends StatelessWidget {
     }
     final stackHeader = Stack(
       children: stackChildren,
-      overflow: Overflow.visible,
     );
     final desc = Padding(
       padding: EdgeInsets.all(8.0),
@@ -80,12 +85,12 @@ class CardSummary extends StatelessWidget {
     );
     return Column(
       children: <Widget>[
-        stackHeader,
+        Material(
+            elevation: 8.0,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+            child: stackHeader),
         desc,
-        SocialSummary(
-          card: card,
-          tileType: TileType.card,
-        )
       ],
     );
   }
