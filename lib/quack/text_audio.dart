@@ -54,10 +54,7 @@ class TextAudioState extends State<TextAudio> {
       text: new TextSpan(
         // Note: Styles for TextSpans must be explicitly defined.
         // Child text spans will inherit styles from parent
-        style: new TextStyle(
-          // fontSize: 15.0,
-          color: Colors.black,
-        ),
+        style: Theme.of(context).textTheme.body2,
         children: <TextSpan>[
           new TextSpan(text: start),
           new TextSpan(

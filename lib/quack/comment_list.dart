@@ -27,12 +27,18 @@ class CommentList extends StatelessWidget {
         return SliverList(
           delegate: SliverChildBuilderDelegate(
               (context, index) => index == 0
-                  ? CommentTextField(
-                      parentId: parentId,
-                      tileType: tileType,
+                  ? Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CommentTextField(
+                        parentId: parentId,
+                        tileType: tileType,
+                      ),
                     )
-                  : CommentCard(
-                      comment: comments[index - 1],
+                  : Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CommentCard(
+                        comment: comments[index - 1],
+                      ),
                     ),
               childCount: (comments?.length ?? 0) + 1),
         );

@@ -9,7 +9,8 @@ import 'package:maui/app_database.dart';
 class CommentDao {
   static const Map<TileType, String> tableMap = {
     TileType.card: 'cardComment',
-    TileType.drawing: 'tileComment'
+    TileType.drawing: 'tileComment',
+    TileType.message: 'tileComment'
   };
 
   Future<List<Comment>> getCommentsByParentId(
@@ -24,7 +25,7 @@ ${Comment.table}.${Comment.parentIdCol} = ?
 AND ${Comment.table}.${Comment.userIdCol} = ${User.table}.${User.idCol}
 ''',
       whereArgs: [parentId],
-      orderBy: "${Comment.timeStampCol}",
+      orderBy: "${Comment.timeStampCol} DESC",
     );
     return maps.map((el) => new Comment.fromMap(el)).toList(growable: true);
   }

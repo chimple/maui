@@ -28,7 +28,9 @@ class CardLockState extends State<CardLock> {
   void _goToCardDetail(BuildContext context) {
     Provider.dispatch<RootState>(context, FetchCardDetail(widget.card.id));
     Provider.dispatch<RootState>(
-        context, AddProgress(card: widget.card, parentCardId: widget.card.id));
+        context,
+        AddProgress(
+            cardId: widget.card.id, parentCardId: widget.card.id, index: 0));
 
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => CardDetail(
@@ -59,7 +61,7 @@ class CardLockState extends State<CardLock> {
   Widget build(BuildContext context) {
     initialPoints = AppStateContainer.of(context).state.loggedInUser.points;
     return Connect<RootState, double>(
-      convert: (state) => state.progressMap[widget.card.id],
+      convert: (state) => state.activityMap[widget.card.id]?.progress,
       where: (prev, next) => next != prev,
       builder: (progress) {
         return progress == null
@@ -86,29 +88,11 @@ class CardLockState extends State<CardLock> {
                   aspectRatio: 1.0,
                   child: Container(
                     constraints: BoxConstraints.expand(),
-                    color: Color(0x77ffffff),
-                    alignment: Alignment.center,
-//                    color: Color(0x99999999),
-                    child: Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                      size: 48.0,
-                    ),
+                    color: Color(0x88888888),
                   ),
                 ),
               )
-            : AspectRatio(
-                aspectRatio: 1.0,
-                child: Container(
-                  constraints: BoxConstraints.expand(),
-                  child: Align(
-                    alignment: Alignment(0.0, 1.0),
-                    child: CollectionProgressIndicator(
-                      card: widget.card,
-                    ),
-                  ),
-                ),
-              );
+            : Container();
       },
       nullable: true,
     );

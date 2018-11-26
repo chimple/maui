@@ -16,7 +16,7 @@ class UserProgress extends StatelessWidget {
         convert: (state) => state.cardMap.values
             .where((c) =>
                 c.type == CardType.concept &&
-                (state.progressMap[c.id] ?? 0.0) > 0.0)
+                (state.activityMap[c.id]?.progress ?? 0.0) > 0.0)
             .toList(growable: false),
         where: (prev, next) => next != prev,
         builder: (cards) {

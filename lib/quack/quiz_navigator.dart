@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_progress.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/knowledge_detail.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
@@ -139,6 +142,13 @@ class QuizNavigatorState extends State<QuizNavigator> {
                 ? NavigatorMode.result
                 : NavigatorMode.disabled;
           });
+          Provider.dispatch<RootState>(
+              context,
+              AddProgress(
+                  cardId: _quizzes[_currentPageIndex].id,
+                  parentCardId: widget.cardId,
+                  index: _currentPageIndex + 1));
+
           Navigator.of(context).pushReplacementNamed('/current_quiz');
         };
     }

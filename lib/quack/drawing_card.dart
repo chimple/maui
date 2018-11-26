@@ -12,21 +12,25 @@ import 'package:tahiti/paper.dart';
 
 class DrawingCard extends StatelessWidget {
   final Tile tile;
+  final bool isInteractive;
 
-  const DrawingCard({Key key, this.tile}) : super(key: key);
+  const DrawingCard({Key key, this.tile, this.isInteractive = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print('drawing_card:build: $tile');
     return RaisedButton(
       padding: EdgeInsets.zero,
-      onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-            return DrawingWrapper(
-              activityId: tile.cardId,
-              drawingId: tile.id,
-            );
-          })),
+      onPressed: isInteractive
+          ? () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (BuildContext context) {
+                return DrawingWrapper(
+                  activityId: tile.cardId,
+                  drawingId: tile.id,
+                );
+              }))
+          : null,
       child: ScopedModel<ActivityModel>(
         model: ActivityModel(
             extStorageDir: AppStateContainer.of(context).extStorageDir,

@@ -30,8 +30,14 @@ class PostCommentsState extends State<PostComments> {
         type: TileType.message);
 
     Provider.dispatch<RootState>(context, PostTile(tile: tile));
-    Navigator.push(context, MaterialPageRoute(builder: (context) => TabHome()));
     _textController.clear();
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 
   @override
