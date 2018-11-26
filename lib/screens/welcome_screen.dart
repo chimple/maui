@@ -9,17 +9,15 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class WelcomeScreenState extends State<WelcomeScreen> {
-  bool delayed;
   String _animationName = "hello";
+  bool paused = false;
 
-  void initState() {
-    super.initState();
-    new Future.delayed(const Duration(milliseconds: 6200), () {
-      Navigator.of(context).pushReplacementNamed('/tab');
-      setState(() {
-        delayed = true;
-      });
+  void _complete() {
+    setState(() {
+      paused = true;
+      _animationName = null;
     });
+    Navigator.of(context).pushReplacementNamed('/tab');
   }
 
   @override
@@ -27,46 +25,32 @@ class WelcomeScreenState extends State<WelcomeScreen> {
     MediaQueryData media = MediaQuery.of(context);
 
     var size = media.size;
-
-    // TODO: implement build
-    return (delayed == true)
-        ? new TabHome()
-        : new Scaffold(
-            body: new Container(
-                decoration: new BoxDecoration(
-                  color: const Color(0xFF0E4476),
-                ),
-                child: new Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: <Widget>[
-                      new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Align(
-                              alignment: AlignmentDirectional.center,
-                              child: new AspectRatio(
-                                aspectRatio:
-                                    size.height > size.width ? 1.5 : 3.8,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
-                                  child: new NimaActor(
-                                    "assets/quack",
-                                    alignment: Alignment.center,
-                                    fit: BoxFit.scaleDown,
-                                    animation: _animationName,
-                                    mixSeconds: 0.2,
-                                    completed: (String animationName) {
-                                      setState(() {
-                                        // Return to idle.
-                                        _animationName = "idle";
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ])
-                    ])));
+    return Scaffold(
+        body: new Container(
+            decoration: new BoxDecoration(
+              color: const Color(0xFF0E4476),
+            ),
+            child: new Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: <Widget>[
+                  new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Align(
+                          alignment: AlignmentDirectional.center,
+                          child: new AspectRatio(
+                            aspectRatio: size.height > size.width ? 1.5 : 3.8,
+                            child: new NimaActor("assets/quack",
+                                paused: paused,
+                                alignment: Alignment.center,
+                                fit: BoxFit.scaleDown,
+                                animation: _animationName,
+                                // mixSeconds: 0.2,
+                                completed: (_) => _complete()),
+                          ),
+                        ),
+                      ])
+                ])));
   }
 }

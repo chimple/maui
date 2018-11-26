@@ -14,6 +14,7 @@ types = {
 	'many': 4,
 	'multi': 4,
 	'match': 5,
+	'open': 6,
 	'connection': 9,
 	'choice': 100,
 	'option': 100,
@@ -100,6 +101,9 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 			elif type_data == 5:
 				option_value = 'pair'
 				type_data = 0
+			elif type_data == 6:
+				option_value = 'open'
+				type_data = 0
 			elif type_data == 2:
 				option_value = colors[random.randint(0, len(colors)-1)]
 			if(type_data <= 4):
@@ -114,6 +118,8 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				extra = -1
 				topics.append(topic)
 			elif type_data <= 9:
+				if topic == '':
+					topic = sheet.title
 				collection_sql += f"INSERT INTO `collection` (id, serial, cardId) VALUES ({esc(topic)}, {card_number}, {esc(card)});\n"
 				card_number += 1
 				extra = -1
