@@ -14,27 +14,34 @@ import 'package:maui/repos/p2p.dart' as p2p;
 
 class PostTile implements AsyncAction<RootState> {
   final Tile tile;
+  final String tileId;
 
   TileRepo tileRepo;
 
-  PostTile({this.tile});
+  PostTile({this.tileId, this.tile});
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
     assert(tileRepo != null, 'tileRepo not injected');
+    Tile pTile;
 
-    await tileRepo.insert(tile);
-    tile
-      ..card = state.cardMap[tile.cardId]
-      ..user = state.user;
+    if (tileId != null) {
+      pTile = await tileRepo.getTile(tileId);
+    } else {
+      await tileRepo.upsert(tile);
+      tile
+        ..card = state.cardMap[tile.cardId]
+        ..user = state.user;
+      pTile = tile;
+    }
 
-    if (tile.userId == state.user?.id)
+    if (pTile.userId == state.user?.id)
       try {
         await p2p.addMessage(
             state.user.id,
             '0',
             'tile',
-            '${tile.id}*${tile.type.index}*${tile.cardId}*${tile.content}',
+            '${pTile.id}*${pTile.type.index}*${pTile.cardId}*${pTile.content}',
             true,
             '');
       } on PlatformException {
@@ -50,7 +57,7 @@ class PostTile implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         commentMap: state.commentMap,
         activityMap: state.activityMap,
-        tiles: state.tiles..insert(0, tile),
+        tiles: tile != null ? (state.tiles..insert(0, tile)) : state.tiles,
         userMap: state.userMap,
         drawings: state.drawings,
         templates: state.templates);

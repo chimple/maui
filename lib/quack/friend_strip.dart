@@ -52,7 +52,6 @@ class _FriendStripState extends State<FriendStrip> {
         child: new CircularProgressIndicator(),
       ));
     }
-    users.addAll([user, user, user, user]);
     return Material(
       elevation: 8.0,
       color: Color(0xFFEF823F),
