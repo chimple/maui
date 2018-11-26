@@ -13,22 +13,33 @@ class Animations extends StatefulWidget {
 
 class AnimationsState extends State<Animations> {
   List<String> emotions = ["happy", "joy", "hello", "sad", "bored", "welcome with hello"];
-  String emotion;
+  String emotion, _animationName;
   int count;
   PageController _pageController;
   int _currentPageIndex;
+  bool paused = false;
 
   @override
   void initState() {
     count = 0;
     _pageController = PageController(initialPage: 0);
     _currentPageIndex = 0;
+    _animationName = emotions[0];
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _complete(bool mounted) {
+   if (mounted) {
+      setState(() {
+        paused = true;
+        _animationName = null;
+      });
+   }
   }
 
   @override
@@ -70,6 +81,10 @@ class AnimationsState extends State<Animations> {
                               fit: BoxFit.scaleDown,
                               animation: '${emotions[count]}',
                               mixSeconds: 0.2,
+                              paused: paused,
+                              completed: (String animationName) {
+                                    _complete(mounted);
+                                  },
                             ),
                           ),
                       onPageChanged: (index) {
@@ -77,6 +92,7 @@ class AnimationsState extends State<Animations> {
                         print('OnPageChanged Emotion: ${emotions[0 + index]}');
                         setState(() {
                           count = 0 + index;
+                          paused = false;
                         });
                       }),
                   Align(

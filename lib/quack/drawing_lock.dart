@@ -26,6 +26,8 @@ class DrawingLock extends StatefulWidget {
 
 class DrawingLockState extends State<DrawingLock> {
   int initialPoints;
+  bool shouldPushPage = false;
+
   void _goToDrawing(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => DrawingWrapper(
@@ -34,21 +36,26 @@ class DrawingLockState extends State<DrawingLock> {
             )));
   }
 
+  void onCompleteNima() {
+    if (!shouldPushPage)
+      Navigator.of(context).pop();
+    else
+      _goToDrawing(context);
+  }
+
   void onPressed() {
+    shouldPushPage = true;
     Navigator.of(context).pop();
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return DialogContent(
               onPressed: onPressed,
-              initialPoints: initialPoints + 1,
+              initialPoints: initialPoints - 1,
+              onCompleteNima: onCompleteNima,
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
-    new Future.delayed(const Duration(seconds: 4), () {
-      _goToDrawing(context);
-    });
-
     Provider.dispatch<RootState>(context, DeductPoints(points: 1));
   }
 
@@ -64,6 +71,7 @@ class DrawingLockState extends State<DrawingLock> {
                       return DialogContent(
                           onPressed: onPressed,
                           initialPoints: initialPoints,
+                          onCompleteNima: onCompleteNima,
                           shouldDisplayNima: true);
                     },
                     barrierDismissible: false)
@@ -93,132 +101,144 @@ class DrawingLockState extends State<DrawingLock> {
   }
 }
 
-class DialogContent extends StatelessWidget {
+class DialogContent extends StatefulWidget {
   final VoidCallback onPressed;
-  final bool shouldDisplayNima;
+  final VoidCallback onCompleteNima;
+  bool shouldDisplayNima;
   final int initialPoints;
   DialogContent(
-      {Key key, this.onPressed, this.shouldDisplayNima, this.initialPoints})
+      {Key key,
+      this.onPressed,
+      this.shouldDisplayNima = false,
+      this.initialPoints,
+      this.onCompleteNima})
       : super(key: key);
   @override
+  State createState() {
+    return new DialogContentState();
+  }
+}
+
+class DialogContentState extends State<DialogContent> {
+  String _animation;
+  bool paused = false;
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.shouldDisplayNima)
+      _animation = widget.initialPoints > 2 ? 'happy' : 'sad';
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
-    return Connect<RootState, int>(
-        convert: (state) => state.user.points,
-        where: (prev, next) {
-          return next != prev;
-        },
-        builder: (points) {
-          if (initialPoints < 3) {
-            new Future.delayed(const Duration(seconds: 4), () {
-              Navigator.of(context).pop();
-            });
-          }
-          return new Center(
-            child: Material(
-              type: MaterialType.transparency,
-              child: new Container(
-                height: size.height * 0.3,
-                width: size.width * 0.7,
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: new BorderRadius.circular(25.0),
-                ),
-                child: Container(
-                  child: new Column(
-                    children: <Widget>[
-                      Container(
-                        decoration: new BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: Colors.blue,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: new Radius.circular(20.0),
-                              topRight: new Radius.circular(20.0)),
-                        ),
-                        height: 60.0,
-                        width: size.width * 0.7,
-                        child: Center(
-                          child: new Text(
-                            'Your Points-$points',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      shouldDisplayNima
-                          ? Container(
-                              height: size.height * 0.3 - 90,
-                              width: (size.width * 0.7) * 0.5,
-                              child: Center(
-                                child: AspectRatio(
-                                  aspectRatio: 0.5,
-                                  child: Container(
-                                    height: size.height * 0.25 - 90,
-                                    width: (size.width * 0.7) * 0.5,
-                                    child: new NimaActor(
-                                      "assets/quack",
-                                      alignment: Alignment.center,
-                                      fit: BoxFit.scaleDown,
-                                      animation:
-                                          initialPoints > 3 ? 'happy' : 'sad',
-                                      mixSeconds: 0.02,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              height: size.height * 0.3 - 75,
-                              width: (size.width * 0.7) * 0.5,
-                              child: Center(
-                                child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Center(
-                                        child: new Text(
-                                      "Cost is - 3",
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    Container(
-                                        // margin: EdgeInsets.only(top: 80.0),
-                                        width: ((size.width * 0.7) * 0.5) / 1.8,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            color: Colors.blue),
-                                        child: new FlatButton(
-                                          onPressed: onPressed,
-                                          child: Center(
-                                            child: Text(
-                                              "Buy",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                              ),
-                            )
-                    ],
+
+    void _complete() {
+      setState(() {
+        paused = true;
+        _animation = null;
+      });
+    }
+
+    return new Center(
+      child: Material(
+        type: MaterialType.transparency,
+        child: new Container(
+          height: size.height * 0.3,
+          width: size.width * 0.7,
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            borderRadius: new BorderRadius.circular(25.0),
+          ),
+          child: Container(
+            child: new Column(
+              children: <Widget>[
+                Container(
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.blue,
+                    borderRadius: new BorderRadius.only(
+                        topLeft: new Radius.circular(20.0),
+                        topRight: new Radius.circular(20.0)),
+                  ),
+                  height: 60.0,
+                  width: size.width * 0.7,
+                  child: Center(
+                    child: new Text(
+                      'Your Points-${widget.initialPoints}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
-              ),
+                widget.shouldDisplayNima
+                    ? Container(
+                        height: size.height * 0.3 - 90,
+                        width: (size.width * 0.7) * 0.5,
+                        child: Center(
+                          child: AspectRatio(
+                            aspectRatio: 0.5,
+                            child: Container(
+                                height: size.height * 0.25 - 90,
+                                width: (size.width * 0.7) * 0.5,
+                                child: new NimaActor("assets/quack",
+                                    alignment: Alignment.center,
+                                    paused: paused,
+                                    fit: BoxFit.scaleDown,
+                                    animation: _animation,
+                                    mixSeconds: 0.2,
+                                    completed: (String animtionName) {
+                                  widget.onCompleteNima();
+                                  _complete();
+                                })),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        height: size.height * 0.3 - 75,
+                        width: (size.width * 0.7) * 0.5,
+                        child: Center(
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Center(
+                                  child: new Text(
+                                "Cost is - 3",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                              Container(
+                                  // margin: EdgeInsets.only(top: 80.0),
+                                  width: ((size.width * 0.7) * 0.5) / 1.8,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      color: Colors.blue),
+                                  child: new FlatButton(
+                                    onPressed: widget.onPressed,
+                                    child: Center(
+                                      child: Text(
+                                        "Buy",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      )
+              ],
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 }

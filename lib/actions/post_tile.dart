@@ -35,7 +35,7 @@ class PostTile implements AsyncAction<RootState> {
       pTile = tile;
     }
 
-    if (pTile.userId == state.user?.id)
+    if (pTile.userId == state.user?.id && pTile.content.length < 12000)
       try {
         await p2p.addMessage(
             state.user.id,
