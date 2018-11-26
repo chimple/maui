@@ -25,7 +25,9 @@ class TileCard extends StatelessWidget {
         return _buildTile(
             context: context,
             tile: tile,
-            header: CardHeader(card: tile.card),
+            header: CardHeader(
+              card: tile.card,
+            ),
             title: tile.card.title,
             trailer: SocialSummary(
               parentId: tile.cardId,

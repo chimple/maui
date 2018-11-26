@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_comment.dart';
 import 'package:maui/actions/post_tile.dart';
+import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
@@ -70,15 +72,17 @@ class QuizOpenState extends State<QuizOpen> {
     setState(() {
       _isComposing = false;
     });
-    final tile = Tile(
-        id: Uuid().v4(),
-        userId: AppStateContainer.of(context).state.loggedInUser.id,
-        cardId: widget.quiz.id,
-        content: _textController.text,
-        updatedAt: DateTime.now(),
-        type: TileType.message);
-
-    Provider.dispatch<RootState>(context, PostTile(tile: tile));
+    Provider.dispatch<RootState>(
+        context,
+        AddComment(
+            comment: Comment(
+                id: Uuid().v4(),
+                parentId: widget.quiz.id,
+                userId: AppStateContainer.of(context).state.loggedInUser.id,
+                timeStamp: DateTime.now(),
+                comment: text,
+                user: AppStateContainer.of(context).state.loggedInUser),
+            tileType: TileType.card));
     widget.canProceed();
   }
 }

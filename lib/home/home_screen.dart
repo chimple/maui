@@ -91,6 +91,7 @@ class HomeScreen extends StatelessWidget {
                       routeName: '/topics',
                       child: CardSummary(
                         card: cards[0],
+                        parentCardId: 'open',
                       ),
                     ),
                   );
