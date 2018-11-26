@@ -5,6 +5,7 @@ import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/header_app_bar.dart';
+import 'package:maui/quack/quiz_open.dart';
 import 'package:maui/quack/quiz_selection.dart';
 import 'package:maui/repos/card_repo.dart';
 
@@ -127,15 +128,20 @@ class QuizCardDetailState extends State<QuizCardDetail> {
                     child: new CircularProgressIndicator(),
                   ),
                 )
-              : QuizSelection(
-                  quiz: _quiz,
-                  quizItems: _quizItems,
-                  answers: widget.answers,
-                  startChoices: widget.startChoices,
-                  endChoices: widget.endChoices,
-                  canProceed: widget.canProceed,
-                  resultMode: widget.resultMode,
-                ),
+              : _quiz.type == QuizType.open
+                  ? QuizOpen(
+                      quiz: _quiz,
+                      canProceed: widget.canProceed,
+                    )
+                  : QuizSelection(
+                      quiz: _quiz,
+                      quizItems: _quizItems,
+                      answers: widget.answers,
+                      startChoices: widget.startChoices,
+                      endChoices: widget.endChoices,
+                      canProceed: widget.canProceed,
+                      resultMode: widget.resultMode,
+                    ),
         )
       ],
     );
