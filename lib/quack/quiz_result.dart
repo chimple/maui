@@ -30,6 +30,14 @@ class QuizResultState extends State<QuizResult> {
   int _expandedPanel = -1;
   int _textpanel = 0;
   String _animation = 'joy';
+  bool paused = false;
+
+  void _complete() {
+    setState(() {
+      paused = true;
+      _animation = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +76,12 @@ class QuizResultState extends State<QuizResult> {
                         scale: .85,
                         child: new NimaActor(
                           "assets/quack",
-
                           alignment: Alignment.center,
-
+                          paused: paused,
                           fit: BoxFit.scaleDown,
-
                           animation: _animation,
-
                           mixSeconds: 0.0,
-                          completed: (String animationName) {
-                            setState(() {
-                              _animation = 'idle';
-                            });
-                          },
-                          // paused: true,
+                          completed: (_) => _complete(),
                         ),
                       ),
                       Align(
