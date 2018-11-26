@@ -37,7 +37,6 @@ class SaveDrawing implements AsyncAction<RootState> {
     final updatedDrawings = state.drawings;
     final index = updatedDrawings.indexWhere((t) => t.id == tileId);
     if (index >= 0) {
-      print('save_drawing: saving index $index');
       updatedDrawings[index] = updatedTile;
     } else {
       updatedDrawings.add(updatedTile);

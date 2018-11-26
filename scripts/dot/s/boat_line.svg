@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{opacity:0;}
+</style>
+<g>
+	<path class="st0" d="M240.2,239.2c7.5,41.6,50.5,79.3,53.1,81.5C237.6,278.1,93.8,331,93.8,331C80,296.7,104.2,241,124,207.5
+		l-0.4-0.4c16-27,38.5-52.1,60.2-72.8c0,0,0,0,0.2,0c29.2-28,56.6-47.8,64.3-53.1l0.6,3.2c-7.7,24.5-11.8,48.3-13.2,70.8l0,0
+		c-2.4,31.6,0.4,60,4.3,83.7L240.2,239.2z"/>
+	<path class="st0" d="M250.3,80c-0.6,1.6-1,3.2-1.6,4.5l0,0l-0.6-3.2l0,0C249.7,80.4,250.3,80,250.3,80z"/>
+	<polygon class="st0" points="247.1,75.6 303.4,362.8 494.2,306.9 	"/>
+	<path class="st0" d="M237.6,27.7c0,0,45.6-14.2,50.9-8.7s29,4.7,36.9,3.9c7.9-0.8,44.8-8.7,44.8-8.7l-31.4,16.4l50.9-3.9
+		c0,0-77,33-86.2,23.5s-54.9-1.6-59.6,11.1"/>
+	<polyline class="st0" points="248.9,84.5 255,116.3 303.6,362.8 309.7,394.1 309.7,394.1 	"/>
+	<polyline class="st0" points="237.6,27.7 244.2,60.8 248.1,81.3 	"/>
+</g>
+<g class="st1">
+	<circle cx="23.8" cy="371" r="3.5"/>
+	<circle cx="30.4" cy="406" r="3.5"/>
+	<circle cx="48.2" cy="437.6" r="3.5"/>
+	<circle cx="74.1" cy="467.2" r="3.5"/>
+	<circle cx="112.1" cy="490.8" r="3.5"/>
+	<circle cx="177" cy="492.8" r="3.5"/>
+	<circle cx="248.9" cy="492.8" r="3.5"/>
+	<circle cx="305.5" cy="492.8" r="3.5"/>
+	<circle cx="363.9" cy="490.8" r="3.5"/>
+	<circle cx="430.3" cy="490.8" r="3.5"/>
+	<circle cx="449.3" cy="458.3" r="3.5"/>
+	<circle cx="463.6" cy="419.8" r="3.5"/>
+	<circle cx="481.6" cy="370" r="3.5"/>
+	<circle cx="450.6" cy="382.3" r="3.5"/>
+	<circle cx="412.5" cy="395.6" r="3.5"/>
+	<circle cx="368.7" cy="403" r="3.5"/>
+	<circle cx="328.4" cy="403" r="3.5"/>
+	<circle cx="283.8" cy="395.6" r="3.5"/>
+	<circle cx="240.8" cy="383.3" r="3.5"/>
+	<circle cx="192.7" cy="373.5" r="3.5"/>
+	<circle cx="143.4" cy="361.6" r="3.5"/>
+	<circle cx="101.9" cy="360.6" r="3.5"/>
+	<circle cx="59" cy="361.1" r="3.5"/>
+</g>
+</svg>

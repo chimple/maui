@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<polygon style="fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;" points="360.4,211.3 286.2,211.3 286.2,137.1 
+		215.1,137.1 215.1,211.3 140.9,211.3 140.9,282.3 215.1,282.3 215.1,356.5 286.2,356.5 286.2,282.3 360.4,282.3 	"/>
+	<path style="fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;" d="M194.2,107.8V81.9c0-11.1,9-20.1,20.1-20.1h70.6
+		c11.1,0,20.1,9,20.1,20.1v25.9"/>
+	<path style="fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;" d="M318.8,107.8V73.6c0-11.1-9-20.1-20.1-20.1h-98.2
+		c-11.1,0-20.1,9-20.1,20.1v34.3"/>
+	<path style="fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;" d="M417.9,107.8v-6.3c0-3.6-2.7-6.3-6.3-6.3h-20.9
+		c-3.6,0-6.3,2.7-6.3,6.3v6.3"/>
+	<path style="fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;" d="M127.4,107.8v-6.3c0-3.6-2.7-6.3-6.3-6.3h-20.9
+		c-3.6,0-6.3,2.7-6.3,6.3v6.3"/>
+</g>
+<g style="opacity:0;">
+	<circle cx="491" cy="107.8" r="3.5"/>
+	<circle cx="400.4" cy="107.8" r="3.5"/>
+	<circle cx="291.4" cy="107.8" r="3.5"/>
+	<circle cx="200.4" cy="107.8" r="3.5"/>
+	<circle cx="83.5" cy="107.8" r="3.5"/>
+	<circle cx="17.2" cy="107.8" r="3.5"/>
+	<circle cx="14.5" cy="187.6" r="3.5"/>
+	<circle cx="14.5" cy="286.6" r="3.5"/>
+	<circle cx="14.5" cy="384.2" r="3.5"/>
+	<circle cx="83.5" cy="384.2" r="3.5"/>
+	<circle cx="200.4" cy="384.2" r="3.5"/>
+	<circle cx="291.4" cy="384.2" r="3.5"/>
+	<circle cx="400.4" cy="384.2" r="3.5"/>
+	<circle cx="491" cy="384.2" r="3.5"/>
+	<circle cx="491" cy="286.6" r="3.5"/>
+	<circle cx="491" cy="187.6" r="3.5"/>
+</g>
+</svg>
