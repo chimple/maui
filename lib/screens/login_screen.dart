@@ -37,12 +37,15 @@ class _LoginScreenState extends State<LoginScreen>
   double _size = 500.0;
   FocusNode _focusName;
   String _animationName;
+  bool paused;
+
   @override
   void initState() {
     super.initState();
     print('LoginScreen: initState');
     _isLoading = true;
     _animationName = "signup";
+    paused = false;
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
@@ -168,9 +171,11 @@ class _LoginScreenState extends State<LoginScreen>
                                                     alignment: Alignment.center,
                                                     fit: BoxFit.scaleDown,
                                                     mixSeconds: 0.2, 
+                                                    paused: paused,
                                                     completed:
                                                         (String animationName) {
                                                   setState(() {
+                                                    paused = true;
                                                     _animationName = null;
                                                   });
                                                 }),
