@@ -29,13 +29,15 @@ class ProfileViewState extends State<ProfileView>
 
   getImage(BuildContext context) async {
     setState(() {
-      imagePathStore = '';
+      imagePathStore = null;
     });
 
     Navigator.push(
       context,
       new MaterialPageRoute(
-          builder: (BuildContext context) => new CameraScreen(true)),
+          builder: (BuildContext context) => new CameraScreen(
+                true,
+              )),
     );
     // imagePathStore = "assets/solo.png" ;
   }
