@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
-    print('LoginScreen: initState');
     _isLoading = true;
     _animationName = "signup";
     paused = false;
@@ -53,7 +52,6 @@ class _LoginScreenState extends State<LoginScreen>
     controller.addStatusListener((status) {});
     _focusName = FocusNode()
       ..addListener(() {
-        print('Name Input has focus');
         _focusName.hasFocus ? _compressIcon() : _decompressIcon();
       });
     _initData();
@@ -151,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen>
                               padding: const EdgeInsets.all(20.0),
                               child: new Column(
                                 // mainAxisAlignment:
-                                    // MainAxisAlignment.spaceEvenly,
+                                // MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,37 +208,34 @@ class _LoginScreenState extends State<LoginScreen>
                                             ),
                                             imagePathStore == null
                                                 ? Container(
-                                                  height: size.height >
-                                                          size.width
-                                                      ? size.height * 0.2
-                                                      : size.height * 0.075,
-                                                  width: size.height >
-                                                          size.width
-                                                      ? size.width * 0.2
-                                                      : size.width * 0.1,
-                                                  child: RaisedButton(
-                                                    splashColor:
-                                                        Colors.amber,
-                                                    color: Colors.white,
-                                                    shape: CircleBorder(
-                                                        side: BorderSide(
-                                                            width: 3.0,
-                                                            color: Colors
-                                                                .amber)),
-                                                    onPressed: () =>
-                                                        getImage(context),
-                                                    child: new IconTheme(
-                                                      data: IconThemeData(
-                                                          size:
-                                                              size.height *
-                                                                  0.05,
-                                                          color:
-                                                              Colors.amber),
-                                                      child:
-                                                          Icon(Icons.add),
+                                                    height: size.height >
+                                                            size.width
+                                                        ? size.height * 0.2
+                                                        : size.height * 0.075,
+                                                    width:
+                                                        size.height > size.width
+                                                            ? size.width * 0.2
+                                                            : size.width * 0.1,
+                                                    child: RaisedButton(
+                                                      splashColor: Colors.amber,
+                                                      color: Colors.white,
+                                                      shape: CircleBorder(
+                                                          side: BorderSide(
+                                                              width: 3.0,
+                                                              color: Colors
+                                                                  .amber)),
+                                                      onPressed: () =>
+                                                          getImage(context),
+                                                      child: new IconTheme(
+                                                        data: IconThemeData(
+                                                            size: size.height *
+                                                                0.05,
+                                                            color:
+                                                                Colors.amber),
+                                                        child: Icon(Icons.add),
+                                                      ),
                                                     ),
-                                                  ),
-                                                )
+                                                  )
                                                 : InkWell(
                                                     onTap: () =>
                                                         getImage(context),
@@ -346,7 +341,6 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
     });
@@ -363,7 +357,6 @@ class _LoginScreenState extends State<LoginScreen>
           points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
     } else {
-      print("false");
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();

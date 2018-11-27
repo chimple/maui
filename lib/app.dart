@@ -56,7 +56,6 @@ class MauiApp extends StatelessWidget {
 
   Route<Null> _getRoute(RouteSettings settings) {
     final List<String> path = settings.name.split('/');
-    print(path);
     if (path[0] != '') return null;
 
     if (path[1] == 'categories' && path.length == 3) {

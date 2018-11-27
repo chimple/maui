@@ -43,7 +43,6 @@ class QuizResultState extends State<QuizResult> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = MediaQuery.of(context).orientation;
-    print("this is height $orientation");
     // var orient = orientation;
     int index = 0;
     bool tileClick = false;

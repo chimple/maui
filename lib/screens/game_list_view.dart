@@ -73,7 +73,6 @@ class GameListViewState extends State<GameListView> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    print(media);
     final iconSize = min(media.size.width, media.size.height) / 8;
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;

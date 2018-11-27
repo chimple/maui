@@ -29,22 +29,21 @@ class TextAudioState extends State<TextAudio> {
   void looper() async {
     int numOfChar = widget.fulltext.length;
     int charTime = (widget.duration ~/ numOfChar);
-    print("number of characters $numOfChar: $charTime");
     words = widget.fulltext.split(" ");
     int loop = words.length;
 
     for (int i = 0; i < loop; i++) {
-      await new Future.delayed(Duration(milliseconds: middle.length * charTime));
-      print("object ${words.length}");
-        setState(() {
-          start = start + middle;
-          middle = words.removeAt(0)+" ";
+      await new Future.delayed(
+          Duration(milliseconds: middle.length * charTime));
+      setState(() {
+        start = start + middle;
+        middle = words.removeAt(0) + " ";
 
-          end="";
-          for(String temp in words){
-          end = end + temp+" ";
-          }
-        });
+        end = "";
+        for (String temp in words) {
+          end = end + temp + " ";
+        }
+      });
     }
   }
 
