@@ -23,7 +23,8 @@ import org.chimple.flores.application.P2PContext
 
 class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   private val CHANNEL = "org.sutara.maui/rivescript"
-  private var tts: TextToSpeech? = null
+  private var tts: TextToSpeech? = null  
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -113,4 +114,17 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
     super.onDestroy()
   }
 
+
+  companion object {
+
+        private var appLaunched: Boolean = false;
+        
+        fun appLaunched() {
+          appLaunched = true;
+        }
+
+        fun isAppLaunched(): Boolean {
+          return appLaunched;
+        }
+    }
 }
