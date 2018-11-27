@@ -16,6 +16,7 @@ import com.rivescript.Config
 import com.rivescript.RiveScript
 import org.chimple.flores.db.AppDatabase
 import org.chimple.flores.multicast.MulticastManager
+import org.chimple.flores.manager.BluetoothManager
 import org.chimple.flores.application.P2PContext
 
 
@@ -108,6 +109,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       tts!!.shutdown()
     }
     MulticastManager.getInstance(this).onCleanUp()
+    BluetoothManager.getInstance(this).onCleanUp()
     super.onDestroy()
   }
 
