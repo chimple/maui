@@ -18,15 +18,12 @@ class CommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('CommentList:build');
     return Connect<RootState, List<Comment>>(
       convert: (state) => state.commentMap[parentId],
       where: (prev, next) {
-        print('CommentList:where "$prev" "$next"');
         return next != prev;
       },
       builder: (comments) {
-        print('CommentList:builder: $comments');
         return SliverList(
           delegate: SliverChildBuilderDelegate(
               (context, index) => index == 0 && showInput

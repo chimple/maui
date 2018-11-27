@@ -38,7 +38,6 @@ class CardSummary extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              print('MaterialPageRoute: CardDetail: $card');
               return card.type == CardType.question
                   ? QuizOpenDetail(
                       card: card,

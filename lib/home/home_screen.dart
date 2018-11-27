@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/games/single_game.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/tile_card.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/app.dart';
+import 'package:maui/screens/game_list_view.dart';
+import 'package:maui/screens/select_opponent_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    print(media);
     final crossAxisCount = (media.size.width / 400.0).floor();
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
     return CustomScrollView(
@@ -21,6 +23,26 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Connect<RootState, List<QuackCard>>(
+                convert: (state) => state.collectionMap['open']
+                    .map((cardId) => state.cardMap[cardId])
+                    .toList(growable: false),
+                where: (prev, next) => true,
+                builder: (cards) {
+                  return Expanded(
+                    flex: 1,
+                    child: _buildBox(
+                      context: context,
+                      name: 'Discuss',
+                      routeName: '/topics',
+                      child: CardSummary(
+                        card: cards[0],
+                        parentCardId: 'open',
+                      ),
+                    ),
+                  );
+                },
+              ),
               Connect<RootState, List<QuackCard>>(
                   convert: (state) => state.collectionMap['story']
                       .map((cardId) => state.cardMap[cardId])
@@ -57,45 +79,51 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['Occupations']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Topic',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
+              Expanded(
+                flex: 1,
+                child: _buildBox(
+                  context: context,
+                  name: 'Game',
+                  routeName: '/games',
+                  child: Column(
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                            return SelectOpponentScreen(
+                              gameName: gameNames[0].item1,
+                            );
+                          }));
+                        },
+                        child: Material(
+                          elevation: 8.0,
+                          borderRadius: const BorderRadius.all(
+                              const Radius.circular(16.0)),
+                          clipBehavior: Clip.antiAlias,
+                          color: SingleGame.gameColors[gameNames[0].item1][0],
+                          child: Stack(
+                            children: <Widget>[
+                              Image.asset(
+                                  "assets/background_image/${gameNames[0].item1}_small.png"),
+                              Hero(
+                                tag: "assets/hoodie/${gameNames[0].item1}.png",
+                                child: Image.asset(
+                                  "assets/hoodie/${gameNames[0].item1}.png",
+                                  scale: 0.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['open']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  print('open $cards');
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Discuss',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                        parentCardId: 'open',
-                      ),
-                    ),
-                  );
-                },
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(gameNames[0].item2),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

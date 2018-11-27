@@ -83,8 +83,6 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('build ${_chatItems.length}');
-    print(_isComposing);
     final botImage = 'assets/chat_Bot_Icon.png';
 
     var widgets = <Widget>[
@@ -126,7 +124,6 @@ class ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   Widget _buildInput() {
-    print('_buildInput: $_isComposing $_canSend');
     if (_currentMode == ChatMode.conversation) {
       return new IconTheme(
         data: IconThemeData(color: Theme.of(context).accentColor),
@@ -323,7 +320,6 @@ class ChatBotScreenState extends State<ChatBotScreen> {
               _chatHistory[ChatMode.teach].item2 >= _toTeach.length) ||
           (_currentMode == ChatMode.quiz &&
               _chatHistory[ChatMode.quiz].item2 < _toQuiz.length)) {
-        print('Current: $_currentMode Next: quiz History: $_chatHistory');
         if (_currentMode != ChatMode.quiz) {
           _toQuiz = List.from(_toTeach)..shuffle();
         }
@@ -367,7 +363,6 @@ class ChatBotScreenState extends State<ChatBotScreen> {
           _addChatItem(ChatMode.quiz, chatItemType, question);
         });
       } else {
-        print('Current: $_currentMode Next: teach History: $_chatHistory');
         if (_currentMode != ChatMode.teach) {
           if (_toTeach == null || _toTeach.isEmpty) {
             if (_lessonUnitIndex >= _lessonUnits.length) {

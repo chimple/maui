@@ -10,7 +10,6 @@ import 'package:maui/models/root_state.dart';
 class MainCollection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('mainCollection: build');
     final media = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(

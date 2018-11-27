@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:maui/quack/user_activity.dart';
+import 'package:maui/repos/card_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 
@@ -24,6 +25,7 @@ class FetchInitialData implements AsyncAction<RootState> {
   LikeRepo likeRepo;
   TileRepo tileRepo;
   UserRepo userRepo;
+  CardRepo cardRepo;
 
   FetchInitialData(this.user);
 
@@ -34,6 +36,7 @@ class FetchInitialData implements AsyncAction<RootState> {
     assert(likeRepo != null, 'likeRepo not injected');
     assert(tileRepo != null, 'tileRepo not injected');
     assert(userRepo != null, 'userRepo not injected');
+    assert(cardRepo != null, 'cardRepo not injected');
 
     final cardMap = Map<String, QuackCard>();
     final collectionMap = Map<String, List<String>>();
@@ -58,6 +61,8 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: collectionMap,
         progressMap: progressMap,
         likeMap: likeMap);
+    final dummy = await cardRepo.getCard('dummy');
+    cardMap['dummy'] = dummy;
     print('open ${collectionMap['open']}');
     final tiles = await tileRepo.getTilesOtherThanDots();
     SharedPreferences prefs = await SharedPreferences.getInstance();

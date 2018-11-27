@@ -86,7 +86,7 @@ class DrawingWrapperState extends State<DrawingWrapper> {
                 SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap));
           },
           backCallback: () {
-            print('backCallback: $_jsonMap');
+            print('backCallback: $tileId');
             if (tileId != null)
               Provider.dispatch<RootState>(context, PostTile(tileId: tileId));
             Navigator.of(context).pop();

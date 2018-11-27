@@ -51,8 +51,6 @@ class CardPagerState extends State<CardPager> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('_currentPageIndex: $_currentPageIndex');
-
     return Connect<RootState, List<QuackCard>>(
       convert: (state) => state.collectionMap[widget.cardId]
           .map((id) => state.cardMap[id])
@@ -77,7 +75,6 @@ class CardPagerState extends State<CardPager> {
                         showBackButton: widget.cardId != 'main',
                       ),
                 onPageChanged: (index) {
-                  print('onPageChanged: $index');
                   if (index < cardList.length) {
                     Provider.dispatch<RootState>(
                         context,
@@ -92,7 +89,6 @@ class CardPagerState extends State<CardPager> {
                             index: index));
                   }
                   setState(() => _currentPageIndex = index);
-                  print("Current page index update - ${_currentPageIndex}");
                 }),
           )
         ];

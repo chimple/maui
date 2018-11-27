@@ -34,6 +34,7 @@ class PostTile implements AsyncAction<RootState> {
         ..user = state.user;
       pTile = tile;
     }
+    print('post_tile: $pTile');
 
     if (pTile.userId == state.user?.id && pTile.content.length < 12000)
       try {
@@ -57,7 +58,7 @@ class PostTile implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         commentMap: state.commentMap,
         activityMap: state.activityMap,
-        tiles: tile != null ? (state.tiles..insert(0, tile)) : state.tiles,
+        tiles: pTile != null ? (state.tiles..insert(0, pTile)) : state.tiles,
         userMap: state.userMap,
         drawings: state.drawings,
         templates: state.templates);
