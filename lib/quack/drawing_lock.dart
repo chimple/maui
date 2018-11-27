@@ -11,7 +11,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/state/app_state_container.dart';
-import '../actions/deduct_points.dart';
+import '../actions/update_points.dart';
 import 'package:nima/nima_actor.dart';
 
 class DrawingLock extends StatefulWidget {
@@ -56,7 +56,7 @@ class DrawingLockState extends State<DrawingLock> {
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
-    Provider.dispatch<RootState>(context, DeductPoints(points: 1));
+    Provider.dispatch<RootState>(context, UpdatePoints(points: -1));
   }
 
   @override
