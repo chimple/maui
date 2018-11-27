@@ -5,7 +5,8 @@ class Nima extends StatefulWidget {
   final String name;
   final int score;
   final String tag;
-  Nima({this.name, this.score, this.tag});
+  final bool pageExited;
+  Nima({this.name, this.score, this.tag, this.pageExited});
 
   @override
   _NimaState createState() {
@@ -16,7 +17,7 @@ class Nima extends StatefulWidget {
 class _NimaState extends State<Nima> with TickerProviderStateMixin {
   int _prevScore;
   String _name;
-  String _emotion;
+  String _emotion = 'blinking';
   bool paused = false;
   String _animation;
 
@@ -27,30 +28,38 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
     _prevScore = widget.score;
   }
 
-  void onComplete() {
-    setState(() {
-      paused = true;
-      _animation = null;
-    });
+  @override
+  void didUpdateWidget(Nima oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.pageExited != widget.pageExited) {
+      setState(() {
+        paused = true;
+        _animation = null;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_emotion == 'blinking') {
-      if (_prevScore < widget.score) {
-        _emotion = 'happy';
-      } else if (_prevScore > widget.score) {
-        _emotion = 'sad';
+    if (!paused) {
+      if (_emotion == 'blinking') {
+        if (_prevScore < widget.score) {
+          _emotion = 'happy';
+        } else if (_prevScore > widget.score) {
+          _emotion = 'sad';
+        }
       }
+      _animation = '${_name}_$_emotion';
     }
-    if (!paused) _animation = '${_name}_$_emotion';
-    print('emotion: $_emotion');
     _prevScore = widget.score;
     return NimaActor("assets/solo",
         alignment: Alignment.center,
         fit: BoxFit.contain,
         paused: paused,
-        animation: _animation,
-        completed: (_) => onComplete());
+        animation: _animation, completed: (_) {
+      setState(() {
+        if (!paused) _emotion = 'blinking';
+      });
+    });
   }
 }
