@@ -45,8 +45,6 @@ class _CommentListViewState extends State<CommentListView> {
     if (_comments != null) {
       _initUserData();
     }
-    print(_allUsers);
-    print(_comments);
     setState(() => _isLoading = false);
   }
 

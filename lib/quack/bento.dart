@@ -33,7 +33,6 @@ class Bento extends StatelessWidget {
                   heroTag: "draw",
                   child: Icon(Icons.edit),
                   onPressed: () {
-                    print("hiiiiiiiiiiiiii");
                     Navigator.of(context).push(
                       new MaterialPageRoute(
                           builder: (BuildContext context) =>
@@ -41,7 +40,9 @@ class Bento extends StatelessWidget {
                     );
                   }),
             ),
-            Padding(padding: EdgeInsets.all(2.0),),
+            Padding(
+              padding: EdgeInsets.all(2.0),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(

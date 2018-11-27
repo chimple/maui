@@ -14,7 +14,6 @@ class QuizGameState extends State<QuizGame> {
   int score = 0;
   @override
   Widget build(BuildContext context) {
-    print("hello here its comming ");
     return Scaffold(
       body: new QuizPager(
         onScore: _onScore,

@@ -40,7 +40,6 @@ class _FriendListViewState extends State<FriendListView> {
   Widget build(BuildContext context) {
     final user = AppStateContainer.of(context).state.loggedInUser;
     var users = AppStateContainer.of(context).users;
-    print('FriendListView.users $users');
     var notifs = AppStateContainer.of(context).notifs;
     MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {

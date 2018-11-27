@@ -89,7 +89,6 @@ class TileCard extends StatelessWidget {
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
-          print(constraints);
           final widgets = <Widget>[];
           widgets.add(Stack(
             children: <Widget>[

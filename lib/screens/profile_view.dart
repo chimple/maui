@@ -24,7 +24,6 @@ class ProfileViewState extends State<ProfileView>
   @override
   void initState() {
     super.initState();
-    print("Welcome to QuizProgressTracker class");
     tabController = new TabController(length: categories.length, vsync: this);
   }
 
@@ -227,7 +226,7 @@ class ProfileViewState extends State<ProfileView>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom:25.0),
+                        padding: const EdgeInsets.only(bottom: 25.0),
                         child: CircleAvatar(
                           backgroundColor: Colors.redAccent,
                           radius: 30,
@@ -241,7 +240,6 @@ class ProfileViewState extends State<ProfileView>
                               editbutton(user);
                             },
                           ),
-                          
                         ),
                       ),
                     ],
@@ -258,7 +256,6 @@ class ProfileViewState extends State<ProfileView>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
       // setflag = false;

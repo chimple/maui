@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    print(media);
     final crossAxisCount = (media.size.width / 400.0).floor();
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
     return CustomScrollView(
@@ -24,6 +23,26 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Connect<RootState, List<QuackCard>>(
+                convert: (state) => state.collectionMap['open']
+                    .map((cardId) => state.cardMap[cardId])
+                    .toList(growable: false),
+                where: (prev, next) => true,
+                builder: (cards) {
+                  return Expanded(
+                    flex: 1,
+                    child: _buildBox(
+                      context: context,
+                      name: 'Discuss',
+                      routeName: '/topics',
+                      child: CardSummary(
+                        card: cards[0],
+                        parentCardId: 'open',
+                      ),
+                    ),
+                  );
+                },
+              ),
               Connect<RootState, List<QuackCard>>(
                   convert: (state) => state.collectionMap['story']
                       .map((cardId) => state.cardMap[cardId])
@@ -105,27 +124,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['open']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  print('open $cards');
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Discuss',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                        parentCardId: 'open',
-                      ),
-                    ),
-                  );
-                },
               ),
             ],
           ),

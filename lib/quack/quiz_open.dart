@@ -82,7 +82,8 @@ class QuizOpenState extends State<QuizOpen> {
                 timeStamp: DateTime.now(),
                 comment: text,
                 user: AppStateContainer.of(context).state.loggedInUser),
-            tileType: TileType.card));
+            tileType: TileType.card,
+            addTile: true));
     widget.canProceed();
   }
 }
