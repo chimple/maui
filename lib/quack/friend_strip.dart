@@ -39,11 +39,6 @@ class _FriendStripState extends State<FriendStrip> {
 
   @override
   Widget build(BuildContext context) {
-    final user = AppStateContainer.of(context).state.loggedInUser;
-    var users = List.from(AppStateContainer.of(context).users);
-    print('FriendListView.users $users');
-    var notifs = AppStateContainer.of(context).notifs;
-    MediaQueryData media = MediaQuery.of(context);
     if (_isLoading) {
       return new Center(
           child: new SizedBox(
@@ -52,6 +47,10 @@ class _FriendStripState extends State<FriendStrip> {
         child: new CircularProgressIndicator(),
       ));
     }
+    final user = AppStateContainer.of(context).state.loggedInUser;
+    var users = List.from(AppStateContainer.of(context).users);
+    var notifs = AppStateContainer.of(context).notifs;
+    MediaQueryData media = MediaQuery.of(context);
     return Material(
       elevation: 8.0,
       color: Color(0xFFEF823F),

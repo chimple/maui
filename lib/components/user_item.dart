@@ -12,7 +12,6 @@ class LoginUserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     return new Center(
         child: new InkWell(
             onTap: () => AppStateContainer.of(context).setLoggedInUser(user),

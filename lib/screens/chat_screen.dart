@@ -85,7 +85,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     final myId = appStateContainerState.state.loggedInUser.id;
     final myImage = appStateContainerState.state.loggedInUser.image;
     var messages = appStateContainerState.messages;
-    print('chat_screen $messages');
     var latestMessage = Map<String, dynamic>();
     try {
       latestMessage = messages.first;
@@ -216,7 +215,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildBottomBar(InputType inputType, Map<String, dynamic> message) {
-    print('ChatScreen._buildBottomBar');
     switch (inputType) {
       case InputType.emoji:
         return SelectEmoji(
@@ -256,7 +254,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _onFocusChange() {
-    debugPrint("Focus: " + _focusNode.hasFocus.toString());
     if (_focusNode.hasFocus) {
       setState(() {
         _inputType = InputType.keyboard;

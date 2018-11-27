@@ -69,11 +69,9 @@ class NotifDao {
     List<Map> maps = await db.query(Notif.table,
         columns: [Notif.typeCol, 'count(${Notif.typeCol})'],
         groupBy: '${Notif.typeCol}');
-    print('getNotifCountByType: $maps');
     Map<String, int> returnMap = Map<String, int>();
     maps.forEach(
         (n) => returnMap[n[Notif.typeCol]] = n['count(${Notif.typeCol})']);
-    print('getNotifCountByType: $returnMap');
     return returnMap;
   }
 

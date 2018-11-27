@@ -95,7 +95,6 @@ class QuizCardDetailState extends State<QuizCardDetail> {
 
   @override
   Widget build(BuildContext context) {
-    print(_quizItems);
     MediaQueryData media = MediaQuery.of(context);
 
     return Column(

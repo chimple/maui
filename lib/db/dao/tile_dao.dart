@@ -43,31 +43,33 @@ AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 
   Future<List<Tile>> getTilesByCardId(String cardId, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(
-        '${Tile.table}, ${QuackCard.table}, ${User.table}',
-        columns: Tile.allCols,
-        where: '''
+    List<Map> maps =
+        await db.query('${Tile.table}, ${QuackCard.table}, ${User.table}',
+            columns: Tile.allCols,
+            where: '''
 ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 AND ${Tile.table}.${Tile.cardIdCol} = ?
 ''',
-        whereArgs: [cardId]);
+            orderBy: '${Tile.table}.${Tile.updatedAtCol} DESC',
+            whereArgs: [cardId]);
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
 
   Future<List<Tile>> getTilesByCardIdAndType(String cardId, TileType type,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(
-        '${Tile.table}, ${QuackCard.table}, ${User.table}',
-        columns: Tile.allCols,
-        where: '''
+    List<Map> maps =
+        await db.query('${Tile.table}, ${QuackCard.table}, ${User.table}',
+            columns: Tile.allCols,
+            where: '''
 ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 AND ${Tile.table}.${Tile.cardIdCol} = ?
 AND ${Tile.table}.${Tile.typeCol} = ?
 ''',
-        whereArgs: [cardId, type.index]);
+            orderBy: '${Tile.table}.${Tile.updatedAtCol} DESC',
+            whereArgs: [cardId, type.index]);
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
 
@@ -75,17 +77,18 @@ AND ${Tile.table}.${Tile.typeCol} = ?
       String cardId, String userId, TileType type,
       {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
-    List<Map> maps = await db.query(
-        '${Tile.table}, ${QuackCard.table}, ${User.table}',
-        columns: Tile.allCols,
-        where: '''
+    List<Map> maps =
+        await db.query('${Tile.table}, ${QuackCard.table}, ${User.table}',
+            columns: Tile.allCols,
+            where: '''
 ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 AND ${Tile.table}.${Tile.cardIdCol} = ?
 AND ${Tile.table}.${Tile.userIdCol} = ?
 AND ${Tile.table}.${Tile.typeCol} = ?
 ''',
-        whereArgs: [cardId, userId, type.index]);
+            orderBy: '${Tile.table}.${Tile.updatedAtCol} DESC',
+            whereArgs: [cardId, userId, type.index]);
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
 

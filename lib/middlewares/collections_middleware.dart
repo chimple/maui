@@ -47,6 +47,7 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.likeRepo = likeRepo;
       action.tileRepo = tileRepo;
       action.userRepo = userRepo;
+      action.cardRepo = cardRepo;
     } else if (action is FetchCardDetail) {
       action.collectionRepo = collectionRepo;
       action.cardProgressRepo = cardProgressRepo;
@@ -67,6 +68,7 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.tileRepo = tileRepo;
     } else if (action is SaveDrawing) {
       action.tileRepo = tileRepo;
+      action.cardRepo = cardRepo;
     } else if (action is FetchComments) {
       action.commentRepo = commentRepo;
     } else if (action is DeductPoints) {

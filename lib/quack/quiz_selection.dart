@@ -90,9 +90,6 @@ class QuizSelectionState extends State<QuizSelection> {
 
   @override
   Widget build(BuildContext context) {
-    print('answers: ${_answers}');
-    print('startChoices: ${_startChoices}');
-    print('endChoices: ${_endChoices}');
     final answersLength = _answers?.length ?? 0;
     final choicesLength =
         max(_startChoices?.length ?? 0, _endChoices?.length ?? 0);
@@ -100,8 +97,6 @@ class QuizSelectionState extends State<QuizSelection> {
       builder: (context, constraints) {
         final width = constraints.maxWidth / 2;
         final height = constraints.maxHeight / _numRows;
-        print(
-            'quiz_stack: numRows: $_numRows, width: $width, maxWidth: ${constraints.maxWidth}, height: $height, maxHeight: ${constraints.maxHeight}');
         List<Widget> widgets = [
           Container(
             constraints: BoxConstraints.expand(),

@@ -14,6 +14,7 @@ import 'package:maui/screens/welcome_screen.dart';
 import 'tab_home.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/loca.dart';
+import 'package:nima/nima_actor.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,8 +22,6 @@ class LoginScreen extends StatefulWidget {
     return new _LoginScreenState();
   }
 }
-
-
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
@@ -37,12 +36,12 @@ class _LoginScreenState extends State<LoginScreen>
   final textEditController = TextEditingController();
   double _size = 500.0;
   FocusNode _focusName;
-
+  String _animationName;
   @override
   void initState() {
     super.initState();
-    print('LoginScreen: initState');
     _isLoading = true;
+    _animationName = "signup";
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
@@ -50,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen>
     controller.addStatusListener((status) {});
     _focusName = FocusNode()
       ..addListener(() {
-        print('Name Input has focus');
         _focusName.hasFocus ? _compressIcon() : _decompressIcon();
       });
     _initData();
@@ -147,25 +145,36 @@ class _LoginScreenState extends State<LoginScreen>
                             Container(
                               padding: const EdgeInsets.all(20.0),
                               child: new Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                // mainAxisAlignment:
+                                // MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
-                                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  AnimatedContainer(
-                                    height: _size,
-                                    width: _size,
-                                    curve: Curves.bounceOut,
-                                    child: Padding(
-                                        padding: new EdgeInsets.symmetric(
-                                            horizontal: 40.0),
-                                        child: new AspectRatio(
-                                            aspectRatio: 2.0,
-                                            child: new SvgPicture.asset(
-                                              "assets/team animals.svg",
-                                              allowDrawingOutsideViewBox: false,
-                                            ))),
-                                    duration: Duration(milliseconds: 1200),
+                                  Align(
+                                    alignment: AlignmentDirectional.center,
+                                    child: AnimatedContainer(
+                                      height: _size,
+                                      width: _size,
+                                      curve: Curves.bounceOut,
+                                      child: new AspectRatio(
+                                          aspectRatio: 2.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 40.0, right: 40.0),
+                                            child: new NimaActor("assets/quack",
+                                                animation: _animationName,
+                                                alignment: Alignment.center,
+                                                fit: BoxFit.scaleDown,
+                                                mixSeconds: 0.2, completed:
+                                                    (String animationName) {
+                                              setState(() {
+                                                _animationName = null;
+                                              });
+                                            }),
+                                          )),
+                                      duration: Duration(milliseconds: 1200),
+                                    ),
                                   ),
                                   new Stack(
                                     alignment:
@@ -193,37 +202,32 @@ class _LoginScreenState extends State<LoginScreen>
                                                   : new EdgeInsets.all(5.0),
                                             ),
                                             imagePathStore == null
-                                                ? Center(
-                                                    child: Container(
-                                                      height: size.height >
-                                                              size.width
-                                                          ? size.height * 0.2
-                                                          : size.height * 0.1,
-                                                      width: size.height >
-                                                              size.width
-                                                          ? size.width * 0.2
-                                                          : size.width * 0.1,
-                                                      child: RaisedButton(
-                                                        splashColor:
-                                                            Colors.amber,
-                                                        color: Colors.white,
-                                                        shape: CircleBorder(
-                                                            side: BorderSide(
-                                                                width: 3.0,
-                                                                color: Colors
-                                                                    .amber)),
-                                                        onPressed: () =>
-                                                            getImage(context),
-                                                        child: new IconTheme(
-                                                          data: IconThemeData(
-                                                              size:
-                                                                  size.height *
-                                                                      0.05,
-                                                              color:
-                                                                  Colors.amber),
-                                                          child:
-                                                              Icon(Icons.add),
-                                                        ),
+                                                ? Container(
+                                                    height: size.height >
+                                                            size.width
+                                                        ? size.height * 0.2
+                                                        : size.height * 0.075,
+                                                    width:
+                                                        size.height > size.width
+                                                            ? size.width * 0.2
+                                                            : size.width * 0.1,
+                                                    child: RaisedButton(
+                                                      splashColor: Colors.amber,
+                                                      color: Colors.white,
+                                                      shape: CircleBorder(
+                                                          side: BorderSide(
+                                                              width: 3.0,
+                                                              color: Colors
+                                                                  .amber)),
+                                                      onPressed: () =>
+                                                          getImage(context),
+                                                      child: new IconTheme(
+                                                        data: IconThemeData(
+                                                            size: size.height *
+                                                                0.05,
+                                                            color:
+                                                                Colors.amber),
+                                                        child: Icon(Icons.add),
                                                       ),
                                                     ),
                                                   )
@@ -250,8 +254,11 @@ class _LoginScreenState extends State<LoginScreen>
                                               padding: size.height > size.width
                                                   ? new EdgeInsets.all(
                                                       size.height * 0.1)
-                                                  : new EdgeInsets.all(
-                                                      size.height * 0.08),
+                                                  : new EdgeInsets.fromLTRB(
+                                                      size.height * 0.04,
+                                                      size.height * 0.03,
+                                                      size.height * 0.04,
+                                                      size.height * 0.085),
                                               child: new TextField(
                                                 focusNode: _focusName,
                                                 autocorrect: false,
@@ -329,7 +336,6 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
     });
@@ -346,7 +352,6 @@ class _LoginScreenState extends State<LoginScreen>
           points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
     } else {
-      print("false");
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();

@@ -64,8 +64,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
         print('Stack trace:\n $s');
       }
 
-      print('_initData: $messages');
-
       if (!mounted) return;
       setState(() {
         _deviceId = prefs.getString('deviceId');
@@ -94,8 +92,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
-    print(
-        "height and width of  opponent is ${mediaSize.width}....${mediaSize.height}");
     final _colors = SingleGame.gameColors[widget.gameName];
     final color = _colors != null ? _colors[0] : Colors.amber;
     final secondColor = _colors != null ? _colors[1] : Colors.amber;
@@ -147,7 +143,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                           child: GestureDetector(
                             onTap: () {
                               videoPlayButton(context, gamename);
-                              print("valueme incresing");
                             },
                             child: Container(
                               height: 60.0,
@@ -263,9 +258,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
 
     Navigator.of(context)
         .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-      print('continueGame: ${user.id} $_messages');
       final message = _messages.firstWhere((m) => user.id == m['userId']);
-      print('continueGame: message: $message');
       GameConfig gameConfig = GameConfig.fromJson(message['message']);
       gameConfig.myUser = loggedInUser;
       gameConfig.otherUser = user;
@@ -278,7 +271,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       gameConfig.amICurrentPlayer = true;
       gameConfig.orientation = MediaQuery.of(context).orientation;
       gameConfig.sessionId = message['sessionId'];
-      print('continueGame: gameConfig: $gameConfig');
       return SingleGame(
         widget.gameName,
         gameMode: GameMode.iterations,
@@ -299,7 +291,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   }
 
   void videoPlayButton(BuildContext context, String gamename) {
-    print("videoPlayButton");
     final name = "assets/demo_video/$gamename.mp4";
     File file = File(AppStateContainer.of(context).extStorageDir + name);
     Navigator.of(context).push(new MaterialPageRoute(

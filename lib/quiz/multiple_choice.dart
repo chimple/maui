@@ -32,7 +32,6 @@ class MultiplechoiceState extends State<Multiplechoice> {
     super.initState();
     List<String> choices = widget.input['choices'].cast<String>();
     _statuses = choices.map((a) => Statuses.Active).toList(growable: false);
-    print("hello this should come first...");
   }
 
   @override
@@ -62,7 +61,6 @@ class MultiplechoiceState extends State<Multiplechoice> {
             margin: const EdgeInsets.all(10.0),
             alignment: Alignment.topCenter,
             child: new Column(
-
               children: <Widget>[
                 new SingleChildScrollView(
                   child: Container(
@@ -107,7 +105,7 @@ class MultiplechoiceState extends State<Multiplechoice> {
       return Padding(
         padding: const EdgeInsets.all(6.0),
         child: Container(
-          height: size *0.15,
+          height: size * 0.15,
           child: new QuizButton(
               text: element,
               buttonStatus: status == Statuses.Active
@@ -123,7 +121,8 @@ class MultiplechoiceState extends State<Multiplechoice> {
                       print("correct one is...clicked here$element");
                       _statuses[index] = Statuses.Disappear;
 
-                      new Future.delayed(const Duration(milliseconds: 2000), () {
+                      new Future.delayed(const Duration(milliseconds: 2000),
+                          () {
                         widget.onEnd(
                             {'userChoice': element, 'correct': 1, 'total': 1});
                       });
