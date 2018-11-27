@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen>
                                                     alignment: Alignment.center,
                                                     fit: BoxFit.scaleDown,
                                                     mixSeconds: 0.2, 
-                                                    paused: paused,
+                                                    paused: paused, 
                                                     completed:
                                                         (String animationName) {
                                                   setState(() {
