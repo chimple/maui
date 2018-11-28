@@ -29,10 +29,7 @@ class PostTile implements AsyncAction<RootState> {
       pTile = await tileRepo.getTile(tileId);
     } else {
       await tileRepo.upsert(tile);
-      tile
-        ..card = state.cardMap[tile.cardId]
-        ..user = state.user;
-      pTile = tile;
+      pTile = await tileRepo.getTile(tile.id);
     }
     print('post_tile: $pTile');
 
