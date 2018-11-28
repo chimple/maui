@@ -143,8 +143,6 @@ class DialogContentState extends State<DialogContent> {
       });
     }
 
-    print("Card Lock File Called!!!!");
-
     return new Center(
       child: Material(
         type: MaterialType.transparency,

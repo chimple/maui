@@ -137,8 +137,6 @@ class DialogContentState extends State<DialogContent> {
       });
     }
 
-    print("Dialog Content State Called!!!!");
-
     return new Center(
       child: Material(
         type: MaterialType.transparency,
