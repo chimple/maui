@@ -22,6 +22,7 @@ class _FancyFabState extends State<FancyFab>
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
+  String help = "Help";
 
   @override
   initState() {
@@ -74,11 +75,12 @@ class _FancyFabState extends State<FancyFab>
 
   Widget add() {
     return Container(
+     
       child: FloatingActionButton(
         heroTag: "add",
         onPressed: null,
         tooltip: 'Add',
-        child:Image.asset("assets/floating_action_button/Help.png"),
+        child:Image.asset('assets/hoodie/bingo.png'),
       ),
     );
   }
