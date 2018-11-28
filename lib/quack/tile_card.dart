@@ -25,7 +25,9 @@ class TileCard extends StatelessWidget {
         return _buildTile(
             context: context,
             tile: tile,
-            header: CardHeader(card: tile.card),
+            header: CardHeader(
+              card: tile.card,
+            ),
             title: tile.card.title,
             trailer: SocialSummary(
               parentId: tile.cardId,
@@ -87,7 +89,6 @@ class TileCard extends StatelessWidget {
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
-          print(constraints);
           final widgets = <Widget>[];
           widgets.add(Stack(
             children: <Widget>[

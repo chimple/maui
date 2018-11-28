@@ -2,7 +2,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_comment.dart';
 import 'package:maui/actions/add_like.dart';
 import 'package:maui/actions/add_progress.dart';
-import 'package:maui/actions/deduct_points.dart';
+import 'package:maui/actions/update_points.dart';
 import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
@@ -47,6 +47,7 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.likeRepo = likeRepo;
       action.tileRepo = tileRepo;
       action.userRepo = userRepo;
+      action.cardRepo = cardRepo;
     } else if (action is FetchCardDetail) {
       action.collectionRepo = collectionRepo;
       action.cardProgressRepo = cardProgressRepo;
@@ -67,9 +68,10 @@ class CollectionMiddleware extends Middleware<RootState> {
       action.tileRepo = tileRepo;
     } else if (action is SaveDrawing) {
       action.tileRepo = tileRepo;
+      action.cardRepo = cardRepo;
     } else if (action is FetchComments) {
       action.commentRepo = commentRepo;
-    } else if (action is DeductPoints) {
+    } else if (action is UpdatePoints) {
       action.userRepo = userRepo;
     } else if (action is PostTile) {
       action.tileRepo = tileRepo;

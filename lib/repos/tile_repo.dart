@@ -15,7 +15,6 @@ class TileRepo {
     if (tile.type == TileType.drawing || tile.type == TileType.dot) {
       tile.content = await _readFile(id: tile.id);
     }
-    print('getTile: $tile');
     return tile;
   }
 
@@ -25,7 +24,6 @@ class TileRepo {
         tiles
             .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
-    print('getTilesByCardId: $tiles');
     return tiles;
   }
 
@@ -36,7 +34,6 @@ class TileRepo {
         tiles
             .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
-    print('getTilesByCardIdAndType: $tiles');
     return tiles;
   }
 
@@ -47,7 +44,6 @@ class TileRepo {
         tiles
             .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
-    print('getTilesByCardIdAndType: $tiles');
     return tiles;
   }
 
@@ -59,7 +55,6 @@ class TileRepo {
         tiles
             .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
-    print('getTilesByCardIdAndType: $tiles');
     return tiles;
   }
 
@@ -69,7 +64,6 @@ class TileRepo {
         tiles
             .where((t) => t.type == TileType.drawing || t.type == TileType.dot),
         (t) async => t.content = await _readFile(id: t.id));
-    print('getTiles: $tiles');
     return tiles;
   }
 
@@ -82,11 +76,9 @@ class TileRepo {
   }
 
   Future<Tile> upsert(Tile tile) async {
-    print('upsert begin: $tile');
     final existingTile = await tileDao.getTile(tile.id);
     final updatedTile =
         await _upsert(updatedTile: tile, existingTile: existingTile);
-    print('upsert: $updatedTile');
     return updatedTile;
   }
 
@@ -125,7 +117,6 @@ class TileRepo {
 
   static Future<File> _getFile({String id}) async {
     final directory = await getApplicationDocumentsDirectory();
-    print('_getFile: ${directory.path}/$id.json');
     return File('${directory.path}/$id.json');
   }
 
@@ -149,7 +140,6 @@ class TileRepo {
         comments: comments);
     final updatedTile =
         await _upsert(updatedTile: tile, existingTile: existingTile);
-    print('upsert: $updatedTile');
     return updatedTile;
   }
 

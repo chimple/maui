@@ -24,19 +24,20 @@ class ProfileViewState extends State<ProfileView>
   @override
   void initState() {
     super.initState();
-    print("Welcome to QuizProgressTracker class");
     tabController = new TabController(length: categories.length, vsync: this);
   }
 
   getImage(BuildContext context) async {
     setState(() {
-      imagePathStore = '';
+      imagePathStore = null;
     });
 
     Navigator.push(
       context,
       new MaterialPageRoute(
-          builder: (BuildContext context) => new CameraScreen(true)),
+          builder: (BuildContext context) => new CameraScreen(
+                true,
+              )),
     );
     // imagePathStore = "assets/solo.png" ;
   }
@@ -276,7 +277,6 @@ class ProfileViewState extends State<ProfileView>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
       // setflag = false;

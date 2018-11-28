@@ -15,10 +15,11 @@ import 'package:maui/repos/p2p.dart' as p2p;
 class AddComment implements AsyncAction<RootState> {
   final Comment comment;
   final TileType tileType;
+  final bool addTile;
   CommentRepo commentRepo;
   TileRepo tileRepo;
 
-  AddComment({this.comment, this.tileType});
+  AddComment({this.comment, this.tileType, this.addTile = false});
 
   @override
   Future<Computation<RootState>> reduce(RootState state) async {
@@ -45,20 +46,22 @@ class AddComment implements AsyncAction<RootState> {
         break;
     }
 
-//    var tile = state.tiles
-//        .firstWhere((t) => t.id == comment.parentId, orElse: () => null);
-//    if (tile == null) {
-//      tile = Tile(
-//          id: Uuid().v4(),
-//          cardId: comment.parentId,
-//          content: '${comment.user.name} commented on this',
-//          type: TileType.card,
-//          userId: comment.userId,
-//          updatedAt: DateTime.now(),
-//          card: state.cardMap[comment.parentId],
-//          user: state.user); //TODO put real user
-//      await tileRepo.insert(tile);
-//    }
+    var tile;
+
+    if (addTile) {
+      var tiles = await tileRepo.getTilesByCardId(comment.parentId);
+      if (tiles.length == 0) {
+        tile = Tile(
+            id: Uuid().v4(),
+            cardId: comment.parentId,
+            type: TileType.card,
+            userId: comment.userId,
+            updatedAt: DateTime.now(),
+            card: state.cardMap[comment.parentId],
+            user: state.user); //TODO put real user
+        await tileRepo.insert(tile);
+      }
+    }
     if (comment.userId == state.user.id)
       try {
         await p2p.addMessage(
@@ -80,8 +83,9 @@ class AddComment implements AsyncAction<RootState> {
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
         activityMap: state.activityMap,
-        commentMap: state.commentMap..[comment.parentId].insert(0, comment),
-        tiles: state.tiles,
+        commentMap: addTile ? state.commentMap : state.commentMap
+          ..[comment.parentId].insert(0, comment),
+        tiles: tile == null ? state.tiles : (state.tiles..insert(0, tile)),
         drawings: state.drawings,
         userMap: state.userMap,
         templates: state.templates);

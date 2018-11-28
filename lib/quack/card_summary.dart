@@ -19,12 +19,14 @@ class CardSummary extends StatelessWidget {
   final int index;
   final String parentCardId;
   final Orientation orientation;
+  final bool showSocialSummary;
 
   CardSummary(
       {Key key,
       @required this.card,
       this.index,
       this.parentCardId,
+      this.showSocialSummary = true,
       this.orientation = Orientation.portrait})
       : super(key: key);
 
@@ -36,7 +38,6 @@ class CardSummary extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              print('MaterialPageRoute: CardDetail: $card');
               return card.type == CardType.question
                   ? QuizOpenDetail(
                       card: card,

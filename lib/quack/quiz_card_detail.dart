@@ -71,6 +71,9 @@ class QuizCardDetailState extends State<QuizCardDetail> {
 
   void _initData() async {
     _quiz = await CardRepo().getQuiz(widget.card.id);
+    if (_quiz.answers.length > 1 && _quiz.type == QuizType.oneAtATime) {
+      _quiz.type = QuizType.many;
+    }
     if (widget.answers == null) {
       int id = 0;
       int index = 0;
@@ -95,7 +98,6 @@ class QuizCardDetailState extends State<QuizCardDetail> {
 
   @override
   Widget build(BuildContext context) {
-    print(_quizItems);
     MediaQueryData media = MediaQuery.of(context);
 
     return Column(

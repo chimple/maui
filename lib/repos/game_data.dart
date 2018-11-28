@@ -22,7 +22,6 @@ Future<List<String>> fetchSerialData(int lessonId) async {
 
 Future<Tuple2<String, List<String>>> fetchSequenceData(
     int lessonId, int maxData) async {
-  print('fetchSequenceData');
   var rand = new Random();
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -64,7 +63,6 @@ Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
-  print(lessonUnits);
   //TODO: get only unique objects and subjects
   //TODO: cut across areaId to get concept->word
   return new Map<String, String>.fromIterable(
@@ -369,7 +367,6 @@ Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
 
     var rand = new Random();
     var startNum = rand.nextInt(max(0, 3));
-    print(" ......random number is... $startNum");
     switch (startNum) {
       case 0:
         return new Tuple2([

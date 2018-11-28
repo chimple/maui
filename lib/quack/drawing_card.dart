@@ -19,7 +19,6 @@ class DrawingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('drawing_card:build: $tile');
     return RaisedButton(
       padding: EdgeInsets.zero,
       onPressed: isInteractive
@@ -36,7 +35,9 @@ class DrawingCard extends StatelessWidget {
             extStorageDir: AppStateContainer.of(context).extStorageDir,
             paintData: PaintData.fromJson(json.decode(tile.content)))
           ..isInteractive = false,
-        child: Paper(),
+        child: Paper(
+          key: ObjectKey(tile.id),
+        ),
       ),
     );
   }
