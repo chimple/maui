@@ -14,6 +14,7 @@ class TileDao {
         columns: Tile.allCols,
         where: '''
 ${Tile.table}.${Tile.idCol} = ?
+AND ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 ''',
         whereArgs: [id]);
@@ -31,6 +32,7 @@ AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
         columns: Tile.allCols,
         where: '''
 ${Tile.table}.${Tile.cardIdCol} = ? 
+AND ${Tile.table}.${Tile.cardIdCol} = ${QuackCard.table}.${QuackCard.idCol}
 AND ${Tile.table}.${Tile.userIdCol} = ?
 AND ${Tile.table}.${Tile.userIdCol} = ${User.table}.${User.idCol}
 ''',
