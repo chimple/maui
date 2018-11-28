@@ -97,14 +97,12 @@ class AudioTextBoldState extends State<AudioTextBold> {
     try {
       final file =
           new File(AppStateContainer.of(context).extStorageDir + fileName);
-      print('Playing ${file.path}');
       if (await file.exists()) {
         await audioPlayer.play(file.path, isLocal: true);
         setState(() {
           playerState = PlayerState.playing;
         });
       } else {
-        print("file doesnt exist in storage");
         // await file.writeAsBytes(
         //     (await rootBundle.load('assets/$fileName')).buffer.asUint8List());
         // await audioPlayer.play(file.path, isLocal: true);
@@ -161,14 +159,16 @@ class AudioTextBoldState extends State<AudioTextBold> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     widget.card.contentAudio != null
-                    ? new IconButton(
-                      onPressed: () => playaudio(widget.card.contentAudio),
-                      icon: Icon(
-                        Icons.play_circle_filled,
-                        color: Colors.red,
-                        size: 50,
-                      ),
-                    ) : Container(),
+                        ? new IconButton(
+                            onPressed: () =>
+                                playaudio(widget.card.contentAudio),
+                            icon: Icon(
+                              Icons.play_circle_filled,
+                              color: Colors.red,
+                              size: 50,
+                            ),
+                          )
+                        : Container(),
                   ]),
             ),
             widget.card.title == null
@@ -185,7 +185,7 @@ class AudioTextBoldState extends State<AudioTextBold> {
               padding: const EdgeInsets.all(8.0),
               child: !isPlaying
                   ? Text(widget.card.content ?? '',
-                  style: Theme.of(context).textTheme.body2)
+                      style: Theme.of(context).textTheme.body2)
                   : TextAudio(
                       audiofile: widget.card.contentAudio,
                       fulltext: widget.card.content ?? '',

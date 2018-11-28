@@ -81,7 +81,6 @@ class AppStateContainerState extends State<AppStateContainer> {
   @override
   void initState() {
     super.initState();
-    print('AppStateContainer: main initState');
     if (widget.state != null) {
       state = widget.state;
     } else {
@@ -111,21 +110,6 @@ class AppStateContainerState extends State<AppStateContainer> {
     getExternalStorageDirectory().then((d) => extStorageDir = '${d.path}/');
   }
 
-  @override
-  void didChangeDependencies() {
-    print('AppStateContainer:didChangeDependencies');
-  }
-
-  @override
-  void didUpdateWidget(AppStateContainer oldWidget) {
-    print('AppStateContainer:didUpdateWidget');
-  }
-
-  @override
-  void reassemble() {
-    print('AppStateContainer:reassemble');
-  }
-
   void _initAudioPlayer() {
     _audioPlayer = new AudioPlayer();
     _audioPlayer.completionHandler = () => _isPlaying = false;
@@ -149,14 +133,9 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   Future onSelectNotification(String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
     var split = payload.split(':');
-    debugPrint('split $split');
     if (split[0] == 'chat') {
       User user = await UserRepo().getUser(split[1]);
-      debugPrint('navigating to $user');
       await Navigator.push(
           context,
           MaterialPageRoute<Null>(
@@ -173,7 +152,6 @@ class AppStateContainerState extends State<AppStateContainer> {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       final file = new File('$path/$fileName');
-      print('Playing ${file.path}');
       if (await file.exists()) {
         await _audioPlayer.play(file.path, isLocal: true);
       } else {
@@ -192,7 +170,6 @@ class AppStateContainerState extends State<AppStateContainer> {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       final file = new File('$path/$word.ogg');
-      print('Playing ${file.path}');
       if (await file.exists()) {
         await _audioPlayer.play(file.path, isLocal: true);
       } else {
@@ -215,7 +192,6 @@ class AppStateContainerState extends State<AppStateContainer> {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       final file = new File('$path/sample.ogg');
-      print('Playing ${file.path}');
       if (await file.exists()) {
         await _audioPlayer.play(file.path, isLocal: true);
       } else {
@@ -227,7 +203,6 @@ class AppStateContainerState extends State<AppStateContainer> {
       print(e);
     }
     _audioPlayer.completionHandler = () {
-      print('audio completed::');
       onComplete();
     };
   }
@@ -275,7 +250,6 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Exception details:\n $e');
         print('Stack trace:\n $s');
       }
-      print('_fetchMessages: $msgs');
       msgs ??= List<Map<String, String>>();
       await NotifRepo().delete(fId, 'chat');
       setState(() {
@@ -299,9 +273,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         botMessages.removeRange(maxChats, botMessages.length);
       botMessages
           .insert(0, {'userId': state.loggedInUser.id, 'message': message});
-      print('insert $message');
       final msg = await _respondToChat(message);
-      print('insert $msg');
       botMessages.insert(0, msg);
     } else {
       try {
@@ -318,7 +290,6 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
-    print('_onReceiveMessage $message');
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
@@ -389,7 +360,6 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   Future<void> getUsers() async {
-    print('getUsers begin');
     activity = 'friends';
     final userList = await UserRepo().getRemoteUsers();
     final botUser = await UserRepo().getUser(User.botId);
@@ -399,7 +369,6 @@ class AppStateContainerState extends State<AppStateContainer> {
       users = userList;
 //      notifs = notifList;
     });
-    print('getUsers end');
   }
 
   Future<Map<String, dynamic>> _respondToChat(String message) async {
@@ -464,19 +433,16 @@ class AppStateContainerState extends State<AppStateContainer> {
       case ChatMode.quiz:
         String question;
         List<String> choices;
-        print(_lesson);
         if (_lesson.conceptId == 3 || _lesson.conceptId == 5) {
           question = _toQuiz[_currentQuizUnit].objectUnitId;
           _expectedAnswer = question;
           List<LessonUnit> lessonUnits =
               List.from(_lessonUnits, growable: false)..shuffle();
-          print(lessonUnits);
           choices = lessonUnits
               .where((l) => l.objectUnitId != _expectedAnswer)
               .take(3)
               .map((l) => l.objectUnitId)
               .toList();
-          print(choices);
         } else {
           question = _toQuiz[_currentQuizUnit].objectUnitId?.length > 0
               ? _toQuiz[_currentQuizUnit].objectUnitId
@@ -503,7 +469,6 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   @override
   Widget build(BuildContext context) {
-    print('AppStateContainer:build');
     return new _InheritedAppStateContainer(
       data: this,
       child: widget.child,

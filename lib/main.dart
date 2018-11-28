@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 void main() async {
-  print('main');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());

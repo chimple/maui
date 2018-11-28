@@ -24,19 +24,20 @@ class ProfileViewState extends State<ProfileView>
   @override
   void initState() {
     super.initState();
-    print("Welcome to QuizProgressTracker class");
     tabController = new TabController(length: categories.length, vsync: this);
   }
 
   getImage(BuildContext context) async {
     setState(() {
-      imagePathStore = '';
+      imagePathStore = null;
     });
 
     Navigator.push(
       context,
       new MaterialPageRoute(
-          builder: (BuildContext context) => new CameraScreen(true)),
+          builder: (BuildContext context) => new CameraScreen(
+                true,
+              )),
     );
     // imagePathStore = "assets/solo.png" ;
   }
@@ -61,7 +62,10 @@ class ProfileViewState extends State<ProfileView>
   }
 
   Widget getTabBarPages(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    Orientation orientation = media.orientation;
     return Expanded(
+      flex: Orientation.landscape == orientation ? 1 : 2,
       child: TabBarView(controller: tabController, children: <Widget>[
         UserDrawingGrid(
           userId: AppStateContainer.of(context).state.loggedInUser.id,
@@ -81,18 +85,22 @@ class ProfileViewState extends State<ProfileView>
     var user = AppStateContainer.of(context).state.loggedInUser;
     final TextEditingController _textController = new TextEditingController();
     final stackChildren = <Widget>[
-      new Container(
-          height: 125.0,
-          width: 125.0,
-          decoration: new BoxDecoration(
-              border: new Border.all(width: 3.0, color: Colors.blueAccent),
-              shape: BoxShape.circle,
-              image: new DecorationImage(
-                  image: new FileImage(new File(user.image)),
-                  fit: BoxFit.fill))),
+      Center(
+        child: new Container(
+            height: 125.0,
+            width: 125.0,
+            decoration: new BoxDecoration(
+                border: new Border.all(width: 3.0, color: Colors.blueAccent),
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                    image: new FileImage(new File(user.image)),
+                    fit: BoxFit.fill))),
+      ),
       Positioned(
-        right: 1.0,
-        bottom: -19.0,
+        right: Orientation.landscape == orientation
+            ? media.size.width * .45
+            : media.size.width * .44,
+        bottom: -18.0,
         child: CircleAvatar(
           radius: 30.0,
           child: Center(
@@ -116,24 +124,42 @@ class ProfileViewState extends State<ProfileView>
         children: <Widget>[
           Container(
             width: media.size.width,
-            height: media.size.height * .05,
-            color: Colors.white,
-            child: Center(
-              child: new Text(
-                "${user.name}",
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+            height: Orientation.landscape == orientation
+                ? media.size.height * .1
+                : media.size.height * .07,
+            color: Colors.transparent,
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: new Text(
+                    "${user.name}",
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+                Center(
+                  child: new Text(
+                    "${user.points}",
+                    maxLines: 1,
+                    textDirection: TextDirection.ltr,
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
       Positioned(
         right: 1.0,
-        bottom: -1.0,
+        bottom: 45.0,
         child: Center(
           child: new IconButton(
             // color: Colors.transparent,
@@ -160,63 +186,90 @@ class ProfileViewState extends State<ProfileView>
       children: stackTextField,
       overflow: Overflow.visible,
     );
-    return Scaffold(
-      body: SafeArea(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            stackHeader,
-            new SizedBox(height: 45.0),
-            stackText,
-            getTabBar(),
-            getTabBarPages(context),
-            setflag == true
-                ? Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: new TextField(
-                          // focusNode: _focusName,
-                          autocorrect: false,
-                          autofocus: true,
-                          textInputAction: TextInputAction.none,
-                          onSubmitted: _submit(userName),
-                          onChanged: _onTyping,
-                          controller: _textController,
-                          decoration: new InputDecoration(
-                            labelStyle: TextStyle(color: Colors.red),
-                            isDense: true,
-                            border: const OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0)),
-                                borderSide: const BorderSide(
-                                    style: BorderStyle.solid,
-                                    width: 100.0,
-                                    color: Colors.amber)),
-                            hintText: Loca.of(context).writeYourName,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.redAccent,
-                        radius: 30,
-                        child: IconButton(
-                          color: Colors.black,
-                          icon: new Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            editbutton(user);
-                          },
-                        ),
-                      ),
-                    ],
-                  )
-                : Container()
-          ],
+    final _profileTextfield = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: new TextField(
+            // focusNode: _focusName,
+            autocorrect: false,
+            autofocus: true,
+            maxLength: 20,
+            textInputAction: TextInputAction.none,
+            onSubmitted: _submit(userName),
+            onChanged: _onTyping,
+            controller: _textController,
+            decoration: new InputDecoration(
+              counterText: '',
+              labelStyle: TextStyle(color: Colors.red),
+              isDense: true,
+              border: const OutlineInputBorder(
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(10.0)),
+                  borderSide: const BorderSide(
+                      style: BorderStyle.solid,
+                      width: 100.0,
+                      color: Colors.amber)),
+              hintText: Loca.of(context).writeYourName,
+            ),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 25.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.redAccent,
+            radius: 30,
+            child: IconButton(
+              color: Colors.black,
+              icon: new Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                editbutton(user);
+              },
+            ),
+          ),
+        ),
+      ],
     );
+
+    return Scaffold(
+        body: SafeArea(
+      child: Column(
+        children: <Widget>[
+          Flexible(
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                      alignment: new FractionalOffset(0.0, 1.0),
+                      child: new IconButton(
+                          icon: new Icon(Icons.arrow_back),
+                          iconSize: 40.0,
+                          color: Colors.black,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                    ),
+                    new SizedBox(height: 30.0),
+                    stackHeader,
+                    new SizedBox(height: 40.0),
+                    stackText,
+                    getTabBar(),
+                  ],
+                )
+              ],
+            ),
+          ),
+          getTabBarPages(context),
+          setflag == true ? _profileTextfield : Container()
+        ],
+      ),
+    ));
   }
 
   _onTyping(String name) {
@@ -224,7 +277,6 @@ class ProfileViewState extends State<ProfileView>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
       // setflag = false;

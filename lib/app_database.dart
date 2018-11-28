@@ -129,8 +129,6 @@ class AppDatabase {
           image: imagePath5,
           deviceId: deviceId,
           currentLessonId: 1));
-
-      await new UserDao().getUsers().then((u) => print(u));
     } else {
       _db = await openDatabase(path, version: 1);
     }

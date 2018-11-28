@@ -9,11 +9,14 @@ import 'package:maui/components/camera.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/screens/welcome_screen.dart';
 import 'tab_home.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/loca.dart';
+import 'package:nima/nima_actor.dart';
+import 'package:image/image.dart' as Img;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,8 +24,6 @@ class LoginScreen extends StatefulWidget {
     return new _LoginScreenState();
   }
 }
-
-
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
@@ -37,12 +38,15 @@ class _LoginScreenState extends State<LoginScreen>
   final textEditController = TextEditingController();
   double _size = 500.0;
   FocusNode _focusName;
+  String _animationName;
+  bool paused;
 
   @override
   void initState() {
     super.initState();
-    print('LoginScreen: initState');
     _isLoading = true;
+    _animationName = "signup";
+    paused = false;
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
@@ -50,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen>
     controller.addStatusListener((status) {});
     _focusName = FocusNode()
       ..addListener(() {
-        print('Name Input has focus');
         _focusName.hasFocus ? _compressIcon() : _decompressIcon();
       });
     _initData();
@@ -62,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/welcome');
+      Navigator.of(context).pushNamed('/welcome');
     }
     var users = await UserRepo().getLocalUsers();
 
@@ -147,25 +150,38 @@ class _LoginScreenState extends State<LoginScreen>
                             Container(
                               padding: const EdgeInsets.all(20.0),
                               child: new Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                // mainAxisAlignment:
+                                // MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
-                                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  AnimatedContainer(
-                                    height: _size,
-                                    width: _size,
-                                    curve: Curves.bounceOut,
-                                    child: Padding(
-                                        padding: new EdgeInsets.symmetric(
-                                            horizontal: 40.0),
-                                        child: new AspectRatio(
-                                            aspectRatio: 2.0,
-                                            child: new SvgPicture.asset(
-                                              "assets/team animals.svg",
-                                              allowDrawingOutsideViewBox: false,
-                                            ))),
-                                    duration: Duration(milliseconds: 1200),
+                                  Align(
+                                    alignment: AlignmentDirectional.center,
+                                    child: AnimatedContainer(
+                                      height: _size,
+                                      width: _size,
+                                      curve: Curves.bounceOut,
+                                      child: new AspectRatio(
+                                              aspectRatio: 2.0,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
+                                                child: new NimaActor("assets/quack",
+                                                    animation: _animationName,
+                                                    alignment: Alignment.center,
+                                                    fit: BoxFit.scaleDown,
+                                                    mixSeconds: 0.2, 
+                                                    paused: paused, 
+                                                    completed:
+                                                        (String animationName) {
+                                                  setState(() {
+                                                    paused = true;
+                                                    _animationName = null;
+                                                  });
+                                                }),
+                                              )),
+                                      duration: Duration(milliseconds: 1200),
+                                    ),
                                   ),
                                   new Stack(
                                     alignment:
@@ -193,37 +209,32 @@ class _LoginScreenState extends State<LoginScreen>
                                                   : new EdgeInsets.all(5.0),
                                             ),
                                             imagePathStore == null
-                                                ? Center(
-                                                    child: Container(
-                                                      height: size.height >
-                                                              size.width
-                                                          ? size.height * 0.2
-                                                          : size.height * 0.1,
-                                                      width: size.height >
-                                                              size.width
-                                                          ? size.width * 0.2
-                                                          : size.width * 0.1,
-                                                      child: RaisedButton(
-                                                        splashColor:
-                                                            Colors.amber,
-                                                        color: Colors.white,
-                                                        shape: CircleBorder(
-                                                            side: BorderSide(
-                                                                width: 3.0,
-                                                                color: Colors
-                                                                    .amber)),
-                                                        onPressed: () =>
-                                                            getImage(context),
-                                                        child: new IconTheme(
-                                                          data: IconThemeData(
-                                                              size:
-                                                                  size.height *
-                                                                      0.05,
-                                                              color:
-                                                                  Colors.amber),
-                                                          child:
-                                                              Icon(Icons.add),
-                                                        ),
+                                                ? Container(
+                                                    height: size.height >
+                                                            size.width
+                                                        ? size.height * 0.2
+                                                        : size.height * 0.075,
+                                                    width:
+                                                        size.height > size.width
+                                                            ? size.width * 0.2
+                                                            : size.width * 0.1,
+                                                    child: RaisedButton(
+                                                      splashColor: Colors.amber,
+                                                      color: Colors.white,
+                                                      shape: CircleBorder(
+                                                          side: BorderSide(
+                                                              width: 3.0,
+                                                              color: Colors
+                                                                  .amber)),
+                                                      onPressed: () =>
+                                                          getImage(context),
+                                                      child: new IconTheme(
+                                                        data: IconThemeData(
+                                                            size: size.height *
+                                                                0.05,
+                                                            color:
+                                                                Colors.amber),
+                                                        child: Icon(Icons.add),
                                                       ),
                                                     ),
                                                   )
@@ -250,8 +261,11 @@ class _LoginScreenState extends State<LoginScreen>
                                               padding: size.height > size.width
                                                   ? new EdgeInsets.all(
                                                       size.height * 0.1)
-                                                  : new EdgeInsets.all(
-                                                      size.height * 0.08),
+                                                  : new EdgeInsets.fromLTRB(
+                                                      size.height * 0.04,
+                                                      size.height * 0.03,
+                                                      size.height * 0.04,
+                                                      size.height * 0.085),
                                               child: new TextField(
                                                 focusNode: _focusName,
                                                 autocorrect: false,
@@ -329,24 +343,31 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   _submit(String name) {
-    print('called on submit $name');
     setState(() {
       userName = name;
     });
   }
 
+  String compressedImage;
+  @override
+  void didChangeDependencies() {
+    if (imagePathStore != null) {
+      compressImage(imagePathStore).then((s) {
+        compressedImage = s;
+      });
+    }
+    super.didChangeDependencies();
+  }
+
   void tabSreen() async {
-    if (imagePathStore != '' &&
-        userName.trim().isNotEmpty &&
-        userName != null) {
+    if (imagePathStore != null && userName != '' && userName != null) {
       user = await new UserRepo().insertLocalUser(new User(
-          image: imagePathStore,
+          image: compressedImage,
           currentLessonId: 1,
           name: userName,
           points: 100));
       AppStateContainer.of(context).setLoggedInUser(user);
     } else {
-      print("false");
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
@@ -362,41 +383,20 @@ class _LoginScreenState extends State<LoginScreen>
   }
 }
 
-// enum ImageSrc {
-//   camera,
-//   galery,
-// }
+Future<String> compressImage(String imagePath) async {
+  final Directory extDir = await getApplicationDocumentsDirectory();
+  final String dirPath = '${extDir.path}/Pictures/flutter_test';
+  await Directory(dirPath).create(recursive: true);
+  final String filePath = '$dirPath/${timestamp()}.jpg';
+  Img.Image image = Img.decodeImage(File(imagePath).readAsBytesSync());
+//  print("image original ht and wid: ${image.height} , ${image.width}");
+  var cp = Img.copyResize(
+    image,
+    56,
+  );
+  var c = File(filePath)..writeAsBytesSync(Img.encodeJpg(image, quality: 15));
+//  print("compressed image:: ${cp.height}, ${cp.width}");
+  return c.path;
+}
 
-// class ImagePick {
-//   static MethodChannel _channel = const MethodChannel(
-//     'plugins.flutter.io/image_picker',
-//   );
-//   static Future<String> pickImage({
-//     @required ImageSrc source,
-//     double maxWidth,
-//     double maxHeight,
-//   }) async {
-//     assert(source != null);
-
-//     List<CameraDescription> cameras;
-//     if (maxWidth != null && maxWidth < 0) {
-//       print("camera sdede $cameras");
-//       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
-//     }
-
-//     if (maxHeight != null && maxHeight < 0) {
-//       throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
-//     }
-//     final String path = await _channel.invokeMethod(
-//       'pickImage',
-//       <String, dynamic>{
-//         //'cameraName': cameras[0],
-//         'source': source.index,
-//         'maxWidth': maxWidth,
-//         'maxHeight': maxHeight,
-//       },
-//     );
-
-//     return path == null ? null : path;
-//   }
-// }
+String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();

@@ -15,8 +15,6 @@ class CollectionProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(builder: (context, constraints) {
-      print(
-          "Collection_Progress_Indicator Layout Builder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return Connect<RootState, double>(
         convert: (state) => state.activityMap[card.id]?.progress,
         where: (prev, next) => next != prev,

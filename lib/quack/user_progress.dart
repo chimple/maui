@@ -10,8 +10,6 @@ class UserProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     return new LayoutBuilder(builder: (context, constraints) {
-      print(
-          "User_Progress LayoutBuilder: Width:${constraints.maxWidth} Height:${constraints.maxHeight}");
       return Connect<RootState, List<QuackCard>>(
         convert: (state) => state.cardMap.values
             .where((c) =>

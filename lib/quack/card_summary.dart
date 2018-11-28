@@ -10,6 +10,8 @@ import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_lock.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/like_button.dart';
+import 'package:maui/quack/quiz_card_detail.dart';
+import 'package:maui/quack/quiz_open_detail.dart';
 import 'package:maui/quack/social_summary.dart';
 
 class CardSummary extends StatelessWidget {
@@ -17,12 +19,14 @@ class CardSummary extends StatelessWidget {
   final int index;
   final String parentCardId;
   final Orientation orientation;
+  final bool showSocialSummary;
 
   CardSummary(
       {Key key,
       @required this.card,
       this.index,
       this.parentCardId,
+      this.showSocialSummary = true,
       this.orientation = Orientation.portrait})
       : super(key: key);
 
@@ -34,11 +38,14 @@ class CardSummary extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              print('MaterialPageRoute: CardDetail: $card');
-              return CardDetail(
-                card: card,
-                parentCardId: parentCardId,
-              );
+              return card.type == CardType.question
+                  ? QuizOpenDetail(
+                      card: card,
+                    )
+                  : CardDetail(
+                      card: card,
+                      parentCardId: parentCardId,
+                    );
             },
           ),
         );
