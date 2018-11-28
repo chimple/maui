@@ -29,7 +29,6 @@ class UserDrawingGridState extends State<UserDrawingGrid> {
   void _initData() async {
     _tiles = await TileRepo()
         .getTilesByUserIdAndType(widget.userId, TileType.drawing);
-    print('tiles:$_tiles');
     setState(() => _isLoading = false);
   }
 

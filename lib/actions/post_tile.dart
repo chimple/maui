@@ -29,13 +29,11 @@ class PostTile implements AsyncAction<RootState> {
       pTile = await tileRepo.getTile(tileId);
     } else {
       await tileRepo.upsert(tile);
-      tile
-        ..card = state.cardMap[tile.cardId]
-        ..user = state.user;
-      pTile = tile;
+      pTile = await tileRepo.getTile(tile.id);
     }
+    print('post_tile: $pTile');
 
-    if (pTile.userId == state.user?.id)
+    if (pTile.userId == state.user?.id && pTile.content.length < 12000)
       try {
         await p2p.addMessage(
             state.user.id,
@@ -57,7 +55,7 @@ class PostTile implements AsyncAction<RootState> {
         cardMap: state.cardMap,
         commentMap: state.commentMap,
         activityMap: state.activityMap,
-        tiles: tile != null ? (state.tiles..insert(0, tile)) : state.tiles,
+        tiles: pTile != null ? (state.tiles..insert(0, pTile)) : state.tiles,
         userMap: state.userMap,
         drawings: state.drawings,
         templates: state.templates);

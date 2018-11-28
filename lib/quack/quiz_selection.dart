@@ -46,19 +46,24 @@ class QuizSelectionState extends State<QuizSelection> {
     super.initState();
     var odd = true;
     if (widget.answers == null) {
-      widget.quizItems.forEach((q) {
-        if (odd) {
-          _startChoices.add(q);
-          odd = false;
-        } else {
-          _endChoices.add(q);
-          odd = true;
-        }
-      });
+      if (widget.quiz.type == QuizType.pair) {
+        widget.quizItems.forEach((q) {
+          if (odd) {
+            _startChoices.add(q);
+            odd = false;
+          } else {
+            _endChoices.add(q);
+            odd = true;
+          }
+        });
+      } else {
+        _answers = List.from(widget.quizItems);
+      }
       _startChoices.shuffle();
       _endChoices.shuffle();
-      _numRows = widget.quizItems.length ~/ 2 +
-          ((widget.quiz.type == QuizType.pair) ? 0 : 1);
+//      _numRows = widget.quizItems.length ~/ 2 +
+//          ((widget.quiz.type == QuizType.pair) ? 0 : 1);
+      _numRows = (widget.quizItems.length / 2).ceil();
     } else {
       _answers = widget.answers;
       _startChoices = widget.startChoices;
@@ -68,31 +73,28 @@ class QuizSelectionState extends State<QuizSelection> {
     }
   }
 
-  @override
-  void didUpdateWidget(QuizSelection oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.resultMode && !oldWidget.resultMode) {
-      _answers = [];
-      _endChoices = [];
-      _startChoices = [];
-      widget.quizItems.forEach((q) {
-        if (q.isAnswer) {
-          _answers.add(q);
-        } else {
-          if (_startChoices.length > _endChoices.length)
-            _endChoices.add(q);
-          else
-            _startChoices.add(q);
-        }
-      });
-    }
-  }
+//  @override
+//  void didUpdateWidget(QuizSelection oldWidget) {
+//    super.didUpdateWidget(oldWidget);
+//    if (widget.resultMode && !oldWidget.resultMode) {
+//      _answers = [];
+//      _endChoices = [];
+//      _startChoices = [];
+//      widget.quizItems.forEach((q) {
+//        if (q.isAnswer) {
+//          _answers.add(q);
+//        } else {
+//          if (_startChoices.length > _endChoices.length)
+//            _endChoices.add(q);
+//          else
+//            _startChoices.add(q);
+//        }
+//      });
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
-    print('answers: ${_answers}');
-    print('startChoices: ${_startChoices}');
-    print('endChoices: ${_endChoices}');
     final answersLength = _answers?.length ?? 0;
     final choicesLength =
         max(_startChoices?.length ?? 0, _endChoices?.length ?? 0);
@@ -100,8 +102,6 @@ class QuizSelectionState extends State<QuizSelection> {
       builder: (context, constraints) {
         final width = constraints.maxWidth / 2;
         final height = constraints.maxHeight / _numRows;
-        print(
-            'quiz_stack: numRows: $_numRows, width: $width, maxWidth: ${constraints.maxWidth}, height: $height, maxHeight: ${constraints.maxHeight}');
         List<Widget> widgets = [
           Container(
             constraints: BoxConstraints.expand(),
@@ -170,27 +170,46 @@ class QuizSelectionState extends State<QuizSelection> {
       height: height,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: RaisedButton(
-          onPressed:
+        child: InkWell(
+          onTap:
               !widget.resultMode && quizItem.status == QuizItemStatus.selectable
                   ? () => _onPressed(quizItem, col == 0)
                   : null,
-          disabledColor: _disabledColor(quizItem),
-          child: (quizItem.text?.endsWith('jpg') ||
-                  quizItem.text?.endsWith('jpeg') ||
-                  quizItem.text?.endsWith('gif'))
-              ? AspectRatio(
-                  aspectRatio: 1.0,
-                  child: Image.file(
-                    File(AppStateContainer.of(context).extStorageDir +
-                        quizItem.text),
-                    fit: BoxFit.contain,
-                  ))
-              : Text(
-                  quizItem.text,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                ),
+          child: Material(
+            elevation: 8.0,
+            color: !widget.resultMode &&
+                    quizItem.status == QuizItemStatus.selectable
+                ? Colors.white
+                : _disabledColor(quizItem),
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                elevation: 0.0,
+                clipBehavior: Clip.antiAlias,
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                child: (quizItem.text?.endsWith('jpg') ||
+                        quizItem.text?.endsWith('jpeg') ||
+                        quizItem.text?.endsWith('gif'))
+                    ? AspectRatio(
+                        aspectRatio: 1.0,
+                        child: Image.file(
+                          File(AppStateContainer.of(context).extStorageDir +
+                              quizItem.text),
+                          fit: BoxFit.cover,
+                        ))
+                    : Center(
+                        child: Text(
+                          quizItem.text,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          softWrap: true,
+                        ),
+                      ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -200,28 +219,38 @@ class QuizSelectionState extends State<QuizSelection> {
     setState(() {
       switch (widget.quiz.type) {
         case QuizType.oneAtATime:
-          if (odd) {
-            _startChoices.remove(quizItem);
-            if (_prevQuizItem != null) {
-              _prevQuizItem.status = QuizItemStatus.selectable;
-              _answers.remove(_prevQuizItem);
-              _startChoices.add(_prevQuizItem);
-            }
-          } else {
-            _endChoices.remove(quizItem);
-            if (_prevQuizItem != null) {
-              _prevQuizItem.status = QuizItemStatus.selectable;
-              _answers.remove(_prevQuizItem);
-              _endChoices.add(_prevQuizItem);
-            }
+          if (_prevQuizItem != null) {
+            _prevQuizItem.status = QuizItemStatus.selectable;
           }
           if (quizItem.isAnswer) {
             quizItem.status = QuizItemStatus.correct;
           } else {
             quizItem.status = QuizItemStatus.incorrect;
           }
-          _answers.add(quizItem);
           _prevQuizItem = quizItem;
+
+//          if (odd) {
+////            _startChoices.remove(quizItem);
+//            if (_prevQuizItem != null) {
+//              _prevQuizItem.status = QuizItemStatus.selectable;
+//              _answers.remove(_prevQuizItem);
+////              _startChoices.add(_prevQuizItem);
+//            }
+//          } else {
+////            _endChoices.remove(quizItem);
+//            if (_prevQuizItem != null) {
+//              _prevQuizItem.status = QuizItemStatus.selectable;
+//              _answers.remove(_prevQuizItem);
+////              _endChoices.add(_prevQuizItem);
+//            }
+//          }
+//          if (quizItem.isAnswer) {
+//            quizItem.status = QuizItemStatus.correct;
+//          } else {
+//            quizItem.status = QuizItemStatus.incorrect;
+//          }
+//          _answers.add(quizItem);
+//          _prevQuizItem = quizItem;
           widget.canProceed(
               quizItems: widget.quizItems,
               answers: _answers,
@@ -236,16 +265,27 @@ class QuizSelectionState extends State<QuizSelection> {
           } else {
             quizItem.status = QuizItemStatus.incorrect;
           }
-          if (odd) {
-            _startChoices.remove(quizItem);
-            if (_endChoices.length > _startChoices.length + 1)
-              _startChoices.add(_endChoices.removeLast());
-          } else {
-            _endChoices.remove(quizItem);
-            if (_startChoices.length > _endChoices.length + 1)
-              _endChoices.add(_startChoices.removeLast());
-          }
-          _answers.add(quizItem);
+          _answers.remove(quizItem);
+          _answers.insert(_selectCount, quizItem);
+
+//          if (quizItem.isAnswer &&
+//              (widget.quiz.choices.length != 0 ||
+//                  _selectCount == quizItem.index)) {
+//            quizItem.status = QuizItemStatus.correct;
+//          } else {
+//            quizItem.status = QuizItemStatus.incorrect;
+//          }
+//          if (odd) {
+//            _startChoices.remove(quizItem);
+//            if (_endChoices.length > _startChoices.length + 1)
+//              _startChoices.add(_endChoices.removeLast());
+//          } else {
+//            _endChoices.remove(quizItem);
+//            if (_startChoices.length > _endChoices.length + 1)
+//              _endChoices.add(_startChoices.removeLast());
+//          }
+//          _answers.add(quizItem);
+
           _selectCount++;
           if (widget.quiz.choices.length != 0 ||
               _selectCount >= widget.quiz.answers.length) {
@@ -302,6 +342,48 @@ class QuizSelectionState extends State<QuizSelection> {
     });
   }
 
+  Widget _indicator(QuizItem quizItem) {
+    if (widget.resultMode) {
+      switch (quizItem.status) {
+        case QuizItemStatus.correct:
+          return Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          );
+          break;
+        case QuizItemStatus.incorrect:
+          return Icon(
+            Icons.cancel,
+            color: Colors.red,
+          );
+          break;
+        case QuizItemStatus.unselectable:
+          if (quizItem.isAnswer) {
+            return Icon(
+              Icons.cancel,
+              color: Colors.red,
+            );
+            ;
+          } else {
+            return Container();
+          }
+          break;
+        case QuizItemStatus.selectable:
+          if (quizItem.isAnswer) {
+            return Icon(
+              Icons.cancel,
+              color: Colors.red,
+            );
+            ;
+          } else {
+            return Container();
+          }
+      }
+    } else {
+      return Container();
+    }
+  }
+
   Color _disabledColor(QuizItem quizItem) {
     if (!widget.resultMode) {
       return Colors.blue;
@@ -315,14 +397,14 @@ class QuizSelectionState extends State<QuizSelection> {
         break;
       case QuizItemStatus.unselectable:
         if (quizItem.isAnswer) {
-          return Colors.red;
+          return Colors.green;
         } else {
           return Colors.white;
         }
         break;
       case QuizItemStatus.selectable:
         if (quizItem.isAnswer) {
-          return Colors.red;
+          return Colors.green;
         } else {
           return Colors.white;
         }

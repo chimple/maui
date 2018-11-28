@@ -87,7 +87,6 @@ class ActivityDrawingGrid extends StatelessWidget {
       convert: (state) => Tuple2(state.drawings, state.templates),
       where: (prev, next) => next != prev,
       builder: (props) {
-        print('activity_drawing_grid:build');
         return SliverGrid.count(
             crossAxisCount: 3,
             childAspectRatio: 1.0,

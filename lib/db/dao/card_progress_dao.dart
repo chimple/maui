@@ -18,7 +18,6 @@ class CardProgressDao {
             '${CardProgress.cardIdCol} = ? AND ${CardProgress.userIdCol} = ?',
         whereArgs: [cardId, userId]);
     if (maps.length > 0) {
-      print(maps);
       return CardProgress.fromMap(maps.first);
     }
     return null;

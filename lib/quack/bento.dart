@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/home/home_screen.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_summary.dart';
+import 'package:maui/quack/fab_icon.dart';
 import 'package:maui/quack/friend_strip.dart';
 import 'package:maui/quack/post_comments.dart';
 
@@ -23,14 +25,7 @@ class Bento extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Color(0xffeeeeee),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.chat),
-            onPressed: () {
-              Navigator.of(context).push(
-                new MaterialPageRoute(
-                    builder: (BuildContext context) => PostComments()),
-              );
-            }),
+        floatingActionButton: FancyFab(),
         body: Column(
           children: <Widget>[
             FriendStrip(),

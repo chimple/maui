@@ -30,7 +30,6 @@ class UserCollectionState extends State<UserCollection> {
   void _initData() async {
     _tiles = await TileRepo()
         .getTilesByCardIdAndUserIdAndType('dummy', widget.userId, TileType.dot);
-    print('tiles:$_tiles');
     setState(() => _isLoading = false);
   }
 

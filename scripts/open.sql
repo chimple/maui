@@ -1,0 +1,13 @@
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('open_2', 0, 'What name will you give a Zebra?', 'assets/topic/zebra_5.jpg', NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_2', 0, 1, 'Stripey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_2', 0, 2, 'Horsey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_2', 0, 3, 'Zebu');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_2', 0, 4, 'Cutie');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('open_7', 0, 'What will you tell this beautiful bird?', 'assets/topic/lovebirdArticle_6.jpg', NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_7', 0, 1, 'Come home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_7', 0, 2, 'Fly away');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_7', 0, 3, 'Love you');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('open_7', 0, 4, 'Be safe');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('open', 2, 'open', NULL, NULL, NULL);
+INSERT INTO `collection` (id, serial, cardId) VALUES ('open', 1, 'open_2');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('open', 2, 'open_7');

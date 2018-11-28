@@ -38,7 +38,6 @@ class UserRepo {
 
   Future<User> insertOrUpdateRemoteUser(
       String userId, String deviceId, String txnText) async {
-    print('UserRepo.insertOrUpdateRemoteUser: $userId $deviceId');
     final userInfo = txnText.split('*');
     String imagePath;
     if (userInfo.length == 3) {
@@ -101,7 +100,6 @@ class UserRepo {
         type: TileType.dot,
         userId: user.id)));
 
-    print('Added main user: $user');
     return await userDao.insert(user);
   }
 

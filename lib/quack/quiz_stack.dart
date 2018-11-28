@@ -18,8 +18,6 @@ class QuizStack extends StatefulWidget {
 class QuizStackState extends State<QuizStack> {
   @override
   Widget build(BuildContext context) {
-    print('answers: ${widget.answers}');
-    print('choices: ${widget.choices}');
     final answersLength = widget.answers?.length ?? 0;
     final choicesLength = widget.choices?.length ?? 0;
     final numRows = (answersLength / 2).ceil() + (choicesLength / 2).ceil();
@@ -27,8 +25,6 @@ class QuizStackState extends State<QuizStack> {
       builder: (context, constraints) {
         final width = constraints.maxWidth / 2;
         final height = constraints.maxHeight / numRows;
-        print(
-            'quiz_stack: numRows: $numRows, width: $width, maxWidth: ${constraints.maxWidth}, height: $height, maxHeight: ${constraints.maxHeight}');
         List<Widget> widgets = [
           Container(
             constraints: BoxConstraints.expand(),
@@ -74,8 +70,6 @@ class QuizStackState extends State<QuizStack> {
 
   Widget _quizButton(
       {QuizItem quizItem, int row, int col, double width, double height}) {
-    print(
-        '_quizButton: ${quizItem.text} row: $row, col: $col, top: ${row * height}');
     return AnimatedPositioned(
       key: ObjectKey(quizItem),
       duration: Duration(milliseconds: 500),
