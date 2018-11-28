@@ -37,11 +37,14 @@ class _LoginScreenState extends State<LoginScreen>
   double _size = 500.0;
   FocusNode _focusName;
   String _animationName;
+  bool paused;
+
   @override
   void initState() {
     super.initState();
     _isLoading = true;
     _animationName = "signup";
+    paused = false;
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
@@ -158,21 +161,23 @@ class _LoginScreenState extends State<LoginScreen>
                                       width: _size,
                                       curve: Curves.bounceOut,
                                       child: new AspectRatio(
-                                          aspectRatio: 2.0,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 40.0, right: 40.0),
-                                            child: new NimaActor("assets/quack",
-                                                animation: _animationName,
-                                                alignment: Alignment.center,
-                                                fit: BoxFit.scaleDown,
-                                                mixSeconds: 0.2, completed:
-                                                    (String animationName) {
-                                              setState(() {
-                                                _animationName = null;
-                                              });
-                                            }),
-                                          )),
+                                              aspectRatio: 2.0,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
+                                                child: new NimaActor("assets/quack",
+                                                    animation: _animationName,
+                                                    alignment: Alignment.center,
+                                                    fit: BoxFit.scaleDown,
+                                                    mixSeconds: 0.2, 
+                                                    paused: paused, 
+                                                    completed:
+                                                        (String animationName) {
+                                                  setState(() {
+                                                    paused = true;
+                                                    _animationName = null;
+                                                  });
+                                                }),
+                                              )),
                                       duration: Duration(milliseconds: 1200),
                                     ),
                                   ),
