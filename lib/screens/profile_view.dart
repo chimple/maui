@@ -62,7 +62,10 @@ class ProfileViewState extends State<ProfileView>
   }
 
   Widget getTabBarPages(BuildContext context) {
+    MediaQueryData media = MediaQuery.of(context);
+    Orientation orientation = media.orientation;
     return Expanded(
+      flex: Orientation.landscape == orientation ? 1 : 2,
       child: TabBarView(controller: tabController, children: <Widget>[
         UserDrawingGrid(
           userId: AppStateContainer.of(context).state.loggedInUser.id,
@@ -82,18 +85,22 @@ class ProfileViewState extends State<ProfileView>
     var user = AppStateContainer.of(context).state.loggedInUser;
     final TextEditingController _textController = new TextEditingController();
     final stackChildren = <Widget>[
-      new Container(
-          height: 125.0,
-          width: 125.0,
-          decoration: new BoxDecoration(
-              border: new Border.all(width: 3.0, color: Colors.blueAccent),
-              shape: BoxShape.circle,
-              image: new DecorationImage(
-                  image: new FileImage(new File(user.image)),
-                  fit: BoxFit.fill))),
+      Center(
+        child: new Container(
+            height: 125.0,
+            width: 125.0,
+            decoration: new BoxDecoration(
+                border: new Border.all(width: 3.0, color: Colors.blueAccent),
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                    image: new FileImage(new File(user.image)),
+                    fit: BoxFit.fill))),
+      ),
       Positioned(
-        right: 1.0,
-        bottom: -19.0,
+        right: Orientation.landscape == orientation
+            ? media.size.width * .45
+            : media.size.width * .44,
+        bottom: -18.0,
         child: CircleAvatar(
           radius: 30.0,
           child: Center(
@@ -117,7 +124,9 @@ class ProfileViewState extends State<ProfileView>
         children: <Widget>[
           Container(
             width: media.size.width,
-            height: media.size.height * .05,
+            height: Orientation.landscape == orientation
+                ? media.size.height * .1
+                : media.size.height * .07,
             color: Colors.transparent,
             child: Column(
               children: <Widget>[
@@ -150,7 +159,7 @@ class ProfileViewState extends State<ProfileView>
       ),
       Positioned(
         right: 1.0,
-        bottom: 20.0,
+        bottom: 45.0,
         child: Center(
           child: new IconButton(
             // color: Colors.transparent,
@@ -177,80 +186,90 @@ class ProfileViewState extends State<ProfileView>
       children: stackTextField,
       overflow: Overflow.visible,
     );
-    return Scaffold(
-      body: SafeArea(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Container(
-              alignment: new FractionalOffset(0.0, 1.0),
-              child: new IconButton(
-                  icon: new Icon(Icons.arrow_back),
-                  iconSize: 40.0,
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
+    final _profileTextfield = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: new TextField(
+            // focusNode: _focusName,
+            autocorrect: false,
+            autofocus: true,
+            maxLength: 20,
+            textInputAction: TextInputAction.none,
+            onSubmitted: _submit(userName),
+            onChanged: _onTyping,
+            controller: _textController,
+            decoration: new InputDecoration(
+              counterText: '',
+              labelStyle: TextStyle(color: Colors.red),
+              isDense: true,
+              border: const OutlineInputBorder(
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(10.0)),
+                  borderSide: const BorderSide(
+                      style: BorderStyle.solid,
+                      width: 100.0,
+                      color: Colors.amber)),
+              hintText: Loca.of(context).writeYourName,
             ),
-            new SizedBox(height: 50.0),
-            stackHeader,
-            new SizedBox(height: 40.0),
-            stackText,
-            new SizedBox(height: 30.0),
-            getTabBar(),
-            getTabBarPages(context),
-            setflag == true
-                ? Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: new TextField(
-                          // focusNode: _focusName,
-                          autocorrect: false,
-                          autofocus: true,
-                          maxLength: 20,
-                          textInputAction: TextInputAction.none,
-                          onSubmitted: _submit(userName),
-                          onChanged: _onTyping,
-                          controller: _textController,
-                          decoration: new InputDecoration(
-                            counterText: '',
-                            labelStyle: TextStyle(color: Colors.red),
-                            isDense: true,
-                            border: const OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0)),
-                                borderSide: const BorderSide(
-                                    style: BorderStyle.solid,
-                                    width: 100.0,
-                                    color: Colors.amber)),
-                            hintText: Loca.of(context).writeYourName,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 25.0),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.redAccent,
-                          radius: 30,
-                          child: IconButton(
-                            color: Colors.black,
-                            icon: new Icon(
-                              Icons.send,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              editbutton(user);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Container()
-          ],
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 25.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.redAccent,
+            radius: 30,
+            child: IconButton(
+              color: Colors.black,
+              icon: new Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                editbutton(user);
+              },
+            ),
+          ),
+        ),
+      ],
     );
+
+    return Scaffold(
+        body: SafeArea(
+      child: Column(
+        children: <Widget>[
+          Flexible(
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                      alignment: new FractionalOffset(0.0, 1.0),
+                      child: new IconButton(
+                          icon: new Icon(Icons.arrow_back),
+                          iconSize: 40.0,
+                          color: Colors.black,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                    ),
+                    new SizedBox(height: 30.0),
+                    stackHeader,
+                    new SizedBox(height: 40.0),
+                    stackText,
+                    getTabBar(),
+                  ],
+                )
+              ],
+            ),
+          ),
+          getTabBarPages(context),
+          setflag == true ? _profileTextfield : Container()
+        ],
+      ),
+    ));
   }
 
   _onTyping(String name) {
