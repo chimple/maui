@@ -20,7 +20,7 @@ class QuizWelcomeState extends State<QuizWelcome> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    MediaQueryData media = MediaQuery.of(context);
+    final media = MediaQuery.of(context);
 
     var size = media.size;
     void _complete() {
@@ -34,19 +34,25 @@ class QuizWelcomeState extends State<QuizWelcome> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-          height: size.height * 0.69,
-          width: size.width * 0.9,
-          child: AspectRatio(
-              aspectRatio: 2.0,
-              child: new NimaActor("assets/quack",
-                  alignment: Alignment.center,
-                  paused: paused,
-                  fit: BoxFit.scaleDown,
-                  animation: _animation,
-                  mixSeconds: 0.2, completed: (String animtionName) {
-                _complete();
-              })),
+        Padding(
+          padding: new  EdgeInsets.only(right: size.width * 0.1),
+          child: Container(
+            height: media.size.height * 0.69,
+            width: size.width * 0.9,
+            child: AspectRatio(
+                aspectRatio: 2.0,
+                child: Padding(
+                  padding: new EdgeInsets.only(right: size.width * 0.1, bottom: size.height * 0.1),
+                  child: new NimaActor("assets/quack",
+                      alignment: Alignment.center,
+                      paused: paused,
+                      fit: BoxFit.scaleDown,
+                      animation: _animation,
+                      mixSeconds: 0.2, completed: (String animtionName) {
+                    _complete();
+                  }),
+                )),
+          ),
         ),
         Center(
           child: Container(
@@ -56,7 +62,7 @@ class QuizWelcomeState extends State<QuizWelcome> {
               color: Colors.amber,
             ),
             padding: new EdgeInsets.only(
-                top: size.height * 0.01, bottom: size.height * 0.01),
+                top: size.height * 0.01, bottom: media.size.height * 0.01),
             height: size.height * 0.2,
             width: size.width * 0.4,
             child: FlatButton(

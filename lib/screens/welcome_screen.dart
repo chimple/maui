@@ -17,7 +17,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
       paused = true;
       _animationName = null;
     });
-    Navigator.of(context).pushNamedAndRemoveUntil('/tab', (_) => false);
+    // Navigator.of(context).pushNamedAndRemoveUntil('/tab', (_) => false);
   }
 
   @override
@@ -30,12 +30,12 @@ class WelcomeScreenState extends State<WelcomeScreen> {
             decoration: new BoxDecoration(
               color: const Color(0xFF0E4476),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0,0,30.0,200.0),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: new AspectRatio(
-                  aspectRatio: 1.0,
+            child: Align(
+              alignment: AlignmentDirectional.center,
+              child: new AspectRatio(
+                aspectRatio: 1.0,
+                child: Padding(
+                  padding: new EdgeInsets.only(right: size.width * 0.1, bottom: size.height * 0.1),
                   child: new NimaActor("assets/quack",
                       paused: paused,
                       alignment: Alignment.center,
