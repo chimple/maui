@@ -55,7 +55,11 @@ class QuizOpenState extends State<QuizOpen> {
               _isComposing = text.trim().isNotEmpty;
             });
           },
-          decoration: InputDecoration(hintText: 'Write something'),
+          decoration: InputDecoration(
+              fillColor: Colors.grey[110],
+              filled: true,
+              border: InputBorder.none,
+              hintText: 'Write Something '),
           onSubmitted: _handleSubmitted,
         ),
       ),

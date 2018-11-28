@@ -163,23 +163,23 @@ class _LoginScreenState extends State<LoginScreen>
                                       width: _size,
                                       curve: Curves.bounceOut,
                                       child: new AspectRatio(
-                                              aspectRatio: 2.0,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
-                                                child: new NimaActor("assets/quack",
-                                                    animation: _animationName,
-                                                    alignment: Alignment.center,
-                                                    fit: BoxFit.scaleDown,
-                                                    mixSeconds: 0.2, 
-                                                    paused: paused, 
-                                                    completed:
-                                                        (String animationName) {
-                                                  setState(() {
-                                                    paused = true;
-                                                    _animationName = null;
-                                                  });
-                                                }),
-                                              )),
+                                          aspectRatio: 2.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 40.0, right: 40.0),
+                                            child: new NimaActor("assets/quack",
+                                                animation: _animationName,
+                                                alignment: Alignment.center,
+                                                fit: BoxFit.scaleDown,
+                                                mixSeconds: 0.2,
+                                                paused: paused, completed:
+                                                    (String animationName) {
+                                              setState(() {
+                                                paused = true;
+                                                _animationName = null;
+                                              });
+                                            }),
+                                          )),
                                       duration: Duration(milliseconds: 1200),
                                     ),
                                   ),
@@ -392,9 +392,9 @@ Future<String> compressImage(String imagePath) async {
 //  print("image original ht and wid: ${image.height} , ${image.width}");
   var cp = Img.copyResize(
     image,
-    56,
+    64,
   );
-  var c = File(filePath)..writeAsBytesSync(Img.encodeJpg(image, quality: 15));
+  var c = File(filePath)..writeAsBytesSync(Img.encodePng(cp));
 //  print("compressed image:: ${cp.height}, ${cp.width}");
   return c.path;
 }
