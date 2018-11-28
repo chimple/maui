@@ -32,7 +32,6 @@ class QuizNavigatorState extends State<QuizNavigator> {
   Map<String, List<QuizItem>> _answersMap = {};
   Map<String, List<QuizItem>> _startChoicesMap = {};
   Map<String, List<QuizItem>> _endChoicesMap = {};
-
   int _currentPageIndex = 0;
   NavigatorMode mode = NavigatorMode.disabled;
 
@@ -91,10 +90,13 @@ class QuizNavigatorState extends State<QuizNavigator> {
                                         List<QuizItem> answers,
                                         List<QuizItem> startChoices,
                                         List<QuizItem> endChoices}) {
-                                      _quizItemMap[card.id] = quizItems;
-                                      _answersMap[card.id] = answers;
-                                      _startChoicesMap[card.id] = startChoices;
-                                      _endChoicesMap[card.id] = endChoices;
+                                      if (quizItems != null) {
+                                        _quizItemMap[card.id] = quizItems;
+                                        _answersMap[card.id] = answers;
+                                        _startChoicesMap[card.id] =
+                                            startChoices;
+                                        _endChoicesMap[card.id] = endChoices;
+                                      }
                                       setState(() {
                                         mode = NavigatorMode.checkable;
                                       });

@@ -9,12 +9,14 @@ import 'package:maui/components/camera.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/screens/welcome_screen.dart';
 import 'tab_home.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/loca.dart';
 import 'package:nima/nima_actor.dart';
+import 'package:image/image.dart' as Img;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -346,12 +348,21 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  String compressedImage;
+  @override
+  void didChangeDependencies() {
+    if (imagePathStore != null) {
+      compressImage(imagePathStore).then((s) {
+        compressedImage = s;
+      });
+    }
+    super.didChangeDependencies();
+  }
+
   void tabSreen() async {
-    if (imagePathStore != '' &&
-        userName.trim().isNotEmpty &&
-        userName != null) {
+    if (imagePathStore != null && userName != '' && userName != null) {
       user = await new UserRepo().insertLocalUser(new User(
-          image: imagePathStore,
+          image: compressedImage,
           currentLessonId: 1,
           name: userName,
           points: 100));
@@ -372,41 +383,20 @@ class _LoginScreenState extends State<LoginScreen>
   }
 }
 
-// enum ImageSrc {
-//   camera,
-//   galery,
-// }
+Future<String> compressImage(String imagePath) async {
+  final Directory extDir = await getApplicationDocumentsDirectory();
+  final String dirPath = '${extDir.path}/Pictures/flutter_test';
+  await Directory(dirPath).create(recursive: true);
+  final String filePath = '$dirPath/${timestamp()}.jpg';
+  Img.Image image = Img.decodeImage(File(imagePath).readAsBytesSync());
+//  print("image original ht and wid: ${image.height} , ${image.width}");
+  var cp = Img.copyResize(
+    image,
+    56,
+  );
+  var c = File(filePath)..writeAsBytesSync(Img.encodeJpg(image, quality: 15));
+//  print("compressed image:: ${cp.height}, ${cp.width}");
+  return c.path;
+}
 
-// class ImagePick {
-//   static MethodChannel _channel = const MethodChannel(
-//     'plugins.flutter.io/image_picker',
-//   );
-//   static Future<String> pickImage({
-//     @required ImageSrc source,
-//     double maxWidth,
-//     double maxHeight,
-//   }) async {
-//     assert(source != null);
-
-//     List<CameraDescription> cameras;
-//     if (maxWidth != null && maxWidth < 0) {
-//       print("camera sdede $cameras");
-//       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
-//     }
-
-//     if (maxHeight != null && maxHeight < 0) {
-//       throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
-//     }
-//     final String path = await _channel.invokeMethod(
-//       'pickImage',
-//       <String, dynamic>{
-//         //'cameraName': cameras[0],
-//         'source': source.index,
-//         'maxWidth': maxWidth,
-//         'maxHeight': maxHeight,
-//       },
-//     );
-
-//     return path == null ? null : path;
-//   }
-// }
+String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();

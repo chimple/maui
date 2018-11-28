@@ -1,7 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/update_points.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 
 class QuizResult extends StatefulWidget {
@@ -31,11 +37,27 @@ class QuizResultState extends State<QuizResult> {
   int _textpanel = 0;
   String _animation = 'joy';
   bool paused = false;
+  int score = 0;
+  int total = 0;
 
   void _complete() {
     setState(() {
       paused = true;
       _animation = null;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.quizItemMap.forEach((k, v) {
+      final correct = v.where((q) => q.status == QuizItemStatus.correct).length;
+      final answer = v.where((q) => q.isAnswer).length;
+      score += max(0, correct);
+      total += answer;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Provider.dispatch<RootState>(context, UpdatePoints(points: score));
     });
   }
 
@@ -101,7 +123,7 @@ class QuizResultState extends State<QuizResult> {
                               )),
                           child: Center(
                               child: Text(
-                            "50",
+                            '$score / $total',
                             style:
                                 TextStyle(fontSize: 40.0, color: Colors.white),
                           )),

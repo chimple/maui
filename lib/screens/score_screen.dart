@@ -59,6 +59,7 @@ class _ScoreScreenState extends State<ScoreScreen>
   var currentAngle, sparklesWidget, firstAngle, sparkleRadius, sparklesOpacity;
   var keys = 0;
   var _cumulativeIncrement = 0;
+  bool _pageExited = false;
 
   @override
   void initState() {
@@ -295,6 +296,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                   child: new Container(
                       height: ht > wd ? ht * 0.15 : wd * 0.13,
                       child: Nima(
+                          pageExited: _pageExited,
                           name: widget.gameName,
                           score: _cumulativeIncrement,
                           tag: gameDisplay != GameDisplay.myHeadToHead
@@ -555,6 +557,10 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 icon: new Image.asset("assets/home_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  setState(() {
+                                    _pageExited = true;
+                                  });
+
                                   AppStateContainer.of(context)
                                       .play('_audiotap.mp3');
                                   if (flag == true) {
@@ -567,6 +573,9 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     "assets/forward_button.png"),
                                 iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
                                 onPressed: () {
+                                  setState(() {
+                                    _pageExited = true;
+                                  });
                                   AppStateContainer.of(context)
                                       .play('_audiotap.mp3');
                                   if (flag == true) {
