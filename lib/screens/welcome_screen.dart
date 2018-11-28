@@ -9,7 +9,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class WelcomeScreenState extends State<WelcomeScreen> {
-  String _animationName = "hello";
+  String _animationName = "quack";
   bool paused = false;
 
   void _complete() {
@@ -34,16 +34,13 @@ class WelcomeScreenState extends State<WelcomeScreen> {
               alignment: AlignmentDirectional.center,
               child: new AspectRatio(
                 aspectRatio: 1.0,
-                child: Padding(
-                  padding: new EdgeInsets.only(right: size.width * 0.1, bottom: size.height * 0.1),
-                  child: new NimaActor("assets/quack",
-                      paused: paused,
-                      alignment: Alignment.center,
-                      fit: BoxFit.contain,
-                      animation: _animationName,
-                      // mixSeconds: 0.2,
-                      completed: (_) => _complete()),
-                ),
+                child: new NimaActor("assets/quack",
+                    paused: paused,
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    animation: _animationName,
+                    // mixSeconds: 0.2,
+                    completed: (_) => _complete()),
               ),
             )));
   }

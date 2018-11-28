@@ -178,19 +178,16 @@ class DialogContentState extends State<DialogContent> {
                         child: Center(
                           child: AspectRatio(
                             aspectRatio: 0.5,
-                            child: Padding(
-                              padding: new EdgeInsets.only(right: size.width * 0.02, bottom: size.height * 0.03),
-                              child: new NimaActor("assets/quack",
-                                  alignment: Alignment.center,
-                                  paused: paused,
-                                  fit: BoxFit.scaleDown,
-                                  animation: _animation,
-                                  mixSeconds: 0.2,
-                                  completed: (String animtionName) {
-                                widget.onCompleteNima();
-                                _complete();
-                              }),
-                            ),
+                            child: new NimaActor("assets/quack",
+                                alignment: Alignment.center,
+                                paused: paused,
+                                fit: BoxFit.scaleDown,
+                                animation: _animation,
+                                mixSeconds: 0.2,
+                                completed: (String animtionName) {
+                              widget.onCompleteNima();
+                              _complete();
+                            }),
                           ),
                         ),
                       )
