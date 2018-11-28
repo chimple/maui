@@ -17,7 +17,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
       paused = true;
       _animationName = null;
     });
-    // Navigator.of(context).pushNamedAndRemoveUntil('/tab', (_) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil('/tab', (_) => false);
   }
 
   @override
