@@ -143,6 +143,8 @@ class DialogContentState extends State<DialogContent> {
       });
     }
 
+    print("Card Lock File Called!!!!");
+
     return new Center(
       child: Material(
         type: MaterialType.transparency,
@@ -188,20 +190,20 @@ class DialogContentState extends State<DialogContent> {
                       flex: 4,
                       child: Center(
                         child: AspectRatio(
-                          aspectRatio: 0.5,
-                          child: Container(
-                              height: size.height * 0.25 - 90,
-                              width: (size.width * 0.7) * 0.5,
-                              child: NimaActor("assets/quack",
-                                  alignment: Alignment.center,
-                                  paused: paused,
-                                  fit: BoxFit.scaleDown,
-                                  animation: _animation,
-                                  mixSeconds: 0.2,
-                                  completed: (String animtionName) {
-                                widget.onCompleteNima();
-                                _complete();
-                              })),
+                          aspectRatio: 1,
+                          child: Padding(
+                            padding: new EdgeInsets.only(right: size.width * 0.02, bottom: size.height * 0.03),
+                            child: NimaActor("assets/quack",
+                                alignment: Alignment.center,
+                                paused: paused,
+                                fit: BoxFit.scaleDown,
+                                animation: _animation,
+                                mixSeconds: 0.2,
+                                completed: (String animtionName) {
+                              widget.onCompleteNima();
+                              _complete();
+                            }),
+                          ),
                         ),
                       ),
                     )

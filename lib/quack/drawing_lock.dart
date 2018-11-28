@@ -137,6 +137,8 @@ class DialogContentState extends State<DialogContent> {
       });
     }
 
+    print("Dialog Content State Called!!!!");
+
     return new Center(
       child: Material(
         type: MaterialType.transparency,
@@ -174,23 +176,23 @@ class DialogContentState extends State<DialogContent> {
                 widget.shouldDisplayNima
                     ? Container(
                         height: size.height * 0.3 - 90,
-                        width: (size.width * 0.7) * 0.5,
+                        width: size.width * 0.4,
                         child: Center(
                           child: AspectRatio(
                             aspectRatio: 0.5,
-                            child: Container(
-                                height: size.height * 0.25 - 90,
-                                width: (size.width * 0.7) * 0.5,
-                                child: new NimaActor("assets/quack",
-                                    alignment: Alignment.center,
-                                    paused: paused,
-                                    fit: BoxFit.scaleDown,
-                                    animation: _animation,
-                                    mixSeconds: 0.2,
-                                    completed: (String animtionName) {
-                                  widget.onCompleteNima();
-                                  _complete();
-                                })),
+                            child: Padding(
+                              padding: new EdgeInsets.only(right: size.width * 0.02, bottom: size.height * 0.03),
+                              child: new NimaActor("assets/quack",
+                                  alignment: Alignment.center,
+                                  paused: paused,
+                                  fit: BoxFit.scaleDown,
+                                  animation: _animation,
+                                  mixSeconds: 0.2,
+                                  completed: (String animtionName) {
+                                widget.onCompleteNima();
+                                _complete();
+                              }),
+                            ),
                           ),
                         ),
                       )
