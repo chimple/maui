@@ -16,13 +16,15 @@ import com.rivescript.Config
 import com.rivescript.RiveScript
 import org.chimple.flores.db.AppDatabase
 import org.chimple.flores.multicast.MulticastManager
+import org.chimple.flores.manager.BluetoothManager
 import org.chimple.flores.application.P2PContext
 
 
 
 class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   private val CHANNEL = "org.sutara.maui/rivescript"
-  private var tts: TextToSpeech? = null
+  private var tts: TextToSpeech? = null  
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -108,7 +110,21 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       tts!!.shutdown()
     }
     MulticastManager.getInstance(this).onCleanUp()
+    BluetoothManager.getInstance(this).onCleanUp()
     super.onDestroy()
   }
 
+
+  companion object {
+
+        private var appLaunched: Boolean = false;
+        
+        fun appLaunched() {
+          appLaunched = true;
+        }
+
+        fun isAppLaunched(): Boolean {
+          return appLaunched;
+        }
+    }
 }

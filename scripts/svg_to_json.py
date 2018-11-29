@@ -8,7 +8,7 @@ svg_dir = sys.argv[1]
 dot_map = 'final dotMap = {\n'
 for svg_file in glob(svg_dir + "/*/*_dot.svg"):
   m = re.findall(r'(.*)_dot.svg', svg_file)
-  dot_name = m[0]
+  dot_name = m[0].replace(os.path.sep, '/')
   under_dot_name = '_'.join(dot_name.split('/'))
   tree = ET.parse(svg_file)
   root = tree.getroot()

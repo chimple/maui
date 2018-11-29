@@ -9,7 +9,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/state/app_state_container.dart';
-import '../actions/deduct_points.dart';
+import '../actions/update_points.dart';
 import 'package:nima/nima_actor.dart';
 
 class CardLock extends StatefulWidget {
@@ -61,7 +61,7 @@ class CardLockState extends State<CardLock> {
         },
         barrierDismissible: false);
 
-    Provider.dispatch<RootState>(context, DeductPoints(points: 1));
+    Provider.dispatch<RootState>(context, UpdatePoints(points: -1));
   }
 
   @override
@@ -188,20 +188,17 @@ class DialogContentState extends State<DialogContent> {
                       flex: 4,
                       child: Center(
                         child: AspectRatio(
-                          aspectRatio: 0.5,
-                          child: Container(
-                              height: size.height * 0.25 - 90,
-                              width: (size.width * 0.7) * 0.5,
-                              child: NimaActor("assets/quack",
-                                  alignment: Alignment.center,
-                                  paused: paused,
-                                  fit: BoxFit.scaleDown,
-                                  animation: _animation,
-                                  mixSeconds: 0.2,
-                                  completed: (String animtionName) {
-                                widget.onCompleteNima();
-                                _complete();
-                              })),
+                          aspectRatio: 1,
+                          child: NimaActor("assets/quack",
+                              alignment: Alignment.center,
+                              paused: paused,
+                              fit: BoxFit.scaleDown,
+                              animation: _animation,
+                              mixSeconds: 0.2,
+                              completed: (String animtionName) {
+                            widget.onCompleteNima();
+                            _complete();
+                          }),
                         ),
                       ),
                     )

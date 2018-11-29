@@ -8,6 +8,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   image_picker: ^0.4.10
+  native_device_orientation: ^0.0.3
   cupertino_icons: ^0.1.2
   sqflite: ^0.12.2+1
   uuid: ^1.0.3
@@ -22,7 +23,7 @@ dependencies:
       https://github.com/chimple/fluttery.git
   flutter_circular_chart: "^0.1.0"
   shared_preferences: ^0.4.3
-  camera: 0.2.1
+  camera: ^0.2.1
   nima: ^1.0.1
   flutter_local_notifications: ^0.4.0
   badge:
@@ -83,6 +84,7 @@ flutter:
     - assets/category/
     - assets/nima_animation/
     - assets/masking/
+    - assets/action/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

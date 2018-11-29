@@ -32,7 +32,6 @@ class QuizNavigatorState extends State<QuizNavigator> {
   Map<String, List<QuizItem>> _answersMap = {};
   Map<String, List<QuizItem>> _startChoicesMap = {};
   Map<String, List<QuizItem>> _endChoicesMap = {};
-
   int _currentPageIndex = 0;
   NavigatorMode mode = NavigatorMode.disabled;
 
@@ -91,32 +90,44 @@ class QuizNavigatorState extends State<QuizNavigator> {
                                         List<QuizItem> answers,
                                         List<QuizItem> startChoices,
                                         List<QuizItem> endChoices}) {
-                                      _quizItemMap[card.id] = quizItems;
-                                      _answersMap[card.id] = answers;
-                                      _startChoicesMap[card.id] = startChoices;
-                                      _endChoicesMap[card.id] = endChoices;
-                                      setState(() {
-                                        mode = NavigatorMode.checkable;
-                                      });
+                                      if (card.option == 'open') {
+                                        mode = NavigatorMode.result;
+                                        goToNext(context);
+                                      } else {
+                                        if (quizItems != null) {
+                                          _quizItemMap[card.id] = quizItems;
+                                          _answersMap[card.id] = answers;
+                                          _startChoicesMap[card.id] =
+                                              startChoices;
+                                          _endChoicesMap[card.id] = endChoices;
+                                        }
+                                        setState(() {
+                                          mode = NavigatorMode.checkable;
+                                        });
+                                      }
                                     },
                                     resultMode: mode == NavigatorMode.result,
                                   ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      const Radius.circular(32.0))),
-                              color: Color(0xFF0E4476),
-                              padding: EdgeInsets.all(8.0),
-                              onPressed: _onPressed(context),
-                              child: Text(
-                                mode == NavigatorMode.result ? 'Next' : 'Check',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
+                          card.option == 'open'
+                              ? Container()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            const Radius.circular(32.0))),
+                                    color: Color(0xFF0E4476),
+                                    padding: EdgeInsets.all(8.0),
+                                    onPressed: _onPressed(context),
+                                    child: Text(
+                                      mode == NavigatorMode.result
+                                          ? 'Next'
+                                          : 'Check',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
                         ],
                       ),
                     );
@@ -134,23 +145,25 @@ class QuizNavigatorState extends State<QuizNavigator> {
         return () => setState(() => mode = NavigatorMode.result);
         break;
       case NavigatorMode.result:
-        return () {
-          setState(() {
-            _currentPageIndex++;
-            mode = _currentPageIndex < _quizzes.length &&
-                    _quizzes[_currentPageIndex].type == CardType.knowledge
-                ? NavigatorMode.result
-                : NavigatorMode.disabled;
-          });
-          Provider.dispatch<RootState>(
-              context,
-              AddProgress(
-                  cardId: _quizzes[_currentPageIndex].id,
-                  parentCardId: widget.cardId,
-                  index: _currentPageIndex + 1));
-
-          Navigator.of(context).pushReplacementNamed('/current_quiz');
-        };
+        return () => goToNext(context);
     }
+  }
+
+  void goToNext(BuildContext context) {
+    setState(() {
+      _currentPageIndex++;
+      mode = _currentPageIndex < _quizzes.length &&
+              _quizzes[_currentPageIndex].type == CardType.knowledge
+          ? NavigatorMode.result
+          : NavigatorMode.disabled;
+    });
+    Provider.dispatch<RootState>(
+        context,
+        AddProgress(
+            cardId: _quizzes[_currentPageIndex].id,
+            parentCardId: widget.cardId,
+            index: _currentPageIndex + 1));
+
+    Navigator.of(context).pushReplacementNamed('/current_quiz');
   }
 }
