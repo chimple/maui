@@ -66,6 +66,7 @@ class QuizResultState extends State<QuizResult> {
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = MediaQuery.of(context).orientation;
     // var orient = orientation;
+    var size = media.size;
     int index = 0;
     bool tileClick = false;
     return SafeArea(

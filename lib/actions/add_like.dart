@@ -94,6 +94,11 @@ class AddLike implements AsyncAction<RootState> {
     }
     return (RootState state) {
       return RootState(
+          frontMap: {
+            'open': state.cardMap['open_7'],
+            'topic': state.cardMap['Teacher'],
+            'story': state.cardMap['18218']
+          },
           user: state.user,
           collectionMap: state.collectionMap,
           cardMap: state.cardMap,

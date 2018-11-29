@@ -19,14 +19,19 @@ class FetchTileDetail implements AsyncAction<RootState> {
         await commentRepo.getCommentsByParentId(tile.id, tile.type);
 
     return (RootState state) => RootState(
-        user: state.user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        activityMap: state.activityMap,
-        tiles: state.tiles,
-        userMap: state.userMap,
-        drawings: state.drawings,
-        templates: state.templates,
-        commentMap: state.commentMap..[tile.id] = comments);
+            frontMap: {
+              'open': state.cardMap['open_7'],
+              'topic': state.cardMap['Teacher'],
+              'story': state.cardMap['18218']
+            },
+            user: state.user,
+            collectionMap: state.collectionMap,
+            cardMap: state.cardMap,
+            activityMap: state.activityMap,
+            tiles: state.tiles,
+            userMap: state.userMap,
+            drawings: state.drawings,
+            templates: state.templates,
+            commentMap: state.commentMap..[tile.id] = comments);
   }
 }
