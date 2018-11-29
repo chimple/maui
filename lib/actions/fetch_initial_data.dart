@@ -79,6 +79,11 @@ class FetchInitialData implements AsyncAction<RootState> {
         Map.fromIterable(userList, key: (u) => u, value: (u) => 0);
 
     return (RootState state) => RootState(
+        frontMap: {
+          'open': cardMap['open_7'],
+          'topic': cardMap['Teacher'],
+          'story': cardMap['18218']
+        },
         user: user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),

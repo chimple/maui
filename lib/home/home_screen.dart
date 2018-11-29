@@ -20,113 +20,98 @@ class HomeScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['open']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Discuss',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                        parentCardId: 'open',
+          child: Connect<RootState, Map<String, QuackCard>>(
+              convert: (state) => state.frontMap,
+              where: (prev, next) => true,
+              builder: (frontMap) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Discuss',
+                        routeName: '/topics',
+                        child: CardSummary(
+                          card: frontMap['open'],
+                          parentCardId: 'open',
+                        ),
                       ),
                     ),
-                  );
-                },
-              ),
-              Connect<RootState, List<QuackCard>>(
-                  convert: (state) => state.collectionMap['story']
-                      .map((cardId) => state.cardMap[cardId])
-                      .toList(growable: false),
-                  where: (prev, next) => true,
-                  builder: (cards) {
-                    return Expanded(
+                    Expanded(
                       flex: 1,
                       child: _buildBox(
                           context: context,
                           name: 'Story',
                           routeName: '/stories',
                           child: CardSummary(
-                            card: cards[0],
+                            card: frontMap['story'],
                           )),
-                    );
-                  }),
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['Animals']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Topic',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                      ),
                     ),
-                  );
-                },
-              ),
-              Expanded(
-                flex: 1,
-                child: _buildBox(
-                  context: context,
-                  name: 'Game',
-                  routeName: '/games',
-                  child: Column(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return SelectOpponentScreen(
-                              gameName: gameNames[0].item1,
-                            );
-                          }));
-                        },
-                        child: Material(
-                          elevation: 8.0,
-                          borderRadius: const BorderRadius.all(
-                              const Radius.circular(16.0)),
-                          clipBehavior: Clip.antiAlias,
-                          color: SingleGame.gameColors[gameNames[0].item1][0],
-                          child: Stack(
-                            children: <Widget>[
-                              Image.asset(
-                                  "assets/background_image/${gameNames[0].item1}_small.png"),
-                              Hero(
-                                tag: "assets/hoodie/${gameNames[0].item1}.png",
-                                child: Image.asset(
-                                  "assets/hoodie/${gameNames[0].item1}.png",
-                                  scale: 0.2,
-                                ),
-                              ),
-                            ],
-                          ),
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Topic',
+                        routeName: '/topics',
+                        child: CardSummary(
+                          card: frontMap['topic'],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(gameNames[0].item2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Game',
+                        routeName: '/games',
+                        child: Column(
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute<void>(
+                                        builder: (BuildContext context) {
+                                  return SelectOpponentScreen(
+                                    gameName: gameNames[0].item1,
+                                  );
+                                }));
+                              },
+                              child: Material(
+                                elevation: 8.0,
+                                borderRadius: const BorderRadius.all(
+                                    const Radius.circular(16.0)),
+                                clipBehavior: Clip.antiAlias,
+                                color: SingleGame.gameColors[gameNames[0].item1]
+                                    [0],
+                                child: Stack(
+                                  children: <Widget>[
+                                    Image.asset(
+                                        "assets/background_image/${gameNames[0].item1}_small.png"),
+                                    Hero(
+                                      tag:
+                                          "assets/hoodie/${gameNames[0].item1}.png",
+                                      child: Image.asset(
+                                        "assets/hoodie/${gameNames[0].item1}.png",
+                                        scale: 0.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(gameNames[0].item2),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
         ),
         Connect<RootState, List<Tile>>(
           convert: (state) => state.tiles,
