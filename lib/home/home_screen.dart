@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -24,6 +26,7 @@ class HomeScreen extends StatelessWidget {
               convert: (state) => state.frontMap,
               where: (prev, next) => true,
               builder: (frontMap) {
+                final gameNum = Random().nextInt(gameNames.length);
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -74,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                                     MaterialPageRoute<void>(
                                         builder: (BuildContext context) {
                                   return SelectOpponentScreen(
-                                    gameName: gameNames[0].item1,
+                                    gameName: gameNames[gameNum].item1,
                                   );
                                 }));
                               },
@@ -88,12 +91,12 @@ class HomeScreen extends StatelessWidget {
                                 child: Stack(
                                   children: <Widget>[
                                     Image.asset(
-                                        "assets/background_image/${gameNames[0].item1}_small.png"),
+                                        "assets/background_image/${gameNames[gameNum].item1}_small.png"),
                                     Hero(
                                       tag:
-                                          "assets/hoodie/${gameNames[0].item1}.png",
+                                          "assets/hoodie/${gameNames[gameNum].item1}.png",
                                       child: Image.asset(
-                                        "assets/hoodie/${gameNames[0].item1}.png",
+                                        "assets/hoodie/${gameNames[gameNum].item1}.png",
                                         scale: 0.2,
                                       ),
                                     ),
@@ -103,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(gameNames[0].item2),
+                              child: Text(gameNames[gameNum].item2),
                             )
                           ],
                         ),

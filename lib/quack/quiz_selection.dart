@@ -190,6 +190,8 @@ class QuizSelectionState extends State<QuizSelection> {
                 clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 child: (quizItem.text?.endsWith('jpg') ||
+                        quizItem.text?.endsWith('JPG') ||
+                        quizItem.text?.endsWith('jp2') ||
                         quizItem.text?.endsWith('jpeg') ||
                         quizItem.text?.endsWith('gif'))
                     ? AspectRatio(
