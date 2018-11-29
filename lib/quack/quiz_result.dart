@@ -93,6 +93,22 @@ class QuizResultState extends State<QuizResult> {
                     // fit: StackFit.expand,
 
                     children: <Widget>[
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: new Container(
+                          // alignment: new FractionalOffset(0.0, 1.0),
+                          child: FloatingActionButton(
+                            heroTag: "comment",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            tooltip: 'comment',
+                            child: Image.asset('assets/home_icon.png'),
+                          ),
+
+//  Navigator.pop(context);
+                        ),
+                      ),
                       Transform.scale(
                         alignment: Alignment.center,
                         scale: .85,
