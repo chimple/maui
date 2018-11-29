@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/components/videoplayer.dart';
 import 'package:maui/quack/post_comments.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class FancyFab extends StatefulWidget {
   final Function() onPressed;
@@ -17,11 +20,12 @@ class _FancyFabState extends State<FancyFab>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;
-  Animation<Color> _buttonColor;
-  Animation<double> _animateIcon;
+  // Animation<Color> _buttonColor;
+  // Animation<double> _animateIcon;
   Animation<double> _translateButton;
-  Curve _curve = Curves.easeOut;
+  Curve _curve = Curves.fastOutSlowIn;
   double _fabHeight = 56.0;
+  String extStorageDir;
 
   @override
   initState() {
@@ -30,26 +34,24 @@ class _FancyFabState extends State<FancyFab>
           ..addListener(() {
             setState(() {});
           });
-    _animateIcon =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(
-        0.00,
-        1.00,
-        curve: Curves.linear,
-      ),
-    ));
+    // _buttonColor = ColorTween(
+    //   begin: Colors.blue,
+    //   end: Colors.red,
+    // ).animate(CurvedAnimation(
+    //   parent: _animationController,
+    //   curve: Interval(
+    //     0.00,
+    //     1.00,
+    //     curve: Curves.linear,
+    //   ),
+    // ));
     _translateButton = Tween<double>(
       begin: _fabHeight,
       end: -14.0,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
-        0.0,
+        0.49,
         0.75,
         curve: _curve,
       ),
@@ -76,9 +78,12 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         heroTag: "add",
-        onPressed: null,
+        onPressed: () {
+          videoPlayButton(context);
+          animate();
+        },
         tooltip: 'Add',
-        child: Icon(Icons.add),
+        child: Image.asset('assets/action/Help.png'),
       ),
     );
   }
@@ -87,8 +92,8 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         heroTag: "draw",
-        onPressed:  () {
-          print("hiiiiiiiiiiiiii");
+        onPressed: () {
+          animate();
           Navigator.of(context).push(
             new MaterialPageRoute(
                 builder: (BuildContext context) =>
@@ -96,7 +101,7 @@ class _FancyFabState extends State<FancyFab>
           );
         },
         tooltip: 'draw',
-        child: Icon(Icons.image),
+        child: Image.asset('assets/action/drawing.png'),
       ),
     );
   }
@@ -106,15 +111,16 @@ class _FancyFabState extends State<FancyFab>
       child: FloatingActionButton(
         heroTag: "comment",
         onPressed: () {
-          print("hiiiiiiiiiiiiii");
-          Navigator.of(context).push(
-            new MaterialPageRoute(
-                builder: (BuildContext context) =>
-                   PostComments()),
-          );
+          setState(() {
+            animate();
+            Navigator.of(context).push(
+              new MaterialPageRoute(
+                  builder: (BuildContext context) => PostComments()),
+            );
+          });
         },
         tooltip: 'comment',
-        child: Icon(Icons.edit),
+        child: Image.asset('assets/action/post.png'),
       ),
     );
   }
@@ -122,15 +128,13 @@ class _FancyFabState extends State<FancyFab>
   Widget toggle() {
     return Container(
       child: FloatingActionButton(
-        heroTag: "toggle",
-        backgroundColor: _buttonColor.value,
-        onPressed: animate,
-        tooltip: 'Toggle',
-        child: AnimatedIcon(
-          icon: AnimatedIcons.menu_close,
-          progress: _animateIcon,
-        ),
-      ),
+          heroTag: "toggle",
+          // backgroundColor: _buttonColor.value,
+          onPressed: animate,
+          tooltip: 'Toggle',
+          child: isOpened == false
+              ? Image.asset('assets/action/Quack_button.png')
+              : Image.asset('assets/action/Cross.png')),
     );
   }
 
@@ -166,5 +170,12 @@ class _FancyFabState extends State<FancyFab>
         toggle(),
       ],
     );
+  }
+
+  void videoPlayButton(BuildContext context) {
+    final name = "assets/demo_video/bingo.mp4";
+    File file = File(AppStateContainer.of(context).extStorageDir + name);
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => new VideoApp(file: file)));
   }
 }
