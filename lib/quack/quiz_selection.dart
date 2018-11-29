@@ -61,6 +61,7 @@ class QuizSelectionState extends State<QuizSelection> {
       }
       _startChoices.shuffle();
       _endChoices.shuffle();
+      _answers.shuffle();
 //      _numRows = widget.quizItems.length ~/ 2 +
 //          ((widget.quiz.type == QuizType.pair) ? 0 : 1);
       _numRows = (widget.quizItems.length / 2).ceil();

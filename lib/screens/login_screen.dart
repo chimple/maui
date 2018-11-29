@@ -156,40 +156,44 @@ class _LoginScreenState extends State<LoginScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.all(20.0),
-                              child: new Column(
-                                // mainAxisAlignment:
-                                // MainAxisAlignment.spaceEvenly,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Align(
-                                    alignment: AlignmentDirectional.center,
-                                    child: AnimatedContainer(
-                                      height: _size,
-                                      width: _size,
-                                      curve: Curves.bounceOut,
-                                      child: new AspectRatio(
-                                              aspectRatio: 2.0,
-                                              child: Padding(
-                                                padding: new EdgeInsets.only(bottom: _size == 250.0 ? 40.0 : 0.0),
-                                                child: new NimaActor("assets/quack",
-                                                    animation: _animationName,
-                                                    alignment: Alignment.center,
-                                                    fit: BoxFit.scaleDown,
-                                                    mixSeconds: 0.2, 
-                                                    paused: paused, 
-                                                    completed:
-                                                        (String animationName) {
-                                                  setState(() {
-                                                    paused = true;
-                                                    _animationName = null;
-                                                  });
-                                                }),
-                                              )),
-                                      duration: Duration(milliseconds: 1200),
+                            Align(
+                              alignment: AlignmentDirectional.center,
+                              child: AnimatedContainer(
+                                height: _size,
+                                width: _size,
+                                curve: Curves.bounceOut,
+                                child: new AspectRatio(
+                                    aspectRatio: 2.0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 40.0, right: 40.0),
+                                      child: new NimaActor("assets/quack",
+                                          animation: _animationName,
+                                          alignment: Alignment.center,
+                                          fit: BoxFit.scaleDown,
+                                          mixSeconds: 0.2,
+                                          paused: paused,
+                                          completed: (String animationName) {
+                                        setState(() {
+                                          paused = true;
+                                          _animationName = null;
+                                        });
+                                      }),
+                                    )),
+                                duration: Duration(milliseconds: 1200),
+                              ),
+                            ),
+                            new Stack(
+                              alignment: AlignmentDirectional.bottomCenter,
+                              children: <Widget>[
+                                new Container(
+                                  decoration: new BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        new BorderRadius.circular(50.0),
+                                    border: new Border.all(
+                                      width: 6.0,
+                                      color: Colors.amber,
                                     ),
                                   ),
                                   child: new Column(

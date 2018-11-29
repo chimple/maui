@@ -156,7 +156,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildBox(
       {BuildContext context, String name, String routeName, Widget child}) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
           Row(
