@@ -96,14 +96,17 @@ class QuizResultState extends State<QuizResult> {
                       Transform.scale(
                         alignment: Alignment.center,
                         scale: .85,
-                        child: new NimaActor(
-                          "assets/quack",
-                          alignment: Alignment.center,
-                          paused: paused,
-                          fit: BoxFit.scaleDown,
-                          animation: _animation,
-                          mixSeconds: 0.0,
-                          completed: (_) => _complete(),
+                        child: Padding(
+                          padding:new EdgeInsets.only(right: media.size.width * 0.08),
+                          child: new NimaActor(
+                            "assets/quack",
+                            alignment: Alignment.center,
+                            paused: paused,
+                            fit: BoxFit.scaleDown,
+                            animation: _animation,
+                            mixSeconds: 0.0,
+                            completed: (_) => _complete(),
+                          ),
                         ),
                       ),
                       Align(
