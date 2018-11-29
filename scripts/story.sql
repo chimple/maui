@@ -1,5 +1,5 @@
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752', 2, 'Abebech, the female bajaj driver', 'assets/topic/asb/27145.png', 'Dawit  Girma
-Yirgalem  Birhanu', NULL);
+Yirgalem  Birhanu', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_3', 3, NULL, 'assets/topic/asb/27153.png', 'A bajaj is a three-wheeled vehicle.
 It is used in town to move fast from place to place.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_4', 3, NULL, 'assets/topic/asb/27152.png', 'In our community, driving is a male-dominated activity.
@@ -36,8 +36,30 @@ Source
 www.africanstorybook.org
 Original source
 This story was developed at the Ras Abebe Library in Debre Birhan with the help of Janet Lee and funded by a grant from the International Library Cultural Exchange Interest Group of the Colorado Association of Libraries (USA).', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_14', 1, 'Draw a bajaj', 'assets/topic/24752.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_14', 2, 1, 'assets/topic/24752.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_15', 0, 'Whom did Abebech transport to earn money?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_15', 1, 1, 'People');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_15', 0, 1, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_15', 0, 2, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_15', 0, 3, 'Donkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_20', 0, 'What did Abebech''s parents decide to buy?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_20', 1, 1, 'Bajaj');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_20', 0, 1, 'Truck');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_20', 0, 2, 'Bicycle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_20', 0, 3, 'Train');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_25', 0, 'Abebech''s work made her ____________?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 1, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 1, 'Sad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 2, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 3, 'Quiet');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_30', 0, 'Where will you go in your Bajaj?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 1, 'Home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 2, 'Market');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 3, 'School');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 4, 'Friend''s house');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074', 2, 'Punishment', 'assets/topic/asb/8032.png', 'Adelheid Marie Bwire
- Melany Pietersen', NULL);
+ Melany Pietersen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_3', 3, NULL, 'assets/topic/asb/8025.png', 'One day, mama bought different fruits.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_4', 3, NULL, 'assets/topic/asb/8032.png', '"When can we have some fruit?" we asked.
 "We will eat the fruit tonight," said mama.', NULL);
@@ -51,7 +73,7 @@ But Rahim was not sorry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_9', 3, NULL, 'assets/topic/asb/8030.png', '"Are you going to punish Rahim?" asked little brother.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_10', 3, NULL, 'assets/topic/asb/8033.png', '"Rahim, you will be sorry soon," warned mama.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_11', 3, NULL, 'assets/topic/asb/8031.png', 'Rahim started feeling unwell.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_12', 3, NULL, 'assets/topic/asb/8034.png', '"My stomach is painful," whispered Rahim.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_12', 3, '', 'assets/topic/asb/8034.png', '"My stomach is painful," whispered Rahim.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_13', 3, NULL, 'assets/topic/asb/8035.png', 'Mama knew why Rahim was sick.
 "The fruit is punishing Rahim," she thought.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_14', 3, NULL, 'assets/topic/asb/8036.png', 'Later, Rahim said sorry to us. "I will never be so greedy again," he promised.
@@ -72,8 +94,30 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_16', 1, 'Draw a bowl showing different fruits in it.', 'assets/topic/8074.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_16', 2, 1, 'assets/topic/8074.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_17', 0, 'What did mama bring?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_17', 1, 1, 'Fruits');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_17', 0, 1, 'Nuts');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_17', 0, 2, 'Juice');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_17', 0, 3, 'monkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_22', 0, 'Rahim was _________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_22', 1, 1, 'Greedy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_22', 0, 1, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_22', 0, 2, 'Soft');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_22', 0, 3, 'Laughing');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_27', 0, 'The story teaches us not be___________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 1, 1, 'Greedy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 2, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 3, 'Sad');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_32', 0, 'What fruits do you like?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 1, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 2, 'Mango');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 3, 'Pineapple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 4, 'Orange');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403', 2, 'Adie and Adhoch', 'assets/topic/asb/14705.png', 'Christine Nyangate
-Alice Toich, Catherine Groenewald, Melany Pietersen, Venolin Keanan Govender and Wiehan de Jager', NULL);
+Alice Toich, Catherine Groenewald, Melany Pietersen, Venolin Keanan Govender and Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_3', 3, NULL, 'assets/topic/asb/9066.png', 'There was a man who had two wives. The wives gave birth to two daughters, Adie and Adhoch. The step sisters loved each other very much.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_4', 3, NULL, 'assets/topic/asb/13839.png', 'Adie was hard working, neat, kind and well behaved. Adhoch, on the other hand, was lazy, unkind and untidy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_5', 3, NULL, 'assets/topic/asb/13843.png', 'Teachers loved Adie. She got many presents for her hard work. Adhoch did not receive any. Adhoch''s mother was jealous of Adie.', NULL);
@@ -100,8 +144,30 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_16', 1, 'Draw a gift and decorate it.', 'assets/topic/15403.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_16', 2, 1, 'assets/topic/15403.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_17', 0, 'How many wives did the man have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_17', 1, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_17', 0, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_17', 0, 2, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_17', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_22', 0, 'Where did Adhoch''s mother take Adie to?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_22', 1, 1, 'Lake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_22', 0, 1, 'School');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_22', 0, 2, 'Ground');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_22', 0, 3, 'Tree');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_27', 0, 'The story teaches us not be?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 1, 1, 'Jealous');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 1, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 2, 'Mad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 3, 'Happy');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_32', 0, 'What presents would you like?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 1, 'Food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 2, 'Clothes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 3, 'Bicycle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 4, 'Bag');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218', 2, 'Adun, the Beautiful', 'assets/topic/asb/13337.png', 'Taiwo Ẹhinẹni
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_3', 3, NULL, 'assets/topic/asb/13337.png', 'Adun was very beautiful. All the men in her village wanted to marry her.
 But Adun refused them all.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_4', 3, NULL, 'assets/topic/asb/13338.png', 'One market day,  a man borrowed legs from another man,  and arms from another,  and a body from a third man.
@@ -140,13 +206,35 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_17', 1, 'Draw a horn.', 'assets/topic/18218.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_17', 2, 1, 'assets/topic/18218.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_18', 0, 'Adhun was very beautiful.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_21', 0, 'What did the man borrow?', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 1, 1, 'Legs');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 1, 2, 'Arms');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 1, 3, 'Body');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 0, 1, 'Cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 0, 2, 'Cake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_21', 0, 3, 'Tortise');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_28', 0, 'The story teaches us not to talk with__________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 1, 1, 'Strangers');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 1, 'Friends');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 2, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 3, 'Father');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_33', 0, 'What will you borrow from others?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 1, 'Bag');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 2, 'Clothes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 3, 'Food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 4, 'Cap');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925', 2, 'Ah! Football!', 'assets/topic/asb/12881.png', 'Ursula Nafula
- Onesmus Kakungi', NULL);
+ Onesmus Kakungi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_3', 3, NULL, 'assets/topic/asb/12871.png', 'I like playing with my friend Chuma.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_4', 3, NULL, 'assets/topic/asb/12872.png', 'We are good friends. When either one of us is sent somewhere, we go together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_5', 3, NULL, 'assets/topic/asb/12873.png', 'One day, my grandmother sent me to the shop to buy salt and cooking oil. I went with Chuma.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_6', 3, NULL, 'assets/topic/asb/12874.png', 'On the way, we saw our friends playing football.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_7', 3, NULL, 'assets/topic/asb/12876.png', '"Ah! Football!" I said. I wanted to play too.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_7', 3, NULL, 'assets/topic/asb/12876.png', '', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_8', 3, NULL, 'assets/topic/asb/12877.png', 'I said to Chuma, "Let''s ask if we can play with them. I like playing football very much."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_9', 3, NULL, 'assets/topic/asb/12878.png', 'Chuma replied, "Let us go to the shop first, then we can come to play."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_10', 3, NULL, 'assets/topic/asb/12879.png', 'But I replied, "Let us play first! Grandmother will not allow us to return."', NULL);
@@ -174,8 +262,28 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_20', 1, 'Draw a football', 'assets/topic/12925.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_20', 2, 1, 'assets/topic/12925.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_21', 0, 'What does Chuma love playing very much?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_21', 1, 1, 'Football');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_21', 0, 1, 'Running');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_21', 0, 2, 'Skating');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_21', 0, 3, 'Basketball');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_26', 0, 'The goal posts where made of two big stones.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_29', 0, 'Story teaches us to take permission of___________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 1, 1, 'Grandmother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 1, 'Neighbour');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 2, 'Friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 3, 'Monkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_34', 0, 'What do you like to play?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 1, 'Football');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 2, 'Running');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 3, 'Jumping');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 4, 'Skipping rope');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555', 2, 'Serious accident', 'assets/topic/asb/9638.png', 'Clare Verbeek
-Rob Owen', NULL);
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_3', 3, NULL, 'assets/topic/asb/9635.png', 'One day my sister and I were walking near the road.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_4', 3, NULL, 'assets/topic/asb/9636.png', 'A big truck was driving down the hill.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_5', 3, NULL, 'assets/topic/asb/9637.png', 'A car was speeding up the hill.', NULL);
@@ -200,8 +308,28 @@ Source
 www.africanstorybook.org
 Original source
 www.akdn.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_12', 1, 'Draw a truck', 'assets/topic/10555.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_12', 2, 1, 'assets/topic/10555.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_13', 0, 'Where was the car speeding up?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_13', 1, 1, 'Hill');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_13', 0, 1, 'Road');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_13', 0, 2, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_13', 0, 3, 'Grass');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_18', 0, 'Truck driver smashed the car.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_21', 0, 'The story teaches us never to use mobile phone while ___________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 1, 1, 'Driving');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 1, 'Running');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 2, 'Talking');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 3, 'Walking');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_26', 0, 'Who do you walk with?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 1, 'Father');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 2, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 3, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 4, 'Friend');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094', 2, 'Akadeli''s Lucky Day', 'assets/topic/asb/19016.png', 'Ursula Nafula
- Rob Owen', NULL);
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_3', 3, NULL, 'assets/topic/asb/19004.png', 'One day Akadeli, Lucy, Acharait and Mary went to the forest far from home to pick wild fruits. They held hands to cross the big river near the forest.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_4', 3, NULL, 'assets/topic/asb/19005.png', 'They found a tree full of ripe fruits. The girls agreed to climb up the tree and to pick the fruits with their eyes closed.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_5', 3, NULL, 'assets/topic/asb/19007.png', 'Lucy, Acharait and Mary did not close their eyes. Only Akadeli closed hers as she picked the fruits.', NULL);
@@ -230,8 +358,34 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_16', 1, 'Draw a tree with fruits on it', 'assets/topic/19094.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_16', 2, 1, 'assets/topic/19094.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_17', 0, 'Where did all go to pick wild fruits?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_17', 1, 1, 'Forests');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_17', 0, 1, 'Home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_17', 0, 2, 'Ground');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_17', 0, 3, 'Lake');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_22', 0, 'Select the things Akadeli collected in her journey.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 1, 1, 'Ripe fruits');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 1, 2, 'Big fish');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 1, 3, 'Hawk');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 1, 4, 'Feather');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 1, 5, 'Bull');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 0, 1, 'Grass');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 0, 2, 'Ant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_22', 0, 3, 'Monkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_31', 0, 'How was Akadeli''s day?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 1, 1, 'Lucky');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 1, 'Bad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 2, 'Tiring');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 3, 'Boring');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_36', 0, 'What did you see when you went out?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 1, 'Bicycles');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 2, 'Houses');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 3, 'Trees');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 4, 'Road');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862', 2, 'Happy Akai', 'assets/topic/asb/9500.png', 'Dominic E Emuria and David A Lodung''a
- Rob Owen', NULL);
+ Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_3', 3, NULL, 'assets/topic/asb/9494.png', 'Akai had no shoes. Other children her age     had shoes.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_4', 3, NULL, 'assets/topic/asb/9492.png', '"It is difficult to play without shoes," said Akai  to her mother.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_5', 3, NULL, 'assets/topic/asb/9493.png', '"Akai,  I think it is time for you to have shoes," said mother. .', NULL);
@@ -260,8 +414,28 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_16', 1, 'Draw a pair of shoes and decorate it.', 'assets/topic/15862.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_16', 2, 1, 'assets/topic/15862.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_17', 0, 'What did other children have but Akai did not have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_17', 1, 1, 'Shoes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_17', 0, 1, 'Bat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_17', 0, 2, 'Ball');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_17', 0, 3, 'Stick');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_22', 0, 'Akai danced on bed wearing her new shoes.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_25', 0, 'How did Akai feel when she got her new shoes?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 1, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 1, 'Sad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 2, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 3, 'Mad');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_30', 0, 'What do you wish to get?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 1, 'Shoes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 2, 'Bag');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 3, 'Cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 4, 'Food');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560', 2, 'Aku the Sun Maker', 'assets/topic/asb/26422.png', 'Aisha  Nelson
-Idowu Abayomi Oluwasegun', NULL);
+Idowu Abayomi Oluwasegun', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_3', 3, NULL, 'assets/topic/asb/26422.png', 'Long ago in a town called Sunland lived a girl with very long legs. Aku was her name.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_4', 3, NULL, 'assets/topic/asb/26423.png', 'Aku wondered about a lot of things.
 Sometimes Aku''s father, Ataa Ankra, a fisherman let her go to the river with him to fish in his canoe. While Aku fished with her father, she wondered why the sun always looked at her from the sky.
@@ -310,8 +484,25 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_16', 1, 'Draw a tree and sun.', 'assets/topic/22560.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_16', 2, 1, 'assets/topic/22560.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_17', 0, 'Where did long legged girl Aku lived?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_17', 1, 1, 'Sunland');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_17', 0, 1, 'Moonland');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_17', 0, 2, 'Dryland');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_17', 0, 3, 'Wetland');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_22', 0, 'Who became Aku''s friend?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 1, 1, 'Sun');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 1, 'Moon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 3, 'Parrot');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_27', 0, 'How did Aku feel when she cleared the sad sky?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 2, 'Sad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 3, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 4, 'Mad');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908', 2, 'Amara and animals', 'assets/topic/asb/14042.png', 'Judy B. Maranga
-Sarah Bouwer', NULL);
+Sarah Bouwer', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_3', 3, NULL, 'assets/topic/asb/14037.png', 'Amara was nine years old. She went to Kerema primary school. Her favorite subjects were English, Science and Social Studies. She wanted to be a lawyer when she grew up. Amara loved animals very much.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_4', 3, NULL, 'assets/topic/asb/14113.png', 'Amara lived with her mother, Margy. She was a very hardworking farmer. Amara''s father died when she was 5 years old.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_5', 3, NULL, 'assets/topic/asb/14040.png', 'When Amara was not at school, she spent her time with Mbisa, the goat. She cleaned and fed it.', NULL);
@@ -336,8 +527,25 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_14', 1, 'Draw a dog and give it a cute name.', 'assets/topic/23908.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_14', 2, 1, 'assets/topic/23908.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_15', 0, 'What does Amara want to become when she grew up?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_15', 1, 1, 'Lawyer');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_15', 0, 1, 'Doctor');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_15', 0, 2, 'Police');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_15', 0, 3, 'Teacher');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_20', 0, 'Group favourite subjects of Amara.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 1, 'English');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 2, 'Science');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 3, 'Social studies');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 0, 1, 'Calculation');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_25', 0, 'How we should treat our dogs?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 1, 'Cruel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 2, 'Mean');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 3, 'Good');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 4, 'Bad');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978', 2, 'Anansi gives people stories', 'assets/topic/asb/1294.png', 'Ghanaian folktale
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_3', 3, NULL, 'assets/topic/asb/1281.png', 'Long,  long ago,  the Sky God,  Nyame,  kept all stories locked in a wooden box,  high in the sky. People down on earth had no stories to tell and they were very sad. They asked Anansi the clever Spider to help them.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_4', 3, NULL, 'assets/topic/asb/1282.png', 'Anansi spun a long thread,  and climbed up his sticky thread all the way to heaven. "Can I have the stories,  please?" he asked the Sky God. But Nyame laughed at Anansi and said,  "Oh,  these are very expensive stories. You wouldn''t be able to pay for them,  little spider."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_5', 3, NULL, 'assets/topic/asb/1283.png', '"How much do the stories cost?" asked Anansi. "You''ll have to bring me three rare and fierce animals," Nyame answered,  "A leopard with sharp teeth like spears,  a hornet that stings people,  and a snake that swallows people whole." He laughed and laughed. He thought his stories were quite safe.', NULL);
@@ -364,8 +572,27 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_16', 1, 'Draw clouds and decorate.', 'assets/topic/1978.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_16', 2, 1, 'assets/topic/1978.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_17', 0, 'Where did Nyame the sky god locked all stories?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_17', 1, 1, 'Wooden box');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_17', 0, 1, 'Steel box');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_17', 0, 2, 'Plastic box');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_17', 0, 3, 'Empty box');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_22', 0, 'Select the animals asked by Nyame.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 1, 1, 'Leopard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 1, 2, 'Hornet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 1, 3, 'Snake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 2, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 3, 'Crow');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_29', 0, 'What sort of person was Anansi?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 1, 'Clever');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 2, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 3, 'Bad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 4, 'Foolish');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234', 2, 'Anansi and wisdom', 'assets/topic/asb/1273.png', 'Ghanaian folktale
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_3', 3, NULL, 'assets/topic/asb/1274.png', 'Long long ago people didn''t know anything. They didn''t know how to plant crops, or how to weave cloth,  or how to make iron tools.
 The god Nyame up in the sky had all the wisdom of the world. He kept it safe in a clay pot.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_4', 3, NULL, 'assets/topic/asb/1275.png', 'One day, Nyame decided that he would give the pot of wisdom to Anansi.
@@ -392,8 +619,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_10', 1, 'Draw a tall tree and pieces of broken pot on the ground.', 'assets/topic/2234.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_10', 2, 1, 'assets/topic/2234.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_11', 0, 'Where was wisdom of the world kept safely?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_11', 1, 1, 'Clay pot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_11', 0, 1, 'wooden pot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_11', 0, 2, 'Mud pot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_11', 0, 3, 'Plastic pot');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_16', 0, 'Anansi became greedy and wanted to have all wisdom alone.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_19', 0, 'What do you feel about sharing your wisdom?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 2, 'Bad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 3, 'Mad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 4, 'Greedy');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000', 2, 'Anansi, the Crows, and the Crocodiles', 'assets/topic/asb/946.png', 'Ghanaian folktale
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_3', 3, NULL, 'assets/topic/asb/2078.png', 'One day there was a great famine in the land. No one had anything to eat except the crows. Each morning they flew a long distance to where there was a tree with ripe figs in the middle of a wide river. Then they flew back with the figs for themselves and their relatives. The sight of so many figs made Anansi''s mouth water. How could he get them for himself?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_4', 3, NULL, 'assets/topic/asb/947.png', 'He thought of a plan. He carefully covered his bottom with sticky beeswax. Then he took a piece of clay pot and went to see the crows. "Please could you help me?" he asked. "I need a live coal to get my fire going again." As they were getting the coal from the fire,  Anansi carefully sat firmly on one of the largest figs,  so that it would stick to his bottom. He thanked the crows,  and hurried home to enjoy the fig.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_5', 3, NULL, 'assets/topic/asb/1996.png', 'But one fig wasn''t enough for him. He went back a second time,  and did the same. When he went back a third time,  the crows began to get suspicious. "Why do you keep coming back to us to get a coal?" they said. Anansi answered,  "Every time when I get home,  the coal has burnt out." "You''re lying!" said the crows. "You just want our food!" "That''s not true," said Anansi. And he started crying.', NULL);
@@ -419,8 +661,25 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_15', 1, 'Draw a crocodile', 'assets/topic/22000.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_15', 2, 1, 'assets/topic/22000.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_16', 0, 'What fruit did the crow eat?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_16', 1, 1, 'Fig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_16', 0, 1, 'Grapes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_16', 0, 2, 'Apple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_16', 0, 3, 'Banana');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_21', 0, 'On whom did Anansi rode till the river bank.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 1, 1, 'Crocodile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 2, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 3, 'Ant');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_26', 0, 'Which animal would you like to ride?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 1, 'Zebra');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 2, 'Horse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 3, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 4, 'Bison');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995', 2, 'Anansi and Vulture', 'assets/topic/asb/166.png', 'Ghanaian folktale
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_3', 3, NULL, 'assets/topic/asb/157.png', 'Anansi the Spider and Rabbit were friends. They lived in a peaceful village in the mountains. Rabbit owned a big farm with lots of vegetables and fruit. Even though Rabbit shared generously with his friend,  Anansi was unhappy and jealous.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_4', 3, NULL, 'assets/topic/asb/158.png', 'So Anansi thought of a clever plan to take over Rabbit''s farm. Soon Rabbit was left poor and homeless. Anansi was the proud owner of all Rabbit''s land,  vegetables,  and fruit.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_5', 3, NULL, 'assets/topic/asb/159.png', 'Anansi went to the market to sell his fruit and vegetables. He made so much money that he filled a big basket with it! With some of the money,  he bought maize for his family,  and put it on top of the money in the basket.', NULL);
@@ -447,25 +706,25 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017', 2, 'Anansi and Vulture', 'assets/topic/asb/166.png', 'Ghanaian folktale
- Wiehan de Jager', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_3', 3, NULL, 'assets/topic/asb/157.png', 'Anansi the Spider and Rabbit were friends. They lived in a peaceful village in the mountains. Rabbit owned a big farm with lots of vegetables and fruit. Even though Rabbit shared generously with his friend,  Anansi was unhappy and jealous.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_4', 3, NULL, 'assets/topic/asb/158.png', 'So Anansi thought of a clever plan to take over Rabbit''s farm. Soon Rabbit was left poor and homeless. Anansi was the proud owner of all Rabbit''s land,  vegetables,  and fruit.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_5', 3, NULL, 'assets/topic/asb/159.png', 'Anansi went to the market to sell his fruit and vegetables. He made so much money that he filled a big basket with it! With some of the money,  he bought maize for his family,  and put it on top of the money in the basket.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_6', 3, NULL, 'assets/topic/asb/160.png', 'Anansi happily headed home with his basket on his head,  singing. He was thinking about all the things he was going to buy with his money.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_7', 3, NULL, 'assets/topic/asb/161.png', 'On the way it started to drizzle. Soon the drizzle turned into a heavy downpour. Anansi the Spider left his basket on the side of the road to shelter under a tree. But from there he kept a close watch on his precious basket.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_8', 3, NULL, 'assets/topic/asb/162.png', 'It started to rain even more heavily,  and Anansi was getting cold and wet. So he ran into a hole. "I will stay in this hole until the rain stops," said Anansi to himself. "At least my money is protected by the maize I put on top of it."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_9', 3, NULL, 'assets/topic/asb/163.png', 'A little while later,  Vulture was flying around and spotted the basket on the side of the road. He saw that there was money and maize in the basket. So he covered the basket with his wings and waited for the rain to stop.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_10', 3, NULL, 'assets/topic/asb/164.png', 'Anansi saw Vulture sitting on his basket. "Oh thank you,  my friend,  for protecting my basket," he said to the Vulture. "Excuse me,  Anansi,  did I hear you right?" asked Vulture. "Your basket? This basket is mine! I found it here on the road side!" Anansi could not believe his ears! "It''s mine,  I tell you!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_11', 3, NULL, 'assets/topic/asb/166.png', 'Furious,  Anansi went and reported the theft to the chief. But Vulture said to the chief and his elders,  "How could anyone leave a basket full of money and maize unguarded on the road?" "But I was watching my basket," said Anansi. "It''s my money and my maize!" "I was looking after the basket when you came and said it was yours!" replied Vulture.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1017_12', 3, NULL, NULL, NULL, NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2305', 2, 'Anansi, the Crows, and the Crocodiles', 'assets/topic/asb/946.png', 'Ghanaian folktale
-Wiehan de Jager', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2305_3', 3, NULL, 'assets/topic/asb/2078.png', 'One day there was a great famine in the land. No one had anything to eat except the crows. Each morning they flew a long distance to where there was a tree with ripe figs in the middle of a wide river. Then they flew back with the figs for themselves and their relatives. The sight of so many figs made Anansi''s mouth water. How could he get them for himself?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2305_4', 3, NULL, 'assets/topic/asb/947.png', 'He thought of a plan. He carefully covered his bottom with sticky beeswax. Then he took a piece of clay pot and went to see the crows. "Please could you help me?" he asked. "I need a live coal to get my fire going again." As they were getting the coal from the fire,  Anansi carefully sat firmly on one of the largest figs,  so that it would stick to his bottom. He thanked the crows,  and hurried home to enjoy the fig.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2305_5', 3, NULL, 'assets/topic/asb/946.png', NULL, NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_16', 1, 'Draw a farm and decorate it.', 'assets/topic/21995.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_16', 2, 1, 'assets/topic/21995.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_17', 0, 'What did Anansi take over from Rabit?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_17', 1, 1, 'Big farm');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_17', 0, 1, 'Big basket');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_17', 0, 2, 'Big pot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_17', 0, 3, 'Big tree');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_22', 0, 'What was in the basket that vulture took away?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 1, 1, 'Money');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 1, 'Honey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 2, 'Egg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 3, 'Camel');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_27', 0, 'What would you like to name Anansi?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 1, 'Cheater');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 2, 'Unworthy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 3, 'Good friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 4, 'Kind heart');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806', 2, 'The one who loves me, knows what I love', 'assets/topic/asb/1196.png', 'Palmesi Katangambo
-Natalie Propa, Rob Owen and Wiehan de Jager', NULL);
+Natalie Propa, Rob Owen and Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_3', 3, NULL, 'assets/topic/asb/19837.png', 'Once upon a time, there was a king.
 He used to have three wives, they lived in a village called Nuru.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_4', 3, NULL, 'assets/topic/asb/17604.png', 'One day, the king called his wives and said, "My beloved wives, today I would like to have a delicious meal.
@@ -496,8 +755,28 @@ Source
 www.africanstorybook.org
 Original source
 Palmesi Katangambo', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_12', 1, 'Draw a palace.', 'assets/topic/22806.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_12', 2, 1, 'assets/topic/22806.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_13', 0, 'How many wives did the king have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_13', 1, 1, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_13', 0, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_13', 0, 2, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_13', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_18', 0, 'The king appoined third wife to be the king.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_21', 0, 'What did king feel when he had food made by third wife?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 1, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 1, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 2, 'Upset');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 3, 'Mad');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_26', 0, 'What do you like to eat?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 1, 'Chapati');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 2, 'Rice');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 3, 'Chicken');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 4, 'Fruit');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817', 2, 'Forest of snakes', 'assets/topic/asb/10763.png', 'Joseph Sanchez Nadimo
-Rob Owen', NULL);
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_3', 3, NULL, 'assets/topic/asb/10763.png', 'Sinyaire village was surrounded by hills. Many snakes lived in the forest on those hills. The biggest snake was called Unyalego by the villagers. Unyalego scared many people. It swallowed whole goats and sheep.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_4', 3, NULL, 'assets/topic/asb/10765.png', 'One day, three sisters, Apiyo, Ajoh and Atieno went to the forest to fetch firewood. The girls'' grandmother warned, "Beware of Unyalego the big snake. Do not take anything from the forest except the wood."  Only Ajoh did not pay attention to her grandmother.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_5', 3, NULL, 'assets/topic/asb/10766.png', 'The girls packed milk, bananas, sweet potatoes and water. They took ropes for tying firewood and a sharp machete for chopping the wood. Then they left for the forest.', NULL);
@@ -524,8 +803,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_16', 1, 'Draw Unyalego big snake with two golden teeth.', 'assets/topic/21817.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_16', 2, 1, 'assets/topic/21817.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_17', 0, 'Unyalego is a name of which animal?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_17', 1, 1, 'Snake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_17', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_17', 0, 2, 'Honey bee');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_17', 0, 3, 'Zebra');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_22', 0, 'Unyalego is having golden teeth.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_25', 0, 'What do you think Unyalego was?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 1, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 2, 'Clever');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 3, 'Cruel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 4, 'Foolish');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734', 2, 'Whoever doesn''t obey elders', 'assets/topic/asb/27127.png', 'Yakubu Aliyu Malumri
-Kenneth Boyowa Okitikpi', NULL);
+Kenneth Boyowa Okitikpi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_3', 3, NULL, 'assets/topic/asb/27118.png', 'Once upon a time, there was a boy called Jallo.
 Jallo was very disobedient to his parents.
 People knew that this child behaved badly.', NULL);
@@ -562,8 +856,26 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_16', 1, 'Draw a mango tree.', 'assets/topic/24734.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_16', 2, 1, 'assets/topic/24734.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_17', 0, 'Jallo was very disobedient to his parents.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_20', 0, 'Jallo became mango tree.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_23', 0, 'Jallo did not listen to his mother because Jallo was?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 1, 1, 'Disobedient');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 1, 'Obedient');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 2, 'Greedy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 3, 'Clever');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_28', 0, 'How do you behave with elders?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 1, 'Obedient');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 2, 'Disobedient');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 3, 'Talkative');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 4, 'Rude');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269', 2, 'Where Is...?', 'assets/topic/asb/26677.png', 'Little Zebra Books
-Leo Daly and Magriet Brink', NULL);
+Leo Daly and Magriet Brink', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_3', 3, NULL, 'assets/topic/asb/26675.png', 'Where is the ant?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_4', 3, NULL, 'assets/topic/asb/26676.png', 'Where is the snail?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_5', 3, NULL, 'assets/topic/asb/26677.png', 'Where is the mouse?', NULL);
@@ -589,8 +901,27 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_15', 1, 'Draw any one animal listed in above story and decorate it.', 'assets/topic/30269.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_15', 2, 1, 'assets/topic/30269.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_16', 0, 'Choose the correct word.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_16', 1, 1, 'Crocodile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_16', 0, 1, 'Crocodial');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_16', 0, 2, 'Codile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_16', 0, 3, 'codole');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_21', 0, 'Match the images with their names', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 1, 'Ant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 2, 'Ant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 3, 'Lizard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 4, 'Lizard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 5, 'Bird');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 6, 'Bird');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_28', 0, 'What do goats eat?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 1, 'Grass');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 2, 'Mud');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 3, 'Leaves');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 4, 'Stick');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354', 2, 'Body', 'assets/topic/asb/26739.png', 'Little Zebra Books
-Sue  Beattie', NULL);
+Sue  Beattie', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_3', 3, NULL, 'assets/topic/asb/26749.png', 'Feet', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_4', 3, NULL, 'assets/topic/asb/26744.png', 'Legs', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_5', 3, NULL, 'assets/topic/asb/26741.png', 'Knees', NULL);
@@ -615,15 +946,55 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_14', 1, 'Draw any one body part from above story.', 'assets/topic/31354.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_14', 2, 1, 'assets/topic/31354.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_15', 0, 'Select all the body parts.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 1, 'Head');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 2, 'Hands');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 3, 'Chest');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 4, 'Legs');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 5, 'Shoes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_15', 1, 6, 'Cap');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_22', 0, 'Match image with their name.', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 1, 'Head');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 2, 'Head');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 3, 'Hand');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 4, 'Hand');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 5, 'Stomach');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 6, 'Stomach');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 7, 'Leg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 8, 'Leg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_31', 0, 'What is your favourite body part?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 1, 'Head');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 2, 'Hands');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 3, 'Belly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 4, 'Legs');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143', 2, 'Kidnapped!', 'assets/topic/asb/14751.png', 'Richard Khadambi
-Abraham Muzee', NULL);
+Abraham Muzee', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_3', 3, NULL, 'assets/topic/asb/14735.png', 'My friend Kiki and I love to go exploring. We know our neighbourhood well. Every day after school we try to think of a new place to explore.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_4', 3, NULL, 'assets/topic/asb/14736.png', 'When walking home we often cut across the big field near the old railway. Even though Kiki''s father has warned us not to go there. On that day, we noticed a tall man in a black coat walking behind us. But at first we didn''t worry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_5', 3, NULL, 'assets/topic/asb/14737.png', 'We slowed down to look at the man. His skin was full of pimples. His lips were too small to cover his dark brown teeth. He had a deep scar across half his face. This man was following us!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_6', 3, NULL, 'assets/topic/asb/14738.png', 'We decided to stop and face the stranger. My heart beat so loudly that I thought he could hear it. I stared at him, paying attention to his features and clothes. He did not like the fact that I was looking at him so keenly. He shouted, "What are you looking at, boy?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_7', 3, NULL, 'assets/topic/asb/14740.png', NULL, NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_8', 1, 'Draw a coat and decorate it.', 'assets/topic/21143.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_8', 2, 1, 'assets/topic/21143.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_9', 0, 'Every day after school what do the two friends think of?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_9', 1, 1, 'Exploring');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_9', 0, 1, 'Dancing');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_9', 0, 2, 'playing');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_9', 0, 3, 'Doing nothing');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_14', 0, 'What was the tall man wearing?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 1, 1, 'Black coat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 1, 'White coat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 2, 'Cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 3, 'Goggles');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_19', 0, 'Why was the tall man was walking behind them?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 1, 'To rob');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 2, 'To hurt');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 3, 'To kidnap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 4, 'He was calm.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830', 2, 'Bunty and Bubbly', 'assets/topic/asb/607.png', 'Sorit Gupto
- Sorit Gupto', NULL);
+ Sorit Gupto', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_3', 3, NULL, 'assets/topic/asb/607.png', 'Bunty loves to play with butterflies.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_4', 3, NULL, 'assets/topic/asb/612.png', 'And with birds.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_5', 3, NULL, 'assets/topic/asb/608.png', 'She loves to play with paper boats.', NULL);
@@ -651,8 +1022,29 @@ Source
 www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_15', 1, 'Draw a soap and decorate it.', 'assets/topic/2830.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_15', 2, 1, 'assets/topic/2830.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_16', 0, 'Select all things that Bunty likes to play with.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 1, 1, 'Butterflies');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 1, 2, 'Birds');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 1, 3, 'Paper boats');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 1, 4, 'Sand castle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 0, 1, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_16', 0, 3, 'Toy');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_24', 0, 'The king soap''s army of bubbles chases the germs away.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_24', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_24', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_27', 0, 'Cleaning ourself with soap keeps germs away', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_27', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_27', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_30', 0, 'What do you like to do in the morning?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 1, 'Bathe');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 2, 'Brush teeth');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 3, 'Eat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 4, 'Run');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912', 2, 'Letters', 'assets/topic/asb/1398.png', 'Clare Verbeek
- Cathy Feek', NULL);
+ Cathy Feek', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_3', 3, NULL, 'assets/topic/asb/1398.png', 'Last week I received a lot of letters.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_4', 3, NULL, 'assets/topic/asb/1399.png', 'On Monday my doctor wrote a letter to my teacher.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_5', 3, NULL, 'assets/topic/asb/1400.png', 'Thabisile is sick. She must stay at home.', NULL);
@@ -677,8 +1069,23 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_12', 1, 'Write a letter to your friend.', 'assets/topic/2912.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_12', 2, 1, 'assets/topic/2912.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_13', 0, 'Whom did the doctor write a letter to?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_13', 1, 1, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_13', 0, 1, 'Dudu');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_13', 0, 2, 'Teacher');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_13', 0, 3, 'Me');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_18', 0, 'My best friend Dudu wrote a letter on thursday.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_21', 0, 'Whom do you like to write a letter to?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 1, 'Friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 2, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 3, 'Teacher');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 4, 'Father');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526', 2, 'Letter to mum', 'assets/topic/asb/1503.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_3', 3, NULL, 'assets/topic/asb/1504.png', 'Mother was finishing packing her clothes in a small bag.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_4', 3, NULL, 'assets/topic/asb/1505.png', 'As she went out the door,  she hugged me and said,  "Bye for now."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_5', 3, NULL, 'assets/topic/asb/1506.png', '"Where are you going,  mum?" I looked up at her as I asked.', NULL);
@@ -711,8 +1118,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_22', 1, 'Draw a baby.', 'assets/topic/2526.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_22', 2, 1, 'assets/topic/2526.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_23', 0, 'Where was the mother going to?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_23', 1, 1, 'Hospital');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_23', 0, 1, 'School');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_23', 0, 2, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_23', 0, 3, 'No where');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_28', 0, 'My dad said we will always love you.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_28', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_28', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_31', 0, 'What do you feel when you see a new baby in your home?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 2, 'Excited');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 3, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 4, 'Sad');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428', 2, 'Big blue bus', 'assets/topic/asb/11446.png', 'Mecelin Kakoro
-Mango Tree', NULL);
+Mango Tree', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_3', 3, NULL, 'assets/topic/asb/11446.png', 'There was only one bus in Ebei''s village. It was big and blue. It was very noisy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_4', 3, NULL, 'assets/topic/asb/11447.png', '"Tomorrow we will go to town," said Ebei''s mother. "We will buy your school uniform."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_5', 3, NULL, 'assets/topic/asb/11448.png', 'Ebei was very excited. They would travel in the big blue bus. He could not sleep that night.', NULL);
@@ -743,8 +1165,25 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_20', 1, 'Draw a bus and color it', 'assets/topic/12428.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_20', 2, 1, 'assets/topic/12428.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_21', 0, 'What did Ebei and his mother want to buy ?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_21', 1, 1, 'Uniform');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_21', 0, 1, 'Cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_21', 0, 2, 'Bat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_21', 0, 3, 'Ball');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_26', 0, 'Which colored bus came to the bus stop?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 1, 1, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 1, 'Yellow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 2, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 3, 'Green');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_31', 0, 'What do you feel when waiting for something?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 1, 'Quiet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 2, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 3, 'Sad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 4, 'Angry');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419', 2, 'Ms Phone', 'assets/topic/asb/10053.png', 'Ursula Nafula
-Marion Drew', NULL);
+Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_3', 3, NULL, 'assets/topic/asb/10048.png', 'She is called Ms Phone. Look at her!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_4', 3, NULL, 'assets/topic/asb/10049.png', 'She has five cellphones. When she wakes up,  she arranges her mobile phones on the table.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_5', 3, NULL, 'assets/topic/asb/10050.png', 'The yellow one is for communicating with family.', NULL);
@@ -773,8 +1212,29 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_16', 1, 'Draw a cell phone and decorate it.', 'assets/topic/14419.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_16', 2, 1, 'assets/topic/14419.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_17', 0, 'How many phones did Ms phone have with her?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_17', 1, 1, 'Five');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_17', 0, 1, 'one');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_17', 0, 2, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_17', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_22', 0, 'Select all colors of phone that Ms phone has.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 1, 'Yellow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 2, 'White');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 3, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 4, 'Pink');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 5, 'Purple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 1, 'Black');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 2, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 3, 'Blue');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_31', 0, 'How many phones do you want?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 2, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 3, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 4, 'Four');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610', 2, 'Byantaka and the dead pot', 'assets/topic/asb/14436.png', 'Cornelius Wambi Gulere
-Emily Berg', NULL);
+Emily Berg', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_3', 3, NULL, 'assets/topic/asb/14435.png', 'Once upon a time,  there was a man called Byantaka who had a cow. Each day Byantaka grazed his cow. He also gave the cow water to drink. But Byantaka only had a very small pot for water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_4', 3, NULL, 'assets/topic/asb/14436.png', 'So he went at his neighbour''s home to borrow a bigger pot for water. His neighbour agreed to lend Byantaka his biggest clay pot saying,  "My neighbour''s problem is my problem."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_5', 3, NULL, 'assets/topic/asb/13193.png', 'After a few days,  Byantaka went to a potter''s place and bought a small pot. He took it home. He put the small pot inside the big pot that he had borrowed from his neighbour. .', NULL);
@@ -806,8 +1266,23 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_17', 1, 'Draw a big pot and decorate it.', 'assets/topic/21610.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_17', 2, 1, 'assets/topic/21610.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_18', 0, 'Which animal did Byantaka have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_18', 1, 1, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_18', 0, 1, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_18', 0, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_18', 0, 3, 'Monkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_23', 0, 'Byantaka was lying to his neighbour about the pot.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_23', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_23', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_26', 0, 'Who do you tell if you have a problem?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 1, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 2, 'Teacher');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 3, 'Judge');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 4, 'Policeman');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503', 2, 'Akoro''s banana business', 'assets/topic/asb/13467.png', 'Mele Joab
-Atilabachew Reda and Natalie Propa', NULL);
+Atilabachew Reda and Natalie Propa', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_3', 3, NULL, 'assets/topic/asb/10070.png', 'Akoro is a young man married to Chichi. They live in Kanam village in Turkana County. Akoro has a banana garden which yields a good harvest.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_4', 3, NULL, 'assets/topic/asb/13459.png', 'One morning before the sun got hot, Akoro set out with a crate of bananas on his head. He walked confidently to Kilindo market, only a kilometre away from his home.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_5', 3, NULL, 'assets/topic/asb/13460.png', 'On the way, men and women of his age stared at him in surprise. Others even laughed out loud shouting, "Akoro is definitely bewitched. How can he do such a job? Men from our community do not sell bananas!" But Akoro never minded. He was a determined and hardworking man who was ready to do any job.', NULL);
@@ -833,8 +1308,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_15', 1, 'Draw a banana tree.', 'assets/topic/31503.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_15', 2, 1, 'assets/topic/31503.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_16', 0, 'Which fruit did Akro grow in his garden?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_16', 1, 1, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_16', 0, 1, 'Mango');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_16', 0, 2, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_16', 0, 3, 'Apple');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_21', 0, 'The ripe bananas and his sweet words made every passerby want to taste the bananas.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_24', 0, 'What do you like to buy from the market?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 1, 'Ripe bananas');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 2, 'Oil');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 3, 'Sugar');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 4, 'Tea');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110', 2, 'Grandmother''s stories', 'assets/topic/asb/18842.png', 'Mutai Chepkoech
-Marleen Visser', NULL);
+Marleen Visser', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_3', 3, NULL, 'assets/topic/asb/18819.png', 'We often gathered at grandmother''s house to listen to her stories. We liked to sit around the fire, under the stars on a cow skin. Grandmother began her last story for the night, "Hare and Elephant were neighbours and friends."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_4', 3, NULL, 'assets/topic/asb/18831.png', 'Hare liked mushrooms, but he was too lazy to farm. So he stole Elephant''s mushrooms. Elephant had planted bananas and pumpkins that year. So there were no mushrooms for Hare.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_5', 3, NULL, 'assets/topic/asb/18832.png', 'Hare went without food for many days. Then he decided to steal Elephant''s bananas. Elephant noticed that someone was stealing his bananas. He went to Hare and said, "Someone is stealing from me."', NULL);
@@ -861,36 +1351,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129', 2, 'Grandmother''s stories', 'assets/topic/asb/18842.png', 'Mutai Chepkoech
-Marleen Visser', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_3', 3, NULL, 'assets/topic/asb/18819.png', 'We often gathered at grandmother''s house to listen to her stories. We liked to sit around the fire, under the stars on a cow skin. Grandmother began her last story for the night, "Hare and Elephant were neighbours and friends."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_4', 3, NULL, 'assets/topic/asb/18831.png', 'Hare liked mushrooms, but he was too lazy to farm. So he stole Elephant''s mushrooms. Elephant had planted bananas and pumpkins that year. So there were no mushrooms for Hare.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_5', 3, NULL, 'assets/topic/asb/18832.png', 'Hare went without food for many days. Then he decided to steal Elephant''s bananas. Elephant noticed that someone was stealing his bananas. He went to Hare and said, "Someone is stealing from me."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_6', 3, NULL, 'assets/topic/asb/18833.png', 'Hare asked, "Who is the thief?" Elephant began to sing,  "I will catch the thief! Aaah! I will catch the thief! Ooo!"  Hare felt nervous.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_7', 3, NULL, 'assets/topic/asb/18834.png', 'Elephant asked Monkey to watch his farm. But Hare did not steal that day or that night. Nor the next day or night. Monkey became tired of watching.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_8', 3, NULL, 'assets/topic/asb/18835.png', 'The following day, Hare went to Elephant''s farm to steal again. When Elephant came to check on his crops, Hare hid amongst the pumpkin leaves.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_9', 3, NULL, 'assets/topic/asb/18836.png', 'Elephant saw leaves move and began singing, "I''ve caught the thief! Aah! I''ve caught the thief! Ooo!" Elephant searched everywhere but did not find the thief.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_10', 3, NULL, 'assets/topic/asb/18837.png', 'On another day, Hare was there helping himself to Elephant''s crops. Elephant arrived at the farm and Hare jumped inside a huge pumpkin to hide.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_11', 3, NULL, 'assets/topic/asb/18839.png', 'Elephant noticed the large pumpkin and said, "Ooo! Here is a big pumpkin. I''ll eat that for lunch." And he swallowed the pumpkin whole!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_12', 3, NULL, 'assets/topic/asb/18840.png', 'Hare tried to jump out of the pumpkin, but could not. Elephant felt something jumping in his stomach and said, "What kind of pumpkin is this that jumps in my stomach?"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_13', 3, NULL, 'assets/topic/asb/18841.png', 'Elephant spat out the pumpkin. Before he could examine it, Hare burst out of the pumpkin and ran away as fast as he could. Elephant never caught the thief.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_14', 3, NULL, 'assets/topic/asb/18842.png', 'Grandmother said, "And that is the end of the story." "Thank you grandmother," we sleepily chorused. Then we went to bed thinking about grandmother''s stories.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21129_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Grandmother''s stories
-Author -
-Mutai Chepkoech
-Illustration -
-Marleen Visser
-Language -
-English
-Level -
-First paragraphs
-© African Storybook Initiative 2016
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_16', 1, 'Draw a pumpkin and decorate it.', 'assets/topic/19110.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_16', 2, 1, 'assets/topic/19110.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_17', 0, 'Hare was a thief.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_20', 0, 'Whom did elephant keep to watch his farm?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 1, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 2, 'Hare');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 3, 'Dog');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_25', 0, 'How will you protect from thieves?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 1, 'Stick');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 2, 'Stone');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 3, 'Lock');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 4, 'Shout');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431', 2, 'Beloved daughter', 'assets/topic/asb/18758.png', 'Ritah Katetemera
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_3', 3, NULL, 'assets/topic/asb/18757.png', 'Once upon a time, there was a man and his wife. They had six boys and one girl.
 The girl''s name was Natabo. Both parents loved Natabo more than the boys.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_4', 3, NULL, 'assets/topic/asb/18758.png', 'The parents made a small pot as a gift for their daughter. Natabo loved that little pot. She loved to play with it.', NULL);
@@ -924,8 +1401,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_16', 1, 'Draw a party', 'assets/topic/20431.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_16', 2, 1, 'assets/topic/20431.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_17', 0, 'How many children did the man and his wife have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_17', 1, 1, 'Seven');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_17', 0, 1, 'Six');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_17', 0, 2, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_17', 0, 3, 'Five');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_22', 0, 'Both man and his wife loved girl child the most.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_25', 0, 'How will you feel if someone broke your things?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 1, 'Very happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 2, 'Boring');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 3, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 4, 'Sad');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899', 2, 'King Kayanja and his daughter', 'assets/topic/asb/10069.png', 'Amana Yunus
-Natalie Propa', NULL);
+Natalie Propa', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_3', 3, NULL, 'assets/topic/asb/10074.png', 'Long,  long ago there was a king called Kayanja. He lived in a palace with the queen and their daughter,  princess Apenyo. Princess Apenyo was such a beautiful young woman that every man wanted to marry her. But king Kayanja demanded a very high bride price for the princess.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_4', 3, NULL, 'assets/topic/asb/10063.png', 'Near king Kayanja''s palace lived a chief called Aludah the Great. He was called "the Great" because everybody in the neighbourhood obeyed him. (He was very violent to anyone who disobeyed him!) Chief Aludah''s wife had recently died of malaria and he wanted another wife.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_5', 3, NULL, 'assets/topic/asb/10064.png', 'So the fat old chief went to king Kayanja to offer bride wealth for the young princess. While the two men were discussing the price, the maid Kakembo overheard their conversation. Maid Kakembo was very close to princess Apenyo.', NULL);
@@ -957,8 +1449,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_20', 1, 'Draw a boat on a river.', 'assets/topic/12899.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_20', 2, 1, 'assets/topic/12899.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_21', 0, 'Whom did Apenyo wanted to marry?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_21', 1, 1, 'Trevor');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_21', 0, 1, 'Aludah');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_21', 0, 2, 'Kategga');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_21', 0, 3, 'No one');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_26', 0, 'Everyone in king Kayanja''s kingdom could marry anyone they wanted, rich or poor.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_29', 0, 'What should you be free to do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 1, 'Eat anything');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 2, 'Marry anyone');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 3, 'Play with anything');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 4, 'Go anywhere');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417', 2, 'Kalabushe the talkative', 'assets/topic/asb/9449.png', 'Gaspah Juma
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_3', 3, NULL, 'assets/topic/asb/9393.png', 'Long time ago,  there lived a girl whose name was Kalabushe. Kalabushe was a very talkative girl. Although her mother warned her not to talk too much,  Kalabushe did not listen.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_4', 3, NULL, 'assets/topic/asb/9392.png', 'Kalabushe''s aunt lived across the valley on the other side of Kalabushe''s village. One day she fell ill. She had nobody to take care of her.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_5', 3, NULL, 'assets/topic/asb/9394.png', 'Kalabushe''s mother was very busy. It was late in the evening when she gave Kalabushe food to take to her sick aunt.', NULL);
@@ -995,8 +1502,28 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_20', 1, 'Draw a hyena', 'assets/topic/18417.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_20', 2, 1, 'assets/topic/18417.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_21', 0, 'Kalabushe was a very talkative girl.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_24', 0, 'Whose name is Sinson?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_24', 1, 1, 'Hyena');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_24', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_24', 0, 2, 'Rat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_24', 0, 3, 'Lion');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_29', 0, 'From above story we come to know that we should not talk to___________.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 1, 1, 'Strangers');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 1, 'Friends');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 2, 'Aunt');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 3, 'Uncle');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_34', 0, 'What kind of person are you?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 1, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 2, 'Talkative');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 3, 'Cheerful');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 4, 'Happy');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084', 2, 'Leopard and Antelope', 'assets/topic/asb/17309.png', 'Magabi Enyew Gessesse
-Isaac Okwir', NULL);
+Isaac Okwir', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_3', 3, NULL, 'assets/topic/asb/17306.png', 'Leopard was always trying to catch Antelope.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_4', 3, NULL, 'assets/topic/asb/17307.png', 'And Antelope was always escaping from Leopard.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_5', 3, NULL, 'assets/topic/asb/17309.png', 'One day,  Leopard called out to Antelope,  "Let''s be friends. What you eat,  I don''t eat. Nothing makes us enemies."', NULL);
@@ -1024,41 +1551,23 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148', 2, 'Byantaka and the dead pot', 'assets/topic/asb/14436.png', 'Cornelius Wambi Gulere
-Emily Berg', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_3', 3, NULL, 'assets/topic/asb/14435.png', 'Once upon a time,  there was a man called Byantaka who had a cow. Each day Byantaka grazed his cow. He also gave the cow water to drink. But Byantaka only had a very small pot for water.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_4', 3, NULL, 'assets/topic/asb/14436.png', 'So he went at his neighbour''s home to borrow a bigger pot for water. His neighbour agreed to lend Byantaka his biggest clay pot saying,  "My neighbour''s problem is my problem."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_5', 3, NULL, 'assets/topic/asb/13193.png', 'After a few days,  Byantaka went to a potter''s place and bought a small pot. He took it home. He put the small pot inside the big pot that he had borrowed from his neighbour. .', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_6', 3, NULL, 'assets/topic/asb/13194.png', 'Then he put the big pot,  with the small pot inside it,  on his head. He carried the big pot to the neighbour who loaned him the pot.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_7', 3, NULL, 'assets/topic/asb/14440.png', 'Byantaka told him,  "I am returning your pot,  it has reproduced." The neighbour was amazed that his pot had produced another pot. He praised Byantaka saying,  "Your home is blessed."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_8', 3, NULL, 'assets/topic/asb/14437.png', 'After a while,  Byantaka went back to his neighbour to borrow the pot again. He did not have good intentions.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_9', 3, NULL, 'assets/topic/asb/14447.png', 'The owner of the big pot waited in vain for Byantaka to return his pot. Eventually he went to Byantaka''s home and said,  "I have come for my pot."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_10', 3, NULL, 'assets/topic/asb/14446.png', 'Byantaka told his neighbour,  "My friend,  our pot died. I was just on my way to tell you the bad news."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_11', 3, NULL, 'assets/topic/asb/14448.png', 'His neighbour clapped his hands together in surprise. His face began to swell with anger. He shouted at Byantaka,  "I have never heard of a pot dying!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_12', 3, NULL, 'assets/topic/asb/14450.png', 'Byantaka replied,  "My friend you should accept these things. Everything that produces must die. I was also very sorry about the big pot''s death."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_13', 3, NULL, 'assets/topic/asb/14449.png', 'His neighbour was very angry and he went to court to report Byantaka. The judge listened to explanations from both of them. He found the owner of the pot was in the wrong.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_14', 3, NULL, 'assets/topic/asb/14451.png', '"When Byantaka told you that the pot had reproduced,  you accepted. When he says that every living thing which reproduces must die,  he is correct." That is how the judge judged the case.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_15', 3, NULL, 'assets/topic/asb/14452.png', 'Byantaka''s neighbour went home walking like a snail. Byantaka had got the big pot with his cleverness.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21148_16', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Byantaka and the dead pot
-Author -
-Peter Kisakye
-Translation -
-Cornelius Wambi Gulere
-Illustration -
-Emily Berg
-Language -
-English
-Level -
-First paragraphs
-© Text: Uganda Community Libraries Association (Ugcla) Artwork: African Storybook Initiative 2015
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org
-Original source
-http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_15', 1, 'Draw a tree with branches and decorate it.', 'assets/topic/22084.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_15', 2, 1, 'assets/topic/22084.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_16', 0, 'From whom was Antelope always escaping?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_16', 1, 1, 'Leopard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_16', 0, 1, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_16', 0, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_16', 0, 3, 'Rat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_21', 0, 'Leopard was caught between two branches.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_24', 0, 'What sort of animal was the Leopard?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 1, 'Hungry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 2, 'Cunning');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 3, 'Kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 4, 'Tempted');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434', 2, 'Frog and Snake', 'assets/topic/asb/18784.png', 'John Emongot
- Rob Owen', NULL);
+ Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_3', 3, NULL, 'assets/topic/asb/18783.png', 'Once upon a time, Frog and Snake were good friends. Their homes were near each other and their children played together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_4', 3, NULL, 'assets/topic/asb/18784.png', 'One day,  Frog said to Snake, "My friend I want to visit my mother next week. Would you like to go with me?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_5', 3, NULL, 'assets/topic/asb/25000.png', '"I would be happy to go," Snake answered.
@@ -1094,8 +1603,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_20', 1, 'Draw a snake and decorate it.', 'assets/topic/20434.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_20', 2, 1, 'assets/topic/20434.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_21', 0, 'Whom did Frog and Snake asked to look after their homes?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_21', 1, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_21', 0, 1, 'Tiger');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_21', 0, 2, 'parrot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_21', 0, 3, 'snail');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_26', 0, 'The two friends were attacked by angry squirrels', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_29', 0, 'What do think about frog''s mother?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 1, 'KInd');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 2, 'Cruel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 3, 'Disciplined');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 4, 'Good');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086', 2, 'Zama is great!', 'assets/topic/asb/7514.png', 'Nina Orange
-Vusi Malindi', NULL);
+Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_3', 3, NULL, 'assets/topic/asb/7513.png', 'My little brother sleeps late.
 I wake early,  because I am great!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_4', 3, NULL, 'assets/topic/asb/7514.png', 'I am the one who lets in the sun.', NULL);
@@ -1129,8 +1653,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_16', 1, 'Draw a window with curtains.', 'assets/topic/22086.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_16', 2, 1, 'assets/topic/22086.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_17', 0, 'Who sleeps late?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_17', 1, 1, 'Little brother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_17', 0, 1, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_17', 0, 2, 'Father');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_17', 0, 3, 'Sister');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_22', 0, 'In class I do my best in every way.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_25', 0, 'Who do you relate above poem to?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 1, 'Brother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 2, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 3, 'Friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 4, 'Myself');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680', 2, 'Demane and Demazane', 'assets/topic/asb/2636.png', 'South African Folktale
- Jemma Kahn', NULL);
+ Jemma Kahn', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_3', 3, NULL, NULL, 'Once upon a time,  there was a boy called Demane. He had a twin sister called Demazane.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_4', 3, NULL, 'assets/topic/asb/2635.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_5', 3, NULL, NULL, 'When their mother and father died,  they went to stay with their uncle. But they were badly treated. They were beaten with long sticks,  and given thin porridge only once a day for food. So they ran away.', NULL);
@@ -1176,8 +1715,25 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_35', 1, 'Draw a cave and put animals inside', 'assets/topic/10680.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_35', 2, 1, 'assets/topic/10680.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_36', 0, 'Where did Demane and Demazane find shelter?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_36', 1, 1, 'Cave');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_36', 0, 1, 'Hut');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_36', 0, 2, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_36', 0, 3, 'Stone house');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_41', 0, 'what did Demane put in the hairy man''s bag?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 1, 1, 'Bees');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 1, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 2, 'Fire');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 3, 'Ashes');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_46', 0, 'How would you feel if you were alone?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 1, 'Brave');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 2, 'Scared');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 3, 'Clever');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 4, 'Foolish');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445', 2, 'Pretty golden pen', 'assets/topic/asb/25333.png', 'Ahmed Mardiya and Ibrahim Sharifa
-Andrews Opoku Antwi and Michelangelo Quaye Anang', NULL);
+Andrews Opoku Antwi and Michelangelo Quaye Anang', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_3', 3, NULL, 'assets/topic/asb/25336.png', 'Long ago, in Pen Village, lived many pens.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_4', 3, NULL, 'assets/topic/asb/25337.png', 'There was Golden, Bic, Ballpoint, Gel, Marker, and others.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_5', 3, NULL, 'assets/topic/asb/25339.png', 'Golden was a pretty girl.
@@ -1206,8 +1762,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_12', 1, 'Draw a pen and decorate it.', 'assets/topic/21445.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_12', 2, 1, 'assets/topic/21445.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_13', 0, 'What is the name of pretty girl in pen village?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_13', 1, 1, 'Golden');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_13', 0, 1, 'Bic');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_13', 0, 2, 'Gel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_13', 0, 3, 'Marker');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_18', 0, 'Golden was sad because she had no ink.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_21', 0, 'What should Golden pen do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 1, 'Get ink');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 2, 'Fill water');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 3, 'Run away');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 4, 'Do nothing');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807', 2, 'Peace', 'assets/topic/asb/8945.png', 'Niyifasha Epimaque
-Steven McKimmie, Wiehan de Jager, Monge Tlaka, Jonathan Field, Emily Berg, Jano Strydom and Catherine Groenewald', NULL);
+Steven McKimmie, Wiehan de Jager, Monge Tlaka, Jonathan Field, Emily Berg, Jano Strydom and Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_3', 3, NULL, 'assets/topic/asb/7987.png', 'Peace is very important thing in our daily life.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_4', 3, NULL, 'assets/topic/asb/8999.png', 'whoever does not have peace does not plan or do anything right.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_5', 3, NULL, 'assets/topic/asb/13838.png', 'If you don''t have peace, you lose the living hope and you feel that whatever you do yields nothing.', NULL);
@@ -1234,8 +1805,23 @@ Source
 www.africanstorybook.org
 Original source
 The author!', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_12', 1, 'Draw dove.', 'assets/topic/30807.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_12', 2, 1, 'assets/topic/30807.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_13', 0, 'What is most important thing in our life?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_13', 1, 1, 'Peace');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_13', 0, 1, 'Money');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_13', 0, 2, 'Job');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_13', 0, 3, 'Enemy');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_18', 0, 'A family with peace is very strong that no one can divide  it.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_21', 0, 'What else is important in life?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 1, 'Food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 2, 'Play');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 3, 'Strength');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 4, 'Happiness');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271', 2, 'Donkey', 'assets/topic/asb/26642.png', 'Little Zebra Books
-Marleen Visser', NULL);
+Marleen Visser', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_3', 3, NULL, 'assets/topic/asb/26643.png', 'Dog', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_4', 3, NULL, 'assets/topic/asb/26644.png', 'Duck', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_5', 3, NULL, 'assets/topic/asb/26645.png', 'Cow', NULL);
@@ -1261,11 +1847,27 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7651', 2, 'A Greedy Boy', 'assets/topic/asb/5815.png', 'Tukei A Cathy
-Bronwen Heath, Eden Daniels, Marleen Visser and Wiehan de Jager', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7651_3', 3, NULL, 'assets/topic/asb/6734.png', NULL, NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_15', 1, 'Paint a chicken and decorate it.', 'assets/topic/30271.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_15', 2, 1, 'assets/topic/30271.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_16', 0, 'Which is the biggest animal among the group?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_16', 1, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_16', 0, 1, 'Sheep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_16', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_16', 0, 3, 'Pig');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_21', 0, 'List the animals in increasing order of their height.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 1, 'Mouse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 3, 'Duck');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 4, 'Pig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 5, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 6, 'Cow');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_28', 0, 'Which is your favourite animal?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 1, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 3, 'Pig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 4, 'Cat');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612', 2, 'Donkey and Ox', 'assets/topic/asb/15496.png', 'Ursula Nafula
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_3', 3, NULL, 'assets/topic/asb/15491.png', 'A farmer had an old ox.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_4', 3, NULL, 'assets/topic/asb/15492.png', 'He had a donkey too.
 The ox and the donkey were friends.', NULL);
@@ -1299,8 +1901,25 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_16', 1, 'Paint a donkey and decorate it.', 'assets/topic/15612.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_16', 2, 1, 'assets/topic/15612.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_17', 0, 'How many animals did the farmer have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_17', 1, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_17', 0, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_17', 0, 2, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_17', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_22', 0, 'What does the cow say?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 1, 1, 'Moo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 1, 'Boo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 2, 'Roo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 3, 'Koo');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_27', 0, 'Why should we work hard?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 1, 'Makes us happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 2, 'Livelihood');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 3, 'Keeps us fit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 4, 'We should not');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985', 2, 'Polygon family', 'assets/topic/asb/19270.png', 'Lindiwe Tshabalala
- Isaac Okwir', NULL);
+ Isaac Okwir', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_3', 3, NULL, 'assets/topic/asb/19268.png', '"This year we are going to have a special family gathering," announced Mom Polygon. "Who is coming? I hope all the Polygons will be there. I miss my cousins," said Khosi. "I miss my side of the family the most,  the Quadrilaterals," smiled Mom. "Yes,  it''s a long time since we saw Rectangle,  Square,  and Rhombus," said Dad Polygon. "Don''t forget,  they have three children now!" Mom reminded Dad.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_4', 3, NULL, 'assets/topic/asb/19270.png', '"What about cousin Scalene and her children? Are they coming?" asked Vusi. Mom answered,  "Yes,  they are Polygons,  although they are not Quadrilaterals. Their surname is Triangle. The kids are Isosceles and Equilateral." "Oh yes,  the Triangle family!" exclaimed Vusi. "But they look a lot like the Quadrilaterals." "No,  not exactly," said Mom. "Triangles have three sides,  while the Quadrilaterals have four sides,  like me."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_5', 3, NULL, 'assets/topic/asb/19271.png', 'Dad Polygon added,  "I am excited because my three other cousins will be here,  they are Pentagon,  Hexagon and Octagon. They are also part of our Polygon family." Vusi asked,  "Dad,  why we are called Polygons?"  "We are called polygons because we are 2-dimensional shapes. We are made of straight lines,  and our shape is closed,  as you can see,  all our lines join up. Our cousins the Triangles,  the Quadrilaterals,  the Hexagons and the Pentagons will all be visiting," replied Dad.', NULL);
@@ -1331,8 +1950,23 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_20', 1, 'Draw five different geometric shapes and color them', 'assets/topic/21985.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_20', 2, 1, 'assets/topic/21985.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_21', 0, 'How many sides does pentagon have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_21', 1, 1, 'Five');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_21', 0, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_21', 0, 2, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_21', 0, 3, 'Three');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_26', 0, 'Decagon has ten sides.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_29', 0, 'Which is your favourite geometric shape?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 1, 'Decagon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 2, 'Pentagon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 3, 'Octagon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 4, 'Hexagon');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998', 2, 'Fana and her animals', 'assets/topic/asb/25266.png', 'Foziya Mohammed
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_3', 3, NULL, 'assets/topic/asb/25265.png', 'Fana and her family live in Debre Birhan, a busy town in Ethiopia. Fana is a Grade 3 student. She is good-hearted and wise.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_4', 3, NULL, 'assets/topic/asb/25266.png', 'Fana loves animals. She has a cat, two hens, a goat and a dove. She spends time with these animals, feeding them, and playing with them.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_5', 3, NULL, 'assets/topic/asb/25267.png', 'One day, Fana was playing in the school yard with her friends when she saw children throwing stones at doves.
@@ -1359,8 +1993,28 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_12', 1, 'Paint doves and decorate.', 'assets/topic/21998.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_12', 2, 1, 'assets/topic/21998.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_13', 0, 'Select the animals Fana had.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 1, 1, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 1, 2, 'Hen');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 1, 3, 'Dove');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 1, 4, 'Goat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 0, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 0, 2, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_13', 0, 3, 'Eagle');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_21', 0, 'What did Fana and her parents bring from the clinic?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 1, 1, 'Medicine');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 1, 'Bread');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 2, 'Biscuit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 3, 'Water');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_26', 0, 'What do you apply when you get hurt?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 1, 'Medicine');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 2, 'Stone');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 3, 'Mud');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 4, 'Water');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613', 2, 'Hyena and Tortoise', 'assets/topic/asb/13398.png', 'Alice Mulwa
- Salim Kasamba', NULL);
+ Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_3', 3, NULL, 'assets/topic/asb/13395.png', 'A long time ago,  in the village of Mkosi,  there lived a greedy hyena.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_4', 3, NULL, 'assets/topic/asb/13397.png', 'In a nearby village,  lived a timid tortoise. The hyena and the tortoise were friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_5', 3, NULL, 'assets/topic/asb/13398.png', 'Hyena heard that across the great western river lived bees that made delicious honey. These bees traveled once a year,  and were away from their hives for a whole week. "We must get that honey while the bees are away," said Hyena to Tortoise.', NULL);
@@ -1391,8 +2045,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_20', 1, 'Paint a tortoise and  decorate it.', 'assets/topic/15613.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_20', 2, 1, 'assets/topic/15613.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_21', 0, 'Who was the friend of greedy hyena?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_21', 1, 1, 'Tortoise');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_21', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_21', 0, 2, 'Cheetah');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_21', 0, 3, 'Rabbit');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_26', 0, 'Bees live in beehive.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_29', 0, 'How should we treat our friends?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 1, 'Kindness');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 2, 'Happiness');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 3, 'Cheerfully');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 4, 'Fairness');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698', 2, 'Hyena and Raven', 'assets/topic/asb/1725.png', 'Ann Nduku
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_3', 3, NULL, 'assets/topic/asb/1725.png', 'Hyena and Raven were once great friends,  even though they were quite different in some ways. Raven could fly but Hyena was only able to walk.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_4', 3, NULL, 'assets/topic/asb/1726.png', 'One day Hyena,  curious to know something about his friend,  asked Raven,  "What is this white thing which is always below your neck?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_5', 3, NULL, NULL, 'Raven answered,  "It is the fatty meat which I usually eat in the sky. I have been eating it for so long now it is stuck on my neck." On hearing about meat,  saliva started pouring out of Hyena''s mouth for he was greedy and he loved meat very much. Hyena really wanted to eat that meat. But how could he reach the meat in the sky if he had no wings to fly? "Please my friend," he asked Raven,  "lend me some feathers so that I can make myself some wings. I really want to be able to fly like you."', NULL);
@@ -1419,8 +2088,23 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_16', 1, 'Paint a raven and decorate it.', 'assets/topic/8698.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_16', 2, 1, 'assets/topic/8698.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_17', 0, 'What did hyena sew with feathers?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_17', 1, 1, 'Wings');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_17', 0, 1, 'Tail');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_17', 0, 2, 'Kite');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_17', 0, 3, 'Glide');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_22', 0, 'The fatty meat that hyena wanted to eat was moist cloud.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_25', 0, 'What do you like about your friend?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 1, 'Friendship');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 2, 'Kindness');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 3, 'Bravery');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 4, 'Fun');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193', 2, 'Hyena, Hare and their basins', 'assets/topic/asb/19188.png', 'Ursula Nafula
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_3', 3, NULL, 'assets/topic/asb/19185.png', 'Long time ago, Hyena and Hare were great friends. They were both poor but Hare owned a donkey. He also had a very small basin, which he used to feed the donkey.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_4', 3, NULL, 'assets/topic/asb/19186.png', 'One hot afternoon, Hare decided to give water to his donkey.
 However, Hare could not fetch water from the well with his small basin. So he decided to borrow a bigger basin from Hyena. Hyena gave Hare his basin because of their friendship.', NULL);
@@ -1452,8 +2136,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_12', 1, 'Draw a big basin and decorate it.', 'assets/topic/19193.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_12', 2, 1, 'assets/topic/19193.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_13', 0, 'Which animal did hare own?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_13', 1, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_13', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_13', 0, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_13', 0, 3, 'Rat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_18', 0, 'Hare gave Small basin along with big basin.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_21', 0, 'How do you drink water?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 1, 'Pot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 2, 'Glass');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 3, 'Cup');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 4, 'Jug');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199', 2, 'Happy and Sad', 'assets/topic/asb/1901.png', 'Madhav Chavan
- Rijuta Ghate', NULL);
+ Rijuta Ghate', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_3', 3, NULL, 'assets/topic/asb/1892.png', 'Why is the baby crying?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_4', 3, NULL, 'assets/topic/asb/1893.png', 'I think she is hungry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_5', 3, NULL, 'assets/topic/asb/1894.png', 'Why is the boy sad?', NULL);
@@ -1482,8 +2181,27 @@ Source
 www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_16', 1, 'Draw a dress for girl.', 'assets/topic/16199.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_16', 2, 1, 'assets/topic/16199.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_17', 0, 'The baby is crying because of hunger.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_20', 0, 'Match according to the story.', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 1, 'Baby');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 2, 'Hungry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 3, 'Girl');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 4, 'Dress');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 5, 'Lady');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 6, 'Shy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 7, 'Old man');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 8, 'Good joke');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_29', 0, 'How are you feeling?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 2, 'Hungry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 3, 'Sad');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 4, 'Shy');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911', 2, 'A tiny seed: The story of Wangari Maathai', 'assets/topic/asb/9803.png', 'Nicola Rijsdijk
-Maya Marshak', NULL);
+Maya Marshak', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_3', 3, NULL, 'assets/topic/asb/9803.png', 'In a village on the slopes of Mount Kenya in East Africa,  a little girl worked in the fields with her mother. Her name was Wangari.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_4', 3, NULL, 'assets/topic/asb/9804.png', 'Wangari loved being outside. In her family''s food garden she broke up the soil with her machete. She pressed tiny seeds into the warm earth.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_5', 3, NULL, 'assets/topic/asb/9805.png', 'Her favourite time of day was just after sunset. When it got too dark to see the plants,  Wangari knew it was time to go home. She would follow the narrow paths through the fields,  crossing rivers as she went.', NULL);
@@ -1495,8 +2213,26 @@ INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_10',
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_11', 3, NULL, 'assets/topic/asb/9812.png', 'Wangari knew what to do. She taught the women how to plant trees from seeds. The women sold the trees and used the money to look after their families. The women were very happy. Wangari had helped them to feel powerful and strong.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_12', 3, NULL, 'assets/topic/asb/9813.png', 'As time passed,  the new trees grew into forests,  and the rivers started flowing again. Wangari''s message spread across Africa. Today,  millions of trees have grown from Wangari''s seeds.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_13', 3, NULL, 'assets/topic/asb/9814.png', NULL, NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_14', 1, 'Paint a forest with river.', 'assets/topic/9911.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_14', 2, 1, 'assets/topic/9911.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_15', 0, 'What is the name of little girl who worked with her mother in the fields?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_15', 1, 1, 'Wangari');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_15', 0, 1, 'Changari');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_15', 0, 2, 'Wango');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_15', 0, 3, 'Chang');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_20', 0, 'Wangari liked to learn more and more.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_23', 0, 'Wangari taught the women how to plant trees from seeds.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_23', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_23', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_26', 0, 'What do you like to do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 1, 'Plant seeds');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 2, 'Play in water');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 3, 'Read');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 4, 'Sleep');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107', 2, 'Little Jojo''s long tall tale', 'assets/topic/asb/19917.png', 'Leo Daly
-Marleen Visser', NULL);
+Marleen Visser', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_3', 3, NULL, 'assets/topic/asb/19902.png', '"I have a very big problem," cried Chief Short and Round in a loud voice. "Everyone,  come here! I have a very big problem." The people of the Village of Many Shapes formed a big circle around Chief Short and Round. They wanted to hear what he had to say.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_4', 3, NULL, 'assets/topic/asb/19903.png', 'Chief Short and Round began, "This is the worst news ever. I have lost my spring horn." The villagers whispered to each other, "Oh no!" Chief Short and Round continued talking, "If I don''t find my spring horn then I can''t blow my spring horn! And we can''t start the springtime party if I can''t blow my spring horn. And spring won''t come if we don''t have a springtime party."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_5', 3, NULL, 'assets/topic/asb/19904.png', 'Little Square Jojo stepped into the circle and lifted up his hand. "I will find your spring horn, Chief Short and Round." "Good,  good," said the chief with a smile. "You can start looking at the last place I visited this morning. Go to Tata Rectangle''s house. I remember having my horn with me there."', NULL);
@@ -1527,8 +2263,23 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_20', 1, 'Draw a horn and decorate it.', 'assets/topic/23107.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_20', 2, 1, 'assets/topic/23107.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_21', 0, 'What did the Chief Short and Round lose?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_21', 1, 1, 'Spring horn');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_21', 0, 1, 'Summer horn');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_21', 0, 2, 'Unicorn');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_21', 0, 3, 'Nohorn');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_26', 0, 'Chief short forgot about where he kept the spring horn.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_29', 0, 'What is your favourite shape?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 1, 'Circle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 2, 'Triangle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 3, 'Square');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 4, 'Diamond');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135', 2, 'Unwise judge', 'assets/topic/asb/17057.png', 'Magabi Eynew Gessesse
-Brian Wambi', NULL);
+Brian Wambi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_3', 3, NULL, 'assets/topic/asb/17050.png', 'There were two poor neighbours who were friends,  Meseret and Demeke. One day,  Meseret said to Demeke,  "I must take my barley to the market today. The sack is very heavy,  and the market is far away. I wish I had enough money to buy a donkey."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_4', 3, NULL, 'assets/topic/asb/17052.png', 'Demeke nodded and said,  "And I must buy some new pots at the market today. They will be very heavy. I wish I had a donkey,  too. I only have half the money."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_5', 3, NULL, 'assets/topic/asb/17053.png', 'Meseret had an idea. "Let''s buy a donkey together. You can pay half and I will pay half. One week,  I will take the donkey to the market,  and the next week,  you can take it." Meseret and Demeke bought a donkey. For a long time they were both happy.', NULL);
@@ -1565,8 +2316,23 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_24', 1, 'Draw a hut and decorate it.', 'assets/topic/17135.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_24', 2, 1, 'assets/topic/17135.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_25', 0, 'What did Meseret and Demeke wished to buy if they had enough money?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_25', 1, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_25', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_25', 0, 2, 'Rat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_25', 0, 3, 'Cat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_30', 0, 'Judge was wise of them all.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_30', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_30', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_33', 0, 'Who do you fight with?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 1, 'No one');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 2, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 3, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 4, 'Friend');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040', 2, 'Hamisi''s lucky day', 'assets/topic/asb/7976.png', 'Adelheid Marie Bwire
-Rob Owen', NULL);
+Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_3', 3, NULL, 'assets/topic/asb/7966.png', 'Hamisi needs a new school uniform. His dad takes him to the market.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_4', 3, NULL, 'assets/topic/asb/7967.png', 'Hamisi sees a boy wearing a beautiful shirt. "That is a very fine shirt," thinks Hamisi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_5', 3, NULL, 'assets/topic/asb/7968.png', '"Dad, I wish I had a shirt like the one that boy has," says Hamisi.', NULL);
@@ -1591,35 +2357,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266', 2, 'Donkey', 'assets/topic/asb/26642.png', 'Little Zebra Books
-Marleen Visser', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_3', 3, NULL, 'assets/topic/asb/26643.png', 'Dog', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_4', 3, NULL, 'assets/topic/asb/26644.png', 'Duck', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_5', 3, NULL, 'assets/topic/asb/26645.png', 'Cow', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_6', 3, NULL, 'assets/topic/asb/26642.png', 'Donkey', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_7', 3, NULL, 'assets/topic/asb/26647.png', 'Mouse', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_8', 3, NULL, 'assets/topic/asb/26648.png', 'Cat', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_9', 3, NULL, 'assets/topic/asb/26649.png', 'Sheep', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_10', 3, NULL, 'assets/topic/asb/26687.png', 'Goat', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_11', 3, NULL, 'assets/topic/asb/26652.png', 'Pig', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_12', 3, NULL, 'assets/topic/asb/26651.png', 'Chicken', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_13', 3, NULL, 'assets/topic/asb/26647.png', NULL, NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30266_14', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Donkey
-Author -
-Little Zebra Books
-Illustration -
-Marleen Visser
-Language -
-English
-Level -
-First words
-© African Storybook Initiative 2018
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_12', 1, 'Paint a school uniform.', 'assets/topic/8040.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_12', 2, 1, 'assets/topic/8040.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_13', 0, 'What did Hamisi and his dad go to buy?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_13', 1, 1, 'uniform');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_13', 0, 1, 'cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_13', 0, 2, 'Bat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_13', 0, 3, 'Ball');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_18', 0, 'Hamisi Dad at last bought a shirt for Hamisi.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_21', 0, 'What  color shirt will you buy?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 1, 'Green');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 2, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 3, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 4, 'Blue');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386', 2, 'The bandit', 'assets/topic/asb/17600.png', 'DiresGebre-Meskel
-Jacob Kono', NULL);
+Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_3', 3, NULL, 'assets/topic/asb/17597.png', 'In those days,  there were merchants who went everywhere. They travelled in the cold weather and hot weather. They crossed hills and deserts and bushy areas,  selling and buying things. These merchants were very careful when they travelled. They were afraid of bandits and robbers so they went in groups.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_4', 3, NULL, 'assets/topic/asb/17598.png', 'One merchant couldn''t find a group so he decided to go alone. He met a bandit and he was afraid. "Who are you? Are you alone?" asked the bandit. "I am a merchant. My friends are ahead,  but right now I am alone," replied he merchant.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_5', 3, NULL, 'assets/topic/asb/17599.png', 'At that time another merchant arrived from a different direction. He saw the bandit and was afraid. He hid himself in the bushes and watched. The bandit killed the first merchant and buried him. The second merchant thought,  "How can I go on? The same thing will happen to me." So he stayed there for some time. Later he thought,  "I can''t stay here forever. I must go on."', NULL);
@@ -1652,8 +2406,25 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_20', 1, 'Paint a camel and decorate it.', 'assets/topic/19386.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_20', 2, 1, 'assets/topic/19386.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_21', 0, 'Who had killed the merchant?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_21', 1, 1, 'Bandit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_21', 0, 1, 'Villager');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_21', 0, 2, 'Ruller');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_21', 0, 3, 'Guard');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_26', 0, 'Which fruit did ruler asked to get?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 1, 1, 'Tiringo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 1, 'Apple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 2, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 3, 'cherry');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_31', 0, 'What will you do if you are not well?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 1, 'Take medicine');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 2, 'Take rest');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 3, 'Eat fruit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 4, 'Go to doctor');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838', 2, 'Fox and Rooster', 'assets/topic/asb/14805.png', 'Vincent Afeku
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_3', 3, NULL, 'assets/topic/asb/14795.png', 'There was a time when all the animals lived together as friends. One day they decided to have a meeting to elect a king.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_4', 3, NULL, 'assets/topic/asb/14796.png', 'Rooster wanted to be king. So he lied to the other animals. He told them,  "The red comb on my head is fire! Don''t touch the comb on my head!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_5', 3, NULL, 'assets/topic/asb/14797.png', 'The other animals believed Rooster. They decided to elect Rooster as their king. The animals hoped that Rooster''s fire would help them in cold weather.', NULL);
@@ -1680,8 +2451,27 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_16', 1, 'Paint a crown and decorate it.', 'assets/topic/21838.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_16', 2, 1, 'assets/topic/21838.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_17', 0, 'Whcih animal wanted to become king?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_17', 1, 1, 'Rooster');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_17', 0, 1, 'Fox');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_17', 0, 2, 'Rabbit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_17', 0, 3, 'Monkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_22', 0, 'Select all the animals you read in the story', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 1, 'Rooster');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 2, 'Fox');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 3, 'Rabbit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 4, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 0, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 0, 2, 'Zebra');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_29', 0, 'What do you do to keep your self warm in winter?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 1, 'Cover with blanket');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 2, 'Light fire to get warm');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 3, 'Rub hands');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 4, 'Wear sweater');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609', 2, 'Rooster and Hare', 'assets/topic/asb/12453.png', 'Geoffrey Thiiru
- Duane Arthur', NULL);
+ Duane Arthur', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_3', 3, NULL, 'assets/topic/asb/12438.png', 'Once upon a time,  there was a rooster and a hare. They were good friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_4', 3, NULL, 'assets/topic/asb/12440.png', 'One night,  Hare visited Rooster and his family. They enjoyed supper together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_5', 3, NULL, 'assets/topic/asb/12443.png', 'When it was bedtime,  Rooster and his family soon fell asleep. Hare could not see their heads.', NULL);
@@ -1704,8 +2494,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_12', 1, 'Painta hare and decorate it.', 'assets/topic/12609.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_12', 2, 1, 'assets/topic/12609.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_13', 0, 'Who is the best friend of hare?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_13', 1, 1, 'Rooster');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_13', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_13', 0, 2, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_13', 0, 3, 'Rabbit');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_18', 0, 'Rooster and his family chopped their head to get good sleep.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_18', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_18', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_21', 0, 'What will you do for a good nights sleep?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 1, 'Eat fruit after dinner');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 2, 'Go for long walk.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 3, 'Change the place of sleep.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 4, 'Read a book.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439', 2, 'Mod the toad', 'assets/topic/asb/13417.png', 'Alice Mulwa
-Rob Owen', NULL);
+Rob Owen', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_3', 3, NULL, 'assets/topic/asb/13415.png', 'It was a cold and wet morning in the forest. Mod the little toad was tired of swimming in cold water. "I need to leave this place during the rainy season," she said to herself.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_4', 3, NULL, 'assets/topic/asb/13416.png', '"I want an adventure," said Mod to Tortoise. "I must find out about the world." "Be careful,  don''t leave the water for too long or your skin will dry out," warned the wise terrapin. At that time,  toads still had smooth wet skin like frogs. Without water,  their skins would become too dry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_5', 3, NULL, 'assets/topic/asb/13417.png', 'But Mod the toad was curious. "I must find out, I must go beyond the forest," she said. Mod hopped out of the water. Hop, hop, she went, away from the river. She had fun jumping over the rocks, across grass, and past trenches.', NULL);
@@ -1732,8 +2537,25 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_16', 1, 'Paint a rainy scene.', 'assets/topic/20439.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_16', 2, 1, 'assets/topic/20439.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_17', 0, 'Mod wanted to leave his place due to which season?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_17', 1, 1, 'Rainy season');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_17', 0, 1, 'Spring season');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_17', 0, 2, 'Autumn season');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_17', 0, 3, 'Summer season');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_22', 0, 'Whom did mod mod talk to before leaving the water?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 1, 1, 'Tortoise');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 2, 'Fish');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 3, 'Crab');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_27', 0, 'What do you when it is a rainy season?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 1, 'Stay at home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 2, 'Play in water');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 3, 'Eat cookies');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 4, 'Carry umbrella');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436', 2, 'How Tortoise''s nose became crooked', 'assets/topic/asb/13136.png', 'Taiwo Ẹhinẹni
-Marleen Visser', NULL);
+Marleen Visser', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_3', 3, NULL, 'assets/topic/asb/13129.png', 'Once upon a time,  Tortoise and Squirrel were very close friends. One day,  Squirrel said to Tortoise,  "My friend,  we have no money,  but market day is getting close. What business can we do to make some money?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_4', 3, NULL, 'assets/topic/asb/13130.png', 'Tortoise responded,  "You know I can make clay plates. I want you to join me in making plates to sell." "Okay my friend,  tomorrow evening I will join you to make the plates," Squirrel said.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_5', 3, NULL, 'assets/topic/asb/13131.png', 'On the day of the market,  Tortoise went to the marketplace. He saw two people fighting in the distance. He put down his clay plates and went to watch the fight.', NULL);
@@ -1758,8 +2580,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_12', 1, 'Draw plates of different sizes and color it.', 'assets/topic/20436.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_12', 2, 1, 'assets/topic/20436.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_13', 0, 'What did tortoise know to make?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_13', 1, 1, 'Clay plates.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_13', 0, 1, 'Clay pots');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_13', 0, 2, 'Clay vase');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_13', 0, 3, 'Clay toy');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_18', 0, 'Tortoise was bit by mole.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_21', 0, 'What will you do when you see your friends fighting?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 1, 'Try to stop the fight');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 2, 'Inform elders');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 3, 'Call some help');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 4, 'Call police');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557', 2, 'How colours came together in the sky', 'assets/topic/asb/26440.png', 'Zainab Ayoza Omaki
-Offei Tettey Eugene', NULL);
+Offei Tettey Eugene', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_3', 3, NULL, 'assets/topic/asb/26434.png', 'One day after a heavy rain, Iman looked across the sky and saw colours in it for the first time.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_4', 3, NULL, 'assets/topic/asb/26435.png', 'How beautiful, she thought. Someone must have worked very hard, painting the sky with a brush like Daddy paints houses.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_5', 3, NULL, 'assets/topic/asb/26436.png', 'She ran to her sister and said, "Zarah look! Someone has painted the sky for us and made it beautiful."', NULL);
@@ -1789,8 +2626,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_16', 1, 'Draw a rainbow.', 'assets/topic/22557.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_16', 2, 1, 'assets/topic/22557.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_17', 0, 'What did Iman see in the sky that looked colorful?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_17', 1, 1, 'Rainbow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_17', 0, 1, 'Birds');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_17', 0, 2, 'Sun');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_17', 0, 3, 'Rain');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_22', 0, 'Rainbow have seven colors.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_25', 0, 'Which is your favourite color in Rainbow?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 1, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 2, 'violet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 3, 'Green');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 4, 'Blue');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587', 2, 'How night came to Opio''s village', 'assets/topic/asb/1130.png', 'Robert Ekuka
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_3', 3, NULL, 'assets/topic/asb/1131.png', 'Long ago,  there was no night in Opio''s village. People slept when they were tired and worked when they were awake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_4', 3, NULL, 'assets/topic/asb/1132.png', 'One day Opio went out hunting with his dogs. After a short time,  his dogs started to chase an antelope. Opio followed them. He ran for many hours. Every time he became tired,  he rested. Then he would run again. But he could not find his dogs.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_5', 3, NULL, 'assets/topic/asb/1133.png', 'After many days,  he came to a village. He went to one of the houses and said to the owner,  "I have chased an antelope for a long time and I am very tired. I want to rest." The man said,  "Sit down and rest. Would you like some beer?" Opio was very thirsty so he drank some. Then he went to sleep.', NULL);
@@ -1815,8 +2667,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_14', 1, 'Decorate night with stars and moon.', 'assets/topic/16587.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_14', 2, 1, 'assets/topic/16587.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_15', 0, 'What was not in Opio''s village ?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_15', 1, 1, 'Night');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_15', 0, 1, 'Day');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_15', 0, 2, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_15', 0, 3, 'Fruit');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_20', 0, 'Night followed Opio to his village.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_23', 0, 'What will you add to decorate night?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 1, 'Stars');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 2, 'Moon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 3, 'Sun');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 4, 'Rainbow');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081', 2, 'Sun, Moon, and Water', 'assets/topic/asb/25567.png', 'Athieno Gertrude
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_3', 3, NULL, 'assets/topic/asb/25557.png', 'Many years ago, Sun and Water were great friends. Both lived on earth together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_4', 3, NULL, 'assets/topic/asb/25558.png', 'Sun used to visit Water very often, but Water never went to visit Sun.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_5', 3, NULL, 'assets/topic/asb/25559.png', 'At last Sun asked Water why he never came to visit.
@@ -1852,8 +2719,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_16', 1, 'Draw sun and decorate.', 'assets/topic/22081.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_16', 2, 1, 'assets/topic/22081.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_17', 0, 'Accordiing to story where did sun and water live?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_17', 1, 1, 'Earth');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_17', 0, 1, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_17', 0, 2, 'Sky');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_17', 0, 3, 'Moon');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_22', 0, 'Sun buit a very large compound so that wate can visit him.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_25', 0, 'What will you build if water wanted to visit you?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 1, 'Dam');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 2, 'Pond');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 3, 'Lake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 4, 'Well');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062', 2, 'Sinziro and his brothers', 'assets/topic/asb/19605.png', 'Magabi Eynew Gessesse
-Vusi Malindi', NULL);
+Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_3', 3, NULL, 'assets/topic/asb/19601.png', 'Once upon a time,  a man and a woman had seven foolish sons. The boys lost the family cattle,  they broke the plough,  and everyone cheated them at the market.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_4', 3, NULL, 'assets/topic/asb/19602.png', 'Their mother prayed,  "Oh God,  why did you send me all these foolish children? Please,  send me one more son,  and let him be wise."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_5', 3, NULL, 'assets/topic/asb/19603.png', 'In time the woman gave birth to another boy. The child was tiny. "We''ll call him Sinziro," his mother said.', NULL);
@@ -1890,8 +2772,23 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_24', 1, 'Paint a little man and big man.', 'assets/topic/22062.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_24', 2, 1, 'assets/topic/22062.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_25', 0, 'How many children did the man and his wife had?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_25', 1, 1, 'Eight');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_25', 0, 1, 'Five');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_25', 0, 2, 'Six');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_25', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_30', 0, 'Sinziro was tallest among all the eight childrens.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_30', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_30', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_33', 0, 'How will you cross the river?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 1, 'By swimming.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 2, 'By boat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 3, 'Walking upon the bridge');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 4, 'Find another way to cross.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632', 2, 'Brown', 'assets/topic/asb/2617.png', 'Reviva Schermbrucker
- Sue Kramer', NULL);
+ Sue Kramer', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_3', 3, NULL, 'assets/topic/asb/2618.png', 'Cracked brown wood.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_4', 3, NULL, 'assets/topic/asb/2619.png', 'Painted brown lion.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_5', 3, NULL, 'assets/topic/asb/2620.png', 'Soft brown bread.', NULL);
@@ -1919,8 +2816,33 @@ Source
 www.africanstorybook.org
 Original source
 http://www.littlehandstrust.com/books.html', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_15', 1, 'Draw yummy brown bread.', 'assets/topic/2632.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_15', 2, 1, 'assets/topic/2632.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_16', 0, 'Match the following as it is in story.', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 1, 'Cracked');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 2, 'Wood');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 3, 'Painted');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 4, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 5, 'Soft');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 6, 'Bread');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 7, 'Yummy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 8, 'Cakes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 9, 'Shiny');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 10, 'Buffalo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 11, 'Woolly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 12, 'Hat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 13, 'Dirty');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 14, 'Mud');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_31', 0, 'Dog is smooth and brown in color.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_31', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_31', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_34', 0, 'Write the name of things which appear black in color.', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 1, 'Hair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 2, 'Black boot');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 3, 'Night');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 4, 'Crow');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468', 2, 'Kate is in heaven', 'assets/topic/asb/26149.png', 'Cornelius Wambi Gulere
-Rodney  Kawaayi', NULL);
+Rodney  Kawaayi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_3', 3, NULL, 'assets/topic/asb/26134.png', 'Kate has a thing in her head.
 How will they remove it?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_4', 3, NULL, 'assets/topic/asb/26135.png', 'It makes her tired.
@@ -1961,8 +2883,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_21', 1, 'Paint heaven and decorate it.', 'assets/topic/22468.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_21', 2, 1, 'assets/topic/22468.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_22', 0, 'What did doctor see in Kate''s head?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_22', 1, 1, 'Tumour');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_22', 0, 1, 'Head pain');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_22', 0, 2, 'Hair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_22', 0, 3, 'Pimple');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_27', 0, 'Doctor operated on kate''s head successfully.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_27', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_27', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_30', 0, 'What do you feel about heaven.', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 1, 'Colorful');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 2, 'Peaceful');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 3, 'No night');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 4, 'Always happy');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127', 2, 'Kato Clever and the Big Trouble', 'assets/topic/asb/2080.png', 'Herminder Ohri
- Herminder Ohri', NULL);
+ Herminder Ohri', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_3', 3, NULL, 'assets/topic/asb/2081.png', 'In a small garden in the city,  there was a big tree. Many small animals lived together on the big tree. There also lived a family of squirrels. Vikki was one little squirrel among them who liked to talk big. His cousin,  Kato from Far Forest had come to visit him.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_4', 3, NULL, 'assets/topic/asb/2082.png', 'One evening,  as all the animals who lived in the little garden were just going to sleep,  they heard loud sounds from the park,  next to the little garden.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_5', 3, NULL, 'assets/topic/asb/2083.png', 'Kato and the other squirrels saw big yellow machines,  and men in hard yellow hats,  pointing to the little garden and other houses on the street. They were going to pull them all down and build a parking lot.', NULL);
@@ -1991,8 +2928,25 @@ Source
 www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_16', 1, 'Paint a squirrel and decorate it.', 'assets/topic/3127.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_16', 2, 1, 'assets/topic/3127.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_17', 0, 'Who came to visit Vikki from far forest?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_17', 1, 1, 'Kato');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_17', 0, 1, 'Nato');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_17', 0, 2, 'Pato');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_17', 0, 3, 'Loto');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_22', 0, 'What was the color of the machine that Kato saw?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 1, 1, 'Yellow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 1, 'Brown');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 2, 'Blue');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 3, 'White');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_27', 0, 'If you were squirrel what will you do when you see big yellow machines?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 1, 'Go to safe place.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 2, 'Inform others');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 3, 'Bite yellow machine');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 4, 'Gather food');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544', 2, 'Khalai talks to plants', 'assets/topic/asb/13389.png', 'Ursula Nafula
-Jesse Pietersen', NULL);
+Jesse Pietersen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_3', 3, NULL, 'assets/topic/asb/13382.png', 'This is Khalai. She is seven years old. Her name means ''the good one.''', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_4', 3, NULL, 'assets/topic/asb/13383.png', 'Khalai wakes up and talks to the orange tree. "Please orange tree, grow big and give us lots of ripe oranges."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_5', 3, NULL, 'assets/topic/asb/13384.png', 'Khalai walks to school. On the way,  she talks to the grass. "Please grass,  grow greener and don''t dry up."', NULL);
@@ -2017,8 +2971,21 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_12', 1, 'Decorate tree with oranges.', 'assets/topic/13544.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_12', 2, 1, 'assets/topic/13544.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_13', 0, 'Khalai asks orange plant to grow big and give ripe fruit.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_13', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_13', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_16', 0, 'Khalai asks grass to grow greener.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_19', 0, 'What will you do if you were big tree?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 1, 'Give fruits');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 2, 'Give shade');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 3, 'Give wood');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 4, 'Give cool air');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567', 2, 'Drought and the River of Blessings', 'assets/topic/asb/26514.png', 'Fary  Silate and Mohammed Sale Also
-Awwalu  Sakiwa', NULL);
+Awwalu  Sakiwa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_3', 3, NULL, 'assets/topic/asb/26503.png', 'In a particular year, the dry season was too long and a drought hit hard. As a result, all the rivers dried up, except the River of Blessings.
 All the animals were thirsty and called for a meeting.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_4', 3, NULL, 'assets/topic/asb/26504.png', 'Camel was the first to speak, "As you know, we are very thirsty and all the rivers have dried up, except the River of Blessings. But it is very far away. What do we do?"', NULL);
@@ -2060,8 +3027,27 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_16', 1, 'Draw a river and decorate.', 'assets/topic/22567.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_16', 2, 1, 'assets/topic/22567.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_17', 0, 'Group all the animal which are in story.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 1, 'Chicken');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 2, 'Goat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 3, 'Sheep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 4, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 5, 'Horse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 1, 6, 'Camel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 0, 1, 'TIger');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 0, 2, 'Lion');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_26', 0, 'All animals reached river of blessings.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_29', 0, 'What will you do if there is no water in your village?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 1, 'I build pond.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 2, 'Dig well.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 3, 'Go in search of water.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 4, 'Wait for rain.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308', 2, 'Breakfast', 'assets/topic/asb/1571.png', 'Clare Verbeek
- Cathy Feek', NULL);
+ Cathy Feek', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_3', 3, NULL, 'assets/topic/asb/1572.png', 'Dad loves porridge.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_4', 3, NULL, 'assets/topic/asb/1573.png', 'I love cornflakes.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_5', 3, NULL, 'assets/topic/asb/1574.png', 'Dad loves coffee.', NULL);
@@ -2086,8 +3072,29 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_12', 1, 'Draw an apple and decorate it.', 'assets/topic/23308.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_12', 2, 1, 'assets/topic/23308.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_13', 0, 'Group all things that Dad loves.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 1, 1, 'Porridge');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 1, 2, 'Coffee');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 1, 3, 'Apple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 1, 4, 'Bread');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 0, 1, 'Honey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 0, 2, 'MIlk');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 0, 3, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_13', 0, 4, 'cookie');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_22', 0, 'According to the story what does the child love?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 1, 1, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 1, 'Honey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 2, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 3, 'Bread');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_27', 0, 'Which is your favourite food?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 1, 'Honey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 2, 'Cake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 3, 'Mango');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 4, 'Ice cream');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841', 2, 'Hyena and Monkey', 'assets/topic/asb/18699.png', 'Elizabeth  Laird
-Salim Kasamba', NULL);
+Salim Kasamba', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_3', 3, NULL, 'assets/topic/asb/18696.png', 'Once upon a time there was a hyena and a monkey.
 The hyena and the monkey had an argument. They went to a judge to settle their differences.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_4', 3, NULL, 'assets/topic/asb/18697.png', 'After the judge listened to their case he was afraid to pass judgement on their case.
@@ -2125,8 +3132,21 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_16', 1, 'Paint a monkey and decorate.', 'assets/topic/21841.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_16', 2, 1, 'assets/topic/21841.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_17', 0, 'Judge was afraid to give judgement on their case.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_20', 0, 'Elders in the village were not affraid to give judgement on their case.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_20', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_20', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_23', 0, 'What you think is the nature of those two animals?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 1, 'Angry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 2, 'No patience');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 3, 'Selfish');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 4, 'Obidient');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440', 2, 'Monkey and the Drought', 'assets/topic/asb/18796.png', 'Alice Edui
- Salim Kasamba', NULL);
+ Salim Kasamba', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_3', 3, NULL, 'assets/topic/asb/18786.png', 'There was severe drought across the land. Bushes and trees dried up. Rivers stopped flowing. There was no water and no food. People,  cattle and wild animals grew thin.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_4', 3, NULL, 'assets/topic/asb/18788.png', 'Many of the monkeys who lived in the hills died of hunger. One day,  a female monkey decided to look for a place where there was no drought.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_5', 3, NULL, 'assets/topic/asb/18789.png', 'Monkey travelled for many days. She passed bushes,  climbed hills,  and crossed valleys.', NULL);
@@ -2157,8 +3177,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_20', 1, 'Draw a forest and decorate  it.', 'assets/topic/20440.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_20', 2, 1, 'assets/topic/20440.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_21', 0, 'Name the place where flowing river and different fruits are found.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_21', 1, 1, 'Tirkol');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_21', 0, 1, 'Charkol');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_21', 0, 2, 'Monkol');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_21', 0, 3, 'Tirk');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_26', 0, 'Tirkol monkeys and hill monkeys lived happily.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_29', 0, 'What will you do if you were a Tirkol monkey?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 1, 'Chase away other monkeys');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 2, 'Show kindness');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 3, 'Inform to elder monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 4, 'Stay far away from other monkeys.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140', 2, 'Rabbit under the tree', 'assets/topic/asb/7610.png', 'Phumy Zikode
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_3', 3, NULL, 'assets/topic/asb/7595.png', 'Rabbit was sleeping under an apple tree. An apple fell down from a branch.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_4', 3, NULL, 'assets/topic/asb/7596.png', 'A voice said,  "Run Rabbit run!" She woke up quickly and ran away with great speed.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_5', 3, NULL, 'assets/topic/asb/7597.png', 'She met Chicken. "Why are you running?" asked Chicken. Rabbit replied, "I don''t know. I just heard something falling and a voice said,  ''Run Rabbit run!''"', NULL);
@@ -2191,8 +3226,27 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_20', 1, 'paint a rabbit under tree.', 'assets/topic/21140.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_20', 2, 1, 'assets/topic/21140.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_21', 0, 'Under which tree was rabbit sleeping?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_21', 1, 1, 'Apple tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_21', 0, 1, 'Mango tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_21', 0, 2, 'Papaya tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_21', 0, 3, 'Jackfruit tree');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_26', 0, 'Choose the order in which rabbit met all the animals.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 1, 'Chicken');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 3, 'Horse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 4, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 5, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 6, 'Cat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_33', 0, 'What could rabbit have done before running?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 1, 'Should be calm');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 2, 'Look around');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 3, 'See what has fallen');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 4, 'Should have slept instead of running.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158', 2, 'Mouth and Hand', 'assets/topic/asb/26880.png', 'African Storybook
-Espoir Ntinda', NULL);
+Espoir Ntinda', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_3', 3, NULL, 'assets/topic/asb/26880.png', 'Long ago, there were two friends, Mouth and Hand.
 They lived like brothers in one village each with his wife.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_4', 3, NULL, 'assets/topic/asb/26881.png', 'Afterwards, Mouth lost his wife.
@@ -2229,8 +3283,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_14', 1, 'Paint mouth and decorate it.', 'assets/topic/23158.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_14', 2, 1, 'assets/topic/23158.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_15', 0, 'What did dog like to be called as?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_15', 1, 1, 'Helper');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_15', 0, 1, 'Pepper');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_15', 0, 2, 'Stepper');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_15', 0, 3, 'Mopper');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_20', 0, 'Helper did not help the hand at all.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_20', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_20', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_23', 0, 'What could Helper have done?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 1, 'It could have forgiven hand.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 2, 'It should have bitten the hand.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 3, 'It could go back to mouth.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 4, 'It could have warned the hand.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209', 2, 'Weather book', 'assets/topic/asb/1547.png', 'Clare Verbeek
-Sandra McDougall', NULL);
+Sandra McDougall', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_3', 3, NULL, 'assets/topic/asb/1547.png', 'It is dry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_4', 3, NULL, 'assets/topic/asb/1548.png', 'The sun is hot.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_5', 3, NULL, 'assets/topic/asb/1549.png', 'It is windy.', NULL);
@@ -2255,8 +3324,21 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_12', 1, 'Paint an icecream and decorate it.', 'assets/topic/2209.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_12', 2, 1, 'assets/topic/2209.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_13', 0, 'Sun is hot in the afternoon.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_13', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_13', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_16', 0, 'Black clouds thunder.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_19', 0, 'When do you feel cold?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 1, 'During rain');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 2, 'Winter season');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 3, 'Snowfall');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 4, 'When I drink something cold.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022', 2, 'Creature with two', 'assets/topic/asb/19458.png', 'Mlungisi Madlala
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_3', 3, NULL, 'assets/topic/asb/19455.png', 'The Izinzawu family was a happy family. The two girls learned cooking and gardening from their mother. The two boys went out with their father to hunt.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_4', 3, NULL, 'assets/topic/asb/19456.png', 'At dinner time every day,  they talked about what they had done that day.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_5', 3, NULL, 'assets/topic/asb/19457.png', 'The father usually warned the children not to go deep into the forest. He told the family about a strange creature that lived in the forest. "This creature is like two of us put together!"', NULL);
@@ -2284,8 +3366,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_16', 1, 'Draw a man using stickers.', 'assets/topic/20022.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_16', 2, 1, 'assets/topic/20022.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_17', 0, 'How many members were there in Izinzawu family?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_17', 1, 1, 'Six');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_17', 0, 1, 'Five');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_17', 0, 2, 'Four');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_17', 0, 3, 'Two');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_22', 0, 'The creature was actually a human like us.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_25', 0, 'What will you do if you see some strange creature?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 1, 'Throw stone at it.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 2, 'Run away from it');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 3, 'Infrom elders');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 4, 'Observe what it is doing.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004', 2, 'Hare and Tortoise (Again!)', 'assets/topic/asb/2036.png', 'Venkatramana Gowda
- Padmanabha', NULL);
+ Padmanabha', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_3', 3, NULL, 'assets/topic/asb/2037.png', 'Do you remember the Great Race between the hare and the tortoise? For a long time,  no one in the entire animal kingdom could talk about anything but the Great Race and its two contestants.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_4', 3, NULL, 'assets/topic/asb/2038.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_5', 3, NULL, 'assets/topic/asb/2039.png', 'We all know that the rabbit was defeated because he was lazy and overconfident. We know that the tortoise won the race because he was slow and steady. The forest animals knew this too,  and continued to respect both creatures equally. Even the two competitors remained friends. The tortoise did not assume airs because he had won,  and the hare,  realising he had been defeated fair and square,  bore the tortoise no grudge.', NULL);
@@ -2317,8 +3414,21 @@ Source
 www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_19', 1, 'Paint an hare and tortoise.', 'assets/topic/22004.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_19', 2, 1, 'assets/topic/22004.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_20', 0, 'Hare sat on the tortoise therefore it was easy to cross river.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_23', 0, 'Hare and tortoise failed to get messages from other king.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_23', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_23', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_26', 0, 'Why you think hare and tortoise were successful?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 1, 'They helped each other.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 2, 'They worked hard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 3, 'They went their own way.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 4, 'They became strength of each other.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751', 2, 'Sheep who got tired of city life', 'assets/topic/asb/26535.png', 'Mohammed Alhaji Modu
-Kenneth Boyowa Okitikpi', NULL);
+Kenneth Boyowa Okitikpi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_3', 3, NULL, 'assets/topic/asb/26535.png', 'Sheep lived in the city. She got tired of city life and decided to go to the bush.
 On her way she met Hyena who had not eaten for many days.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_4', 3, NULL, 'assets/topic/asb/26536.png', 'She greeted Hyena over and over again, "Brother Hyena, how are you? Brother Hyena, how are you?"
@@ -2360,8 +3470,25 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_16', 1, 'Paint a sheep and decorate it.', 'assets/topic/24751.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_16', 2, 1, 'assets/topic/24751.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_17', 0, 'Where did the sheep want to go?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_17', 1, 1, 'Bush');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_17', 0, 1, 'Forest');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_17', 0, 2, 'Home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_17', 0, 3, 'City');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_22', 0, 'How many ears did the lion eat?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 1, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 2, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_27', 0, 'What will do you if are hungry?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 1, 'Wait for  food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 2, 'Cook food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 3, 'Eat fruits');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 4, 'Drink water');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863', 2, 'Counting cabbages', 'assets/topic/asb/19328.png', 'Penelope Smith
-Magriet Brink', NULL);
+Magriet Brink', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_3', 3, NULL, 'assets/topic/asb/19323.png', 'Mama K has been harvesting cabbages all week. Doobie,  Maya and Duksie help Mama K in her vegetable garden on Saturday mornings. Today the children are going to help with counting and packing the cabbages. Then Baba K will take boxes of cabbages to sell at the market.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_4', 3, NULL, 'assets/topic/asb/19325.png', 'The taxi drops off the children at the garden gate. They can see the huge heap of cabbages piled up near Baba K''s old truck. "Yo! What a lot of cabbages!" says Maya pointing. "There must be a thousand cabbages there!" laughs Duksie. "No way! Two hundred at the most!" disagrees Doobie.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_5', 3, NULL, 'assets/topic/asb/19326.png', 'Mama K is waiting at the gate. "Hello everyone,  I''m happy to see you!" she greets the children. "Now let''s get to work. You''ll need to count the cabbages and put them into boxes,  12 cabbages in each box. I have 20 boxes. Two of you can each pack 7 boxes and one of you can pack 6 boxes."', NULL);
@@ -2392,8 +3519,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_20', 1, 'Paint cabbage and decorate it.', 'assets/topic/21863.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_20', 2, 1, 'assets/topic/21863.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_21', 0, 'Baba k loaded twenty boxes in the truck.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_24', 0, 'What did children share?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 1, 1, 'Apple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 1, 'Orange');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 2, 'Strawberry');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 3, 'Banana');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_29', 0, 'What do you share with your friend?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 1, 'Fruit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 2, 'Food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 3, 'Juice');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 4, 'Water');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035', 2, 'Hen tricks Eagle', 'assets/topic/asb/9588.png', 'Nathan Higenyi
-Rob Owen', NULL);
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_3', 3, NULL, 'assets/topic/asb/9587.png', 'Long ago Hen and Eagle were friends. One day,  Eagle found Hen under a tree resting with her hopping bags. Hen was standing on one leg.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_4', 3, NULL, 'assets/topic/asb/9588.png', 'Eagle asked Hen,  "Where is your other leg?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_5', 3, NULL, 'assets/topic/asb/9589.png', 'Hen told Eagle,  "The shopkeeper cut off my leg and gave me these groceries in return."', NULL);
@@ -2418,39 +3560,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608', 2, 'Kuku Na Jongoo', 'assets/topic/asb/8983.png', 'Ursula Nafula
- Magriet Brink', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_3', 3, NULL, 'assets/topic/asb/8983.png', 'Kuku na Jongoo walikuwa marafiki.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_4', 3, NULL, 'assets/topic/asb/8989.png', 'Walienda kucheza mpira wa miguu.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_5', 3, NULL, 'assets/topic/asb/8995.png', 'Kuku alikuwa golikipa.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_6', 3, NULL, 'assets/topic/asb/8986.png', 'Jongoo alilifunga bao.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_7', 3, NULL, 'assets/topic/asb/8984.png', 'Kuku alikasirika sana.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_8', 3, NULL, 'assets/topic/asb/8985.png', 'Aliamua kummeza Jongoo.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_9', 3, NULL, 'assets/topic/asb/8987.png', 'Kuku alipoondoka uwanjani, alikutana na Mama yake Jongoo.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_10', 3, NULL, 'assets/topic/asb/8991.png', 'Jongoo aliyemezwa alimlilia, "Mama nisaidie. Nimemezwa."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_11', 3, NULL, 'assets/topic/asb/8990.png', 'Jongoo alikuwa na ladha mbaya sana.
-Kuku alihisi kutapika.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_12', 3, NULL, 'assets/topic/asb/8993.png', 'Kuku alikohoa kumtema Jongoo.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_13', 3, NULL, 'assets/topic/asb/8992.png', 'Jongoo alipotemwa, alitoroka na kwenda zake.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_14', 3, NULL, 'assets/topic/asb/8994.png', 'Tangu siku hiyo, Kuku na Jongoo walikuwa maadui.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15608_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Kuku Na Jongoo
-Author -
-Winny Asara
-Translation -
-Ursula Nafula
-Illustration -
-Magriet Brink
-Language -
-English
-Level -
-First words
-© African Storybook Initiative 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_12', 1, 'Paint a hen and decorate it.', 'assets/topic/23035.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_12', 2, 1, 'assets/topic/23035.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_13', 0, 'Who is the friend of hen?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_13', 1, 1, 'Eagle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_13', 0, 1, 'Rat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_13', 0, 2, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_13', 0, 3, 'Crow');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_18', 0, 'The shopkeeper cut eagle''s leg', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_21', 0, 'What do you exchange with your friend?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 1, 'Food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 2, 'Fruit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 3, 'Cookies');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 4, 'Chocolate');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536', 2, 'Raven and Fox', 'assets/topic/asb/25729.png', 'Angesom Abadi
-Isaac Okwir', NULL);
+Isaac Okwir', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_3', 3, NULL, 'assets/topic/asb/25729.png', 'Long ago, wild animals lived together.
 Raven and Fox were good friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_4', 3, NULL, 'assets/topic/asb/25730.png', 'There was a famine. The animals had nothing to eat.', NULL);
@@ -2484,8 +3610,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_16', 1, 'Paint a Raven and Fox.', 'assets/topic/22536.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_16', 2, 1, 'assets/topic/22536.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_17', 0, 'Fox and raven went in search of food.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_20', 0, 'Where did raven land after being thrown off the cliff?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 1, 1, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 1, 'House');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 2, 'Air');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 3, 'Cliff');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_25', 0, 'What will you do if you get some food?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 1, 'Eat alone.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 2, 'Share with my friend.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 3, 'Throw it back.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 4, 'Take it to home.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837', 2, 'Grateful animals', 'assets/topic/asb/17299.png', 'Mariam Mohammed
-Rob Owen', NULL);
+Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_3', 3, NULL, 'assets/topic/asb/17289.png', 'Once upon a time,  a man and five animals were going to war together. They traveled all day until the sun went down. "Where are we going to sleep?" asked Donkey. "Look,  there''s a hut. We can sleep there," said Puff Adder.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_4', 3, NULL, 'assets/topic/asb/17290.png', 'They went to the hut and called. A man and a woman came out. "You''re welcome to sleep here,  but we don''t have food for you," said the man. "What about the cow outside your house?" asked Dog.  "It''s the only thing we have. If we kill it,  we''ll have nothing." The wife said.  Man said,  "We will all reward you. Please kill the cow for us."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_5', 3, NULL, 'assets/topic/asb/17291.png', '"If you give me its blood,  I''ll repay you," said Lion. "I want the bones," said Dog,  "and I''ll reward you." "Give me the fat,  you won''t be sorry" said Puff Adder. "I want the meat under the skin. I''ll reward you," said Eagle. "Let me have the milk," the man said. "I''ll give you something wonderful one day." "I don''t want meat. Give me some grass from your roof," Donkey said.', NULL);
@@ -2518,8 +3659,33 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_20', 1, 'Draw an hut and decorate it.', 'assets/topic/21837.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_20', 2, 1, 'assets/topic/21837.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_21', 0, 'Select all the animals which weere taken to war.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 1, 1, 'Eagle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 1, 2, 'Snake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 1, 3, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 1, 4, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 1, 5, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 0, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_21', 0, 3, 'Tortoise');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_30', 0, 'Match the animal with the help they did', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 1, 'Lion');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 2, 'Elephant Tusk');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 3, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 4, 'Protect from thieves');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 5, 'Eagle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 6, 'some thing bright and shining.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 7, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 8, 'Bag of money');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_39', 0, 'How did you return the favour to a person who helped you once?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 1, 'Gave money');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 2, 'Gave food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 3, 'Gave cloth');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 4, 'Gave shelter');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934', 2, 'Kidnapped!', 'assets/topic/asb/14751.png', 'Richard Khadambi
-Abraham Muzee', NULL);
+Abraham Muzee', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_3', 3, NULL, 'assets/topic/asb/14735.png', 'My friend Kiki and I love to go exploring. We know our neighbourhood well. Every day after school we try to think of a new place to explore.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_4', 3, NULL, 'assets/topic/asb/14736.png', 'When walking home we often cut across the big field near the old railway. Even though Kiki''s father has warned us not to go there. On that day, we noticed a tall man in a black coat walking behind us. But at first we didn''t worry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_5', 3, NULL, 'assets/topic/asb/14737.png', 'We slowed down to look at the man. His skin was full of pimples. His lips were too small to cover his dark brown teeth. He had a deep scar across half his face. This man was following us!', NULL);
@@ -2554,8 +3720,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_24', 1, 'Paint lock and key.', 'assets/topic/15934.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_24', 2, 1, 'assets/topic/15934.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_25', 0, 'What do kiki and his friend love to?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_25', 1, 1, 'Exploring');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_25', 0, 1, 'Eating');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_25', 0, 2, 'Talking');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_25', 0, 3, 'Dancing');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_30', 0, 'Kiki and his friend were kidnaped by tall ugly man.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_30', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_30', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_33', 0, 'What will you do if you see kidnappers?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 1, 'Run away');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 2, 'Inform elders');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 3, 'inform police');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 4, 'Be calm and look for help.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149', 2, 'Pig that wouldn''t listen', 'assets/topic/asb/18310.png', 'Zanele Mguye
-Marion Drew', NULL);
+Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_3', 3, NULL, 'assets/topic/asb/18306.png', 'After a long day at the farm,  it was time for all the animals to go to sleep.
 But not everyone was willing to listen to the farmer.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_4', 3, NULL, 'assets/topic/asb/18307.png', '"Time for bed Miss Piggy," said the farmer. "In the pen you go."
@@ -2590,35 +3771,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268', 2, 'Where Is...?', 'assets/topic/asb/26677.png', 'Little Zebra Books
-Leo Daly and Magriet Brink', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_3', 3, NULL, 'assets/topic/asb/26675.png', 'Where is the ant?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_4', 3, NULL, 'assets/topic/asb/26676.png', 'Where is the snail?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_5', 3, NULL, 'assets/topic/asb/26677.png', 'Where is the mouse?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_6', 3, NULL, 'assets/topic/asb/26678.png', 'Where is the bird?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_7', 3, NULL, 'assets/topic/asb/26679.png', 'Where is the lizard?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_8', 3, NULL, 'assets/topic/asb/26680.png', 'Where is the cat?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_9', 3, NULL, 'assets/topic/asb/26681.png', 'Where is the chicken?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_10', 3, NULL, 'assets/topic/asb/26682.png', 'Where is the dog?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_11', 3, NULL, 'assets/topic/asb/26683.png', 'Where is the pig?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_12', 3, NULL, 'assets/topic/asb/26684.png', 'Where is the goat?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_13', 3, NULL, 'assets/topic/asb/26686.png', NULL, NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30268_14', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Where Is...?
-Author -
-Little Zebra Books
-Illustration -
-Leo Daly and Magriet Brink
-Language -
-English
-Level -
-First sentences
-© African Storybook Initiative 2018
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_16', 1, 'Paint cute piggy and decorate.', 'assets/topic/21149.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_16', 2, 1, 'assets/topic/21149.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_17', 0, 'Where did the farmer ask Miss piggy to sleep in?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_17', 1, 1, 'Pen');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_17', 0, 1, 'pencil');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_17', 0, 2, 'Compound');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_17', 0, 3, 'House');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_22', 0, 'Trusty whip asked fiery fire not to burn it.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_25', 0, 'Why do you think Miss piggy did not wanted to go into pen.', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 1, 'Miss piggy wanted to play.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 2, 'Did not get sleep.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 3, 'Miss piggy was hungry.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 4, 'Miss piggy wanted to sleep alone.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534', 2, 'Counting animals', 'assets/topic/asb/9651.png', 'Clare Verbeek
-Rob Owen', NULL);
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_3', 3, NULL, 'assets/topic/asb/9652.png', 'One elephant is going to drink water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_4', 3, NULL, 'assets/topic/asb/9647.png', 'Two giraffes are going to drink water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_5', 3, NULL, 'assets/topic/asb/9644.png', 'Three buffaloes and four birds are also going to drink water.', NULL);
@@ -2643,8 +3812,23 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_12', 1, 'Paint a elephant and decorate.', 'assets/topic/17534.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_12', 2, 1, 'assets/topic/17534.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_13', 0, 'How many lions drank water?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_13', 1, 1, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_13', 0, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_13', 0, 2, 'None');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_13', 0, 3, 'Three');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_18', 0, 'Seven zebras were running towards water.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_21', 0, 'Why do you think animals are drinking water together?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 1, 'There might be drought.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 2, 'Water might be sweet.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 3, 'All are friends');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 4, 'To show their unity.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031', 2, 'Why Ajao was not buried', 'assets/topic/asb/16974.png', 'Taiwo Ẹhinẹni
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_3', 3, NULL, 'assets/topic/asb/16973.png', 'Ajao,  a bat,  lay in his house very ill. There was no one to attend to him.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_4', 3, NULL, 'assets/topic/asb/16974.png', 'Then,  Ajao died.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_5', 3, NULL, 'assets/topic/asb/16975.png', 'The neighbours said,  "Ajao is dead. We must call his relations to come and bury him."', NULL);
@@ -2673,8 +3857,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_16', 1, 'Paint a bat mammal and decorate it.', 'assets/topic/17031.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_16', 2, 1, 'assets/topic/17031.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_17', 0, 'Who is a Ajao?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_17', 1, 1, 'Bat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_17', 0, 1, 'Bird');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_17', 0, 2, 'Rat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_17', 0, 3, 'Dog');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_22', 0, 'Birds and rats helped Ajao in burying.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_22', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_22', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_25', 0, 'What will you do if you were friend of Ajao?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 1, 'Bury Ajao.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 2, 'Avoid saying he is not our family.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 3, 'Inform his family.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 4, 'Never let him die.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069', 2, 'Lazy Anansi', 'assets/topic/asb/1069.png', 'Ghanaian folktale
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_3', 3, NULL, 'assets/topic/asb/1070.png', 'There was a spider called Anansi. Anansi was too lazy to cook his own food. Instead,  he used to visit his friends and eat the delicious food they had cooked.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_4', 3, NULL, 'assets/topic/asb/1071.png', 'One day, Anansi was passing Rabbit''s house when he smelled green vegetables cooking. He was very excited. Rabbit said to Anansi, "They''re not quite ready yet. You can help me to wash up while we wait."  Anansi replied, "Sorry, I have things to do. I''ll come back later."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_5', 3, NULL, 'assets/topic/asb/1072.png', '"How will I call you when they''re ready?" asked Rabbit. Anansi thought for a minute. "I''ll spin a web," he said. "I''ll tie one end around my leg and one end to your pot. When the greens are ready, pull on the web string. I''ll come right away." So Anansi tied the web to the pot, and walked on.', NULL);
@@ -2697,8 +3896,25 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_12', 1, 'Paint a spider and decorate it.', 'assets/topic/2069.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_12', 2, 1, 'assets/topic/2069.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_13', 0, 'Match animals with food they are cooking.', NULL, NULL, 'pair');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 1, 'Rabbit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 2, 'Green vegetables');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 3, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 4, 'Beans');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 5, 'Warthog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 6, 'Sweet potato');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_20', 0, 'Anansi final had food in rabbit''s house.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_23', 0, 'What will do if you are hungry?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 1, 'I will cook and eat.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 2, 'Visit friend''s home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 3, 'Stay empty stomach');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 4, 'Eat some fruits');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088', 2, 'Why Fly pesters Cow', 'assets/topic/asb/19248.png', 'Jaco jacobs
-Stephen Wallace', NULL);
+Stephen Wallace', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_3', 3, NULL, 'assets/topic/asb/19248.png', 'Have you ever seen a herd of cows in the field? Every now and then you will notice a cow shaking her head. She tries to drive away the flies that pester her. But why do the flies zoom-zoom-zee around Cow''s head?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_4', 3, NULL, 'assets/topic/asb/19249.png', 'They say it started long,  long ago in a far-off country. The country''s queen was very rich and had a kind heart. One day she decided to arrange a huge banquet. All the animals were invited. The enormous tables were beautifully laden. Every table groaned under the delicacies,  dishes full of meat,  freshly baked bread,  steaming vegetables and honey-sweet fruit.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_5', 3, NULL, 'assets/topic/asb/19250.png', 'The animals smacked their lips when they saw the delicious food. "The largest animal at each table should sit at the head," the queen said. "It is his or her job to dish out the food." Cow shared a table with Sheep,  Goat,  Dog,  Goose and Fly. Since Cow was the biggest,  she started dishing out the food.  Each animal received a big chunk of home-baked bread with grape jam and cheese.', NULL);
@@ -2723,8 +3939,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_14', 1, 'Paint a fly and a cow and decorate it.', 'assets/topic/22088.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_14', 2, 1, 'assets/topic/22088.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_15', 0, 'Who pesters the cow all the time?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_15', 1, 1, 'Fly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_15', 0, 1, 'Honey bee');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_15', 0, 2, 'Butterfly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_15', 0, 3, 'Bird');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_20', 0, 'Fly was very small therefore cow hardly noticed it.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_20', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_20', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_23', 0, 'What will you do if no one notices you?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 1, 'Shout loudly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 2, 'Throw paper ball');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 3, 'Throw small stone');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 4, 'Poke the person');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938', 2, 'Why Hippos have no hair', 'assets/topic/asb/6143.png', 'Basilio Gimo
-Carol Liddiment', NULL);
+Carol Liddiment', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_3', 3, NULL, 'assets/topic/asb/6162.png', 'One day,  Rabbit was walking by the riverside.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_4', 3, NULL, 'assets/topic/asb/6163.png', 'Hippo was there too,  going for a stroll and eating some nice green grass.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_5', 3, NULL, 'assets/topic/asb/6145.png', 'Hippo didn''t see that Rabbit was there and she accidentally stepped on Rabbit''s foot. Rabbit started screaming at Hippo,  "You Hippo! Can''t you see that you''re stepping on my foot?"', NULL);
@@ -2749,8 +3980,23 @@ Source
 www.africanstorybook.org
 Original source
 http://www.littlezebrabooks.com/.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_12', 1, 'Paint hippopotamus and decorate it.', 'assets/topic/15938.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_12', 2, 1, 'assets/topic/15938.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_13', 0, 'Who stamped on the foot of rabbit?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_13', 1, 1, 'Hippo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_13', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_13', 0, 2, 'Elephant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_13', 0, 3, 'Lion');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_18', 0, 'Hippo got his hair burnt on land so he always stays in water.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_21', 0, 'If anyone stamps your feet what will you do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 1, 'Forgive');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 2, 'Teach a lesson');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 3, 'stamp back');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 4, 'Shout and laugh');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442', 2, 'Why is Yayeri great?', 'assets/topic/asb/7509.png', 'Cornelius Wambi Gulere
-Vusi Malindi', NULL);
+Vusi Malindi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_3', 3, NULL, 'assets/topic/asb/7513.png', 'Yayeri the great one wakes up very early every morning.
 We ask ourselves,  "Why is Yayeri great?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_4', 3, NULL, 'assets/topic/asb/7514.png', 'She is grateful for the night past.
@@ -2793,8 +4039,25 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_16', 1, 'Draw a soap decorate it.', 'assets/topic/8442.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_16', 2, 1, 'assets/topic/8442.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_17', 0, 'What is the color of her soap?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_17', 1, 1, 'Blue');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_17', 0, 1, 'Black');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_17', 0, 2, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_17', 0, 3, 'Yellow');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_22', 0, 'What is the color of her shoes?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 1, 1, 'Black');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 1, 'Blue');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 2, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 3, 'Orange');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_27', 0, 'What is your favourite color?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 1, 'Black');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 2, 'Blue');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 3, 'Red');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 4, 'Orange');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473', 2, 'Why the Library Was Built?', 'assets/topic/asb/7960.png', 'Kabubbu Remedial class
- Marleen Visser, Magriet Brink, Karlien de Villiers, Marike le Roux, Jano Strydom, Rob Owen, Jesse Breytenbach and Catherine Groenewald', NULL);
+ Marleen Visser, Magriet Brink, Karlien de Villiers, Marike le Roux, Jano Strydom, Rob Owen, Jesse Breytenbach and Catherine Groenewald', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_3', 3, NULL, 'assets/topic/asb/8548.png', 'Chairs and tables.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_4', 3, NULL, 'assets/topic/asb/8856.png', 'A lot of story books for children and adults.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_5', 3, NULL, 'assets/topic/asb/9652.png', 'Painted pictures on the wall.', NULL);
@@ -2821,8 +4084,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_16', 1, 'Draw lots of books and color it.', 'assets/topic/24473.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_16', 2, 1, 'assets/topic/24473.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_17', 0, 'Not only childrens but also adults go to library.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_20', 0, 'Where were the pictures painted in the library?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 1, 1, 'Wall');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 1, 'chairs');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 2, 'Tables');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 3, 'Ceiling');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_25', 0, 'If you go to library what do you like to read?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 1, 'Story books');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 2, 'HIstory');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 3, 'Science');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 4, 'Culture');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999', 2, 'Day I left home for the city', 'assets/topic/asb/15008.png', 'Lesley Koyi
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_3', 3, NULL, 'assets/topic/asb/14993.png', 'The small bus stop in my village was busy with people and overloaded buses. On the ground were even more things to load. Touts were shouting the names where the buses were going.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_4', 3, NULL, 'assets/topic/asb/14994.png', '"City! City! Going west!" I heard a tout shouting. That was the bus I needed to catch.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_5', 3, NULL, 'assets/topic/asb/14995.png', 'The city bus was almost full,  but more people were still pushing to get on. Some packed their luggage under the bus. Others put their things on the racks inside.', NULL);
@@ -2853,8 +4131,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_20', 1, 'Paint bus.', 'assets/topic/21999.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_20', 2, 1, 'assets/topic/21999.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_21', 0, 'Where did the passengers keep their things?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_21', 1, 1, 'Rack');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_21', 0, 1, 'Rock');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_21', 0, 2, 'Seat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_21', 0, 3, 'Belt');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_26', 0, 'People carried different items in the bus.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_29', 0, 'What will you do when you get in to bus?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 1, 'Sleep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 2, 'Sit next to window');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 3, 'Eat snacks');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 4, 'Talk to others');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080', 2, 'Lerato, Thabo and Cow', 'assets/topic/asb/9373.png', 'Khothatso Ranoosi and Marion Drew
- Marion Drew', NULL);
+ Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_3', 3, NULL, 'assets/topic/asb/9371.png', 'Once upon a time in a village there lived a boy named Thabo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_4', 3, NULL, 'assets/topic/asb/9370.png', 'Thabo was friends with a girl called Lerato. They were neighbours.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_5', 3, NULL, 'assets/topic/asb/9374.png', 'One day they went to get water.', NULL);
@@ -2889,8 +4182,26 @@ Source
 www.africanstorybook.org
 Original source
 http://paleng.weebly.com/,', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_20', 1, 'Paint cow and decorate it.', 'assets/topic/22080.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_20', 2, 1, 'assets/topic/22080.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_21', 0, 'Which animal was sleeping near to the spring?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_21', 1, 1, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_21', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_21', 0, 2, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_21', 0, 3, 'Lion');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_26', 0, 'Cow did not move though they tried hiting it.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_29', 0, 'Cow was kind and did not attack Thabo', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_29', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_29', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_32', 0, 'What will you do if you see cow sitting near to water?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_32', 0, 1, 'Avoid going near to it.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_32', 0, 2, 'Take another path.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_32', 0, 3, 'Try to scare it.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22080_32', 0, 4, 'Feed something to it.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670', 2, 'Holidays with grandmother', 'assets/topic/asb/11661.png', 'Violet Otieno
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_3', 3, NULL, 'assets/topic/asb/11657.png', 'Odongo and Apiyo lived in the city with their father. They looked forward to the holidays. Not only because school was closed, but because they went to visit their grandmother. She lived in a fishing village near a large lake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_4', 3, NULL, 'assets/topic/asb/11658.png', 'Odongo and Apiyo were excited because it was time to visit their grandmother again. They packed their bags and got ready for their long journey the next day. They could not sleep and talked about the holiday the whole night.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_5', 3, NULL, 'assets/topic/asb/11659.png', 'Early the next morning, they left for the village in their father''s car. They drove past mountains, wild animals, and tea plantations. They counted cars and sang songs.', NULL);
@@ -2925,7 +4236,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586', 2, 'Cunning Madola', 'assets/topic/asb/19552.png', 'Mariam Yusuf', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_24', 1, 'Paint grand mother on a chair.', 'assets/topic/12670.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_24', 2, 1, 'assets/topic/12670.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_25', 0, 'Odongo and Apiyo were excited to visit their grandmother.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_25', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_25', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_28', 0, 'Odongo and Apiyo bought present for their grandmother.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_28', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_28', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_31', 0, 'Nyar-Kanyada gave Odongo a cap and Apiyo a sweater.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_31', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_31', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_34', 0, 'What gift do you like to give your grandmother?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 1, 'Sweet box');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 2, 'Sweater');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 3, 'Glasses');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 4, 'Umbrella');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586', 2, 'Cunning Madola', 'assets/topic/asb/19552.png', 'Mariam Yusuf', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_3', 3, NULL, 'assets/topic/asb/19543.png', 'There was a rich cunning man called Madola. He hired people who worked hard but he did not pay them their wages.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_4', 3, NULL, 'assets/topic/asb/19544.png', 'Dande was 11 years old. He went to Madola for work so he could buy medicine for his grandmother. Madola hired Dande to graze his animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_5', 3, NULL, 'assets/topic/asb/19545.png', 'At the end of the month,  Dande went for his pay. The cunning Madola said,  "Go home and come back tomorrow for your pay."', NULL);
@@ -2951,8 +4278,28 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_16', 1, 'Decorate cunning  rich and paint him.', 'assets/topic/19586.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_16', 2, 1, 'assets/topic/19586.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_17', 0, 'What is the name of rich cunning man?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_17', 1, 1, 'Madola');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_17', 0, 1, 'Badola');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_17', 0, 2, 'Cadola');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_17', 0, 3, 'Doladola');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_22', 0, 'What did Dande wanted to buy for his grandmother?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_22', 1, 1, 'Medicine');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_22', 0, 1, 'Cap');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_22', 0, 2, 'Sweet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_22', 0, 3, 'Fruit');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_27', 0, 'Madola was very kind and he paid Dande.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_27', 1, 1, 'False.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_27', 0, 1, 'True.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_30', 0, 'What will you do if Madola does not pay you?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 1, 'Convince him about my problem.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 2, 'Inform elders.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 3, 'Complain to police.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 4, 'Teach a lesson.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075', 2, 'Magezi and the finger of millet', 'assets/topic/asb/15478.png', 'Cornelius Wambi Gulere
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_3', 3, NULL, 'assets/topic/asb/15471.png', 'Long ago,  there were two animals that were good friends. One was called Magezi Mataala Manene,  the other was called Kasiru Kasiira Katono. They used to live by sharing. Their friendship was so deep that they could share one white ant.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_4', 3, NULL, 'assets/topic/asb/15472.png', 'One day,  Magezi Matala Manene made a suggestion."Why don''t we dig together as we eat together?" he asked. Kasiru Kasiira Katono replied,  "Good idea. We should also store our food together." They both agreed to this.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_5', 3, NULL, 'assets/topic/asb/15473.png', 'Magezi Mataala Manene asked his friend,  "Ee! Who will start the digging? Why don''t you dig,  and I will come to sow?" "Yes," replied Kasiru Kasiira Katono,  and she dug a big garden. Then she told her friend,  "Magezi Mataala Manene,  I have finished digging. Come and sow millet."', NULL);
@@ -2991,8 +4338,27 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_24', 1, 'Paint chimpanzee and monkey.', 'assets/topic/21075.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_24', 2, 1, 'assets/topic/21075.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_25', 0, 'They would share even one white ant with each other.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_25', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_25', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_28', 0, 'Choose all the activities in order that Kasiru Kasiira Katono did.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 1, 'Dig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 2, 'Sow millet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 3, 'Weed grass');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 4, 'Harvest millet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 5, 'Granary');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_34', 0, 'Each one of the people gave Magezi Mataala Manene a bull.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_34', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_34', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_37', 0, 'What sort of person do you want to become?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 1, 'Hard working');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 2, 'Sharing with friends');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 3, 'Lucky');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 4, 'Own a business');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330', 2, 'Magozwe', 'assets/topic/asb/12937.png', 'Lesley Koyi
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_3', 3, NULL, 'assets/topic/asb/12931.png', 'In the busy city,  far away from a caring life at home,  lived a group of homeless boys. They welcomed each day just as it came. On one morning,  the boys were packing their mats after sleeping on cold pavements. To chase away the cold they lit a fire. Among the group of boys was Magozwe. He was the youngest.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_4', 3, NULL, 'assets/topic/asb/12932.png', 'When Magozwe''s parents died,  he was only five years old. He went to live with his uncle. This man did not care about the child. He did not give Magozwe enough food. He made the boy do a lot of hard work.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_5', 3, NULL, 'assets/topic/asb/12933.png', 'If Magozwe complained or questioned,  his uncle beat him. When Magozwe asked if he could go to school,  his uncle beat him and said,  "You''re too stupid to learn anything." After three years of this treatment Magozwe ran away from his uncle. He started living on the street.', NULL);
@@ -3023,40 +4389,29 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214', 2, 'Magozwe', 'assets/topic/asb/12937.png', 'Lesley Koyi
-Wiehan de Jager', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_3', 3, NULL, 'assets/topic/asb/12931.png', 'In the busy city,  far away from a caring life at home,  lived a group of homeless boys. They welcomed each day just as it came. On one morning,  the boys were packing their mats after sleeping on cold pavements. To chase away the cold they lit a fire. Among the group of boys was Magozwe. He was the youngest.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_4', 3, NULL, 'assets/topic/asb/12932.png', 'When Magozwe''s parents died,  he was only five years old. He went to live with his uncle. This man did not care about the child. He did not give Magozwe enough food. He made the boy do a lot of hard work.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_5', 3, NULL, 'assets/topic/asb/12933.png', 'If Magozwe complained or questioned,  his uncle beat him. When Magozwe asked if he could go to school,  his uncle beat him and said,  "You''re too stupid to learn anything." After three years of this treatment Magozwe ran away from his uncle. He started living on the street.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_6', 3, NULL, 'assets/topic/asb/12935.png', 'Street life was difficult and most of the boys struggled daily just to get food. Sometimes they were arrested,  sometimes they were beaten. When they were sick,  there was no one to help. The group depended on the little money they got from begging,  and from selling plastics and other recycling. Life was even more difficult because of fights with rival groups who wanted control of parts of the city.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_7', 3, NULL, 'assets/topic/asb/12936.png', 'One day while Magozwe was looking through the dustbins,  he found an old tattered storybook. He cleaned the dirt from it and put it in his sack. Every day after that he would take out the book and look at the pictures. He did not know how to read the words.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_8', 3, NULL, 'assets/topic/asb/12937.png', 'The pictures told the story of a boy who grew up to be a pilot. Magozwe would daydream of being a pilot. Sometimes,  he imagined that he was the boy in the story.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_9', 3, NULL, 'assets/topic/asb/12938.png', 'It was cold and Magozwe was standing on the road begging. A man walked up to him. "Hello,  I''m Thomas. I work near here,  at a place where you can get something to eat," said the man. He pointed to a yellow house with a blue roof. "I hope you will go there to get some food?" he asked. Magozwe looked at the man,  and then at the house. "Maybe," he said,  and walked away.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_10', 3, NULL, 'assets/topic/asb/12939.png', 'Over the months that followed,  the homeless boys got used to seeing Thomas around. He liked to talk to people,  especially people living on the streets. Thomas listened to the stories of people''s lives. He was serious and patient,  never rude or disrespectful. Some of the boys started going to the yellow and blue house to get food at midday.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_11', 3, NULL, 'assets/topic/asb/12940.png', 'Magozwe was sitting on the pavement looking at his picture book when Thomas sat down next to him. "What is the story about?" asked Thomas. "It''s about a boy who becomes a pilot," replied Magozwe. "What''s the boy''s name?" asked Thomas. "I don''t know,  I can''t read," said Magozwe quietly.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_12', 3, NULL, 'assets/topic/asb/12941.png', 'When they met,  Magozwe began to tell his own story to Thomas. It was the story of his uncle and why he ran away. Thomas didn''t talk a lot,  and he didn''t tell Magozwe what to do,  but he always listened carefully. Sometimes they would talk while they ate at the house with the blue roof.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_13', 3, NULL, 'assets/topic/asb/12942.png', 'Around Magozwe''s tenth birthday,  Thomas gave him a new storybook. It was a story about a village boy who grew up to be a famous soccer player. Thomas read that story to Magozwe many times,  until one day he said,  "I think it''s time you went to school and learned to read. What do you think?" Thomas explained that he knew of a place where children could stay,  and go to school.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_14', 3, NULL, 'assets/topic/asb/12943.png', 'Magozwe thought about this new place,  and about going to school. What if his uncle was right and he was too stupid to learn anything? What if they beat him at this new place? He was afraid. "Maybe it is better to stay living on the street," he thought.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_15', 3, NULL, 'assets/topic/asb/12944.png', 'He shared his fears with Thomas. Over time the man reassured the boy that life could be better at the new place.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_16', 3, NULL, 'assets/topic/asb/12945.png', 'And so Magozwe moved into a room in a house with a green roof. He shared the room with two other boys. Altogether there were ten children living at that house. Along with Auntie Cissy and her husband,  three dogs,  a cat,  and an old goat.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_17', 3, NULL, 'assets/topic/asb/12946.png', 'Magozwe started school and it was difficult. He had a lot to catch up. Sometimes he wanted to give up. But he thought about the pilot and the soccer player in the storybooks. Like them,  he did not give up.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_18', 3, NULL, 'assets/topic/asb/12947.png', 'Magozwe was sitting in the yard at the house with the green roof,  reading a storybook from school. Thomas came up and sat next to him. "What is the story about?" asked Thomas. "It''s about a boy who becomes a teacher," replied Magozwe. "What''s the boy''s name?" asked Thomas. "His name is Magozwe," said Magozwe with a smile.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13214_19', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Magozwe
-Author -
-Lesley Koyi
-Illustration -
-Wiehan de Jager
-Language -
-English
-Level -
-Longer paragraphs
-© African Storybook Initiative 2015
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_20', 1, 'Make a camp fire and decorate it.', 'assets/topic/18330.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_20', 2, 1, 'assets/topic/18330.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_21', 0, 'Who was youngest among group of boys?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_21', 1, 1, 'Magozwe');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_21', 0, 1, 'Maggie');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_21', 0, 2, 'Mago');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_21', 0, 3, 'Gozwe');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_26', 0, 'Magozwe''s uncle was a kind person.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_29', 0, 'One day Magozwe found a story book in dustbin.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_29', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_29', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_32', 0, 'Thomas was kind and gave food to boys.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_32', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_32', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_35', 0, 'How would you help homeless guys?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 1, 'Provide food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 2, 'Give alms');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 3, 'Be kind and listen to their story.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 4, 'Show them an orphanage.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412', 2, 'Maguru gives legs', 'assets/topic/asb/13910.png', 'Mutugi Kamundi
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_3', 3, NULL, 'assets/topic/asb/13904.png', 'Long time ago, animals had no legs.
 They all used to crawl.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_4', 3, NULL, 'assets/topic/asb/13905.png', 'Only people had legs, which Maguru gave to them.', NULL);
@@ -3100,8 +4455,26 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_20', 1, 'Paint millipede and decorate it.', 'assets/topic/14412.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_20', 2, 1, 'assets/topic/14412.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_21', 0, 'Long long ago what did animals not have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_21', 1, 1, 'Legs');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_21', 0, 1, 'Ears');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_21', 0, 2, 'Eyes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_21', 0, 3, 'Tail');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_26', 0, 'Millipede got many legs from Maguru.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_29', 0, 'Snake did not get legs from maguru because of over sleeeping.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_29', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_29', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_32', 0, 'What did you miss because of over sleeping?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 1, 'Sweets');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 2, 'Studying');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 3, 'Fun with friends');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 4, 'Food');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405', 2, 'The sprouting bean', 'assets/topic/asb/1824.png', 'Clare Verbeek
-Mlungisi Dlamini', NULL);
+Mlungisi Dlamini', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_3', 3, NULL, 'assets/topic/asb/1826.png', 'The root grows first.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_4', 3, NULL, 'assets/topic/asb/1827.png', 'It grows down into the soil.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_5', 3, NULL, 'assets/topic/asb/1828.png', 'Then the stem grows. It grows up towards the sun.', NULL);
@@ -3125,8 +4498,26 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_11', 1, 'Draw a sprouting bean.', 'assets/topic/2405.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_11', 2, 1, 'assets/topic/2405.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_12', 0, 'Root grows first from a bean moves downward.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_12', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_12', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_15', 0, 'The stem grows up towards the sun.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_15', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_15', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_18', 0, 'What do flowers turn in to?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 1, 1, 'Beans');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 1, 'Plant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 2, 'Stem');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 3, 'Root');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_23', 0, 'What type of bean would you like to grow?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 1, 'Green bean');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 2, 'Kidney bean');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 3, 'Pinto bean');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 4, 'Black beans');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126', 2, 'An egg for bride wealth', 'assets/topic/asb/6733.png', 'Cornelius Wambi Gulere
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_3', 3, NULL, 'assets/topic/asb/6733.png', 'Once upon a time,  there was an old woman who loved her grandson very much. She gave him an egg as a gift. She said,  "From this egg you will get bride wealth for your marriage when you are of age."  And the boy went on his way.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_4', 3, NULL, 'assets/topic/asb/6732.png', 'First he met some blackberry gatherers who asked him for the egg. They used it to shoot at the berries and it broke.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_5', 3, NULL, 'assets/topic/asb/6731.png', 'The boy cried,  "EiEiEi! You have caused trouble for me! The egg was not mine. It belonged to my grandmother. And grandmother didn''t give it to me for nothing. She gave it to me to get bride wealth."', NULL);
@@ -3158,8 +4549,26 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_17', 1, 'Draw different sized eggs and decorate it.', 'assets/topic/21126.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_17', 2, 1, 'assets/topic/21126.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_18', 0, 'What did the old woman gift her grandson?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_18', 1, 1, 'Egg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_18', 0, 1, 'Gold');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_18', 0, 2, 'Apple');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_18', 0, 3, 'Money');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_23', 0, 'Choose all the things that boy got in order.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 1, 'Egg');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 2, 'Stick');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 3, 'Bundle of grass');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 4, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 5, 'Bride');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_29', 0, 'What will you do if get an egg?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 1, 'Make omlet.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 2, 'Exchange it with someone.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 3, 'Hit someone');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 4, 'Play with it.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652', 2, 'My mother planted', 'assets/topic/asb/9002.png', 'Cornelius Wambi Gulere
-Jonathan Field', NULL);
+Jonathan Field', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_3', 3, NULL, 'assets/topic/asb/8998.png', 'My mother planted. She planted a small garden. She planted a small garden of peas.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_4', 3, NULL, 'assets/topic/asb/8999.png', 'My father planted. He planted a small garden. He planted a small garden of flowers.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_5', 3, NULL, 'assets/topic/asb/9000.png', 'My mother weeded in both gardens.', NULL);
@@ -3184,8 +4593,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_12', 1, 'Decorate the field with flowers.', 'assets/topic/12652.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_12', 2, 1, 'assets/topic/12652.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_13', 0, 'What did the father plant in his small garden?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_13', 1, 1, 'Flowers');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_13', 0, 1, 'Peas');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_13', 0, 2, 'Fruit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_13', 0, 3, 'Tree');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_18', 0, 'Mother weeded in both gardens.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_21', 0, 'What will you plant if you had a small garden?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 1, 'Mango tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 2, 'Papaya tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 3, 'Green vegetables');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 4, 'Sugarcane');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746', 2, 'Crocodile in my body', 'assets/topic/asb/6105.png', 'Val Morris
-Felicity Bell', NULL);
+Felicity Bell', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_3', 3, NULL, 'assets/topic/asb/6093.png', 'Hello,  I''m Ntombi. I''m a little girl like other little girls,  except I have a crocodile in my body. You can''t see him,  but I know he is there. His name is Horrible InVader. He hides in my body and doesn''t do any harm to my friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_4', 3, NULL, 'assets/topic/asb/6094.png', 'He won''t leave my body and go into yours if you sit next to me,  or hold my hand.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_5', 3, NULL, 'assets/topic/asb/6092.png', 'He won''t leave my body and jump into yours even if you share your lunch with me,  or lie down on the floor together when we have a rest.', NULL);
@@ -3211,8 +4635,26 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_15', 1, 'Paint a little girl.', 'assets/topic/15746.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_15', 2, 1, 'assets/topic/15746.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_16', 0, 'What was in the body of little girl?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_16', 1, 1, 'Crocodile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_16', 0, 1, 'Elephant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_16', 0, 2, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_16', 0, 3, 'Rat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_21', 0, 'If little girl takes medicine then crcodile sleeps.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_24', 0, 'According to story crocodile is fever.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_24', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_24', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_27', 0, 'What will you do to keep your crocodile sleeping?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 1, 'Eat healthy food.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 2, 'Eat fruit.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 3, 'Do exercise.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 4, 'Take medicine if needed.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602', 2, 'The hungry crocodile', 'assets/topic/asb/5948.png', 'Christian G.
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_3', 3, NULL, 'assets/topic/asb/5948.png', 'Once there was a very hungry crocodile.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_4', 3, NULL, 'assets/topic/asb/5949.png', 'He searched for food slowly and quietly.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_5', 3, NULL, NULL, 'And then.', NULL);
@@ -3233,8 +4675,21 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_10', 1, 'Paint crcodile and decorate it.', 'assets/topic/12602.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_10', 2, 1, 'assets/topic/12602.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_11', 0, 'Crocodile searched for food slowly and quietly.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_11', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_11', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_14', 0, 'After eating crocodile is happy.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_14', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_14', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_17', 0, 'What do you feel when you get your favourite thing to eat?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 1, 'Happy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 2, 'Excited');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 3, 'Wanting more');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 4, 'Share with family');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087', 2, 'Crocodile waits for brains', 'assets/topic/asb/25465.png', 'Northern Cape Teacher''s Workshop 2016
-Tawanda Mhandu', NULL);
+Tawanda Mhandu', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_3', 3, NULL, 'assets/topic/asb/25460.png', 'Once upon a time, there was a crocodile living at a river with her young ones.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_4', 3, NULL, 'assets/topic/asb/25462.png', 'The crocodile taught her young ones not to trust humans.
 This is because humans have brains.', NULL);
@@ -3262,8 +4717,25 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_12', 1, 'Paint crocodile and its babies.', 'assets/topic/22087.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_12', 2, 1, 'assets/topic/22087.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_13', 0, 'Whom did crocodile tell not to trust?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_13', 1, 1, 'Humans');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_13', 0, 1, 'Elephant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_13', 0, 2, 'Ant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_13', 0, 3, 'Grass hopper');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_18', 0, 'What did the man promise to bring?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 1, 1, 'Brain');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 1, 'Hand');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 2, 'Meat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 3, 'Grass');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_23', 0, 'If you were in place of man what would you do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 1, 'Never go near crocodile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 2, 'Be calm and try to escape');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 3, 'Make a deal with crocodile');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 4, 'Cry for help');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151', 2, 'Dog and Crocodile', 'assets/topic/asb/17149.png', 'Candiru Enzikuru Mary
- Rob Owen', NULL);
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_3', 3, NULL, 'assets/topic/asb/17139.png', 'One day at the river,  Dog came across some eggs in the sand. He asked himself,  "Which animal left these eggs here?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_4', 3, NULL, 'assets/topic/asb/17140.png', 'He counted ten eggs and thought they might belong to Duck. He put them in his bag.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_5', 3, NULL, 'assets/topic/asb/17141.png', 'He took the eggs home and put them in a warm place.', NULL);
@@ -3290,8 +4762,28 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_16', 1, 'Paint a dog and decorate it.', 'assets/topic/21151.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_16', 2, 1, 'assets/topic/21151.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_17', 0, 'What did the dog see in the sand?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_17', 1, 1, 'Eggs');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_17', 0, 1, 'Water');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_17', 0, 2, 'Bush');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_17', 0, 3, 'Stick');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_22', 0, 'Dog unknowingly stole eggs of crocodile.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_25', 0, 'In whose house did crocodile find its eggs?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_25', 1, 1, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_25', 0, 1, 'Antelope');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_25', 0, 2, 'Tiger');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_25', 0, 3, 'Fox');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_30', 0, 'What will you do if someone steals your eggs?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 1, 'Look clearly where I kept.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 2, 'Ask others.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 3, 'Bring another dozen eggs.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 4, 'Complain to elders.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742', 2, 'Look at the animals', 'assets/topic/asb/1747.png', 'Jenny Katz
- Sandy Campbell', NULL);
+ Sandy Campbell', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_3', 3, NULL, 'assets/topic/asb/1749.png', 'Look at the animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_4', 3, NULL, 'assets/topic/asb/1750.png', 'The cow says, "Moo."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_5', 3, NULL, 'assets/topic/asb/1751.png', 'The goat says, "Meh,  meh."', NULL);
@@ -3316,8 +4808,31 @@ Source
 www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_12', 1, 'Paint animals which are in farm.', 'assets/topic/16742.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_12', 2, 1, 'assets/topic/16742.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_13', 0, 'The cow says Moo', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_13', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_13', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_16', 0, 'The goat says Meh Meh', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_19', 0, 'Select all the animals you read in the story.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 1, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 2, 'Goat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 3, 'Horse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 4, 'Pig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 5, 'Chicken');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 6, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 2, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 3, 'Cat');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_29', 0, 'What is the use of goat?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 1, 'Gives milk');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 2, 'Gives sweater');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 3, 'Becomes friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 4, 'Gives small goats');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084', 2, 'Friends', 'assets/topic/asb/8601.png', 'Hlengiwe Zondi and Zimbili Dlamini
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_3', 3, NULL, 'assets/topic/asb/8600.png', 'My name is Simo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_4', 3, NULL, 'assets/topic/asb/8601.png', 'I have four friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_5', 3, NULL, 'assets/topic/asb/8602.png', 'Their names are Zizo, Lele, Sisa and Ayanda.', NULL);
@@ -3350,8 +4865,26 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_20', 1, 'Color football with different colors.', 'assets/topic/16084.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_20', 2, 1, 'assets/topic/16084.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_21', 0, 'How many friends were there for Simon?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_21', 1, 1, 'Four');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_21', 0, 1, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_21', 0, 2, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_21', 0, 3, 'One');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_26', 0, 'Simon''s friend Lele likes to swim.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_29', 0, 'Simon''s friend Ayanda likes to read.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_29', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_29', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_32', 0, 'What do you like to do in your free time?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 1, 'Swim');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 2, 'Dance');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 3, 'Read');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 4, 'Play');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404', 2, 'Two little friends', 'assets/topic/asb/18402.png', 'Belainesh Woubishet
-Jesse Pietersen', NULL);
+Jesse Pietersen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_3', 3, NULL, 'assets/topic/asb/18401.png', 'There was Little Goat and Little Leopard. They became friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_4', 3, NULL, 'assets/topic/asb/18402.png', 'They went to a field together to play.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_5', 3, NULL, 'assets/topic/asb/18403.png', 'They returned home very late.', NULL);
@@ -3378,8 +4911,26 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_16', 1, 'Paint little goat and little leopard.', 'assets/topic/19404.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_16', 2, 1, 'assets/topic/19404.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_17', 0, 'Whom did the little goat meet and became friends?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_17', 1, 1, 'Leopard');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_17', 0, 1, 'Tiger');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_17', 0, 2, 'Ant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_17', 0, 3, 'Fox');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_22', 0, 'Little leopard wanted to eat little goat.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_25', 0, 'Little goat listened its mother and got saved.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_25', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_25', 0, 1, 'false.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_28', 0, 'Who in your family always listens to the mother?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 1, 'Me');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 2, 'Brother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 3, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 4, 'Father');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462', 2, 'Three boxes of wealth', 'assets/topic/asb/26153.png', 'Angesom Abadi
-Adonay  Gebru', NULL);
+Adonay  Gebru', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_3', 3, NULL, 'assets/topic/asb/26150.png', 'There lived an old man called Hagos. He lived with his three sons.
 Hagos wanted his sons to have wealth after his death. He prepared three boxes for them.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_4', 3, NULL, 'assets/topic/asb/26151.png', 'Hagos went to his neighbour Haile and said, "I want my sons to have wealth. I have prepared three boxes. I want you to give them the boxes after I die."', NULL);
@@ -3413,8 +4964,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_16', 1, 'Paint different sized boxes.', 'assets/topic/22462.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_16', 2, 1, 'assets/topic/22462.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_17', 0, 'How many sons did the old man have?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_17', 1, 1, 'Three');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_17', 0, 1, 'Two');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_17', 0, 2, 'One');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_17', 0, 3, 'Four');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_22', 0, 'Father wanted person getting animal dung to become cowboy.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_25', 0, 'If you were a farmer what will you do?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 1, 'Till the land.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 2, 'Sow seeds.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 3, 'Feed cattle.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 4, 'Grow my favourite crop.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582', 2, 'Kariza''s questions', 'assets/topic/asb/25965.png', 'Aloysie Uwizeyemariya
-Rob Owen', NULL);
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_3', 3, NULL, 'assets/topic/asb/25964.png', 'Kariza loved to ask questions. She got this habit from her parents. They used to tell her, "If you don''t ask questions when you are young, you will grow up to be an ignorant adult!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_4', 3, NULL, 'assets/topic/asb/25965.png', 'One day, Kariza asked her teacher, "Why do our parents always tell us to wash our hands before eating, even when our hands look clean?"
 Her classmates liked her question. They didn''t like being told to wash their hands either.', NULL);
@@ -3449,8 +5015,23 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_16', 1, 'Paint Washing hands under tap.', 'assets/topic/22582.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_16', 2, 1, 'assets/topic/22582.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_17', 0, 'What do Kariza likes to ask?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_17', 1, 1, 'Questions');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_17', 0, 1, 'Ball');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_17', 0, 2, 'Duster');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_17', 0, 3, 'Pen');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_22', 0, 'Germs can make us sick if we dont clean our hands.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_25', 0, 'How will you keep yourself healthy?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 1, 'Eating healthy food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 2, 'Keeping hands clean');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 3, 'Doing exercise');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 4, 'Wash hands before eating');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403', 2, 'Father''s advice', 'assets/topic/asb/17114.png', 'Mohammed Kuyu
-Jacob Kono', NULL);
+Jacob Kono', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_3', 3, NULL, 'assets/topic/asb/17103.png', 'Once upon a time,  there was a father who had two sons.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_4', 3, NULL, 'assets/topic/asb/17104.png', 'One day,  he called his sons and said,  "I am old and will die soon. But before I die,  I want to see you in your own homes. You have one month to each make your own home. I want to see you back here after the month."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_5', 3, NULL, 'assets/topic/asb/17105.png', 'The two sons rushed out. The first one went to the roadside. He cut down trees and began to build a big compound for himself.', NULL);
@@ -3479,8 +5060,23 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_16', 1, 'Paint house and decorate it.', 'assets/topic/19403.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_16', 2, 1, 'assets/topic/19403.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_17', 0, 'What did the father ask his sons to make?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_17', 1, 1, 'Home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_17', 0, 1, 'Farm');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_17', 0, 2, 'money');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_17', 0, 3, 'Land');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_22', 0, 'Home means love,  warmth and friendship with other people.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_25', 0, 'What do understand from above story?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 1, 'Be friendly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 2, 'Be kind');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 3, 'Love one another');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 4, 'Turn house into home');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043', 2, 'The Hyena''s funeral', 'assets/topic/asb/25123.png', 'Daniel  Ewoi
-Jacob Kono', NULL);
+Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_3', 3, NULL, 'assets/topic/asb/25123.png', 'One day, the hyena''s son died.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_4', 3, NULL, 'assets/topic/asb/25124.png', 'A donkey heard the news.
 He ran to his relatives and said, "The hyena''s son is dead." All the other donkeys said, "The hyena''s son? That''s good news. All the hyenas are our enemies."', NULL);
@@ -3527,8 +5123,21 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_20', 1, 'Paint donkey and decorate it.', 'assets/topic/22043.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_20', 2, 1, 'assets/topic/22043.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_21', 0, 'Donkey were kind and went to comfort hyenas.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_24', 0, 'Hyenas were cunning and wanted to eat donkey.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_24', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_24', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_27', 0, 'What will you do if you see your enemy suffering?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 1, 'Help him');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 2, 'Avoid Him');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 3, 'Inform his side people');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 4, 'Take suggestion of my elders');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101', 2, 'Two', 'assets/topic/asb/3062.png', 'Carole Bloch
- Richard MacIntosh', NULL);
+ Richard MacIntosh', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_3', 3, NULL, 'assets/topic/asb/3061.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_4', 3, NULL, 'assets/topic/asb/3063.png', 'Two little hands to hold.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_5', 3, NULL, 'assets/topic/asb/3064.png', NULL, NULL);
@@ -3555,8 +5164,24 @@ Source
 www.africanstorybook.org
 Original source
 http://www.littlehandstrust.com/books.html', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_14', 1, 'Draw two little hands.', 'assets/topic/3101.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_14', 2, 1, 'assets/topic/3101.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_15', 0, 'Two lilttle hands are to hold', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_15', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_15', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_18', 0, 'Two little ears to hear.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_21', 0, 'There is always loving arms to hug.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_24', 0, 'Who have you hugged with your loving arms?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 1, 'Mother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 2, 'Father');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 3, 'Sister');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 4, 'Friend');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877', 2, 'Africa unity race', 'assets/topic/asb/19868.png', 'Nina Orange
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_3', 3, NULL, 'assets/topic/asb/19860.png', 'Kadogo and Juma are friends who love running. They run together every day.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_4', 3, NULL, 'assets/topic/asb/19861.png', 'One day, Juma said, "Let''s run across our continent. Let''s race to support the idea of African unity!"
 "Let''s go!" cheered Kadogo.', NULL);
@@ -3594,8 +5219,26 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_20', 1, 'Paint people running.', 'assets/topic/19877.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_20', 2, 1, 'assets/topic/19877.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_21', 0, 'Where did Juma and kadogo wanted to run across?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_21', 1, 1, 'Continent');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_21', 0, 1, 'City');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_21', 0, 2, 'Village');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_21', 0, 3, 'State');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_26', 0, 'They decided to carry unity torch on their journey.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_29', 0, 'Kadogo carried light to kilimanjaro and light the flame.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_29', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_29', 0, 1, 'false.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_32', 0, 'What do you feel about running for unity?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 1, 'Exciting');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 2, 'Having fun');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 3, 'Representing unity');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 4, 'Meet new people');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635', 2, 'Annoying mosquito', 'assets/topic/asb/14756.png', 'Ursula Nafula
-Magriet Brink', NULL);
+Magriet Brink', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_3', 3, NULL, 'assets/topic/asb/14755.png', 'Knock! Knock!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_4', 3, NULL, 'assets/topic/asb/14756.png', '"Who is there?" I ask sleepily.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_5', 3, NULL, 'assets/topic/asb/14757.png', '"It is me," a shrill voice says.', NULL);
@@ -3622,8 +5265,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_16', 1, 'Paint a mosquito and decorate it.', 'assets/topic/21635.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_16', 2, 1, 'assets/topic/21635.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_17', 0, 'Who replied in a shrill voice?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_17', 1, 1, 'Mosquito');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_17', 0, 1, 'Fly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_17', 0, 2, 'Grass hopper');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_17', 0, 3, 'Bed bug');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_22', 0, 'When he did not find mosquito he switched on lights.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_25', 0, 'How will you fight a mosquito?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 1, 'Hit with hand');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 2, 'Use Spray');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 3, 'Mosquito bat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 4, 'Lit a mosquito coil.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401', 2, 'Ostrich and Lioness', 'assets/topic/asb/19205.png', 'Turkana ECD Teachers
- Brian Wambi', NULL);
+ Brian Wambi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_3', 3, NULL, 'assets/topic/asb/19195.png', 'Ostrich and Lioness were great friends. Both of them had young ones.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_4', 3, NULL, 'assets/topic/asb/19196.png', 'Ostrich fed her chicks well.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_5', 3, NULL, 'assets/topic/asb/19197.png', 'The cubs had little food to eat.', NULL);
@@ -3656,8 +5314,26 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_20', 1, 'Paint any animal and it young ones.', 'assets/topic/19401.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_20', 2, 1, 'assets/topic/19401.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_21', 0, 'Ostrich fed her chicks well.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_21', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_21', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_24', 0, 'The cubs had little food to eat.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_24', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_24', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_27', 0, 'Which animal judged properly and ran in to hole?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 1, 1, 'Squirrel');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 1, 'Elephant');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 2, 'Tortoise');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 3, 'Chimpanzee');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_32', 0, 'Why do you think lioness changed her cubs with chicks?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 1, 'She found chicks cute');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 2, 'Chicks had little food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 3, 'She wanted to eat them');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 4, 'She did not remember her cubs');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611', 2, 'Goat and Hyena''s knife', 'assets/topic/asb/13567.png', 'Cornelius Wekunya
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_3', 3, NULL, 'assets/topic/asb/13550.png', 'Once upon a time,  there was a long dry spell. The animals ate all the grass in the country. Only the imbowa plants on the big trees survived.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_4', 3, NULL, 'assets/topic/asb/13552.png', 'One day Goat saw Hyena pass by with a knife. Goat asked for the knife so that she could cut imbowa plants to eat.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_5', 3, NULL, 'assets/topic/asb/13551.png', 'Hyena gave the knife to Goat. She cut down the climbing plant,  and ate until she was full. Goat forgot all about the knife she had used.', NULL);
@@ -3682,7 +5358,22 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868', 2, '(Colour-in) Goat, Dog and Cow', 'assets/topic/asb/6372.png', 'Marleen Visser', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_12', 1, 'Paint Goat and decorate it.', 'assets/topic/15611.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_12', 2, 1, 'assets/topic/15611.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_13', 0, 'From whom did goat take the knife?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_13', 1, 1, 'Hyena');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_13', 0, 1, 'Monkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_13', 0, 2, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_13', 0, 3, 'Fox');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_18', 0, 'Goat could not remember where she dropped the knife.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_21', 0, 'What will do after having eating a lot?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 1, 'Sleep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 2, 'Go for walk');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 3, 'Have fruits');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 4, 'Go to play');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868', 2, '(Colour-in) Goat, Dog and Cow', 'assets/topic/asb/6372.png', 'Marleen Visser', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_3', 3, NULL, 'assets/topic/asb/6371.png', 'Goat, Dog and Cow were great friends. One day they went on a journey in a taxi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_4', 3, NULL, 'assets/topic/asb/6373.png', 'They reached the end of their journey. The driver asked them to pay their fares. Cow paid her fare.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_5', 3, NULL, 'assets/topic/asb/6374.png', 'Dog paid extra, because he did not have the correct money.', NULL);
@@ -3706,8 +5397,23 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_12', 1, 'Paint goat, dog and cow and decorate it.', 'assets/topic/7868.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_12', 2, 1, 'assets/topic/7868.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_13', 0, 'Who did not pay money to taxi driver?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_13', 1, 1, 'Goat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_13', 0, 1, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_13', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_13', 0, 3, 'All paid');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_18', 0, 'Dog is looking for the driver who owes him change.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_21', 0, 'What will you do if you do not find change to give driver?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 1, 'Run from there');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 2, 'Get change from any person');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 3, 'Ask driver to look for change');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 4, 'Ask him to take next time');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059', 2, 'Goat, the false king', 'assets/topic/asb/13362.png', 'Cornelius Wambi Gulere
-Marleen Visser', NULL);
+Marleen Visser', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_3', 3, NULL, 'assets/topic/asb/13351.png', 'Once upon a time,  there was a goat called Igodhoobe. Igodhoobe the goat was the king of farm animals and birds. He lived a good life. One day,  Igodhoobe the goat called all the animals and birds to a meeting.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_4', 3, NULL, 'assets/topic/asb/13350.png', '"My friends,  I have called you because I had a dream," said the goat. All the animals and birds kept quiet. They listened to their king carefully.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_5', 3, NULL, 'assets/topic/asb/13352.png', '"I dreamed that there was no food or water left in the land. Many of our relatives died!" said the king. When the animals and the birds heard the dream,  they were worried. "What shall we do?" asked the cat.', NULL);
@@ -3744,8 +5450,23 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_22', 1, 'Paint cat and decorate it with crown.', 'assets/topic/22059.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_22', 2, 1, 'assets/topic/22059.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_23', 0, 'Who was elected as new king?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_23', 0, 1, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_23', 0, 2, 'Cow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_23', 0, 3, 'Pig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_23', 0, 4, 'Chicken');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_28', 0, 'Sheep gave wool to goat for covering its children.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_28', 1, 1, 'Ture.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_28', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_31', 0, 'How will you punish goat for his disobedience?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 1, 'Tie him');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 2, 'Do not give him food');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 3, 'Hit him');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 4, 'Put him in prision');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851', 2, 'A Dog', 'assets/topic/asb/5927.png', 'Ritah Katetemera and Cissy Namugerwa
-Catherine Groenewald, Jean Fullalove, Sandy Campbell, Ursula Nafula and Wiehan de Jager', NULL);
+Catherine Groenewald, Jean Fullalove, Sandy Campbell, Ursula Nafula and Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_3', 3, NULL, 'assets/topic/asb/1393.png', 'There was a man with his one dog.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_4', 3, NULL, 'assets/topic/asb/5926.png', 'He loved his dog so much.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_5', 3, NULL, 'assets/topic/asb/3033.png', 'It was hard working and it used to go to the market to buy meat.', NULL);
@@ -3769,64 +5490,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327', 2, 'Dog and Crocodile', 'assets/topic/asb/17149.png', 'Candiru Enzikuru Mary
- Rob Owen', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_3', 3, NULL, 'assets/topic/asb/17139.png', 'One day at the river,  Dog came across some eggs in the sand. He asked himself,  "Which animal left these eggs here?"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_4', 3, NULL, 'assets/topic/asb/17140.png', 'He counted ten eggs and thought they might belong to Duck. He put them in his bag.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_5', 3, NULL, 'assets/topic/asb/17141.png', 'He took the eggs home and put them in a warm place.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_6', 3, NULL, 'assets/topic/asb/17142.png', 'When Dog returned to the river,  he met Crocodile. She asked,  "Have you seen my eggs?" "I don''t know anything about your eggs," he replied.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_7', 3, NULL, 'assets/topic/asb/17143.png', 'Crocodile started visiting all the animals asking about her eggs.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_8', 3, NULL, 'assets/topic/asb/17144.png', 'Meanwhile,  the eggs hatched one by one.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_9', 3, NULL, 'assets/topic/asb/17145.png', 'Dog did his best to look after the baby crocodiles,  but there was never enough food. The young crocodiles were always hungry.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_10', 3, NULL, 'assets/topic/asb/17146.png', 'One day Crocodile went to Dog''s house looking for her eggs. As she stood outside,  she heard the rumbling of little crocodile bellies!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_11', 3, NULL, 'assets/topic/asb/17147.png', 'Crocodile stormed inside and hit Dog with her tail. Dog yelped and jumped through the window.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_12', 3, NULL, 'assets/topic/asb/17148.png', 'Crocodile chased Dog all the way to the river.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_13', 3, NULL, 'assets/topic/asb/17149.png', 'Dog cried,  "I''m sorry,  I didn''t know they were your eggs!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_14', 3, NULL, 'assets/topic/asb/17150.png', 'Crocodile believed him and forgave him. She took her offspring for their first swimming lesson.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18327_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Dog and Crocodile
-Author -
-Candiru Enzikuru Mary
-Illustration -
-Rob Owen
-Language -
-English
-Level -
-First sentences
-© African Storybook Initiative 2016
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596', 2, 'Dog and Crocodile', 'assets/topic/asb/17149.png', 'Candiru Enzikuru Mary
- Rob Owen', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_3', 3, NULL, 'assets/topic/asb/17139.png', 'One day at the river,  Dog came across some eggs in the sand. He asked himself,  "Which animal left these eggs here?"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_4', 3, NULL, 'assets/topic/asb/17140.png', 'He counted ten eggs and thought they might belong to Duck. He put them in his bag.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_5', 3, NULL, 'assets/topic/asb/17141.png', 'He took the eggs home and put them in a warm place.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_6', 3, NULL, 'assets/topic/asb/17142.png', 'When Dog returned to the river,  he met Crocodile. She asked,  "Have you seen my eggs?" "I don''t know anything about your eggs," he replied.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_7', 3, NULL, 'assets/topic/asb/17143.png', 'Crocodile started visiting all the animals asking about her eggs.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_8', 3, NULL, 'assets/topic/asb/17144.png', 'Meanwhile,  the eggs hatched one by one.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_9', 3, NULL, 'assets/topic/asb/17145.png', 'Dog did his best to look after the baby crocodiles,  but there was never enough food. The young crocodiles were always hungry.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_10', 3, NULL, 'assets/topic/asb/17146.png', 'One day Crocodile went to Dog''s house looking for her eggs. As she stood outside,  she heard the rumbling of little crocodile bellies!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_11', 3, NULL, 'assets/topic/asb/17147.png', 'Crocodile stormed inside and hit Dog with her tail. Dog yelped and jumped through the window.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_12', 3, NULL, 'assets/topic/asb/17148.png', 'Crocodile chased Dog all the way to the river.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_13', 3, NULL, 'assets/topic/asb/17149.png', 'Dog cried,  "I''m sorry,  I didn''t know they were your eggs!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_14', 3, NULL, 'assets/topic/asb/17150.png', 'Crocodile believed him and forgave him. She took her offspring for their first swimming lesson.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17596_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Dog and Crocodile
-Author -
-Candiru Enzikuru Mary
-Illustration -
-Rob Owen
-Language -
-English
-Level -
-First sentences
-© African Storybook Initiative 2016
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_11', 1, 'Paint man and dog.', 'assets/topic/23851.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_11', 2, 1, 'assets/topic/23851.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_12', 0, 'Who was very faithful to man?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_12', 1, 1, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_12', 0, 1, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_12', 0, 2, 'Buffalo');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_12', 0, 3, 'Donkey');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_17', 0, 'Man''s dog was guarding everything at home.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_20', 0, 'What gift would you give to dog if you had one?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 1, 'Meat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 2, 'Sweet');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 3, 'Dress');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 4, 'Goggles');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124', 2, 'Jackal and Rabbit', 'assets/topic/asb/18475.png', 'Mohammed Kuyu
- Jacob Kono', NULL);
+ Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_3', 3, NULL, 'assets/topic/asb/18468.png', 'Once upon a time,  there was a hungry Jackal. He tried to catch a bush rat,  but the rat ran away.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_4', 3, NULL, 'assets/topic/asb/18469.png', 'He tried to catch a squirrel,  but the squirrel ran up a tree. Then Jackal saw a fat little mouse. "That mouse looks delicious to eat," he thought. The mouse saw Jackal. It ran under a big rock,  and jumped into its hole. "I must dig the mouse out of its hole," thought Jackal.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_5', 3, NULL, 'assets/topic/asb/18470.png', 'Jackal began to dig. But he dug too far and too deep. The rock fell down on Jackal''s paw. He couldn''t pull his paw out from under the rock. "I''m trapped! Help! Help!" Jackal shouted.', NULL);
@@ -3859,8 +5539,23 @@ Source
 www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_20', 1, 'Paint rabbit and decorate it.', 'assets/topic/21124.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_20', 2, 1, 'assets/topic/21124.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_21', 0, 'Who helped jackal by rolling the stone?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_21', 1, 1, 'Rabbit');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_21', 0, 1, 'Rat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_21', 0, 2, 'Mouse');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_21', 0, 3, 'Squirrel');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_26', 0, 'Old man tricked Jackal and rescued rabbit.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_29', 0, 'What you think about jackal''s nature?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 1, 'Cunning');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 2, 'Unworthy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 3, 'Not trustable');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 4, 'Cruel');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881', 2, 'Jackal and the sun', 'assets/topic/asb/5253.png', 'Traditional San story
-Manyeka Arts Trust', NULL);
+Manyeka Arts Trust', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_3', 3, NULL, 'assets/topic/asb/5246.png', 'Long ago,  there was a foolish lazy jackal. He lived with his old father in the Kalahari bush.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_4', 3, NULL, 'assets/topic/asb/5247.png', 'One morning Old Jackal woke up to find his son sleeping in the sun. The food was not ready and the goats were still in the kraal! "Young man,  you are so lazy! Go and find a wife. I am too old to look after you," said Jackal''s father. So Jackal jumped up and took the goats out to graze.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_5', 3, NULL, 'assets/topic/asb/5250.png', 'In the bush,  he saw something shining on a rock. He went closer and closer to the rock. The closer he got,  the more beautiful the shine was. Perhaps this was the wife for him!', NULL);
@@ -3887,42 +5582,23 @@ Source
 www.africanstorybook.org
 Original source
 www.manyeka.co.za', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387', 2, 'Jackal and Rabbit', 'assets/topic/asb/18475.png', 'Mohammed Kuyu
- Jacob Kono', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_3', 3, NULL, 'assets/topic/asb/18468.png', 'Once upon a time,  there was a hungry Jackal. He tried to catch a bush rat,  but the rat ran away.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_4', 3, NULL, 'assets/topic/asb/18469.png', 'He tried to catch a squirrel,  but the squirrel ran up a tree. Then Jackal saw a fat little mouse. "That mouse looks delicious to eat," he thought. The mouse saw Jackal. It ran under a big rock,  and jumped into its hole. "I must dig the mouse out of its hole," thought Jackal.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_5', 3, NULL, 'assets/topic/asb/18470.png', 'Jackal began to dig. But he dug too far and too deep. The rock fell down on Jackal''s paw. He couldn''t pull his paw out from under the rock. "I''m trapped! Help! Help!" Jackal shouted.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_6', 3, NULL, 'assets/topic/asb/18471.png', 'Rabbit heard Jackal and ran up to him. "What happened to you?" she asked. "I was hunting a mouse and this rock fell on my paw. Please,  kind Rabbit,  help me!" cried Jackal.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_7', 3, NULL, 'assets/topic/asb/18472.png', '"I''d like to help you," said Rabbit. "But I''m small and weak and this rock is big and heavy. It will be hard work. What will you give me if I help you?" "Oh,  I''ll make all your favourite dishes for dinner," replied Jackal.  So Rabbit agreed to help Jackal.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_8', 3, NULL, 'assets/topic/asb/18473.png', 'Rabbit pushed the rock. It didn''t move. She pushed again and again and again. At last the rock rolled off Jackal''s paw. Rabbit smiled.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_9', 3, NULL, 'assets/topic/asb/18474.png', '"Where''s my reward?" asked Rabbit. "There''s no reward. I''m going to eat you," snarled Jackal. "But I helped you! You promised a reward!" shouted Rabbit. "I''m a jackal and you''re a rabbit. Jackals eat rabbits," snapped Jackal. "Wait! We must find elders and ask advice," begged Rabbit.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_10', 3, NULL, 'assets/topic/asb/18475.png', 'Jackal and Rabbit found an old man. "Please help us," Rabbit said. "Jackal wants to eat me but I saved his life. A rock was on his paw and he couldn''t escape. He promised to reward me. I pushed the rock off his paw. He has forgotten his promise."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_11', 3, NULL, 'assets/topic/asb/18476.png', '"That''s not right," the old man said. "Jackal,  you are ungrateful." Jackal opened his mouth. He showed the old man his sharp teeth. "No," he said. "Don''t try to stop me eating the rabbit,  old man,  or I''ll eat you too." The old man looked frightened.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_12', 3, NULL, 'assets/topic/asb/18477.png', '"Please don''t eat me," the old man said. "Perhaps I was wrong. Perhaps you are right after all. I can''t decide until I have seen the rock. What happened exactly?"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_13', 3, NULL, 'assets/topic/asb/18478.png', '"Oh,  that''s easy," Jackal said. "Come,  let me show you." So the old man went back to the rock with Jackal and Rabbit. "What were you doing?" he asked Jackal.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_14', 3, NULL, 'assets/topic/asb/18479.png', '"The mouse I was hunting ran into its hole,  so I was digging it out. The rock fell on to my paw," said Jackal. "Which rock?" asked the old man. "This one," answered Jackal. "And where were you?" asked the old man. "I was here," Jackal replied.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_15', 3, NULL, 'assets/topic/asb/18481.png', 'The old man looked at Rabbit. "You''re only a little rabbit,  small and weak. I don''t believe you could move that big rock," the man said. "But I did! I did!" cried Rabbit. "Show me then," the old man said.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_16', 3, NULL, 'assets/topic/asb/18482.png', 'Rabbit pushed and pushed. The rock fell back on to Jackal''s paw. "Did you find Jackal like this?" asked the old man. Rabbit nodded.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_17', 3, NULL, 'assets/topic/asb/18483.png', '"Good," said the old man. "Then it''s all fair now. Run away Rabbit and go home. I''m going home too."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_18', 3, NULL, 'assets/topic/asb/18484.png', 'And so,  the old man and Rabbit went away. They left the ungrateful Jackal trapped by the rock.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19387_19', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Jackal and Rabbit
-Author -
-Mohammed Kuyu and Elizabeth Laird
-Illustration -
-Jacob Kono
-Language -
-English
-Level -
-First paragraphs
-© African Storybook Initiative 2016
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org
-Original source
-www.ethiopianfolktales.com', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_14', 1, 'Paint Jackal and decorate it.', 'assets/topic/7881.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_14', 2, 1, 'assets/topic/7881.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_15', 0, 'Old jackal asked his son to find wife for himself.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_15', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_15', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_18', 0, 'Whom did the jackal carry?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 1, 1, 'Sun');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 1, 'Tree');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 2, 'Moon');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 3, 'Stone');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_23', 0, 'What would you to like dry in hot sun?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 1, 'Clothes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 2, 'Fish');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 3, 'Seeds');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 4, 'Red chiily');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865', 2, 'Hungry Jackal and the sour grapes', 'assets/topic/asb/1775.png', 'Kholeka Mabeta
-Benjamin Mitchley', NULL);
+Benjamin Mitchley', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_3', 3, NULL, 'assets/topic/asb/1776.png', 'Once upon a time, there was a hungry jackal. He was walking around the bush looking for food.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_4', 3, NULL, 'assets/topic/asb/1775.png', 'He came across a grapevine. He spotted a bunch of juicy ripe grapes hanging from a high branch.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_5', 3, NULL, 'assets/topic/asb/1777.png', '"Those look really delicious," he thought. He took a few steps back so that he could make his highest jump.', NULL);
@@ -3945,7 +5621,22 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085', 2, 'Teret', 'assets/topic/asb/19575.png', 'Beza', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_12', 1, 'Draw grapes and decorate it.', 'assets/topic/7865.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_12', 2, 1, 'assets/topic/7865.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_13', 0, 'What did the hungry jackal spot?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_13', 1, 1, 'Grapes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_13', 0, 1, 'Mango');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_13', 0, 2, 'Banana');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_13', 0, 3, 'Pineapple');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_18', 0, 'Hungry jackal could not reach the grapes and gave up.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_18', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_18', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_21', 0, 'Why do you think jackal gave up?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 1, 'He could not reach grapes');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 2, 'He was lazy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 3, 'He did not plant properly');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 4, 'There was no strength in him');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085', 2, 'Teret', 'assets/topic/asb/19575.png', 'Beza', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_3', 3, NULL, 'assets/topic/asb/19569.png', 'There was a shepherd who had no grass to feed his pig, sheep and goat and no grains for his hen. He had no barn to keep them warm.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_4', 3, NULL, 'assets/topic/asb/19572.png', 'He decided to take them where they could get food and shelter.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_5', 3, NULL, 'assets/topic/asb/19573.png', 'The shepherd said, "I could sell them for a quarter each." But the man was negotiating for a lower price.', NULL);
@@ -3969,8 +5660,25 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_14', 1, 'Paint a shepherd and sheep.', 'assets/topic/22085.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_14', 2, 1, 'assets/topic/22085.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_15', 0, 'Select all the animals shepherd had.', NULL, NULL, 'many');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 1, 1, 'Pig');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 1, 2, 'Goat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 1, 3, 'sheep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 1, 4, 'Hen');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 0, 1, 'Donkey');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 0, 2, 'Cow');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_22', 0, 'Shepherd got his animals back after making barn.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_22', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_22', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_25', 0, 'Which animal is your best friend?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 1, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 2, 'Cat');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 3, 'Sheep');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 4, 'Cow');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750', 2, 'The kingfisher and the sea', 'assets/topic/asb/26594.png', 'Peter Omoko
-Idowu Abayomi Oluwasegun', NULL);
+Idowu Abayomi Oluwasegun', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_3', 3, NULL, 'assets/topic/asb/26584.png', 'There once lived a king in the southern part of Okugbe Island. This king had not known pain in his life.
 Not even for a minute.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_4', 3, NULL, 'assets/topic/asb/26585.png', 'One morning he was imagining what pain would be like. His head was bowed, "There are so many poor people in my land. How can I feel their pain?" he asked himself.', NULL);
@@ -4007,8 +5715,26 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_16', 1, 'Paint king and decorate him.', 'assets/topic/24750.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_16', 2, 1, 'assets/topic/24750.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_17', 0, 'The king of southern part of Okugbe island never felt pain.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_20', 0, 'How many large boats did king built?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_20', 1, 1, 'Seven');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_20', 0, 1, 'Five');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_20', 0, 2, 'Four');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_20', 0, 3, 'Eight');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_25', 0, 'King became kingfisher.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_25', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_25', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_28', 0, 'When did you last feel pain?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 1, 'I got wounded');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 2, 'My father hit me for my mistake');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 3, 'There was nothing to eat at home');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 4, 'I was alone');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152', 2, 'Teeth', 'assets/topic/asb/1701.png', 'Clare Verbeek
- Kathy Arbuckle', NULL);
+ Kathy Arbuckle', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_3', 3, NULL, 'assets/topic/asb/1701.png', 'A crocodile has big teeth.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_4', 3, NULL, 'assets/topic/asb/1702.png', 'A lion has big teeth as well.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_5', 3, NULL, 'assets/topic/asb/1703.png', 'A cow has strong teeth.', NULL);
@@ -4033,74 +5759,24 @@ Source
 www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621', 2, 'What type of teeth?', 'assets/topic/asb/9634.png', 'Clare Verbeek
-Rob Owen', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_3', 3, NULL, 'assets/topic/asb/9627.png', 'A crocodile has sharp teeth.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_4', 3, NULL, 'assets/topic/asb/9628.png', 'A lion also has sharp teeth.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_5', 3, NULL, 'assets/topic/asb/9626.png', 'A shark has very sharp teeth!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_6', 3, NULL, 'assets/topic/asb/9630.png', 'A cow has strong teeth for grinding food.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_7', 3, NULL, 'assets/topic/asb/9631.png', 'A bird does not have teeth. How does it eat?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_8', 3, NULL, 'assets/topic/asb/9634.png', 'Rats have long front teeth.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_9', 3, NULL, 'assets/topic/asb/9632.png', 'I used to have front teeth.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_10', 3, NULL, 'assets/topic/asb/9633.png', 'My front teeth fell out!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12621_11', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-What type of teeth?
-Author -
-Clare Verbeek, Thembani Dladla and Zanele Buthelezi
-Translation -
-Clare Verbeek, Thembani Dladla and Zanele Buthelezi
-Illustration -
-Rob Owen
-Language -
-English
-Level -
-First words
-© School of Education and Development (Ukzn) and African Storybook Initiative 2007
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org
-Original source
-www.akdn.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997', 2, 'Goat, the false king', 'assets/topic/asb/13362.png', 'Cornelius Wambi Gulere
-Marleen Visser', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_3', 3, NULL, 'assets/topic/asb/13351.png', 'Once upon a time,  there was a goat called Igodhoobe. Igodhoobe the goat was the king of farm animals and birds. He lived a good life. One day,  Igodhoobe the goat called all the animals and birds to a meeting.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_4', 3, NULL, 'assets/topic/asb/13350.png', '"My friends,  I have called you because I had a dream," said the goat. All the animals and birds kept quiet. They listened to their king carefully.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_5', 3, NULL, 'assets/topic/asb/13352.png', '"I dreamed that there was no food or water left in the land. Many of our relatives died!" said the king. When the animals and the birds heard the dream,  they were worried. "What shall we do?" asked the cat.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_6', 3, NULL, 'assets/topic/asb/13353.png', 'The hen and the duck had an idea. They said,  "Let each one of us bring food and put it in the king''s store." All the animals agreed with this idea.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_7', 3, NULL, 'assets/topic/asb/13362.png', 'The king made a rule. He said,  "Get ropes. Tie up anyone who does not bring food to my store. Then carry him to me."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_8', 3, NULL, 'assets/topic/asb/13354.png', 'But, soon after this, it was time for a new king to rule over the farm. All the animals and birds met and elected the cat as their new king.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_9', 3, NULL, 'assets/topic/asb/13363.png', 'But the goat refused to agree that the cat was king. "I''m the king. There is no other king. I can''t obey any other animal," said the goat.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_10', 3, NULL, 'assets/topic/asb/13355.png', 'The animals took food to the new king''s store. But the goat did not take anything. "When the goat was king,  we all obeyed him. Now he does not want to obey our new king. What shall we do?" asked the cow.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_11', 3, NULL, 'assets/topic/asb/13357.png', 'All the domestic animals and birds were angry. "He thinks he is different to us," they all muttered.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_12', 3, NULL, 'assets/topic/asb/13356.png', 'The dog said,  "I helped him when he was king. I did not sleep at night. I was always with him,  ready to help."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_13', 3, NULL, 'assets/topic/asb/13358.png', 'The sheep said,  "I gave him my wool to cover his children."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_14', 3, NULL, 'assets/topic/asb/13359.png', 'The pig said,  "When he was king,  he told his friends that I eat a lot. But I was often in his garden digging and weeding his maize and millet."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_15', 3, NULL, 'assets/topic/asb/13360.png', 'The sheep asked,  "What did he say? That you eat a lot? Did he think that he will be king forever?" Then the sheep added,  "Let him understand that he is not king any more. I don''t know why he thinks he is so important."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_16', 3, NULL, 'assets/topic/asb/13361.png', 'All the animals laughed and agreed that the goat must take food to the new king. King Cat ordered the goat to come to him.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_17', 3, NULL, 'assets/topic/asb/13364.png', 'When the animals went to fetch the goat, he was sitting on a chair with his legs crossed. "I shall not go to the cat. There is no other king except me. When you become a king,  you are always a king," said the goat.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_18', 3, NULL, 'assets/topic/asb/13365.png', '"We will tie you with ropes and take you to the new king," said the sheep.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_19', 3, NULL, 'assets/topic/asb/13366.png', 'So the cow tied the goat to her tail. She then pulled him to the king. The sheep,  the duck,  the dog,  the pig,  and the cock cheered as the cow pulled the goat. They all shouted,  "Take this stubborn goat to our new king!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_20', 3, NULL, 'assets/topic/asb/13367.png', 'From that time,  every goat refuses to move when it is pulled. It thinks that you are taking it to the king''s court.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21997_21', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Goat, the false king
-Author -
-Alice Nakasango
-Translation -
-Cornelius Wambi Gulere
-Illustration -
-Marleen Visser
-Language -
-English
-Level -
-Longer paragraphs
-© Text: Uganda Community Libraries Association (Ugcla) Artwork: African Storybook Initiative 2015
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org
-Original source
-http://ugcla.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_12', 1, 'Paint a roaring lion.', 'assets/topic/10152.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_12', 2, 1, 'assets/topic/10152.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_13', 0, 'A lion has a big teeth.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_13', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_13', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_16', 0, 'Birds do not have teeth.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_19', 0, 'Sharks have sharp teeth.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_19', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_19', 0, 1, 'false.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_22', 0, 'In your home who has less teeth?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 1, 'Grandmother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 2, 'Grandfather');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 3, 'Small baby boy');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 4, 'Small baby girl');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469', 2, 'Cassava and Palm', 'assets/topic/asb/25923.png', 'Divine  Apedo
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_3', 3, NULL, 'assets/topic/asb/25919.png', 'Long time ago, Cassava and Palm lived in a village called Koowa. They were very good friends. They visited each other every day. They were farmers. They worked very hard on their farms.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_4', 3, NULL, 'assets/topic/asb/25920.png', 'In a certain year, there was no rain. The crops did not grow well. All the plants dried up. People did not have any food to eat.
 Cassava and Palm decided to travel to another village to look for work.', NULL);
@@ -4138,8 +5814,23 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_20', 1, 'Paint a palm tree.', 'assets/topic/22469.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_20', 2, 1, 'assets/topic/22469.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_21', 0, 'In which village did cassava and palm tree live?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_21', 1, 1, 'Koowa');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_21', 0, 1, 'Boowa');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_21', 0, 2, 'Noowa');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_21', 0, 3, 'Doowa');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_26', 0, 'Brooms that  are used come from palm tree.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_26', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_26', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_29', 0, 'Over what did you and your friend fight?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 1, 'Playing best');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 2, 'studying best');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 3, 'Cooking best');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 4, 'Working best');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871', 2, 'My family and I', 'assets/topic/asb/5216.png', 'Cornelius Wambi Gulere
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_3', 3, NULL, 'assets/topic/asb/5217.png', 'My dinosaur and I look at my birds in the sky.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_4', 3, NULL, 'assets/topic/asb/5218.png', 'My birds and I meet Chimpanzee in the tree.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_5', 3, NULL, 'assets/topic/asb/5219.png', 'My chimpanzee and I play with my giraffes on the hill.', NULL);
@@ -4163,8 +5854,21 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_13', 1, 'Paint dinosaur and decorate it.', 'assets/topic/7871.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_13', 2, 1, 'assets/topic/7871.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_14', 0, 'The boy and his dinosaur were looking at birds.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_14', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_14', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_17', 0, 'The boy, monkey and Gorilla eat banana together.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_17', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_17', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_20', 0, 'What do you do with your family?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 1, 1, 'Eat together');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 1, 'Play');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 2, 'Dance');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 3, 'Cook');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082', 2, 'Fire''s story', 'assets/topic/asb/8558.png', 'African Storybook and Lisa Treffry-Goatley
-Rob Owen', NULL);
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_3', 3, NULL, 'assets/topic/asb/8555.png', 'Let me tell you my story. I start as a small spark.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_4', 3, NULL, 'assets/topic/asb/8556.png', 'I run wild when the wind carries me.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_5', 3, NULL, 'assets/topic/asb/8558.png', 'We are good friends,  you and I.', NULL);
@@ -4189,8 +5893,21 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_12', 1, 'Draw matchstick', 'assets/topic/22082.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_12', 2, 1, 'assets/topic/22082.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_13', 0, 'Fire starts as a small spark.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_13', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_13', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_16', 0, 'Fire says it is part of our family.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_16', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_16', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_19', 0, 'If there was no fire what problems would we face?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 1, 'Cooking would be difficult');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 2, 'No light in house');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 3, 'Shiver in winter');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 4, 'Difficult to walk at night');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140', 2, 'The tree wife', 'assets/topic/asb/2580.png', 'Southern African Folktale
-Jemma Kahn', NULL);
+Jemma Kahn', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_3', 3, NULL, 'assets/topic/asb/2584.png', 'Once upon a time,  there lived a man who had plenty of everything – a large fertile farm,  with cattle,  sheep,  and goats. But,  as he grew old,  he grew sad,  because one thing was missing. He did not have a wife.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_4', 3, NULL, 'assets/topic/asb/2585.png', 'Standing under a tree one day,  he had a brilliant idea. If he couldn''t find a wife,  perhaps he could make one?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_5', 3, NULL, 'assets/topic/asb/2583.png', 'So he set to work to shape a beautiful woman from a strong branch of the tree. When he had finished making the statue,  he touched her eyes,  and they opened. He blew gently on her,  and she came alive.', NULL);
@@ -4221,8 +5938,23 @@ Source
 www.africanstorybook.org
 Original source
 http://www.youtube.com/watch?v=li8tkliflms', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_18', 1, 'Paint a tree woman', 'assets/topic/3140.svg', NULL, NULL);
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_18', 2, 1, 'assets/topic/3140.svg');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_19', 0, 'Old man made a woman out of tree and married her.', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_19', 1, 1, 'True.');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_19', 0, 1, 'False.');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_22', 0, 'Which bird did the old man send to the woman?', NULL, NULL, 'oneAtATime');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 1, 1, 'Dove');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 1, 'Crow');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 2, 'Eagle');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 3, 'Parrot');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_27', 0, 'Whom do you love the most?', NULL, NULL, 'open');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 1, 'Friend');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 2, 'Dog');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 3, 'Brother');
+INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 4, 'Sister');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079', 2, 'Jealous co-wife', 'assets/topic/asb/25521.png', 'Mary Narebon
-Jacob Kono', NULL);
+Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079_3', 3, NULL, 'assets/topic/asb/25510.png', 'There lived two co-wives.
 They shared the same hut with their husband.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079_4', 3, NULL, 'assets/topic/asb/25511.png', 'For a long time, neither wife had a child. Then, the first wife became pregnant.
@@ -4257,7 +5989,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860', 2, 'Akai''s special mat', 'assets/topic/asb/6007.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_3', 3, NULL, 'assets/topic/asb/5845.png', 'When Akai was a little girl,  her mother used to put her to sleep on a beautiful mat. Akai''s aunt made this special mat from palm leaves.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_4', 3, NULL, 'assets/topic/asb/5846.png', 'The mat had bright pink,  blue and green colours. It was different from other mats that Akai''s mother had in the hut.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_5', 3, NULL, 'assets/topic/asb/5847.png', 'The land around Akai''s home was very dry,  hot and full of stones. There were many scorpions,  spiders and snakes too. But Akai was never in danger of being bitten by these dangerous creatures.', NULL);
@@ -4288,7 +6020,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2530', 2, 'The talking bag', 'assets/topic/asb/1461.png', 'Caroline Lentupuru
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2530_3', 3, NULL, 'assets/topic/asb/1461.png', 'Once upon a time there was a female giant. As she was walking near the lake one day,  she met three little girls.    The giant asked the girls,  "Who among you is loved by both parents?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2530_4', 3, NULL, 'assets/topic/asb/1462.png', 'One of the girls said,  "My mother loves me most." Another said,  "My father loves me most." But the third one said,  "I am loved by both parents."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2530_5', 3, NULL, 'assets/topic/asb/1463.png', 'The giant asked the girl loved by both parents to help her carry firewood. So the girl followed the giant.', NULL);
@@ -4312,7 +6044,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13026', 2, 'Keeper and his nursery', 'assets/topic/asb/12997.png', 'Nina Orange
-Magriet Brink', NULL);
+Magriet Brink', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13026_3', 3, NULL, 'assets/topic/asb/12979.png', 'This is the story of Keeper and his nursery for orphaned animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13026_4', 3, NULL, 'assets/topic/asb/12980.png', 'August was a busy month for Keeper and his helpers at the nursery.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13026_5', 3, NULL, 'assets/topic/asb/12981.png', 'One year old Mkite arrived first. She came in an old green truck.', NULL);
@@ -4348,7 +6080,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771', 2, 'Mojo and Tortiose', 'assets/topic/asb/26787.png', 'Monica Oyovwevotu Dale
-Edwin  Irabor', NULL);
+Edwin  Irabor', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771_3', 3, NULL, 'assets/topic/asb/26785.png', 'Long time ago, Mojo the bird lived in a kingdom called Baro. Tortoise was his friend.
 Mojo was a messenger and travelled far to deliver messages.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771_4', 3, NULL, 'assets/topic/asb/26786.png', 'One day the lion king called for Mojo.
@@ -4384,7 +6116,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18419', 2, 'Fire, Water, Truth and Lies', 'assets/topic/asb/18348.png', 'Merga Debelo
- Marion Drew', NULL);
+ Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18419_3', 3, NULL, 'assets/topic/asb/18347.png', 'Fire,  Water,  Truth and Lies were friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18419_4', 3, NULL, 'assets/topic/asb/18348.png', 'But Lies was not happy and wanted to destroy their friendship.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18419_5', 3, NULL, 'assets/topic/asb/18349.png', 'One day Lies said,  "Why don''t we all go and look for free land. Then each one of us can have a kingdom?" They agreed and started walking.', NULL);
@@ -4418,7 +6150,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994', 2, 'The girl with one breast', 'assets/topic/asb/2673.png', 'Cornelius Wekunya
-Rachael Napagi', NULL);
+Rachael Napagi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_3', 3, NULL, 'assets/topic/asb/2673.png', 'A long time ago,  there was a man who lived with his wife whom he loved very much. One day he took a walk to the forest. Along the way,  he met a tall,  slender,  and very beautiful girl. He fell in love with her at first sight. The girl too readily accepted him. But she told him that she had only one breast.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_4', 3, NULL, 'assets/topic/asb/2674.png', 'So she told him to go home,  cut off one of his wife''s breasts and bring it to her. Then she would have two breasts,  and they could marry. The man ran very fast back home,  picked a knife,  pounced on his dear wife,  and the breast was off instantly.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_5', 3, NULL, 'assets/topic/asb/2675.png', 'He hurried back to the forest to where he had left his newfound darling. But she was nowhere to be seen. He called her name very loudly,  but there was complete silence. Then he heard a voice saying,  "Why are you calling? Don''t you know that you are in the forest area of Musambwa kwa Libeeletwela?"', NULL);
@@ -4438,7 +6170,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13309', 2, 'Forest of snakes', 'assets/topic/asb/10763.png', 'Joseph Sanchez Nadimo
-Rob Owen', NULL);
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13309_3', 3, NULL, 'assets/topic/asb/10763.png', 'Sinyaire village was surrounded by hills. Many snakes lived in the forest on those hills. The biggest snake was called Unyalego by the villagers. Unyalego scared many people. It swallowed whole goats and sheep.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13309_4', 3, NULL, 'assets/topic/asb/10765.png', 'One day, three sisters, Apiyo, Ajoh and Atieno went to the forest to fetch firewood. The girls'' grandmother warned, "Beware of Unyalego the big snake. Do not take anything from the forest except the wood."  Only Ajoh did not pay attention to her grandmother.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13309_5', 3, NULL, 'assets/topic/asb/10766.png', 'The girls packed milk, bananas, sweet potatoes and water. They took ropes for tying firewood and a sharp machete for chopping the wood. Then they left for the forest.', NULL);
@@ -4466,7 +6198,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861', 2, 'Child as a peacemaker', 'assets/topic/asb/14590.png', 'John Nga''sike
-Jacob Kono', NULL);
+Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_3', 3, NULL, 'assets/topic/asb/14580.png', 'A woman with her baby went into the forest. She went to pick fruit.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_4', 3, NULL, 'assets/topic/asb/14581.png', 'In the forest she found a tree with ripe fruit.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_5', 3, NULL, 'assets/topic/asb/14582.png', 'She put down her sleeping baby and climbed the tree.', NULL);
@@ -4496,7 +6228,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23300', 2, 'Baby snatched by cranes', 'assets/topic/asb/8485.png', 'South African Folktale
-Emily Berg', NULL);
+Emily Berg', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23300_3', 3, NULL, 'assets/topic/asb/8479.png', 'Once upon a time there was a family who lived in a village. The parents in this family woke up early every morning to work in the fields. They left the baby with their elder son,  Sipho who was ten years old,  and their eldest daughter Bulelwa,  who was twelve years old.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23300_4', 3, NULL, 'assets/topic/asb/8482.png', 'The older children loved playing outside during the day and they forgot about doing their household chores. They called their friends to come and play with them. The boys loved playing soccer. The girls loved playing with dolls around the yard. They forgot about looking after the baby when their friends arrived. The baby cried and cried and nobody heard.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23300_5', 3, NULL, 'assets/topic/asb/8154.png', 'One day the children put the baby under a tree in the shade on a bright red blanket. They went to play. The baby began crying as usual. A group of cranes flew above the playground and felt sorry for the crying baby. They tried to get the children to notice that the baby was crying but the children kept on playing. The cranes decided to take the baby and raise it themselves.', NULL);
@@ -4519,32 +6251,8 @@ Read aloud
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150', 2, 'Baby snatched by cranes', 'assets/topic/asb/8485.png', 'South African Folktale
-Emily Berg', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_3', 3, NULL, 'assets/topic/asb/8479.png', 'Once upon a time there was a family who lived in a village. The parents in this family woke up early every morning to work in the fields. They left the baby with their elder son,  Sipho who was ten years old,  and their eldest daughter Bulelwa,  who was twelve years old.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_4', 3, NULL, 'assets/topic/asb/8482.png', 'The older children loved playing outside during the day and they forgot about doing their household chores. They called their friends to come and play with them. The boys loved playing soccer. The girls loved playing with dolls around the yard. They forgot about looking after the baby when their friends arrived. The baby cried and cried and nobody heard.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_5', 3, NULL, 'assets/topic/asb/8154.png', 'One day the children put the baby under a tree in the shade on a bright red blanket. They went to play. The baby began crying as usual. A group of cranes flew above the playground and felt sorry for the crying baby. They tried to get the children to notice that the baby was crying but the children kept on playing. The cranes decided to take the baby and raise it themselves.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_6', 3, NULL, 'assets/topic/asb/8156.png', 'Four cranes came to pick up the baby from under the tree. Each crane took a corner of the baby''s blanket,  lifted the baby up and flew away. The children did not notice anything because they were busy playing. The children''s parents were working hard in the hot sun.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_7', 3, NULL, 'assets/topic/asb/8485.png', 'It was so hot that the mother decided to rest under a tree. While she was resting she heard her baby crying. She looked around and she could not see anything. Then she looked up and she saw four cranes flying away with her baby in the bright red blanket. She screamed and chased after the cranes. When the woman told her husband what she saw he did not believe her.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_8', 3, NULL, 'assets/topic/asb/8484.png', 'The cranes hid the baby between the reeds to protect it. They wanted to find a new family that would care for the baby. They fed it and put it to sleep. Then they flew away to look for more food. The baby slept for a long time without crying. When the baby woke up it started crying because it was hungry.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_9', 3, NULL, 'assets/topic/asb/8483.png', 'A big frog heard the baby''s cry. It came closer and saw the baby wrapped in the blanket. The frog thought the cranes had stolen the baby,  and decided to hide the baby from the cranes. Suddenly the frog heard the voices of the cranes. There was no time to hide. The frog swallowed the baby and hid behind a big rock. When the cranes arrived they could not find the baby and they flew off to look for it. The frog hopped back to the baby''s family home.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_10', 3, NULL, 'assets/topic/asb/8486.png', 'The baby''s family was sitting in the evening feeling very sad. Suddenly,  a big frog jumped through the door. The frog told them about how it swallowed their baby. They begged the frog to give them the baby. "Give me three flies to eat then I will give you the baby," said the frog." The father caught three flies and fed them to the frog. The frog coughed and the baby popped out. The family and the frog jumped and danced with joy."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21150_11', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Baby snatched by cranes
-Author -
-South African Folktale
-Illustration -
-Emily Berg
-Language -
-English
-Level -
-Read aloud
-© African Storybook Initiative 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865', 2, 'Donkey child', 'assets/topic/asb/14980.png', 'Lindiwe Matshikiza
- Meghan Judge', NULL);
+ Meghan Judge', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_3', 3, NULL, 'assets/topic/asb/14972.png', 'It was a little girl who first saw the mysterious shape in the distance.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_4', 3, NULL, 'assets/topic/asb/14973.png', 'As the shape moved closer, the girl saw that it was a heavily pregnant woman.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_5', 3, NULL, 'assets/topic/asb/14974.png', 'Shy but brave, the little girl moved nearer to the woman. "We must keep her with us," the little girl''s people decided. "We''ll keep her and her child safe."', NULL);
@@ -4582,7 +6290,7 @@ www.africanstorybook.org
 Original source
 www.donkeychildprojects.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12915', 2, '(Colour-in) Monkey and the hunter''s wife', 'assets/topic/asb/9057.png', 'Wesley Kipkorir Rop
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12915_3', 3, NULL, 'assets/topic/asb/9042.png', 'In Miwa Forest,  there lived a monkey who was always sad. This was because every time she had a baby,  it died.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12915_4', 3, NULL, 'assets/topic/asb/9043.png', 'The pain of losing her babies made Monkey jump up and down. She would jump to one branch,  then to another,  and cry out,  "Kwi! Kwi! Kwi!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12915_5', 3, NULL, 'assets/topic/asb/9044.png', 'Monkey was always sad. She was sadder when she saw other monkeys with their babies.', NULL);
@@ -4610,7 +6318,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14812', 2, 'Magic baby', 'assets/topic/asb/14779.png', 'Simon Ipoo
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14812_3', 3, NULL, 'assets/topic/asb/14777.png', 'There once lived a man with a lot of livestock. He kept goats,  camels,  cows and donkeys. The man was married to a beautiful woman.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14812_4', 3, NULL, 'assets/topic/asb/14778.png', 'For a long time,  the man and his wife did not have a baby. Then the woman gave birth to a beautiful girl. They named the baby Muurui. The man was happy and proud.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14812_5', 3, NULL, 'assets/topic/asb/14779.png', 'The woman was very busy. She left her baby alone in the hut and went to milk cows. The baby''s gourd of milk was also in the hut.', NULL);
@@ -4643,7 +6351,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769', 2, 'A very tall man', 'assets/topic/asb/309.png', 'Cornelius Wambi Gulere
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_3', 3, NULL, 'assets/topic/asb/309.png', 'His hoe was too short.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_4', 3, NULL, 'assets/topic/asb/310.png', 'His doorway was too low.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_5', 3, NULL, 'assets/topic/asb/311.png', 'His bed was too short.', NULL);
@@ -4672,7 +6380,7 @@ www.africanstorybook.org
 Original source
 www.ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689', 2, 'Man and Lion', 'assets/topic/asb/8180.png', 'Mozambican folktale
-Hélder de Paz Alexandre', NULL);
+Hélder de Paz Alexandre', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_3', 3, NULL, 'assets/topic/asb/8180.png', 'Once upon a time,  Man was walking in the bush. Suddenly,  he met Lion!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_4', 3, NULL, 'assets/topic/asb/8181.png', 'Lion was resting in the short grass.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_5', 3, NULL, 'assets/topic/asb/8182.png', 'The meeting was so sudden that Man did not know what to do. He was full of fear.', NULL);
@@ -4699,7 +6407,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340', 2, 'Mulongo and the Hyenas', 'assets/topic/asb/1419.png', 'Sarah Nangobi
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_3', 3, NULL, 'assets/topic/asb/1420.png', 'There was once a girl called Mulongo who lived with her parents near the village of Budongo. One day Mulongo''s mother sent her to fetch water at the well.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_4', 3, NULL, 'assets/topic/asb/1421.png', 'On the way,  she met her friends. They were going to the forest to get firewood. Mulongo wanted to go with them. "Please wait for me under this muvule tree!" she said,  "I have to fetch water for my mother." But her friends didn''t want to wait.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_5', 3, NULL, 'assets/topic/asb/1422.png', '"All right,  I''ll catch up with you in the forest!" said Mulongo. She ran off to fetch water and take it to her mother. Then she went to the forest to look for her friends.', NULL);
@@ -4730,7 +6438,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22352', 2, 'Musa and the cat', 'assets/topic/asb/26349.png', 'TDP  Nigeria
-Tawanda Mhandu', NULL);
+Tawanda Mhandu', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22352_3', 3, NULL, 'assets/topic/asb/26346.png', 'Musa lives with his parents in the village of Kagadama, in Nigeria.
 He is an intelligent boy, but he is stubborn.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22352_4', 3, NULL, 'assets/topic/asb/26347.png', 'Musa is also a bully. He always beats his friends.
@@ -4762,7 +6470,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600', 2, 'The boy who nobody loved', 'assets/topic/asb/7991.png', 'Phumy Zikode
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_3', 3, NULL, 'assets/topic/asb/9191.png', 'Once upon a time, there was a boy who was so ugly that nobody loved him. Not even his parents. At home,  he would sit alone while his family watched television.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_4', 3, NULL, 'assets/topic/asb/7987.png', 'At school, he would sit alone while other children were playing.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_5', 3, NULL, 'assets/topic/asb/7988.png', 'He would walk alone behind the other boys when they went to fetch the cattle. They didn''t want to walk with him.', NULL);
@@ -4796,7 +6504,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15609', 2, 'My teacher', 'assets/topic/asb/8513.png', 'Hlengiwe Zondi
-Jesse Pietersen', NULL);
+Jesse Pietersen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15609_3', 3, NULL, 'assets/topic/asb/8509.png', 'I love my teacher.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15609_4', 3, NULL, 'assets/topic/asb/8510.png', 'She is a good teacher. She is kind and patient.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15609_5', 3, NULL, 'assets/topic/asb/8511.png', 'She has braided her hair so nicely.', NULL);
@@ -4820,7 +6528,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166', 2, '(Colour-in) Monkey and the hunter''s wife', 'assets/topic/asb/9057.png', 'Wesley Kipkorir Rop
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_3', 3, NULL, 'assets/topic/asb/9042.png', 'In Miwa Forest,  there lived a monkey who was always sad. This was because every time she had a baby,  it died.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_4', 3, NULL, 'assets/topic/asb/9043.png', 'The pain of losing her babies made Monkey jump up and down. She would jump to one branch,  then to another,  and cry out,  "Kwi! Kwi! Kwi!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_5', 3, NULL, 'assets/topic/asb/9044.png', 'Monkey was always sad. She was sadder when she saw other monkeys with their babies.', NULL);
@@ -4848,7 +6556,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22068', 2, 'Greedy woman', 'assets/topic/asb/19126.png', 'Annet Ssebaggala and Ritah Katetemera
-Abraham Muzee', NULL);
+Abraham Muzee', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22068_3', 3, NULL, 'assets/topic/asb/19113.png', 'Long time ago,  there was a man called Kato. He lived in Kabuusu town. He stayed with his dog in a small house.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22068_4', 3, NULL, 'assets/topic/asb/19114.png', 'One day Kato was very sick. He had no one to help him. When he recovered,  he decided he would marry a woman who lived nearby.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22068_5', 3, NULL, 'assets/topic/asb/19115.png', 'He invited friends and relatives to attend the marriage ceremony. Kato was very excited because he thought he was getting a helper.', NULL);
@@ -4882,7 +6590,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176', 2, 'A very tall man', 'assets/topic/asb/309.png', 'Cornelius Wambi Gulere
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176_3', 3, NULL, 'assets/topic/asb/309.png', 'His hoe was too short.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176_4', 3, NULL, 'assets/topic/asb/310.png', 'His doorway was too low.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176_5', 3, NULL, 'assets/topic/asb/311.png', 'His bed was too short.', NULL);
@@ -4911,7 +6619,7 @@ www.africanstorybook.org
 Original source
 www.ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19600', 2, 'Man with a serious problem', 'assets/topic/asb/19570.png', 'Ursula Nafula
-Abraham Muzee', NULL);
+Abraham Muzee', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19600_3', 3, NULL, 'assets/topic/asb/19567.png', 'Muniafu lived with his grandparents,  his aunt,  an uncle,  a hen,  a goat,  a sheep and a pig. The hen stayed in a small cage. The goat,  sheep and pig were each tied on the side of the wall. The grandparents were still well,  and the aunt and uncle helped with the work.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19600_4', 3, NULL, 'assets/topic/asb/19568.png', 'This changed few years later. Muniafu''s grandparents aged and could not hear or see well. His aunt became sickly and could not help clean the house. His uncle slept all the time and did not help to feed the animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19600_5', 3, NULL, 'assets/topic/asb/19569.png', 'The animals made so much noise because they were hungry. The house was so dirty because the aunt did not clean it. Muniafu was tired all the time because he went out every day to look for food for them all.', NULL);
@@ -4943,7 +6651,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400', 2, 'Man who grew feathers', 'assets/topic/asb/18142.png', 'Worku Debele
- Tadesse Teshome', NULL);
+ Tadesse Teshome', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_3', 3, NULL, 'assets/topic/asb/17994.png', 'Once upon a time,  there was a rich man who had two sons. The rich man wrote in his will that the first son should get all his cows. And only one rooster should go to his second son.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_4', 3, NULL, 'assets/topic/asb/17995.png', 'So,  after the man died,  his first son got all the cows. The second son was only given one rooster.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_5', 3, NULL, 'assets/topic/asb/17997.png', 'After some time,  the rich son became sick. He went to the healer to ask what he should do to get better. The healer said,  "You should slaughter a rooster of a special colour."', NULL);
@@ -4973,7 +6681,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229', 2, 'The moon and the cap', 'assets/topic/asb/2137.png', 'Noni
- Angie & Upesh', NULL);
+ Angie & Upesh', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229_3', 3, NULL, 'assets/topic/asb/2138.png', 'All of us went to the fun fair.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229_4', 3, NULL, 'assets/topic/asb/2139.png', 'Father bought brother fancy glasses. Mother bought me a bright blue cap. The baby got sugar candy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229_5', 3, NULL, 'assets/topic/asb/2141.png', 'On the way home,  a very strong wind came. It blew my cap away.', NULL);
@@ -5002,7 +6710,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282', 2, 'Body', 'assets/topic/asb/26739.png', 'Little Zebra Books
-Sue  Beattie', NULL);
+Sue  Beattie', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_3', 3, NULL, 'assets/topic/asb/26749.png', 'Feet', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_4', 3, NULL, 'assets/topic/asb/26744.png', 'Legs', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_5', 3, NULL, 'assets/topic/asb/26741.png', 'Knees', NULL);
@@ -5027,34 +6735,8 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770', 2, 'Body', 'assets/topic/asb/26739.png', 'Little Zebra Books
-Sue  Beattie', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_3', 3, NULL, 'assets/topic/asb/26749.png', 'Feet', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_4', 3, NULL, 'assets/topic/asb/26744.png', 'Legs', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_5', 3, NULL, 'assets/topic/asb/26741.png', 'Knees', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_6', 3, NULL, 'assets/topic/asb/26747.png', 'Waist', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_7', 3, NULL, 'assets/topic/asb/26740.png', 'Belly', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_8', 3, NULL, 'assets/topic/asb/26748.png', 'Chest', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_9', 3, NULL, 'assets/topic/asb/26742.png', 'Hands', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_10', 3, NULL, 'assets/topic/asb/26745.png', 'Arms', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_11', 3, NULL, 'assets/topic/asb/26746.png', 'Elbows', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_12', 3, NULL, 'assets/topic/asb/26743.png', 'Head', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24770_13', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Body
-Author -
-Little Zebra Books
-Illustration -
-Sue  Beattie
-Language -
-English
-Level -
-First words
-© African Storybook Initiative 2018
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632', 2, 'My body', 'assets/topic/asb/1622.png', 'Clare Verbeek
-Mlungisi Dlamini', NULL);
+Mlungisi Dlamini', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_3', 3, NULL, 'assets/topic/asb/1623.png', 'I can run with it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_4', 3, NULL, 'assets/topic/asb/1624.png', 'I can jump with it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_5', 3, NULL, 'assets/topic/asb/1625.png', 'I can dance with it.', NULL);
@@ -5080,7 +6762,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061', 2, 'Hyena and Monkey', 'assets/topic/asb/18699.png', 'Elizabeth  Laird
-Salim Kasamba', NULL);
+Salim Kasamba', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061_3', 3, NULL, 'assets/topic/asb/18696.png', 'Once upon a time there was a hyena and a monkey.
 The hyena and the monkey had an argument. They went to a judge to settle their differences.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061_4', 3, NULL, 'assets/topic/asb/18697.png', 'After the judge listened to their case he was afraid to pass judgement on their case.
@@ -5119,7 +6801,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863', 2, 'Namorutunga', 'assets/topic/asb/11754.png', 'Simon Ipoo
-Zablon Alex Nguku', NULL);
+Zablon Alex Nguku', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_3', 3, NULL, 'assets/topic/asb/11743.png', 'Long time ago, in a Turkana village, people loved to dance edonga, the traditional dance.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_4', 3, NULL, 'assets/topic/asb/11747.png', 'Every evening they gathered together and danced edonga. The whole region came to know of this village and its dancers.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_5', 3, NULL, 'assets/topic/asb/11748.png', 'People from nearby villages also came to this village to dance.', NULL);
@@ -5150,7 +6832,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874', 2, 'Namukhaywa', 'assets/topic/asb/5807.png', 'Matthews M Wanga
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_3', 3, NULL, 'assets/topic/asb/5806.png', 'Long time ago,  in the village of Elunyiko,  there lived a man called Ndong''a and his wife called Namukhaywa. They had six children. All of them were girls.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_4', 3, NULL, 'assets/topic/asb/5807.png', 'When Namukhaywa was pregnant with her seventh child,  Ndong''a warned her,  "If you give birth to another girl,  I will leave you. But if you give me a baby boy,  I will hold a big party for you!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_5', 3, NULL, 'assets/topic/asb/5808.png', 'When it was time to give birth,  Namukhaywa went to the traditional midwife. Would the child be a girl or a boy?', NULL);
@@ -5180,7 +6862,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22049', 2, 'Who can count to ten?', 'assets/topic/asb/25319.png', 'Athieno Gertrude and Owino Ogot
-Salim Kasamba', NULL);
+Salim Kasamba', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22049_3', 3, NULL, 'assets/topic/asb/25317.png', 'A long time ago, deep in the forests, King Leopard began to think about the future.
 He thought, "I''m getting old and one day, I''m going to die. A wise ruler should pick a successor while still young and healthy."
 But how could King Leopard choose? He loved all the members of the animal kingdom the same!', NULL);
@@ -5234,7 +6916,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747', 2, 'I Can Do This!', 'assets/topic/asb/13814.png', 'Isabelle Duston
- Silva Afonso', NULL);
+ Silva Afonso', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_3', 3, NULL, 'assets/topic/asb/13815.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_4', 3, NULL, NULL, 'Amelia wakes up and thinks,  "Today is my first day of school."  .', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_5', 3, NULL, 'assets/topic/asb/13816.png', NULL, NULL);
@@ -5273,7 +6955,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750', 2, 'Pendo our cow', 'assets/topic/asb/7945.png', 'Ruth Odondi
-Rob Owen', NULL);
+Rob Owen', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750_3', 3, NULL, 'assets/topic/asb/11992.png', 'This is Ndalo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750_4', 3, NULL, 'assets/topic/asb/7944.png', 'Ndalo likes to read books.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750_5', 3, NULL, 'assets/topic/asb/11993.png', 'This is Pendo.', NULL);
@@ -5303,7 +6985,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21747', 2, 'Parna''s calf', 'assets/topic/asb/25507.png', 'Soila Murianka
-Jacob Kono', NULL);
+Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21747_3', 3, NULL, 'assets/topic/asb/25498.png', 'Parna was a tall, slender boy who was in Grade 3.
 He liked to wear the long black coat that his Uncle Teteyo gave him.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21747_4', 3, NULL, 'assets/topic/asb/25499.png', 'During holiday time, Parna looked after his parents'' cows.', NULL);
@@ -5336,7 +7018,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2344', 2, 'The Honeyguide''s revenge', 'assets/topic/asb/1865.png', 'Zulu folktale
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2344_3', 3, NULL, NULL, 'This is the story of Ngede, the Honeyguide,  and a greedy young man named Gingile. One day while Gingile was out hunting he heard the call of Ngede. Gingile''s mouth began to water at the thought of honey. He stopped and listened carefully,  searching until he saw the bird in the branches above his head. "Chitik-chitik-chitik," the little bird rattled,  as he flew to the next tree,  and the next. "Chitik,  chitik,  chitik," he called,  stopping from time to time to be sure that Gingile followed.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2344_4', 3, NULL, 'assets/topic/asb/1866.png', 'After half an hour,  they reached a huge wild fig tree. Ngede hopped about madly among the branches. He then settled on one branch and cocked his head at Gingile as if to say,  "Here it is! Come now! What is taking you so long?" Gingile couldn''t see any bees from under the tree,  but he trusted Ngede.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2344_5', 3, NULL, 'assets/topic/asb/1867.png', 'After half an hour,  they reached a huge wild fig tree. Ngede hopped about madly among the branches. He then settled on one branch and cocked his head at Gingile as if to say,  "Here it is! Come now! What is taking you so long?" Gingile couldn''t see any bees from under the tree,  but he trusted Ngede.', NULL);
@@ -5367,7 +7049,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15942', 2, 'Grandma''s bananas', 'assets/topic/asb/1360.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15942_3', 3, NULL, 'assets/topic/asb/1361.png', 'Grandma''s garden was wonderful. It was full of sorghum, millet, and cassava. But best of all were the bananas. Although Grandma had many grandchildren, I secretly knew that I was her favourite. She invited me often to her house. She also told me little secrets. But there was one secret she did not share with me. Where she ripened bananas.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15942_4', 3, NULL, 'assets/topic/asb/1360.png', 'One day I saw a big straw basket placed in the sun outside Grandma''s house. When I asked what it was for, the only answer I got was, "It''s my magic basket." Next to the basket, there were several banana leaves that Grandma turned from time to time. I was curious. "What are the leaves for, Grandma?" I asked. The only answer I got was, "They are my magic leaves."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15942_5', 3, NULL, 'assets/topic/asb/1362.png', 'It was so interesting watching Grandma, the bananas, the banana leaves and the big straw basket. But Grandma sent me off to my mother on an errand. "Grandma, please, let me watch as you prepare." "Don''t be stubborn, child, do as you are told," she insisted. I took off running.', NULL);
@@ -5393,7 +7075,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877', 2, 'Too small', 'assets/topic/asb/2282.png', 'Media Matters
-Sandy Lightly', NULL);
+Sandy Lightly', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877_3', 3, NULL, 'assets/topic/asb/2283.png', '"Mom," calls Lebo. "Come and look. These clothes are all too small for me!" "Let me see," says Mom.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877_4', 3, NULL, 'assets/topic/asb/2284.png', '"Look at my skirt. It''s too small," says Lebo. "Yes,  it is," says Mom. "Nomsa can have your skirt."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877_5', 3, NULL, 'assets/topic/asb/2285.png', '"Look at my jeans. They''re too small," says Lebo. "Yes,  they are," says Mom.  "Nomsa can have your jeans."', NULL);
@@ -5420,7 +7102,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684', 2, 'Graca''s dream', 'assets/topic/asb/8850.png', 'Melissa Fagan
-Karlien de Villiers and Marike le Roux', NULL);
+Karlien de Villiers and Marike le Roux', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_3', 3, NULL, 'assets/topic/asb/8852.png', 'Graça was about to be born in a small village in Mozambique. The country was poor and the people did not yet rule themselves. Children didn''t have good schools and many couldn''t read. Graça''s mother dreamed of giving her children better opportunities. But without education there was little hope.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_4', 3, NULL, 'assets/topic/asb/8853.png', 'Baby Graça would be the sixth child. But with this joyous event there was great sadness. Their beloved father was dying. He dreamed that his youngest daughter would go to a good school. He knew that education would give her opportunities he never had. His family promised to make their dad''s dream come true.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_5', 3, NULL, 'assets/topic/asb/8854.png', 'Just weeks after their dad died,  the new baby was born. She was given a name to match the beauty and blessing that she was – Graça. As the years passed,  Graça brought much joy to her family and they kept the promise made to their father. Graça would have a good education.', NULL);
@@ -5450,7 +7132,7 @@ www.africanstorybook.org
 Original source
 www.bookdash.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15616', 2, 'Elephant and Chameleon', 'assets/topic/asb/9461.png', 'Stella Badaru
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15616_3', 3, NULL, 'assets/topic/asb/9457.png', 'Once upon a time in a big palace,  there lived a king and his beautiful daughter,  the princess.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15616_4', 3, NULL, 'assets/topic/asb/9458.png', 'Elephant lived in a house on one side of the palace. Chameleon lived on the other side.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15616_5', 3, NULL, 'assets/topic/asb/9459.png', 'At this time,  there was a terrible drought across the land. The king had an idea and called his two neighbours to the palace.', NULL);
@@ -5474,7 +7156,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9480', 2, 'The Elephant and the Frogs', 'assets/topic/asb/8197.png', 'Mozambican folktale
-Amir Bachir António Necas', NULL);
+Amir Bachir António Necas', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9480_3', 3, NULL, 'assets/topic/asb/8195.png', 'A long time ago,  the king of the bush was Mr Lion.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9480_4', 3, NULL, 'assets/topic/asb/8196.png', 'He sent his animals to stop the noise coming from a small lake in the bush. But they did not succeed!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9480_5', 3, NULL, 'assets/topic/asb/8197.png', 'An elephant volunteered to stop it. The elephant was sent out as a guard.', NULL);
@@ -5500,7 +7182,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621', 2, 'Clever brother', 'assets/topic/asb/19342.png', 'Mulualem Daba and Elizabeth Laird
-Tadesse Teshome', NULL);
+Tadesse Teshome', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621_3', 3, NULL, 'assets/topic/asb/19349.png', 'Once upon a time,  there was a man who had three sons. The youngest son was the cleverest and his father liked him the most. Then the man realised that his two other sons were jealous. So when the father died,  he left all his cattle to his two elder sons. He only left one ox for the youngest son. But the brothers were still jealous of him.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621_4', 3, NULL, 'assets/topic/asb/19340.png', 'One day they said,  "We''ve got to slaughter your ox." He was the youngest so he couldn''t protest. He said,  "If that must be so,  there''s nothing I can do. But please give me the hide." When they slaughtered the ox,  he took the hide. After drying it,  he climbed a tree with it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621_5', 3, NULL, 'assets/topic/asb/19351.png', 'As it got darker,  a group of merchants came to sleep under the tree. In the middle of the night,  the young man started beating the hide with a stick. When the stick hit the hide it sounded like thunder. The merchants thought that a storm was coming. They ran off leaving their goods behind.', NULL);
@@ -5532,7 +7214,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687', 2, 'The girl who got rich', 'assets/topic/asb/9239.png', 'Salaama Wanale
-Mango Tree', NULL);
+Mango Tree', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_3', 3, NULL, 'assets/topic/asb/9230.png', 'Once upon a time, there lived two sisters, Nelima and Nambuya. Their parents were dead. They lived on bare land. There was neither rain nor crops. Whoever wanted food had to go a long distance to find it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_4', 3, NULL, 'assets/topic/asb/9231.png', 'Nelima was a humble, quiet and helpful girl. Her sister Nambuya was proud and did not listen to advice. She did not care about other people.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_5', 3, NULL, 'assets/topic/asb/9232.png', 'One day, the two sisters had nothing to eat. They would have to look for food. So Nelima and Nambuya went off in different directions.', NULL);
@@ -5563,7 +7245,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15712', 2, 'Cow with one horn', 'assets/topic/asb/9612.png', 'Khothatso Ranoosi and Marion Drew
-Marion Drew', NULL);
+Marion Drew', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15712_3', 3, NULL, 'assets/topic/asb/9613.png', 'Heeeee! There is a beautiful cow at home.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15712_4', 3, NULL, 'assets/topic/asb/9614.png', 'It has only one horn,  and no tail.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15712_5', 3, NULL, 'assets/topic/asb/9615.png', 'It is fat,  with a big stomach.', NULL);
@@ -5591,7 +7273,7 @@ www.africanstorybook.org
 Original source
 http://paleng.weebly.com/,', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24042', 2, 'A Cow is my Friend', 'assets/topic/asb/6379.png', 'Frista and Fatima
-Felicity Bell and Marleen Visser', NULL);
+Felicity Bell and Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24042_3', 3, NULL, 'assets/topic/asb/6373.png', 'Mother cow cow,  I like you cow.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24042_4', 3, NULL, 'assets/topic/asb/6376.png', 'Yesterday you gave me milk.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24042_5', 3, NULL, NULL, 'My father buys meat every Saturday.', NULL);
@@ -5610,28 +7292,8 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767', 2, 'A Cow is my Friend', 'assets/topic/asb/6379.png', 'Frista and Fatima
-Felicity Bell and Marleen Visser', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767_3', 3, NULL, 'assets/topic/asb/6373.png', 'Mother cow cow,  I like you cow.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767_4', 3, NULL, 'assets/topic/asb/6376.png', 'Yesterday you gave me milk.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767_5', 3, NULL, NULL, 'My father buys meat every Saturday.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767_6', 3, NULL, 'assets/topic/asb/6105.png', 'Mummy has a nice bag, and I have very good shoes.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24767_7', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-A Cow is my Friend
-Author -
-Frista and Fatima
-Illustration -
-Felicity Bell and Marleen Visser
-Language -
-English
-Level -
-First words
-© Frista and Fatima 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003', 2, 'Market cows', 'assets/topic/asb/1607.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_3', 3, NULL, 'assets/topic/asb/1608.png', 'Everybody knew that Mama Schola liked to shout a lot.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_4', 3, NULL, 'assets/topic/asb/1609.png', 'That day,  it was about cows at the market. "Push these silly cows away," she said. "They are eating my vegetables."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_5', 3, NULL, 'assets/topic/asb/1609.png', '"Hey you there! Push these silly cows away from here," she insisted. "They are eating my clothes."', NULL);
@@ -5663,7 +7325,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22531', 2, 'Drum', 'assets/topic/asb/25948.png', 'Owino Ogot
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22531_3', 3, NULL, 'assets/topic/asb/25947.png', 'The drum has always been an important musical instrument in our community. We love drums!
 We have drums of different sizes: big, medium-sized and small.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22531_4', 3, NULL, 'assets/topic/asb/25948.png', 'We play drums using beaters, or with our fingers.
@@ -5696,7 +7358,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21141', 2, 'Thunder and Lightning', 'assets/topic/asb/19056.png', 'Athieno Gertrude and Owino Ogot
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21141_3', 3, NULL, 'assets/topic/asb/19042.png', 'In the olden days,  Thunder and Lightning lived on earth amongst people.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21141_4', 3, NULL, 'assets/topic/asb/19044.png', 'Thunder was the mother of Lightning.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21141_5', 3, NULL, 'assets/topic/asb/19046.png', 'Lightning was hot tempered and he often got into arguments.', NULL);
@@ -5725,38 +7387,8 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092', 2, 'Thunder and Lightning', 'assets/topic/asb/19056.png', 'Athieno Gertrude and Owino Ogot
-Jesse Breytenbach', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_3', 3, NULL, 'assets/topic/asb/19042.png', 'In the olden days,  Thunder and Lightning lived on earth amongst people.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_4', 3, NULL, 'assets/topic/asb/19044.png', 'Thunder was the mother of Lightning.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_5', 3, NULL, 'assets/topic/asb/19046.png', 'Lightning was hot tempered and he often got into arguments.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_6', 3, NULL, 'assets/topic/asb/19047.png', 'Whenever Lightning was angry he used to go around burning houses and knocking down trees. He made a frightening noise,  "Pia-la-la-la,  pia-la-la-la!" He damaged farms,  and even sometimes killed people.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_7', 3, NULL, 'assets/topic/asb/19048.png', 'Whenever Lightning did these things,  his mother would call out to him in a very loud voice,  "Bum-rambo-la-la-la,  la-bum!" She tried to make him stop causing damage.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_8', 3, NULL, 'assets/topic/asb/19050.png', 'But Lightning did not care about what his mother said. He would instead cause problems for everyone when he was in a bad temper.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_9', 3, NULL, 'assets/topic/asb/19051.png', 'At last,  people complained to the king.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_10', 3, NULL, 'assets/topic/asb/19052.png', 'So the king ordered that Thunder and her son should leave the village. He sent them to live far away from people''s houses.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_11', 3, NULL, 'assets/topic/asb/19053.png', 'This did not do much good. When Lightning was angry he still burnt forests,  "Pia-la-la-la,  pia-la-la-la!" The flames sometimes spread to farms and burned them.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_12', 3, NULL, 'assets/topic/asb/19054.png', 'So people complained to the king again.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_13', 3, NULL, 'assets/topic/asb/19055.png', 'This time,  the king told Lightning and Thunder that they could no longer live on earth. He sent them to live in the sky,  where they could not cause as much damage.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_14', 3, NULL, 'assets/topic/asb/19056.png', 'Ever since then,  when Lightning is angry,  he still manages to burn and destroy,  "Pia-la-la-la,  pia-la-la-la!" And we still hear his mother,  Thunder,  scolding him,  "Bum-rambo-la-la-la,  la-bum!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19092_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Thunder and Lightning
-Author -
-Ogot  Owino
-Translation -
-Athieno Gertrude and Owino Ogot
-Illustration -
-Jesse Breytenbach
-Language -
-English
-Level -
-First paragraphs
-© African Storybook Initiative 2016
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12653', 2, 'No pigs allowed', 'assets/topic/asb/6814.png', 'Little Zebra Books
-Laura Libertore and Little Zebra Books', NULL);
+Laura Libertore and Little Zebra Books', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12653_3', 3, NULL, 'assets/topic/asb/6805.png', 'Years ago,  a group of horned animals decided to have a big party high up in the mountains. They only invited other animals with horns. No one else.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12653_4', 3, NULL, 'assets/topic/asb/6806.png', 'When the pig heard about the party,  he thought,  "I don''t have horns. What am I going to do?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12653_5', 3, NULL, 'assets/topic/asb/6807.png', 'The next day,  he had an idea. He stuck some horns to his head with wax!', NULL);
@@ -5784,7 +7416,7 @@ www.africanstorybook.org
 Original source
 http://littlezebrabooks.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20433', 2, 'Disagreement among occupations', 'assets/topic/asb/10274.png', 'Beatrice Inzikuru
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20433_3', 3, NULL, 'assets/topic/asb/10274.png', 'In a village there was a disagreement among people of different occupations. Everyone thought their work was the most important!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20433_4', 3, NULL, 'assets/topic/asb/10278.png', 'The teacher said that he had the most important occupation. "Without teachers you could not go to school and learn."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20433_5', 3, NULL, 'assets/topic/asb/10276.png', 'The builder said that he had the most important occupation. "Without builders you would not have schools to learn in or houses to sleep in."', NULL);
@@ -5808,7 +7440,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21842', 2, 'Who can count to ten?', 'assets/topic/asb/25319.png', 'Athieno Gertrude and Owino Ogot
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21842_3', 3, NULL, 'assets/topic/asb/25317.png', 'A long time ago, deep in the forests, King Leopard began to think about the future.
 He thought, "I''m getting old and one day, I''m going to die. A wise ruler should pick a successor while still young and healthy."
 But how could King Leopard choose? He loved all the members of the animal kingdom the same!', NULL);
@@ -5862,7 +7494,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9529', 2, 'How many?', 'assets/topic/asb/1786.png', 'Clare Verbeek
-Sandra McDougall', NULL);
+Sandra McDougall', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9529_3', 3, NULL, 'assets/topic/asb/1600.png', 'How many legs do two ladybirds have?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9529_4', 3, NULL, 'assets/topic/asb/1599.png', 'How many wings do four birds have?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9529_5', 3, NULL, 'assets/topic/asb/1601.png', 'How many horns do three rhinos have?', NULL);
@@ -5888,7 +7520,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836', 2, 'Grandma''s bananas', 'assets/topic/asb/1360.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836_3', 3, NULL, 'assets/topic/asb/1361.png', 'Grandma''s garden was wonderful. It was full of sorghum, millet, and cassava. But best of all were the bananas. Although Grandma had many grandchildren, I secretly knew that I was her favourite. She invited me often to her house. She also told me little secrets. But there was one secret she did not share with me. Where she ripened bananas.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836_4', 3, NULL, 'assets/topic/asb/1360.png', 'One day I saw a big straw basket placed in the sun outside Grandma''s house. When I asked what it was for, the only answer I got was, "It''s my magic basket." Next to the basket, there were several banana leaves that Grandma turned from time to time. I was curious. "What are the leaves for, Grandma?" I asked. The only answer I got was, "They are my magic leaves."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836_5', 3, NULL, 'assets/topic/asb/1362.png', 'It was so interesting watching Grandma, the bananas, the banana leaves and the big straw basket. But Grandma sent me off to my mother on an errand. "Grandma, please, let me watch as you prepare." "Don''t be stubborn, child, do as you are told," she insisted. I took off running.', NULL);
@@ -5914,7 +7546,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106', 2, 'Ndikonda', 'assets/topic/asb/1492.png', 'Richard Ndazye and Mutinta Mwanamoonga
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106_3', 3, NULL, 'assets/topic/asb/1493.png', 'Ndimakonda masewero nthambo.
 I enjoy skipping.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106_4', 3, NULL, 'assets/topic/asb/1494.png', 'Ine ndili ndekha.
@@ -5954,7 +7586,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31301', 2, 'I enjoy doing', 'assets/topic/asb/1496.png', 'Ursula Nafula
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31301_3', 3, NULL, 'assets/topic/asb/1495.png', 'I enjoy skipping with my friend.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31301_4', 3, NULL, 'assets/topic/asb/1499.png', 'I enjoy writing letters on the board.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31301_5', 3, NULL, 'assets/topic/asb/1496.png', 'I enjoy reading picture books.', NULL);
@@ -5979,7 +7611,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878', 2, 'I can do this', 'assets/topic/asb/1372.png', 'Clare Verbeek
-Cathy Feek', NULL);
+Cathy Feek', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878_3', 3, NULL, 'assets/topic/asb/1373.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878_4', 3, NULL, 'assets/topic/asb/1374.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878_5', 3, NULL, 'assets/topic/asb/1372.png', NULL, NULL);
@@ -6005,7 +7637,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159', 2, 'Nozibele and the three hairs', 'assets/topic/asb/1196.png', 'Tessa Welch
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_3', 3, NULL, 'assets/topic/asb/1197.png', 'A long time ago,  three girls went out to collect wood.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_4', 3, NULL, 'assets/topic/asb/1198.png', 'It was a hot day so they went down to the river to swim. They played and splashed and swam in the water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_5', 3, NULL, 'assets/topic/asb/1196.png', 'Suddenly,  they realised that it was late. They hurried back to the village.', NULL);
@@ -6034,7 +7666,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21994', 2, 'Baboon chief', 'assets/topic/asb/18900.png', 'Bonsamo Miesso
-Isaac Okwir', NULL);
+Isaac Okwir', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21994_3', 3, NULL, 'assets/topic/asb/18894.png', 'There was a huge baboon with a large troop of baboons that followed him. He was a real dictator!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21994_4', 3, NULL, 'assets/topic/asb/18895.png', 'But there were many huge baboons in the troop,  and the herd was often not sure which one was giving the orders.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21994_5', 3, NULL, 'assets/topic/asb/18896.png', 'So the other baboons said to the chief,  "You need a special mark,  so that we can be sure who you are. Then we''ll be able to follow your orders."', NULL);
@@ -6064,7 +7696,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987', 2, 'The baboons that went this way and that', 'assets/topic/asb/1160.png', 'Southern African Folktale
-Benjamin Mitchley', NULL);
+Benjamin Mitchley', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_3', 3, NULL, 'assets/topic/asb/1161.png', 'The people in a village of small huts were becoming unhappy. Wild animals began to come and frighten them.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_4', 3, NULL, 'assets/topic/asb/1162.png', 'These animals ate all their crops and even carried children away. It was not a good place to live any longer,  but where could the people go?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_5', 3, NULL, 'assets/topic/asb/1163.png', 'One family found the answer. It was not hard to find food up in the hills.', NULL);
@@ -6095,7 +7727,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692', 2, 'Tortoise finds his house', 'assets/topic/asb/9213.png', 'Maya Fowler
-Katrien Coetzer', NULL);
+Katrien Coetzer', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_3', 3, NULL, 'assets/topic/asb/9214.png', 'One day Tortoise was walking through the veld. He was looking for something. He gazed into the distance and squinted at the grass. Then he walked past Snail.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_4', 3, NULL, NULL, '"Are you looking for something?" Snail asked. "Yes,  Snail,  I''m looking for my house. Have you seen it,  by any chance?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_5', 3, NULL, 'assets/topic/asb/9215.png', 'Snail said,  "No,  I haven''t,  but I''ll help you look!" She climbed onto Tortoise''s shell. Tortoise walked on with Snail on his back. They looked and looked,  but there was no sign of a house. The sun was high in the sky.', NULL);
@@ -6130,7 +7762,7 @@ www.africanstorybook.org
 Original source
 www.bookdash.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073', 2, 'Wardit, the mule', 'assets/topic/asb/17977.png', 'Mesfin Habte-Mariam
-Marleen Visser', NULL);
+Marleen Visser', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073_3', 3, NULL, 'assets/topic/asb/17968.png', 'Once upon a time,  there was a young mule called Wardit. She was clever,  and beautiful. She was also very proud. One day,  Wardit was going to the river to drink some water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073_4', 3, NULL, 'assets/topic/asb/17969.png', 'A handsome young horse was walking along the same road. The horse saw Wardit and thought,  "Here is the most beautiful mule in the world! I must marry her."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073_5', 3, NULL, 'assets/topic/asb/17970.png', '"Where are you going?" the horse asked Wardit. "I''m going to the river to drink water," she replied. "Let me come with you," the horse said.', NULL);
@@ -6164,7 +7796,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270', 2, 'Face', 'assets/topic/asb/26803.png', 'Little Zebra Books
-Sue  Beattie', NULL);
+Sue  Beattie', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_3', 3, NULL, 'assets/topic/asb/26807.png', 'Eyes', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_4', 3, NULL, 'assets/topic/asb/26808.png', 'Ears', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_5', 3, NULL, 'assets/topic/asb/26802.png', 'Mouth', NULL);
@@ -6190,7 +7822,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775', 2, 'A Naughty Girl', 'assets/topic/asb/8665.png', 'Bathokwa book club
- Catherine Groenewald, Vusi Malindi, Rob Owen, Natalie Propa, Ingrid Schechter and Melany Pietersen', NULL);
+ Catherine Groenewald, Vusi Malindi, Rob Owen, Natalie Propa, Ingrid Schechter and Melany Pietersen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_3', 3, NULL, 'assets/topic/asb/8661.png', 'Once upon a time the was a girl by the name of Emily Emily was very naughty.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_4', 3, NULL, 'assets/topic/asb/7518.png', 'Whenever her mother asked her to do anything she would refuse.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_5', 3, NULL, 'assets/topic/asb/8630.png', 'One day her mother was sick. She asked her to go her grandma and ask for some special medicine,  so that she can drink and get better. Because Emily was naughty,  she decided to go and have a swim on her way to grand ma.', NULL);
@@ -6216,7 +7848,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530', 2, 'Pa Nase the spider and the village women', 'assets/topic/asb/26450.png', 'Abdul  Koroma
-Kenneth Boyowa Okitikpi', NULL);
+Kenneth Boyowa Okitikpi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530_3', 3, NULL, 'assets/topic/asb/26446.png', 'Once upon a time, Pa Nase the spider felt very hungry. He decided to go in search of food. He visited his friend''s place where he usually got help.
 But his friend was not at home.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530_4', 3, NULL, 'assets/topic/asb/26447.png', 'Hungry Pa Nase thought of an idea for getting food. He remembered the store where the village women usually kept food.', NULL);
@@ -6254,7 +7886,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877', 2, 'Clever cat', 'assets/topic/asb/8876.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877_3', 3, NULL, 'assets/topic/asb/8864.png', 'In my village,  lives Mister Kio. Mister Kio has a cat called Safi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877_4', 3, NULL, 'assets/topic/asb/8865.png', 'When Mister Kio goes to work,  he leaves the door open.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877_5', 3, NULL, 'assets/topic/asb/8866.png', 'Safi sits in the doorway to watch over the house.', NULL);
@@ -6284,7 +7916,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065', 2, 'Clever cat and foolish dog', 'assets/topic/asb/25483.png', 'Angesom Abadi
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065_3', 3, NULL, 'assets/topic/asb/25473.png', 'Long ago, there was a clever cat and a foolish dog.
 The clever cat lived well in a wealthy family''s house. The foolish dog starved on the street.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065_4', 3, NULL, 'assets/topic/asb/25474.png', '"How is it that a wealthy family allows you to live in their house?" the foolish dog angrily asked the clever cat.', NULL);
@@ -6323,7 +7955,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402', 2, 'Cats and mice', 'assets/topic/asb/18908.png', 'Merga Debelo
-Jacob Kono', NULL);
+Jacob Kono', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_3', 3, NULL, 'assets/topic/asb/18908.png', 'A long time ago,  the cats and the mice were friends. They worked together and played together. Cats married mice and mice married cats and they were happy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_4', 3, NULL, 'assets/topic/asb/18909.png', 'But over time,  the mice became worried. "Some of our relatives have disappeared," they said. "Where are they?" "I haven''t seen my uncle for a long time," one mouse said. "And I haven''t seen my aunt," said another mouse. "My sister isn''t here anymore," a third mouse said. "And where''s my brother?" said a fourth mouse.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_5', 3, NULL, 'assets/topic/asb/18910.png', 'An old mouse shook his head. He looked sad. "I have bad news for you,  my friends," he said. "The cats are eating us. We must be very careful. Soon they will eat us all."', NULL);
@@ -6357,7 +7989,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558', 2, 'Selemeng''s cats', 'assets/topic/asb/12005.png', 'Khothatso Ranoosi and Marion Drew
-Marleen Visser and Wiehan de Jager', NULL);
+Marleen Visser and Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_3', 3, NULL, 'assets/topic/asb/12005.png', 'Selemeng loves cats. There are many cats at her house.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_4', 3, NULL, 'assets/topic/asb/12006.png', 'Selemeng has one black cat. This cat eats a lot of meat.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_5', 3, NULL, 'assets/topic/asb/12007.png', 'Selemeng has one fat cat. This cat eats everything.', NULL);
@@ -6390,7 +8022,7 @@ www.africanstorybook.org
 Original source
 http://paleng.weebly.com/.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22083', 2, 'The rat', 'assets/topic/asb/7506.png', 'Cornelius Wambi Gulere
-Zablon Alex Nguku', NULL);
+Zablon Alex Nguku', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22083_3', 3, NULL, 'assets/topic/asb/7496.png', 'Once upon a time,  there lived two rats. One rat lived in the bush.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22083_4', 3, NULL, 'assets/topic/asb/7497.png', 'The other rat lived in a house.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22083_5', 3, NULL, 'assets/topic/asb/7498.png', 'One day,  the rat that lived in the house said to the rat that lived in the bush,  "You eat badly,  sleep badly,  and it rains on you."', NULL);
@@ -6421,40 +8053,8 @@ Source
 www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439', 2, 'The rat', 'assets/topic/asb/7506.png', 'Cornelius Wambi Gulere
-Zablon Alex Nguku', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_3', 3, NULL, 'assets/topic/asb/7496.png', 'Once upon a time,  there lived two rats. One rat lived in the bush.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_4', 3, NULL, 'assets/topic/asb/7497.png', 'The other rat lived in a house.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_5', 3, NULL, 'assets/topic/asb/7498.png', 'One day,  the rat that lived in the house said to the rat that lived in the bush,  "You eat badly,  sleep badly,  and it rains on you."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_6', 3, NULL, 'assets/topic/asb/7499.png', '"But us,  we sleep in chief''s houses. We eat many different kinds of food. One day come and visit me and see," said the house rat. "I will come this very night," said the bush rat. "I''m ready like a straw for taking soda."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_7', 3, NULL, 'assets/topic/asb/7500.png', 'Meanwhile the owner of the house was furious. He cursed,  "These rats that eat my food,  they will see!" This time,  he set a trap with sugar.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_8', 3, NULL, 'assets/topic/asb/7501.png', 'The rats came in to eat the goodies in the house. They came laughing,  "Chuchuchichicheche!"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_9', 3, NULL, 'assets/topic/asb/7502.png', 'When they reached the trap the house rat said,  "Let me taste this sugar. You see the goodies we eat here."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_10', 3, NULL, 'assets/topic/asb/7503.png', 'But before the rat could take the sugar,  the trap snapped,  PA! The trap caught the rat''s head,  and his eyes bulged like eggplants.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_11', 3, NULL, 'assets/topic/asb/7504.png', 'The bush rat just looked,  amazed. He said,  "E. Heee! My friend,  which goodies did you eat that made your eyes bulge?"', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_12', 3, NULL, 'assets/topic/asb/7505.png', 'But the house rat could not reply.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_13', 3, NULL, 'assets/topic/asb/7505.png', 'The bush rat left the house saying,  "Haa! I will not manage these goodies you praise."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_14', 3, NULL, 'assets/topic/asb/7506.png', 'Your worst home is better than your neighbour''s best home.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8439_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-The rat
-Author -
-Nambi  Sseppuuya Community Resource Centre
-Translation -
-Cornelius Wambi Gulere
-Illustration -
-Zablon Alex Nguku
-Language -
-English
-Level -
-First sentences
-© Text: Ugandan Community Libraries Association (Ugcla; Illusrations: African Storybook Initiative 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org
-Original source
-http://ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127', 2, 'Cats and mice', 'assets/topic/asb/18908.png', 'Merga Debelo
-Jacob Kono', NULL);
+Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_3', 3, NULL, 'assets/topic/asb/18908.png', 'A long time ago,  the cats and the mice were friends. They worked together and played together. Cats married mice and mice married cats and they were happy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_4', 3, NULL, 'assets/topic/asb/18909.png', 'But over time,  the mice became worried. "Some of our relatives have disappeared," they said. "Where are they?" "I haven''t seen my uncle for a long time," one mouse said. "And I haven''t seen my aunt," said another mouse. "My sister isn''t here anymore," a third mouse said. "And where''s my brother?" said a fourth mouse.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_5', 3, NULL, 'assets/topic/asb/18910.png', 'An old mouse shook his head. He looked sad. "I have bad news for you,  my friends," he said. "The cats are eating us. We must be very careful. Soon they will eat us all."', NULL);
@@ -6488,7 +8088,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418', 2, 'Petros and his dog', 'assets/topic/asb/25201.png', 'Bethelihem Waltenegus
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_3', 3, NULL, 'assets/topic/asb/25198.png', 'Once upon a time, there was a boy called Petros. He was a very clever student. He came first in his class and his parents were proud of him. But Petros wished he had a brother, a sister, or a pet to play with.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_4', 3, NULL, 'assets/topic/asb/25199.png', 'One day he asked his mom, "Can I play outside? I have studied all morning and I want to play with my friends now." His mom replied, "All right! Go, but don''t be late!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_5', 3, NULL, 'assets/topic/asb/25200.png', 'On the way to the playground, Petros saw something unusual. It was a little dog with white and brown spots. The dog was stuck in a hole and he was scared. "Don''t worry, I won''t hurt you. I will help you," said Petros.', NULL);
@@ -6516,7 +8116,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809', 2, 'Petros and his dog', 'assets/topic/asb/25201.png', 'Bethelihem Waltenegus
-Brian Wambi', NULL);
+Brian Wambi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809_3', 3, NULL, 'assets/topic/asb/25198.png', 'Once upon a time, there was a boy called Petros. He was a very clever student. He came first in his class and his parents were proud of him. But Petros wished he had a brother, a sister, or a pet to play with.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809_4', 3, NULL, 'assets/topic/asb/25199.png', 'One day he asked his mom, "Can I play outside? I have studied all morning and I want to play with my friends now." His mom replied, "All right! Go, but don''t be late!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809_5', 3, NULL, 'assets/topic/asb/25200.png', 'On the way to the playground, Petros saw something unusual. It was a little dog with white and brown spots. The dog was stuck in a hole and he was scared. "Don''t worry, I won''t hurt you. I will help you," said Petros.', NULL);
@@ -6544,7 +8144,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29688', 2, 'Donkey', 'assets/topic/asb/26642.png', 'Little Zebra Books
-Marleen Visser', NULL);
+Marleen Visser', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29688_3', 3, NULL, 'assets/topic/asb/26643.png', 'Dog', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29688_4', 3, NULL, 'assets/topic/asb/26644.png', 'Duck', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29688_5', 3, NULL, 'assets/topic/asb/26645.png', 'Cow', NULL);
@@ -6571,7 +8171,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422', 2, 'Three Best Friends', 'assets/topic/asb/25842.png', 'Catherine  Amia
-Wiehan de Jager, Idowu Abayomi Oluwasegun, Andrews Opoku Antwi, Michelangelo Quaye Anang and Rob Owen', NULL);
+Wiehan de Jager, Idowu Abayomi Oluwasegun, Andrews Opoku Antwi, Michelangelo Quaye Anang and Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_3', 3, NULL, 'assets/topic/asb/1497.png', 'Once upon a time, there lived three best friends; Jude, Becky and Rachael.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_4', 3, NULL, 'assets/topic/asb/19328.png', 'They always did their house chores together; they actually went to each other''s homes and helped each other.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_5', 3, NULL, 'assets/topic/asb/19336.png', 'Their parents were so pleased with them.
@@ -6601,7 +8201,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527', 2, 'The friend I miss', 'assets/topic/asb/8658.png', 'Ursula Nafula
-Benjamin Mitchley, Catherine Groenewald, Rijuta Ghate and Wiehan de Jager', NULL);
+Benjamin Mitchley, Catherine Groenewald, Rijuta Ghate and Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_3', 3, NULL, 'assets/topic/asb/2444.png', 'Every morning when I woke up I hurried to eat my breakfast.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_4', 3, NULL, 'assets/topic/asb/2450.png', 'Then I would take my blue blouse and run out of the house to find my friend Muthoni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_5', 3, NULL, 'assets/topic/asb/2452.png', 'Once I found Muthoni,  we would forget everything else.', NULL);
@@ -6628,7 +8228,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547', 2, 'Aku the Sun Maker', 'assets/topic/asb/26422.png', 'Aisha  Nelson
-Idowu Abayomi Oluwasegun', NULL);
+Idowu Abayomi Oluwasegun', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547_3', 3, NULL, 'assets/topic/asb/26422.png', 'Long ago in a town called Sunland lived a girl with very long legs. Aku was her name.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547_4', 3, NULL, 'assets/topic/asb/26423.png', 'Aku wondered about a lot of things.
 Sometimes Aku''s father, Ataa Ankra, a fisherman let her go to the river with him to fish in his canoe. While Aku fished with her father, she wondered why the sun always looked at her from the sky.
@@ -6678,7 +8278,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718', 2, 'My friend Coco', 'assets/topic/asb/2485.png', 'Ursula Nafula
-Ursula Nafula', NULL);
+Ursula Nafula', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_3', 3, NULL, 'assets/topic/asb/2486.png', 'When I was five years old,  my uncle gave me a wonderful present. It was a three-week-old puppy! The day my uncle brought the puppy home,  I was very happy. I knew I had a friend.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_4', 3, NULL, 'assets/topic/asb/2487.png', 'After putting him down,  my uncle turned to me and asked,  "What name will you give him?" I looked at my puppy,  and said,  "Coco." My uncle was surprised. He asked,  "Why do you call him Coco?" I said,  "Because he looks like cocoa."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_5', 3, NULL, 'assets/topic/asb/2488.png', 'I asked my uncle if Coco was born alone. My uncle said that there was another puppy,  exactly like Coco. I went to see Coco''s brother.', NULL);
@@ -6705,7 +8305,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22078', 2, 'My friend, my enemy', 'assets/topic/asb/25536.png', 'Lorato Trok
-Thulani Mhlanga', NULL);
+Thulani Mhlanga', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22078_3', 3, NULL, 'assets/topic/asb/25535.png', 'Once upon a time, in the village of Mphahlele, there was a young man who lived with his parents.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22078_4', 3, NULL, 'assets/topic/asb/25536.png', 'This young man was very respectful to his parents and to all the other people in the village. His name was Thabo Maloba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22078_5', 3, NULL, 'assets/topic/asb/25537.png', 'Mondays are a busy day in the village as the children get ready for school after the weekend.
@@ -6733,42 +8333,8 @@ Source
 www.africanstorybook.org
 Original source
 This story was selected as one of the 7 winning stories from the Writing in your mother tongue writing competition partnership between Saulsville Library and the African Storybook Initiative.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432', 2, 'Colours of a rainbow', 'assets/topic/asb/9838.png', 'Caren Echesa
- Jesse Breytenbach', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_3', 3, NULL, 'assets/topic/asb/9838.png', 'A rainbow has seven colours.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_4', 3, NULL, 'assets/topic/asb/9839.png', 'The first colour is red.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_5', 3, NULL, 'assets/topic/asb/9840.png', 'Kewyu is wearing a red shirt.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_6', 3, NULL, 'assets/topic/asb/9841.png', 'The second colour is orange.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_7', 3, NULL, 'assets/topic/asb/9842.png', 'This is an orange. What else can you see that is the colour orange?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_8', 3, NULL, 'assets/topic/asb/9843.png', 'The third colour is yellow.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_9', 3, NULL, 'assets/topic/asb/9844.png', 'The yolk of an egg is yellow. What else can you see that is the colour yellow?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_10', 3, NULL, 'assets/topic/asb/9846.png', 'The fourth colour is green.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_11', 3, NULL, 'assets/topic/asb/9847.png', 'Our banana garden is green.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_12', 3, NULL, 'assets/topic/asb/9849.png', 'The fifth colour is blue.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_13', 3, NULL, 'assets/topic/asb/9850.png', 'The sky is blue.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_14', 3, NULL, 'assets/topic/asb/9851.png', 'The sixth colour is indigo.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_15', 3, NULL, 'assets/topic/asb/9852.png', 'These berries are the colour indigo.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_16', 3, NULL, 'assets/topic/asb/9854.png', 'The seventh colour is violet.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_17', 3, NULL, 'assets/topic/asb/9853.png', 'My dress is violet. Violet is my favourite colour! What is your favourite colour?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_18', 3, NULL, 'assets/topic/asb/9856.png', 'Do you know the seven colours of the rainbow?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20432_19', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Colours of a rainbow
-Author -
-Caren Echesa
-Translation -
-Caren Echesa
-Illustration -
-Jesse Breytenbach
-Language -
-English
-Level -
-First words
-© African Storybook Initiative 2015
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202', 2, 'The lady in orange', 'assets/topic/asb/9474.png', 'Ursula Nafula
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_3', 3, NULL, 'assets/topic/asb/9465.png', 'My father took me to town in our old blue car. We stopped at a big roundabout to wait for the lights to turn green.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_4', 3, NULL, 'assets/topic/asb/9466.png', 'I saw a lady walking on the side of the road. She was wearing a beautiful bright orange dress.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_5', 3, NULL, 'assets/topic/asb/9469.png', 'She had a big red belt around her waist.', NULL);
@@ -6798,7 +8364,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442', 2, 'Colours of a rainbow', 'assets/topic/asb/9838.png', 'Caren Echesa
- Jesse Breytenbach', NULL);
+ Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_3', 3, NULL, 'assets/topic/asb/9838.png', 'A rainbow has seven colours.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_4', 3, NULL, 'assets/topic/asb/9839.png', 'The first colour is red.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_5', 3, NULL, 'assets/topic/asb/9840.png', 'Kewyu is wearing a red shirt.', NULL);
@@ -6832,7 +8398,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574', 2, 'Refiloe and the washed chickens', 'assets/topic/asb/986.png', 'Marion Drew
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574_3', 3, NULL, 'assets/topic/asb/1003.png', 'It was the first wedding in the Tenane family,  and Refiloe had never been so excited in her life. "I''m going to be Palesa''s bridesmaid,  with a new dress and shoes!" she said to her chickens. Refiloe told her chickens everything. Her father had given the chickens to her as a birthday present,  and she loved them very much.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574_4', 3, NULL, 'assets/topic/asb/1011.png', '"Take those dirty scruffy chickens out of here Refiloe!" shouted her mother,  "I don''t want them anywhere near this wedding tent."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574_5', 3, NULL, 'assets/topic/asb/989.png', 'Refiloe shooed her chickens out of the tent. "Run away you silly things." she said,  "I don''t want you to be eaten at Palesa''s wedding!"', NULL);
@@ -6871,7 +8437,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22747', 2, 'Mr Mkhize''s quarters', 'assets/topic/asb/15721.png', 'Lorato Trok
-Marleen Visser', NULL);
+Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22747_3', 3, NULL, 'assets/topic/asb/15714.png', 'It is nearly break time at Siyafunda Primary School. The two spaza shop owners at the school are preparing lunch to sell to hungry children.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22747_4', 3, NULL, 'assets/topic/asb/15715.png', 'In Mr Motaung''s shop,  the bread is cut and ready for making kotas. He carefully cuts out the soft middle of each quarter loaf. Then he puts polony and chips in the space inside. Motaung puts two spoonfuls of his wife''s homemade atchar in each kota. He likes to boast that his kotas have atchar inside and atchar on top!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22747_5', 3, NULL, 'assets/topic/asb/15716.png', 'In Mr Mkhize''s shop,  the chips are nearly ready,  but he is still cutting his bread for kotas. He is worried because things are not going well with his shop. "It started well," thinks Mkhize. "But now I get fewer and fewer customers. At least I''m reducing some of my costs by cutting five kotas from a loaf."', NULL);
@@ -6904,7 +8470,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712', 2, 'Why Frog is so ugly', 'assets/topic/asb/7077.png', 'Mozambican folktale
-Hélder de Paz Alexandre', NULL);
+Hélder de Paz Alexandre', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_3', 3, NULL, 'assets/topic/asb/7069.png', 'Many years ago,  the Lizard and the Frog were friends. One day they decided to look for girlfriends in the city.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_4', 3, NULL, 'assets/topic/asb/7070.png', 'The Frog was jealous of the Lizard''s shining and brilliant skin.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_5', 3, NULL, 'assets/topic/asb/7071.png', 'He said,  "What did you do to look so beautiful? Look at me,  I am so ugly. What can I do about my skin?"', NULL);
@@ -6929,7 +8495,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197', 2, 'The generous fish', 'assets/topic/asb/1840.png', 'Kholeka Mabeta
-Jemma Kahn and Wiehan de Jager', NULL);
+Jemma Kahn and Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_3', 3, NULL, 'assets/topic/asb/1841.png', 'Once upon a time there was a very rich man called Mpunzi. He had a wife and one daughter called Nosisa. Mpunzi wanted a son,  but he and his wife could not have any more children. Mpunzi blamed his wife for not giving him a son. He bullied his wife and treated her like a child.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_4', 3, NULL, 'assets/topic/asb/1843.png', 'One day Mpunzi was very angry and he hit his wife with a stick. She ran away back to her family. She left with a sad heart because Mpunzi did not let her take Nosisa with her. Mpunzi bullied his daughter in the same way he bullied his wife. Nosisa lived a very sad life.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_5', 3, NULL, 'assets/topic/asb/1844.png', 'Mpunzi decided to marry another wife. He hoped that the new wife would give him a baby boy. Nosisa''s life became even more difficult when her father married again. Mpunzi scolded her all the time and made her serve the new wife. Nosisa worked like a slave.', NULL);
@@ -6961,7 +8527,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2974', 2, 'School clothes', 'assets/topic/asb/954.png', 'Clare Verbeek
-Mlungisi Dlamini', NULL);
+Mlungisi Dlamini', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2974_3', 3, NULL, 'assets/topic/asb/955.png', 'This dress is long.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2974_4', 3, NULL, 'assets/topic/asb/956.png', 'This jersey is big.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2974_5', 3, NULL, 'assets/topic/asb/957.png', 'This bag is big.', NULL);
@@ -6987,7 +8553,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397', 2, 'The Seventh Sun: A Tribal Tale From Odisha, India', 'assets/topic/asb/2316.png', 'Indian Folktale
-Pratham Books', NULL);
+Pratham Books', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_3', 3, NULL, 'assets/topic/asb/2317.png', 'Long,  long ago there were seven suns in the sky. Their rays made the earth so hot that human beings could not bear it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_4', 3, NULL, 'assets/topic/asb/2318.png', 'So,  the seven brothers belonging to a tribe called the Munda decided to kill the suns. They shot arrows at them and were able to kill six of the suns.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_5', 3, NULL, 'assets/topic/asb/2319.png', 'The seventh sun hid behind a hill.', NULL);
@@ -7016,7 +8582,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23109', 2, 'Lynne''s birthday surprise', 'assets/topic/asb/18612.png', 'Leo Daly
-Marleen Visser', NULL);
+Marleen Visser', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23109_3', 3, NULL, 'assets/topic/asb/18613.png', '"The house looks beautiful," said Oupa Karel, as Lynne put up the last of her birthday decorations.  "Your guests will be very impressed." Getting things ready for the party had been hard work. Lynne and Anton had to do most of it themselves as Oupa Karel was too old to climb up ladders. But Oupa Karel did what he could by blowing up the balloons.
 "Now we only have to bake the cake!" said Lynne.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23109_4', 3, NULL, 'assets/topic/asb/18599.png', 'Oupa Karel sighed as he turned the pages of his recipe book.  "I''m not going to be much help," he said, shaking his head. "I''ve never been good at cooking."
@@ -7071,7 +8637,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707', 2, 'How Ant saved Dove', 'assets/topic/asb/788.png', 'Judith Baker
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_3', 3, NULL, 'assets/topic/asb/784.png', 'It was a hot summer day in the dry forest.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_4', 3, NULL, 'assets/topic/asb/785.png', 'Little Ant had no water for many days.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_5', 3, NULL, 'assets/topic/asb/786.png', '"I need a drop of water, even if it falls from a leaf," cried Little Ant.', NULL);
@@ -7115,7 +8681,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615', 2, 'The day the Sun went away', 'assets/topic/asb/14611.png', 'Khothatso Ranoosi and Marion Drew
-Jesse Breytenbach', NULL);
+Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615_3', 3, NULL, 'assets/topic/asb/14612.png', 'Mother Sun decided to visit her sister,  the moon. Sister Moon lives on the  other side of the sky. "I will be back soon," said Sun to the clouds.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615_4', 3, NULL, 'assets/topic/asb/14598.png', 'When Sun left,  the mountains put on their white scarves.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615_5', 3, NULL, 'assets/topic/asb/14600.png', 'Wind had an argument with the trees. The trees became angry. They threw their leaves  all over the place.', NULL);
@@ -7147,7 +8713,7 @@ www.africanstorybook.org
 Original source
 http://paleng.weebly.com/.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15032', 2, 'Day I left home for the city', 'assets/topic/asb/15008.png', 'Lesley Koyi
-Brian Wambi', NULL);
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15032_3', 3, NULL, 'assets/topic/asb/14993.png', 'The small bus stop in my village was busy with people and overloaded buses. On the ground were even more things to load. Touts were shouting the names where the buses were going.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15032_4', 3, NULL, 'assets/topic/asb/14994.png', '"City! City! Going west!" I heard a tout shouting. That was the bus I needed to catch.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15032_5', 3, NULL, 'assets/topic/asb/14995.png', 'The city bus was almost full,  but more people were still pushing to get on. Some packed their luggage under the bus. Others put their things on the racks inside.', NULL);
@@ -7179,7 +8745,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433', 2, 'My first day at the market', 'assets/topic/asb/1447.png', 'Timothy Kabare
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_3', 3, NULL, 'assets/topic/asb/1448.png', 'I live in Kakuma village,  a very hot dry place,  full of thorny trees,  and more goats than people. Even the market place is quiet,  with only a few small shops. Most people use bicycles for transport.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_4', 3, NULL, 'assets/topic/asb/1449.png', 'One morning my mother called me and said,  "Etabo,  today you turn six years old. We have a present for you." "What is it? What is it?" I asked eagerly. "Tomorrow we''re going by bus to the market in Eldoret," she replied,  "And we''re taking you with us!" My first visit to the city! I was so excited that I could hardly sleep that night.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_5', 3, NULL, 'assets/topic/asb/1450.png', 'The next day at the Kakuma bus stop,  I stood between my mother and my aunt. I wore my new pair of blue jeans and a red T-shirt. I felt very small between my tall slender mother and my big round aunt.', NULL);
@@ -7209,7 +8775,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('11139', 2, 'Rainbow visits the village', 'assets/topic/asb/10970.png', 'Ursula Nafula
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('11139_3', 3, NULL, 'assets/topic/asb/10965.png', 'My name is Kobole.   I live in a small village.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('11139_4', 3, NULL, 'assets/topic/asb/10966.png', 'I was out picking fruits when I saw something I had never seen before.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('11139_5', 3, NULL, 'assets/topic/asb/10967.png', 'There were colourful lines in the sky.', NULL);
@@ -7239,7 +8805,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059', 2, 'Ostrich and Lioness', 'assets/topic/asb/19205.png', 'Turkana ECD Teachers
- Brian Wambi', NULL);
+ Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059_3', 3, NULL, 'assets/topic/asb/19195.png', 'Ostrich and Lioness were great friends. Both of them had young ones.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059_4', 3, NULL, 'assets/topic/asb/19196.png', 'Ostrich fed her chicks well.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059_5', 3, NULL, 'assets/topic/asb/19197.png', 'The cubs had little food to eat.', NULL);
@@ -7273,7 +8839,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22002', 2, 'Simbegwire', 'assets/topic/asb/1682.png', 'Rukia Nantale
- Benjamin Mitchley', NULL);
+ Benjamin Mitchley', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22002_3', 3, NULL, 'assets/topic/asb/1675.png', 'When Simbegwire''s mother died,  she was very sad. Simbegwire''s father did his best to take care of his daughter. Slowly,  they learned to feel happy again,  without Simbegwire''s mother. Every morning they sat and talked about the day ahead. Every evening they made dinner together. After they washed the dishes,  Simbegwire''s father helped her with homework.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22002_4', 3, NULL, 'assets/topic/asb/1676.png', 'One day,  Simbegwire''s father came home later than usual. "Where are you my child?" he called. Simbegwire ran to her father. She stopped still when she saw that he was holding a woman''s hand. "I want you to meet someone special,  my child. This is Anita," he said smiling.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22002_5', 3, NULL, 'assets/topic/asb/1677.png', '"Hello Simbegwire,  your father told me a lot about you," said Anita. But she did not smile or take the girl''s hand. Simbegwire''s father was happy and excited. He talked about the three of them living together,  and how good their life would be. "My child,  I hope you will accept Anita as your mother," he said.', NULL);
@@ -7305,7 +8871,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374', 2, 'Ape and Crocodile', 'assets/topic/asb/19079.png', 'Mulualem Daba
- Abraham Muzee', NULL);
+ Abraham Muzee', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374_3', 3, NULL, 'assets/topic/asb/19075.png', 'Once upon a time,  Crocodile was sitting near a big lake basking in the sun. Ape arrived at the water and they greeted each other.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374_4', 3, NULL, 'assets/topic/asb/19076.png', 'Ape asked where Crocodile lived. Crocodile answered,  "I live in the lake."  Ape was amazed. She asked Crocodile,  "How is life in the water? Is it good?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374_5', 3, NULL, 'assets/topic/asb/19077.png', 'Crocodile answered,  "Life in the water is good. Where do you live?" Ape answered,  "I live in the trees. I eat fruits and leaves. What do you eat?"', NULL);
@@ -7339,7 +8905,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342', 2, 'Hare tricks Elephant, again', 'assets/topic/asb/13000.png', 'Ursula Nafula
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_3', 3, NULL, 'assets/topic/asb/13000.png', 'Elephant and Hare were good friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_4', 3, NULL, 'assets/topic/asb/13001.png', 'They found grass and water for their animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_5', 3, NULL, 'assets/topic/asb/13002.png', 'They liked to play football.', NULL);
@@ -7378,7 +8944,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438', 2, 'Rabbit under the tree', 'assets/topic/asb/7610.png', 'Phumy Zikode
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_3', 3, NULL, 'assets/topic/asb/7595.png', 'Rabbit was sleeping under an apple tree. An apple fell down from a branch.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_4', 3, NULL, 'assets/topic/asb/7596.png', 'A voice said,  "Run Rabbit run!" She woke up quickly and ran away with great speed.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_5', 3, NULL, 'assets/topic/asb/7597.png', 'She met Chicken. "Why are you running?" asked Chicken. Rabbit replied, "I don''t know. I just heard something falling and a voice said,  ''Run Rabbit run!''"', NULL);
@@ -7412,7 +8978,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17533', 2, 'Hare the Trickster', 'assets/topic/asb/17187.png', 'Dan Kaasha
- Abraham Muzee', NULL);
+ Abraham Muzee', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17533_3', 3, NULL, 'assets/topic/asb/17185.png', 'One day,  Hare was out looking for food. He met Elephant,  who had a pot of honey. Hare asked Elephant,  "Please be kind and carry me. I am weak."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17533_4', 3, NULL, 'assets/topic/asb/17186.png', 'Elephant agreed to carry Hare. Hare got onto Elephant''s back and held on tightly. He started eating Elephant''s honey straight away!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17533_5', 3, NULL, 'assets/topic/asb/17187.png', 'Honey began dripping on Elephant''s back. When Elephant asked what it was,  Hare said that it was from his wound.', NULL);
@@ -7443,72 +9009,8 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418', 2, 'Hare and Hyena', 'assets/topic/asb/8138.png', 'Mutugi Kamundi
-Rob Owen', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_3', 3, NULL, 'assets/topic/asb/8135.png', 'Long time ago Hare and Hyena were great friends. They did many things together. They danced and sang together.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_4', 3, NULL, 'assets/topic/asb/8136.png', 'One day, Hare said, "My friend Hyena, let us start farming together and we will be rich." "Oh yes, we can plant a lot of food, harvest it, and sell it to others," Hyena said. "But what shall we plant?" asked Hare.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_5', 3, NULL, 'assets/topic/asb/8137.png', 'Hyena suggested that it was good to plant maize. Hare agreed. Hare also told Hyena that it was good for them to share duties on the farm. "My work will be guarding the maize from birds," said Hare. Then Hare told Hyena to till the land, plant, and weed.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_6', 3, NULL, 'assets/topic/asb/8138.png', 'Hyena complained that he had been given more work. But Hare said that the work of chasing birds was the most difficult and most important. "My work is not easy. I will be climbing trees and chasing birds away day and night. And you are not able to climb a tree," Hare explained.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_7', 3, NULL, 'assets/topic/asb/8139.png', 'Hyena was convinced by Hare''s words. He agreed to till the land alone. It was a lot of work. Hare did not help at all. After tilling the land, Hyena planted maize in the whole field, alone.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_8', 3, NULL, 'assets/topic/asb/8140.png', 'When weeds grew in the field, Hyena weeded. It was a lot of work. Hare sat on a rock singing: "My friend is a worker, I am his adviser. He works like a tractor,  I am his manager. The soil he toils, The hills he tills,  The seeds he plants, The weeds he cuts, The maize we harvest."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_9', 3, NULL, 'assets/topic/asb/8141.png', 'When the maize was almost ready, Hare enjoyed himself singing in the field to keep birds away. Chasing the birds was not a hard job. He did not sweat at all.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_10', 3, NULL, 'assets/topic/asb/8142.png', 'Finally, the maize was ready to harvest. Hare told Hyena that they would share the harvest between themselves. Hare said, "I will harvest everything that grows above the soil and you will harvest everything that grows below the soil." Hyena thought that it was a good idea.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_11', 3, NULL, 'assets/topic/asb/8143.png', 'Hare said, "I will first get my harvest then you will harvest yours." So Hare harvested all the maize in the field and put it in his store.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_12', 3, NULL, 'assets/topic/asb/8144.png', 'Hyena went to harvest things that grew below the soil. He dug, hoping to get a good harvest. But he only found roots under the soil. He dug everywhere. He did not find anything to harvest.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_13', 3, NULL, 'assets/topic/asb/8145.png', 'Hyena realised that he had been cheated. He was angry. He returned home carrying empty baskets. In the evening he went to Hare''s home very annoyed. He told Hare, "Let us now farm together again my friend."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_14', 3, NULL, 'assets/topic/asb/8146.png', 'Hyena told Hare, "This time I will harvest everything that grows above the ground and you will harvest everything that grows below the soil." Hare accepted. He told Hyena that instead of planting maize it was good to change the crop. They agreed to plant potatoes.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_15', 3, NULL, 'assets/topic/asb/8147.png', 'Hyena also insisted that this time they would both do the digging, planting and weeding. Hare accepted. So they worked on the farm together, singing.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_16', 3, NULL, 'assets/topic/asb/8148.png', 'When the potatoes were ready, Hare told Hyena to harvest what grows above the ground. Hyena went looking for something to harvest. But he did not find anything. He only found potato leaves. He went back home with empty baskets.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_17', 3, NULL, 'assets/topic/asb/8149.png', 'Hare harvested a lot of big potatoes. He put them in his store. When Hyena saw Hare''s harvest, he was annoyed. "Why did you cheat me?" Hyena asked Hare. Hare explained that it was Hyena himself who chose to harvest the things that grew above the soil.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_18', 3, NULL, 'assets/topic/asb/8150.png', 'Hyena was very angry. He chased after Hare in order to get revenge. But Hare ran away fast. Since that day,  Hare and Hyena have not been friends.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18418_19', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Hare and Hyena
-Author -
-Mutugi Kamundi
-Illustration -
-Rob Owen
-Language -
-English
-Level -
-Longer paragraphs
-© African Storybook Initiative 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610', 2, 'Hare and Hyena', 'assets/topic/asb/8138.png', 'Mutugi Kamundi
-Rob Owen', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_3', 3, NULL, 'assets/topic/asb/8135.png', 'Long time ago Hare and Hyena were great friends. They did many things together. They danced and sang together.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_4', 3, NULL, 'assets/topic/asb/8136.png', 'One day, Hare said, "My friend Hyena, let us start farming together and we will be rich." "Oh yes, we can plant a lot of food, harvest it, and sell it to others," Hyena said. "But what shall we plant?" asked Hare.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_5', 3, NULL, 'assets/topic/asb/8137.png', 'Hyena suggested that it was good to plant maize. Hare agreed. Hare also told Hyena that it was good for them to share duties on the farm. "My work will be guarding the maize from birds," said Hare. Then Hare told Hyena to till the land, plant, and weed.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_6', 3, NULL, 'assets/topic/asb/8138.png', 'Hyena complained that he had been given more work. But Hare said that the work of chasing birds was the most difficult and most important. "My work is not easy. I will be climbing trees and chasing birds away day and night. And you are not able to climb a tree," Hare explained.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_7', 3, NULL, 'assets/topic/asb/8139.png', 'Hyena was convinced by Hare''s words. He agreed to till the land alone. It was a lot of work. Hare did not help at all. After tilling the land, Hyena planted maize in the whole field, alone.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_8', 3, NULL, 'assets/topic/asb/8140.png', 'When weeds grew in the field, Hyena weeded. It was a lot of work. Hare sat on a rock singing: "My friend is a worker, I am his adviser. He works like a tractor,  I am his manager. The soil he toils, The hills he tills,  The seeds he plants, The weeds he cuts, The maize we harvest."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_9', 3, NULL, 'assets/topic/asb/8141.png', 'When the maize was almost ready, Hare enjoyed himself singing in the field to keep birds away. Chasing the birds was not a hard job. He did not sweat at all.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_10', 3, NULL, 'assets/topic/asb/8142.png', 'Finally, the maize was ready to harvest. Hare told Hyena that they would share the harvest between themselves. Hare said, "I will harvest everything that grows above the soil and you will harvest everything that grows below the soil." Hyena thought that it was a good idea.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_11', 3, NULL, 'assets/topic/asb/8143.png', 'Hare said, "I will first get my harvest then you will harvest yours." So Hare harvested all the maize in the field and put it in his store.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_12', 3, NULL, 'assets/topic/asb/8144.png', 'Hyena went to harvest things that grew below the soil. He dug, hoping to get a good harvest. But he only found roots under the soil. He dug everywhere. He did not find anything to harvest.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_13', 3, NULL, 'assets/topic/asb/8145.png', 'Hyena realised that he had been cheated. He was angry. He returned home carrying empty baskets. In the evening he went to Hare''s home very annoyed. He told Hare, "Let us now farm together again my friend."', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_14', 3, NULL, 'assets/topic/asb/8146.png', 'Hyena told Hare, "This time I will harvest everything that grows above the ground and you will harvest everything that grows below the soil." Hare accepted. He told Hyena that instead of planting maize it was good to change the crop. They agreed to plant potatoes.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_15', 3, NULL, 'assets/topic/asb/8147.png', 'Hyena also insisted that this time they would both do the digging, planting and weeding. Hare accepted. So they worked on the farm together, singing.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_16', 3, NULL, 'assets/topic/asb/8148.png', 'When the potatoes were ready, Hare told Hyena to harvest what grows above the ground. Hyena went looking for something to harvest. But he did not find anything. He only found potato leaves. He went back home with empty baskets.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_17', 3, NULL, 'assets/topic/asb/8149.png', 'Hare harvested a lot of big potatoes. He put them in his store. When Hyena saw Hare''s harvest, he was annoyed. "Why did you cheat me?" Hyena asked Hare. Hare explained that it was Hyena himself who chose to harvest the things that grew above the soil.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_18', 3, NULL, 'assets/topic/asb/8150.png', 'Hyena was very angry. He chased after Hare in order to get revenge. But Hare ran away fast. Since that day,  Hare and Hyena have not been friends.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15610_19', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Hare and Hyena
-Author -
-Mutugi Kamundi
-Illustration -
-Rob Owen
-Language -
-English
-Level -
-Longer paragraphs
-© African Storybook Initiative 2014
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21134', 2, 'Hare and Hyena', 'assets/topic/asb/8138.png', 'Mutugi Kamundi
-Rob Owen', NULL);
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21134_3', 3, NULL, 'assets/topic/asb/8135.png', 'Long time ago Hare and Hyena were great friends. They did many things together. They danced and sang together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21134_4', 3, NULL, 'assets/topic/asb/8136.png', 'One day, Hare said, "My friend Hyena, let us start farming together and we will be rich." "Oh yes, we can plant a lot of food, harvest it, and sell it to others," Hyena said. "But what shall we plant?" asked Hare.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21134_5', 3, NULL, 'assets/topic/asb/8137.png', 'Hyena suggested that it was good to plant maize. Hare agreed. Hare also told Hyena that it was good for them to share duties on the farm. "My work will be guarding the maize from birds," said Hare. Then Hare told Hyena to till the land, plant, and weed.', NULL);
@@ -7540,7 +9042,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3083', 2, 'Hare and Tortoise (Again!)', 'assets/topic/asb/2036.png', 'Venkatramana Gowda
- Padmanabha', NULL);
+ Padmanabha', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3083_3', 3, NULL, 'assets/topic/asb/2037.png', 'Do you remember the Great Race between the hare and the tortoise? For a long time,  no one in the entire animal kingdom could talk about anything but the Great Race and its two contestants.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3083_4', 3, NULL, 'assets/topic/asb/2038.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3083_5', 3, NULL, 'assets/topic/asb/2039.png', 'We all know that the rabbit was defeated because he was lazy and overconfident. We know that the tortoise won the race because he was slow and steady. The forest animals knew this too,  and continued to respect both creatures equally. Even the two competitors remained friends. The tortoise did not assume airs because he had won,  and the hare,  realising he had been defeated fair and square,  bore the tortoise no grudge.', NULL);
@@ -7573,7 +9075,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092', 2, 'Hare tricks Elephant, again', 'assets/topic/asb/13000.png', 'Ursula Nafula
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_3', 3, NULL, 'assets/topic/asb/13000.png', 'Elephant and Hare were good friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_4', 3, NULL, 'assets/topic/asb/13001.png', 'They found grass and water for their animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_5', 3, NULL, 'assets/topic/asb/13002.png', 'They liked to play football.', NULL);
@@ -7612,7 +9114,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16197', 2, 'Colours', 'assets/topic/asb/1926.png', 'Madhav Chavan
- Rijuta Ghate', NULL);
+ Rijuta Ghate', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16197_3', 3, NULL, 'assets/topic/asb/1242.png', 'Why is the sky blue?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16197_4', 3, NULL, 'assets/topic/asb/1243.png', 'It is not always blue. Is it?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16197_5', 3, NULL, 'assets/topic/asb/1917.png', 'Why are leaves green?', NULL);
@@ -7640,7 +9142,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631', 2, 'Tamara starts school', 'assets/topic/asb/25447.png', 'Soila Murianka
-Jacob Kono', NULL);
+Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631_3', 3, NULL, 'assets/topic/asb/25447.png', 'Tamara was a five-year-old girl who lived with her family.
 Their village was near a forest that had wild animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631_4', 3, NULL, 'assets/topic/asb/25448.png', 'Tamara was obedient to her parents.
@@ -7678,7 +9180,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003', 2, 'Shepherd and his best friend', 'assets/topic/asb/25050.png', 'Biniam  Asfaw
-Isaac Okwir', NULL);
+Isaac Okwir', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003_3', 3, NULL, 'assets/topic/asb/25047.png', 'Tarik was a Grade 4 student at Elementary School. The school was located in Menz district in the province of North Shoa, Ethiopia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003_4', 3, NULL, 'assets/topic/asb/25048.png', 'Tarik had a dog called Buchie. Where Buchie was, Tarik was there too. When Tarik''s mom gave Tarik food, he shared it with Buchie.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003_5', 3, NULL, 'assets/topic/asb/25049.png', 'Tarik and his classmate, Bedilu, were shepherds when they were not at school. One Saturday morning, Tarik and Bedilu were taking their flock to the town''s common grazing land.', NULL);
@@ -7708,7 +9210,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8713', 2, 'Nanu''s taxi', 'assets/topic/asb/7576.png', 'Marion Drew
-Marion Drew', NULL);
+Marion Drew', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8713_3', 3, NULL, 'assets/topic/asb/7560.png', 'Hello! My name is Nanu. I am waiting with my mother for a taxi. We are going home.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8713_4', 3, NULL, 'assets/topic/asb/7562.png', 'Here I am standing in line. My mother sings me a song. "Come Mr Taxi can''t you see? We are waiting,  Nanu and me!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8713_5', 3, NULL, 'assets/topic/asb/7563.png', 'The lady next to me is taking her chickens home. They will lay eggs for her to eat.', NULL);
@@ -7740,7 +9242,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24748', 2, 'Elephant and Hippo', 'assets/topic/asb/27134.png', 'Terkule Aorabee
-Awwalu  Sakiwa and Idowu Abayomi Oluwasegun', NULL);
+Awwalu  Sakiwa and Idowu Abayomi Oluwasegun', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24748_3', 3, NULL, 'assets/topic/asb/27133.png', 'There lived a set of twin brothers called Elephant and Hippo.
 One day, Fate came and gave them two choices. "Choose blindness or leprosy," Fate ordered.
 Hippo wanted to be clever. He quickly chose leprosy so as to keep using his eyes. Elephant chose blindness.', NULL);
@@ -7787,7 +9289,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23143', 2, 'A very tall man', 'assets/topic/asb/309.png', 'Cornelius Wambi Gulere
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23143_3', 3, NULL, 'assets/topic/asb/309.png', 'His hoe was too short.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23143_4', 3, NULL, 'assets/topic/asb/310.png', 'His doorway was too low.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23143_5', 3, NULL, 'assets/topic/asb/311.png', 'His bed was too short.', NULL);
@@ -7816,7 +9318,7 @@ www.africanstorybook.org
 Original source
 www.ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914', 2, 'The happy revival', 'assets/topic/asb/2462.png', 'Rebecca Njuguna
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_3', 3, NULL, 'assets/topic/asb/2463.png', 'For ages,  Olokwango hill stood smiling at the middle of Kwere plains. From the two dimples on its side came springs which converged downhill to form a river. River Temu meandered silently across the Kwere plains. Its waters were a gift to the sheep and goats of the area as well as the deer that dwelt in the plains.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_4', 3, NULL, 'assets/topic/asb/2464.png', 'Things were all well until Matata became headman. He ordered a path to be cleared from the top of the hill to the foot so that he could climb uphill easily and roll gently down to the foot. Olokwango hill was angry with the damage to his beard,  but he was patient.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_5', 3, NULL, 'assets/topic/asb/2465.png', 'During the weekend,  Matata''s children and their friends would climb uphill to play. They would run all over the place,  breaking twigs and branches,  lighting fires for their games,  which they would later leave burning.', NULL);
@@ -7839,7 +9341,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303', 2, 'Decision', 'assets/topic/asb/10625.png', 'Ursula Nafula
-Vusi Malindi', NULL);
+Vusi Malindi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_3', 3, NULL, 'assets/topic/asb/10609.png', 'My village had many problems. We made a long line to fetch water from one tap.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_4', 3, NULL, 'assets/topic/asb/10616.png', 'We waited for food donated by others.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_5', 3, NULL, 'assets/topic/asb/10614.png', 'We locked our houses early because of thieves.', NULL);
@@ -7873,7 +9375,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267', 2, 'Face', 'assets/topic/asb/26803.png', 'Little Zebra Books
-Sue  Beattie', NULL);
+Sue  Beattie', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_3', 3, NULL, 'assets/topic/asb/26807.png', 'Eyes', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_4', 3, NULL, 'assets/topic/asb/26808.png', 'Ears', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_5', 3, NULL, 'assets/topic/asb/26802.png', 'Mouth', NULL);
@@ -7899,7 +9401,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23156', 2, 'Ugali and Fish', 'assets/topic/asb/26863.png', 'African Storybook
-Ben Terarc', NULL);
+Ben Terarc', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23156_3', 3, NULL, 'assets/topic/asb/26864.png', 'Long ago, Ugali and Fish lived together in a village.
 They grew to become close friends.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23156_4', 3, NULL, 'assets/topic/asb/26865.png', 'One day, Fish asked Ugali to accompany him to the lake for a swim.
@@ -7930,7 +9432,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16210', 2, 'Nangila''s courage', 'assets/topic/asb/15103.png', 'Violet Otieno
-Vusi Malindi', NULL);
+Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16210_3', 3, NULL, 'assets/topic/asb/15103.png', 'Long ago,  there was a man who had a very serious wound on his leg. He could not stand or walk. This man lived in a village with his wife and their children.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16210_4', 3, NULL, 'assets/topic/asb/15104.png', 'The couple had three sons and one daughter. The daughter''s name was Nangila. Her duty was to take care of her father. The sons worked on the land and grazed animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16210_5', 3, NULL, 'assets/topic/asb/15105.png', 'Nangila was a beautiful girl. All the villagers liked and respected her. Her parents wanted a good husband for Nangila. They set a difficult task in order to find the right man.', NULL);
@@ -7961,7 +9463,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15614', 2, 'Porridge', 'assets/topic/asb/13256.png', 'Hlengiwe Zondi and Zimbili Dlamini
-Catherine Groenewald', NULL);
+Catherine Groenewald', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15614_3', 3, NULL, 'assets/topic/asb/7923.png', 'Zama is getting ready for school.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15614_4', 3, NULL, 'assets/topic/asb/7924.png', 'Dad is cooking porridge for breakfast.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15614_5', 3, NULL, 'assets/topic/asb/7925.png', '"Mom makes the best porridge!" says Zama.', NULL);
@@ -7991,7 +9493,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138', 2, 'Mulongo and the Ogre', 'assets/topic/asb/8114.png', 'Fabian Wakholi
- Natalie Propa', NULL);
+ Natalie Propa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138_3', 3, NULL, 'assets/topic/asb/8111.png', 'A long time ago,  there lived a man called Mulongo and his wife Nambuya. They had two children,  Mukhwana and Namono. There was a famine in the land where they lived. All the villagers,  including Mulongo and his family,  would leave their homes early to look for food in the forest.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138_4', 3, NULL, 'assets/topic/asb/8112.png', 'One day,  Mulongo,  his wife and children decided to go deep in the forest in search of something to eat. From morning to evening they looked for food but they found nothing. Nambuya urged her husband to go further into the forest. Mulongo led the way as Nambuya and the two children followed.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138_5', 3, NULL, 'assets/topic/asb/8113.png', 'Suddenly Mulongo saw a beautiful banana plantation. He called his wife and said,  "Is that not a banana plantation? I can see bananas and other food crops. I wonder whose it is." They moved on and soon saw a house in the middle of the plantation. They stopped,  looked in all directions,  but there was no one around. Because they were hungry and it was nearly night time,  they decided to sit and wait for the owner.', NULL);
@@ -8021,7 +9523,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033', 2, 'Disability is not inability', 'assets/topic/asb/10424.png', 'Agnes Mabururu
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_3', 3, NULL, 'assets/topic/asb/10419.png', 'This is Agnes. She is my teacher.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_4', 3, NULL, 'assets/topic/asb/10418.png', 'Agnes uses crutches to walk.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_5', 3, NULL, 'assets/topic/asb/10420.png', 'This is Metobo. He is my favourite radio DJ.', NULL);
@@ -8045,7 +9547,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18344', 2, 'Decision', 'assets/topic/asb/10625.png', 'Ursula Nafula
-Vusi Malindi', NULL);
+Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18344_3', 3, NULL, 'assets/topic/asb/10609.png', 'My village had many problems. We made a long line to fetch water from one tap.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18344_4', 3, NULL, 'assets/topic/asb/10616.png', 'We waited for food donated by others.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18344_5', 3, NULL, 'assets/topic/asb/10614.png', 'We locked our houses early because of thieves.', NULL);
@@ -8079,7 +9581,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864', 2, 'Palm tree', 'assets/topic/asb/9607.png', 'Simon Ipoo
-Rob Owen', NULL);
+Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864_3', 3, NULL, 'assets/topic/asb/9604.png', 'Let me tell you about the palm tree.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864_4', 3, NULL, 'assets/topic/asb/9605.png', 'This tree lives when everything else is dry.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864_5', 3, NULL, 'assets/topic/asb/9606.png', 'The shade from a palm tree is always cool.', NULL);
@@ -8104,38 +9606,8 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118', 2, 'Wind', 'assets/topic/asb/14101.png', 'Ursula Nafula
- Marion Drew', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_3', 3, NULL, 'assets/topic/asb/14102.png', 'The wind roars. It roars past our home.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_4', 3, NULL, 'assets/topic/asb/14103.png', 'The wind is powerful. It tears my kite from my hand.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_5', 3, NULL, 'assets/topic/asb/14104.png', 'I run after my kite. The wind blows me away from the kite!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_6', 3, NULL, 'assets/topic/asb/14105.png', 'The wind becomes a tornado. It carries my kite higher and higher.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_7', 3, NULL, 'assets/topic/asb/14106.png', 'The tornado swallows me up! I see nothing,  I touch nothing.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_8', 3, NULL, 'assets/topic/asb/14107.png', 'Where is my kite now? Perhaps it is caught in a tree.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_9', 3, NULL, 'assets/topic/asb/14108.png', 'Perhaps my kite is still flying in the sky.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_10', 3, NULL, 'assets/topic/asb/14109.png', 'The wind finally dies down. I am still spinning.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_11', 3, NULL, 'assets/topic/asb/14110.png', 'When I stop spinning I look around. Where did the wind go?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_12', 3, NULL, 'assets/topic/asb/14111.png', 'I cannot see my kite anywhere. I cannot hear the wind anymore.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_13', 3, NULL, 'assets/topic/asb/14112.png', 'Perhaps tomorrow I will find my kite.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_14', 3, NULL, 'assets/topic/asb/14101.png', 'Now,  I must go home,  before the wind starts to roar again.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14118_15', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
-Wind
-Author -
-Ursula Nafula
-Adaptation -
-Ursula Nafula
-Illustration -
-Marion Drew
-Language -
-English
-Level -
-First sentences
-© African Storybook Initiative 2015
-Creative Commons: Attribution 4.0
-Source
-www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345', 2, 'Wind', 'assets/topic/asb/14101.png', 'Ursula Nafula
- Marion Drew', NULL);
+ Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_3', 3, NULL, 'assets/topic/asb/14102.png', 'The wind roars. It roars past our home.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_4', 3, NULL, 'assets/topic/asb/14103.png', 'The wind is powerful. It tears my kite from my hand.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_5', 3, NULL, 'assets/topic/asb/14104.png', 'I run after my kite. The wind blows me away from the kite!', NULL);
@@ -8165,7 +9637,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572', 2, 'Magical rainbow river', 'assets/topic/asb/26828.png', 'Mimi  Werna
-Edwin  Irabor', NULL);
+Edwin  Irabor', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572_3', 3, NULL, 'assets/topic/asb/26491.png', 'Three siblings, Udoo, Erdoo and Eryum listened to the music of the rain. They wanted to dance in it. They wanted to touch the rainbow that arrived in the sky. Mother said, "No."
 They cried, hoping to change her mind. It didn''t work. Eryum even tried to sneak out of the house to visit the rainbow.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572_4', 3, NULL, 'assets/topic/asb/26492.png', 'Mother caught him before he could go. She raised her voice so that Eryum and his sisters would hear too.
@@ -8207,7 +9679,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23751', 2, 'Frog and Snake', 'assets/topic/asb/18784.png', 'John Emongot
- Rob Owen', NULL);
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23751_3', 3, NULL, 'assets/topic/asb/18783.png', 'Once upon a time, Frog and Snake were good friends. Their homes were near each other and their children played together.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23751_4', 3, NULL, 'assets/topic/asb/18784.png', 'One day,  Frog said to Snake, "My friend I want to visit my mother next week. Would you like to go with me?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23751_5', 3, NULL, 'assets/topic/asb/25000.png', '"I would be happy to go," Snake answered.
@@ -8244,7 +9716,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937', 2, 'Father''s inheritance', 'assets/topic/asb/17228.png', 'Lemu Wachile
-Jacob Kono', NULL);
+Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_3', 3, NULL, 'assets/topic/asb/17218.png', 'Once upon a time,  there was a hardworking farmer. He had a hardworking wife,  and two sons.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_4', 3, NULL, 'assets/topic/asb/17219.png', 'He had enough food because he and his wife worked very hard. He wanted his children to have a good life. He never let them do any work.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_5', 3, NULL, 'assets/topic/asb/17220.png', 'After some time,  his wife died.', NULL);
@@ -8274,7 +9746,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816', 2, 'Unwise judge', 'assets/topic/asb/17057.png', 'Magabi Eynew Gessesse
-Brian Wambi', NULL);
+Brian Wambi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816_3', 3, NULL, 'assets/topic/asb/17050.png', 'There were two poor neighbours who were friends,  Meseret and Demeke. One day,  Meseret said to Demeke,  "I must take my barley to the market today. The sack is very heavy,  and the market is far away. I wish I had enough money to buy a donkey."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816_4', 3, NULL, 'assets/topic/asb/17052.png', 'Demeke nodded and said,  "And I must buy some new pots at the market today. They will be very heavy. I wish I had a donkey,  too. I only have half the money."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816_5', 3, NULL, 'assets/topic/asb/17053.png', 'Meseret had an idea. "Let''s buy a donkey together. You can pay half and I will pay half. One week,  I will take the donkey to the market,  and the next week,  you can take it." Meseret and Demeke bought a donkey. For a long time they were both happy.', NULL);
@@ -8312,7 +9784,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690', 2, 'How night came to Opio''s village', 'assets/topic/asb/1130.png', 'Robert Ekuka
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_3', 3, NULL, 'assets/topic/asb/1131.png', 'Long ago,  there was no night in Opio''s village. People slept when they were tired and worked when they were awake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_4', 3, NULL, 'assets/topic/asb/1132.png', 'One day Opio went out hunting with his dogs. After a short time,  his dogs started to chase an antelope. Opio followed them. He ran for many hours. Every time he became tired,  he rested. Then he would run again. But he could not find his dogs.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_5', 3, NULL, 'assets/topic/asb/1133.png', 'After many days,  he came to a village. He went to one of the houses and said to the owner,  "I have chased an antelope for a long time and I am very tired. I want to rest." The man said,  "Sit down and rest. Would you like some beer?" Opio was very thirsty so he drank some. Then he went to sleep.', NULL);
@@ -8338,7 +9810,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29975', 2, 'Face', 'assets/topic/asb/26803.png', 'Little Zebra Books
-Sue  Beattie', NULL);
+Sue  Beattie', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29975_3', 3, NULL, 'assets/topic/asb/26807.png', 'Eyes', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29975_4', 3, NULL, 'assets/topic/asb/26808.png', 'Ears', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('29975_5', 3, NULL, 'assets/topic/asb/26802.png', 'Mouth', NULL);
@@ -8364,7 +9836,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22067', 2, 'Disagreement among occupations', 'assets/topic/asb/10274.png', 'Beatrice Inzikuru
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22067_3', 3, NULL, 'assets/topic/asb/10274.png', 'In a village there was a disagreement among people of different occupations. Everyone thought their work was the most important!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22067_4', 3, NULL, 'assets/topic/asb/10278.png', 'The teacher said that he had the most important occupation. "Without teachers you could not go to school and learn."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22067_5', 3, NULL, 'assets/topic/asb/10276.png', 'The builder said that he had the most important occupation. "Without builders you would not have schools to learn in or houses to sleep in."', NULL);
@@ -8388,7 +9860,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2611', 2, 'Vayu, the wind', 'assets/topic/asb/2442.png', 'Madhuri Pai
-Rijuta Ghate', NULL);
+Rijuta Ghate', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2611_3', 3, NULL, 'assets/topic/asb/2443.png', 'I finish my hot,  hot bath. My wet body feels so cool,  cool,  cool.  What makes that happen? Vayu,  the wind!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2611_4', 3, NULL, 'assets/topic/asb/2444.png', 'The milk in my cup is too hot. But soon it is ready for me to sip. Who makes that happen? Vayu,  the wind!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2611_5', 3, NULL, 'assets/topic/asb/2445.png', 'The window curtains flutter and gently brush my face. Who makes it happen? Vayu,  the wind!', NULL);
@@ -8416,7 +9888,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440', 2, 'My first pair of shoes', 'assets/topic/asb/9500.png', 'Ursula Nafula
-Rob Owen', NULL);
+Rob Owen', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_3', 3, NULL, 'assets/topic/asb/9494.png', 'I had never worn shoes before. When I saw children wearing nice shoes,  I would look at them with longing.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_4', 3, NULL, 'assets/topic/asb/9492.png', 'My mother would say,  "You will have many pairs in the future,  just wait!" Sometimes I did not believe her. "When is the future?" I asked her one day.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_5', 3, NULL, 'assets/topic/asb/9493.png', 'Time passed and it was nearly Christmas. Everybody was busy going to the market and coming back with bags of new things. "Mother,  are we going to the market?" I asked her.', NULL);
@@ -8446,7 +9918,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135', 2, 'Things I know', 'assets/topic/asb/2550.png', 'Ursula Nafula
-Michael Nakuwa', NULL);
+Michael Nakuwa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_3', 3, NULL, 'assets/topic/asb/2551.png', 'This is a manyatta. It is my home. My home is in Turkana County.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_4', 3, NULL, 'assets/topic/asb/2552.png', 'This is a camel. In Turkana County people keep many different animals. But the camel is very important.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_5', 3, NULL, 'assets/topic/asb/2553.png', 'These are my teachers. I like going to school. My school is called Lolupe Primary School. I like my Art teacher very much.', NULL);
@@ -8472,7 +9944,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314', 2, 'The adventures of Supercow', 'assets/topic/asb/858.png', 'Danielle Bruckert
-Danielle Bruckert', NULL);
+Danielle Bruckert', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_3', 3, NULL, 'assets/topic/asb/859.png', 'This is cow. Cow is cool!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_4', 3, NULL, 'assets/topic/asb/860.png', 'By day,  it is an ordinary cow.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_5', 3, NULL, 'assets/topic/asb/861.png', 'Flying a kite.', NULL);
@@ -8500,7 +9972,7 @@ www.africanstorybook.org
 Original source
 http://freekidsbooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637', 2, 'Big blue bus', 'assets/topic/asb/11446.png', 'Mecelin Kakoro
-Mango Tree', NULL);
+Mango Tree', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637_3', 3, NULL, 'assets/topic/asb/11446.png', 'There was only one bus in Ebei''s village. It was big and blue. It was very noisy.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637_4', 3, NULL, 'assets/topic/asb/11447.png', '"Tomorrow we will go to town," said Ebei''s mother. "We will buy your school uniform."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637_5', 3, NULL, 'assets/topic/asb/11448.png', 'Ebei was very excited. They would travel in the big blue bus. He could not sleep that night.', NULL);
@@ -8532,7 +10004,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22533', 2, 'Skillful musicians', 'assets/topic/asb/25963.png', 'Athieno Gertrude and Owino Ogot
-Salim Kasamba', NULL);
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22533_3', 3, NULL, 'assets/topic/asb/25955.png', 'Bul, Fumbo, Teke, Tongoli, Milege, Sos and Gwara were great friends. They also produced good music. They lived at the foot of faraway hills.
 All of them were skilful musicians. Everyone enjoyed listening to their melodies and dancing to their rhythms!
 These skillful musicians wanted to choose a leader. The greatest among them would be their king.', NULL);
@@ -8566,7 +10038,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19384', 2, 'Grateful animals', 'assets/topic/asb/17299.png', 'Mariam Mohammed
-Rob Owen', NULL);
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19384_3', 3, NULL, 'assets/topic/asb/17289.png', 'Once upon a time,  a man and five animals were going to war together. They traveled all day until the sun went down. "Where are we going to sleep?" asked Donkey. "Look,  there''s a hut. We can sleep there," said Puff Adder.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19384_4', 3, NULL, 'assets/topic/asb/17290.png', 'They went to the hut and called. A man and a woman came out. "You''re welcome to sleep here,  but we don''t have food for you," said the man. "What about the cow outside your house?" asked Dog.  "It''s the only thing we have. If we kill it,  we''ll have nothing." The wife said.  Man said,  "We will all reward you. Please kill the cow for us."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19384_5', 3, NULL, 'assets/topic/asb/17291.png', '"If you give me its blood,  I''ll repay you," said Lion. "I want the bones," said Dog,  "and I''ll reward you." "Give me the fat,  you won''t be sorry" said Puff Adder. "I want the meat under the skin. I''ll reward you," said Eagle. "Let me have the milk," the man said. "I''ll give you something wonderful one day." "I don''t want meat. Give me some grass from your roof," Donkey said.', NULL);
@@ -8600,7 +10072,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681', 2, 'Look at the animals', 'assets/topic/asb/1747.png', 'Jenny Katz
- Sandy Campbell', NULL);
+ Sandy Campbell', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_3', 3, NULL, 'assets/topic/asb/1749.png', 'Look at the animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_4', 3, NULL, 'assets/topic/asb/1750.png', 'The cow says, "Moo."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_5', 3, NULL, 'assets/topic/asb/1751.png', 'The goat says, "Meh,  meh."', NULL);
@@ -8626,7 +10098,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074', 2, 'Old rooster', 'assets/topic/asb/8524.png', 'Cissy Kiwanuka Luyiga
-Magriet Brink', NULL);
+Magriet Brink', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_3', 3, NULL, 'assets/topic/asb/8517.png', 'Once upon a time there was an old woman who lived alone. She had many chickens. Among them was a rooster that was very old and could no longer crow.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_4', 3, NULL, 'assets/topic/asb/8518.png', 'One day the old woman''s grandson visited. She was very happy to see him. She asked the young man to catch the old rooster so they could cook and eat it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_5', 3, NULL, 'assets/topic/asb/8519.png', 'The old rooster heard the woman talking and its heart sank. "Aaiii,  you are also very old but I don''t see anyone trying to kill you,  we will see!" So the old rooster sneaked away and decided to head for the big city to start singing.', NULL);
@@ -8654,7 +10126,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130', 2, 'Maguru gives legs', 'assets/topic/asb/13910.png', 'Mutugi Kamundi
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130_3', 3, NULL, 'assets/topic/asb/13904.png', 'Long time ago, animals had no legs.
 They all used to crawl.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130_4', 3, NULL, 'assets/topic/asb/13905.png', 'Only people had legs, which Maguru gave to them.', NULL);
@@ -8699,7 +10171,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407', 2, 'Old rooster', 'assets/topic/asb/8524.png', 'Cissy Kiwanuka Luyiga
-Magriet Brink', NULL);
+Magriet Brink', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_3', 3, NULL, 'assets/topic/asb/8517.png', 'Once upon a time there was an old woman who lived alone. She had many chickens. Among them was a rooster that was very old and could no longer crow.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_4', 3, NULL, 'assets/topic/asb/8518.png', 'One day the old woman''s grandson visited. She was very happy to see him. She asked the young man to catch the old rooster so they could cook and eat it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_5', 3, NULL, 'assets/topic/asb/8519.png', 'The old rooster heard the woman talking and its heart sank. "Aaiii,  you are also very old but I don''t see anyone trying to kill you,  we will see!" So the old rooster sneaked away and decided to head for the big city to start singing.', NULL);
@@ -8727,7 +10199,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758', 2, 'Where is my bat?', 'assets/topic/asb/1556.png', 'Madhav Chavan
-Rijuta Ghate', NULL);
+Rijuta Ghate', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_3', 3, NULL, 'assets/topic/asb/1557.png', 'I have lost my bat,  and I cannot find it.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_4', 3, NULL, 'assets/topic/asb/1558.png', 'I looked behind the door. It was not there.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_5', 3, NULL, 'assets/topic/asb/1559.png', 'I looked for it on the shelf. I could not find it there.', NULL);
@@ -8753,7 +10225,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1970', 2, 'Where is my cat?', 'assets/topic/asb/1565.png', 'Clare Verbeek
-Bronwen Heath', NULL);
+Bronwen Heath', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1970_3', 3, NULL, 'assets/topic/asb/1565.png', 'Where is my cat?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1970_4', 3, NULL, 'assets/topic/asb/1822.png', 'Is it under the bed?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1970_5', 3, NULL, 'assets/topic/asb/1566.png', 'Is it on top of the cupboard?', NULL);
@@ -8779,7 +10251,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479', 2, 'Look at the animals', 'assets/topic/asb/1747.png', 'Jenny Katz
- Sandy Campbell', NULL);
+ Sandy Campbell', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_3', 3, NULL, 'assets/topic/asb/1749.png', 'Look at the animals.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_4', 3, NULL, 'assets/topic/asb/1750.png', 'The cow says, "Moo."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_5', 3, NULL, 'assets/topic/asb/1751.png', 'The goat says, "Meh,  meh."', NULL);
@@ -8805,7 +10277,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505', 2, 'Children of wax', 'assets/topic/asb/1295.png', 'Southern African Folktale
- Wiehan de Jager', NULL);
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_3', 3, NULL, 'assets/topic/asb/1296.png', 'Once upon a time, there lived a happy family.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_4', 3, NULL, 'assets/topic/asb/1297.png', 'The children never fought with each other. They helped their parents at home and in the fields.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_5', 3, NULL, 'assets/topic/asb/1298.png', 'But they were not allowed to go near a fire.', NULL);
@@ -8833,7 +10305,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746', 2, 'People who forgot', 'assets/topic/asb/27234.png', 'Edwin  Irabor
-Edwin  Irabor', NULL);
+Edwin  Irabor', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746_3', 3, NULL, 'assets/topic/asb/27230.png', 'Once upon a time, there was a village called Izagodo. All the people in this village were very young.
 There was not a single old man or old woman in the village.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746_4', 3, NULL, 'assets/topic/asb/27231.png', 'The young men and women of Izagodo danced and had fun. They ate what they liked and drank anything that made them drunk. They had fun all day and all night.
@@ -8874,7 +10346,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814', 2, 'Baby who cried', 'assets/topic/asb/10483.png', 'Ursula Nafula
-Wiehan de Jager', NULL);
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814_3', 3, NULL, 'assets/topic/asb/10477.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814_4', 3, NULL, 'assets/topic/asb/10478.png', NULL, NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814_5', 3, NULL, 'assets/topic/asb/10479.png', NULL, NULL);
@@ -8898,7 +10370,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111', 2, 'Sisanda''s gift', 'assets/topic/asb/17355.png', 'Gcina Mhlophe
-Jiggs Snaddon-Wood', NULL);
+Jiggs Snaddon-Wood', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111_3', 3, NULL, 'assets/topic/asb/17354.png', 'Every day when eight-year-old Sisanda gets home from school,  she changes out of her uniform,  eats her lunch and plays a game of umlabalaba with her grandfather. They have so much fun flying their "cows" around the board that she doesn''t want to stop. But then he reminds her that she wants to become a bank manager one day when she grows up.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111_4', 3, NULL, NULL, '"How will you do that if you don''t go to high school?" jokes her grandfather. Sisanda just laughs. "I will go to high school and university too. That''s why I work so hard at school!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111_5', 3, NULL, NULL, 'Sisanda is quite tall for her age − she takes after her father. Her round face and beautiful smile are her mother''s. Both her parents get up early each morning to go to work at the game reserve close by. By the time Sisanda and her friends start school,  coachloads of tourists are already arriving to spot Africa''s finest animals.', NULL);
@@ -8941,6 +10413,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 8, '24752_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 9, '24752_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 10, '24752_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 11, '24752_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 12, '24752_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 13, '24752_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 14, '24752_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 15, '24752_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24752', 16, '24752_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 1, '8074_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 2, '8074_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 3, '8074_5');
@@ -8954,6 +10431,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 10, '8074_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 11, '8074_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 12, '8074_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 13, '8074_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 14, '8074_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 15, '8074_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 16, '8074_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 17, '8074_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8074', 18, '8074_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 1, '15403_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 2, '15403_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 3, '15403_5');
@@ -8967,6 +10449,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 10, '15403_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 11, '15403_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 12, '15403_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 13, '15403_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 14, '15403_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 15, '15403_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 16, '15403_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 17, '15403_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15403', 18, '15403_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 1, '18218_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 2, '18218_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 3, '18218_5');
@@ -8981,6 +10468,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 11, '18218_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 12, '18218_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 13, '18218_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 14, '18218_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 15, '18218_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 16, '18218_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 17, '18218_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 18, '18218_28');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18218', 19, '18218_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 1, '12925_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 2, '12925_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 3, '12925_5');
@@ -8998,6 +10490,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 14, '12925_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 15, '12925_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 16, '12925_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 17, '12925_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 18, '12925_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 19, '12925_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 20, '12925_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 21, '12925_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12925', 22, '12925_34');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 1, '10555_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 2, '10555_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 3, '10555_5');
@@ -9007,6 +10504,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 6, '10555_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 7, '10555_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 8, '10555_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 9, '10555_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 10, '10555_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 11, '10555_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 12, '10555_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 13, '10555_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10555', 14, '10555_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 1, '19094_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 2, '19094_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 3, '19094_5');
@@ -9020,6 +10522,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 10, '19094_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 11, '19094_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 12, '19094_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 13, '19094_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 14, '19094_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 15, '19094_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 16, '19094_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 17, '19094_31');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19094', 18, '19094_36');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 1, '15862_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 2, '15862_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 3, '15862_5');
@@ -9033,6 +10540,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 10, '15862_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 11, '15862_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 12, '15862_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 13, '15862_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 14, '15862_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 15, '15862_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 16, '15862_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 17, '15862_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15862', 18, '15862_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 1, '22560_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 2, '22560_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 3, '22560_5');
@@ -9046,6 +10558,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 10, '22560_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 11, '22560_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 12, '22560_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 13, '22560_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 14, '22560_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 15, '22560_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 16, '22560_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22560', 17, '22560_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 1, '23908_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 2, '23908_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 3, '23908_5');
@@ -9057,6 +10573,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 8, '23908_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 9, '23908_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 10, '23908_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 11, '23908_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 12, '23908_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 13, '23908_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 14, '23908_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23908', 15, '23908_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 1, '1978_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 2, '1978_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 3, '1978_5');
@@ -9070,6 +10590,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 10, '1978_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 11, '1978_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 12, '1978_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 13, '1978_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 14, '1978_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 15, '1978_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 16, '1978_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('1978', 17, '1978_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 1, '2234_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 2, '2234_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 3, '2234_5');
@@ -9077,6 +10601,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 4, '2234_6');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 5, '2234_7');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 6, '2234_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 7, '2234_9');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 8, '2234_10');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 9, '2234_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 10, '2234_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2234', 11, '2234_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 1, '22000_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 2, '22000_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 3, '22000_5');
@@ -9089,6 +10617,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 9, '22000_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 10, '22000_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 11, '22000_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 12, '22000_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 13, '22000_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 14, '22000_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 15, '22000_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22000', 16, '22000_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 1, '21995_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 2, '21995_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 3, '21995_5');
@@ -9102,19 +10634,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 10, '21995_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 11, '21995_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 12, '21995_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 13, '21995_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 1, '1017_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 2, '1017_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 3, '1017_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 4, '1017_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 5, '1017_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 6, '1017_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 7, '1017_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 8, '1017_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 9, '1017_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('1017', 10, '1017_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('2305', 1, '2305_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('2305', 2, '2305_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('2305', 3, '2305_5');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 14, '21995_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 15, '21995_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 16, '21995_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21995', 17, '21995_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 1, '22806_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 2, '22806_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 3, '22806_5');
@@ -9124,6 +10647,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 6, '22806_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 7, '22806_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 8, '22806_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 9, '22806_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 10, '22806_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 11, '22806_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 12, '22806_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 13, '22806_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22806', 14, '22806_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 1, '21817_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 2, '21817_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 3, '21817_5');
@@ -9137,6 +10665,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 10, '21817_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 11, '21817_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 12, '21817_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 13, '21817_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 14, '21817_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 15, '21817_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 16, '21817_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21817', 17, '21817_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 1, '24734_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 2, '24734_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 3, '24734_5');
@@ -9150,6 +10682,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 10, '24734_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 11, '24734_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 12, '24734_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 13, '24734_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 14, '24734_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 15, '24734_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 16, '24734_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 17, '24734_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24734', 18, '24734_28');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 1, '30269_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 2, '30269_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 3, '30269_5');
@@ -9162,6 +10699,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 9, '30269_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 10, '30269_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 11, '30269_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 12, '30269_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 13, '30269_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 14, '30269_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 15, '30269_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30269', 16, '30269_28');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 1, '31354_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 2, '31354_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 3, '31354_5');
@@ -9173,11 +10714,19 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 8, '31354_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 9, '31354_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 10, '31354_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 11, '31354_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 12, '31354_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 13, '31354_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 14, '31354_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31354', 15, '31354_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 1, '21143_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 2, '21143_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 3, '21143_5');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 4, '21143_6');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 5, '21143_7');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 6, '21143_8');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 7, '21143_9');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 8, '21143_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21143', 9, '21143_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 1, '2830_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 2, '2830_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 3, '2830_5');
@@ -9190,6 +10739,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 9, '2830_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 10, '2830_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 11, '2830_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 12, '2830_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 13, '2830_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 14, '2830_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 15, '2830_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 16, '2830_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2830', 17, '2830_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 1, '2912_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 2, '2912_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 3, '2912_5');
@@ -9199,6 +10753,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 6, '2912_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 7, '2912_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 8, '2912_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 9, '2912_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 10, '2912_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 11, '2912_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 12, '2912_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2912', 13, '2912_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 1, '2526_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 2, '2526_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 3, '2526_5');
@@ -9218,6 +10776,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 16, '2526_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 17, '2526_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 18, '2526_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 19, '2526_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 20, '2526_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 21, '2526_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 22, '2526_28');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2526', 23, '2526_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 1, '12428_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 2, '12428_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 3, '12428_5');
@@ -9235,6 +10797,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 14, '12428_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 15, '12428_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 16, '12428_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 17, '12428_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 18, '12428_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 19, '12428_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 20, '12428_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12428', 21, '12428_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 1, '14419_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 2, '14419_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 3, '14419_5');
@@ -9248,6 +10814,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 10, '14419_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 11, '14419_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 12, '14419_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 13, '14419_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 14, '14419_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 15, '14419_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 16, '14419_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14419', 17, '14419_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 1, '21610_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 2, '21610_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 3, '21610_5');
@@ -9262,6 +10832,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 11, '21610_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 12, '21610_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 13, '21610_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 14, '21610_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 15, '21610_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 16, '21610_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 17, '21610_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21610', 18, '21610_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 1, '31503_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 2, '31503_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 3, '31503_5');
@@ -9274,6 +10848,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 9, '31503_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 10, '31503_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 11, '31503_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 12, '31503_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 13, '31503_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 14, '31503_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 15, '31503_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('31503', 16, '31503_24');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 1, '19110_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 2, '19110_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 3, '19110_5');
@@ -9287,19 +10865,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 10, '19110_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 11, '19110_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 12, '19110_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 13, '19110_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 1, '21129_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 2, '21129_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 3, '21129_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 4, '21129_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 5, '21129_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 6, '21129_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 7, '21129_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 8, '21129_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 9, '21129_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 10, '21129_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 11, '21129_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 12, '21129_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21129', 13, '21129_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 14, '19110_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 15, '19110_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 16, '19110_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19110', 17, '19110_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 1, '20431_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 2, '20431_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 3, '20431_5');
@@ -9313,6 +10882,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 10, '20431_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 11, '20431_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 12, '20431_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 13, '20431_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 14, '20431_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 15, '20431_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 16, '20431_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20431', 17, '20431_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 1, '12899_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 2, '12899_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 3, '12899_5');
@@ -9330,6 +10903,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 14, '12899_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 15, '12899_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 16, '12899_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 17, '12899_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 18, '12899_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 19, '12899_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 20, '12899_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12899', 21, '12899_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 1, '18417_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 2, '18417_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 3, '18417_5');
@@ -9347,6 +10924,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 14, '18417_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 15, '18417_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 16, '18417_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 17, '18417_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 18, '18417_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 19, '18417_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 20, '18417_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 21, '18417_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18417', 22, '18417_34');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 1, '22084_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 2, '22084_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 3, '22084_5');
@@ -9359,20 +10941,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 9, '22084_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 10, '22084_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 11, '22084_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 12, '22084_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 1, '21148_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 2, '21148_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 3, '21148_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 4, '21148_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 5, '21148_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 6, '21148_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 7, '21148_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 8, '21148_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 9, '21148_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 10, '21148_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 11, '21148_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 12, '21148_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 13, '21148_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21148', 14, '21148_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 13, '22084_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 14, '22084_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 15, '22084_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22084', 16, '22084_24');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 1, '20434_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 2, '20434_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 3, '20434_5');
@@ -9390,6 +10962,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 14, '20434_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 15, '20434_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 16, '20434_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 17, '20434_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 18, '20434_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 19, '20434_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 20, '20434_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20434', 21, '20434_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 1, '22086_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 2, '22086_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 3, '22086_5');
@@ -9403,6 +10979,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 10, '22086_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 11, '22086_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 12, '22086_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 13, '22086_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 14, '22086_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 15, '22086_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 16, '22086_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22086', 17, '22086_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 1, '10680_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 2, '10680_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 3, '10680_5');
@@ -9435,6 +11015,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 29, '10680_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 30, '10680_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 31, '10680_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 32, '10680_34');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 33, '10680_35');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 34, '10680_36');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 35, '10680_41');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10680', 36, '10680_46');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 1, '21445_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 2, '21445_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 3, '21445_5');
@@ -9444,6 +11028,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 6, '21445_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 7, '21445_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 8, '21445_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 9, '21445_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 10, '21445_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 11, '21445_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 12, '21445_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21445', 13, '21445_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 1, '30807_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 2, '30807_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 3, '30807_5');
@@ -9453,6 +11041,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 6, '30807_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 7, '30807_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 8, '30807_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 9, '30807_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 10, '30807_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 11, '30807_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 12, '30807_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30807', 13, '30807_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 1, '30271_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 2, '30271_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 3, '30271_5');
@@ -9465,7 +11057,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 9, '30271_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 10, '30271_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 11, '30271_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 12, '30271_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('7651', 1, '7651_3');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 13, '30271_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 14, '30271_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 15, '30271_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('30271', 16, '30271_28');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 1, '15612_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 2, '15612_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 3, '15612_5');
@@ -9479,6 +11074,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 10, '15612_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 11, '15612_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 12, '15612_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 13, '15612_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 14, '15612_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 15, '15612_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 16, '15612_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15612', 17, '15612_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 1, '21985_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 2, '21985_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 3, '21985_5');
@@ -9496,6 +11095,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 14, '21985_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 15, '21985_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 16, '21985_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 17, '21985_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 18, '21985_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 19, '21985_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 20, '21985_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21985', 21, '21985_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 1, '21998_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 2, '21998_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 3, '21998_5');
@@ -9505,6 +11108,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 6, '21998_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 7, '21998_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 8, '21998_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 9, '21998_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 10, '21998_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 11, '21998_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 12, '21998_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21998', 13, '21998_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 1, '15613_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 2, '15613_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 3, '15613_5');
@@ -9522,6 +11129,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 14, '15613_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 15, '15613_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 16, '15613_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 17, '15613_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 18, '15613_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 19, '15613_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 20, '15613_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15613', 21, '15613_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 1, '8698_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 2, '8698_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 3, '8698_5');
@@ -9535,6 +11146,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 10, '8698_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 11, '8698_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 12, '8698_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 13, '8698_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 14, '8698_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 15, '8698_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 16, '8698_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8698', 17, '8698_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 1, '19193_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 2, '19193_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 3, '19193_5');
@@ -9544,6 +11159,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 6, '19193_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 7, '19193_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 8, '19193_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 9, '19193_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 10, '19193_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 11, '19193_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 12, '19193_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19193', 13, '19193_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 1, '16199_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 2, '16199_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 3, '16199_5');
@@ -9557,6 +11176,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 10, '16199_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 11, '16199_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 12, '16199_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 13, '16199_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 14, '16199_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 15, '16199_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 16, '16199_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16199', 17, '16199_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 1, '9911_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 2, '9911_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 3, '9911_5');
@@ -9568,6 +11191,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 8, '9911_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 9, '9911_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 10, '9911_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 11, '9911_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 12, '9911_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 13, '9911_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 14, '9911_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 15, '9911_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('9911', 16, '9911_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 1, '23107_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 2, '23107_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 3, '23107_5');
@@ -9585,6 +11213,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 14, '23107_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 15, '23107_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 16, '23107_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 17, '23107_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 18, '23107_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 19, '23107_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 20, '23107_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23107', 21, '23107_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 1, '17135_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 2, '17135_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 3, '17135_5');
@@ -9606,6 +11238,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 18, '17135_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 19, '17135_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 20, '17135_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 21, '17135_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 22, '17135_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 23, '17135_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 24, '17135_30');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17135', 25, '17135_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 1, '8040_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 2, '8040_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 3, '8040_5');
@@ -9615,18 +11251,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 6, '8040_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 7, '8040_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 8, '8040_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 9, '8040_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 1, '30266_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 2, '30266_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 3, '30266_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 4, '30266_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 5, '30266_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 6, '30266_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 7, '30266_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 8, '30266_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 9, '30266_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 10, '30266_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 11, '30266_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30266', 12, '30266_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 10, '8040_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 11, '8040_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 12, '8040_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8040', 13, '8040_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 1, '19386_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 2, '19386_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 3, '19386_5');
@@ -9644,6 +11272,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 14, '19386_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 15, '19386_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 16, '19386_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 17, '19386_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 18, '19386_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 19, '19386_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 20, '19386_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19386', 21, '19386_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 1, '21838_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 2, '21838_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 3, '21838_5');
@@ -9657,6 +11289,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 10, '21838_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 11, '21838_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 12, '21838_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 13, '21838_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 14, '21838_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 15, '21838_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 16, '21838_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21838', 17, '21838_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 1, '12609_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 2, '12609_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 3, '12609_5');
@@ -9666,6 +11302,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 6, '12609_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 7, '12609_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 8, '12609_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 9, '12609_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 10, '12609_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 11, '12609_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 12, '12609_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12609', 13, '12609_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 1, '20439_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 2, '20439_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 3, '20439_5');
@@ -9679,6 +11319,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 10, '20439_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 11, '20439_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 12, '20439_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 13, '20439_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 14, '20439_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 15, '20439_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 16, '20439_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20439', 17, '20439_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 1, '20436_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 2, '20436_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 3, '20436_5');
@@ -9688,6 +11332,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 6, '20436_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 7, '20436_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 8, '20436_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 9, '20436_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 10, '20436_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 11, '20436_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 12, '20436_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20436', 13, '20436_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 1, '22557_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 2, '22557_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 3, '22557_5');
@@ -9701,6 +11349,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 10, '22557_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 11, '22557_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 12, '22557_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 13, '22557_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 14, '22557_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 15, '22557_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 16, '22557_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22557', 17, '22557_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 1, '16587_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 2, '16587_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 3, '16587_5');
@@ -9712,6 +11364,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 8, '16587_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 9, '16587_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 10, '16587_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 11, '16587_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 12, '16587_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 13, '16587_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 14, '16587_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16587', 15, '16587_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 1, '22081_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 2, '22081_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 3, '22081_5');
@@ -9725,6 +11381,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 10, '22081_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 11, '22081_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 12, '22081_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 13, '22081_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 14, '22081_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 15, '22081_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 16, '22081_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22081', 17, '22081_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 1, '22062_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 2, '22062_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 3, '22062_5');
@@ -9746,6 +11406,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 18, '22062_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 19, '22062_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 20, '22062_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 21, '22062_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 22, '22062_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 23, '22062_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 24, '22062_30');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22062', 25, '22062_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 1, '2632_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 2, '2632_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 3, '2632_5');
@@ -9758,6 +11422,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 9, '2632_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 10, '2632_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 11, '2632_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 12, '2632_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 13, '2632_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 14, '2632_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 15, '2632_31');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2632', 16, '2632_34');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 1, '22468_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 2, '22468_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 3, '22468_5');
@@ -9776,6 +11444,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 15, '22468_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 16, '22468_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 17, '22468_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 18, '22468_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 19, '22468_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 20, '22468_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 21, '22468_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22468', 22, '22468_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 1, '3127_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 2, '3127_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 3, '3127_5');
@@ -9789,6 +11461,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 10, '3127_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 11, '3127_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 12, '3127_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 13, '3127_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 14, '3127_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 15, '3127_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 16, '3127_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3127', 17, '3127_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 1, '13544_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 2, '13544_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 3, '13544_5');
@@ -9798,6 +11474,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 6, '13544_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 7, '13544_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 8, '13544_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 9, '13544_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 10, '13544_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 11, '13544_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 12, '13544_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('13544', 13, '13544_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 1, '22567_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 2, '22567_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 3, '22567_5');
@@ -9811,6 +11491,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 10, '22567_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 11, '22567_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 12, '22567_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 13, '22567_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 14, '22567_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 15, '22567_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 16, '22567_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22567', 17, '22567_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 1, '23308_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 2, '23308_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 3, '23308_5');
@@ -9820,6 +11504,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 6, '23308_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 7, '23308_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 8, '23308_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 9, '23308_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 10, '23308_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 11, '23308_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 12, '23308_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23308', 13, '23308_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 1, '21841_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 2, '21841_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 3, '21841_5');
@@ -9833,6 +11521,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 10, '21841_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 11, '21841_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 12, '21841_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 13, '21841_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 14, '21841_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 15, '21841_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 16, '21841_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21841', 17, '21841_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 1, '20440_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 2, '20440_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 3, '20440_5');
@@ -9850,6 +11542,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 14, '20440_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 15, '20440_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 16, '20440_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 17, '20440_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 18, '20440_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 19, '20440_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 20, '20440_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20440', 21, '20440_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 1, '21140_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 2, '21140_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 3, '21140_5');
@@ -9867,6 +11563,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 14, '21140_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 15, '21140_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 16, '21140_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 17, '21140_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 18, '21140_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 19, '21140_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 20, '21140_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21140', 21, '21140_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 1, '23158_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 2, '23158_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 3, '23158_5');
@@ -9878,6 +11578,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 8, '23158_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 9, '23158_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 10, '23158_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 11, '23158_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 12, '23158_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 13, '23158_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 14, '23158_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23158', 15, '23158_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 1, '2209_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 2, '2209_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 3, '2209_5');
@@ -9887,6 +11591,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 6, '2209_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 7, '2209_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 8, '2209_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 9, '2209_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 10, '2209_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 11, '2209_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 12, '2209_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2209', 13, '2209_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 1, '20022_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 2, '20022_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 3, '20022_5');
@@ -9900,6 +11608,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 10, '20022_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 11, '20022_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 12, '20022_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 13, '20022_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 14, '20022_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 15, '20022_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 16, '20022_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('20022', 17, '20022_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 1, '22004_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 2, '22004_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 3, '22004_5');
@@ -9916,6 +11628,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 13, '22004_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 14, '22004_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 15, '22004_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 16, '22004_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 17, '22004_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 18, '22004_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 19, '22004_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22004', 20, '22004_26');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 1, '24751_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 2, '24751_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 3, '24751_5');
@@ -9929,6 +11645,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 10, '24751_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 11, '24751_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 12, '24751_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 13, '24751_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 14, '24751_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 15, '24751_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 16, '24751_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24751', 17, '24751_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 1, '21863_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 2, '21863_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 3, '21863_5');
@@ -9946,6 +11666,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 14, '21863_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 15, '21863_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 16, '21863_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 17, '21863_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 18, '21863_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 19, '21863_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 20, '21863_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21863', 21, '21863_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 1, '23035_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 2, '23035_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 3, '23035_5');
@@ -9955,19 +11679,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 6, '23035_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 7, '23035_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 8, '23035_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 9, '23035_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 1, '15608_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 2, '15608_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 3, '15608_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 4, '15608_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 5, '15608_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 6, '15608_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 7, '15608_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 8, '15608_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 9, '15608_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 10, '15608_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 11, '15608_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 12, '15608_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15608', 13, '15608_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 10, '23035_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 11, '23035_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 12, '23035_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23035', 13, '23035_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 1, '22536_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 2, '22536_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 3, '22536_5');
@@ -9981,6 +11696,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 10, '22536_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 11, '22536_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 12, '22536_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 13, '22536_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 14, '22536_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 15, '22536_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 16, '22536_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22536', 17, '22536_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 1, '21837_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 2, '21837_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 3, '21837_5');
@@ -9998,6 +11717,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 14, '21837_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 15, '21837_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 16, '21837_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 17, '21837_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 18, '21837_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 19, '21837_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 20, '21837_30');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21837', 21, '21837_39');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 1, '15934_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 2, '15934_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 3, '15934_5');
@@ -10019,6 +11742,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 18, '15934_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 19, '15934_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 20, '15934_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 21, '15934_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 22, '15934_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 23, '15934_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 24, '15934_30');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15934', 25, '15934_33');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 1, '21149_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 2, '21149_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 3, '21149_5');
@@ -10032,18 +11759,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 10, '21149_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 11, '21149_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 12, '21149_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 13, '21149_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 1, '30268_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 2, '30268_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 3, '30268_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 4, '30268_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 5, '30268_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 6, '30268_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 7, '30268_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 8, '30268_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 9, '30268_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 10, '30268_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 11, '30268_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('30268', 12, '30268_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 14, '21149_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 15, '21149_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 16, '21149_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21149', 17, '21149_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 1, '17534_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 2, '17534_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 3, '17534_5');
@@ -10053,6 +11772,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 6, '17534_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 7, '17534_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 8, '17534_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 9, '17534_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 10, '17534_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 11, '17534_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 12, '17534_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17534', 13, '17534_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 1, '17031_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 2, '17031_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 3, '17031_5');
@@ -10066,6 +11789,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 10, '17031_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 11, '17031_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 12, '17031_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 13, '17031_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 14, '17031_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 15, '17031_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 16, '17031_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('17031', 17, '17031_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 1, '2069_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 2, '2069_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 3, '2069_5');
@@ -10075,6 +11802,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 6, '2069_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 7, '2069_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 8, '2069_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 9, '2069_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 10, '2069_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 11, '2069_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 12, '2069_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2069', 13, '2069_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 1, '22088_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 2, '22088_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 3, '22088_5');
@@ -10086,6 +11817,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 8, '22088_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 9, '22088_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 10, '22088_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 11, '22088_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 12, '22088_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 13, '22088_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 14, '22088_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22088', 15, '22088_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 1, '15938_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 2, '15938_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 3, '15938_5');
@@ -10095,6 +11830,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 6, '15938_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 7, '15938_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 8, '15938_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 9, '15938_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 10, '15938_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 11, '15938_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 12, '15938_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15938', 13, '15938_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 1, '8442_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 2, '8442_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 3, '8442_5');
@@ -10108,6 +11847,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 10, '8442_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 11, '8442_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 12, '8442_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 13, '8442_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 14, '8442_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 15, '8442_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 16, '8442_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('8442', 17, '8442_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 1, '24473_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 2, '24473_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 3, '24473_5');
@@ -10121,6 +11864,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 10, '24473_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 11, '24473_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 12, '24473_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 13, '24473_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 14, '24473_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 15, '24473_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 16, '24473_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24473', 17, '24473_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 1, '21999_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 2, '21999_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 3, '21999_5');
@@ -10138,6 +11885,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 14, '21999_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 15, '21999_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 16, '21999_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 17, '21999_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 18, '21999_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 19, '21999_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 20, '21999_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21999', 21, '21999_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 1, '22080_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 2, '22080_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 3, '22080_5');
@@ -10155,6 +11906,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 14, '22080_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 15, '22080_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 16, '22080_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 17, '22080_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 18, '22080_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 19, '22080_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 20, '22080_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 21, '22080_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22080', 22, '22080_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 1, '12670_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 2, '12670_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 3, '12670_5');
@@ -10176,6 +11932,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 18, '12670_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 19, '12670_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 20, '12670_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 21, '12670_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 22, '12670_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 23, '12670_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 24, '12670_28');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 25, '12670_31');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12670', 26, '12670_34');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 1, '19586_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 2, '19586_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 3, '19586_5');
@@ -10189,6 +11950,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 10, '19586_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 11, '19586_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 12, '19586_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 13, '19586_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 14, '19586_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 15, '19586_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 16, '19586_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 17, '19586_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19586', 18, '19586_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 1, '21075_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 2, '21075_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 3, '21075_5');
@@ -10210,6 +11976,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 18, '21075_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 19, '21075_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 20, '21075_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 21, '21075_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 22, '21075_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 23, '21075_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 24, '21075_28');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 25, '21075_34');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21075', 26, '21075_37');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 1, '18330_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 2, '18330_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 3, '18330_5');
@@ -10227,23 +11998,12 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 14, '18330_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 15, '18330_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 16, '18330_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 17, '18330_19');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 1, '13214_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 2, '13214_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 3, '13214_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 4, '13214_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 5, '13214_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 6, '13214_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 7, '13214_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 8, '13214_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 9, '13214_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 10, '13214_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 11, '13214_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 12, '13214_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 13, '13214_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 14, '13214_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 15, '13214_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 16, '13214_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('13214', 17, '13214_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 18, '18330_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 19, '18330_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 20, '18330_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 21, '18330_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 22, '18330_32');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('18330', 23, '18330_35');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 1, '14412_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 2, '14412_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 3, '14412_5');
@@ -10261,6 +12021,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 14, '14412_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 15, '14412_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 16, '14412_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 17, '14412_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 18, '14412_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 19, '14412_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 20, '14412_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 21, '14412_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('14412', 22, '14412_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 1, '2405_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 2, '2405_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 3, '2405_5');
@@ -10269,6 +12034,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 5, '2405_7');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 6, '2405_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 7, '2405_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 8, '2405_10');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 9, '2405_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 10, '2405_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 11, '2405_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 12, '2405_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('2405', 13, '2405_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 1, '21126_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 2, '21126_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 3, '21126_5');
@@ -10283,6 +12053,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 11, '21126_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 12, '21126_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 13, '21126_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 14, '21126_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 15, '21126_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 16, '21126_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 17, '21126_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21126', 18, '21126_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 1, '12652_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 2, '12652_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 3, '12652_5');
@@ -10292,6 +12066,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 6, '12652_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 7, '12652_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 8, '12652_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 9, '12652_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 10, '12652_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 11, '12652_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 12, '12652_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12652', 13, '12652_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 1, '15746_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 2, '15746_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 3, '15746_5');
@@ -10304,6 +12082,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 9, '15746_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 10, '15746_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 11, '15746_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 12, '15746_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 13, '15746_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 14, '15746_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 15, '15746_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 16, '15746_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15746', 17, '15746_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 1, '12602_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 2, '12602_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 3, '12602_5');
@@ -10311,6 +12094,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 4, '12602_6');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 5, '12602_7');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 6, '12602_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 7, '12602_9');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 8, '12602_10');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 9, '12602_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 10, '12602_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('12602', 11, '12602_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 1, '22087_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 2, '22087_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 3, '22087_5');
@@ -10320,6 +12107,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 6, '22087_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 7, '22087_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 8, '22087_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 9, '22087_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 10, '22087_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 11, '22087_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 12, '22087_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22087', 13, '22087_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 1, '21151_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 2, '21151_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 3, '21151_5');
@@ -10333,6 +12124,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 10, '21151_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 11, '21151_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 12, '21151_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 13, '21151_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 14, '21151_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 15, '21151_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 16, '21151_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 17, '21151_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21151', 18, '21151_30');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 1, '16742_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 2, '16742_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 3, '16742_5');
@@ -10342,6 +12138,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 6, '16742_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 7, '16742_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 8, '16742_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 9, '16742_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 10, '16742_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 11, '16742_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 12, '16742_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 13, '16742_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16742', 14, '16742_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 1, '16084_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 2, '16084_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 3, '16084_5');
@@ -10359,6 +12160,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 14, '16084_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 15, '16084_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 16, '16084_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 17, '16084_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 18, '16084_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 19, '16084_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 20, '16084_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 21, '16084_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('16084', 22, '16084_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 1, '19404_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 2, '19404_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 3, '19404_5');
@@ -10372,6 +12178,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 10, '19404_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 11, '19404_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 12, '19404_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 13, '19404_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 14, '19404_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 15, '19404_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 16, '19404_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 17, '19404_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19404', 18, '19404_28');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 1, '22462_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 2, '22462_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 3, '22462_5');
@@ -10385,6 +12196,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 10, '22462_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 11, '22462_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 12, '22462_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 13, '22462_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 14, '22462_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 15, '22462_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 16, '22462_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22462', 17, '22462_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 1, '22582_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 2, '22582_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 3, '22582_5');
@@ -10398,6 +12213,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 10, '22582_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 11, '22582_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 12, '22582_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 13, '22582_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 14, '22582_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 15, '22582_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 16, '22582_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22582', 17, '22582_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 1, '19403_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 2, '19403_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 3, '19403_5');
@@ -10411,6 +12230,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 10, '19403_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 11, '19403_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 12, '19403_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 13, '19403_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 14, '19403_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 15, '19403_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 16, '19403_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19403', 17, '19403_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 1, '22043_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 2, '22043_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 3, '22043_5');
@@ -10428,6 +12251,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 14, '22043_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 15, '22043_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 16, '22043_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 17, '22043_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 18, '22043_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 19, '22043_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 20, '22043_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22043', 21, '22043_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 1, '3101_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 2, '3101_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 3, '3101_5');
@@ -10439,6 +12266,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 8, '3101_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 9, '3101_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 10, '3101_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 11, '3101_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 12, '3101_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 13, '3101_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 14, '3101_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 15, '3101_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3101', 16, '3101_24');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 1, '19877_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 2, '19877_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 3, '19877_5');
@@ -10456,6 +12288,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 14, '19877_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 15, '19877_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 16, '19877_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 17, '19877_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 18, '19877_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 19, '19877_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 20, '19877_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 21, '19877_29');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19877', 22, '19877_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 1, '21635_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 2, '21635_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 3, '21635_5');
@@ -10469,6 +12306,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 10, '21635_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 11, '21635_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 12, '21635_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 13, '21635_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 14, '21635_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 15, '21635_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 16, '21635_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21635', 17, '21635_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 1, '19401_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 2, '19401_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 3, '19401_5');
@@ -10486,6 +12327,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 14, '19401_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 15, '19401_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 16, '19401_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 17, '19401_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 18, '19401_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 19, '19401_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 20, '19401_24');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 21, '19401_27');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('19401', 22, '19401_32');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 1, '15611_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 2, '15611_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 3, '15611_5');
@@ -10495,6 +12341,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 6, '15611_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 7, '15611_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 8, '15611_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 9, '15611_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 10, '15611_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 11, '15611_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 12, '15611_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('15611', 13, '15611_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 1, '7868_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 2, '7868_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 3, '7868_5');
@@ -10504,6 +12354,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 6, '7868_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 7, '7868_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 8, '7868_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 9, '7868_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 10, '7868_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 11, '7868_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 12, '7868_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7868', 13, '7868_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 1, '22059_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 2, '22059_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 3, '22059_5');
@@ -10523,6 +12377,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 16, '22059_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 17, '22059_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 18, '22059_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 19, '22059_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 20, '22059_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 21, '22059_23');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 22, '22059_28');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22059', 23, '22059_31');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 1, '23851_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 2, '23851_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 3, '23851_5');
@@ -10531,32 +12389,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 5, '23851_7');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 6, '23851_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 7, '23851_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 8, '23851_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 1, '18327_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 2, '18327_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 3, '18327_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 4, '18327_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 5, '18327_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 6, '18327_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 7, '18327_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 8, '18327_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 9, '18327_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 10, '18327_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 11, '18327_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 12, '18327_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18327', 13, '18327_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 1, '17596_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 2, '17596_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 3, '17596_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 4, '17596_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 5, '17596_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 6, '17596_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 7, '17596_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 8, '17596_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 9, '17596_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 10, '17596_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 11, '17596_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 12, '17596_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('17596', 13, '17596_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 9, '23851_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 10, '23851_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 11, '23851_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('23851', 12, '23851_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 1, '21124_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 2, '21124_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 3, '21124_5');
@@ -10574,6 +12410,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 14, '21124_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 15, '21124_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 16, '21124_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 17, '21124_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 18, '21124_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 19, '21124_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 20, '21124_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('21124', 21, '21124_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 1, '7881_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 2, '7881_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 3, '7881_5');
@@ -10585,23 +12425,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 8, '7881_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 9, '7881_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 10, '7881_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 11, '7881_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 1, '19387_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 2, '19387_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 3, '19387_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 4, '19387_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 5, '19387_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 6, '19387_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 7, '19387_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 8, '19387_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 9, '19387_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 10, '19387_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 11, '19387_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 12, '19387_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 13, '19387_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 14, '19387_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 15, '19387_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 16, '19387_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19387', 17, '19387_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 12, '7881_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 13, '7881_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 14, '7881_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7881', 15, '7881_23');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 1, '7865_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 2, '7865_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 3, '7865_5');
@@ -10611,6 +12438,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 6, '7865_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 7, '7865_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 8, '7865_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 9, '7865_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 10, '7865_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 11, '7865_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 12, '7865_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7865', 13, '7865_21');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 1, '22085_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 2, '22085_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 3, '22085_5');
@@ -10622,6 +12453,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 8, '22085_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 9, '22085_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 10, '22085_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 11, '22085_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 12, '22085_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 13, '22085_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 14, '22085_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22085', 15, '22085_25');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 1, '24750_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 2, '24750_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 3, '24750_5');
@@ -10635,6 +12470,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 10, '24750_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 11, '24750_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 12, '24750_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 13, '24750_15');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 14, '24750_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 15, '24750_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 16, '24750_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 17, '24750_25');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('24750', 18, '24750_28');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 1, '10152_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 2, '10152_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 3, '10152_5');
@@ -10644,34 +12484,11 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 6, '10152_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 7, '10152_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 8, '10152_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 9, '10152_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 1, '12621_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 2, '12621_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 3, '12621_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 4, '12621_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 5, '12621_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 6, '12621_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 7, '12621_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 8, '12621_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('12621', 9, '12621_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 1, '21997_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 2, '21997_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 3, '21997_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 4, '21997_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 5, '21997_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 6, '21997_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 7, '21997_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 8, '21997_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 9, '21997_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 10, '21997_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 11, '21997_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 12, '21997_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 13, '21997_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 14, '21997_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 15, '21997_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 16, '21997_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 17, '21997_19');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 18, '21997_20');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21997', 19, '21997_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 10, '10152_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 11, '10152_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 12, '10152_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 13, '10152_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('10152', 14, '10152_22');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 1, '22469_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 2, '22469_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 3, '22469_5');
@@ -10689,6 +12506,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 14, '22469_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 15, '22469_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 16, '22469_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 17, '22469_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 18, '22469_20');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 19, '22469_21');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 20, '22469_26');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22469', 21, '22469_29');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 1, '7871_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 2, '7871_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 3, '7871_5');
@@ -10699,6 +12520,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 7, '7871_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 8, '7871_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 9, '7871_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 10, '7871_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 11, '7871_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 12, '7871_14');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 13, '7871_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('7871', 14, '7871_20');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 1, '22082_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 2, '22082_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 3, '22082_5');
@@ -10708,6 +12533,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 6, '22082_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 7, '22082_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 8, '22082_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 9, '22082_11');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 10, '22082_12');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 11, '22082_13');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 12, '22082_16');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('22082', 13, '22082_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 1, '3140_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 2, '3140_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 3, '3140_5');
@@ -10723,6 +12552,10 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 12, '3140_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 13, '3140_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 14, '3140_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 15, '3140_17');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 16, '3140_18');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 17, '3140_19');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 18, '3140_22');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('3140', 19, '3140_27');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22079', 1, '22079_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22079', 2, '22079_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22079', 3, '22079_5');
@@ -10848,15 +12681,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('23300', 6, '23300_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23300', 7, '23300_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23300', 8, '23300_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('23300', 9, '23300_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 1, '21150_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 2, '21150_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 3, '21150_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 4, '21150_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 5, '21150_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 6, '21150_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 7, '21150_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 8, '21150_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('21150', 9, '21150_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15865', 1, '15865_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15865', 2, '15865_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15865', 3, '15865_5');
@@ -11077,17 +12901,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('31282', 8, '31282_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31282', 9, '31282_11');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31282', 10, '31282_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('31282', 11, '31282_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 1, '24770_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 2, '24770_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 3, '24770_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 4, '24770_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 5, '24770_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 6, '24770_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 7, '24770_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 8, '24770_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 9, '24770_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 10, '24770_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24770', 11, '24770_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12632', 1, '12632_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12632', 2, '12632_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12632', 3, '12632_5');
@@ -11313,11 +13126,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('24042', 2, '24042_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24042', 3, '24042_5');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24042', 4, '24042_6');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('24042', 5, '24042_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24767', 1, '24767_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24767', 2, '24767_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24767', 3, '24767_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24767', 4, '24767_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('24767', 5, '24767_7');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3003', 1, '3003_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3003', 2, '3003_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('3003', 3, '3003_5');
@@ -11357,19 +13165,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('21141', 10, '21141_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21141', 11, '21141_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21141', 12, '21141_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21141', 13, '21141_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 1, '19092_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 2, '19092_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 3, '19092_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 4, '19092_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 5, '19092_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 6, '19092_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 7, '19092_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 8, '19092_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 9, '19092_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 10, '19092_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 11, '19092_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 12, '19092_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('19092', 13, '19092_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12653', 1, '12653_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12653', 2, '12653_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('12653', 3, '12653_5');
@@ -11636,19 +13431,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22083', 10, '22083_12');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22083', 11, '22083_13');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22083', 12, '22083_14');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22083', 13, '22083_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 1, '8439_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 2, '8439_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 3, '8439_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 4, '8439_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 5, '8439_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 6, '8439_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 7, '8439_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 8, '8439_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 9, '8439_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 10, '8439_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 11, '8439_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 12, '8439_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('8439', 13, '8439_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21127', 1, '21127_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21127', 2, '21127_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21127', 3, '21127_5');
@@ -11761,23 +13543,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('22078', 6, '22078_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22078', 7, '22078_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22078', 8, '22078_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('22078', 9, '22078_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 1, '20432_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 2, '20432_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 3, '20432_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 4, '20432_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 5, '20432_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 6, '20432_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 7, '20432_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 8, '20432_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 9, '20432_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 10, '20432_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 11, '20432_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 12, '20432_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 13, '20432_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 14, '20432_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 15, '20432_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 16, '20432_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('20432', 17, '20432_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10202', 1, '10202_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10202', 2, '10202_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('10202', 3, '10202_5');
@@ -12101,40 +13866,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('17533', 14, '17533_16');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17533', 15, '17533_17');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17533', 16, '17533_18');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('17533', 17, '17533_19');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 1, '18418_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 2, '18418_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 3, '18418_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 4, '18418_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 5, '18418_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 6, '18418_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 7, '18418_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 8, '18418_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 9, '18418_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 10, '18418_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 11, '18418_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 12, '18418_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 13, '18418_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 14, '18418_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 15, '18418_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 16, '18418_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('18418', 17, '18418_19');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 1, '15610_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 2, '15610_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 3, '15610_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 4, '15610_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 5, '15610_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 6, '15610_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 7, '15610_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 8, '15610_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 9, '15610_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 10, '15610_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 11, '15610_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 12, '15610_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 13, '15610_15');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 14, '15610_16');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 15, '15610_17');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 16, '15610_18');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('15610', 17, '15610_19');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21134', 1, '21134_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21134', 2, '21134_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('21134', 3, '21134_5');
@@ -12382,19 +14113,6 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('15864', 6, '15864_8');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15864', 7, '15864_9');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15864', 8, '15864_10');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('15864', 9, '15864_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 1, '14118_3');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 2, '14118_4');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 3, '14118_5');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 4, '14118_6');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 5, '14118_7');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 6, '14118_8');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 7, '14118_9');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 8, '14118_10');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 9, '14118_11');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 10, '14118_12');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 11, '14118_13');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 12, '14118_14');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('14118', 13, '14118_15');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18345', 1, '18345_3');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18345', 2, '18345_4');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('18345', 3, '18345_5');
@@ -12737,278 +14455,255 @@ INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 10, '1978');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 11, '2234');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 12, '22000');
 INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 13, '21995');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 14, '1017');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 15, '2305');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 16, '22806');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 17, '21817');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 18, '24734');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 19, '30269');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 20, '31354');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 21, '21143');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 22, '2830');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 23, '2912');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 24, '2526');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 25, '12428');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 26, '14419');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 27, '21610');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 28, '31503');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 29, '19110');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 30, '21129');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 31, '20431');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 32, '12899');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 33, '18417');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 34, '22084');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 35, '21148');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 36, '20434');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 37, '22086');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 38, '10680');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 39, '21445');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 40, '30807');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 41, '30271');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 42, '7651');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 43, '15612');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 44, '21985');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 45, '21998');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 46, '15613');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 47, '8698');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 48, '19193');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 49, '16199');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 50, '9911');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 51, '23107');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 52, '17135');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 53, '8040');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 54, '30266');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 55, '19386');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 56, '21838');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 57, '12609');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 58, '20439');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 59, '20436');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 60, '22557');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 61, '16587');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 62, '22081');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 63, '22062');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 64, '2632');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 65, '22468');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 66, '3127');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 67, '13544');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 68, '22567');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 69, '23308');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 70, '21841');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 71, '20440');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 72, '21140');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 73, '23158');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 74, '2209');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 75, '20022');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 76, '22004');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 77, '24751');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 78, '21863');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 79, '23035');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 80, '15608');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 81, '22536');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 82, '21837');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 83, '15934');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 84, '21149');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 85, '30268');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 86, '17534');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 87, '17031');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 88, '2069');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 89, '22088');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 90, '15938');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 91, '8442');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 92, '24473');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 93, '21999');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 94, '22080');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 95, '12670');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 96, '19586');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 97, '21075');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 98, '18330');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 99, '13214');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 100, '14412');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 101, '2405');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 102, '21126');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 103, '12652');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 104, '15746');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 105, '12602');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 106, '22087');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 107, '21151');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 108, '16742');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 109, '16084');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 110, '19404');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 111, '22462');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 112, '22582');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 113, '19403');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 114, '22043');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 115, '3101');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 116, '19877');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 117, '21635');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 118, '19401');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 119, '15611');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 120, '7868');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 121, '22059');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 122, '23851');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 123, '18327');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 124, '17596');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 125, '21124');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 126, '7881');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 127, '19387');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 128, '7865');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 129, '22085');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 130, '24750');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 131, '10152');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 132, '12621');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 133, '21997');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 134, '22469');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 135, '7871');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 136, '22082');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 137, '3140');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 138, '22079');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 139, '7860');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 140, '2530');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 141, '13026');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 142, '24771');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 143, '18419');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 144, '2994');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 145, '13309');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 146, '15861');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 147, '23300');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 148, '21150');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 149, '15865');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 150, '12915');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 151, '14812');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 152, '24769');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 153, '12689');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 154, '2340');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 155, '22352');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 156, '12600');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 157, '15609');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 158, '10166');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 159, '22068');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 160, '1176');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 161, '19600');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 162, '19400');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 163, '2229');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 164, '31282');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 165, '24770');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 166, '12632');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 167, '22061');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 168, '15863');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 169, '7874');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 170, '22049');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 171, '23747');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 172, '22750');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 173, '21747');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 174, '2344');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 175, '15942');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 176, '7877');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 177, '9684');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 178, '15616');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 179, '9480');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 180, '21621');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 181, '12687');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 182, '15712');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 183, '24042');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 184, '24767');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 185, '3003');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 186, '22531');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 187, '21141');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 188, '19092');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 189, '12653');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 190, '20433');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 191, '21842');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 192, '9529');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 193, '21836');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 194, '2106');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 195, '31301');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 196, '2878');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 197, '3159');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 198, '21994');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 199, '2987');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 200, '12692');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 201, '21073');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 202, '30270');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 203, '23775');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 204, '22530');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 205, '8877');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 206, '22065');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 207, '19402');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 208, '15558');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 209, '22083');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 210, '8439');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 211, '21127');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 212, '31418');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 213, '21809');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 214, '29688');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 215, '24422');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 216, '9527');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 217, '31547');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 218, '6718');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 219, '22078');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 220, '20432');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 221, '10202');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 222, '10442');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 223, '2574');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 224, '22747');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 225, '8712');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 226, '2197');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 227, '2974');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 228, '2397');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 229, '23109');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 230, '8707');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 231, '15615');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 232, '15032');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 233, '8433');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 234, '11139');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 235, '21059');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 236, '22002');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 237, '20374');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 238, '18342');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 239, '8438');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 240, '17533');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 241, '18418');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 242, '15610');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 243, '21134');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 244, '3083');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 245, '13092');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 246, '16197');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 247, '21631');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 248, '22003');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 249, '8713');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 250, '24748');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 251, '23143');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 252, '3914');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 253, '13303');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 254, '30267');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 255, '23156');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 256, '16210');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 257, '15614');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 258, '21138');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 259, '23033');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 260, '18344');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 261, '15864');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 262, '14118');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 263, '18345');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 264, '22572');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 265, '23751');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 266, '17937');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 267, '21816');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 268, '8690');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 269, '29975');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 270, '22067');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 271, '2611');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 272, '10440');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 273, '3135');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 274, '5314');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 275, '22637');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 276, '22533');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 277, '19384');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 278, '9681');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 279, '21074');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 280, '21130');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 281, '23407');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 282, '2758');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 283, '1970');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 284, '9479');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 285, '2505');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 286, '24746');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 287, '14814');
-INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 288, '22111');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 14, '22806');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 15, '21817');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 16, '24734');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 17, '30269');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 18, '31354');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 19, '21143');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 20, '2830');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 21, '2912');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 22, '2526');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 23, '12428');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 24, '14419');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 25, '21610');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 26, '31503');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 27, '19110');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 28, '20431');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 29, '12899');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 30, '18417');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 31, '22084');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 32, '20434');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 33, '22086');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 34, '10680');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 35, '21445');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 36, '30807');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 37, '30271');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 38, '15612');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 39, '21985');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 40, '21998');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 41, '15613');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 42, '8698');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 43, '19193');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 44, '16199');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 45, '9911');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 46, '23107');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 47, '17135');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 48, '8040');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 49, '19386');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 50, '21838');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 51, '12609');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 52, '20439');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 53, '20436');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 54, '22557');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 55, '16587');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 56, '22081');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 57, '22062');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 58, '2632');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 59, '22468');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 60, '3127');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 61, '13544');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 62, '22567');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 63, '23308');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 64, '21841');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 65, '20440');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 66, '21140');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 67, '23158');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 68, '2209');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 69, '20022');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 70, '22004');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 71, '24751');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 72, '21863');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 73, '23035');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 74, '22536');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 75, '21837');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 76, '15934');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 77, '21149');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 78, '17534');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 79, '17031');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 80, '2069');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 81, '22088');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 82, '15938');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 83, '8442');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 84, '24473');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 85, '21999');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 86, '22080');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 87, '12670');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 88, '19586');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 89, '21075');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 90, '18330');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 91, '14412');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 92, '2405');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 93, '21126');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 94, '12652');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 95, '15746');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 96, '12602');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 97, '22087');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 98, '21151');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 99, '16742');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 100, '16084');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 101, '19404');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 102, '22462');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 103, '22582');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 104, '19403');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 105, '22043');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 106, '3101');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 107, '19877');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 108, '21635');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 109, '19401');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 110, '15611');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 111, '7868');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 112, '22059');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 113, '23851');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 114, '21124');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 115, '7881');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 116, '7865');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 117, '22085');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 118, '24750');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 119, '10152');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 120, '22469');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 121, '7871');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 122, '22082');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 123, '3140');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 124, '22079');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 125, '7860');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 126, '2530');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 127, '13026');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 128, '24771');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 129, '18419');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 130, '2994');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 131, '13309');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 132, '15861');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 133, '23300');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 134, '15865');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 135, '12915');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 136, '14812');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 137, '24769');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 138, '12689');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 139, '2340');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 140, '22352');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 141, '12600');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 142, '15609');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 143, '10166');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 144, '22068');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 145, '1176');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 146, '19600');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 147, '19400');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 148, '2229');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 149, '31282');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 150, '12632');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 151, '22061');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 152, '15863');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 153, '7874');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 154, '22049');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 155, '23747');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 156, '22750');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 157, '21747');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 158, '2344');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 159, '15942');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 160, '7877');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 161, '9684');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 162, '15616');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 163, '9480');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 164, '21621');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 165, '12687');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 166, '15712');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 167, '24042');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 168, '3003');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 169, '22531');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 170, '21141');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 171, '12653');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 172, '20433');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 173, '21842');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 174, '9529');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 175, '21836');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 176, '2106');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 177, '31301');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 178, '2878');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 179, '3159');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 180, '21994');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 181, '2987');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 182, '12692');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 183, '21073');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 184, '30270');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 185, '23775');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 186, '22530');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 187, '8877');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 188, '22065');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 189, '19402');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 190, '15558');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 191, '22083');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 192, '21127');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 193, '31418');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 194, '21809');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 195, '29688');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 196, '24422');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 197, '9527');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 198, '31547');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 199, '6718');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 200, '22078');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 201, '10202');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 202, '10442');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 203, '2574');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 204, '22747');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 205, '8712');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 206, '2197');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 207, '2974');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 208, '2397');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 209, '23109');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 210, '8707');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 211, '15615');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 212, '15032');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 213, '8433');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 214, '11139');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 215, '21059');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 216, '22002');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 217, '20374');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 218, '18342');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 219, '8438');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 220, '17533');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 221, '21134');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 222, '3083');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 223, '13092');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 224, '16197');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 225, '21631');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 226, '22003');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 227, '8713');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 228, '24748');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 229, '23143');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 230, '3914');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 231, '13303');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 232, '30267');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 233, '23156');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 234, '16210');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 235, '15614');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 236, '21138');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 237, '23033');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 238, '18344');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 239, '15864');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 240, '18345');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 241, '22572');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 242, '23751');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 243, '17937');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 244, '21816');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 245, '8690');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 246, '29975');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 247, '22067');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 248, '2611');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 249, '10440');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 250, '3135');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 251, '5314');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 252, '22637');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 253, '22533');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 254, '19384');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 255, '9681');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 256, '21074');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 257, '21130');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 258, '23407');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 259, '2758');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 260, '1970');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 261, '9479');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 262, '2505');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 263, '24746');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 264, '14814');
+INSERT INTO `collection` (id, serial, cardId) VALUES ('story', 265, '22111');
