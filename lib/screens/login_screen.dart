@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       child: new AspectRatio(
                                               aspectRatio: 2.0,
                                               child: Padding(
-                                                padding: const EdgeInsets.only(bottom: 40.0, right: 40.0),
+                                                padding: new EdgeInsets.only(bottom: _size == 250.0 ? 40.0 : 0.0),
                                                 child: new NimaActor("assets/quack",
                                                     animation: _animationName,
                                                     alignment: Alignment.center,
