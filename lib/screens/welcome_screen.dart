@@ -9,7 +9,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class WelcomeScreenState extends State<WelcomeScreen> {
-  String _animationName = "hello";
+  String _animationName = "quack";
   bool paused = false;
 
   void _complete() {
@@ -30,27 +30,18 @@ class WelcomeScreenState extends State<WelcomeScreen> {
             decoration: new BoxDecoration(
               color: const Color(0xFF0E4476),
             ),
-            child: new Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: <Widget>[
-                  new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                          alignment: AlignmentDirectional.center,
-                          child: new AspectRatio(
-                            aspectRatio: size.height > size.width ? 1.5 : 3.8,
-                            child: new NimaActor("assets/quack",
-                                paused: paused,
-                                alignment: Alignment.center,
-                                fit: BoxFit.scaleDown,
-                                animation: _animationName,
-                                // mixSeconds: 0.2,
-                                completed: (_) => _complete()),
-                          ),
-                        ),
-                      ])
-                ])));
+            child: Align(
+              alignment: AlignmentDirectional.center,
+              child: new AspectRatio(
+                aspectRatio: 1.0,
+                child: new NimaActor("assets/quack",
+                    paused: paused,
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    animation: _animationName,
+                    // mixSeconds: 0.2,
+                    completed: (_) => _complete()),
+              ),
+            )));
   }
 }
