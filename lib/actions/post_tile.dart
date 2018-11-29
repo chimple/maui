@@ -61,14 +61,19 @@ class PostTile implements AsyncAction<RootState> {
       state.tiles.insert(0, pTile);
     }
     return (RootState state) => RootState(
-        user: state.user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        commentMap: state.commentMap,
-        activityMap: state.activityMap,
-        tiles: updatedTiles,
-        userMap: state.userMap,
-        drawings: state.drawings,
-        templates: state.templates);
+            frontMap: {
+              'open': state.cardMap['open_7'],
+              'topic': state.cardMap['Teacher'],
+              'story': state.cardMap['18218']
+            },
+            user: state.user,
+            collectionMap: state.collectionMap,
+            cardMap: state.cardMap,
+            commentMap: state.commentMap,
+            activityMap: state.activityMap,
+            tiles: updatedTiles,
+            userMap: state.userMap,
+            drawings: state.drawings,
+            templates: state.templates);
   }
 }

@@ -25,14 +25,19 @@ class UpdatePoints implements AsyncAction<RootState> {
     user.points = (user.points ?? 0) + points;
     userRepo.update(user);
     return (RootState state) => RootState(
-        user: user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        activityMap: state.activityMap,
-        commentMap: state.commentMap,
-        tiles: state.tiles,
-        userMap: state.userMap,
-        drawings: state.drawings,
-        templates: state.templates);
+            frontMap: {
+              'open': state.cardMap['open_7'],
+              'topic': state.cardMap['Teacher'],
+              'story': state.cardMap['18218']
+            },
+            user: user,
+            collectionMap: state.collectionMap,
+            cardMap: state.cardMap,
+            activityMap: state.activityMap,
+            commentMap: state.commentMap,
+            tiles: state.tiles,
+            userMap: state.userMap,
+            drawings: state.drawings,
+            templates: state.templates);
   }
 }

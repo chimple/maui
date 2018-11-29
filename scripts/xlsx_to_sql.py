@@ -7,8 +7,13 @@ import random
 
 types = {
 	'select': 0,
+	'selaect': 0,
 	'quiz': 0,
 	'activity': 1,
+	'actiivity': 1,
+	'actvity': 1,
+	'activty': 1,
+	'actitvity': 1,
 	'topic': 2,
 	'article': 3,
 	'many': 4,
@@ -81,6 +86,7 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 		for row in sheet.iter_rows(row_offset=1):
 			row_num+=1
 			print(sheet.title, row_num)
+			add_template = False
 			type_value = row_value(row, type)
 			title_value = row_value(row, title)
 			content_value = row_value(row, content)
@@ -91,6 +97,11 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				continue
 			type_value = type_value.lower()
 			type_data = types[type_value]
+
+			if collection_name == 'story' and type_data == 1 and header_value == None:
+				add_template = True
+				header_value = sheet.title + '.svg'
+
 			if type_data == -1:
 				continue
 			elif type_data == 0:
@@ -112,6 +123,8 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				else:
 					card = sheet.title+'_'+str(row_num)
 				sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
+				if add_template:
+					sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, 2, 1, {esc(header_value)});\n")
 			if type_data == 2:
 				topic = card
 				card_number = 1

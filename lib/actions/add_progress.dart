@@ -45,14 +45,19 @@ class AddProgress implements AsyncAction<RootState> {
     }
 
     return (RootState state) => RootState(
-        user: state.user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        activityMap: state.activityMap..[parentCardId] = userActivity,
-        commentMap: state.commentMap,
-        tiles: state.tiles,
-        userMap: state.userMap,
-        drawings: state.drawings,
-        templates: state.templates);
+            frontMap: {
+              'open': state.cardMap['open_7'],
+              'topic': state.cardMap['Teacher'],
+              'story': state.cardMap['18218']
+            },
+            user: state.user,
+            collectionMap: state.collectionMap,
+            cardMap: state.cardMap,
+            activityMap: state.activityMap..[parentCardId] = userActivity,
+            commentMap: state.commentMap,
+            tiles: state.tiles,
+            userMap: state.userMap,
+            drawings: state.drawings,
+            templates: state.templates);
   }
 }
