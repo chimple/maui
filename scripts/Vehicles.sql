@@ -1,30 +1,15 @@
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw', 2, NULL, 'assets/topic/Auto.svg', 'A riksha or rickshaw is a kind of vehicle that has two wheels. They were usually pulled by a man. 
-Now, these rickshaws can be pulled by a bicycle or motor.', 'FF9DEDE3');
+Now, these rickshaws can be pulled by a bicycle or motor.', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_3', 1, 'Draw a rickshaw.', 'assets/topic/road_bg.svg', 'Draw a rickshaw and paint it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_3', 2, 1, 'assets/topic/road_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_5', 1, 'Take a picture of an auto rickshaw.', 'assets/topic/forest_bg.svg', 'Take a picture of an auto rickshaw and decorate it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_5', 2, 1, 'assets/topic/forest_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_7', 1, 'Make an auto rickshaw horn sound', 'assets/topic/mountain_bg.svg', 'Make the sound of an auto rickshaw horn and record it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_7', 2, 1, 'assets/topic/mountain_bg.svg');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_9', 3, 'Rickshaw', 'assets/topic/pulled_rikshaw2.jpg', 'The most common commutor on the road is a rickshaw. A Rickshaw was originally denoted as 
-a two or three-wheeled passenger cart.  Now its known as a pulled rickshaw.  The rickshaw 
-was generally pulled by one man carrying one passenger.  Over the time, cycle rickshaws, also 
-known as pedicabs or trishaws, auto rickshaws, and electric rickshaws were invented. Can''t 
-ignore that all these new changes have helped the tourism.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_10', 3, 'Pulled rickshaw', 'assets/topic/pulled_rikshaw.jpg', 'In the early days of invention, these pulled rickshaws created a popular form of transportation. 
-It was also a source of employment for male laborers. But their popularity came down as cars, 
-trains and other forms of transportation became widely available. True that it''s no more used 
-in big cities. But the smaller towns still have the pulled rickshaws.', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_11', 3, 'Auto rickshaw', 'assets/topic/auto.jpg', 'An auto rickshaw is a motorized development of the traditional pulled rickshaw or cycle 
-rickshaw. Most of them have three wheels and do not tilt. "The auto rickshaw is a common 
-form of urban transport.  The vehicle is used for hire and also for private use. These auto 
-rickshaws are widely in use in many countries around the world.  India is the world''s largest 
-auto rickshaw manufacturer. Auto rickshaws were driven using petrol and now these run on 
-diesel. Latest invention is done where auto run by the power of elctricty known as electric 
-rickshaws.  Solarpowered rickshaws are also coming into existance. Great technology!', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_12', 3, 'Auto rickshaw in tanzania', 'assets/topic/auto_tanzania.jpg', 'Rickshaws are locally known as "bajaji" and are a common mode of transportation in Dar es 
-Salaam. Auto rickshaws are locally called "baby taxis" and they also run on "CNGs" meaning 
-compressed natural gas. It is one of the most popular modes of transportion in tanzania. It is known for its size and speed that helps it to cover longer distance and move freely even in crowded places.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_9', 3, 'Rickshaw', 'assets/topic/pulled_rikshaw2.jpg', 'The most common commutor on the road is a rickshaw. A Rickshaw was originally denoted as a two or three-wheeled passenger cart.  Now its known as a pulled rickshaw.  The rickshaw was generally pulled by one man carrying one passenger.  Over the time, cycle rickshaws, also known as pedicabs or trishaws, auto rickshaws, and electric rickshaws were invented. Can''t ignore that all these new changes have helped the tourism.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_10', 3, 'Pulled rickshaw', 'assets/topic/pulled_rikshaw.jpg', 'In the early days of invention, these pulled rickshaws created a popular form of transportation. It was also a source of employment for male laborers. But their popularity came down as cars, trains and other forms of transportation became widely available. True that it''s no more used in big cities. But the smaller towns still have the pulled rickshaws.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_11', 3, 'Auto rickshaw', 'assets/topic/auto.jpg', 'An auto rickshaw is a motorized development of the traditional pulled rickshaw or cycle rickshaw. Most of them have three wheels and do not tilt. "The auto rickshaw is a common form of urban transport.  The vehicle is used for hire and also for private use. These auto rickshaws are widely in use in many countries around the world.  India is the world''s largest auto rickshaw manufacturer. Auto rickshaws were driven using petrol and now these run on diesel. Latest invention is done where auto run by the power of elctricty known as electric rickshaws.  Solarpowered rickshaws are also coming into existance. Great technology!', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_12', 3, 'Auto rickshaw in tanzania', 'assets/topic/auto_tanzania.jpg', 'Rickshaws are locally known as "bajaji" and are a common mode of transportation in Dar es Salaam. Auto rickshaws are locally called "baby taxis" and they also run on "CNGs" meaning compressed natural gas. It is one of the most popular modes of transportion in tanzania. It is known for its size and speed that helps it to cover longer distance and move freely even in crowded places.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Auto rickshaw_13', 0, 'A cart having two wheels and pulled by
 man carrying passenger is called as?', 'assets/topic/pulled_rikshaw3.jpg', NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_13', 1, 1, 'Pulled rickshaw');
@@ -60,7 +45,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_3
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_39', 1, 2, 'Pulled rickshaw');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_39', 1, 3, 'assets/topic/new_rikshaw.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Auto rickshaw_39', 1, 4, 'Auto rickshaw');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Tractor', 2, 'Tractor', 'assets/topic/tractor.svg', 'A tractor is a strong work vehicle used for farming. It usually has one seat for the driver. Tractors can be used to pull many different tools or trailers.', 'FF9DEDE3');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Tractor', 2, 'Tractor', 'assets/topic/tractor.svg', 'A tractor is a strong work vehicle used for farming. It usually has one seat for the driver. Tractors can be used to pull many different tools or trailers.', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Tractor_3', 1, 'Draw a tractor', 'assets/topic/farm_bg.svg', 'Draw and paint a tractor.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Tractor_3', 2, 1, 'assets/topic/farm_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Tractor_5', 1, 'Take a picture', 'assets/topic/forest_bg.svg', 'Take picture of a tractor and decorate it.', NULL);
@@ -115,7 +100,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Tractor_39', 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Tractor_39', 1, 4, 'Cultivator');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Tractor_39', 1, 5, 'assets/topic/tractor-mower.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Tractor_39', 1, 6, 'Mower');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat', 2, 'Boat', 'assets/topic/boat.svg', 'Can you ever imagine travelling over water? Yes, its possible by water vehicle which can easily be balanced on water. Boats come in large range of types and sizes.', 'FF9DEDE3');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat', 2, 'Boat', 'assets/topic/boat.svg', 'Can you ever imagine travelling over water? Yes, its possible by water vehicle which can easily be balanced on water. Boats come in large range of types and sizes.', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_3', 1, 'Draw a boat', 'assets/topic/water_bg.svg', 'Draw a boat and paint it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_3', 2, 1, 'assets/topic/water_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_5', 1, 'Take a picture of boat', 'assets/topic/water_bg.svg', 'Take a picture of boat and decorate it.', NULL);
@@ -153,7 +138,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_19', 0, 2,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_27', 0, 'The body of a boat is called as hull.', 'assets/topic/boatbody.jpg', NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_27', 1, 1, 'True.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_27', 0, 1, 'False.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_30', 0, 'Life jacket heps you to float on water.', 'lifejacketsaver.JPG', NULL, 'oneAtATime');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_30', 0, 'Life jacket helps you to float on water.', 'assets/topic/lifejacketsaver.jpg', NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_30', 1, 1, 'True.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_30', 0, 1, 'False.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Boat_33', 0, 'A boat is a very big vessel.', 'assets/topic/Bigship.jpg', NULL, 'oneAtATime');
@@ -166,7 +151,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_36', 1, 3,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_36', 1, 4, 'Boat');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_36', 1, 5, 'assets/topic/Redjacket.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Boat_36', 1, 6, 'Life jacket');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane', 2, 'Airplane', 'assets/topic/plane.svg', 'Have you ever seen anything moving in air with two giant wings? It looks similar to a bird but not a bird. Yes, you have guessed it right. It is an airplane. Being the fastest means of transport, airplane is a common view in the sky quiet often.', 'FF9DEDE3');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane', 2, 'Airplane', 'assets/topic/plane.svg', 'Have you ever seen anything moving in air with two giant wings? It looks similar to a bird but not a bird. Yes, you have guessed it right. It is an airplane. Being the fastest means of transport, airplane is a common view in the sky quiet often.', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_3', 1, 'Draw an airplane', 'assets/topic/sky_bg.svg', 'Draw an airplane and paint it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_3', 2, 1, 'assets/topic/sky_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_5', 1, 'Take a picture', 'assets/topic/no_bg.svg', 'Take a picture of an airplane from gallery and decorate it.', NULL);
@@ -175,9 +160,7 @@ INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_7', 2, 1, 'assets/topic/plane_wings.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_9', 3, 'Introduction', 'assets/topic/airplane-invention.jpg', 'Whenever we see a bird flying around we feel like fying too. Wanting to have wings and flying high in the sky, inspired man to invent airplane. Many of them tried and invented many machines but success came to wright brothers. Wright brothers invented airplane which is always remembered  to be a human wonder.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_10', 3, 'History', 'assets/topic/airplane-evolution.jpeg', 'Airplane comes in different sizes and shapes. Initially the plane could carry maximum of two people. Later airplane were developed to carry more number of people travelling  from one place to another. Travel included flying across the seas and mountains reaching far off places. The time taken to travel was too short when compared to other means of transport. Isn''t this an amazing invenstion?', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_11', 3, 'Diferent types of planes', 'assets/topic/Collection_of_military_aircraft.jpg  
-
- lufthansa.jpg', 'Passenger plane is a vehicle used to carry passengers from one place to another. Cargo plane is a vehicle used to carry goods from one place to another in short period of time. There are fighter planes which are used in military. Some planes are designed in such a way that the plane can even land on  water.', NULL);
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_11', 3, 'Diferent types of planes', 'assets/topic/Collection_of_military_aircraft.jpg', 'Passenger plane is a vehicle used to carry passengers from one place to another. Cargo plane is a vehicle used to carry goods from one place to another in short period of time. There are fighter planes which are used in military. Some planes are designed in such a way that the plane can even land on  water.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_12', 3, 'Airports', 'assets/topic/airport.jpg', 'Airport is an aerodrome with facilities to store and maintain aircrafts. There is a complex for runways and buildings for the take-off, landing and maintenance of aircrafts and control tower. Airports have facilities for the passengers. Every big city has an airport.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_13', 3, 'Super fast plane', 'assets/topic/super-fast-planes.jpeg', 'Can u imagine going long distance within a hour or some times less than an hour? Yes, it is possible 
 only with airplane.  Airplane is super powered and it uses white petrol as a fuel. Airplane reaches any place within a short period of time. It need not climb mountain or drive through a busy road. It is not required to even move on seas breaking all the barriers. The airplane flies above the bad roads, huge mountains or even seas. So now you know why it moves so fast!', NULL);
@@ -205,7 +188,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_32', 0
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_35', 0, 'Airplane travells quickly in short period of time.', 'assets/topic/super-fast-planes.jpeg', NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_35', 1, 1, 'True.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_35', 0, 1, 'False.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_38', 0, 'Airplane rides upon mountains and hills.', 'airplane-over-mountain', NULL, 'oneAtATime');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_38', 0, 'Airplane rides upon mountains and hills.', 'assets/topic/airplane-over-mountain.jpeg', NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_38', 1, 1, 'False.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_38', 0, 1, 'True.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Airplane_41', 0, 'Match the images with their names', NULL, NULL, 'pair');
@@ -217,7 +200,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_41', 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_41', 1, 6, 'Airplane wings');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_41', 1, 7, 'assets/topic/cargo-plane.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Airplane_41', 1, 8, 'Cargo plane');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Train', 2, 'Train', 'assets/topic/train.svg', 'Who is not aware of a train? Everyone knows but, today we will learn some interesting facts about the train. Basically a train is a set of vehicles connected to each other which moves on a railway track. The vehicles in a set are called as cars or wagons.', 'FFCFB5DD');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Train', 2, 'Train', 'assets/topic/train.svg', 'Who is not aware of a train? Everyone knows but, today we will learn some interesting facts about the train. Basically a train is a set of vehicles connected to each other which moves on a railway track. The vehicles in a set are called as cars or wagons.', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Train_3', 1, 'Train horn', 'assets/topic/track.svg', 'Make the running and horn sound of a train and record it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Train_3', 2, 1, 'assets/topic/track.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Train_5', 1, 'My perfect Train', 'assets/topic/track_mountain.svg', 'Join different wagons to the engine and make a perfect train.', NULL);
@@ -314,7 +297,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Trucks_41', 1, 
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Trucks_41', 1, 4, 'Road train');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Trucks_41', 1, 5, 'assets/topic/deliverytruck.jpg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Trucks_41', 1, 6, 'Local delivery');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bicycle', 2, 'Bicycle', 'assets/topic/cycle.svg', 'Who dont know what a bicycle is ? This is everyones favourite. And, today we are going to learn some basic and interesting facts about a bicycle.', 'FF9DEDE3');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bicycle', 2, 'Bicycle', 'assets/topic/cycle.svg', 'Who dont know what a bicycle is ? This is everyones favourite. And, today we are going to learn some basic and interesting facts about a bicycle.', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bicycle_3', 1, 'Cycle horn', 'assets/topic/mountain_bg.svg', 'Make a sound of the cycle horn and record it.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Bicycle_3', 2, 1, 'assets/topic/mountain_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bicycle_5', 1, 'Colouring Fun', 'assets/topic/road_bg.svg', 'Draw a cycle and color it.', NULL);
@@ -406,7 +389,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Car_38', 1, 3, 
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Car_38', 1, 4, 'assets/topic/CRV_side_mirror.jpeg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Car_38', 1, 5, 'assets/topic/bmw-i8-car-steering-wheel.jpeg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Car_38', 1, 6, 'assets/topic/Driver_free_car.jpeg');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bus', 2, 'Bus', 'assets/topic/bus.svg', 'A bus is a public transport that is used to commute from one place to another.  Bus is very convenient and safe way to travel.', 'FFF4E1B5');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bus', 2, 'Bus', 'assets/topic/bus.svg', 'A bus is a public transport that is used to commute from one place to another.  Bus is very convenient and safe way to travel.', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bus_3', 1, 'I can a draw a bus', 'assets/topic/road_bg.svg', 'Draw a Bus.', NULL);
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('Bus_3', 2, 1, 'assets/topic/road_bg.svg');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('Bus_5', 1, 'Add parts of the bus', 'assets/topic/bus_tire.svg', 'Add tires to the bus.', NULL);

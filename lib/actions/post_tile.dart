@@ -32,8 +32,13 @@ class PostTile implements AsyncAction<RootState> {
       pTile = await tileRepo.getTile(tile.id);
     }
     print('post_tile: $pTile');
+    if (pTile.type == TileType.dot) {
+      pTile = null;
+    }
 
-    if (pTile.userId == state.user?.id && pTile.content.length < 12000)
+    if (pTile != null &&
+        pTile.userId == state.user?.id &&
+        pTile.content.length < 12000)
       try {
         await p2p.addMessage(
             state.user.id,
@@ -49,15 +54,26 @@ class PostTile implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
 
+    final updatedTiles = state.tiles;
+    print('posttile: $pTile ${pTile.card}');
+    if (pTile != null) {
+      state.tiles.removeWhere((t) => t.id == pTile.id);
+      state.tiles.insert(0, pTile);
+    }
     return (RootState state) => RootState(
-        user: state.user,
-        collectionMap: state.collectionMap,
-        cardMap: state.cardMap,
-        commentMap: state.commentMap,
-        activityMap: state.activityMap,
-        tiles: pTile != null ? (state.tiles..insert(0, pTile)) : state.tiles,
-        userMap: state.userMap,
-        drawings: state.drawings,
-        templates: state.templates);
+            frontMap: {
+              'open': state.cardMap['open_7'],
+              'topic': state.cardMap['Teacher'],
+              'story': state.cardMap['18218']
+            },
+            user: state.user,
+            collectionMap: state.collectionMap,
+            cardMap: state.cardMap,
+            commentMap: state.commentMap,
+            activityMap: state.activityMap,
+            tiles: updatedTiles,
+            userMap: state.userMap,
+            drawings: state.drawings,
+            templates: state.templates);
   }
 }

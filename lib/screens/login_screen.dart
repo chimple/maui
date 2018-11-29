@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen>
   FocusNode _focusName;
   String _animationName;
   bool paused;
+  bool disabled;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen>
     _isLoading = true;
     _animationName = "signup";
     paused = false;
+    disabled = false;
 
     controller = new AnimationController(
         duration: new Duration(milliseconds: 50), vsync: this);
@@ -123,29 +125,36 @@ class _LoginScreenState extends State<LoginScreen>
 
     var size = media.size;
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return (user != null)
-        ? new WelcomeScreen()
-        : new Scaffold(
-            appBar: _isLoading
-                ? null
-                : new AppBar(
-                    backgroundColor: new Color(0xff4C5C9E),
-                    title: new Text(Loca.of(context).enterYourDetails),
-                  ),
-            body: new Container(
-              decoration: new BoxDecoration(
-                color: Colors.purple,
-              ),
-              child: _isLoading
-                  ? new SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                      child: new CircularProgressIndicator(),
-                    )
-                  : (_users?.length ?? 0) == 0
-                      ? new Container()
-                      // : new UserList(users: _users),
-                      : ListView(
+    return Scaffold(
+      appBar: _isLoading
+          ? null
+          : new AppBar(
+              backgroundColor: new Color(0xff4C5C9E),
+              title: new Text(Loca.of(context).enterYourDetails),
+            ),
+      body: new Container(
+        decoration: new BoxDecoration(
+          color: Colors.purple,
+        ),
+        child: _isLoading
+            ? new SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: new CircularProgressIndicator(),
+              )
+            : (_users?.length ?? 0) == 0
+                ? new Container()
+                // : new UserList(users: _users),
+                : ListView(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.all(20.0),
+                        child: new Column(
+                          // mainAxisAlignment:
+                          // MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
                               padding: const EdgeInsets.all(20.0),
@@ -183,159 +192,133 @@ class _LoginScreenState extends State<LoginScreen>
                                       duration: Duration(milliseconds: 1200),
                                     ),
                                   ),
-                                  new Stack(
-                                    alignment:
-                                        AlignmentDirectional.bottomCenter,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      new Container(
-                                        decoration: new BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              new BorderRadius.circular(50.0),
-                                          border: new Border.all(
-                                            width: 6.0,
-                                            color: Colors.amber,
-                                          ),
-                                        ),
-                                        child: new Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            new Padding(
-                                              padding: size.height > size.width
-                                                  ? new EdgeInsets.all(10.0)
-                                                  : new EdgeInsets.all(5.0),
-                                            ),
-                                            imagePathStore == null
-                                                ? Container(
-                                                    height: size.height >
-                                                            size.width
-                                                        ? size.height * 0.2
-                                                        : size.height * 0.075,
-                                                    width:
-                                                        size.height > size.width
-                                                            ? size.width * 0.2
-                                                            : size.width * 0.1,
-                                                    child: RaisedButton(
-                                                      splashColor: Colors.amber,
-                                                      color: Colors.white,
-                                                      shape: CircleBorder(
-                                                          side: BorderSide(
-                                                              width: 3.0,
-                                                              color: Colors
-                                                                  .amber)),
-                                                      onPressed: () =>
-                                                          getImage(context),
-                                                      child: new IconTheme(
-                                                        data: IconThemeData(
-                                                            size: size.height *
-                                                                0.05,
-                                                            color:
-                                                                Colors.amber),
-                                                        child: Icon(Icons.add),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : InkWell(
-                                                    onTap: () =>
-                                                        getImage(context),
-                                                    child: new Container(
-                                                        width: 130.0,
-                                                        height: 130.0,
-                                                        decoration:
-                                                            new BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                image:
-                                                                    new DecorationImage(
-                                                                  image: FileImage(
-                                                                      File(
-                                                                          imagePathStore)),
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ))),
-                                                  ),
-                                            new Padding(
-                                              padding: size.height > size.width
-                                                  ? new EdgeInsets.all(
-                                                      size.height * 0.1)
-                                                  : new EdgeInsets.fromLTRB(
-                                                      size.height * 0.04,
-                                                      size.height * 0.03,
-                                                      size.height * 0.04,
-                                                      size.height * 0.085),
-                                              child: new TextField(
-                                                focusNode: _focusName,
-                                                autocorrect: false,
-                                                onSubmitted: _submit(userName),
-                                                onChanged: _onTyping,
-                                                // controller:
-                                                //     TextEditingController(
-                                                //         text: userName),
-                                                decoration: new InputDecoration(
-                                                  labelStyle: TextStyle(
-                                                      color: Colors.red),
-                                                  isDense: true,
-                                                  border: const OutlineInputBorder(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                                  .all(
-                                                              const Radius
-                                                                      .circular(
-                                                                  10.0)),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              style: BorderStyle
-                                                                  .solid,
-                                                              width: 100.0,
-                                                              color: Colors
-                                                                  .amber)),
-                                                  hintText: Loca.of(context)
-                                                      .writeYourName,
+                                      new Padding(
+                                        padding: size.height > size.width
+                                            ? new EdgeInsets.all(10.0)
+                                            : new EdgeInsets.all(5.0),
+                                      ),
+                                      imagePathStore == null
+                                          ? Container(
+                                              height: size.height > size.width
+                                                  ? size.height * 0.2
+                                                  : size.height * 0.075,
+                                              width: size.height > size.width
+                                                  ? size.width * 0.2
+                                                  : size.width * 0.1,
+                                              child: RaisedButton(
+                                                splashColor: Colors.amber,
+                                                color: Colors.white,
+                                                shape: CircleBorder(
+                                                    side: BorderSide(
+                                                        width: 3.0,
+                                                        color: Colors.amber)),
+                                                onPressed: () =>
+                                                    getImage(context),
+                                                child: new IconTheme(
+                                                  data: IconThemeData(
+                                                      size: size.height * 0.05,
+                                                      color: Colors.amber),
+                                                  child: Icon(Icons.add),
                                                 ),
                                               ),
+                                            )
+                                          : InkWell(
+                                              onTap: () => getImage(context),
+                                              child: new Container(
+                                                  width: 130.0,
+                                                  height: 130.0,
+                                                  decoration: new BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          new DecorationImage(
+                                                        image: FileImage(File(
+                                                            imagePathStore)),
+                                                        fit: BoxFit.fill,
+                                                      ))),
                                             ),
-                                          ],
+                                      new Padding(
+                                        padding: size.height > size.width
+                                            ? new EdgeInsets.all(
+                                                size.height * 0.1)
+                                            : new EdgeInsets.fromLTRB(
+                                                size.height * 0.04,
+                                                size.height * 0.03,
+                                                size.height * 0.04,
+                                                size.height * 0.085),
+                                        child: new TextField(
+                                          focusNode: _focusName,
+                                          autocorrect: false,
+                                          onSubmitted: _submit(userName),
+                                          onChanged: _onTyping,
+                                          // controller:
+                                          //     TextEditingController(
+                                          //         text: userName),
+                                          decoration: new InputDecoration(
+                                            labelStyle:
+                                                TextStyle(color: Colors.red),
+                                            isDense: true,
+                                            border: const OutlineInputBorder(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        const Radius.circular(
+                                                            10.0)),
+                                                borderSide: const BorderSide(
+                                                    style: BorderStyle.solid,
+                                                    width: 100.0,
+                                                    color: Colors.amber)),
+                                            hintText:
+                                                Loca.of(context).writeYourName,
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: new EdgeInsets.all(20.0),
-                                        child: new InkWell(
-                                          onTap: tabSreen,
-                                          splashColor: Colors.amber,
-                                          child: new Shake(
-                                              animation: shakeAnimation,
-                                              child: new Container(
-                                                  // alignment:
-                                                  //     Alignment(0.0, 0.5),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                            const Radius
-                                                                    .circular(
-                                                                16.0)),
-                                                    color: Colors.amber,
-                                                  ),
-                                                  height: size.height * 0.06,
-                                                  width: size.width * 0.2,
-                                                  child: new Icon(
-                                                      Icons
-                                                          .keyboard_arrow_right,
-                                                      color: Colors.white,
-                                                      size: 50.0))),
-                                        ),
-                                      )
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Padding(
+                                  padding: new EdgeInsets.all(20.0),
+                                  child: new InkWell(
+                                    onTap: disabled ? null : tabSreen,
+                                    splashColor: Colors.amber,
+                                    child: new Shake(
+                                        animation: shakeAnimation,
+                                        child: new Container(
+                                            // alignment:
+                                            //     Alignment(0.0, 0.5),
+                                            decoration: BoxDecoration(
+                                              borderRadius: const BorderRadius
+                                                      .all(
+                                                  const Radius.circular(16.0)),
+                                              color: Colors.amber,
+                                            ),
+                                            height: size.height * 0.06,
+                                            width: size.width * 0.2,
+                                            child: disabled
+                                                ? Center(
+                                                    child: SizedBox(
+                                                        height: 16.0,
+                                                        width: 16.0,
+                                                        child:
+                                                            CircularProgressIndicator()))
+                                                : Icon(
+                                                    Icons.keyboard_arrow_right,
+                                                    color: Colors.white,
+                                                    size: 50.0))),
+                                  ),
+                                )
+                              ],
                             ),
                           ],
                         ),
-            ),
-          );
+                      ),
+                    ],
+                  ),
+      ),
+    );
   }
 
   _onTyping(String name) {
@@ -349,24 +332,31 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   String compressedImage;
-  @override
-  void didChangeDependencies() {
-    if (imagePathStore != null) {
-      compressImage(imagePathStore).then((s) {
-        compressedImage = s;
-      });
-    }
-    super.didChangeDependencies();
-  }
+//  @override
+//  void didChangeDependencies() {
+//    if (imagePathStore != null) {
+//      compressImage(imagePathStore).then((s) {
+//        compressedImage = s;
+//      });
+//    }
+//    super.didChangeDependencies();
+//  }
 
-  void tabSreen() async {
+  void tabSreen() {
     if (imagePathStore != null && userName != '' && userName != null) {
-      user = await new UserRepo().insertLocalUser(new User(
-          image: compressedImage,
-          currentLessonId: 1,
-          name: userName,
-          points: 100));
-      AppStateContainer.of(context).setLoggedInUser(user);
+      setState(() {
+        disabled = true;
+      });
+      compressImage(imagePathStore).then((s) async {
+        compressedImage = s;
+        user = await new UserRepo().insertLocalUser(new User(
+            image: compressedImage,
+            currentLessonId: 1,
+            name: userName,
+            points: 100));
+        AppStateContainer.of(context).setLoggedInUser(user);
+        Navigator.of(context).pushReplacementNamed('/welcome');
+      });
     } else {
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -392,9 +382,9 @@ Future<String> compressImage(String imagePath) async {
 //  print("image original ht and wid: ${image.height} , ${image.width}");
   var cp = Img.copyResize(
     image,
-    56,
+    64,
   );
-  var c = File(filePath)..writeAsBytesSync(Img.encodeJpg(image, quality: 15));
+  var c = File(filePath)..writeAsBytesSync(Img.encodePng(cp));
 //  print("compressed image:: ${cp.height}, ${cp.width}");
   return c.path;
 }
