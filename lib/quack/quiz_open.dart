@@ -63,11 +63,23 @@ class QuizOpenState extends State<QuizOpen> {
           onSubmitted: _handleSubmitted,
         ),
       ),
-      IconButton(
-        icon: Icon(Icons.send),
-        onPressed:
-            _isComposing ? () => _handleSubmitted(_textController.text) : null,
-      )
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  const BorderRadius.all(const Radius.circular(32.0))),
+          color: Color(0xFF0E4476),
+          padding: EdgeInsets.all(8.0),
+          onPressed: _isComposing
+              ? () => _handleSubmitted(_textController.text)
+              : null,
+          child: Text(
+            'Post',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
     ]);
   }
 

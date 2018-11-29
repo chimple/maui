@@ -122,6 +122,7 @@ AND ${Tile.table}.${Tile.typeCol} != ?
 ''',
             whereArgs: [TileType.dot.index],
             orderBy: '${Tile.table}.${Tile.updatedAtCol} DESC',
+            limit: 1000,
             columns: Tile.allCols);
     return maps.map((el) => new Tile.fromMap(el)).toList();
   }
