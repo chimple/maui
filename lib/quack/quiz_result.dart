@@ -7,6 +7,7 @@ import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 
@@ -56,6 +57,7 @@ class QuizResultState extends State<QuizResult> {
       score += max(0, correct);
       total += answer;
     });
+    writeLog('topic_score,$score,$total');
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Provider.dispatch<RootState>(context, UpdatePoints(points: score));
     });
