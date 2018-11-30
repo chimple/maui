@@ -5,6 +5,7 @@ import 'package:maui/db/entity/home.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/repos/home_page_repo.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/screens/comment_list_view.dart';
 import 'package:maui/repos/likes_repo.dart';
 import 'package:flutter/material.dart';
@@ -330,7 +331,7 @@ class AnimatedCommentBox extends StatelessWidget {
           child: new Container(
               child: new Center(
                 child: new Text(
-                  "Comment",
+                  Loca.of(context).comment,
                   style: new TextStyle(fontSize: 30.0),
                 ),
               ),

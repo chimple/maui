@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/card_summary.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
@@ -12,7 +13,7 @@ class StoryPage extends StatelessWidget {
     final media = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stories'),
+        title: Text(Loca.of(context).stories),
       ),
       body: Connect<RootState, List<QuackCard>>(
         convert: (state) => state.collectionMap['story']

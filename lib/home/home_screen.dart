@@ -8,6 +8,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/tile_card.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/app.dart';
 import 'package:maui/screens/game_list_view.dart';
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                         context: context,
-                        name: 'Discuss',
+                        name: Loca.of(context).discuss,
                         color: Color(0xFFE37825),
                         child: CardSummary(
                           card: frontMap['open'],
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                           context: context,
-                          name: 'Story',
+                          name: Loca.of(context).story,
                           routeName: '/stories',
                           color: Color(0xFFEE4069),
                           child: CardSummary(
@@ -57,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                         context: context,
-                        name: 'Topic',
+                        name: Loca.of(context).topic,
                         routeName: '/topics',
                         color: Color(0xFFFED060),
                         child: CardSummary(
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                         context: context,
-                        name: 'Game',
+                        name: Loca.of(context).game,
                         routeName: '/games',
                         color: Color(0xFF7FC4EC),
                         child: Column(
@@ -197,7 +198,7 @@ class HomeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        routeName == null ? '' : 'See All',
+                        routeName == null ? '' : Loca.of(context).seeAll,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

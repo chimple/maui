@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/loca.dart';
 
 class SignIn extends StatelessWidget {
   SignIn();
@@ -13,7 +14,7 @@ class SignIn extends StatelessWidget {
         borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
       ),
       child: new Text(
-        "Sign In",
+        Loca.of(context).signIn,
         style: new TextStyle(
           color: Colors.amber,
           fontSize: 36.0,

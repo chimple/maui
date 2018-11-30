@@ -62,10 +62,9 @@ class PostTile implements AsyncAction<RootState> {
       state.tiles.removeWhere((t) => t.id == pTile.id);
       state.tiles.insert(0, pTile);
     }
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
-        frontMap: frontMap,
+        frontMap: state.frontMap,
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,

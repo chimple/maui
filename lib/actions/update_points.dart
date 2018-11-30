@@ -25,10 +25,9 @@ class UpdatePoints implements AsyncAction<RootState> {
     final user = state.user;
     user.points = (user.points ?? 0) + points;
     userRepo.update(user);
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
-        frontMap: frontMap,
+        frontMap: state.frontMap,
         user: user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
