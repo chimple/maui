@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_pager.dart';
 import 'package:maui/quack/card_summary.dart';
@@ -46,7 +47,7 @@ class KnowledgeButton extends StatelessWidget {
                     }));
                   },
                   child: Text(
-                    'Next',
+                    Loca.of(context).next,
                     style: TextStyle(color: Colors.white),
                   ),
                 )

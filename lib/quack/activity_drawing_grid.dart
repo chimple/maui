@@ -6,6 +6,7 @@ import 'package:maui/db/entity/comment.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/template_grid.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/db/entity/tile.dart';
@@ -52,7 +53,7 @@ class ActivityDrawingGrid extends StatelessWidget {
       title: new Container(
           height: MediaQuery.of(context).size.height * .06,
           color: Colors.blue,
-          child: new Center(child: new Text("Choose a template"))),
+          child: new Center(child: new Text(Loca.of(context).chooseATemplate))),
       children: <Widget>[
         new Container(
             width: MediaQuery.of(context).size.width / 1.5,

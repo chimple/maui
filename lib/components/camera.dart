@@ -7,6 +7,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/loca.dart';
 
 import 'package:native_device_orientation/native_device_orientation.dart';
 
@@ -275,7 +276,7 @@ class _CameraControllerState extends State<CameraScreen>
                     new SizedBox(
                       width: 20.0,
                     ),
-                    new Text("Please wait..."),
+                    new Text(Loca.of(context).pleaseWait),
                   ],
                 ),
               ],

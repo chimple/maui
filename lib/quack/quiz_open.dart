@@ -7,6 +7,7 @@ import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_stack.dart';
@@ -59,7 +60,7 @@ class QuizOpenState extends State<QuizOpen> {
               fillColor: Colors.grey[110],
               filled: true,
               border: InputBorder.none,
-              hintText: 'Write Something '),
+              hintText: Loca.of(context).writeSomething),
           onSubmitted: _handleSubmitted,
         ),
       ),
@@ -75,7 +76,7 @@ class QuizOpenState extends State<QuizOpen> {
               ? () => _handleSubmitted(_textController.text)
               : null,
           child: Text(
-            'Post',
+            Loca.of(context).post,
             style: TextStyle(color: Colors.white),
           ),
         ),
