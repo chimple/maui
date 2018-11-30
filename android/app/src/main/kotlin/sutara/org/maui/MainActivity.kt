@@ -28,6 +28,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    println("onCreate")
     GeneratedPluginRegistrant.registerWith(this)
     tts = TextToSpeech(this, this)
     println("RiveScript")
@@ -72,7 +73,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   }
 
   override fun onInit(status: Int) {
-
+    println("onInit")
     if (status == TextToSpeech.SUCCESS) {
       // set US English as language for tts
       val result = tts!!.setLanguage(Locale.US)
@@ -89,6 +90,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
 
   override fun onResume() {
     super.onResume()
+    println("onResume")
     val intent = Intent()
     intent.setClassName("org.chimple.bali", "org.chimple.bali.service.TollBroadcastReceiver")
     intent.putExtra("onResume", "sutara.org.maui")
@@ -97,6 +99,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
 
   override fun onPause() {
     super.onPause()
+    println("onPause")
     val intent = Intent()
     intent.setClassName("org.chimple.bali", "org.chimple.bali.service.TollBroadcastReceiver")
     intent.putExtra("onPause", "sutara.org.maui")
@@ -104,6 +107,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   }
 
   public override fun onDestroy() {
+    println("onDestroy")
     P2PContext.getInstance().onCleanUp();
     MulticastManager.getInstance(this).onCleanUp()
     BluetoothManager.getInstance(this).onCleanUp()

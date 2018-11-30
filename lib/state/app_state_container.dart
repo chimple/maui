@@ -293,7 +293,7 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
     writeLog(
-        "msg,${state.loggedInUser.id},${message['userId']},${message['messageType']},${message['message']}}");
+        "msg,${message['userId']},${message['messageType']},${message['message']}}");
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
