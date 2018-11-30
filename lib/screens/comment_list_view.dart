@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:maui/db/entity/comments.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/comments_repo.dart';
 import 'package:maui/repos/user_repo.dart';
@@ -92,7 +93,7 @@ class _CommentListViewState extends State<CommentListView> {
                     key: new Key(
                       index.toString(),
                     ),
-                    hint: new Text("options"),
+                    hint: new Text(Loca.of(context).options),
                     onChanged: (value) async {
                       if (value == "delete") {
                         setState(() => _isLoading = true);
@@ -110,11 +111,11 @@ class _CommentListViewState extends State<CommentListView> {
                     items: <DropdownMenuItem>[
                       new DropdownMenuItem(
                         value: "edit",
-                        child: new Text("edit"),
+                        child: new Text(Loca.of(context).edit),
                       ),
                       new DropdownMenuItem(
                         value: "delete",
-                        child: new Text("delete"),
+                        child: new Text(Loca.of(context).delete),
                       ),
                     ],
                   ),

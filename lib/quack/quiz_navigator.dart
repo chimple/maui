@@ -4,6 +4,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/knowledge_detail.dart';
@@ -122,10 +123,9 @@ class QuizNavigatorState extends State<QuizNavigator> {
                                     onPressed: _onPressed(context),
                                     child: Text(
                                       mode == NavigatorMode.result
-                                          ? 'Next'
-                                          : 'Check',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 32.0),
+                                          ? Loca.of(context).next
+                                          : Loca.of(context).check,
+                                      style: TextStyle(color: Colors.white, fontSize: 32.0),
                                     ),
                                   ),
                                 ),

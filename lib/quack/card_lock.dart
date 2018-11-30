@@ -7,6 +7,7 @@ import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/state/app_state_container.dart';
 import '../actions/update_points.dart';
@@ -172,7 +173,7 @@ class DialogContentState extends State<DialogContent> {
                     ),
                     child: Center(
                       child: new Text(
-                        'Your Points- ${widget.initialPoints}',
+                       '${Loca.of(context).yourPoints} ${widget.initialPoints}',
                         style: TextStyle(
                             color: Colors.white,
                             fontStyle: FontStyle.normal,
@@ -211,7 +212,7 @@ class DialogContentState extends State<DialogContent> {
                             Expanded(
                               child: Center(
                                   child: new Text(
-                                "Cost is - 5",
+                                Loca.of(context).costIs,
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,
@@ -234,7 +235,7 @@ class DialogContentState extends State<DialogContent> {
                                       onPressed: widget.onPressed,
                                       child: Center(
                                         child: Text(
-                                          "Buy",
+                                          Loca.of(context).buy,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontStyle: FontStyle.normal,

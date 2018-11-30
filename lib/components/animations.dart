@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/post_comments.dart';
 import 'package:nima/nima_actor.dart';
 import 'package:maui/components/drawing_wrapper.dart';
@@ -158,7 +159,7 @@ class AnimationsState extends State<Animations> {
                             );
                           },
                           child: new Text(
-                            'Draw',
+                            Loca.of(context).draw,
                             style: new TextStyle(
                                 fontSize: 40.0,
                                 color: Colors.white,
@@ -180,7 +181,7 @@ class AnimationsState extends State<Animations> {
                             );
                           },
                           child: new Text(
-                            'Post',
+                            Loca.of(context).post,
                             style: new TextStyle(
                                 fontSize: 40.0,
                                 color: Colors.white,
