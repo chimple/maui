@@ -33,6 +33,7 @@ class AddProgress implements AsyncAction<RootState> {
 
     print('index: $index $parentCardId');
     final userActivity = state.activityMap[parentCardId] ?? UserActivity();
+    var frontMap = state.frontMap;
     if ((userActivity.done ?? -1) < index) {
       print('userActivity: ${state.activityMap}');
       userActivity.done = index;
@@ -43,8 +44,10 @@ class AddProgress implements AsyncAction<RootState> {
       state.activityMap[parentCardId] = userActivity;
       print('userActivity: $userActivity');
       prefs.setString('userActivity', json.encode(state.activityMap));
+      if (userActivity.done >= userActivity.total) {
+        frontMap = await FetchInitialData.fetchFrontMap(state);
+      }
     }
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
         frontMap: frontMap,
