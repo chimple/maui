@@ -93,6 +93,20 @@ class QuizResultState extends State<QuizResult> {
                     // fit: StackFit.expand,
 
                     children: <Widget>[
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: new Container(
+                          // alignment: new FractionalOffset(0.0, 1.0),
+                          child: FloatingActionButton(
+                            heroTag: "Go to home",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            tooltip: 'Go to home',
+                            child: Image.asset('assets/home_icon.png'),
+                          ),
+                        ),
+                      ),
                       Transform.scale(
                         alignment: Alignment.center,
                         scale: .85,
