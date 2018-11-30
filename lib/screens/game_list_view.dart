@@ -78,7 +78,7 @@ class GameListViewState extends State<GameListView> {
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Games'),
+        title: Text(Loca.of(context).games),
       ),
       body: Container(
         color: Color(0xFFFFFFFF),
