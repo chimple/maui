@@ -61,6 +61,7 @@ class QuizSelectionState extends State<QuizSelection> {
       }
       _startChoices.shuffle();
       _endChoices.shuffle();
+      _answers.shuffle();
 //      _numRows = widget.quizItems.length ~/ 2 +
 //          ((widget.quiz.type == QuizType.pair) ? 0 : 1);
       _numRows = (widget.quizItems.length / 2).ceil();
@@ -190,6 +191,8 @@ class QuizSelectionState extends State<QuizSelection> {
                 clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 child: (quizItem.text?.endsWith('jpg') ||
+                        quizItem.text?.endsWith('JPG') ||
+                        quizItem.text?.endsWith('jp2') ||
                         quizItem.text?.endsWith('jpeg') ||
                         quizItem.text?.endsWith('gif'))
                     ? AspectRatio(

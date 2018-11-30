@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -77,22 +78,19 @@ class AddComment implements AsyncAction<RootState> {
         print('Exception details:\n $e');
         print('Stack trace:\n $s');
       }
+    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
-            frontMap: {
-              'open': state.cardMap['open_7'],
-              'topic': state.cardMap['Teacher'],
-              'story': state.cardMap['18218']
-            },
-            user: state.user,
-            collectionMap: state.collectionMap,
-            cardMap: state.cardMap,
-            activityMap: state.activityMap,
-            commentMap: addTile ? state.commentMap : state.commentMap
-              ..[comment.parentId].insert(0, comment),
-            tiles: tile == null ? state.tiles : (state.tiles..insert(0, tile)),
-            drawings: state.drawings,
-            userMap: state.userMap,
-            templates: state.templates);
+        frontMap: frontMap,
+        user: state.user,
+        collectionMap: state.collectionMap,
+        cardMap: state.cardMap,
+        activityMap: state.activityMap,
+        commentMap: addTile ? state.commentMap : state.commentMap
+          ..[comment.parentId].insert(0, comment),
+        tiles: tile == null ? state.tiles : (state.tiles..insert(0, tile)),
+        drawings: state.drawings,
+        userMap: state.userMap,
+        templates: state.templates);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -92,13 +93,11 @@ class AddLike implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
     }
+    final frontMap = await FetchInitialData.fetchFrontMap(state);
+
     return (RootState state) {
       return RootState(
-          frontMap: {
-            'open': state.cardMap['open_7'],
-            'topic': state.cardMap['Teacher'],
-            'story': state.cardMap['18218']
-          },
+          frontMap: frontMap,
           user: state.user,
           collectionMap: state.collectionMap,
           cardMap: state.cardMap,

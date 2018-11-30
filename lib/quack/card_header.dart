@@ -33,7 +33,10 @@ class CardHeader extends StatelessWidget {
         ),
       );
     } else if (card.header?.endsWith('png') ||
+        card.header?.endsWith('JPG') ||
+        card.header?.endsWith('jp2') ||
         card.header?.endsWith('jpg') ||
+        card.header?.endsWith('gif') ||
         card.header?.endsWith('jpeg')) {
       return Hero(
         tag: '$parentCardId/${card.type}/${card.id}',
