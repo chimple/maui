@@ -18,7 +18,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final crossAxisCount = (media.size.width / 400.0).floor();
+//    final crossAxisCount = (media.size.width / 400.0).floor();
+    final crossAxisCount = 2;
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
     return CustomScrollView(
       slivers: <Widget>[
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                         context: context,
-                        name: Loca.of(context).discuss,
+                        name: Loca.of(context).post,
                         color: Color(0xFFE37825),
                         child: CardSummary(
                           card: frontMap['open'],

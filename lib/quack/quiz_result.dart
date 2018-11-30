@@ -124,30 +124,32 @@ class QuizResultState extends State<QuizResult> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Container(
-                          height: 100.0,
+                      total == 0
+                          ? Container()
+                          : Align(
+                              alignment: AlignmentDirectional.bottomCenter,
+                              child: Container(
+                                height: 100.0,
 
-                          width: 200.0,
+                                width: 200.0,
 
-                          // padding: EdgeInsets.only(bottom: 30.0),
+                                // padding: EdgeInsets.only(bottom: 30.0),
 
-                          decoration: ShapeDecoration(
-                              color: Colors.orangeAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(40.0),
-                                    right: Radius.circular(40.0)),
-                              )),
-                          child: Center(
-                              child: Text(
-                            '$score / $total',
-                            style:
-                                TextStyle(fontSize: 40.0, color: Colors.white),
-                          )),
-                        ),
-                      )
+                                decoration: ShapeDecoration(
+                                    color: Colors.orangeAccent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(40.0),
+                                          right: Radius.circular(40.0)),
+                                    )),
+                                child: Center(
+                                    child: Text(
+                                  '$score / $total',
+                                  style: TextStyle(
+                                      fontSize: 40.0, color: Colors.white),
+                                )),
+                              ),
+                            )
                     ],
                   ),
                 ),
