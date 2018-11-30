@@ -748,5 +748,160 @@
      "@writeYourName": {
        "type": "text",
        "placeholders": {}
-     }
+     },
+  "gallery": "Sanaa",
+  "@gallery": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "collection": "Ukusanyaji",
+  "@collection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "progress": "Maendeleo",
+  "@progress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home": "Nyumbani",
+  "@home": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile": "Profaili",
+  "@profile": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addAComment": "Ongeza maoni",
+  "@addAComment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "draw": "Chora",
+  "@draw": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "post": "Chapisho",
+  "@post": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseWait": "Tafadhali subiri...",
+  "@pleaseWait": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signIn": "Weka sahihi",
+  "@signIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loading": "Inapakia...",
+  "@loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "seeAll": "Ona yote",
+  "@seeAll": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chooseATemplate": "Chagua picha",
+  "@chooseATemplate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yourPoints": "Pointi yako -",
+  "@yourPoints": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "costIs": "Gharama ni - 5",
+  "@costIs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "buy": "Nunua",
+  "@buy": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "next": "Ifuatayo",
+  "@next": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "check": "Angalia",
+  "@check": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "topics": "Mada",
+  "@topics": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "writeSomething": "Andika Kitu",
+  "@writeSomething": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stories": "Hadithi",
+  "@stories": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "answerThis": "Jibu hili",
+  "@answerThis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hoodie": "Hoodie",
+  "@hoodie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "send": "Tuma",
+  "@send": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "options": "Chaguo",
+  "@options": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Badilisha",
+  "@edit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Futa",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "games": "Michezo",
+  "@games": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment": "Maoni",
+  "@comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "story": "Hadithi",
+  "@story": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "topic": "Mada",
+  "@topic": {
+    "type": "text",
+    "placeholders": {}
+  }
 }
