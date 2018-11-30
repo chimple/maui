@@ -114,6 +114,7 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
       tts!!.stop()
       tts!!.shutdown()
     }
+    P2PContext.getInstance().onCleanUp();
     MulticastManager.getInstance(this).onCleanUp()
     BluetoothManager.getInstance(this).onCleanUp()
     super.onDestroy()
