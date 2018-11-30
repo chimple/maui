@@ -57,7 +57,7 @@ class TileCard extends StatelessWidget {
         return _buildTile(
             context: context,
             tile: tile,
-            header: Image.asset('assets/forest.png'),
+            header: Image.asset('assets/comment_icon.png'),
             title: tile.content,
             user: tile.user,
             trailer: SocialSummary(
