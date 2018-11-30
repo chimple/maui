@@ -104,14 +104,15 @@ class MainActivity(): FlutterActivity(),TextToSpeech.OnInitListener {
   }
 
   public override fun onDestroy() {
+    P2PContext.getInstance().onCleanUp();
+    MulticastManager.getInstance(this).onCleanUp()
+    BluetoothManager.getInstance(this).onCleanUp()
+
     // Shutdown TTS
     if (tts != null) {
       tts!!.stop()
       tts!!.shutdown()
     }
-    P2PContext.getInstance().onCleanUp();
-    MulticastManager.getInstance(this).onCleanUp()
-    BluetoothManager.getInstance(this).onCleanUp()
     super.onDestroy()
   }
 
