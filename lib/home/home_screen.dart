@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -20,114 +22,107 @@ class HomeScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['open']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Discuss',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                        parentCardId: 'open',
+          child: Connect<RootState, Map<String, QuackCard>>(
+              convert: (state) => state.frontMap,
+              where: (prev, next) => true,
+              builder: (frontMap) {
+                final gameNum = Random().nextInt(gameNames.length);
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Discuss',
+                        color: Color(0xFFE37825),
+                        child: CardSummary(
+                          card: frontMap['open'],
+                          parentCardId: 'open',
+                        ),
                       ),
                     ),
-                  );
-                },
-              ),
-              Connect<RootState, List<QuackCard>>(
-                  convert: (state) => state.collectionMap['story']
-                      .map((cardId) => state.cardMap[cardId])
-                      .toList(growable: false),
-                  where: (prev, next) => true,
-                  builder: (cards) {
-                    return Expanded(
+                    Expanded(
                       flex: 1,
                       child: _buildBox(
                           context: context,
                           name: 'Story',
                           routeName: '/stories',
+                          color: Color(0xFFEE4069),
                           child: CardSummary(
-                            card: cards[0],
+                            card: frontMap['story'],
                           )),
-                    );
-                  }),
-              Connect<RootState, List<QuackCard>>(
-                convert: (state) => state.collectionMap['Animals']
-                    .map((cardId) => state.cardMap[cardId])
-                    .toList(growable: false),
-                where: (prev, next) => true,
-                builder: (cards) {
-                  return Expanded(
-                    flex: 1,
-                    child: _buildBox(
-                      context: context,
-                      name: 'Topic',
-                      routeName: '/topics',
-                      child: CardSummary(
-                        card: cards[0],
-                      ),
                     ),
-                  );
-                },
-              ),
-              Expanded(
-                flex: 1,
-                child: _buildBox(
-                  context: context,
-                  name: 'Game',
-                  routeName: '/games',
-                  child: Column(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return SelectOpponentScreen(
-                              gameName: gameNames[0].item1,
-                            );
-                          }));
-                        },
-                        child: Material(
-                          elevation: 8.0,
-                          borderRadius: const BorderRadius.all(
-                              const Radius.circular(16.0)),
-                          clipBehavior: Clip.antiAlias,
-                          color: SingleGame.gameColors[gameNames[0].item1][0],
-                          child: Stack(
-                            children: <Widget>[
-                              Image.asset(
-                                  "assets/background_image/${gameNames[0].item1}_small.png"),
-                              Hero(
-                                tag: "assets/hoodie/${gameNames[0].item1}.png",
-                                child: Image.asset(
-                                  "assets/hoodie/${gameNames[0].item1}.png",
-                                  scale: 0.2,
-                                ),
-                              ),
-                            ],
-                          ),
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Topic',
+                        routeName: '/topics',
+                        color: Color(0xFFFED060),
+                        child: CardSummary(
+                          card: frontMap['topic'],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(gameNames[0].item2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: _buildBox(
+                        context: context,
+                        name: 'Game',
+                        routeName: '/games',
+                        color: Color(0xFF7FC4EC),
+                        child: Column(
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute<void>(
+                                        builder: (BuildContext context) {
+                                  return SelectOpponentScreen(
+                                    gameName: gameNames[gameNum].item1,
+                                  );
+                                }));
+                              },
+                              child: Material(
+                                elevation: 8.0,
+                                borderRadius: const BorderRadius.all(
+                                    const Radius.circular(16.0)),
+                                clipBehavior: Clip.antiAlias,
+                                color: SingleGame.gameColors[gameNames[0].item1]
+                                    [0],
+                                child: Stack(
+                                  children: <Widget>[
+                                    Image.asset(
+                                        "assets/background_image/${gameNames[gameNum].item1}_small.png"),
+                                    Hero(
+                                      tag:
+                                          "assets/hoodie/${gameNames[gameNum].item1}.png",
+                                      child: Image.asset(
+                                        "assets/hoodie/${gameNames[gameNum].item1}.png",
+                                        scale: 0.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(gameNames[gameNum].item2),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
         ),
+        SliverToBoxAdapter(
+            child: Divider(
+          height: 32.0,
+        )),
         Connect<RootState, List<Tile>>(
           convert: (state) => state.tiles,
           where: (prev, next) => true,
@@ -166,34 +161,50 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBox(
-      {BuildContext context, String name, String routeName, Widget child}) {
+      {BuildContext context,
+      String name,
+      String routeName,
+      Widget child,
+      Color color}) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: InkWell(
+              onTap: routeName == null
+                  ? null
+                  : () => Navigator.of(context).pushNamed(routeName),
+              child: Container(
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(32.0)),
+                  color: color,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          name,
+                          style: TextStyle(color: Colors.white),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        routeName == null ? '' : 'See All',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () => Navigator.of(context).pushNamed(routeName),
-                  child: Text(
-                    'See All',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           child,
         ],

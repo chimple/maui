@@ -178,14 +178,14 @@ class AudioTextBoldState extends State<AudioTextBold> {
                         vertical: 16.0, horizontal: 8.0),
                     child: Text(
                       widget.card.title ?? '',
-                      style: Theme.of(context).textTheme.subhead,
+                      style: Theme.of(context).textTheme.display1,
                     ),
                   ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: !isPlaying
                   ? Text(widget.card.content ?? '',
-                      style: Theme.of(context).textTheme.body2)
+                      style: Theme.of(context).textTheme.display1)
                   : TextAudio(
                       audiofile: widget.card.contentAudio,
                       fulltext: widget.card.content ?? '',

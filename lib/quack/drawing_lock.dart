@@ -56,7 +56,7 @@ class DrawingLockState extends State<DrawingLock> {
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
-    Provider.dispatch<RootState>(context, UpdatePoints(points: -1));
+    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
   }
 
   @override

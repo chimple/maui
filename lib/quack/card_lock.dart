@@ -55,13 +55,13 @@ class CardLockState extends State<CardLock> {
         builder: (BuildContext context) {
           return DialogContent(
               onPressed: onPressed,
-              initialPoints: initialPoints - 1,
+              initialPoints: initialPoints - 5,
               onCompleteNima: onCompleteNima,
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
 
-    Provider.dispatch<RootState>(context, UpdatePoints(points: -1));
+    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
   }
 
   @override
@@ -73,7 +73,7 @@ class CardLockState extends State<CardLock> {
       builder: (progress) {
         return progress == null
             ? InkWell(
-                onTap: () => initialPoints < 3
+                onTap: () => initialPoints < 5
                     ? showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -132,7 +132,7 @@ class DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     if (widget.shouldDisplayNima)
-      _animation = widget.initialPoints > 2 ? 'happy' : 'sad';
+      _animation = widget.initialPoints > 5 ? 'happy' : 'sad';
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
 
@@ -211,7 +211,7 @@ class DialogContentState extends State<DialogContent> {
                             Expanded(
                               child: Center(
                                   child: new Text(
-                                "Cost is - 3",
+                                "Cost is - 5",
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,

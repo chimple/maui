@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -9,6 +10,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 
@@ -44,7 +46,7 @@ class PostTile implements AsyncAction<RootState> {
             state.user.id,
             '0',
             'tile',
-            '${pTile.id}*${pTile.type.index}*${pTile.cardId}*${pTile.content}',
+            '${pTile.id}${floresSeparator}${pTile.type.index}${floresSeparator}${pTile.cardId}${floresSeparator}${pTile.content}',
             true,
             '');
       } on PlatformException {
@@ -60,7 +62,10 @@ class PostTile implements AsyncAction<RootState> {
       state.tiles.removeWhere((t) => t.id == pTile.id);
       state.tiles.insert(0, pTile);
     }
+    final frontMap = await FetchInitialData.fetchFrontMap(state);
+
     return (RootState state) => RootState(
+        frontMap: frontMap,
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,

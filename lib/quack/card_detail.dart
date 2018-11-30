@@ -48,6 +48,7 @@ class CardDetail extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         card.content ?? '',
+        style: Theme.of(context).textTheme.display1,
       ),
     )));
     scrollViewWidgets.addAll([

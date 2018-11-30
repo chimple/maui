@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -75,8 +76,10 @@ class FetchCardDetail implements AsyncAction<RootState> {
 
     final comments =
         await commentRepo.getCommentsByParentId(cardId, TileType.card);
+    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
+        frontMap: frontMap,
         user: state.user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
