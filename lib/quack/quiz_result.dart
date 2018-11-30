@@ -97,7 +97,8 @@ class QuizResultState extends State<QuizResult> {
                         alignment: Alignment.center,
                         scale: .85,
                         child: Padding(
-                          padding:new EdgeInsets.only(right: media.size.width * 0.08),
+                          padding: new EdgeInsets.only(
+                              right: media.size.width * 0.08),
                           child: new NimaActor(
                             "assets/quack",
                             alignment: Alignment.center,
@@ -149,7 +150,8 @@ class QuizResultState extends State<QuizResult> {
                             });
                           },
                           children: widget.quizzes
-                              .where((q) => q.type == CardType.question)
+                              .where((q) => (q.type == CardType.question &&
+                                  q.option != 'open'))
                               .map(
                                 (q) => ExpansionPanel(
                                       isExpanded: (_expandedPanel == index++)

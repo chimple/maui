@@ -55,7 +55,7 @@ class CardLockState extends State<CardLock> {
         builder: (BuildContext context) {
           return DialogContent(
               onPressed: onPressed,
-              initialPoints: initialPoints - 1,
+              initialPoints: initialPoints - 5,
               onCompleteNima: onCompleteNima,
               shouldDisplayNima: true);
         },
@@ -132,7 +132,7 @@ class DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     if (widget.shouldDisplayNima)
-      _animation = widget.initialPoints > 2 ? 'happy' : 'sad';
+      _animation = widget.initialPoints > 5 ? 'happy' : 'sad';
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
 

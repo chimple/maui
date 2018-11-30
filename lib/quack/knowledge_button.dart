@@ -23,14 +23,14 @@ class KnowledgeButton extends StatelessWidget {
       where: (prev, next) => next != prev,
       builder: (cardList) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(32.0),
           child: cardList.length > 0
               ? RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius:
                           const BorderRadius.all(const Radius.circular(32.0))),
                   color: Color(0xFF0E4476),
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(16.0),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                         new MaterialPageRoute(builder: (BuildContext context) {
@@ -47,7 +47,7 @@ class KnowledgeButton extends StatelessWidget {
                   },
                   child: Text(
                     'Next',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 32.0),
                   ),
                 )
               : Container(),
