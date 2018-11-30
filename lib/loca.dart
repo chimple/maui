@@ -195,6 +195,35 @@ class Loca {
   String get writeYourName =>
       Intl.message('Write your name...', name: 'writeYourName');
   String get addAComment => Intl.message('Add a comment', name: 'addAComment');
+
+  String get draw => Intl.message('Draw', name: 'draw');
+  String get post => Intl.message('Post', name: 'post');
+  String get pleaseWait => Intl.message('Please wait...', name: 'pleaseWait');
+  String get signIn => Intl.message('Sign In', name: 'signIn');
+  String get loading => Intl.message('Loading...', name: 'loading');
+  String get seeAll => Intl.message('See All', name: 'seeAll');
+  String get chooseATemplate =>
+      Intl.message('Choose a template', name: 'chooseATemplate');
+  String get yourPoints => Intl.message('Your Points -', name: 'yourPoints');
+  String get costIs => Intl.message('Cost is - 5', name: 'costIs');
+  String get buy => Intl.message('Buy', name: 'buy');
+  String get next => Intl.message('Next', name: 'next');
+  String get check => Intl.message('Check', name: 'check');
+  String get topics => Intl.message('Topics', name: 'topics');
+  String get writeSomething =>
+      Intl.message('Write Something', name: 'writeSomething');
+  String get stories => Intl.message('Stories', name: 'stories');
+  String get answerThis => Intl.message('Answer this', name: 'answerThis');
+  String get hoodie => Intl.message('Hoodie', name: 'hoodie');
+  String get send => Intl.message('Send', name: 'send');
+  String get options => Intl.message('Options', name: 'options');
+  String get edit => Intl.message('Edit', name: 'edit');
+  String get delete => Intl.message('Delete', name: 'delete');
+  String get games => Intl.message('Games', name: 'games');
+  String get comment => Intl.message('Comment', name: 'comment');
+  String get story => Intl.message('Story', name: 'story');
+  String get discuss => Intl.message('Discuss', name: 'story');
+  String get topic => Intl.message('Topic', name: 'topic');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {

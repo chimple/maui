@@ -7,6 +7,7 @@ import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/comment_list.dart';
@@ -94,7 +95,7 @@ class TileCardDetail extends StatelessWidget {
             ));
           },
           child: Text(
-            'Answer this',
+            Loca.of(context).answerThis,
             style: TextStyle(color: Colors.white),
           ),
         )

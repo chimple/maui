@@ -4,6 +4,7 @@ import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/repos/collection_repo.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/loca.dart';
 // import 'package:maui/components/animations.dart';
 // import 'package:nima/nima_actor.dart';
 
@@ -13,7 +14,7 @@ class MainCollection extends StatelessWidget {
     final media = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Topics'),
+        title: Text(Loca.of(context).topics),
       ),
       body: Connect<RootState, List<QuackCard>>(
         convert: (state) => state.collectionMap['main']

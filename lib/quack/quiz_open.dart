@@ -76,7 +76,7 @@ class QuizOpenState extends State<QuizOpen> {
               fillColor: Colors.grey[110],
               filled: true,
               border: InputBorder.none,
-              hintText: Loca().addAComment),
+              hintText: Loca.of(context).writeSomething),
           onSubmitted: _handleSubmitted,
         ),
       ),
@@ -92,7 +92,7 @@ class QuizOpenState extends State<QuizOpen> {
               ? () => _handleSubmitted(_textController.text)
               : null,
           child: Text(
-            Loca().ok,
+            Loca.of(context).post,
             style: TextStyle(color: Colors.white),
           ),
         ),
