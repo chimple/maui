@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:maui/quack/user_activity.dart';
 import 'package:maui/repos/card_repo.dart';
@@ -77,13 +78,10 @@ class FetchInitialData implements AsyncAction<RootState> {
     userList.insert(0, botUser);
     Map<User, int> userMap =
         Map.fromIterable(userList, key: (u) => u, value: (u) => 0);
-
+    final frontMap = await fetchFrontMap(
+        RootState(cardMap: cardMap, collectionMap: collectionMap));
     return (RootState state) => RootState(
-        frontMap: {
-          'open': cardMap['open_7'],
-          'topic': cardMap['Teacher'],
-          'story': cardMap['18218']
-        },
+        frontMap: frontMap,
         user: user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),
@@ -117,5 +115,23 @@ class FetchInitialData implements AsyncAction<RootState> {
 
       collectionMap[mc] = cardNames;
     });
+  }
+
+  static Future<Map<String, QuackCard>> fetchFrontMap(RootState state) async {
+    final rand = Random();
+    final openCollection = state.collectionMap['open'];
+    final mainCollection = state.collectionMap['main'];
+    final topic = mainCollection[rand.nextInt(mainCollection.length)];
+    final topicCollection = state.collectionMap[topic];
+    final storyCollection = state.collectionMap['story'];
+
+    return {
+      'open':
+          state.cardMap[openCollection[rand.nextInt(openCollection.length)]],
+      'topic':
+          state.cardMap[topicCollection[rand.nextInt(topicCollection.length)]],
+      'story':
+          state.cardMap[storyCollection[rand.nextInt(storyCollection.length)]]
+    };
   }
 }

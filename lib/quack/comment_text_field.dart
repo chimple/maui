@@ -62,7 +62,8 @@ class CommentTextFieldState extends State<CommentTextField> {
           Flexible(
             child: new TextField(
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
+                fontSize: 24.0,
               ),
               maxLength: null,
               keyboardType: TextInputType.multiline,
@@ -82,7 +83,7 @@ class CommentTextFieldState extends State<CommentTextField> {
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
 //              iconSize: 20.0,
-                color: Colors.white,
+                color: Colors.blue,
                 icon: new Icon(Icons.send),
                 onPressed: _isComposing
                     ? () => _handleSubmitted(context, _textController.text)

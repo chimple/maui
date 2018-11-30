@@ -56,7 +56,7 @@ class _FriendStripState extends State<FriendStrip> {
       color: Color(0xFFEF823F),
       child: SafeArea(
         child: SizedBox(
-          height: 80.0,
+          height: 96.0,
           child: Row(
             children: <Widget>[
               Expanded(
@@ -66,7 +66,7 @@ class _FriendStripState extends State<FriendStrip> {
                     var notif = notifs.firstWhere((n) => n.userId == u.id,
                         orElse: () => Notif(userId: u.id, numNotifs: 0));
                     return SizedBox(
-                      width: 80.0,
+                      width: 96.0,
                       child: FriendItem(
                           id: u.id,
                           name: u.name,
@@ -86,7 +86,7 @@ class _FriendStripState extends State<FriendStrip> {
                 ),
               ),
               SizedBox(
-                width: 80.0,
+                width: 96.0,
                 child: FriendItem(
                   replaceWithHoodie: false,
                   id: user.id,
