@@ -192,6 +192,7 @@ class QuizSelectionState extends State<QuizSelection> {
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 child: (quizItem.text?.endsWith('jpg') ||
                         quizItem.text?.endsWith('JPG') ||
+                        quizItem.text?.endsWith('png') ||
                         quizItem.text?.endsWith('jp2') ||
                         quizItem.text?.endsWith('jpeg') ||
                         quizItem.text?.endsWith('gif'))
@@ -203,12 +204,11 @@ class QuizSelectionState extends State<QuizSelection> {
                           fit: BoxFit.cover,
                         ))
                     : Center(
-                        child: Text(
-                          quizItem.text,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          softWrap: true,
-                        ),
+                        child: Text(quizItem.text,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.headline),
                       ),
               ),
             ),

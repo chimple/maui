@@ -10,6 +10,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 
@@ -45,7 +46,7 @@ class PostTile implements AsyncAction<RootState> {
             state.user.id,
             '0',
             'tile',
-            '${pTile.id}*${pTile.type.index}*${pTile.cardId}*${pTile.content}',
+            '${pTile.id}${floresSeparator}${pTile.type.index}${floresSeparator}${pTile.cardId}${floresSeparator}${pTile.content}',
             true,
             '');
       } on PlatformException {

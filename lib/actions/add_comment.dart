@@ -10,6 +10,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 
@@ -26,7 +27,7 @@ class AddComment implements AsyncAction<RootState> {
   Future<Computation<RootState>> reduce(RootState state) async {
     assert(commentRepo != null, 'commentRepo not injected');
     assert(tileRepo != null, 'tileRepo not injected');
-
+    print('AddComment: $comment');
     commentRepo.insert(comment, tileType);
     switch (tileType) {
       case TileType.card:
@@ -69,7 +70,7 @@ class AddComment implements AsyncAction<RootState> {
             state.user.id,
             '0',
             'comment',
-            '${comment.id}*${tileType.index}*${comment.parentId}*${comment.comment}',
+            '${comment.id}${floresSeparator}${tileType.index}${floresSeparator}${comment.parentId}${floresSeparator}${comment.comment}',
             true,
             '');
       } on PlatformException {
@@ -79,15 +80,20 @@ class AddComment implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
     final frontMap = await FetchInitialData.fetchFrontMap(state);
-
+    final commentMap = state.commentMap;
+    if (!addTile) {
+      if (commentMap[comment.parentId] == null) {
+        commentMap[comment.parentId] = [];
+      }
+      commentMap[comment.parentId].insert(0, comment);
+    }
     return (RootState state) => RootState(
         frontMap: frontMap,
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,
         activityMap: state.activityMap,
-        commentMap: addTile ? state.commentMap : state.commentMap
-          ..[comment.parentId].insert(0, comment),
+        commentMap: commentMap,
         tiles: tile == null ? state.tiles : (state.tiles..insert(0, tile)),
         drawings: state.drawings,
         userMap: state.userMap,

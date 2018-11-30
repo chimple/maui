@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       child: _buildBox(
                         context: context,
                         name: Loca.of(context).discuss,
-                        routeName: '/topics',
+                        color: Color(0xFFE37825),
                         child: CardSummary(
                           card: frontMap['open'],
                           parentCardId: 'open',
@@ -49,6 +49,7 @@ class HomeScreen extends StatelessWidget {
                           context: context,
                           name: Loca.of(context).story,
                           routeName: '/stories',
+                          color: Color(0xFFEE4069),
                           child: CardSummary(
                             card: frontMap['story'],
                           )),
@@ -59,6 +60,7 @@ class HomeScreen extends StatelessWidget {
                         context: context,
                         name: Loca.of(context).topic,
                         routeName: '/topics',
+                        color: Color(0xFFFED060),
                         child: CardSummary(
                           card: frontMap['topic'],
                         ),
@@ -70,6 +72,7 @@ class HomeScreen extends StatelessWidget {
                         context: context,
                         name: Loca.of(context).game,
                         routeName: '/games',
+                        color: Color(0xFF7FC4EC),
                         child: Column(
                           children: <Widget>[
                             InkWell(
@@ -117,6 +120,10 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
         ),
+        SliverToBoxAdapter(
+            child: Divider(
+          height: 32.0,
+        )),
         Connect<RootState, List<Tile>>(
           convert: (state) => state.tiles,
           where: (prev, next) => true,
@@ -155,34 +162,50 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBox(
-      {BuildContext context, String name, String routeName, Widget child}) {
+      {BuildContext context,
+      String name,
+      String routeName,
+      Widget child,
+      Color color}) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: InkWell(
+              onTap: routeName == null
+                  ? null
+                  : () => Navigator.of(context).pushNamed(routeName),
+              child: Container(
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(32.0)),
+                  color: color,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          name,
+                          style: TextStyle(color: Colors.white),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        routeName == null ? '' : Loca.of(context).seeAll,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () => Navigator.of(context).pushNamed(routeName),
-                  child: Text(
-                    Loca.of(context).seeAll,
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           child,
         ],

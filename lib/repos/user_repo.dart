@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:maui/db/dao/tile_dao.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/repos/tile_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:meta/meta.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/db/dao/user_dao.dart';
@@ -38,7 +39,7 @@ class UserRepo {
 
   Future<User> insertOrUpdateRemoteUser(
       String userId, String deviceId, String txnText) async {
-    final userInfo = txnText.split('*');
+    final userInfo = txnText.split(floresSeparator);
     String imagePath;
     if (userInfo.length == 3) {
       String base64Image = userInfo.last;
@@ -79,9 +80,9 @@ class UserRepo {
     var config = File(user.image);
     var contents = await config.readAsBytes();
     var enc = user.name +
-        '*' +
+        floresSeparator +
         user.color.toRadixString(16) +
-        '*' +
+        floresSeparator +
         base64.encode(contents);
     try {
       p2p.addUser(user.id, deviceId, enc);

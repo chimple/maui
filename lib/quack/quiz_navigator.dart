@@ -113,19 +113,19 @@ class QuizNavigatorState extends State<QuizNavigator> {
                           card.option == 'open'
                               ? Container()
                               : Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(32.0),
                                   child: RaisedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: const BorderRadius.all(
                                             const Radius.circular(32.0))),
                                     color: Color(0xFF0E4476),
-                                    padding: EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.all(16.0),
                                     onPressed: _onPressed(context),
                                     child: Text(
                                       mode == NavigatorMode.result
                                           ? Loca.of(context).next
                                           : Loca.of(context).check,
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white, fontSize: 32.0),
                                     ),
                                   ),
                                 ),

@@ -42,8 +42,14 @@ class QuizOpenState extends State<QuizOpen> {
       Wrap(
         spacing: 8.0,
         runSpacing: 4.0,
-        children:
-            widget.quiz.choices.map((q) => Text(q)).toList(growable: false),
+        children: widget.quiz.choices
+            .map((q) => Container(
+                color: Colors.blue,
+                child: Text(
+                  q,
+                  style: TextStyle(fontSize: 24.0),
+                )))
+            .toList(growable: false),
       ),
       Flexible(
         child: TextField(
@@ -51,6 +57,7 @@ class QuizOpenState extends State<QuizOpen> {
           keyboardType: TextInputType.multiline,
           autofocus: true,
           maxLines: 5,
+          style: TextStyle(fontSize: 24.0),
           onChanged: (String text) {
             setState(() {
               _isComposing = text.trim().isNotEmpty;
