@@ -79,7 +79,6 @@ class AddComment implements AsyncAction<RootState> {
         print('Exception details:\n $e');
         print('Stack trace:\n $s');
       }
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
     final commentMap = state.commentMap;
     if (!addTile) {
       if (commentMap[comment.parentId] == null) {
@@ -88,7 +87,7 @@ class AddComment implements AsyncAction<RootState> {
       commentMap[comment.parentId].insert(0, comment);
     }
     return (RootState state) => RootState(
-        frontMap: frontMap,
+        frontMap: state.frontMap,
         user: state.user,
         collectionMap: state.collectionMap,
         cardMap: state.cardMap,

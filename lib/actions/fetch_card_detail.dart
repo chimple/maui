@@ -76,10 +76,9 @@ class FetchCardDetail implements AsyncAction<RootState> {
 
     final comments =
         await commentRepo.getCommentsByParentId(cardId, TileType.card);
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
-        frontMap: frontMap,
+        frontMap: state.frontMap,
         user: state.user,
         collectionMap: state.collectionMap..addAll(collectionMap),
         cardMap: state.cardMap..addAll(cardMap),

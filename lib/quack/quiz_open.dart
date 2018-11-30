@@ -39,17 +39,26 @@ class QuizOpenState extends State<QuizOpen> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Wrap(
-        spacing: 8.0,
-        runSpacing: 4.0,
-        children: widget.quiz.choices
-            .map((q) => Container(
-                color: Colors.blue,
-                child: Text(
-                  q,
-                  style: TextStyle(fontSize: 24.0),
-                )))
-            .toList(growable: false),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          children: widget.quiz.choices
+              .map((q) => Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: new BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      q,
+                      style: TextStyle(fontSize: 24.0, color: Colors.white),
+                    ),
+                  )))
+              .toList(growable: false),
+        ),
       ),
       Flexible(
         child: TextField(
@@ -57,7 +66,7 @@ class QuizOpenState extends State<QuizOpen> {
           keyboardType: TextInputType.multiline,
           autofocus: true,
           maxLines: 5,
-          style: TextStyle(fontSize: 24.0),
+          style: TextStyle(fontSize: 24.0, color: Colors.black),
           onChanged: (String text) {
             setState(() {
               _isComposing = text.trim().isNotEmpty;
