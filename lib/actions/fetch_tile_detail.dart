@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/comment_repo.dart';
@@ -19,19 +20,15 @@ class FetchTileDetail implements AsyncAction<RootState> {
         await commentRepo.getCommentsByParentId(tile.id, tile.type);
 
     return (RootState state) => RootState(
-            frontMap: {
-              'open': state.cardMap['open_7'],
-              'topic': state.cardMap['Teacher'],
-              'story': state.cardMap['18218']
-            },
-            user: state.user,
-            collectionMap: state.collectionMap,
-            cardMap: state.cardMap,
-            activityMap: state.activityMap,
-            tiles: state.tiles,
-            userMap: state.userMap,
-            drawings: state.drawings,
-            templates: state.templates,
-            commentMap: state.commentMap..[tile.id] = comments);
+        frontMap: state.frontMap,
+        user: state.user,
+        collectionMap: state.collectionMap,
+        cardMap: state.cardMap,
+        activityMap: state.activityMap,
+        tiles: state.tiles,
+        userMap: state.userMap,
+        drawings: state.drawings,
+        templates: state.templates,
+        commentMap: state.commentMap..[tile.id] = comments);
   }
 }

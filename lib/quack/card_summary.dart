@@ -73,7 +73,7 @@ class CardSummary extends StatelessWidget {
         ),
       )
     ];
-    if (card.type == CardType.concept) {
+    if (card.type == CardType.concept && showSocialSummary) {
       stackChildren.add(CardLock(
         card: card,
         parentCardId: parentCardId,

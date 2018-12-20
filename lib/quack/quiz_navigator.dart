@@ -4,6 +4,7 @@ import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/knowledge_detail.dart';
@@ -112,19 +113,19 @@ class QuizNavigatorState extends State<QuizNavigator> {
                           card.option == 'open'
                               ? Container()
                               : Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(32.0),
                                   child: RaisedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: const BorderRadius.all(
                                             const Radius.circular(32.0))),
                                     color: Color(0xFF0E4476),
-                                    padding: EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.all(16.0),
                                     onPressed: _onPressed(context),
                                     child: Text(
                                       mode == NavigatorMode.result
-                                          ? 'Next'
-                                          : 'Check',
-                                      style: TextStyle(color: Colors.white),
+                                          ? Loca.of(context).next
+                                          : Loca.of(context).check,
+                                      style: TextStyle(color: Colors.white, fontSize: 32.0),
                                     ),
                                   ),
                                 ),
