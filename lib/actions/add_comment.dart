@@ -9,6 +9,7 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/comment_repo.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
@@ -27,7 +28,6 @@ class AddComment implements AsyncAction<RootState> {
   Future<Computation<RootState>> reduce(RootState state) async {
     assert(commentRepo != null, 'commentRepo not injected');
     assert(tileRepo != null, 'tileRepo not injected');
-    print('AddComment: $comment');
     commentRepo.insert(comment, tileType);
     switch (tileType) {
       case TileType.card:
@@ -86,6 +86,7 @@ class AddComment implements AsyncAction<RootState> {
       }
       commentMap[comment.parentId].insert(0, comment);
     }
+    writeLog('comment,${comment.parentId},${comment.comment}');
     return (RootState state) => RootState(
         frontMap: state.frontMap,
         user: state.user,

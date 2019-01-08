@@ -62,7 +62,8 @@ class TileCardDetail extends StatelessWidget {
                   ? Container()
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(tile.card.title ?? ''),
+                      child: Text(tile.card.title ?? '',
+                          style: Theme.of(context).textTheme.display1),
                     ),
             ),
             CommentList(
@@ -72,31 +73,34 @@ class TileCardDetail extends StatelessWidget {
             )
           ]),
         ),
-        RaisedButton(
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  const BorderRadius.all(const Radius.circular(32.0))),
-          color: Color(0xFF0E4476),
-          padding: EdgeInsets.all(8.0),
-          onPressed: () {
-            Provider.dispatch<RootState>(
-                context, FetchCardDetail(tile.card.id));
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) {
-                return tile.card.type == CardType.question
-                    ? QuizOpenDetail(
-                        card: tile.card,
-                      )
-                    : CardDetail(
-                        card: tile.card,
-                        parentCardId: tile.cardId,
-                      );
-              },
-            ));
-          },
-          child: Text(
-            Loca.of(context).answerThis,
-            style: TextStyle(color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(32.0))),
+            color: Color(0xFF0E4476),
+            padding: EdgeInsets.all(8.0),
+            onPressed: () {
+              Provider.dispatch<RootState>(
+                  context, FetchCardDetail(tile.card.id));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return tile.card.type == CardType.question
+                      ? QuizOpenDetail(
+                          card: tile.card,
+                        )
+                      : CardDetail(
+                          card: tile.card,
+                          parentCardId: tile.cardId,
+                        );
+                },
+              ));
+            },
+            child: Text(
+              Loca.of(context).answerThis,
+              style: TextStyle(color: Colors.white, fontSize: 32.0),
+            ),
           ),
         )
       ],
@@ -151,24 +155,27 @@ class DrawingDetail extends StatelessWidget {
                 )
               ]),
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(32.0))),
-              color: Color(0xFF0E4476),
-              padding: EdgeInsets.all(8.0),
-              onPressed: () {
-                Provider.dispatch<RootState>(
-                    context, FetchCardDetail(tile.card.id));
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => CardDetail(
-                        card: tile.card,
-                      ),
-                ));
-              },
-              child: Text(
-                'Draw this',
-                style: TextStyle(color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(32.0))),
+                color: Color(0xFF0E4476),
+                padding: EdgeInsets.all(16.0),
+                onPressed: () {
+                  Provider.dispatch<RootState>(
+                      context, FetchCardDetail(tile.card.id));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => CardDetail(
+                          card: tile.card,
+                        ),
+                  ));
+                },
+                child: Text(
+                  Loca.of(context).draw,
+                  style: TextStyle(color: Colors.white, fontSize: 32.0),
+                ),
               ),
             )
           ],
@@ -184,7 +191,7 @@ class PostDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Post')),
+      appBar: AppBar(title: Text(Loca.of(context).post)),
       body: CustomScrollView(slivers: <Widget>[
         SliverToBoxAdapter(
           child: Row(
