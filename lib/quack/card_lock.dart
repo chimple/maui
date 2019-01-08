@@ -7,6 +7,7 @@ import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/state/app_state_container.dart';
 import '../actions/update_points.dart';
@@ -55,13 +56,13 @@ class CardLockState extends State<CardLock> {
         builder: (BuildContext context) {
           return DialogContent(
               onPressed: onPressed,
-              initialPoints: initialPoints - 1,
+              initialPoints: initialPoints - 5,
               onCompleteNima: onCompleteNima,
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
 
-    Provider.dispatch<RootState>(context, UpdatePoints(points: -1));
+    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
   }
 
   @override
@@ -73,7 +74,7 @@ class CardLockState extends State<CardLock> {
       builder: (progress) {
         return progress == null
             ? InkWell(
-                onTap: () => initialPoints < 3
+                onTap: () => initialPoints < 5
                     ? showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -132,7 +133,7 @@ class DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     if (widget.shouldDisplayNima)
-      _animation = widget.initialPoints > 2 ? 'happy' : 'sad';
+      _animation = widget.initialPoints > 5 ? 'happy' : 'sad';
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
 
@@ -172,7 +173,7 @@ class DialogContentState extends State<DialogContent> {
                     ),
                     child: Center(
                       child: new Text(
-                        'Your Points- ${widget.initialPoints}',
+                       '${Loca.of(context).yourPoints} ${widget.initialPoints}',
                         style: TextStyle(
                             color: Colors.white,
                             fontStyle: FontStyle.normal,
@@ -211,7 +212,7 @@ class DialogContentState extends State<DialogContent> {
                             Expanded(
                               child: Center(
                                   child: new Text(
-                                "Cost is - 3",
+                                Loca.of(context).costIs,
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,
@@ -234,7 +235,7 @@ class DialogContentState extends State<DialogContent> {
                                       onPressed: widget.onPressed,
                                       child: Center(
                                         child: Text(
-                                          "Buy",
+                                          Loca.of(context).buy,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontStyle: FontStyle.normal,

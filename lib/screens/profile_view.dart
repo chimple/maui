@@ -64,8 +64,9 @@ class ProfileViewState extends State<ProfileView>
   Widget getTabBarPages(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = media.orientation;
-    return Expanded(
-      flex: Orientation.landscape == orientation ? 1 : 2,
+
+    return Align(
+      alignment: Alignment.topCenter,
       child: TabBarView(controller: tabController, children: <Widget>[
         UserDrawingGrid(
           userId: AppStateContainer.of(context).state.loggedInUser.id,
@@ -81,111 +82,116 @@ class ProfileViewState extends State<ProfileView>
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    Orientation orientation = media.orientation;
+    var _height = media.size.height;
     var user = AppStateContainer.of(context).state.loggedInUser;
     final TextEditingController _textController = new TextEditingController();
-    final stackChildren = <Widget>[
-      Center(
-        child: new Container(
-            height: 125.0,
-            width: 125.0,
-            decoration: new BoxDecoration(
-                border: new Border.all(width: 3.0, color: Colors.blueAccent),
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                    image: new FileImage(new File(user.image)),
-                    fit: BoxFit.fill))),
-      ),
-      Positioned(
-        right: Orientation.landscape == orientation
-            ? media.size.width * .45
-            : media.size.width * .44,
-        bottom: -18.0,
-        child: CircleAvatar(
-          radius: 30.0,
-          child: Center(
-            child: new IconButton(
-              // color: Colors.blue,
-              icon: Icon(
-                Icons.photo_camera,
-                color: Colors.white,
-                size: 30.0,
+    final userText = Row(children: [
+      Expanded(
+        child: Container(
+          padding: EdgeInsets.only(left: 35.0),
+          child: Column(
+            children: <Widget>[
+              new Text(
+                "${user.name}",
+                style: new TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
               ),
-              onPressed: () => getImage(context),
-            ),
+              new Text(
+                "${user.points}",
+                maxLines: 1,
+                textDirection: TextDirection.ltr,
+                style: new TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
-      )
-    ];
-
-    final stackTextField = <Widget>[
-      Row(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            width: media.size.width,
-            height: Orientation.landscape == orientation
-                ? media.size.height * .1
-                : media.size.height * .07,
-            color: Colors.transparent,
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: new Text(
-                    "${user.name}",
-                    style: new TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: new Text(
-                    "${user.points}",
-                    maxLines: 1,
-                    textDirection: TextDirection.ltr,
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
-      Positioned(
-        right: 1.0,
-        bottom: 45.0,
-        child: Center(
-          child: new IconButton(
-            // color: Colors.transparent,
-            icon: Icon(
-              Icons.edit,
-              color: Colors.red,
-              size: 30.0,
-            ),
-            onPressed: () {
-              setState(() {
-                setflag = true;
-              });
-            },
+      Align(
+        alignment: AlignmentDirectional.topEnd,
+        child: IconButton(
+          icon: Icon(
+            Icons.edit,
+            color: Colors.red,
+            size: 35.0,
           ),
+          onPressed: () {
+            setState(() {
+              setflag = true;
+            });
+          },
         ),
-      )
-    ];
+      ),
+    ]);
 
     final stackHeader = Stack(
-      children: stackChildren,
-      overflow: Overflow.visible,
+      overflow: Overflow.clip,
+      children: [
+        Align(
+          alignment: AlignmentDirectional.center,
+          child: SizedBox.expand(
+            child: Padding(
+              padding: EdgeInsets.all(5.0),
+              child: CircleAvatar(
+                backgroundImage: new FileImage(new File(user.image)),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: AlignmentDirectional.bottomEnd,
+          child: CircleAvatar(
+            radius: 30.0,
+            child: Center(
+              child: new IconButton(
+                // color: Colors.blue,
+                icon: Icon(
+                  Icons.photo_camera,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                onPressed: () => getImage(context),
+              ),
+            ),
+          ),
+        )
+      ],
     );
-    final stackText = Stack(
-      children: stackTextField,
-      overflow: Overflow.visible,
+    final userdetails = Column(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+                height: _height * .14,
+                width: _height * .14,
+                child: CircleAvatar(
+                  child: stackHeader,
+                )),
+          ),
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: userText,
+            ),
+          ),
+        ),
+        getTabBar()
+      ],
     );
+
     final _profileTextfield = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -237,36 +243,44 @@ class ProfileViewState extends State<ProfileView>
 
     return Scaffold(
         body: SafeArea(
-      child: Column(
+      child: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
-          Flexible(
-            child: ListView(
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+          Column(
+            children: <Widget>[
+              Flexible(
+                child: ListView(
                   children: <Widget>[
-                    new Container(
-                      alignment: new FractionalOffset(0.0, 1.0),
-                      child: new IconButton(
-                          icon: new Icon(Icons.arrow_back),
-                          iconSize: 40.0,
-                          color: Colors.black,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                    ),
-                    new SizedBox(height: 30.0),
-                    stackHeader,
-                    new SizedBox(height: 40.0),
-                    stackText,
-                    getTabBar(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                            height: _height * 0.33,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
+                              child: userdetails,
+                            )),
+                        SizedBox(
+                            height: _height * 0.67,
+                            child: getTabBarPages(context)),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              setflag == true ? _profileTextfield : Container()
+            ],
           ),
-          getTabBarPages(context),
-          setflag == true ? _profileTextfield : Container()
+          Align(
+            alignment: AlignmentDirectional.topStart,
+            child: new IconButton(
+                icon: new Icon(Icons.arrow_back),
+                iconSize: 42.0,
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ),
         ],
       ),
     ));

@@ -24,6 +24,7 @@ class CommentList extends StatelessWidget {
         return next != prev;
       },
       builder: (comments) {
+        print(comments);
         return SliverList(
           delegate: SliverChildBuilderDelegate(
               (context, index) => index == 0 && showInput

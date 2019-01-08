@@ -94,11 +94,11 @@ class TapWrongState extends State<TapWrong> {
     arr1.addAll(word);
     var lenOfArr1 = arr1.length;
     arr1.addAll(others);
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh word ${word}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh others ${others}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh arr1 ${arr1}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh _dispText ${_dispText}");
-    print("Rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh lenOfArr1${lenOfArr1}");
+    print(" word ${word}");
+    print(" others ${others}");
+    print(" arr1 ${arr1}");
+    print("_dispText ${_dispText}");
+    print(" lenOfArr1${lenOfArr1}");
     var rand = new Random();
     var randNum = 0;
     String temp = '';
@@ -198,7 +198,7 @@ class TapWrongState extends State<TapWrong> {
                   setState(() {
                     _statusList[index] = Statuses.wrong;
                   });
-                  print('status array afdter clicking wrong     $_statusList');
+                  print('status array after clicking wrong     $_statusList');
                   new Future.delayed(const Duration(milliseconds: 700), () {
                     setState(() {
                       _statusList[index] = Statuses.right;

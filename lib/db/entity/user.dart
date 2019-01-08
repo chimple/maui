@@ -1,3 +1,4 @@
+import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
@@ -82,7 +83,7 @@ class User {
             userColors.entries
                 .elementAt(Random().nextInt(userColors.length))
                 .key,
-        this.name = name?.replaceAll('*', ' ');
+        this.name = name?.replaceAll(floresSeparator, ' ');
 
   Map<String, dynamic> toMap() {
     return {

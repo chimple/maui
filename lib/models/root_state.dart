@@ -11,6 +11,7 @@ import 'package:maui/quack/user_activity.dart';
 class RootState {
   final bool isLoading;
   final User user;
+  final Map<String, QuackCard> frontMap;
   final Map<User, int> userMap;
   final Map<String, List<String>> collectionMap;
   final Map<String, QuackCard> cardMap;
@@ -22,6 +23,7 @@ class RootState {
 
   RootState(
       {this.isLoading,
+      this.frontMap,
       this.user,
       this.collectionMap,
       this.cardMap,

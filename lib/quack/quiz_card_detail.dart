@@ -113,7 +113,8 @@ class QuizCardDetailState extends State<QuizCardDetail> {
             ? Container()
             : Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(widget.card.title ?? ''),
+                child: Text(widget.card.title ?? '',
+                    style: Theme.of(context).textTheme.display1),
               ),
         widget.card.content == null
             ? Container()

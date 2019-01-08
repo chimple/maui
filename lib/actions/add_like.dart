@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/db/entity/card_progress.dart';
 import 'package:maui/db/entity/like.dart';
 import 'package:maui/db/entity/quack_card.dart';
@@ -12,6 +13,7 @@ import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
@@ -84,7 +86,7 @@ class AddLike implements AsyncAction<RootState> {
 
       try {
         await p2p.addMessage(state.user.id, '0', 'like',
-            '${tileType.index}*$parentId', true, '');
+            '${tileType.index}${floresSeparator}$parentId', true, '');
       } on PlatformException {
         print('Flores: Failed addChat');
       } catch (e, s) {
@@ -92,8 +94,10 @@ class AddLike implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
     }
+
     return (RootState state) {
       return RootState(
+          frontMap: state.frontMap,
           user: state.user,
           collectionMap: state.collectionMap,
           cardMap: state.cardMap,

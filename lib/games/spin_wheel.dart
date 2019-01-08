@@ -10,6 +10,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/repos/unit_repo.dart';
 import '../components/spins.dart';
+import 'package:maui/loca.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'dart:ui' as ui show Image, instantiateImageCodec, Codec, FrameInfo;
 import 'package:maui/components/unit_button.dart';
@@ -705,7 +706,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
         return Container(
             child: Center(
                 child: Text(
-          'Loading...',
+          Loca.of(context).loading,
           style: TextStyle(
             color: Colors.green,
             fontSize: 24.0,

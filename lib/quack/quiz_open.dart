@@ -7,6 +7,7 @@ import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/db/entity/tile.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_stack.dart';
@@ -38,11 +39,26 @@ class QuizOpenState extends State<QuizOpen> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Wrap(
-        spacing: 8.0,
-        runSpacing: 4.0,
-        children:
-            widget.quiz.choices.map((q) => Text(q)).toList(growable: false),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          children: widget.quiz.choices
+              .map((q) => Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: new BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      q,
+                      style: TextStyle(fontSize: 24.0, color: Colors.white),
+                    ),
+                  )))
+              .toList(growable: false),
+        ),
       ),
       Flexible(
         child: TextField(
@@ -50,6 +66,7 @@ class QuizOpenState extends State<QuizOpen> {
           keyboardType: TextInputType.multiline,
           autofocus: true,
           maxLines: 5,
+          style: TextStyle(fontSize: 24.0, color: Colors.black),
           onChanged: (String text) {
             setState(() {
               _isComposing = text.trim().isNotEmpty;
@@ -59,7 +76,7 @@ class QuizOpenState extends State<QuizOpen> {
               fillColor: Colors.grey[110],
               filled: true,
               border: InputBorder.none,
-              hintText: 'Write Something '),
+              hintText: Loca.of(context).writeSomething),
           onSubmitted: _handleSubmitted,
         ),
       ),
@@ -75,7 +92,7 @@ class QuizOpenState extends State<QuizOpen> {
               ? () => _handleSubmitted(_textController.text)
               : null,
           child: Text(
-            'Post',
+            Loca.of(context).post,
             style: TextStyle(color: Colors.white),
           ),
         ),

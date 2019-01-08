@@ -37,6 +37,8 @@ import 'package:maui/loca.dart';
 
 enum ChatMode { teach, conversation, quiz }
 
+final floresSeparator = '}|~{';
+
 class AppStateContainer extends StatefulWidget {
   final AppState state;
   final Widget child;
@@ -290,10 +292,12 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   void onReceiveMessage(Map<dynamic, dynamic> message) async {
+    writeLog(
+        "msg,${message['userId']},${message['messageType']},${message['message']}}");
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
-      await NotifRepo().increment(message['userId'], message['messageType'], 1);
+//      await NotifRepo().increment(message['userId'], message['messageType'], 1);
     }
     if (message['messageType'] == 'Photo') {
       await UserRepo().insertOrUpdateRemoteUser(
@@ -303,7 +307,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       }
     } else if (message['messageType'] == 'like') {
       String content = message['message'];
-      final msgList = content.split('*');
+      final msgList = content.split(floresSeparator);
       if (msgList?.length == 2) {
         Provider.dispatch<RootState>(
             context,
@@ -314,7 +318,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       }
     } else if (message['messageType'] == 'tile') {
       String content = message['message'];
-      final msgList = content.split('*');
+      final msgList = content.split(floresSeparator);
       if (msgList?.length >= 4) {
         final tile = Tile(
             id: msgList[0],
@@ -327,7 +331,8 @@ class AppStateContainerState extends State<AppStateContainer> {
       }
     } else if (message['messageType'] == 'comment') {
       String content = message['message'];
-      final msgList = content.split('*');
+      final msgList = content.split(floresSeparator);
+      print(msgList);
       if (msgList?.length >= 4) {
         final comment = Comment(
             id: msgList[0],
@@ -377,7 +382,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     } else if (message == Loca().letUsChat) {
       _currentMode = ChatMode.conversation;
     } else if (_currentMode == ChatMode.quiz) {
-      if (message.startsWith('*')) message = message.substring(3);
+      if (message.startsWith(floresSeparator)) message = message.substring(3);
       if (message != _expectedAnswer) {
         _toTeach.add(_toQuiz[_currentQuizUnit]);
       }
