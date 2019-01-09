@@ -1,14 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/fetch_comments.dart';
-import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/social_summary.dart';
 import 'package:maui/quack/tile_detail.dart';
@@ -85,11 +80,11 @@ class TileCard extends StatelessWidget {
       User user}) {
     return InkWell(
       onTap: () {
-        Provider.dispatch<RootState>(
-            context,
-            FetchComments(
-                parentId: tile.type == TileType.card ? tile.card.id : tile.id,
-                tileType: tile.type));
+//        Provider.dispatch<RootState>(
+//            context,
+//            FetchComments(
+//                parentId: tile.type == TileType.card ? tile.card.id : tile.id,
+//                tileType: tile.type));
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => TileDetail(tile: tile)));
       },
@@ -131,7 +126,7 @@ class TileCard extends StatelessWidget {
           columnWidgets.add(Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              title,
+              title ?? '',
               overflow: TextOverflow.ellipsis,
             ),
           ));

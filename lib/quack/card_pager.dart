@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/actions/fetch_comments.dart';
-import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_detail.dart';
-import 'package:maui/quack/comment_list.dart';
-import 'package:maui/quack/comment_text_field.dart';
-import 'package:maui/quack/knowledge_detail.dart';
-import 'package:maui/quack/quiz_navigator.dart';
 import 'package:maui/components/quiz_welcome.dart';
-import 'package:maui/repos/collection_repo.dart';
+import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/quack/knowledge_detail.dart';
 
+//TODO: pass cards
 class CardPager extends StatefulWidget {
   final String cardId;
   final CardType cardType;
   final int initialPage;
+  final List<QuackCard> cards;
 
-  CardPager({Key key, this.cardId, this.cardType, this.initialPage});
+  CardPager(
+      {Key key, this.cardId, this.cardType, this.initialPage, this.cards});
 
   @override
   CardPagerState createState() {
@@ -51,47 +44,40 @@ class CardPagerState extends State<CardPager> {
 
   @override
   Widget build(BuildContext context) {
-    return Connect<RootState, List<QuackCard>>(
-      convert: (state) => state.collectionMap[widget.cardId]
-          .map((id) => state.cardMap[id])
-          .where((c) => c.type == widget.cardType)
-          .toList(growable: false),
-      where: (prev, next) => next != prev,
-      builder: (cardList) {
-        final widgets = <Widget>[
-          Expanded(
-            child: PageView.builder(
-                controller: _pageController,
-                scrollDirection: Axis.horizontal,
-                itemCount: cardList.length + 1,
-                itemBuilder: (context, index) => index >= cardList.length
-                    ? QuizWelcome(
-                        cardId: widget.cardId,
-                      )
-                    : KnowledgeDetail(
+    final widgets = <Widget>[
+      Expanded(
+        child: PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.cards.length + 1,
+            itemBuilder: (context, index) => index >= widget.cards.length
+                ? QuizWelcome(
+                    cardId: widget.cardId,
+                  )
+                : KnowledgeDetail(
 //                    key: _cardDetailKeys[index],
-                        card: cardList[index],
-                        parentCardId: widget.cardId,
-                        showBackButton: widget.cardId != 'main',
-                      ),
-                onPageChanged: (index) {
-                  if (index < cardList.length) {
-                    Provider.dispatch<RootState>(
-                        context,
-                        FetchComments(
-                            parentId: cardList[index].id,
-                            tileType: TileType.card));
-                    Provider.dispatch<RootState>(
-                        context,
-                        AddProgress(
-                            cardId: cardList[index].id,
-                            parentCardId: widget.cardId,
-                            index: index));
-                  }
-                  setState(() => _currentPageIndex = index);
-                }),
-          )
-        ];
+                    card: widget.cards[index],
+                    parentCardId: widget.cardId,
+                    showBackButton: widget.cardId != 'main',
+                  ),
+            onPageChanged: (index) {
+              if (index < widget.cards.length) {
+//                    Provider.dispatch<RootState>(
+//                        context,
+//                        FetchComments(
+//                            parentId: cardList[index].id,
+//                            tileType: TileType.card));
+//                    Provider.dispatch<RootState>(
+//                        context,
+//                        AddProgress(
+//                            cardId: cardList[index].id,
+//                            parentCardId: widget.cardId,
+//                            index: index));
+              }
+              setState(() => _currentPageIndex = index);
+            }),
+      )
+    ];
 //        if (widget.cardId != 'main' && _currentPageIndex < cardList.length) {
 //          widgets.add(Row(
 //            children: <Widget>[
@@ -120,10 +106,8 @@ class CardPagerState extends State<CardPager> {
 //            ],
 //          ));
 //        }
-        return Scaffold(
-          body: Column(children: widgets),
-        );
-      },
+    return Scaffold(
+      body: Column(children: widgets),
     );
   }
 

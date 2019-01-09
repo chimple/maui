@@ -1,14 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/update_points.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
 import 'package:maui/repos/log_repo.dart';
-import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 
 class QuizResult extends StatefulWidget {
@@ -58,9 +54,10 @@ class QuizResultState extends State<QuizResult> {
       total += answer;
     });
     writeLog('topic_score,$score,$total');
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Provider.dispatch<RootState>(context, UpdatePoints(points: score));
-    });
+//    WidgetsBinding.instance.addPostFrameCallback((_) async {
+//      Provider.dispatch<RootState>(context, UpdatePoints(points: score));
+//    });
+    //TODO: dispatch UpdatePoints
   }
 
   @override
@@ -116,7 +113,7 @@ class QuizResultState extends State<QuizResult> {
                           padding: new EdgeInsets.only(
                               right: media.size.width * 0.08),
                           child: new NimaActor(
-                            "assets/quack",
+                            "assets/quack.nima",
                             alignment: Alignment.center,
                             paused: paused,
                             fit: BoxFit.scaleDown,

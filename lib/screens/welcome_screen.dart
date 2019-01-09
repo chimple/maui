@@ -34,7 +34,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
               alignment: AlignmentDirectional.center,
               child: new AspectRatio(
                 aspectRatio: 1.0,
-                child: new NimaActor("assets/quack",
+                child: new NimaActor("assets/quack.nima",
                     paused: paused,
                     alignment: Alignment.center,
                     fit: BoxFit.contain,
