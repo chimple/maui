@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           bottom: 40.0, right: 40.0),
-                                      child: new NimaActor("assets/quack",
+                                      child: new NimaActor("assets/quack.nima",
                                           animation: _animationName,
                                           alignment: Alignment.center,
                                           fit: BoxFit.scaleDown,
