@@ -12,10 +12,13 @@ import 'dart:math';
 
 import 'flash_card.dart';
 
+int valuesofCount = 0;
+
 class UnitButton extends StatefulWidget {
   final String text;
   final VoidCallback onPress;
   final UnitMode unitMode;
+  Widget child;
   final bool disabled;
   final bool highlighted;
   final bool primary;
@@ -25,12 +28,15 @@ class UnitButton extends StatefulWidget {
   final double maxHeight;
   final double fontSize;
   final bool forceUnitMode;
+  final int flag;
 
   UnitButton(
       {Key key,
       @required this.text,
       this.onPress,
+      this.flag,
       this.disabled = false,
+      this.child,
       this.showHelp = true,
       this.highlighted = false,
       this.primary = true,
@@ -79,16 +85,18 @@ class _UnitButtonState extends State<UnitButton> {
   bool _isLoading = true;
   UnitMode _unitMode;
 
+  Widget widgetDots;
   @override
   void initState() {
     super.initState();
     _unitMode = widget.unitMode;
+
     _getData();
   }
 
   @override
   void didUpdateWidget(UnitButton oldWidget) {
-    if (widget.text != oldWidget.text) {
+    if (widget.text != oldWidget.text && widget.flag == 1) {
       _getData();
     }
   }
@@ -119,45 +127,115 @@ class _UnitButtonState extends State<UnitButton> {
   }
 
   Widget _buildButton(BuildContext context) {
+    // double affectHeight=widget.maxWidth ?? buttonConfig.width;
     final buttonConfig = ButtonStateContainer.of(context)?.buttonConfig;
-    return Container(
+    double affectwidth = widget.maxWidth ?? buttonConfig.width;
+    double affectHeight = widget.maxHeight ?? buttonConfig.height;
+    double widthOfButton = affectwidth - 10;
+    double heightOfButton = affectHeight - 5;
+    return Stack(children: [
+      Container(
+        margin: EdgeInsets.only(top: 8.0, left: 5.0, right: 5.0),
         constraints: BoxConstraints.tightFor(
-            height: widget.maxHeight ?? buttonConfig.height,
-            width: widget.maxWidth ?? buttonConfig.width),
+            height: widget.maxHeight ?? heightOfButton,
+            width: widget.maxWidth ?? widthOfButton),
+        // color: Colors.white,
         decoration: new BoxDecoration(
-            image: widget.bgImage != null
-                ? new DecorationImage(
-                    image: new AssetImage(widget.bgImage), fit: BoxFit.contain)
-                : null),
-        child: FlatButton(
-            color: widget.highlighted
-                ? Theme.of(context).primaryColor
-                : Colors.transparent,
-            splashColor: Theme.of(context).accentColor,
-            highlightColor: Theme.of(context).accentColor,
-            disabledColor: Color(0xFFDDDDDD),
-            onPressed: widget.disabled
-                ? null
-                : () {
-                    AppStateContainer.of(context)
-                        .play(widget.text.toLowerCase());
-                    widget.onPress();
-                  },
-            padding: EdgeInsets.all(0.0),
-            shape: new RoundedRectangleBorder(
-                side: new BorderSide(
-                    color: widget.disabled
-                        ? Color(0xFFDDDDDD)
-                        : widget.primary
-                            ? Theme.of(context).primaryColor
-                            : Colors.white,
-                    width: 4.0),
+            shape: BoxShape.rectangle,
+            color: Colors.black,
+            borderRadius:
+                BorderRadius.all(Radius.circular(buttonConfig?.radius ?? 8.0))),
+      ),
+      Container(
+          constraints: BoxConstraints.tightFor(
+              height: widget.maxHeight ?? buttonConfig.height,
+              width: widget.maxWidth ?? buttonConfig.width),
+          decoration: new BoxDecoration(
+              image: widget.bgImage != null
+                  ? new DecorationImage(
+                      image: new AssetImage(widget.bgImage),
+                      fit: BoxFit.contain)
+                  : null),
+          child: Card(
+            shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(buttonConfig?.radius ?? 8.0))),
-            child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)));
+            elevation: 5.0,
+            child: FlatButton(
+                color: widget.highlighted
+                    ? Theme.of(context).primaryColor
+                    : Colors.transparent,
+                splashColor: Theme.of(context).accentColor,
+                highlightColor: Theme.of(context).accentColor,
+                disabledColor: Color(0xFFDDDDDD),
+                onPressed: widget.disabled
+                    ? null
+                    : () {
+                        AppStateContainer.of(context)
+                            .play(widget.text.toLowerCase());
+                        widget.onPress();
+                      },
+                padding: EdgeInsets.all(0.0),
+                shape: new RoundedRectangleBorder(
+                    side: new BorderSide(
+                        color: widget.disabled
+                            ? Color(0xFFDDDDDD)
+                            : widget.primary
+                                ? Theme.of(context).primaryColor
+                                : Colors.white,
+                        width: 4.0),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(buttonConfig?.radius ?? 8.0))),
+                child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)),
+          )),
+    ]);
   }
 
   Widget _buildUnit(double fontSize) {
+    int rowSize = 1;
+    int checkingNumber = 0;
+
+    if (int.tryParse(widget.text) != null) {
+      checkingNumber = int.tryParse(widget.text);
+      if (checkingNumber > 9) {
+        checkingNumber = 0;
+      }
+    }
+    if (checkingNumber > 0) {
+      List numberDots = new List(checkingNumber);
+      if (numberDots.length > 5) {
+        rowSize = 2;
+      } else {
+        rowSize = 1;
+      }
+
+      List<Widget> rows = new List<Widget>();
+
+      for (var i = 0; i < rowSize + 1; ++i) {
+        List<Widget> cells = numberDots.skip(i * 5).take(5).map((e) {
+          return Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: new Icon(
+              Icons.lens,
+              color: Colors.black,
+              size: 13.0,
+            ),
+          );
+        }).toList(growable: false);
+        rows.add(Row(
+          children: cells,
+          mainAxisAlignment: MainAxisAlignment.center,
+        ));
+      }
+
+      widgetDots = Column(
+        children: rows,
+        mainAxisAlignment: MainAxisAlignment.center,
+      );
+    } else {
+      widgetDots = null;
+    }
+
     if (_unitMode == UnitMode.audio) {
       return new Icon(Icons.volume_up);
     } else if (_unitMode == UnitMode.image) {
@@ -168,13 +246,23 @@ class _UnitButtonState extends State<UnitButton> {
               fit: BoxFit.cover,
             );
     }
-    return Center(
-        child: Text(widget.text,
-            style: new TextStyle(
-                color: widget.highlighted || !widget.primary
-                    ? Colors.white
-                    : Theme.of(context).primaryColor,
-                fontSize: fontSize)));
+    return widgetDots == null
+        ? Center(
+            child: Text(widget.text,
+                style: new TextStyle(
+                    color: widget.highlighted || !widget.primary
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
+                    fontSize: fontSize)))
+        : Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Text("${widget.text}",
+                style: new TextStyle(
+                    color: widget.highlighted || !widget.primary
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
+                    fontSize: fontSize / 2)),
+            widgetDots
+          ]);
   }
 
   @override
