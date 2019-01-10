@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 const Duration kWaitBetweenActions = const Duration(milliseconds: 250);
 
@@ -16,7 +16,7 @@ void main() {
     });
 
     test('abacus without carry', () async {
-      final SerializableFinder user = find.byValueKey('user-Chimple');
+       final SerializableFinder user = find.byValueKey('user-Chimple');
       await driver.tap(user);
 
       final SerializableFinder game = find.text('Game');
