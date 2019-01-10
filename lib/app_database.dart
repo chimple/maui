@@ -41,7 +41,7 @@ class AppDatabase {
     String path = join(documentsDirectory.path, "maui.db");
     var dbFile = new File(path);
     if (!await dbFile.exists()) {
-      ByteData data = await rootBundle.load(join("assets", "database_swa.db"));
+      ByteData data = await rootBundle.load(join("assets", "database.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       await new File(path).writeAsBytes(bytes);

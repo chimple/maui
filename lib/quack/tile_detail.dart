@@ -1,16 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/fetch_card_detail.dart';
-import 'package:maui/components/drawing_wrapper.dart';
+import 'package:maui/containers/card_detail_container.dart';
+import 'package:maui/containers/comments_container.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/quiz_open_detail.dart';
 
@@ -66,7 +62,7 @@ class TileCardDetail extends StatelessWidget {
                           style: Theme.of(context).textTheme.display1),
                     ),
             ),
-            CommentList(
+            CommentsContainer(
               parentId: tile.cardId,
               tileType: tile.type,
               showInput: false,
@@ -82,15 +78,15 @@ class TileCardDetail extends StatelessWidget {
             color: Color(0xFF0E4476),
             padding: EdgeInsets.all(8.0),
             onPressed: () {
-              Provider.dispatch<RootState>(
-                  context, FetchCardDetail(tile.card.id));
+//              Provider.dispatch<RootState>(
+//                  context, FetchCardDetail(tile.card.id));
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) {
                   return tile.card.type == CardType.question
                       ? QuizOpenDetail(
                           card: tile.card,
                         )
-                      : CardDetail(
+                      : CardDetailContainer(
                           card: tile.card,
                           parentCardId: tile.cardId,
                         );
@@ -149,7 +145,7 @@ class DrawingDetail extends StatelessWidget {
                     isInteractive: false,
                   ),
                 ),
-                CommentList(
+                CommentsContainer(
                   parentId: tile.id,
                   tileType: tile.type,
                 )
@@ -164,10 +160,10 @@ class DrawingDetail extends StatelessWidget {
                 color: Color(0xFF0E4476),
                 padding: EdgeInsets.all(16.0),
                 onPressed: () {
-                  Provider.dispatch<RootState>(
-                      context, FetchCardDetail(tile.card.id));
+//                  Provider.dispatch<RootState>(
+//                      context, FetchCardDetail(tile.card.id));
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => CardDetail(
+                    builder: (BuildContext context) => CardDetailContainer(
                           card: tile.card,
                         ),
                   ));
@@ -220,7 +216,7 @@ class PostDetail extends StatelessWidget {
             child: Text(tile.content),
           ),
         ),
-        CommentList(
+        CommentsContainer(
           parentId: tile.id,
           tileType: tile.type,
         )
