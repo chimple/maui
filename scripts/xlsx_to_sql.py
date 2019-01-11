@@ -85,6 +85,7 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 		extra_number = 1
 		row_num = 1
 		quiz_type = ''
+		topic_header = ''
 		for row in sheet.iter_rows(row_offset=1):
 			row_num+=1
 			# print(sheet.title, row_num)
@@ -125,6 +126,8 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 						card = sheet.title
 					else:
 						card = sheet.title+'_'+str(row_num)
+					if option_value == 'open' and header_value == None:
+						header_value = topic_header
 					sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
 					if add_template:
 						sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, 2, 1, {esc(header_value)});\n")
@@ -135,6 +138,7 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				topic = card
 				card_number = 1
 				extra = -1
+				topic_header = header_value
 				if topic != '':
 					topics.append(topic)
 			elif type_data <= 9:

@@ -297,7 +297,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     if (!(message['userId'] == friendId &&
         activity == 'chat' &&
         message['messageType'] == 'chat')) {
-      await NotifRepo().increment(message['userId'], message['messageType'], 1);
+//      await NotifRepo().increment(message['userId'], message['messageType'], 1);
     }
     if (message['messageType'] == 'Photo') {
       await UserRepo().insertOrUpdateRemoteUser(

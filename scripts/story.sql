@@ -1,5 +1,5 @@
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752', 2, 'Abby, dereva wa kike wa tuktuk', 'assets/topic/asb/27145.png', 'Ursula  Nafula
-Yirgalem  Birhanu', 'FF9DEDE3');
+Yirgalem  Birhanu', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_3', 3, NULL, 'assets/topic/asb/27153.png', 'Tuktuk ni gari lenye magurudumu matatu.
 Linatumika kwenda sehemu moja hadi nyingine kwa haraka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_4', 3, NULL, 'assets/topic/asb/27152.png', 'Katika jamii yetu, uendeshaji gari la abiria ni kazi inayofanywa sana sana na wanaume.
@@ -55,13 +55,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 1, 'Huzuni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 2, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_25', 0, 3, 'Mtulivu');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_30', 0, 'Utaenda wapi kwenye Tuktuk yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24752_30', 0, 'Utaenda wapi kwenye Tuktuk yako?', 'assets/topic/asb/27145.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 1, 'Nyumabani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 2, 'Sokoni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 3, 'Shule');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24752_30', 0, 4, 'Nyumani kwa rafiki yangu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074', 2, 'Adhabu', 'assets/topic/asb/8032.png', 'Adelheid Marie Bwire
- Melany Pietersen', 'FFB3C8FF');
+ Melany Pietersen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_3', 3, NULL, 'assets/topic/asb/8025.png', 'Siku moja mamangu alinunua matunda aina tofauti.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_4', 3, NULL, 'assets/topic/asb/8032.png', 'Tulijiuliza, "Mama atatugawia matunda wakati gani?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_5', 3, NULL, 'assets/topic/asb/8029.png', 'Baadaye, kakangu, Rahim, alijificha na kuyala matunda yote!', NULL);
@@ -105,13 +105,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 1, 'Na furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 2, 'Wapole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_27', 0, 3, 'Na huzuni');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_32', 0, 'Unapendelea Matunda gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8074_32', 0, 'Unapendelea Matunda gani?', 'assets/topic/asb/8032.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 1, 'Ndizi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 2, 'Maembe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 3, 'Mananasi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8074_32', 0, 4, 'Machungwa');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403', 2, 'Adie na Adhoch', 'assets/topic/asb/14705.png', 'Christine Nyangate
-Catherine Groenewald, Wiehan de Jager, Melany Pietersen, Alice Toich, Silva Afonso, Michael Omadi and Vusi Malindi', 'FFB3C8FF');
+Catherine Groenewald, Wiehan de Jager, Melany Pietersen, Alice Toich, Silva Afonso, Michael Omadi and Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_3', 3, NULL, 'assets/topic/asb/9066.png', 'Hapo zamani za kale, palikuwa na mwanamme mmoja aliyekuwa na wake wawili. Wake zake walipata watoto wasichana wawili, Adie na Adhoch. Watoto hao walipendana sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_4', 3, NULL, 'assets/topic/asb/13839.png', 'Adie alikuwa mwenye bidii, mkarimu na mwenye nidhamu. Adhoch naye alikuwa mvivu, mchoyo na mtovu wa nidhamu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_5', 3, NULL, 'assets/topic/asb/13843.png', 'Adie alipendwa na walimu. Alipata zawadi nyingi kutokana na bidii yake. Adhoch hakupata zawadi yoyote. Mamake Adhoch alimwonea wivu Adie.', NULL);
@@ -157,13 +157,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 1, 'na Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 2, 'Wakatili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_27', 0, 3, 'wenye furaha');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_32', 0, 'Ungependelea uwe na nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15403_32', 0, 'Ungependelea uwe na nini?', 'assets/topic/asb/14705.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 1, 'Chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 2, 'Nguo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 3, 'Baiskeli');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15403_32', 0, 4, 'Begi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218', 2, 'Adun, mrembo', 'assets/topic/asb/13337.png', 'Ursula Nafula
-Wiehan de Jager', 'FFF4E1B5');
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_3', 3, NULL, 'assets/topic/asb/13337.png', 'Adun alikuwa msichana mrembo sana. Wanaume kutoka kijijini kwake, wangependa wamuoe. Lakini, Adun aliwakataa wote.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_4', 3, NULL, 'assets/topic/asb/13338.png', 'Ilikuwa siku ya soko. Mamboleo aliomba miguu kutoka kwa mwanamume mmoja, mikono kutoka kwa mwingine, na kiwiliwili kutoka kwa mtu tofauti. Kisha Mamboleo akaziunganisha sehemu hizo tofauti. Akakiweka kichwa chake juu yake halafu akaenda sokoni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_5', 3, NULL, 'assets/topic/asb/13339.png', 'Mamboleo alimtaka Adun na alikuwa na azma ya kumuoa. Adun alipendezwa na Mamboleo akataka kuolewa naye. Ingawa Mamboleo alitoka mji wa mbali, Adun alikuwa tayari kurudi naye kwake.', NULL);
@@ -210,13 +210,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 1, 'Marafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 2, 'Dada');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_28', 0, 3, 'baba');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_33', 0, 'Utaazima nini kutoka kwa wengine?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18218_33', 0, 'Utaazima nini kutoka kwa wengine?', 'assets/topic/asb/13337.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 1, 'Begi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 2, 'nguo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 3, 'Chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18218_33', 0, 4, 'Kofia');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925', 2, 'Ah! Mpira!', 'assets/topic/asb/12881.png', 'Stella Kihweo
- Onesmus Kakungi', 'FF9DEDE3');
+ Onesmus Kakungi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_3', 3, NULL, 'assets/topic/asb/12871.png', 'Mimi ninapenda kucheza na rafiki yangu Chuma.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_4', 3, NULL, 'assets/topic/asb/12872.png', 'Mimi na Chuma tunapendana sana. Tukitumwa,  tunaenda pamoja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_5', 3, NULL, 'assets/topic/asb/12873.png', 'Siku moja nilitumwa na bibi dukani nikanunue chumvi na mafuta. Nilienda na Chuma.', NULL);
@@ -262,13 +262,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 1, 'Jirani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 2, 'rafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_29', 0, 3, 'Tumbili');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_34', 0, 'Unapendelea kucheza mchezo gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12925_34', 0, 'Unapendelea kucheza mchezo gani?', 'assets/topic/asb/12881.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 1, 'Mpira wa miguu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 2, 'Kukimbia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 3, 'Kuruka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12925_34', 0, 4, 'Kuruka kamba');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555', 2, 'Ajali mbaya', 'assets/topic/asb/9638.png', 'Ursula Nafula
- Rob Owen', 'FFB3C8FF');
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_3', 3, NULL, 'assets/topic/asb/9635.png', 'Mimi na dadangu tulikuwa tukitembea kando ya barabara.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_4', 3, NULL, 'assets/topic/asb/9636.png', 'Tuliona lori kubwa likiendeshwa kwenye mteremko.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_5', 3, NULL, 'assets/topic/asb/9637.png', 'Wakati huo, gari ndogo liliendeshwa kwa kasi kuelekea upande wa juu wa barabara.', NULL);
@@ -312,7 +312,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 1, 'Tunakimbia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 2, 'Tunaongea');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_21', 0, 3, 'Tunatembea');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_26', 0, 'Unatembea na nani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10555_26', 0, 'Unatembea na nani?', 'assets/topic/asb/9638.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 1, 'Baba');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 2, 'Mama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10555_26', 0, 3, 'Dada');
@@ -366,7 +366,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 1, 'Mbaya');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 2, 'Ngumu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_31', 0, 3, 'Inachosha');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_36', 0, 'Uliona nini ulipoenda nje?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19094_36', 0, 'Uliona nini ulipoenda nje?', 'assets/topic/asb/19016.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 1, 'Baiskeli');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 2, 'Nyumba');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19094_36', 0, 3, 'Miti');
@@ -416,13 +416,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 1, 'Huzuni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 2, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_25', 0, 3, 'mkatili');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_30', 0, 'Unatamani kupata nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15862_30', 0, 'Unatamani kupata nini?', 'assets/topic/asb/9500.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 1, 'Viatu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 2, 'begi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 3, 'Kofia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15862_30', 0, 4, 'Chakula');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560', 2, 'Aku, rafikiye Jua', 'assets/topic/asb/26422.png', 'Ursula  Nafula
-Idowu Abayomi Oluwasegun', 'FF9DEDE3');
+Idowu Abayomi Oluwasegun', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_3', 3, NULL, 'assets/topic/asb/26422.png', 'Hapo zamani, kuliishi msichana mmoja katika kijiji kilichoitwa Nchijua. Msichana huyo aliitwa Aku. Alikuwa msichana mwenye miguu mirefu mno.
 Aku alistaajabishwa na mambo mengi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_4', 3, NULL, 'assets/topic/asb/26423.png', 'Babake Aku aliitwa Juma na alikuwa mvuvi. Wakati mwingine, Juma alienda na Aku kuvua samaki. Alipofanya hivyo, Aku alistaajabu kwa nini kila mara jua lilimtazama kutoka juu angani.
@@ -472,13 +472,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 1, 'Mwezi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 2, 'Mbwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_22', 0, 3, 'Kasuku');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_27', 0, 'Aku alijisikiaje aliposafisha Wingu lenye huzuni?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22560_27', 0, 'Aku alijisikiaje aliposafisha Wingu lenye huzuni?', 'assets/topic/asb/26422.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 1, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 2, 'Huzuni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 3, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22560_27', 0, 4, 'Mkatili');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908', 2, 'Amara na wanyama', 'assets/topic/asb/14042.png', 'John Musene
-Sarah Bouwer', 'FF9DEDE3');
+Sarah Bouwer', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_3', 3, NULL, 'assets/topic/asb/14037.png', 'Amara alikuwa msichana wamiyaka mitisaa . Alisoma chuo cha Kerema. Alipenda misomo mbali mbali zilizomo kingereza, sayansi na pia masomo ya kijamii. Alitaka kuwa mwanasheria wakati yeye kukua. Amara aliwapenda wanyama sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_4', 3, NULL, 'assets/topic/asb/14113.png', 'Amara ali ishi na mama yake Margy. Margy alikuwa mukulima mwenye bidi. Baba wake Amara ali iaga dunia Amara akiwa na mwiaka mitano.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_5', 3, NULL, 'assets/topic/asb/14040.png', 'Ambapo Amara akuwa shuleni, alishinda na Mbisa, mbuzi. Alimuwosha na kumulisha pia.', NULL);
@@ -517,13 +517,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 2, 'Sayansi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 1, 3, 'Masomo ya Jamii');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_20', 0, 1, 'Hesabu');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_25', 0, 'Tuishi nao vipi mbwa wetu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23908_25', 0, 'Tuishi nao vipi mbwa wetu?', 'assets/topic/asb/14042.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 1, 'Tuwatese');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 2, 'Tuwe wabinafsi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 3, 'Tuwe wazuri kwao');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23908_25', 0, 4, 'Tuwe wabaya kwao');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978', 2, 'Anansi awapa watu hadithi', 'assets/topic/asb/1294.png', 'Mutugi Kamundi
-Wiehan de Jager', 'FFB3C8FF');
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_3', 3, NULL, 'assets/topic/asb/1281.png', 'Hapo zamani za kale, Mungu wa Mbinguni, Nyame,  alizifungia hadithi zote kwenye sanduku la mbao, huko juu. Watu duniani walihuzunika sana kwa kuwa hawakuhadithiana. Wakamwuliza Anansi, buibui, mwerevu, awasaidie.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_4', 3, NULL, 'assets/topic/asb/1282.png', 'Anansi alisokota utando mrefu unaonata, akautumia kupanda hadi mbinguni. "Tafadhali nipe hadithi?" Anansi alimwambia Mungu wa mbinguni. Lakini Nyame alimcheka Anansi akisema, "Hadithi hizi ni ghali mno. Hutaweza kuzilipia, buibui mdogo, wee."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_5', 3, NULL, 'assets/topic/asb/1283.png', '"Hadithi hugharimu pesa ngapi?" Anansi aliuliza." "Itabidi uniletee wanyama watatu wakali tena wa kipekee", Nyame alijibu. "Chui mwenye meno makali kama mkuki, nyigu anayewauma watu, na nyoka anayewameza watu." Alicheka tena. Alidhani kwamba hadithi zake zilikuwa salama.', NULL);
@@ -566,7 +566,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 1, 3,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 1, 'Tumbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 2, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_22', 0, 3, 'Kunguru');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_29', 0, 'Anansi alikua mtu wa aina gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1978_29', 0, 'Anansi alikua mtu wa aina gani?', 'assets/topic/asb/1294.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 1, 'Mwenye akili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 2, 'Mpole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('1978_29', 0, 3, 'Mtu mbaya');
@@ -605,13 +605,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_11', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_16', 0, 'Anansi alikuja kuwa mchoyo akataka awe na busara mwenyewe.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_16', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_16', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_19', 0, 'Unajisikiaje kuhusu kushirikiana busara yako na wengine?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2234_19', 0, 'Unajisikiaje kuhusu kushirikiana busara yako na wengine?', 'assets/topic/asb/1273.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 1, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 2, 'Vibaya');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 3, 'Ukatili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2234_19', 0, 4, 'Uchoyo');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000', 2, 'Anansi mlafi', 'assets/topic/asb/946.png', 'Ursula Nafula
-Wiehan de Jager', 'FFB3C8FF');
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_3', 3, NULL, 'assets/topic/asb/2078.png', 'Anansi aliwakuta kunguru wakila makuyu.
 Yeye pia alitaka makuyu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_4', 3, NULL, 'assets/topic/asb/947.png', 'Kunguru walimpatia Anansi makuyu.', NULL);
@@ -657,13 +657,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 1, 'Tumbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 2, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_21', 0, 3, 'Sisiminzi');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_26', 0, 'Utapenda kubebwa na Mnyama gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22000_26', 0, 'Utapenda kubebwa na Mnyama gani?', 'assets/topic/asb/946.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 1, 'Punda Milia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 2, 'Farasi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 3, 'Simba');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22000_26', 0, 4, 'Ngamia');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995', 2, 'Anansi mwenye wivu', 'assets/topic/asb/166.png', 'Ursula Nafula
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_3', 3, NULL, 'assets/topic/asb/157.png', 'Anansi na Sungura walikuwa marafiki.
 Anansi alionea wivu mali ya Sungura.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_4', 3, NULL, 'assets/topic/asb/158.png', 'Anansi alimfukuza Sungura.
@@ -714,13 +714,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 1, 'Asali');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 2, 'Yai');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_22', 0, 3, 'Ngamia');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_27', 0, 'Utapenda kumuitaje Anansi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21995_27', 0, 'Utapenda kumuitaje Anansi?', 'assets/topic/asb/166.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 1, 'Muongo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 2, 'Asiyestahili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 3, 'Rafiki Mzuri');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21995_27', 0, 4, 'Mwenye moyo mzuri');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806', 2, 'Anayenipenda, hujua ninachopenda', 'assets/topic/asb/1196.png', 'palmesi katangambo
-Natalie Propa, Rob Owen and Wiehan de Jager', 'FF9DEDE3');
+Natalie Propa, Rob Owen and Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_3', 3, NULL, 'assets/topic/asb/19837.png', 'Hapo zamani za kale, palikuwa na mfalme.
 Yeye na wake zake watatu, waliishi katika kijiji kimoja kilichoitwa Nuru.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_4', 3, NULL, 'assets/topic/asb/17604.png', 'Siku moja, mfalme yule aliwaita wake zake na kusema, "Wake zangu wapendwa, ningependa leo nile chakula kitamu. Atakayepika chakula kitamu zaidi, atapata zawadi nono."', NULL);
@@ -766,13 +766,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 1, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 2, 'Alisononeka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_21', 0, 3, 'Ukatili');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_26', 0, 'Unapendelea kula nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22806_26', 0, 'Unapendelea kula nini?', 'assets/topic/asb/1196.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 1, 'Chapati');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 2, 'Wali');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 3, 'Kuku');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22806_26', 0, 4, 'Matunda');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817', 2, 'Asiyesikia la mkuu', 'assets/topic/asb/10763.png', 'Ursula Nafula
-Rob Owen', 'FFB3C8FF');
+Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_3', 3, NULL, 'assets/topic/asb/10763.png', 'Lego alikuwa nyoka mkubwa. Aliishi katika kijiji cha Sinyare.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_4', 3, NULL, 'assets/topic/asb/10765.png', 'Apiyo, Ajoh na Atieno walienda kutafuta kuni.
 Bibi aliwaonya kuhusu Lego.', NULL);
@@ -818,13 +818,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_22', 0, 'Unyalego ana meno ya Dhahabu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_25', 0, 'Unafikiri Unyalego alikua wa aina gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21817_25', 0, 'Unafikiri Unyalego alikua wa aina gani?', 'assets/topic/asb/10763.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 1, 'Mpole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 2, 'Mwenye akili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 3, 'Mkatili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21817_25', 0, 4, 'Mpumbavu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734', 2, 'Asiyetii wazee', 'assets/topic/asb/27127.png', 'Ursula  Nafula
-Kenneth Boyowa Okitikpi', 'FFCFB5DD');
+Kenneth Boyowa Okitikpi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_3', 3, NULL, 'assets/topic/asb/27118.png', 'Hapo zamani, kulikuwa na mvulana aliyeitwa Jalo. Jalo aliwaasi wazazi wake.
 Watu walijua kuwa mvulana huyo alikosa adabu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_4', 3, NULL, 'assets/topic/asb/27119.png', 'Siku moja Jalo na mamake waliwatembelea jamaa zao kijijini.
@@ -870,7 +870,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 1, 'Ana Adabu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 2, 'Mchoyo.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_23', 0, 3, 'Mwenye akili.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_28', 0, 'Unaishi vipi na wakubwa zako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24734_28', 0, 'Unaishi vipi na wakubwa zako?', 'assets/topic/asb/27127.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 1, 'Kwa adabu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 2, 'Kwa adabu Mbaya');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24734_28', 0, 3, 'Kwa kuongea sana');
@@ -917,13 +917,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 3
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 4, 'Mjusi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 5, 'Bird');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_21', 1, 6, 'Ndege');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_28', 0, 'Mbuzi hula nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30269_28', 0, 'Mbuzi hula nini?', 'assets/topic/asb/26677.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 1, 'Nyasi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 2, 'Udongo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 3, 'Majani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30269_28', 0, 4, 'Fimbo');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354', 2, 'Ömöbhërë', 'assets/topic/asb/26739.png', 'Kutafsiri Biblia Mara
-Sue  Beattie', 'FF9DEDE3');
+Sue  Beattie', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_3', 3, NULL, 'assets/topic/asb/26749.png', 'Ekerenge', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_4', 3, NULL, 'assets/topic/asb/26744.png', 'Ököghörö', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_5', 3, NULL, 'assets/topic/asb/26741.png', 'Riiru', NULL);
@@ -968,13 +968,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 5
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 6, 'Tumbo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 7, 'Leg');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_22', 1, 8, 'Mguu');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_31', 0, 'Sehemu gani ya mwili wako unayoipendelea sana?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31354_31', 0, 'Sehemu gani ya mwili wako unayoipendelea sana?', 'assets/topic/asb/26739.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 1, 'Kichwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 2, 'Mikono');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 3, 'Tumbo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31354_31', 0, 4, 'Miguu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143', 2, 'Bahati  mbaya!', 'assets/topic/asb/14751.png', 'Brigid Simiyu
-Abraham Muzee', 'FFB3C8FF');
+Abraham Muzee', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_3', 3, NULL, 'assets/topic/asb/14735.png', 'Mimi na Kiki ni marafiki.
 Sisi hutembea kwenda nyumbani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_4', 3, NULL, 'assets/topic/asb/14736.png', 'Siku moja, mwanamme alitufuata.', NULL);
@@ -993,13 +993,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 1, 'Koti jeupe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 2, 'Kofia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_14', 0, 3, 'Miwani');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_19', 0, 'Kwanini mtu mrefu alikua anawafuata nyuma yao?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21143_19', 0, 'Kwanini mtu mrefu alikua anawafuata nyuma yao?', 'assets/topic/asb/14751.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 1, 'Ili kuwapora');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 2, 'Ili kuwaumiza');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 3, 'Ili kuwateka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21143_19', 0, 4, 'Alikua shwari.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830', 2, 'Banti na Sabuni', 'assets/topic/asb/607.png', 'Brigid Simiyu
- Sorit Gupto', 'FFF4E1B5');
+ Sorit Gupto', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_3', 3, NULL, 'assets/topic/asb/607.png', 'Banti anapenda kucheza na vipepeo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_4', 3, NULL, 'assets/topic/asb/612.png', 'Pia anapenda kucheza na ndege.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_5', 3, NULL, 'assets/topic/asb/608.png', 'Yeye hutengeneza mashua kutoka kwa makaratasi.', NULL);
@@ -1045,13 +1045,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_24', 0, 1,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_27', 0, 'Tuogapo na sabuni, vijidudu hukimbia', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_27', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_27', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_30', 0, 'Unapendelea kufanya nini asubuh?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2830_30', 0, 'Unapendelea kufanya nini asubuh?', 'assets/topic/asb/607.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 1, 'Kuoga');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 2, 'Kuosha meno');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 3, 'Kula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2830_30', 0, 4, 'Kukimbia');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912', 2, 'Barua', 'assets/topic/asb/1398.png', 'Mutugi Kamundi
-Cathy Feek', 'FFCFB5DD');
+Cathy Feek', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_3', 3, NULL, 'assets/topic/asb/1398.png', 'Wiki iliyopita nilipokea barua nyingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_4', 3, NULL, 'assets/topic/asb/1399.png', 'Siku ya Jumatatu, daktari alimwandikia mwalimu wangu barua.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_5', 3, NULL, 'assets/topic/asb/1400.png', 'Tabisile ni mgonjwa.
@@ -1090,13 +1090,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_13', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_18', 0, 'Rafiki yangu Dudu aliandika barua siku ya Alhamisi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_21', 0, 'Unapendelea kumwandikia nani barua?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2912_21', 0, 'Unapendelea kumwandikia nani barua?', 'assets/topic/asb/1398.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 1, 'Rafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 2, 'Mama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 3, 'Mwalimu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2912_21', 0, 4, 'baba');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526', 2, 'Barua kwa Mama', 'assets/topic/asb/1503.png', 'Ursula Nafula
- Catherine Groenewald', 'FFB3C8FF');
+ Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_3', 3, NULL, 'assets/topic/asb/1504.png', 'Mama aliziweka nguo zake katika begi ndogo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_4', 3, NULL, 'assets/topic/asb/1505.png', 'Alinikumbatia akasema,  "Kwa heri kwa sasa."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_5', 3, NULL, 'assets/topic/asb/1506.png', '"Mama unaenda wapi?" Nilimwuliza.', NULL);
@@ -1147,13 +1147,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_23', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_28', 0, 'Baba yangu alisema tutakupenda siku zote', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_28', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_28', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_31', 0, 'Unajisikiaje unapomuona mtoto mpya nyumbani kwenu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2526_31', 0, 'Unajisikiaje unapomuona mtoto mpya nyumbani kwenu?', 'assets/topic/asb/1503.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 1, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 2, 'Msisimko');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 3, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2526_31', 0, 4, 'Huzuni');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428', 2, 'Basi kubwa la bluu', 'assets/topic/asb/11446.png', 'Brigid Simiyu
- Mango Tree', 'FF9DEDE3');
+ Mango Tree', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_3', 3, NULL, 'assets/topic/asb/11446.png', 'Kulikuwa na basi moja tu katika kijiji cha Ebei. Lilikuwa basi kubwa lenye rangi ya bluu. Lilinguruma sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_4', 3, NULL, 'assets/topic/asb/11447.png', 'Siku moja mamake Ebei alisema, "Kesho tutaenda mjini kununua sare yako ya shule."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_5', 3, NULL, 'assets/topic/asb/11448.png', 'Ebei alifurahi sana. Kumbe atasafiri katika lile basi kubwa la bluu! Usiku huo hakuweza kulala vizuri.', NULL);
@@ -1199,7 +1199,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 1, 'Njano');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 2, 'Rangi ya chungwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_26', 0, 3, 'kijani');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_31', 0, 'Unajisikiaje unapokua unasubiria kitu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12428_31', 0, 'Unajisikiaje unapokua unasubiria kitu?', 'assets/topic/asb/11446.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 1, 'Mtulivu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 2, 'Mwenye furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12428_31', 0, 3, 'Mwenye huzuni');
@@ -1249,13 +1249,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 1, 5
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 1, 'Nyeusi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 2, 'Rangi ya chungwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_22', 0, 3, 'Buluu');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_31', 0, 'Unahitaji simu ngapi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14419_31', 0, 'Unahitaji simu ngapi?', 'assets/topic/asb/10053.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 1, 'Moja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 2, 'Mbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 3, 'Tatu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14419_31', 0, 4, 'Nne');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610', 2, 'Biantaka na chungu kilichokufa', 'assets/topic/asb/14436.png', 'Ursula Nafula
-Emily Berg', 'FFF4E1B5');
+Emily Berg', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_3', 3, NULL, 'assets/topic/asb/14435.png', 'Hapo zamani za kale, kulikuwa na mwanamme aliyeitwa Biantaka. Alikuwa na ng''ombe. Kila siku Biantaka alimlisha ng''ombe wake na kumpa maji. Alikuwa na chungu kidogo alichotumia kuchota maji.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_4', 3, NULL, 'assets/topic/asb/14436.png', 'Siku moja, Biantaka alimwendea jirani yake kumuomba chungu kikubwa ili akitumie kuchota maji. Jirani yake alikubali kumwazima Biantaka chungu kikubwa. Alisema, "Tatizo la jirani yangu ni tatizo langu."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_5', 3, NULL, 'assets/topic/asb/13193.png', 'Siku chache baadaye, Biantaka alienda kwa mfinyanzi akanunua chungu kidogo. Alipofika nyumbani, alikiweka ndani ya kile chungu kikubwa alichomuomba jirani yake.', NULL);
@@ -1297,7 +1297,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_18', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_23', 0, 'Byantaka alimdanganya jirani yake kuhusu chungu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_23', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_23', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_26', 0, 'Ukiwa na tatizo unamwambia nani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21610_26', 0, 'Ukiwa na tatizo unamwambia nani?', 'assets/topic/asb/14436.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 1, 'Mama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 2, 'Mwalimu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21610_26', 0, 3, 'Jaji');
@@ -1341,13 +1341,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_16', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_21', 0, 'Ndizi mbivu na maneno yake matamu yalimfanya kila mpita njia atake kujaribu ladha ya ndizi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_21', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_21', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_24', 0, 'Unapendelea kununua nini sokoni?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31503_24', 0, 'Unapendelea kununua nini sokoni?', 'assets/topic/asb/13467.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 1, 'Ndizi Mbivu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 2, 'Mafuta');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 3, 'Sukari');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('31503_24', 0, 4, 'Chai');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110', 2, 'Bibi atusimulia hadithi', 'assets/topic/asb/18842.png', 'Ursula Nafula
-Marleen Visser', 'FF9DEDE3');
+Marleen Visser', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_3', 3, NULL, 'assets/topic/asb/18819.png', 'Sote tulikuwa tumekusanyika nyumbani kwa bibi kuzisikiliza hadithi zake. Usiku huo, tulikuwa tumeketi karibu na meko bibi alipoanza kutusimulia hadithi:
 Sungura na Tembo walikuwa majirani waliokuwa marafiki pia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_4', 3, NULL, 'assets/topic/asb/18831.png', 'Sungura alikuwa akipenda uyoga, lakini alikuwa mvivu sana. Alizoea kuiba uyoga wa Tembo. Mwaka huo, Tembo alipanda ndizi na maboga. Kwa hivyo, Sungura hakupata uyoga.', NULL);
@@ -1387,13 +1387,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 1, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 2, 'Sungura');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_20', 0, 3, 'Mbwa');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_25', 0, 'Utajilindaje na wezi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19110_25', 0, 'Utajilindaje na wezi?', 'assets/topic/asb/18842.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 1, 'Kwa fimbo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 2, 'Kwa mawe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 3, 'Kwa kujificha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19110_25', 0, 4, 'kwa kupiga kelele');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431', 2, 'Binti mpendwa', 'assets/topic/asb/18758.png', 'Brigid Simiyu
-Brian Wambi', 'FF9DEDE3');
+Brian Wambi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_3', 3, NULL, 'assets/topic/asb/18757.png', 'Huyu ni Natabo.
 Ana ndugu sita wa kiume.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_4', 3, NULL, 'assets/topic/asb/18758.png', 'Wazazi wake walimpatia chungu kidogo.
@@ -1437,13 +1437,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_22', 0, 'Mwnaume na mke wake, kwa pamoja walimpenda mtoto wa kike zaidi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_25', 0, 'Uitajisikiaje kama mtu akivunja vitu vyako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20431_25', 0, 'Uitajisikiaje kama mtu akivunja vitu vyako?', 'assets/topic/asb/18758.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 1, 'Ntarahi sana');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 2, 'Ntachoka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 3, 'Ntakasirika');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20431_25', 0, 4, 'Ntahuzunika');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899', 2, 'Binti wa Mflame Kayanja', 'assets/topic/asb/10069.png', 'Brigid Simiyu
-Natalie Propa', 'FFCFB5DD');
+Natalie Propa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_3', 3, NULL, 'assets/topic/asb/10074.png', 'Hapo zamani za kale, aliishi Mfalme kwa jina Kayanja. Waliishi katika kasri kubwa yeye, mkewe malkia na Apenyo binti yao. Apenyo alikuwa msichana mrembo. Kila mwanmme alitaka kumwoa,  lakini mfalme Kayanja alitaka mahari ya juu sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_4', 3, NULL, 'assets/topic/asb/10063.png', 'Karibu na kasri la mfalme Kayanja, aliishi Chifu Aludah Mkuu. Aliitwa ''Mkuu'' kwa sababu kila aliyeishi pale kijijini, alimtii. Chifu Aludah alikuwa amempoteza mkewe kutokana na ugonjwa wa malaria. Alitaka kuoa mke mwingine.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_5', 3, NULL, 'assets/topic/asb/10064.png', 'Chifu Aludah alikuwa mzee mfupi mwenye upara. Aliamua kupeleka mahari kwa Mfalme Kayanja ili amwoe bintiye. Walipokuwa wakijadili mahari,  kijakazi wa Mfalme, kwa jina Kakembo, aliyasikia mazungumzo yao. Kakembo alikuwa na uhusiano wa karibu sana na Apenyo.', NULL);
@@ -1486,13 +1486,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_26', 0, 'Katika ufalme wa Mfalme Kayanja, kila mtu aliweza kumuoa mtu aliyemtaka, tajiri au masikini.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_29', 0, 'Unatakua huru kufanya nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12899_29', 0, 'Unatakua huru kufanya nini?', 'assets/topic/asb/10069.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 1, 'Kula kila kitu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 2, 'Kumuoa kila mtu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 3, 'Kucheza na kila mtu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12899_29', 0, 4, 'Kwenda kila mahali');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417', 2, 'Chiriku', 'assets/topic/asb/9449.png', 'Ursula Nafula
-Jesse Breytenbach', 'FFCFB5DD');
+Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_3', 3, NULL, 'assets/topic/asb/9393.png', 'Chiriku alionywa na mamake kutoongea sana.
 Hakutii.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_4', 3, NULL, 'assets/topic/asb/9392.png', 'Shangazi ya Chiriku aliishi mbali.
@@ -1556,13 +1556,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 1, 'Marafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 2, 'Shangazi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_29', 0, 3, 'Mjomba');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_34', 0, 'Wewe ni mtu wa aina gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18417_34', 0, 'Wewe ni mtu wa aina gani?', 'assets/topic/asb/9449.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 1, 'Mpole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 2, 'Muongeaji');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 3, 'Mchangamfu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18417_34', 0, 4, 'Mwenye furaha');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084', 2, 'Chui na Swara', 'assets/topic/asb/17309.png', 'Brigid Simiyu
-Isaac Okwir', 'FFB3C8FF');
+Isaac Okwir', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_3', 3, NULL, 'assets/topic/asb/17306.png', 'Mara nyingi, Chui alitaka kumshika Swara.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_4', 3, NULL, 'assets/topic/asb/17307.png', 'Swara naye alikuwa akitoroka kila alipomwona Chui.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_5', 3, NULL, 'assets/topic/asb/17309.png', 'Siku moja, Chui alimwambia Swara, "Ningependa tuwe marafiki. Unachokula, mimi sili. Hakuna sababu ya kuwa maadui."', NULL);
@@ -1604,13 +1604,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_16', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_21', 0, 'Chui alinasa katikati ya matawi mawili.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_21', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_21', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_24', 0, 'Chui alikua mnyama wa aina gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22084_24', 0, 'Chui alikua mnyama wa aina gani?', 'assets/topic/asb/17309.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 1, 'Mwenye hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 2, 'Mjanja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 3, 'Mpole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22084_24', 0, 4, 'Mshawishi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434', 2, 'Chura na Nyoka', 'assets/topic/asb/18784.png', 'Brigid Simiyu
-Rob Owen', 'FFCFB5DD');
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_3', 3, NULL, 'assets/topic/asb/18783.png', 'Chura na Nyoka walikuwa marafiki.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_4', 3, NULL, 'assets/topic/asb/18784.png', '"Njoo twende tukamtembelee mamangu." Chura alimwalika Nyoka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_5', 3, NULL, 'assets/topic/asb/25000.png', '"Asante, lakini nani atatuchungia makao yetu?" Nyoka alimwuliza Chura.', NULL);
@@ -1653,13 +1653,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_26', 0, 'Marafiki wawili walivamiwa na Vichakuro.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_29', 0, 'unafikiria nini kuhusu mam yake chura?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20434_29', 0, 'unafikiria nini kuhusu mam yake chura?', 'assets/topic/asb/18784.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 1, 'Ni mpole');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 2, 'Ni mjeuri');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 3, 'Ana nidhamu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20434_29', 0, 4, 'Ni mzuri.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086', 2, 'Dama ni mashuhuri!', 'assets/topic/asb/7514.png', 'Brigid Simiyu
-Vusi Malindi', 'FF9DEDE3');
+Vusi Malindi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_3', 3, NULL, 'assets/topic/asb/7513.png', 'Ndungu yangu mdogo anachelewa kuamka.
 Mimi huamka mapema kwani, mimi ni mashuhuri!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_4', 3, NULL, 'assets/topic/asb/7514.png', 'Mimi ndiye hufungua dirisha asubuhi.', NULL);
@@ -1701,13 +1701,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_22', 0, 'Ninafanya bidii darasani kwa njia yoyote.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_25', 0, 'Ni nani unamuhusisha na shairi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22086_25', 0, 'Ni nani unamuhusisha na shairi?', 'assets/topic/asb/7514.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 1, 'Kaka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 2, 'Dada');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 3, 'Rafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22086_25', 0, 4, 'Mimi mwenyewe');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680', 2, 'Demane na Demazane', 'assets/topic/asb/2636.png', 'Mutugi Kamundi
- Jemma Kahn', 'FF9DEDE3');
+ Jemma Kahn', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_3', 3, NULL, NULL, 'Hapo zamani kuliondokea mvulana mmoja aliyeitwa Demane. Alikuwa na pacha mwenzake aliyeitwa Demazane.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_4', 3, NULL, 'assets/topic/asb/2635.png', 'Wazazi wao walipofariki, Demane na Demazane walienda kuishi na mjomba wao. Mjomba aliwachapa na kuwapatia uji mwepesi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_5', 3, NULL, NULL, 'Kwa sababu hiyo, walitoroka.', NULL);
@@ -1787,13 +1787,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 1, 'Paka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 2, 'Moto');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_41', 0, 3, 'Majivu');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_46', 0, 'Ungejisikiaje kama ungekua peke yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10680_46', 0, 'Ungejisikiaje kama ungekua peke yako?', 'assets/topic/asb/2636.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 1, 'Jasiri');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 2, 'Uoga');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 3, 'Mwenye akili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10680_46', 0, 4, 'Mpumbavu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445', 2, 'Dhahabu, kalamu nzuri', 'assets/topic/asb/25333.png', 'Ursula Nafula
-Andrews Opoku Antwi and Michelangelo Quaye Anang', 'FF9DEDE3');
+Andrews Opoku Antwi and Michelangelo Quaye Anang', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_3', 3, NULL, 'assets/topic/asb/25336.png', 'Hapo zamani za kale, kulikuwa na Kijiji kilichoitwa Kalamu. Pale kijijini, kuliishi kalamu tofauti.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_4', 3, NULL, 'assets/topic/asb/25337.png', 'Kwa mfano, kulikuwa na Dhahabu, Bic, Ballpoint, Gel, Marker na wengine wengi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_5', 3, NULL, 'assets/topic/asb/25339.png', 'Dhahabu alikuwa msichana mrembo.', NULL);
@@ -1829,7 +1829,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_18', 0, 'Dhahabu alikua mwenye huzuni kwasababu hakuna na wino.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_21', 0, 'Kalamu Dhahabu atafanya nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21445_21', 0, 'Kalamu Dhahabu atafanya nini?', 'assets/topic/asb/25333.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 1, 'Atachukua Wino');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 2, 'Atajaza maji');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21445_21', 0, 3, 'Atakimbia');
@@ -1872,13 +1872,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_18', 0, 'Familia yenye Amani ni Imara, ambapo hakuna mtu anayeweza kuitenganisha.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_21', 0, 'Ni nini kingine cha muhimu katika maisha yetu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30807_21', 0, 'Ni nini kingine cha muhimu katika maisha yetu?', 'assets/topic/asb/8945.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 1, 'Chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 2, 'Michezo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 3, 'Nguvu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30807_21', 0, 4, 'Furaha');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271', 2, 'Ensíkili', 'assets/topic/asb/26642.png', 'Kutafsiri Biblia Mara
-Marleen Visser', 'FFB3C8FF');
+Marleen Visser', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_3', 3, NULL, 'assets/topic/asb/26643.png', 'Eémbwa', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_4', 3, NULL, 'assets/topic/asb/26644.png', 'Embaata', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_5', 3, NULL, 'assets/topic/asb/26645.png', 'Éente', NULL);
@@ -1919,13 +1919,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 3
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 4, 'Nguruwe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 5, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_21', 1, 6, 'Ng''ombe');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_28', 0, 'Ni mnyama gani unayempenda?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30271_28', 0, 'Ni mnyama gani unayempenda?', 'assets/topic/asb/26642.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 1, 'Ng''ombe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 2, 'Mbwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 3, 'Nguruwe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('30271_28', 0, 4, 'Paka');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612', 2, 'Fahali na Punda', 'assets/topic/asb/15496.png', 'Brigid Simiyu
-Salim Kasamba', 'FF9DEDE3');
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_3', 3, NULL, 'assets/topic/asb/15491.png', 'Zamani aliishi mkulima mmoja maskini aliyekuwa na Fahali mzee. Fahali huyo hakupenda kulima. Alipenda kubaki nyumbani akila nyasi, akinywa maji na kupumzika.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_4', 3, NULL, 'assets/topic/asb/15492.png', 'Mkulima huyo vilevile alikuwa na Punda. Punda na Fahali walikuwa marafiki. Mwisho wa siku, walipenda kuongea pamoja. Siku moja, Fahali alisema, "Nimechoka sana. Nimefanya kazi siku nzima. Jembe ni kubwa na zito. Naye mkulima haniruhusu kupumzika."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_5', 3, NULL, 'assets/topic/asb/15493.png', 'Punda alimtazama Fahali akawaza, "Bila shaka Fahali ni mvivu na hapendi kufanya kazi." Kisha akasema, "Unadhani kuwa jembe lako ni zito? Niamini, rafiki yangu, jembe ni jepesi! Mimi leo nimebeba gunia la ngano mgongoni. Nina hakika lilikuwa zito kuliko jembe lako."', NULL);
@@ -1968,13 +1968,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 1, 'Boo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 2, 'Roo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_22', 0, 3, 'Koo');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_27', 0, 'Kwa nini tunapaswa kufanya kazi kwa bidii?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15612_27', 0, 'Kwa nini tunapaswa kufanya kazi kwa bidii?', 'assets/topic/asb/15496.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 1, 'Inatufanya tufurahi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 2, 'Inatupa Uhai');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 3, 'Inatuweka sawa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15612_27', 0, 4, 'Hatupaswi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985', 2, 'Familia ya Pembenyingi', 'assets/topic/asb/19270.png', 'Ursula Nafula
- Isaac Okwir', 'FFB3C8FF');
+ Isaac Okwir', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_3', 3, NULL, 'assets/topic/asb/19268.png', '"Mwaka huu tutakuwa na mkutano maalum wa familia," Mama Pembenyingi alitangaza. "Nani atakayehudhuria? Natumai Pembenyingi wote watakuwa. Ninawakosa binamu yangu," Kosi alisema. "Ninakosa zaidi upande wa familia yangu ya Pembenne," Mama alitabasamu. "Ndiyo, ni kitambo sana tangu tuwaone Mstatili, Mraba, na Msambamba," alisema Baba Pembenyingi. "Usisahau, wana watoto watatu sasa!" Mama alimkumbusha Baba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_4', 3, NULL, 'assets/topic/asb/19270.png', '"Na binamu wengine, je? Watakuja?" Fusi aliuliza. Mama alijibu, "Ndiyo, wao ni Pembenyingi, ingawa si Pembenne. Jina lao la ukoo ni Pembetatu. Watoto ni Pembetatu Pacha na Pembetatu Sawa." "Aa, ndiyo, familia ya Pembetatu!" alishangaa Fusi. "Lakini wanafanana sana na Pembenne." "La, sio kabisa," Mama alisema. "Pembetatu wana pande tatu, ilhali Pembenne wana pande nne, kama mimi."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_5', 3, NULL, 'assets/topic/asb/19271.png', 'Baba Pembenyingi aliongeza, "Nimefurahi kwa sababu binamu yangu wengine watatu watakuwa hapa, yaani, Pembetano, Pembesita na Pembenane. Wao pia ni wa familia yetu ya Pembenyingi." Vusi aliuliza, "Baba, mbona tunaitwa Pembenyingi?" "Tunaitwa Pembenyingi kwa sababu tuna pande mbili sura. Tumeumbwa kwa mistari iliyonyooka, na maumbo yetu yamefungika, kama unavyoona, mistari yetu yote imeunganika. Binamu yetu Pembetatu, Pembenne, Pembesita, na Pembetano wote watatutembelea," Baba alijibu.', NULL);
@@ -2018,7 +2018,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_26', 0, 'Dekagoni ina pande kumi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_29', 0, 'Je, ni umbo gani la kijiometri unalolipenda?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21985_29', 0, 'Je, ni umbo gani la kijiometri unalolipenda?', 'assets/topic/asb/19270.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 1, 'Dekagoni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 2, 'Pentagoni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21985_29', 0, 3, 'Oktagoni');
@@ -2065,7 +2065,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 1, 'Mkate');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 2, 'Biskuti');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_21', 0, 3, 'Maji');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_26', 0, 'Unapakaa nini unapoumia?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21998_26', 0, 'Unapakaa nini unapoumia?', 'assets/topic/asb/25266.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 1, 'Dawa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 2, 'Jiwe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21998_26', 0, 3, 'Matope');
@@ -2114,13 +2114,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_26', 0, 'Nyuki huishi kwenye mzinga', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_29', 0, 'Tuwafanyie nini marafiki zetu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15613_29', 0, 'Tuwafanyie nini marafiki zetu?', 'assets/topic/asb/13398.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 1, 'Wema');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 2, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 3, 'Uchangamfu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15613_29', 0, 4, 'Haki');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698', 2, 'Fisi na Kunguru', 'assets/topic/asb/1725.png', 'Pete Mhunzi
- Wiehan de Jager', 'FFB3C8FF');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_3', 3, NULL, 'assets/topic/asb/1725.png', 'Fisi na Kunguru walikuwa marafiki ingawa walikuwa tofauti. Kunguru aliruka lakini Fisi alitembea tu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_4', 3, NULL, 'assets/topic/asb/1726.png', 'Siku moja Fisi alitaka kumfahamu Kunguru zaidi. Alimwuliza, "Ni kitu gani cheupe kilicho nyuma ya shingo yako?" Kunguru alimjibu Fisi, "Ni nyama nono nimekuwa nikiila huko angani ninaporuka. Nimeila kwa muda mrefu hadi imejibandika shingoni mwangu."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_5', 3, NULL, NULL, 'Fisi aliposikia juu ya nyama, alidondokwa na mate. Alitamani sana kula nyama hiyo. Ataipataje ikiwa angani naye hakuwa na mabawa ya kuruka na kuifikia? Fisi alimwomba Kunguru, "Tafadhali rafiki yangu, nikopeshe manyoya ili nijitengenezee mabawa. Nina hamu sana ya kuruka kama wewe na kuila ile nyama."', NULL);
@@ -2158,7 +2158,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_17', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_22', 0, 'Nyama ya Mafuta ambayo fisi alitaka kula ilikua ni Wingu', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_25', 0, 'Unapendelea nini kwa rafiki yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8698_25', 0, 'Unapendelea nini kwa rafiki yako?', 'assets/topic/asb/1725.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 1, 'Urafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 2, 'Wema');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8698_25', 0, 3, 'Ujasiri');
@@ -2197,7 +2197,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_18', 0, 'Sungura alitoa beseni dogo pamoja na beseni kubwa', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_21', 0, 'Unakunywa maji kwa kutumia nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19193_21', 0, 'Unakunywa maji kwa kutumia nini?', 'assets/topic/asb/19188.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 1, 'Sufuria');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 2, 'Bilauri');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19193_21', 0, 3, 'Kikombe');
@@ -2250,7 +2250,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 5
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 6, 'Haya');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 7, 'Mzee');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_20', 1, 8, 'Utani mzuri');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_29', 0, 'Unahisije?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16199_29', 0, 'Unahisije?', 'assets/topic/asb/1901.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 1, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 2, 'Njaa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16199_29', 0, 3, 'Huzuni');
@@ -2280,13 +2280,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_20', 0, 1,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_23', 0, 'Wangari aliwafundisha wanawake jinsi ya kupanda miti kutokana na mbegu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_23', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_23', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_26', 0, 'Unapenda kufanya nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9911_26', 0, 'Unapenda kufanya nini?', 'assets/topic/asb/9803.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 1, 'Kupanda mbegu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 2, 'Kucheza katika maji');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 3, 'Kusoma');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('9911_26', 0, 4, 'Kulala');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107', 2, 'Hadithi ndefu ya Jojo', 'assets/topic/asb/19917.png', 'Ursula  Nafula
-Marleen Visser', 'FFF4E1B5');
+Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_3', 3, NULL, 'assets/topic/asb/19902.png', 'Chifu aliyeitwa Mfupi na Duara, alilia, "Nina tatizo kubwa sana."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_4', 3, NULL, 'assets/topic/asb/19903.png', '"Nimeipoteza pembe yangu inayotumika wakati wa upanzi," Chifu Mfupi na Duara alisema.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_5', 3, NULL, 'assets/topic/asb/19904.png', '"Nitaipata pembe yako. Nitaenda kuitafuta nyumbani kwa Mjomba Mstatili," Jojo alisema.', NULL);
@@ -2329,7 +2329,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_26', 0, 'Mfalme mfupi alisahau mahali alipohifadhi pembe ya springi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_26', 0, 1, 'Uongo.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_29', 0, 'Ni umbo gani unalopenda?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23107_29', 0, 'Ni umbo gani unalopenda?', 'assets/topic/asb/19917.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 1, 'Duara');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 2, 'Pembe tatu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23107_29', 0, 3, 'Mraba');
@@ -2397,13 +2397,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_25', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_30', 0, 'Jaji alikuwa mwenye busara kwa wote.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_30', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_30', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_33', 0, 'Unapigana na nani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17135_33', 0, 'Unapigana na nani?', 'assets/topic/asb/17057.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 1, 'Sipigani na mtu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 2, 'Mama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 3, 'Dada');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17135_33', 0, 4, 'Rafiki');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040', 2, 'Hamisi abahatika', 'assets/topic/asb/7976.png', 'Adelheid Marie Bwire
-Rob Owen', 'FFCFB5DD');
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_3', 3, NULL, 'assets/topic/asb/7966.png', 'Siku moja Hamisi na babake walienda sokoni kununua sare ya shule.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_4', 3, NULL, 'assets/topic/asb/7967.png', 'Hamisi akamwona kijana mwingine amevalia shati la kijani kibichi. "Anaonekana nadhifu sana," Hamisi aliwaza.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_5', 3, NULL, 'assets/topic/asb/7968.png', '"Shati lile lapendeza sana," Hamisi alimwambia babake.', NULL);
@@ -2436,13 +2436,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_13', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_18', 0, 'Hatimaye baba yake hamisi alinunua shati kwaajili ya Hamisi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_21', 0, 'Je, ungependa kununua shati la rangi gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8040_21', 0, 'Je, ungependa kununua shati la rangi gani?', 'assets/topic/asb/7976.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 1, 'Kijani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 2, 'Nyekundu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 3, 'Rangi ya machungwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8040_21', 0, 4, 'Buluu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386', 2, 'Jambazi', 'assets/topic/asb/17600.png', 'Susan Kavaya
-Jacob Kono', 'FFF4E1B5');
+Jacob Kono', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_3', 3, NULL, 'assets/topic/asb/17597.png', 'Hapo zamani za kale, kulikuwa na wafanya biashara waliokwenda kila mahali. Walisafiri wakati wa musimu wa baridi na musimu wa joto. Walivuka milima, majangwa na misitu wakiuza na kununua bidhaa. Wafanya biashara hao waliwaogopa majambazi kwa hivyo walisafiri wakiwa katika vikundi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_4', 3, NULL, 'assets/topic/asb/17598.png', 'Ilitokea kuwa mfanya biashara mmoja hakuweza kupata kikundi cha kusafiri nacho, kwa hivyo, alisafiri peke yake. Alikutana na jambazi akajawa na hofu. Jambazi huyo alimwuliza, "Wewe ni nani?" Alijibu, "Mimi ni mfanya biashara." "Uko peke yako?" "La! Marafiki zangu wako nyuma ingawa sasa niko peke yangu." Alijibu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_5', 3, NULL, 'assets/topic/asb/17599.png', 'Wakati huo, mfanya biashara mwingine alikuja kutoka nyuma yao. Alijificha akatazama kwa hofu jambazi yule akimwua mfanya biashara wa kwanza na kumzika. Aliwaza, "Nitaendeleaje na safari yangu? Yaliyompata mwenzangu yatanipata mimi pia." Aliogopa kuvuka akabaki mahali hapo kwa muda. Baadaye, aliwaza, "Siwezi kukaa hapa milele. Lazima niendelee na safari yangu."', NULL);
@@ -2489,13 +2489,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 1, 'Tofaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 2, 'Ndizi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_26', 0, 3, 'Cheri');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_31', 0, 'Utafanyaje ukiumwa?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19386_31', 0, 'Utafanyaje ukiumwa?', 'assets/topic/asb/17600.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 1, 'Nitakunywa dawa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 2, 'Nitapumzika');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 3, 'Nitakula Tunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19386_31', 0, 4, 'Nitamuona Mganga wa Afya');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838', 2, 'Jimbi adanganya', 'assets/topic/asb/14805.png', 'Ursula Nafula
- Wiehan de Jager', 'FFF4E1B5');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_3', 3, NULL, 'assets/topic/asb/14795.png', 'Zamani, wanyama waliishi pamoja.
 Walikutana kumchagua mfalme.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_4', 3, NULL, 'assets/topic/asb/14796.png', 'Jimbi alitaka kuwa mfalme.
@@ -2543,13 +2543,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 3
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 1, 4, 'Tumbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 0, 1, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_22', 0, 2, 'Pundamilia');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_29', 0, 'Unafanya nini kupasha mwili wako joto kipindi cha Baridi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21838_29', 0, 'Unafanya nini kupasha mwili wako joto kipindi cha Baridi?', 'assets/topic/asb/14805.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 1, 'Najifunika na Blanketi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 2, 'Nawasha moto kupata joto');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 3, 'Napasha Mikono');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21838_29', 0, 4, 'Navaa sweta');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609', 2, 'Jimbi na Sungura', 'assets/topic/asb/12453.png', 'Ursula Nafula
- Duane Arthur', 'FFCFB5DD');
+ Duane Arthur', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_3', 3, NULL, 'assets/topic/asb/12438.png', 'Hapo zamani za kale, kulikuwa na Jimbi na Sungura. Walikuwa marafiki sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_4', 3, NULL, 'assets/topic/asb/12440.png', 'Usiku mmoja, Sungura aliitembelea familia ya Jimbi. Walifurahia kula chajio pamoja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_5', 3, NULL, 'assets/topic/asb/12443.png', 'Walipolala, Sungura aligundua kitu fulani.  Jimbi na familia yake walivificha vichwa vyao walipolala.', NULL);
@@ -2584,7 +2584,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_18', 0, 'Jimbi na familia yake walikata vichwa vyao ili kupata usingizi mzuri.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_18', 1, 1, 'Si kweli');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_18', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_21', 0, 'Utafanya nini ili upate usingizi mzuri usiku?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12609_21', 0, 'Utafanya nini ili upate usingizi mzuri usiku?', 'assets/topic/asb/12453.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 1, 'Nitakula matunda baada ya mlo wa usiku');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 2, 'Nitatembea umbali mrefu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12609_21', 0, 3, 'Nitabadilisha eneo la kulala.');
@@ -2638,13 +2638,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 1, 'Tumbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 2, 'Samaki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_22', 0, 3, 'Kaa');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_27', 0, 'Je, wewe hufanya nini wakati wa mvua?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20439_27', 0, 'Je, wewe hufanya nini wakati wa mvua?', 'assets/topic/asb/13417.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 1, 'Nakaa nyumbani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 2, 'Nacheza katika maji');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 3, 'Nakula kuki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20439_27', 0, 4, 'Nabeba mwamvuli');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436', 2, 'Jinsi Kobe alivyopata pua kombo', 'assets/topic/asb/13136.png', 'Brigid Simiyu
-Marlene Visser', 'FFCFB5DD');
+Marlene Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_3', 3, NULL, 'assets/topic/asb/13129.png', 'Kobe na Kindi wanahitaji pesa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_4', 3, NULL, 'assets/topic/asb/13130.png', 'Wanatengeneza sahani ili wauze sokoni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_5', 3, NULL, 'assets/topic/asb/13131.png', 'Kobe anashuhudia vita sokoni.', NULL);
@@ -2679,13 +2679,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_18', 0, 'Kobe alingátwa na Fuko', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_18', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_21', 0, 'Utafanya nini utakapoona marafiki wako wanapigana?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20436_21', 0, 'Utafanya nini utakapoona marafiki wako wanapigana?', 'assets/topic/asb/13136.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 1, 'Nitajaribu kuzuia ugomvi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 2, 'Nitawajulisha watu wakubwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 3, 'Nitaita msaada');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20436_21', 0, 4, 'Nitaita polisi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557', 2, 'Jinsi rangi zilivyokuja pamoja angani', 'assets/topic/asb/26440.png', 'Ursula  Nafula
-Offei Tettey Eugene', 'FF9DEDE3');
+Offei Tettey Eugene', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_3', 3, NULL, 'assets/topic/asb/26434.png', 'Siku moja, mvua kubwa ilikuwa imenyesha. Imani alitazama angani na kwa mara ya kwanza, aliona rangi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_4', 3, NULL, 'assets/topic/asb/26435.png', 'Rangi zile zilipendeza sana. Alidhani kuwa mtu fulani alikuwa amefanya kazi kubwa ya kuipaka anga rangi kama vile babake alivyozipaka nyumba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_5', 3, NULL, 'assets/topic/asb/26436.png', 'Alikimbia kumweleza dadake. "Sarah, tazama! Mtu fulani ametupakia anga rangi na kuirembesha."', NULL);
@@ -2724,13 +2724,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_22', 0, 'Upinde wa mvua una rangi saba.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_25', 0, 'Je, ni rangi gani unayoipenda katika Upinde wa mvua?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22557_25', 0, 'Je, ni rangi gani unayoipenda katika Upinde wa mvua?', 'assets/topic/asb/26440.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 1, 'Nyekundu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 2, 'Zambarau-buluu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 3, 'Kijani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22557_25', 0, 4, 'Buluu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587', 2, 'Jinsi usiku ulivyoingia kijijini', 'assets/topic/asb/1130.png', 'Ursula Nafula
- Wiehan de Jager', 'FFF4E1B5');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_3', 3, NULL, 'assets/topic/asb/1131.png', 'Opio aliishi katika kijiji kisichokuwa na majira ya usiku. Watu walipochoka, walilala na kufanya kazi walipoamka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_4', 3, NULL, 'assets/topic/asb/1132.png', 'Siku moja Opio na mbwa wake walienda kuwinda. Mbwa walipomfukuza paa, Opio aliwafuata. Mwishowe, hakuwaona tena.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_5', 3, NULL, 'assets/topic/asb/1133.png', 'Opia alikimbia mpaka akachoka. Alikaribishwa na mtu mmoja akapewa pombe kunywa.', NULL);
@@ -2767,13 +2767,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_15', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_20', 0, 'Usiku ulimfuata Opio kijijini kwake.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_20', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_20', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_23', 0, 'Utaongeza nini kupamba usiku?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16587_23', 0, 'Utaongeza nini kupamba usiku?', 'assets/topic/asb/1130.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 1, 'Nyota');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 2, 'Mwezi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 3, 'Jua');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16587_23', 0, 4, 'Upinde wa mvua');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081', 2, 'Jua, Mwezi, na Maji', 'assets/topic/asb/25567.png', 'Brigid Simiyu
-Salim Kasamba', 'FFF4E1B5');
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_3', 3, NULL, 'assets/topic/asb/25557.png', 'Miaka mingi iliyopita, Jua na Maji walikuwa marafiki.
 Wote waliishi duniani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_4', 3, NULL, 'assets/topic/asb/25558.png', 'Jua alipenda kumtembelea Maji mara kwa mara.
@@ -2822,13 +2822,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_22', 0, 'Jua alijenga eneo kubwa sana ili maji aweze kumtembelea.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_25', 0, 'Je, utajenga nini ikiwa maji yanataka kukutembelea?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22081_25', 0, 'Je, utajenga nini ikiwa maji yanataka kukutembelea?', 'assets/topic/asb/25567.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 1, 'Bwawa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 2, 'Dimbwi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 3, 'Ziwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22081_25', 0, 4, 'Kisima');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062', 2, 'Kadogo na nduguze', 'assets/topic/asb/19605.png', 'Brigid Simiyu
- Vusi Malindi', 'FFF4E1B5');
+ Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_3', 3, NULL, 'assets/topic/asb/19601.png', 'Hapo zamani za kale, mtu na mkewe walikuwa na watoto wa kiume saba wajinga.
 Watoto hao waliipoteza mifugo, walivunja jembe, na kila mtu aliwadanganya walipokuwa sokoni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_4', 3, NULL, 'assets/topic/asb/19602.png', 'Mama yao aliomba, "Ee Mungu, mbona watoto wangu wote ni wajinga? Tafadhali, nipe angaa mtoto mmoja mwenye hekima."', NULL);
@@ -2892,13 +2892,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_25', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_30', 0, 'Sinziro alikuwa mrefu zaidi kati ya watoto wote nane.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_30', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_30', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_33', 0, 'Utavukaje mto?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22062_33', 0, 'Utavukaje mto?', 'assets/topic/asb/19605.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 1, 'Kwa kuogelea.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 2, 'Kwa mashua.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 3, 'Kwa kutembea juu ya daraja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22062_33', 0, 4, 'Utatafuta njia nyingine ya kuvuka.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632', 2, 'Kahawia', 'assets/topic/asb/2617.png', 'Ursula Nafula
- Sue Kramer', 'FF9DEDE3');
+ Sue Kramer', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_3', 3, NULL, 'assets/topic/asb/2618.png', 'Kuni ya kahawia iliyopasukapasuka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_4', 3, NULL, 'assets/topic/asb/2619.png', 'Mchoro wa simba wa kahawia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_5', 3, NULL, 'assets/topic/asb/2620.png', 'Mkate laini wa kahawia.', NULL);
@@ -2948,13 +2948,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_16', 1, 14
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_31', 0, 'Mbwa ni mlaini na ana macho ya kahawia.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_31', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_31', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_34', 0, 'Andika majina ya vitu vyenye rangi nyeusi.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2632_34', 0, 'Andika majina ya vitu vyenye rangi nyeusi.', 'assets/topic/asb/2617.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 1, 'Nywele');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 2, 'Buti nyeusi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 3, 'Usiku');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2632_34', 0, 4, 'Kunguru');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468', 2, 'Kate yuko mbinguni', 'assets/topic/asb/26149.png', 'Ursula Nafula
-Rodney  Kawaayi', 'FFB3C8FF');
+Rodney  Kawaayi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_3', 3, NULL, 'assets/topic/asb/26134.png', 'Kate ana kitu kichwani mwake. Je, watakiondoaje?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_4', 3, NULL, 'assets/topic/asb/26135.png', 'Kinafanya Kate achoke. Kinamuumiza. Kinamfanya ajihisi mzito.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_5', 3, NULL, 'assets/topic/asb/26136.png', 'Hawezi kula. Hawezi kunywa. Hacheki kama hapo awali.', NULL);
@@ -2998,7 +2998,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_22', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_27', 0, 'Mganga wa Afya alifanikisha upasuaji katika kichwa cha Kate.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_27', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_27', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_30', 0, 'Unahisi nini kuhusu mbingu.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22468_30', 0, 'Unahisi nini kuhusu mbingu.', 'assets/topic/asb/26149.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 1, 'Rangi mbali mbali');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 2, 'Amani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22468_30', 0, 3, 'Hakuna usiku');
@@ -3047,13 +3047,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 1, 'Kahawia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 2, 'Buluu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_22', 0, 3, 'Nyeupe');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_27', 0, 'Kama wewe ukiwa  kichakuro, utafanya nini utakapoona mashine kubwa ya njano?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3127_27', 0, 'Kama wewe ukiwa  kichakuro, utafanya nini utakapoona mashine kubwa ya njano?', 'assets/topic/asb/2080.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 1, 'Nitaenda mahali salama.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 2, 'Nitawajulisha  wengine');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 3, 'Nitaingata mashine ya njano');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3127_27', 0, 4, 'Nitakusanya chakula');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544', 2, 'Khalai anapenda mimea', 'assets/topic/asb/13389.png', 'Ursula Nafula
-Jesse Pietersen', 'FF9DEDE3');
+Jesse Pietersen', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_3', 3, NULL, 'assets/topic/asb/13382.png', 'Khalai ni msichana mwenye umri wa miaka saba. Katika jamii yake, jina lake lina maana sawa na ''aliye mzuri''.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_4', 3, NULL, 'assets/topic/asb/13383.png', 'Khalai anapoamka, anauzungumzia mmea mchanga wa Mchungwa akisema, "Tafadhali mchungwa, kua mkubwa uzae machungwa mengi mabivu."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_5', 3, NULL, 'assets/topic/asb/13384.png', 'Khalai anapokuwa njiani kwenda shuleni, anazizungumzia Nyasi. Anasema, "Tafadhali nyasi, zidi kuwa kijani kibichi na wala usinyauke."', NULL);
@@ -3084,13 +3084,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_13', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_16', 0, 'Khalai huziambia nyasi ziwe kijani kibichi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_16', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_16', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_19', 0, 'Ungefanya nini kama ungekuwa mti mkubwa?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13544_19', 0, 'Ungefanya nini kama ungekuwa mti mkubwa?', 'assets/topic/asb/13389.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 1, 'Ningetoa matunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 2, 'Ningetoa kivuli');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 3, 'Ningetoa kuni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('13544_19', 0, 4, 'Ningetoa hewa nzuri');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567', 2, 'Kiangazi na Mto wenye Baraka', 'assets/topic/asb/26514.png', 'Ursula  Nafula
-Awwalu  Sakiwa', 'FFCFB5DD');
+Awwalu  Sakiwa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_3', 3, NULL, 'assets/topic/asb/26503.png', 'Katika mwaka mmoja, kipindi cha ukame kilikuwa kirefu sana. Kiangazi kikawaathiri wanyama wote. Mito yote ikakauka ila Mto wenye Baraka.
 Wanyama wakahisi kiu kikubwa wakaamua kukutana ili watafute suluhu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_4', 3, NULL, 'assets/topic/asb/26504.png', 'Ngamia alikuwa wa kwanza kuzungumza, "Kama mnavyojua, tuna kiu kikubwa na mito yote imekauka ila Mto wenye Baraka. Lakini mto huo uko mbali sana. Je, tufanyaje?"', NULL);
@@ -3144,13 +3144,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_17', 0, 2
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_26', 0, 'Wanyama wote walifika katika mto wa baraka.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_29', 0, 'Utafanya nini ikiwa hakuna maji katika kijiji chako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22567_29', 0, 'Utafanya nini ikiwa hakuna maji katika kijiji chako?', 'assets/topic/asb/26514.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 1, 'Nitajenga bwawa.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 2, 'Nitachimba kisima.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 3, 'Nitaenda kutafuta maji.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22567_29', 0, 4, 'Nitasubiri mvua.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308', 2, 'Kifungua kinywa', 'assets/topic/asb/1571.png', 'Bushirah Kabatesi
-Cathy Feek', 'FFB3C8FF');
+Cathy Feek', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_3', 3, NULL, 'assets/topic/asb/1572.png', 'Babangu anapenda
 sana uji wa ma mahinidi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_4', 3, NULL, 'assets/topic/asb/1573.png', 'Mimi napendelea uji wa
@@ -3201,7 +3201,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 1, 'Asali');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 2, 'Ndizi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_22', 0, 3, 'Mkate');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_27', 0, 'Je, unapendelea chakula gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23308_27', 0, 'Je, unapendelea chakula gani?', 'assets/topic/asb/1571.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 1, 'Asali');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 2, 'Keki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23308_27', 0, 3, 'Embe');
@@ -3248,7 +3248,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_17', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_20', 0, 'Wazee katika kijiji hawakuogopa kutoa hukumu ya kesi yao.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_20', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_20', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_23', 0, 'Unafikiri ni nini asili ya wanyama hao wawili?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21841_23', 0, 'Unafikiri ni nini asili ya wanyama hao wawili?', 'assets/topic/asb/18699.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 1, 'Hasira');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 2, 'Kutokuwa na uvumilivu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21841_23', 0, 3, 'Ubinafsi');
@@ -3295,7 +3295,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_26', 0, 'Kima wa Tirkol na kima wa mlimani waliishi kwa furaha.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_29', 0, 'Ungefanya nini kama ungekuwa kima wa Tirkol?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20440_29', 0, 'Ungefanya nini kama ungekuwa kima wa Tirkol?', 'assets/topic/asb/18796.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 1, 'Ningefukuza fukuza kima wengine');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 2, 'Ningeonesha wema');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20440_29', 0, 3, 'Ningemjulisha kima mzee');
@@ -3352,13 +3352,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 3
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 4, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 5, 'Ng''ombe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_26', 1, 6, 'Paka');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_33', 0, 'Sungura angeweza kufanya nini kabla ya kukimbia?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21140_33', 0, 'Sungura angeweza kufanya nini kabla ya kukimbia?', 'assets/topic/asb/7610.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 1, 'Angepaswa kuwa mtulivu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 2, 'Angeangalia kote');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 3, 'Angeangalia kilichoanguka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21140_33', 0, 4, 'Angepaswa kulala badala ya kukimbia.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158', 2, 'Kinywa na Mkono', 'assets/topic/asb/26880.png', 'Espoir Ntinda
-Espoir Ntinda', 'FFF4E1B5');
+Espoir Ntinda', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_3', 3, NULL, 'assets/topic/asb/26880.png', 'Hapo zamani, kulikuwa na marafiki wawili, Kinywa na Mkono.
 Waliishi kijijini kama ndugu kila mmoja na mkewe.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_4', 3, NULL, 'assets/topic/asb/26881.png', 'Baada ya muda mfupi, mke wa Kinywa alifariki.
@@ -3404,13 +3404,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_15', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_20', 0, 'Msaidizi hakusaidia mkono kabisa.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_20', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_20', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_23', 0, 'Je, msaidizi angeweza kufanya nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23158_23', 0, 'Je, msaidizi angeweza kufanya nini?', 'assets/topic/asb/26880.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 1, 'kusamehe mkono.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 2, 'kupiga mkono.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 3, 'kurudi kinywani.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23158_23', 0, 4, 'kuonya mkono.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209', 2, 'Kitabu cha hali ya hewa', 'assets/topic/asb/1547.png', 'Mutugi Kamundi
- Sandra McDougall', 'FFF4E1B5');
+ Sandra McDougall', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_3', 3, NULL, 'assets/topic/asb/1547.png', 'Hakuna mvua.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_4', 3, NULL, 'assets/topic/asb/1548.png', 'Jua linang''aa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_5', 3, NULL, 'assets/topic/asb/1549.png', 'Kuna upepo.', NULL);
@@ -3445,7 +3445,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_13', 0, 1,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_16', 0, 'Radi huja kwenye Mawingu Meusi', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_16', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_16', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_19', 0, 'Wakati gani huwa unahisi baridi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2209_19', 0, 'Wakati gani huwa unahisi baridi?', 'assets/topic/asb/1547.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 1, 'Wakati wa mvua');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 2, 'Msimu wa baridi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2209_19', 0, 3, 'Kipindi cha mvua ya barafu');
@@ -3492,13 +3492,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_22', 0, 'Kiumbe kilikua ni binadamu kama sisi', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_22', 0, 1, 'Uongo.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_25', 0, 'Utafanya nini ukiona kiumbe cha ajabu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20022_25', 0, 'Utafanya nini ukiona kiumbe cha ajabu?', 'assets/topic/asb/19458.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 1, 'Nitakipiga jiwe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 2, 'Nitakikimbia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 3, 'Nitawajulisha watu wakubwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('20022_25', 0, 4, 'Nitaangalia kinafanya nini.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004', 2, 'Kobe na Sungura', 'assets/topic/asb/2036.png', 'Ursula Nafula
- Padmanabha', 'FFF4E1B5');
+ Padmanabha', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_3', 3, NULL, 'assets/topic/asb/2037.png', 'Hapo zamani, Sungura na Kobe walishindana mbio.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_4', 3, NULL, 'assets/topic/asb/2038.png', 'Wanyama wengine walitazama mashindano hayo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_5', 3, NULL, 'assets/topic/asb/2039.png', 'Sungura alimshinda Kobe.
@@ -3545,13 +3545,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_20', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_23', 0, 'Sungura na Kobe hawakuweza kupata ujumbe kutoka kwa mfalme mwingine.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_23', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_23', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_26', 0, 'Unafikiri kwanini Sungura na Kobe walifanikiwa?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22004_26', 0, 'Unafikiri kwanini Sungura na Kobe walifanikiwa?', 'assets/topic/asb/2036.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 1, 'Walisaidiana.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 2, 'Walifanya kazi kwa bidii.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 3, 'Walikwenda njia yao wenyewe.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22004_26', 0, 4, 'Walikuwa nguvu ya kila mmoja.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751', 2, 'Kondoo aliyechoka na maisha ya jijini', 'assets/topic/asb/26535.png', 'Ursula  Nafula
-Kenneth Boyowa Okitikpi', 'FF9DEDE3');
+Kenneth Boyowa Okitikpi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_3', 3, NULL, 'assets/topic/asb/26535.png', 'Kondoo aliishi jijini. Alipochoka na maisha ya jiji, aliamua kwenda kichakani.
 Akiwa njiani, alikutana na Fisi aliyekuwa hajala kwa siku nyingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_4', 3, NULL, 'assets/topic/asb/26536.png', 'Kondoo alimsalimu Fisi, "Hujambo ndugu Fisi? Hujambo ndugu Fisi?"
@@ -3604,7 +3604,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 1, 'Moja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 2, 'Matatu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_22', 0, 3, 'Manne');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_27', 0, 'Utafanya nini ikiwa una njaa?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24751_27', 0, 'Utafanya nini ikiwa una njaa?', 'assets/topic/asb/26535.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 1, 'Nitasubiri chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 2, 'Nitapika chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24751_27', 0, 3, 'Nitakula matunda');
@@ -3653,7 +3653,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 1, 'Machungwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 2, 'Stroberi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_24', 0, 3, 'Ndizi');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_29', 0, 'Unashirikiana nini na rafiki yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21863_29', 0, 'Unashirikiana nini na rafiki yako?', 'assets/topic/asb/19328.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 1, 'Matunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 2, 'Chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21863_29', 0, 3, 'Juisi');
@@ -3694,7 +3694,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_18', 0, 'Mwenye duka aliukata mguu wa Tai.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_21', 0, 'Unabadilishana nini na rafiki yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23035_21', 0, 'Unabadilishana nini na rafiki yako?', 'assets/topic/asb/9588.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 1, 'Chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 2, 'Matunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23035_21', 0, 3, 'Kuki');
@@ -3744,13 +3744,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 1, 'Nyumbani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 2, 'Angani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_20', 0, 3, 'Mwambani');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_25', 0, 'Utafanya nini ukipata chakula?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22536_25', 0, 'Utafanya nini ukipata chakula?', 'assets/topic/asb/25729.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 1, 'Nitakula peke yangu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 2, 'Nitakula na rafiki zangu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 3, 'Nitatupa nyuma');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22536_25', 0, 4, 'Nitapeleka nyumbani.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837', 2, 'Kusema Asante!', 'assets/topic/asb/17299.png', 'Ursula Nafula
- Rob Owen', 'FFB3C8FF');
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_3', 3, NULL, 'assets/topic/asb/17289.png', 'Mtu, Simba, Mbwa, Nyoka, Tai na Punda walienda vita.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_4', 3, NULL, 'assets/topic/asb/17290.png', 'Mume na mkewe walikubali kuwachinjia ng''ombe wao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_5', 3, NULL, 'assets/topic/asb/17291.png', 'Kila mmoja alitaka sehemu tofauti ya ng''ombe.
@@ -3812,13 +3812,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 5
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 6, 'Kitu chenye kuwaka na kungáa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 7, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_30', 1, 8, 'Begi la Fedha');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_39', 0, 'Utarudishaje fadhila kwa mtu aliyekusaidia kwa ya kwanza.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21837_39', 0, 'Utarudishaje fadhila kwa mtu aliyekusaidia kwa ya kwanza.', 'assets/topic/asb/17299.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 1, 'Nitampa Fedha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 2, 'Nitampa chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 3, 'Nitampa Nguo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21837_39', 0, 4, 'Nitampa Makazi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934', 2, 'Kutekwa nyara!', 'assets/topic/asb/14751.png', 'Ursula Nafula
-Abraham Muzee', 'FF9DEDE3');
+Abraham Muzee', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_3', 3, NULL, 'assets/topic/asb/14735.png', 'Mimi na rafiki yangu Kiki hupenda kuchunguza na kuvumbua mambo. Hii ndiyo sababu tunayafahamu mazingira yetu vyema. Siku moja tulipokuwa tukienda nyumbani kutoka shule, tulikubaliana twende mahali tukafanye uchunguzi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_4', 3, NULL, 'assets/topic/asb/14736.png', 'Tulipitia karibu na reli ingawa babake Kiki alikuwa ametuonya dhidi ya kufanya hivyo. Baadaye,  tulimwona mwanamume aliyekuwa amevaa koti refu jeusi. Alikuwa akitufuata polepole.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_5', 3, NULL, 'assets/topic/asb/14737.png', 'Tuliamua kutembea polepole ili tumtazame kwa karibu. Alikuwa mtu wa kuogofya. Ngozi yake ilijaa vipele. Midomo yake ilikuwa midogo na haikuyafunika meno yake ya rangi ya kahawia. Alikuwa na kovu moja kubwa lililofunika nusu ya uso wake.', NULL);
@@ -3866,13 +3866,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_25', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_30', 0, 'Kiki na rafiki yake walitekwa na mtu mrefu mbaya', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_30', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_30', 0, 1, 'Uongo.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_33', 0, 'Utafanyaje ukiwaona watekaji?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15934_33', 0, 'Utafanyaje ukiwaona watekaji?', 'assets/topic/asb/14751.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 1, 'Nitakimbia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 2, 'Nitawajulisha watu wakubwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 3, 'Nitawajulisha Polisi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15934_33', 0, 4, 'Nitakua mtulivu na kutafuta msaada');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149', 2, 'Kutotii!', 'assets/topic/asb/18310.png', 'Brigid Simiyu
- Marion Drew', 'FFF4E1B5');
+ Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_3', 3, NULL, 'assets/topic/asb/18306.png', 'Ulikuwa wakati wa wanyama kwenda kulala.
 Mmoja wao hakutii.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_4', 3, NULL, 'assets/topic/asb/18307.png', 'Mkulima alimwambia Piggy aende kulala.
@@ -3915,7 +3915,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_22', 0, 'Trusty Whip alimuambia Moto Kali asimchome.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_25', 0, 'Unafikiria ni kwanini Piggy hakutaka kwenda kwenye Kalamu.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21149_25', 0, 'Unafikiria ni kwanini Piggy hakutaka kwenda kwenye Kalamu.', 'assets/topic/asb/18310.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 1, 'Piggy alitaka kucheza.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 2, 'Piggy Hakupata usingizi.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21149_25', 0, 3, 'Piggy alikuwa ana njaa.');
@@ -3958,13 +3958,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_18', 0, 'Pundamilia saba walikua wanakimbilia kwenye maji.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_21', 0, 'Unafikiri kwanini wanyama wanakunywa maji pamoja?.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17534_21', 0, 'Unafikiri kwanini wanyama wanakunywa maji pamoja?.', 'assets/topic/asb/9651.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 1, 'Kunaweza kuwa na ukame.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 2, 'Maji yanaweza kuwa matamu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 3, 'Wote ni marafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17534_21', 0, 4, 'Ili kuonyesha umoja wao.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031', 2, 'Kwa nini Ajao hakuzikwa', 'assets/topic/asb/16974.png', 'Ursula Nafula
- Jesse Breytenbach', 'FFB3C8FF');
+ Jesse Breytenbach', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_3', 3, NULL, 'assets/topic/asb/16973.png', 'Ajao alikuwa popo.
 Aliugua nyumbani kwake bila kupata usaidizi wowote.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_4', 3, NULL, 'assets/topic/asb/16974.png', 'Baada ya muda,  Ajao alifariki.', NULL);
@@ -4009,7 +4009,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_22', 0, 'Ndege na Panya walimsaidia Ajao kuzika.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_22', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_22', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_25', 0, 'Ungefanya nini ikiwa ungekuwa rafiki wa Ajao?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17031_25', 0, 'Ungefanya nini ikiwa ungekuwa rafiki wa Ajao?', 'assets/topic/asb/16974.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 1, 'Ningemzika Ajao.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 2, 'Ningeepuka kusema yeye si familia yetu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('17031_25', 0, 3, 'Ningewajulisha familia yake.');
@@ -4059,13 +4059,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_13', 1, 6,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_20', 0, 'Mwishowe Anansi alipata chakula nyumbani kwa Sungura', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_20', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_20', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_23', 0, 'Je, utafanya nini ikiwa una njaa?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2069_23', 0, 'Je, utafanya nini ikiwa una njaa?', 'assets/topic/asb/1069.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 1, 'Nitapika na kula.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 2, 'Nitawatembelea marafiki zangu nyumbani kwao.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 3, 'Nitakaa na Njaa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2069_23', 0, 4, 'Nitakula matunda');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088', 2, 'Kwa nini Nzi humsumbua Ng''ombe', 'assets/topic/asb/19248.png', 'Brigid Simiyu
- Stephen Wallace', 'FF9DEDE3');
+ Stephen Wallace', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_3', 3, NULL, 'assets/topic/asb/19248.png', 'Je, umewahi kuona kundi la ng''ombe malishoni?
 Kila mara ng''ombe hutikisa kichwa chake. Huonekana akijaribu kuwafukuza nzi wanaomsumbua.
 Lakini, kwa nini nzi hupenda kuzunguka kichwa cha Ng''ombe?', NULL);
@@ -4108,13 +4108,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_15', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_20', 0, 'Nzi alikua mdogo sana, hivyo Ngómbe alimuona kwa shida.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_20', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_20', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_23', 0, 'Utafanya nini ikiwa hakuna mtu anayekuona?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22088_23', 0, 'Utafanya nini ikiwa hakuna mtu anayekuona?', 'assets/topic/asb/19248.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 1, 'Nitapiga kelele kwa sauti kubwa.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 2, 'Nitatupa Mpira wa karatasi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 3, 'Nitatupa jiwe dogo.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22088_23', 0, 4, 'Nitamkumbusha mtu.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938', 2, 'Kwa nini viboko hawana manyoya', 'assets/topic/asb/6143.png', 'Wilkins Kiondo
- Little Zebra Books and Carol Liddiment', 'FF9DEDE3');
+ Little Zebra Books and Carol Liddiment', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_3', 3, NULL, 'assets/topic/asb/6162.png', 'Siku moja, Sungura alikuwa anatembea ukingoni mwa mto.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_4', 3, NULL, 'assets/topic/asb/6163.png', 'Kiboko alikuwa akila majani matamu ya kijani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_5', 3, NULL, 'assets/topic/asb/6145.png', 'Kwa bahati mbaya, Kiboko alimkanyaga Sungura mguuni. Kwa uchungu, Sungura alipiga mayowe  na kumfokea Kiboko akisema, "Wewe Kiboko! Unaukanyaga mguu wangu. Huoni?"', NULL);
@@ -4151,7 +4151,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_18', 0, 'Kiboko aliungua nywele akiwa nchi kavu, hivo siku zote huishi kwenye maji.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_21', 0, 'Kama mtu yeyote akikunyaga mguu utafanyaje?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15938_21', 0, 'Kama mtu yeyote akikunyaga mguu utafanyaje?', 'assets/topic/asb/6143.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 1, 'Nitasamehe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 2, 'Nitamfundisha adabu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15938_21', 0, 3, 'Ntamkanyaga na yeye.');
@@ -4211,7 +4211,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 1, 'Buluu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 2, 'Nyekundu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_22', 0, 3, 'Rangi ya chungwa');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_27', 0, 'Unapendelea rangi gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8442_27', 0, 'Unapendelea rangi gani?', 'assets/topic/asb/7509.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 1, 'Nyeusi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 2, 'Bluu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('8442_27', 0, 3, 'Nyekundu');
@@ -4256,13 +4256,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 1, 'Kwenye viti');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 2, 'Mezani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_20', 0, 3, 'Darini');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_25', 0, 'Unapendelea kusoma nini ukienda Maktaba?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24473_25', 0, 'Unapendelea kusoma nini ukienda Maktaba?', 'assets/topic/asb/7960.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 1, 'Vitabu vya Hadithi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 2, 'Historia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 3, 'Sayansi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24473_25', 0, 4, 'Utamaduni');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999', 2, 'Kwenda Jijini', 'assets/topic/asb/15008.png', 'Ursula Nafula
- Brian Wambi', 'FF9DEDE3');
+ Brian Wambi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_3', 3, NULL, 'assets/topic/asb/14993.png', 'Niliwasili katika kituo chetu cha basi. Kilikuwa kimejaa watu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_4', 3, NULL, 'assets/topic/asb/14994.png', 'Kondakta wa basi aliita, "Kwenda jijini! Tunaondoka sasa!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_5', 3, NULL, 'assets/topic/asb/14995.png', 'Watu walifanya haraka kuingia ndani ya basi.', NULL);
@@ -4310,13 +4310,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_26', 0, 'Watu walibeba vitu tofauti katika basi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_29', 0, 'Utafanya nini utakapoingia kwenye basi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21999_29', 0, 'Utafanya nini utakapoingia kwenye basi?', 'assets/topic/asb/15008.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 1, 'Nitalala');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 2, 'Nitakaa karibu na dirisha.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 3, 'Nitakula vitafunwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21999_29', 0, 4, 'Nitaongea na wengine.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080', 2, 'Leah, Roba na Ng''ombe', 'assets/topic/asb/9373.png', 'Brigid Simiyu
- Marion Drew', 'FFF4E1B5');
+ Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_3', 3, NULL, 'assets/topic/asb/9371.png', 'Hapo zamani, katika kijiji kimoja, kulikuwa na mvulana aliyeitwa Roba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_4', 3, NULL, 'assets/topic/asb/9370.png', 'Roba alikuwa rafiki ya Leah. Walikuwa majirani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22080_5', 3, NULL, 'assets/topic/asb/9374.png', 'Siku moja, walienda kuchota maji.', NULL);
@@ -4434,7 +4434,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_28', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_31', 0, 'Nyar-Kanyada alimpa Odongo kofia  na Apiyo sweta.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_31', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_31', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_34', 0, 'Unapenda kumpa bibi zawadi gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12670_34', 0, 'Unapenda kumpa bibi zawadi gani?', 'assets/topic/asb/11661.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 1, 'Sanduku zuri');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 2, 'Sweta');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12670_34', 0, 3, 'Miwani');
@@ -4484,13 +4484,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_22', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_27', 0, 'Madola alikuwa mpole sana na alimlipa Dande.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_27', 1, 1, 'Si kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_27', 0, 1, 'Kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_30', 0, 'Utafanya nini ikiwa Madola hakulipi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19586_30', 0, 'Utafanya nini ikiwa Madola hakulipi?', 'assets/topic/asb/19552.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 1, 'Nitamshawishi kwa kumuelezea matatizo yangu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 2, 'Nitawajulisha watu wazima');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 3, 'Nitalalamika Polisi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19586_30', 0, 4, 'Nitamfundisha somo.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075', 2, 'Magezi na Kasiira', 'assets/topic/asb/15478.png', 'Brigid Simiyu
-Brian Wambi', 'FFB3C8FF');
+Brian Wambi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_3', 3, NULL, 'assets/topic/asb/15471.png', 'Magezi na Kasiira waliishi pamoja.
 Walishiriki chakula pamoja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_4', 3, NULL, 'assets/topic/asb/15472.png', 'Magezi alisema, "Tulime pamoja jinsi tunavyokula pamoja."', NULL);
@@ -4554,13 +4554,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_28', 1, 5
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_34', 0, 'Kila mtu mmoja alimpa Magezi Ngómbe moja.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_34', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_34', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_37', 0, 'Unataka kuwa mtu wa aina gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21075_37', 0, 'Unataka kuwa mtu wa aina gani?', 'assets/topic/asb/15478.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 1, 'Mchapakazi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 2, 'Wa kushirikiana na marafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 3, 'Mwenye Bahati');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21075_37', 0, 4, 'Wa kumilikia biashara');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330', 2, 'Magozwe', 'assets/topic/asb/12937.png', 'Ursula Nafula
-Wiehan de Jager', 'FF9DEDE3');
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_3', 3, NULL, 'assets/topic/asb/12931.png', 'Kulikuwa na wavulana wa kurandaranda mtaani.
 Mdogo wao aliitwa Magozwe.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_4', 3, NULL, 'assets/topic/asb/12932.png', 'Wazazi wa Magozwe walikufa akiwa mdogo.
@@ -4616,13 +4616,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_29', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_32', 0, 'Thomas alikuwa mpole na alitoa chakula kwa wavulana.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_32', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_32', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_35', 0, 'Utawasaidiaje watu wasio na makazi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18330_35', 0, 'Utawasaidiaje watu wasio na makazi?', 'assets/topic/asb/12937.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 1, 'Nitawapa chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 2, 'Nitawapa sadaka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 3, 'Nitakua Mwema na kusikiliza hadithi zao.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('18330_35', 0, 4, 'Nitawaonyesha kituo cha kulelea watoto yatima.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412', 2, 'Maguru apatiana miguu', 'assets/topic/asb/13910.png', 'Ursula Nafula
-Wiehan de Jager', 'FFCFB5DD');
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_3', 3, NULL, 'assets/topic/asb/13904.png', 'Hapo zamani, wanyama hawakuwa na miguu.
 Wote walitambaa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_4', 3, NULL, 'assets/topic/asb/13905.png', 'Watu pekee ndio waliotembea.
@@ -4679,7 +4679,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_26', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_29', 0, 'Nyoka hakupata Miguu kutoka kwa Maguru kwa kua alilala sana.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_29', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_29', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_32', 0, 'Ulikosa nini kwa sababu ya kulala sana?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14412_32', 0, 'Ulikosa nini kwa sababu ya kulala sana?', 'assets/topic/asb/13910.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 1, 'Pipi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 2, 'Kujifunza');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('14412_32', 0, 3, 'Furahia na marafiki');
@@ -4726,13 +4726,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 1, 'Mmea');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 2, 'Shina');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_18', 0, 3, 'Mizizi');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_23', 0, 'Je, ni aina gani ya maharagwe ungependa kupanda?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2405_23', 0, 'Je, ni aina gani ya maharagwe ungependa kupanda?', 'assets/topic/asb/1824.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 1, 'Maharagwe ya kijani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 2, 'Maharagwe ya umbo la figo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 3, 'Maharagwe ya Pinto');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('2405_23', 0, 4, 'Maharage myeusi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126', 2, 'Mahari', 'assets/topic/asb/6733.png', 'Brigid Simiyu
-Wiehan de Jager', 'FFB3C8FF');
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_3', 3, NULL, 'assets/topic/asb/6733.png', 'Bi Kizee alikuwa na mjukuu aliyeitwa Noah.
 Alimpatia Noah yai.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_4', 3, NULL, 'assets/topic/asb/6732.png', 'Noah alikutana na wachuma matunda damu.
@@ -4782,13 +4782,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 2
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 3, 'Kifurushi cha nyasi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 4, 'Ng''ombe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_23', 1, 5, 'Bi Harusi');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_29', 0, 'Utafanya nini ukipata Yai', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21126_29', 0, 'Utafanya nini ukipata Yai', 'assets/topic/asb/6733.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 1, 'Nitalikaanga');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 2, 'Nitabadilishana na mtu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 3, 'Nitampiga nalo Mtu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21126_29', 0, 4, 'Nitacheza nalo.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652', 2, 'Mamangu alipanda', 'assets/topic/asb/9002.png', 'Brigid Simiyu
- Jonathan Field', 'FF9DEDE3');
+ Jonathan Field', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_3', 3, NULL, 'assets/topic/asb/8998.png', 'Mamangu alipanda. Alipanda bustani ndogo. Alipanda bustani ndogo ya mbaazi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_4', 3, NULL, 'assets/topic/asb/8999.png', 'Babangu alipanda. Alipanda bustani ndogo. Alipanda bustani ndogo ya maua.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_5', 3, NULL, 'assets/topic/asb/9000.png', 'Mamangu alipalilia bustani zote mbili.', NULL);
@@ -4823,13 +4823,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_18', 0, 'Mama alipalilia katika bustani zote.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_21', 0, 'Utapanda nini ukiwa na bustani ndogo?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12652_21', 0, 'Utapanda nini ukiwa na bustani ndogo?', 'assets/topic/asb/9002.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 1, 'Muembe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 2, 'Mpapai');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 3, 'Mbogamboga');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12652_21', 0, 4, 'Miwa');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746', 2, 'Mamba aliye mwilini mwangu', 'assets/topic/asb/6105.png', 'Ursula Nafula
- Felicity Bell', 'FFB3C8FF');
+ Felicity Bell', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_3', 3, NULL, 'assets/topic/asb/6093.png', 'Ninaitwa Molly. Mimi ni msichana kama wasichana wangine, isipokuwa, nina mamba mwilini mwangu. Wewe huwezi kumwona, lakini ninajua yupo. Jina lake ni Ukosefu-Kinga-Mwilini. Anajificha ndani ya mwili wangu na hawezi kuwaumiza marafiki zangu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_4', 3, NULL, 'assets/topic/asb/6094.png', 'Mamba huyu hawezi kuondoka mwilini mwangu na kuingia mwilini mwako. Hata ukikaa karibu nami au ukiushika mkono wangu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_5', 3, NULL, 'assets/topic/asb/6092.png', 'Hawezi kuuacha mwili wangu na kuruka ndani ya wako ukila nami chakula cha mchana, au ukilala karibu nami sakafuni.', NULL);
@@ -4870,13 +4870,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_21', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_24', 0, 'Kulingana na Hadithi, Mamba ni Homa.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_24', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_24', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_27', 0, 'Utafanya nini kumfanya mamba wako alale.', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15746_27', 0, 'Utafanya nini kumfanya mamba wako alale.', 'assets/topic/asb/6105.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 1, 'Nitakula chakula chenye afya.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 2, 'Nitakula Matunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 3, 'Nitafanya mazoezi.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15746_27', 0, 4, 'Nitameza dawa kama inanipasa.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602', 2, 'Mamba aliyekuwa na njaa', 'assets/topic/asb/5948.png', 'Brigid Simiyu
- Wiehan de Jager', 'FFB3C8FF');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_3', 3, NULL, 'assets/topic/asb/5948.png', 'Wakati mmoja palikuwa na mamba aliyekuwa na njaa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_4', 3, NULL, 'assets/topic/asb/5949.png', 'Alikitafuta chakula polepole tena kimya kimya.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_5', 3, NULL, NULL, 'Halafu.', NULL);
@@ -4907,13 +4907,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_11', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_14', 0, 'mamba huwa na furaha baada ya kula.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_14', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_14', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_17', 0, 'Unajisikiaje unapokula kitu ukipendacho?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12602_17', 0, 'Unajisikiaje unapokula kitu ukipendacho?', 'assets/topic/asb/5948.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 1, 'Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 2, 'Nasisimka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 3, 'Nataka zaidi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('12602_17', 0, 4, 'Nawagawia na familia yangu.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087', 2, 'Mamba anasubiri bongo', 'assets/topic/asb/25465.png', 'Brigid Simiyu
-Tawanda Mhandu', 'FFB3C8FF');
+Tawanda Mhandu', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_3', 3, NULL, 'assets/topic/asb/25460.png', 'Zamani mamba aliishi karibu na mto na wanawe.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_4', 3, NULL, 'assets/topic/asb/25462.png', 'Aliwafunza wanawe kutowaamini binadamu. Binadamu walikuwa na bongo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_5', 3, NULL, 'assets/topic/asb/25461.png', 'Siku moja, mwanamume mmoja alikuwa akivuka mto.', NULL);
@@ -4953,13 +4953,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 1, 'Mkono');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 2, 'Nyama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_18', 0, 3, 'Nyasi');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_23', 0, 'Ungefanya nini kama wewe ungekuwa ni binadamu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22087_23', 0, 'Ungefanya nini kama wewe ungekuwa ni binadamu?', 'assets/topic/asb/25465.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 1, 'Nisingeenda karibu na Mamba');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 2, 'Ningekua mtulivu na kujaribu kutoroka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 3, 'Ningepatana na Mamba.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22087_23', 0, 4, 'Ningeomba msaada.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151', 2, 'Mamba na Mbwa', 'assets/topic/asb/17149.png', 'Brigid Simiyu
- Rob Owen', 'FF9DEDE3');
+ Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_3', 3, NULL, 'assets/topic/asb/17139.png', 'Siku moja, Mbwa aliyapata mayai kando ya mto.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_4', 3, NULL, 'assets/topic/asb/17140.png', 'Mbwa aliyaweka mayai hayo kumi katika kikapu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21151_5', 3, NULL, 'assets/topic/asb/17141.png', 'Mbwa aliyalinda na kuyaweka mahali kwenye joto.', NULL);
@@ -5009,7 +5009,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 2
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 3, 'Nitaleta dazeni nyingine ya mayai.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21151_30', 0, 4, 'Nitalalamika kwa watu wakubwa.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742', 2, 'Manyati na wanyama wake', 'assets/topic/asb/1747.png', 'Ursula Nafula
-Sandy Campbell', 'FF9DEDE3');
+Sandy Campbell', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_3', 3, NULL, 'assets/topic/asb/1749.png', 'Huyu ni Manyati na wanyama wake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_4', 3, NULL, 'assets/topic/asb/1750.png', 'Ng''ombe wake anampatia maziwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_5', 3, NULL, 'assets/topic/asb/1751.png', 'Mbuzi wake naye anampatia nyama.', NULL);
@@ -5054,13 +5054,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 1, 6
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 1, 'Punda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 2, 'Tumbili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_19', 0, 3, 'paka');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_29', 0, 'Matumizi ya mbuzi ni nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16742_29', 0, 'Matumizi ya mbuzi ni nini?', 'assets/topic/asb/1747.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 1, 'Kutoa maziwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 2, 'Manyoa yake yanatumika kutengenezea sweta');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 3, 'Ni marafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16742_29', 0, 4, 'Wanatuzalia mbuzi watoto.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084', 2, 'Marafiki', 'assets/topic/asb/8601.png', 'Ursula Nafula
- Catherine Groenewald', 'FFCFB5DD');
+ Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_3', 3, NULL, 'assets/topic/asb/8600.png', 'Jina langu ni Simo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_4', 3, NULL, 'assets/topic/asb/8601.png', 'Nina marafiki wanne.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_5', 3, NULL, 'assets/topic/asb/8602.png', 'Majina yao ni Zizo,  Lele,  Sisa na Ayanda.', NULL);
@@ -5106,7 +5106,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_26', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_29', 0, 'Rafiki wa Simon Ayanda hupenda kusoma.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_29', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_29', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_32', 0, 'Unapenda kufanya nini ukiwa huru?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('16084_32', 0, 'Unapenda kufanya nini ukiwa huru?', 'assets/topic/asb/8601.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 1, 'Kuogelea');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 2, 'Kucheza muziki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('16084_32', 0, 3, 'Kusoma');
@@ -5154,7 +5154,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_22', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_25', 0, 'Mbuzi mdogo alimsikiliza mama yake na akaokolewa.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_25', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_25', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_28', 0, 'Ni nani katika familia yenu anayemsikiliza mama?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19404_28', 0, 'Ni nani katika familia yenu anayemsikiliza mama?', 'assets/topic/asb/18402.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 1, 'Mimi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 2, 'kaka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19404_28', 0, 3, 'Dada');
@@ -5203,13 +5203,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_22', 0, 'Baba alitaka mtu aliyepata samadi kuwa Mfugaji.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_25', 0, 'Ikiwa ungekuwa mkulima ungefanya nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22462_25', 0, 'Ikiwa ungekuwa mkulima ungefanya nini?', 'assets/topic/asb/26153.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 1, 'Ningelima ardhi.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 2, 'Ningepanda Mbegu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 3, 'Ningelisha mifugo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22462_25', 0, 4, 'Ningekuza mazao ninayoyapenda.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582', 2, 'Maswali aliyouliza Kariza', 'assets/topic/asb/25965.png', 'Ursula  Nafula
-Rob Owen', 'FFCFB5DD');
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_3', 3, NULL, 'assets/topic/asb/25964.png', 'Kariza alipenda kuuliza maswali. Aliyapata mazoea haya kutoka kwa wazazi wake waliokuwa wakimwambia, "Usipouliza maswali ukiwa mdogo, utakapokua mtu mzima, utakuwa mjinga!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_4', 3, NULL, 'assets/topic/asb/25965.png', 'Siku moja, Kariza alimwuliza mwalimu wake, "Kwa nini wazazi wetu wanatueleza kila wakati tuwe tukinawa mikono yetu kabla ya kula, hata kama mikono yetu huonekana kuwa misafi?"
 Wenzake darasani walilipenda swali lake. Wao pia hawakupenda kuambiwa kunawa mikono yao.', NULL);
@@ -5253,13 +5253,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_22', 0, 'Vijidudu vinaweza kutufanya tuumwe kama tusipoosha mikono yetu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_25', 0, 'Je! Utajiweka vipi kuwa mwenye afya?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22582_25', 0, 'Je! Utajiweka vipi kuwa mwenye afya?', 'assets/topic/asb/25965.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 1, 'Nitakula chakula nyenye afya.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 2, 'Nitaweka mikono iwe safi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 3, 'Nitafanya mazoezi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22582_25', 0, 4, 'Nitaosha mikono kabla ya kula.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403', 2, 'Mawaidha kutoka kwa Baba', 'assets/topic/asb/17114.png', 'Susan Kavaya
-Jacob Kono', 'FFCFB5DD');
+Jacob Kono', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_3', 3, NULL, 'assets/topic/asb/17103.png', 'Hapo zamani za kale, kulikuwa na mwanamume aliyekuwa na watoto wawili wa kiume.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_4', 3, NULL, 'assets/topic/asb/17104.png', 'Siku moja, aliwaita akawaambia, "Wanangu, mimi ninakaribia kufa. Ningependa kuwaona mkiwa nyumbani mwenu kabla ya kifo changu. Ninawapa mwezi mmoja ili muweze kulishughulikia jambo hili. Rudini hapa baada ya mwezi."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_5', 3, NULL, 'assets/topic/asb/17105.png', 'Wanawe hao wawili walitoka kwa kasi. Mwana wa kwanza alikwenda akakata miti akaanza kujijengea nyumba.', NULL);
@@ -5300,7 +5300,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_22', 0, 'Nyumba inamaanisha upendo, urafiki na uhusiano mwema na wengine.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_25', 0, 'Unaelewa nini kutoka na hadithi hii?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19403_25', 0, 'Unaelewa nini kutoka na hadithi hii?', 'assets/topic/asb/17114.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 1, 'Kuwa mtu wa watu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 2, 'Kuwa mwema');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19403_25', 0, 3, 'Kupendana na wengine');
@@ -5357,7 +5357,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_21', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_24', 0, 'Fisi walikua wajanja na walitaka kuwala Punda.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_24', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_24', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_27', 0, 'Utafanya ukiwa utaona adui zako wanateseka?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22043_27', 0, 'Utafanya ukiwa utaona adui zako wanateseka?', 'assets/topic/asb/25123.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 1, 'Nitawasaidia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 2, 'Nitawaepuka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22043_27', 0, 3, 'Nitawajulisha watu wao wa karibu');
@@ -5403,13 +5403,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_18', 0, 1,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_21', 0, 'Siku zote kuna mikono yenye upendo ya kukumbatia.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_21', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_21', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_24', 0, 'Umemkumbatia nani kwa mikono yako yenye upendo?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3101_24', 0, 'Umemkumbatia nani kwa mikono yako yenye upendo?', 'assets/topic/asb/3062.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 1, 'Mama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 2, 'Baba');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 3, 'Dada');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3101_24', 0, 4, 'Rafiki');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877', 2, 'Mbio kuhimiza umoja wa Afrika', 'assets/topic/asb/19868.png', 'Ursula Nafula
-Brian Wambi', 'FFB3C8FF');
+Brian Wambi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_3', 3, NULL, 'assets/topic/asb/19860.png', 'Kadogo na Juma ni marafiki.
 Wanapenda kukimbia pamoja kila siku.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_4', 3, NULL, 'assets/topic/asb/19861.png', 'Siku moja, Juma alisema, "Tukimbie kwa ajili ya bara letu, tuhimize umoja wa Afrika!"
@@ -5470,13 +5470,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_26', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_29', 0, 'Kadogo alibeba kurunzi hadi Kilimanjaro na kuwasha Mwale wa Umoja.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_29', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_29', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_32', 0, 'Unajisikiaje kukimbia Mbio za Pamoja?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19877_32', 0, 'Unajisikiaje kukimbia Mbio za Pamoja?', 'assets/topic/asb/19868.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 1, 'Nasisimka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 2, 'Ninajisikia Furaha');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 3, 'Ninahamasisha Umoja.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19877_32', 0, 4, 'Ninakutana na watu wapya.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635', 2, 'Mbu msumbufu', 'assets/topic/asb/14756.png', 'Ursula Nafula
-Magriet Brink', 'FF9DEDE3');
+Magriet Brink', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_3', 3, NULL, 'assets/topic/asb/14755.png', 'Nilisikia, "Hodi! Hodi!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_4', 3, NULL, 'assets/topic/asb/14756.png', '"Ni nani, jamani?" Niliuliza huku nikisinzia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_5', 3, NULL, 'assets/topic/asb/14757.png', '"Ni mimi." Sauti inayokwaruza sikio ilinijibu.', NULL);
@@ -5515,13 +5515,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_17', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_22', 0, 'Aliwasha taa wakati ambao hakuona Mbu', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_25', 0, 'Unapambanaje na Mbu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21635_25', 0, 'Unapambanaje na Mbu?', 'assets/topic/asb/14756.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 1, 'Nitawapiga kwa Mkono');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 2, 'Nitawapulizia dawa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 3, 'Nitatumia chandarua');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21635_25', 0, 4, 'Nitawafukuza kwa mashine ya umeme ya kuulia mbu');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401', 2, 'Mbuni na Simba', 'assets/topic/asb/19205.png', 'Susan Kavaya
- Brian Wambi', 'FFB3C8FF');
+ Brian Wambi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_3', 3, NULL, 'assets/topic/asb/19195.png', 'Mbuni na Simba walikuwa marafiki sana. Wote wawili walikuwa na watoto wachanga.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_4', 3, NULL, 'assets/topic/asb/19196.png', 'Mbuni aliwalisha watoto wake vizuri.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_5', 3, NULL, 'assets/topic/asb/19197.png', 'Watoto wa Simba hawakupata chakula cha kutosha.', NULL);
@@ -5567,13 +5567,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 1, 1
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 1, 'Tembo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 2, 'Kobe');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_27', 0, 3, 'Sokwe');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_32', 0, 'Unafikiri ni kwanini simba alibadilisha watoto wake na watoto wa Mbuni?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19401_32', 0, 'Unafikiri ni kwanini simba alibadilisha watoto wake na watoto wa Mbuni?', 'assets/topic/asb/19205.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 1, 'Aliona watoto wa Mbuni ni wazuri.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 2, 'Watoto wa Mbuni walikua na chakula kidogo.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 3, 'Alitaka awale watoto wa Mbuni');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('19401_32', 0, 4, 'Hakuwakumbuka watoto wake.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611', 2, 'Mbuzi na kisu cha Fisi', 'assets/topic/asb/13567.png', 'Brigid Simiyu
- Wiehan de Jager', 'FFB3C8FF');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_3', 3, NULL, 'assets/topic/asb/13550.png', 'Hapo zamani za kale,  kulikuwa na kipindi kirefu cha kiangazi. Wanyama walikula nyasi zote nchini. Kilichosalia pekee ni aina ya mmea uliotambaa kwenye miti mikubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_4', 3, NULL, 'assets/topic/asb/13552.png', 'Siku moja Mbuzi alimwona Fisi akipita akiwa amekibeba kisu. Mbuzi alikiomba kile kisu ili aukate ule mmea uliotamba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_5', 3, NULL, 'assets/topic/asb/13551.png', 'Fisi alimpa Mbuzi kisu. Mbuzi aliukata mmea ule akaula hadi akashiba kabisa. Alisahau kisu baada ya kukitumia.', NULL);
@@ -5608,13 +5608,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_13', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_18', 0, 'Mbuzi hakuweza kukumbuka alikopotozea Kisu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_18', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_21', 0, 'Je, utafanya nini baada ya kula sana?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15611_21', 0, 'Je, utafanya nini baada ya kula sana?', 'assets/topic/asb/13567.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 1, 'Nitalala');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 2, 'Nitaenda kutembea');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 3, 'Nitakula matunda');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('15611_21', 0, 4, 'Nitaenda kucheza.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868', 2, 'Mbuzi, Mbwa na Ng''ombe', 'assets/topic/asb/6372.png', 'Brigid Simiyu
- Marleen Visser', 'FFB3C8FF');
+ Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_3', 3, NULL, 'assets/topic/asb/6371.png', 'Mbuzi, Mbwa na Ng''ombe walikuwa marafiki wakubwa. Siku moja walisafiri kwa teksi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_4', 3, NULL, 'assets/topic/asb/6373.png', 'Walipofika mwisho wa safari yao, dereva aliwauliza walipe nauli zao. Ng''ombe akalipa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_5', 3, NULL, 'assets/topic/asb/6374.png', 'Mbwa hakuwa na kiasi kamili cha pesa, akalipa zaidi kidogo.', NULL);
@@ -5649,13 +5649,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_13', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_18', 0, 'Mbwa anamtafuta dereva aliyemuachia chenji.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_21', 0, 'Utafanyaje kama huna chenji ya kumpatia dereva?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7868_21', 0, 'Utafanyaje kama huna chenji ya kumpatia dereva?', 'assets/topic/asb/6372.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 1, 'Nitakimbia');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 2, 'Nitaomba chenji kutoka kwa mtu mwingine.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 3, 'Ntamuomba dereva atafute chenji.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7868_21', 0, 4, 'Nitamwambia nitampa siku nyingine.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059', 2, 'Mbuzi, mfalme bandia', 'assets/topic/asb/13362.png', 'Brigid Simiyu
-Marleen Visser', 'FFB3C8FF');
+Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_3', 3, NULL, 'assets/topic/asb/13351.png', 'Hapo zamani, kulikuwa na mbuzi aliyeitwa Igobe.
 Igobe alikuwa mfalme wa mifugo na ndege. Aliishi maisha mazuri.
 Siku moja, Igobe aliwaita mifugo wote na ndege mkutanoni.', NULL);
@@ -5707,7 +5707,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_23', 0, 4
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_28', 0, 'Kondoo alimpa Mbuzi Manyoya ili awafunike watoto wake.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_28', 1, 1, 'Kweli');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_28', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_31', 0, 'Je, utamuadhibu vipi mbuzi kwa kutokutii?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22059_31', 0, 'Je, utamuadhibu vipi mbuzi kwa kutokutii?', 'assets/topic/asb/13362.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 1, 'Nitamfunga');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 2, 'Sitampa chakula');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22059_31', 0, 3, 'Nitampiga');
@@ -5747,13 +5747,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_12', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_17', 0, 'Mbwa wa mwanadamu alikuwa akilinda kila kitu nyumbani.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_17', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_17', 0, 1, 'Si kweli');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_20', 0, 'Ni zawadi gani unayoweza kumpa mbwa ikiwa ulikuwa na moja?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23851_20', 0, 'Ni zawadi gani unayoweza kumpa mbwa ikiwa ulikuwa na moja?', 'assets/topic/asb/5927.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 1, 'Nyama');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 2, 'Vitu vitamu.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 3, 'Nguo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('23851_20', 0, 4, 'Miwani');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124', 2, 'Mbweha asiye na shukurani', 'assets/topic/asb/18475.png', 'Brigid Simiyu
- Jacob Kono', 'FFCFB5DD');
+ Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_3', 3, NULL, 'assets/topic/asb/18468.png', 'Mbweha alikuwa na njaa.
 Alienda kuwinda.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_4', 3, NULL, 'assets/topic/asb/18469.png', 'Alimfukuza panya.
@@ -5807,7 +5807,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_26', 0, 'Mzee alimdanganya Mbwea na akamuokoa Sungura.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_29', 0, 'Unafikiria nini kuhusu asili ya Mbwea', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21124_29', 0, 'Unafikiria nini kuhusu asili ya Mbwea', 'assets/topic/asb/18475.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 1, 'Mjanja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 2, 'Hastahili');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('21124_29', 0, 3, 'Haaminiki');
@@ -5852,7 +5852,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 1, 'Mti');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 2, 'Mwezi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_18', 0, 3, 'Jiwe');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_23', 0, 'Unapenda kukausha nini kipindi cha jua kali?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7881_23', 0, 'Unapenda kukausha nini kipindi cha jua kali?', 'assets/topic/asb/5253.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 1, 'Nguo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 2, 'Samaki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7881_23', 0, 3, 'Mbegu');
@@ -5893,7 +5893,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_13', 0, 3,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_18', 0, 'Mbweha mwenye njaa hakuweza kufikia zabibu,  akaachana nazo.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_18', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_18', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_21', 0, 'Unafikiri kwanini Mbweha aliachana na Zabibu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7865_21', 0, 'Unafikiri kwanini Mbweha aliachana na Zabibu?', 'assets/topic/asb/1775.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 1, 'Hakuweza kufikia zabibu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 2, 'Alikuwa mvivu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7865_21', 0, 3, 'Yeye hakupanda vizuri');
@@ -5943,7 +5943,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_15', 0, 2
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_22', 0, 'Mchungaji aliwarudisha wanyama wake baada ya kutengeneza zizi.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_22', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_22', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_25', 0, 'Mnyama yupi ni rafiki yako bora?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22085_25', 0, 'Mnyama yupi ni rafiki yako bora?', 'assets/topic/asb/19575.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 1, 'Mbwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 2, 'Paka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22085_25', 0, 3, 'Kondoo');
@@ -5999,13 +5999,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_20', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_25', 0, 'Mfalme alibadilika na kuwa Mdiria', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_25', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_25', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_28', 0, 'Mara yako ya mwisho kuhisi maumivu ni lini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24750_28', 0, 'Mara yako ya mwisho kuhisi maumivu ni lini?', 'assets/topic/asb/26594.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 1, 'Nilipojeruhiwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 2, 'Baba yangu ananipopiga kwa makosa yangu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 3, 'siku ambayo hakukua na kitu cha kula nyumbani');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('24750_28', 0, 4, 'Siku niliyokua peke yangu.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152', 2, 'Meno', 'assets/topic/asb/1701.png', 'Brigid Simiyu
- Kathy Arbuckle', 'FFB3C8FF');
+ Kathy Arbuckle', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_3', 3, NULL, 'assets/topic/asb/1701.png', 'Mamba ana meno makubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_4', 3, NULL, 'assets/topic/asb/1702.png', 'Simba naye ana meno makubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_5', 3, NULL, 'assets/topic/asb/1703.png', 'Ng''ombe ana meno ya nguvu.', NULL);
@@ -6043,7 +6043,7 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_16', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_19', 0, 'Papa ana meno makali.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_19', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_19', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_22', 0, 'Ni nani ana meno machache nyumbani kwenu?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10152_22', 0, 'Ni nani ana meno machache nyumbani kwenu?', 'assets/topic/asb/1701.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 1, 'Bibi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 2, 'Babu');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('10152_22', 0, 3, 'Mtoto mdogo wa kiume');
@@ -6099,13 +6099,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_21', 0, 3
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_26', 0, 'Fagio za kufagilia kiwanja tunazotumia zinatokana na mti wa mtende.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_26', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_26', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_29', 0, 'Wewe na rafiki yako mlipigania nini?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22469_29', 0, 'Wewe na rafiki yako mlipigania nini?', 'assets/topic/asb/25923.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 1, 'Kucheza vizuri zaidi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 2, 'kusoma vizuri zaidi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 3, 'Kupika vizuri zaidi');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22469_29', 0, 4, 'Kufanya kazi vizuri zaidi');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871', 2, 'Mimi na familia yangu', 'assets/topic/asb/5216.png', 'Brigid Simiyu
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_3', 3, NULL, 'assets/topic/asb/5217.png', 'Mimi na dinasou wangu tunawatazama ndege angani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_4', 3, NULL, 'assets/topic/asb/5218.png', 'Mimi na ndege wangu tunamkuta sokwe mtini.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_5', 3, NULL, 'assets/topic/asb/5219.png', 'Ninacheza na sokwe na twiga wangu milimani.', NULL);
@@ -6139,13 +6139,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_14', 0, 1,
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_17', 0, 'Mvulana, tumbili na sokwe hula ndizi pamoja.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_17', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_17', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_20', 0, 'Unafanya nini na familia yako?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7871_20', 0, 'Unafanya nini na familia yako?', 'assets/topic/asb/5216.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 1, 1, 'Tunakula pamoja');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 1, 'Tunacheza michezo');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 2, 'Tunacheza mziki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('7871_20', 0, 3, 'Tunapika');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082', 2, 'Mimi ni Moto!', 'assets/topic/asb/8558.png', 'Brigid Simiyu
- Rob Owen', 'FF9DEDE3');
+ Rob Owen', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_3', 3, NULL, 'assets/topic/asb/8555.png', 'Hebu nikueleze hadithi kunihusu.
 Ninaanza kama cheche ndogo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_4', 3, NULL, 'assets/topic/asb/8556.png', 'Ninaenea kila mahali upepo unaponibeba.', NULL);
@@ -6180,13 +6180,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_13', 0, 1
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_16', 0, 'Moto unasema ni sehemu ya familia yetu.', NULL, NULL, 'oneAtATime');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_16', 1, 1, 'Kweli.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_16', 0, 1, 'Si kweli.');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_19', 0, 'Kama kusingekua na Moto, tungepata matatizo gani?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22082_19', 0, 'Kama kusingekua na Moto, tungepata matatizo gani?', 'assets/topic/asb/8558.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 1, 'Ingekua shida kupika');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 2, 'Kusingekua na Mwanga nyumbani.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 3, 'Tungetetemeka kipindi cha baridi.');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('22082_19', 0, 4, 'Ingekua vigumu kufanya kazi usiku.');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140', 2, 'Mke Mti', 'assets/topic/asb/2580.png', 'Mutugi Kamundi
-Jemma Kahn', 'FFF4E1B5');
+Jemma Kahn', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_3', 3, NULL, 'assets/topic/asb/2584.png', 'Hapo zamani za kale, paliishi mzee aliyekuwa tajiri wa kila kitu. Alikuwa na shamba kubwa lenye rutuba,  ng''ombe, na mbuzi.
 Lakini jinsi alivyozeeka ndivyo alivyohuzunika kwani hakuwa na mke.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_4', 3, NULL, 'assets/topic/asb/2585.png', 'Siku moja alipokuwa chini ya mti, alipata wazo zuri sana.
@@ -6258,13 +6258,13 @@ INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 1, 1,
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 1, 'Kunguru');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 2, 'Tai');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_22', 0, 3, 'Kasuku');
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_27', 0, 'Je! Unampenda nani zaidi?', NULL, NULL, 'open');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3140_27', 0, 'Je! Unampenda nani zaidi?', 'assets/topic/asb/2580.png', NULL, 'open');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 1, 'Rafiki');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 2, 'Mbwa');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 3, 'Kaka');
 INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ('3140_27', 0, 4, 'Dada');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079', 2, 'Mke-mwenza mwenye wivu', 'assets/topic/asb/25521.png', 'Brigid Simiyu
-Jacob Kono', 'FF9DEDE3');
+Jacob Kono', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079_3', 3, NULL, 'assets/topic/asb/25510.png', 'Hapo kale kulikuwa na wake wenza wawili. Waliishi katika nyumba moja na mume wao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22079_4', 3, NULL, 'assets/topic/asb/25511.png', 'Kwa muda mrefu hakuna mke aliyejaliwa kupata watoto. Hatimaye, mke wa kwanza alishika mimba.
 Alipojifungua mtoto, mume wao hakuwa nyumbani.', NULL);
@@ -6302,7 +6302,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860', 2, 'Mkeka wa Akai', 'assets/topic/asb/6007.png', 'Brigid Simiyu
- Catherine Groenewald', 'FFF4E1B5');
+ Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_3', 3, NULL, 'assets/topic/asb/5845.png', 'Akai alipokuwa mdogo, mamake alikuwa na mazoea ya kumlaza kwenye mkeka maridadi. Mkeka huo ulitengezwa na shangaziye Akai kwa majani ya mtende.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_4', 3, NULL, 'assets/topic/asb/5846.png', 'Mkeka wa Akai ulikuwa na rangi za waridi, bluu na kijani kibichi. Ulikuwa tofauti na mikeka mingine aliyokuwa nayo mamake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7860_5', 3, NULL, 'assets/topic/asb/5847.png', 'Makazi ya kina Akai yalikuwa katika sehemu kavu,  iliyojaa mawe na yenye joto. Kulikuwa na nge, buibui na nyoka pia. Akai hakuwahi kuumwa na viumbe hao hatari.', NULL);
@@ -6399,7 +6399,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771', 2, 'Mojo na Kobe', 'assets/topic/asb/26787.png', 'Ursula  Nafula
-Edwin  Irabor', 'FFB3C8FF');
+Edwin  Irabor', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771_3', 3, NULL, 'assets/topic/asb/26785.png', 'Hapo zamani, ndege aliyeitwa Mojo aliishi katika ufalme wa Baro. Kobe alikuwa rafikiye.
 Mojo alikuwa mjumbe na alisafiri mbali kupeleka jumbe.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24771_4', 3, NULL, 'assets/topic/asb/26786.png', 'Siku moja, Mfalme Simba alimwita Mojo.
@@ -6479,7 +6479,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994', 2, 'Msichana mwenye titi moja', 'assets/topic/asb/2673.png', 'Mutugi Kamundi
- Rachael Napagi', 'FFB3C8FF');
+ Rachael Napagi', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_3', 3, NULL, 'assets/topic/asb/2673.png', 'Hapo kale palikuwa na mtu aliyeishi na mkewe aliyempenda sana. Siku moja alitembea msituni. Njiani alikutana na msichana mmoja mwembamba na mrembo mno. Alimpenda papo hapo. Msichana vilevile alimkubali mara moja. Lakini, msichana yule alimwambia kuwa alikuwa na titi moja tu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_4', 3, NULL, 'assets/topic/asb/2674.png', 'Msichana yule alimwambia mwanamme huyo aende nyumbani, akate titi moja la mkwewe amletee. Hivyo yeye angekuwa na matiti mawili nao wangeoana. Mwanamme alikimbia kwa kasi, akachukua kisu,  akamrukia mkewe mpendwa na kukata titi lake mara moja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2994_5', 3, NULL, 'assets/topic/asb/2675.png', 'Alifanya haraka kurudi msituni alikomwacha mpenzi wake mpya. Lakini hakuwapo. Aliliita jina lake kwa sauti, lakini ilikuwa kimya tu. Kisha alisikia sauti ikisema, "Kwa nini unaita? Kwani hujui kwamba uko katika msitu wa mapepo?"', NULL);
@@ -6531,7 +6531,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861', 2, 'Mtoto aliyeleta Amani', 'assets/topic/asb/14590.png', 'Translators without Borders and Pete Mhunzi
- Jacob Kono', 'FFF4E1B5');
+ Jacob Kono', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_3', 3, NULL, 'assets/topic/asb/14580.png', 'Akadeli alimbeba mtoto wake. Alikwenda msituni kuchuma matunda.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_4', 3, NULL, 'assets/topic/asb/14581.png', 'Alipata mti uliojaa matunda mabivu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15861_5', 3, NULL, 'assets/topic/asb/14582.png', 'Akadeli alimlaza mtoto wake chini akapanda mti.', NULL);
@@ -6605,7 +6605,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865', 2, 'Mtoto Punda', 'assets/topic/asb/14980.png', 'Translators without Borders and Pete Mhunzi
- Meghan Judge', 'FFB3C8FF');
+ Meghan Judge', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_3', 3, NULL, 'assets/topic/asb/14972.png', 'Siku moja, msichana mdogo aliona umbo la ajabu kwa umbali.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_4', 3, NULL, 'assets/topic/asb/14973.png', 'Umbo hilo lilipokaribia, aligundua kwamba lilikuwa mwanamke mja mzito.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15865_5', 3, NULL, 'assets/topic/asb/14974.png', 'Kwa ushupavu, msichana huyo alimkaribia yule mwanamke mja mzito.
@@ -6734,7 +6734,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769', 2, 'Mtu Mrefu Sana', 'assets/topic/asb/309.png', 'Keziah Badi
-Catherine Groenewald', 'FFF4E1B5');
+Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_3', 3, NULL, 'assets/topic/asb/309.png', 'Jembe lake lilikuwa fupi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_4', 3, NULL, 'assets/topic/asb/310.png', 'Mlango wake ulikuwa chini sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24769_5', 3, NULL, 'assets/topic/asb/311.png', 'Kitanda chake kilikuwa kifupi sana.', NULL);
@@ -6765,7 +6765,7 @@ www.africanstorybook.org
 Original source
 www.ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689', 2, 'Mtu na Simba', 'assets/topic/asb/8180.png', 'Brigid Simiyu
-Hélder de Paz Alexandre', 'FFF4E1B5');
+Hélder de Paz Alexandre', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_3', 3, NULL, 'assets/topic/asb/8180.png', 'Hapo zamani za kale, palikuwa na mtu aliyekuwa akitembea kichakani. Ghafla, alimkuta Simba!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_4', 3, NULL, 'assets/topic/asb/8181.png', 'Ulikuwa msimu wa baridi. Simba alikuwa akipumzika kwenye nyasi fupi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12689_5', 3, NULL, 'assets/topic/asb/8182.png', 'Makutano hayo yalitokea ghafla mtu huyo asijue la kufanya. Alijawa na woga.', NULL);
@@ -6794,7 +6794,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340', 2, 'Mulongo na Fisi', 'assets/topic/asb/1419.png', 'Brigid Simiyu
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_3', 3, NULL, 'assets/topic/asb/1420.png', 'Palikuwa na msichana aliyeitwa Mulongo. Aliishi na wazazi wake karibu na kijiji cha Budongo. Siku moja mamake Mulongo alimtuma kuchota maji kisimani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_4', 3, NULL, 'assets/topic/asb/1421.png', 'Njiani, alikutana na marafiki zake wakienda msituni kutafuta kuni. Mulongo alitaka kwenda nao. "Tafadhali, nisubiri chini ya mti huu!" alisema, "Lazima nimchotee mama maji." Lakini marafiki zake hawakutaka kusubiri.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2340_5', 3, NULL, 'assets/topic/asb/1422.png', '"Sawa, nitawakuta huko msituni!" Mulongo alisema huku akikimbia kwenda kumchotea mamake maji. Kisha akaenda msituni kuwatafuta marafiki zake.', NULL);
@@ -6860,7 +6860,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600', 2, 'Mvulana aliyechukiwa na wote', 'assets/topic/asb/7991.png', 'Brigid Simiyu
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_3', 3, NULL, 'assets/topic/asb/9191.png', 'Hapo zamani za kale, kulikuwa na mvulana mwenye sura mbaya sana. Hakupendwa na yeyote, hata wazazi wake. Hata nyumbani, aliketi peke yake wengine walipotazama runinga.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_4', 3, NULL, 'assets/topic/asb/7987.png', 'Shuleni pia aliketi peke yake watoto wengine walipokuwa wakicheza.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12600_5', 3, NULL, 'assets/topic/asb/7988.png', 'Walipokwenda kuwaleta mifugo, yeye alitembea nyuma yao. Watoto wengine hawakutaka kutembea pamoja naye.', NULL);
@@ -6920,7 +6920,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166', 2, 'Mwana wa Tumbili (Colour-in)', 'assets/topic/asb/9057.png', 'Baraka Fatma
-Jesse Breytenbach', 'FFB3C8FF');
+Jesse Breytenbach', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_3', 3, NULL, 'assets/topic/asb/9042.png', 'Kwenye msitu wa Miwa paliishi tumbili aliyekuwa na huzuni sana. Kila mara alipozaa, mtoto wake alifariki.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_4', 3, NULL, 'assets/topic/asb/9043.png', 'Uchungu wa kufiliwa na watoto wake ulimfanya tumbili kuruka juu na chini. Tumbili huyu alikuwa akirukia tawi hili hadi kwenye lingine, akipiga mayowe, Kwi! Kwi! Kwi! Kwi!', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10166_5', 3, NULL, 'assets/topic/asb/9044.png', 'Tumbili alikuwa na huzuni wakati wote. Huzuni wake ulimzidi haswa alipowaona akina mama tumbili wengine na watoto wao.', NULL);
@@ -6997,7 +6997,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176', 2, 'Mwanamme Mrefu', 'assets/topic/asb/309.png', 'Ursula Nafula
- Catherine Groenewald', 'FF9DEDE3');
+ Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176_3', 3, NULL, 'assets/topic/asb/309.png', 'Kulikuwa na mwanamme mrefu sana.
 Jembe lake lilikuwa fupi mno.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('1176_4', 3, NULL, 'assets/topic/asb/310.png', 'Mlango wake ulikuwa chini mno.', NULL);
@@ -7065,7 +7065,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400', 2, 'Mwanamume aliyeota manyoya', 'assets/topic/asb/18142.png', 'Susan Kavaya
- Tadesse Teshome', 'FFCFB5DD');
+ Tadesse Teshome', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_3', 3, NULL, 'assets/topic/asb/17994.png', 'Kulikuwa na tajiri aliyekuwa na watoto wa kiume wawili. Kwenye wosia wake alitaka mwanawe wa kwanza arithi ng''ombe wake wote na wa pili, amrithi jogoo mmoja tu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_4', 3, NULL, 'assets/topic/asb/17995.png', 'Baada ya tajiri kufa, mwanawe wa kwanza alirithi ng''ombe wote. Mwanawe wa pili alipewa jogoo mmoja tu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19400_5', 3, NULL, 'assets/topic/asb/17997.png', 'Baada ya muda mchache, mwana wa kwanza ambaye alirithi mali yote, aliugua. Alienda kumwona mganga amsaidie kupata njia ya kupona. Mganga alisema, "Ni sharti umchinje jogoo mwenye rangi ya pekee."', NULL);
@@ -7097,7 +7097,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229', 2, 'Mwezi na kofia', 'assets/topic/asb/2137.png', 'Brigid Simiyu
- Angie & Upesh', 'FF9DEDE3');
+ Angie & Upesh', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229_3', 3, NULL, 'assets/topic/asb/2138.png', 'Sote tulienda katika sherehe ya Dasara.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2229_4', 3, NULL, 'assets/topic/asb/2139.png', 'Chintu alipewa miwani.
 Nilipata kofia naye Moto akapata peremende.', NULL);
@@ -7135,7 +7135,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282', 2, 'Mwili', 'assets/topic/asb/26739.png', 'Kutafsiri Biblia Mara
-Sue  Beattie', 'FFB3C8FF');
+Sue  Beattie', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_3', 3, NULL, 'assets/topic/asb/26749.png', 'Unyayo', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_4', 3, NULL, 'assets/topic/asb/26744.png', 'Mguu', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31282_5', 3, NULL, 'assets/topic/asb/26741.png', 'Goti', NULL);
@@ -7163,7 +7163,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632', 2, 'Mwili wangu', 'assets/topic/asb/1622.png', 'Peterson Kibuuri and Stevenson Mutisya
- Mlungisi Dlamini', 'FFF4E1B5');
+ Mlungisi Dlamini', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_3', 3, NULL, 'assets/topic/asb/1623.png', 'Ninaweza kuutumia kukimbia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_4', 3, NULL, 'assets/topic/asb/1624.png', 'Ninaweza kuruka nao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12632_5', 3, NULL, 'assets/topic/asb/1625.png', 'Ninaweza kucheza nao.', NULL);
@@ -7191,7 +7191,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061', 2, 'Mzozo wa Fisi na Kima', 'assets/topic/asb/18699.png', 'Brigid Simiyu
-Salim Kasamba', 'FFB3C8FF');
+Salim Kasamba', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061_3', 3, NULL, 'assets/topic/asb/18696.png', 'Hapo zamani za kale, kulikuwa na Fisi na Kima. Walikuwa na mzozo kati yao. Walienda kwa hakimu ili awasaidie kuusuluhisha.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061_4', 3, NULL, 'assets/topic/asb/18697.png', 'Baada ya hakimu kusikiliza kesi yao, aliogopa kuamua. Aliwaza, "Nikimlaumu Fisi, atawala mifugo wangu. Nikimlaumu Kima, atayala mahindi yangu yote! Nifanyeje?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22061_5', 3, NULL, 'assets/topic/asb/18698.png', 'Hakimu alitafakari juu ya kesi hiyo kisha akasema, "Naona vigumu kuiamua kesi hii peke yangu. Ipelekeni kwa wazee wa kijiji."
@@ -7228,7 +7228,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863', 2, 'Namorutunga', 'assets/topic/asb/11754.png', 'Translators without Borders and Pete Mhunzi
-Zablon Alex Nguku', 'FFB3C8FF');
+Zablon Alex Nguku', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_3', 3, NULL, 'assets/topic/asb/11743.png', 'Zamani za kale, katika kijiji kimoja cha Turkana,  wanakijiji walikutana kila jioni kucheza ngoma ya kienyeji iitwayo edonga.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_4', 3, NULL, 'assets/topic/asb/11747.png', 'Wachezaji wa kijiji hicho walifahamika kila pahali. Walikuwa na ustadi mkubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15863_5', 3, NULL, 'assets/topic/asb/11748.png', 'Watu kutoka vijiji jirani walifika kijijini humo kucheza ngoma ya edonga.', NULL);
@@ -7259,7 +7259,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874', 2, 'Namukhaywa', 'assets/topic/asb/5807.png', 'Brigid Simiyu
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_3', 3, NULL, 'assets/topic/asb/5806.png', 'Hapo zamani katika kijiji cha Lunyiko, kuliishi mwanamme aliyeitwa Ndong''a na mkewe Namukhaywa. Walikuwa na binti sita.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_4', 3, NULL, 'assets/topic/asb/5807.png', 'Namukhaywa alipokuwa na mimba ya saba,  Ndong''a alimwonya, "Ukimzaa msichana, nitakuua. Lakini ukinipa mtoto mvulana, nitakuandalia karamu kubwa!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7874_5', 3, NULL, 'assets/topic/asb/5808.png', 'Wakati wa kujifungua ulipowadia, Namukhaywa alienda kwa mkunga wa kienyeji. Je, mtoto atakuwa msichana au mvulana?', NULL);
@@ -7340,7 +7340,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747', 2, 'Naweza kufanya hili!', 'assets/topic/asb/13814.png', 'HANNINGTON  OWERE
- Silva Afonso', 'FFB3C8FF');
+ Silva Afonso', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_4', 3, NULL, NULL, 'Amelia anamka na anadhani, "Leo ni siku yangu ya kwanza ya shule."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_6', 3, NULL, NULL, '"Carlos, ninafanya nini?" Amelia anauliza. "Nitakwambia," Carlos anajibu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23747_8', 3, NULL, NULL, 'Carlos anamwambia Amelia kuosha uso wake. Amelia anasema, "Ninaweza kuosha uso wangu. Na kisha?"', NULL);
@@ -7367,7 +7367,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750', 2, 'Ndalo na Pendo – Marafiki wakubwa', 'assets/topic/asb/7945.png', 'Ursula  Nafula
-Rob Owen', 'FF9DEDE3');
+Rob Owen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750_3', 3, NULL, 'assets/topic/asb/11992.png', 'Ndalo ana umri wa miaka 10. Yuko katika darasa la 5 katika shule iliyo pale kijijini. Ndalo huibuka wa kwanza darasani kwake. "Ni nini siri yake?" Wenzake wanajiuliza.
 Ndalo anasoma na kuandika vizuri. "Je, anawezaje kufanya hivi?" Wanashangaa. Ndalo anawaeleza kwamba ni kwa sababu ana vitabu vingi. Wao wanapopoteza muda wao wakikaa bila kazi, yeye huutumia muda wake kusoma.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22750_4', 3, NULL, 'assets/topic/asb/7944.png', 'Wakati mwingine Ndalo hupata Shilingi 80 kama pesa za matumizi. Yeye huzitumia pesa zake nyingi kununua vitabu kutoka duka la vitabu vikuukuu lilioko pale kijijini.
@@ -7503,7 +7503,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877', 2, 'Ndogo sana, Kubwa sana', 'assets/topic/asb/2282.png', 'Brigid Simiyu
- Sandy Lightly', 'FFB3C8FF');
+ Sandy Lightly', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877_3', 3, NULL, 'assets/topic/asb/2283.png', 'Nelima aliita, "Mama! Njoo uone. Nguo hizi zote ni ndogo kwangu!"
 "Hebu nizione," Mama alisema.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('7877_4', 3, NULL, 'assets/topic/asb/2284.png', '"Iangalie hii sketi yangu. Ni ndogo mno," Nelima alisema.
@@ -7541,7 +7541,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684', 2, 'Ndoto ya Graca', 'assets/topic/asb/8850.png', 'Rebbeccah Karoki
-Karlien de Villiers', 'FFF4E1B5');
+Karlien de Villiers', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_3', 3, NULL, 'assets/topic/asb/8852.png', 'Graca alizaliwa Msumbiji. Nchi yake ilikuwa maskini sana na hawakuwa wamepata uhuru. Watoto hawakuwa na shule nzuri za kwenda. Mamake alikuwa na ndoto ya kuwapa wanawe maisha mazuri lakini bila masomo haingewezekana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_4', 3, NULL, 'assets/topic/asb/8853.png', 'Mtoto Graca angekuwa mzaliwa wa sita. Licha ya furaha hii yote kulikuwa na huzuni kwani babake Graca alikuwa karibu kufa. Aliota kuwa mtoto wake mdogo angeenda shule nzuri. Alijua elimu ndiyo ingemsaidia mwanawe. Jamii yake iliapa kutimiza ndoto yake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9684_5', 3, NULL, 'assets/topic/asb/8854.png', 'Wiki chache baada ya kifo cha babake, mtoto alipewa jina kuambatana na urembo wake. Aliitwa Graca. Kadri miaka ilipozidi kuyoyoma ndivyo Graca alizidi kuleta furaha kwao. Familia iliamua kumpa Graca masomo mazuri.', NULL);
@@ -7626,7 +7626,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621', 2, 'Ndugu mwerevu', 'assets/topic/asb/19342.png', 'Susan Kavaya
-Tadesse Teshome', 'FFB3C8FF');
+Tadesse Teshome', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621_3', 3, NULL, 'assets/topic/asb/19349.png', 'Hapo zamani za kale, kulikuwa na mtu aliyekuwa na watoto wa kiume watatu. Mtoto wa mwisho alikuwa mwerevu zaidi kuliko wote na babake alimpenda zaidi.
 Mtu huyo aligundua kwamba wanawe wawili walimwonea wivu yule ndugu yao mdogo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21621_4', 3, NULL, 'assets/topic/asb/19340.png', 'Siku moja kaka wakubwa walimwambia ndugu mdogo, "Tutamchinja fahali wako." Kwa vile alikuwa mdogo, alisema, "Ikiwa ni lazima mfanye hivyo, siwezi kuwazuia. Lakini, tafadhali, nipeni ngozi ya fahali wangu."
@@ -7668,7 +7668,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687', 2, 'Nelima atajirika', 'assets/topic/asb/9239.png', 'Brigid Simiyu
- Mango Tree', 'FF9DEDE3');
+ Mango Tree', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_3', 3, NULL, 'assets/topic/asb/9230.png', 'Hapo zamani za kale, kulikuwa na yatima wawili,  Nelima na Nambuya. Waliishi katika shamba lisilokuwa na rutuba. Kwa muda mrefu hakukunyesha na hawakuwa na chakula. Walilazimika kwenda mbali kutafuta chakula.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_4', 3, NULL, 'assets/topic/asb/9231.png', 'Nelima alikuwa mnyamavu, mnyenyekevu na alipenda kusaidia. Dadake Nambuya alikuwa mwenye kiburi na hakumsikiza yeyote. Hakuwajali watu wengine.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12687_5', 3, NULL, 'assets/topic/asb/9232.png', 'Siku moja, Nelima na Nambuya walipoamka,  walitambua kwamba hawakuwa na chochote cha kula. Walilazimika kutafuta chakula. Kila mmoja alikwenda kutafuta upande tofauti.', NULL);
@@ -7752,7 +7752,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003', 2, 'Ng''ombe wa Sokoni', 'assets/topic/asb/1607.png', 'Ursula Nafula
- Catherine Groenewald', 'FF9DEDE3');
+ Catherine Groenewald', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_3', 3, NULL, 'assets/topic/asb/1608.png', 'Watu kijijini walijua kwamba Mama Schola alipenda kupiga kelele mno.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_4', 3, NULL, 'assets/topic/asb/1609.png', 'Siku hiyo, alifanya hivyo kuhusiana na ng''ombe waliokuwa sokoni. "Wafukuze waende mbali hawa ng''ombe wajinga," alisema. "Wanakula mboga zangu."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3003_5', 3, NULL, 'assets/topic/asb/1609.png', '"Hei we pale! Wafukuze hawa ng''ombe wajinga watoke hapa," alisisitiza. "Wanakula nguo zangu."', NULL);
@@ -7976,7 +7976,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836', 2, 'Nilipata Funzo', 'assets/topic/asb/1360.png', 'African Storybook and Ursula Nafula
- Catherine Groenewald', 'FF9DEDE3');
+ Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836_3', 3, NULL, 'assets/topic/asb/1361.png', 'Bibi alinipenda.
 Alinitambulia siri zake nyingi, ila moja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21836_4', 3, NULL, 'assets/topic/asb/1360.png', '"Kikapu na majani ni ya nini?"
@@ -8014,7 +8014,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106', 2, 'Ninafurahi / I Enjoy', 'assets/topic/asb/1492.png', 'Ursula Nafula
-Wiehan de Jager', 'FF9DEDE3');
+Wiehan de Jager', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106_3', 3, NULL, 'assets/topic/asb/1493.png', 'I enjoy skipping.
 Ninafurahi kuruka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2106_4', 3, NULL, 'assets/topic/asb/1494.png', 'I enjoy skipping alone.
@@ -8079,7 +8079,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878', 2, 'Ninaweza kufanya hivi', 'assets/topic/asb/1372.png', 'Ursula Nafula
- Cathy Feek', 'FF9DEDE3');
+ Cathy Feek', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2878_11', 3, NULL, NULL, 'You are free to download, copy, translate or adapt this story and use the illustrations as long as you attribute in the following way:
 Ninaweza kufanya hivi
 Author -
@@ -8099,7 +8099,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159', 2, 'Nozibele na Nywele Tatu', 'assets/topic/asb/1196.png', 'Ursula Nafula
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_3', 3, NULL, 'assets/topic/asb/1197.png', 'Hapo zamani za kale,  wasichana watatu walienda kutafuta kuni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_4', 3, NULL, 'assets/topic/asb/1198.png', 'Ilikuwa siku yenye joto kwa hivyo walienda mtoni kuogelea. Walicheza wakirushiania maji na kuogelea.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3159_5', 3, NULL, 'assets/topic/asb/1196.png', 'Ghafla,  waligundua kuwa saa zilikuwa zimeenda. Waliharakisha kurudi kijijini.', NULL);
@@ -8170,7 +8170,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987', 2, 'Nyani walioenda huku na huko', 'assets/topic/asb/1160.png', 'Brigid Simiyu
- Benjamin Mitchley', 'FFB3C8FF');
+ Benjamin Mitchley', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_3', 3, NULL, 'assets/topic/asb/1161.png', 'Watu wa kijiji cha Udongo walikumbwa na matatizo mengi. Walihuzunika kwa sababu wanyama pori waliyahatarisha maisha yao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_4', 3, NULL, 'assets/topic/asb/1162.png', 'Wanyama hao waliila mimea yao yote na kuwaiba watoto. Mahali hapo hapakuwa pazuri pa kuishi tena. Lakini, wangehamia wapi?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2987_5', 3, NULL, 'assets/topic/asb/1163.png', 'Watu wa familia moja walihamia milimani. Waliamini kuwa wangepata chakula huko.', NULL);
@@ -8203,7 +8203,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692', 2, 'Nyumba ya Kobe', 'assets/topic/asb/9213.png', 'Brigid Simiyu
- Katrien Coetzer', 'FFF4E1B5');
+ Katrien Coetzer', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_3', 3, NULL, 'assets/topic/asb/9214.png', 'Siku moja, Kobe alikuwa akitembea nyasini. Alichunguza mbele na kukodolea nyasi macho akamwona Konokono.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_4', 3, NULL, NULL, '"Unatafuta nini?" Konokono alimwuliza. "Ninaitafuta nyumba yangu. Umeiona?"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('12692_5', 3, NULL, 'assets/topic/asb/9215.png', 'Alijibu, "La, sijaiona, lakini nitakusaidia kuitafuta!" Konokono alipanda juu ya gamba la Kobe. Kobe alimbeba Konokono mgongoni mwake. Walitafuta,  lakini hawakuiona.', NULL);
@@ -8238,7 +8238,7 @@ www.africanstorybook.org
 Original source
 www.bookdash.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073', 2, 'Nyumbu', 'assets/topic/asb/17977.png', 'Brigid Simiyu
- Marleen Visser', 'FFF4E1B5');
+ Marleen Visser', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073_3', 3, NULL, 'assets/topic/asb/17968.png', 'Hapo zamani, kulikuwa na nyumbu mrembo.
 Aliitwa Waridi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21073_4', 3, NULL, 'assets/topic/asb/17969.png', 'Farasi mwenye umbo zuri alisema, "Lazima nimwoe Waridi."', NULL);
@@ -8279,7 +8279,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270', 2, 'Obúso', 'assets/topic/asb/26803.png', 'Kutafsiri Biblia Mara
-Sue  Beattie', 'FFF4E1B5');
+Sue  Beattie', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_3', 3, NULL, 'assets/topic/asb/26807.png', 'Améeso', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_4', 3, NULL, 'assets/topic/asb/26808.png', 'Okutwi', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30270_5', 3, NULL, 'assets/topic/asb/26802.png', 'Omunwa', NULL);
@@ -8307,7 +8307,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775', 2, 'Omuwala owekyejo', 'assets/topic/asb/8665.png', 'Namutebi Nelly and Uganda Christian University
- Catherine Groenewald, Vusi Malindi, Rob Owen, Natalie Propa, Ingrid Schechter and Melany Pietersen', 'FFF4E1B5');
+ Catherine Groenewald, Vusi Malindi, Rob Owen, Natalie Propa, Ingrid Schechter and Melany Pietersen', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_3', 3, NULL, 'assets/topic/asb/8661.png', 'olwatuka waliyo omuwala nga'' yitibwa Emily era nga wakyejo dala.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_4', 3, NULL, 'assets/topic/asb/7518.png', 'Buli nyina bweyamugambanga akole emirimu nga agaana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23775_5', 3, NULL, 'assets/topic/asb/8630.png', 'Olunaku lumu nyina yalwala. Era namutuma agende ewaa jajjawe amuletereyo kuddagala elye''njawulo, asobole okubeera ngawona. Olwe'' kyejo kya Emily, yasalao kukwata makubo ge.', NULL);
@@ -8335,7 +8335,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530', 2, 'Pa Nase buibui, na wanawake', 'assets/topic/asb/26450.png', 'Ursula  Nafula
-Kenneth Boyowa Okitikpi', 'FFCFB5DD');
+Kenneth Boyowa Okitikpi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530_3', 3, NULL, 'assets/topic/asb/26446.png', 'Hapo zamani, kulikuwa na buibui aliyeitwa Pa Nase. Alihisi njaa sana akaamua kutafuta chakula.
 Alienda kwa rafikiye aliyekuwa akimpa masaada. Lakini rafikiye hakuwa nyumbani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22530_4', 3, NULL, 'assets/topic/asb/26447.png', 'Pa Nase, alikuwa na wazo tofauti la kuweza kupata chakula. Alikumbuka kuwa mle kijijini, kulikuwa na ghala ambamo wanawake wa kijijini walikuwa wakihifadhi chakula chao.', NULL);
@@ -8373,7 +8373,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877', 2, 'Paka mwerevu', 'assets/topic/asb/8876.png', 'Ursula Nafula
-Catherine Groenewald', 'FF9DEDE3');
+Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877_3', 3, NULL, 'assets/topic/asb/8864.png', 'Bwana Kio anaishi kijijini kwetu.
 Ana paka anayeitwa Safi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8877_4', 3, NULL, 'assets/topic/asb/8865.png', 'Bwana Kio anapoenda kazini,  anauacha mlango wazi.', NULL);
@@ -8409,7 +8409,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065', 2, 'Paka mwerevu na Mbwa mjinga', 'assets/topic/asb/25483.png', 'Brigid Simiyu
-Salim Kasamba', 'FF9DEDE3');
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065_3', 3, NULL, 'assets/topic/asb/25473.png', 'Hapo kale, kulikuwa na Paka mwerevu na Mbwa mjinga. Paka mwerevu aliishi vizuri katika nyumba ya kifahari.
 Mbwa mjinga alihisi njaa mtaani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22065_4', 3, NULL, 'assets/topic/asb/25474.png', '"Inawezekanaje familia tajiri kukuruhusu kuishi nyumbani kwao?" Mbwa mjinga alimwuliza  yule Paka mwerevu kwa hasira.', NULL);
@@ -8444,7 +8444,7 @@ First paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402', 2, 'Paka na Panya', 'assets/topic/asb/18908.png', 'Susan Kavaya', 'FFB3C8FF');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402', 2, 'Paka na Panya', 'assets/topic/asb/18908.png', 'Susan Kavaya', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_3', 3, NULL, 'assets/topic/asb/18908.png', 'Hapo zamani za kale, paka na panya walikuwa marafiki. Walifanya kazi na kucheza pamoja. Walioana na kuishi kwa furaha.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_4', 3, NULL, 'assets/topic/asb/18909.png', 'Siku moja, panya walisema kwa hofu, "Baadhi ya jamaa zetu wamepotea." "Sijamwona mjomba kwa muda," mmoja alisema. "Sijamwona shangazi," alisema mwingine. "Dadangu hayuko," alisema wa tatu. "Kakangu yuko wapi?" aliuliza wa nne.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('19402_5', 3, NULL, 'assets/topic/asb/18910.png', 'Panya mmoja mzee alitikisa kichwa chake kwa huzuni. "Marafiki wapendwa, nina habari mbaya." Alisema. "Paka wanatula. Ni lazima tuwe waangalifu. Hivi karibuni watatula sisi sote."', NULL);
@@ -8479,7 +8479,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558', 2, 'Paka wa Selemeng', 'assets/topic/asb/12005.png', 'Brigid Simiyu
- Jesse Breytenbach', 'FF9DEDE3');
+ Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_3', 3, NULL, 'assets/topic/asb/12005.png', 'Selemeng anawapenda paka. Kuna paka wengi nyumbani kwake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_4', 3, NULL, 'assets/topic/asb/12006.png', 'Selemeng ana paka mmoja mweusi. Paka huyu anakula nyama nyingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15558_5', 3, NULL, 'assets/topic/asb/12007.png', 'Selemeng vilevile ana paka mmoja mnono. Paka huyu hula kila kitu.', NULL);
@@ -8548,7 +8548,7 @@ www.africanstorybook.org
 Original source
 http://ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127', 2, 'Panya na Paka', 'assets/topic/asb/18908.png', 'Brigid Simiyu
-Jacob Kono', 'FF9DEDE3');
+Jacob Kono', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_3', 3, NULL, 'assets/topic/asb/18908.png', 'Hapo zamani, paka na panya walikuwa marafiki.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_4', 3, NULL, 'assets/topic/asb/18909.png', 'Panya walianza kupoteza baadhi ya jamaa zao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21127_5', 3, NULL, 'assets/topic/asb/18910.png', 'Panya mmoja mzee alisema, "Nadhani paka wanatula."', NULL);
@@ -8588,7 +8588,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418', 2, 'Petro na mbwa wake', 'assets/topic/asb/25201.png', 'Ursula  Nafula
-Brian Wambi', 'FF9DEDE3');
+Brian Wambi', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_3', 3, NULL, 'assets/topic/asb/25198.png', 'Hapo zamani, kulikuwa na mvulana kwa jina Petro. Alikuwa mwanafunzi mwerevu aliyeibuka wa kwanza darasani. Wazazi wake walijivunia kazi yake nzuri. Lakini, Petro alitamani kuwa na kaka, dada au hata kipenzi cha kucheza naye.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_4', 3, NULL, 'assets/topic/asb/25199.png', 'Siku moja, Petro alimwuliza mama, "Ninaweza kwenda nje kucheza? Nimekuwa nikisoma wakati huu wote. Ningependa sasa niende nicheze na marafiki zangu." Mamake alimjibu, "Ni sawa! Nenda, lakini usichelewe!"', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31418_5', 3, NULL, 'assets/topic/asb/25200.png', 'Alipokuwa akienda uwanjani, Petro aliona jambo lisilokuwa la kawaida. Alimwona mbwa mdogo mwenye madoadoa. Mbwa huyo alikuwa amekwama shimoni na alikuwa ameogopa. "Usiwe na wasiwasi, sitakuumiza. Nitakusaidia," Petro alimwambia.', NULL);
@@ -8618,7 +8618,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809', 2, 'Petros ampata rafiki', 'assets/topic/asb/25201.png', 'Ursula Nafula
-Brian Wambi', 'FFCFB5DD');
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809_3', 3, NULL, 'assets/topic/asb/25198.png', 'Petros alikuwa mtoto wa pekee.
 Alikuwa mwanafunzi mwerevu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21809_4', 3, NULL, 'assets/topic/asb/25199.png', 'Siku moja, Petros alipata ruhusa ya kwenda kucheza na marafiki zake.', NULL);
@@ -8684,7 +8684,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422', 2, 'rafiki bora zaidi', 'assets/topic/asb/25842.png', 'Angela Mbalu
-Wiehan de Jager, Idowu Abayomi Oluwasegun, Andrews Opoku Antwi, Michelangelo Quaye Anang and Rob Owen', 'FFB3C8FF');
+Wiehan de Jager, Idowu Abayomi Oluwasegun, Andrews Opoku Antwi, Michelangelo Quaye Anang and Rob Owen', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_3', 3, NULL, 'assets/topic/asb/1497.png', 'Mara moja kwa wakati, kulikuwa na marafiki tatu bora; Jude, Becky na Rachael.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_4', 3, NULL, 'assets/topic/asb/19328.png', 'Daima walifanya kazi zao za nyumbani pamoja; kwa kweli walikwenda nyumbani kwa kila mmoja na kusaidiana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24422_5', 3, NULL, 'assets/topic/asb/19336.png', 'Wazazi wao walifurahia sana.
@@ -8716,7 +8716,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527', 2, 'Rafiki ninayemkosa', 'assets/topic/asb/8658.png', 'Ursula Nafula
- Catherine Groenewald, Rijuta Ghate and Benjamin Mitchley', 'FFB3C8FF');
+ Catherine Groenewald, Rijuta Ghate and Benjamin Mitchley', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_3', 3, NULL, 'assets/topic/asb/2444.png', 'Nilipoamka asubuhi,  nilikula kifungua kinywa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_4', 3, NULL, 'assets/topic/asb/2450.png', 'Nilikimbia kwenda kukutana na rafiki yangu Muthoni.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9527_5', 3, NULL, 'assets/topic/asb/2452.png', 'Pindi nilipompata Muthoni,  tulisahau kila kitu.', NULL);
@@ -8745,7 +8745,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547', 2, 'Rafiki ya Atieno', 'assets/topic/asb/26422.png', 'Ursula  Nafula
-Idowu Abayomi Oluwasegun', 'FFCFB5DD');
+Idowu Abayomi Oluwasegun', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547_3', 3, NULL, 'assets/topic/asb/26422.png', 'Kuliishi msichana mdogo katika kijiji kimoja karibu na ziwa.
 Aliitwa Atieno.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('31547_4', 3, NULL, 'assets/topic/asb/26423.png', 'Babake Atieno alikuwa mvuvi mashuhuri. Alikuwa na mtumbwi wake wa kuvua samaki.
@@ -8788,7 +8788,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718', 2, 'Rafiki yangu Koko', 'assets/topic/asb/2485.png', 'Ursula Nafula
- Ursula Nafula', 'FF9DEDE3');
+ Ursula Nafula', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_3', 3, NULL, 'assets/topic/asb/2486.png', 'Nilipokuwa wa umri wa miaka mitano, mjombangu alinipa zawadi ya ajabu sana. Alinipa mbwa mdogo wa wiki tatu! Siku mjomba aliniletea mbwa huyo,  nilifurahi sana. Nilijua kuwa nilikuwa nimempata rafiki.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_4', 3, NULL, 'assets/topic/asb/2487.png', 'Nilipomweka chini, mjomba alinigeukia na kuniuliza,  "Utamwitaje?" Nilimwangalia mbwa wangu kisha nikasema, "Ataitwa KoKo." Mjombangu alishangaa sana akaniuliza, "Mbona unamwita Koko?" Nilimjibu,  "Kwa sababu rangi yake ni kama kakao."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('6718_5', 3, NULL, 'assets/topic/asb/2488.png', 'Nilimwuliza mjomba iwapo Koko alizaliwa peke yake. Mjomba alisema kwamba alikua na nduguye aliyemfanana kabisa. Nilienda kumwona nduguye Koko.', NULL);
@@ -8851,7 +8851,7 @@ www.africanstorybook.org
 Original source
 This story was selected as one of the 7 winning stories from the Writing in your mother tongue writing competition partnership between Saulsville Library and the African Storybook Initiative.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202', 2, 'Rangi ya chungwa', 'assets/topic/asb/9474.png', 'Ursula Nafula
- Catherine Groenewald', 'FFB3C8FF');
+ Catherine Groenewald', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_3', 3, NULL, 'assets/topic/asb/9465.png', 'Mimi na babangu tulienda mjini.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_4', 3, NULL, 'assets/topic/asb/9466.png', 'Nlimwona mwanamke. Alikuwa amevaa nguo ya rangi ya chungwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10202_5', 3, NULL, 'assets/topic/asb/9469.png', 'Alijifunga mshipi mkubwa mwekundu.', NULL);
@@ -8879,7 +8879,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442', 2, 'Rangi za Upinde', 'assets/topic/asb/9838.png', 'Caren Echesa
-Jesse Breytenbach', 'FF9DEDE3');
+Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_3', 3, NULL, 'assets/topic/asb/9838.png', 'Upinde una rangi saba.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_4', 3, NULL, 'assets/topic/asb/9839.png', 'Rangi ya kwanza ni nyekundu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10442_5', 3, NULL, 'assets/topic/asb/9840.png', 'Kweyu amevalia shati la rangi nyekundu.', NULL);
@@ -8911,7 +8911,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574', 2, 'Refi awaosha kuku wake', 'assets/topic/asb/986.png', 'Brigid Simiyu
-Wiehan de Jager', 'FF9DEDE3');
+Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574_3', 3, NULL, 'assets/topic/asb/1003.png', 'Ilikuwa harusi ya kwanza katika familia ya Tenana, na Refi alikuwa amechangamka sana. "Nitakuwa msaidizi wa Elsa nikiwa nimevaa nguo na viatu vipya! Refi aliwaelezea kuku wake. Aliwaelezea kuku wake kila kitu.
 Babake alikuwa amempa kuku kama zawadi alipokuwa akiadhimisha siku ya kuzaliwa kwake. Refi aliwapenda sana."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2574_4', 3, NULL, 'assets/topic/asb/1011.png', '"Refi, waondoshe hapo hao kuku wachafu!" Mamake alipiga kelele, "Siwataki popote karibu na hema la harusi."', NULL);
@@ -8997,7 +8997,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712', 2, 'Sababu ya chura kuwa na sura mbaya', 'assets/topic/asb/7077.png', 'Brigid Simiyu
- Hélder de Paz Alexandre', 'FFB3C8FF');
+ Hélder de Paz Alexandre', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_3', 3, NULL, 'assets/topic/asb/7069.png', 'Miaka mingi iliyopita, Mjusi na Chura walikuwa marafiki. Siku moja waliamua kuwatafuta wasichana wapenzi jijini.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_4', 3, NULL, 'assets/topic/asb/7070.png', 'Chura alimwonea Mjusi wivu. Mjusi alikuwa na ngozi iliyometameta na ya kuvutia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8712_5', 3, NULL, 'assets/topic/asb/7071.png', 'Chura alimwuliza, "Ni kitu gani ulichofanya ukawa mrembo hivi? Hebu, nitazame, nina sura mbaya mno. Ninawezaje kuirembesha ngozi yangu?"', NULL);
@@ -9024,7 +9024,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197', 2, 'Samaki Mkarimu', 'assets/topic/asb/1840.png', 'Brigid Simiyu
-Jemma Kahn and Wiehan de Jager', 'FFB3C8FF');
+Jemma Kahn and Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_3', 3, NULL, 'assets/topic/asb/1841.png', 'Hapo zamani za kale, Mpunzi na mkewe waliishi na mtoto wao mmoja wa kike aliyeitwa Nosisa. Mpunzi alitaka mtoto mvulana, lakini yeye na mkewe hawangeweza kupata watoto wengine. Mpunzi alimlaumu mkewe kwa kutompa mtoto wa kiume.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_4', 3, NULL, 'assets/topic/asb/1843.png', 'Siku moja, Mpunzi alimchapa mkewe. Mkewe alitoroka akaenda nyumbani kwao. Alihuzunika kwani Mpunzi hakumruhusu aende na Nosisa. Mpunzi alimdhulumu bintiye namna alivyomdhulumu mkewe. Nosisa aliishi maisha ya huzuni sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2197_5', 3, NULL, 'assets/topic/asb/1844.png', 'Mpunzi alioa mke mwingine. Alitumaini kwamba mke huyo mpya angemzalia mtoto mvulana. Maisha ya Nosisa sasa yalikuwa magumu zaidi babake alipooa tena. Mpunzi alimtetesha na kumlazimisha kumtumikia mke wake mpya. Nosisa alifanya kazi kama mtumwa.', NULL);
@@ -9085,7 +9085,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397', 2, 'Sayari Jua ya Saba', 'assets/topic/asb/2316.png', 'Kamundi Mutugi
- Pratham Books', 'FFB3C8FF');
+ Pratham Books', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_3', 3, NULL, 'assets/topic/asb/2317.png', 'Hapo zamani za kale kulikuwa na sayari jua saba angani. Miale mikali ya sayari jua hizo iling''aa duniani hadi binadamu wakashindwa kuvumilia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_4', 3, NULL, 'assets/topic/asb/2318.png', 'Ndugu saba wa kabila la Munda waliamua kuziua sayari jua hizo. Walizirushia mishale lakini wakaweza kuziua sayari jua sita pekee.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2397_5', 3, NULL, 'assets/topic/asb/2319.png', 'Sayari Jua ya saba ilikuwa imejificha nyuma ya mlima.', NULL);
@@ -9150,7 +9150,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707', 2, 'Siafu amwokoa Njiwa', 'assets/topic/asb/788.png', 'Ursula Nafula
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_3', 3, NULL, 'assets/topic/asb/784.png', 'Ilikuwa siku yenye joto jingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_4', 3, NULL, 'assets/topic/asb/785.png', 'Siafu Mdogo hakuwa amepata maji kwa siku nyingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8707_5', 3, NULL, 'assets/topic/asb/786.png', 'Akawaza, "Ninahitaji tone moja tu la maji, hata kama litatoka kwenye jani."', NULL);
@@ -9196,7 +9196,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615', 2, 'Siku ambayo Jua lilipotea', 'assets/topic/asb/14611.png', 'Brigid Simiyu
- Jesse Breytenbach', 'FF9DEDE3');
+ Jesse Breytenbach', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615_3', 3, NULL, 'assets/topic/asb/14612.png', 'Mama Jua alimtembelea dadake Mwezi.
 "Nitarejea karibuni," Jua alisema.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15615_4', 3, NULL, 'assets/topic/asb/14598.png', 'Mama Jua alipoondoka,  Milima ilihuzunika.', NULL);
@@ -9272,7 +9272,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433', 2, 'Siku niliyopotea sokoni', 'assets/topic/asb/1447.png', 'Pete Mhunzi
- Catherine Groenewald', 'FFCFB5DD');
+ Catherine Groenewald', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_3', 3, NULL, 'assets/topic/asb/1448.png', 'Mimi ninaishi katika kijiji cha Kakuma. Ni mahali pakavu penye miti ya miiba na joto jingi. Kakuma,  kuna mbuzi wengi. Wenyeji wengi hupanda baiskeli. Sokoni kuna maduka machache madogo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_4', 3, NULL, 'assets/topic/asb/1449.png', 'Asubuhi moja, mamangu aliniita akasema, "Etabo,  leo umefika umri wa miaka sita nasi tutakupa zawadi." Nilimuuliza nikiwa na furaha tele, "Zawadi gani? Zawadi gani?" Akajibu, "Utafuatana nasi kesho twende sokoni. Tutapanda basi." Hiyo ingekuwa safari yangu ya kwanza kwenda soko kubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8433_5', 3, NULL, 'assets/topic/asb/1450.png', 'Keshoye, tulikwenda kwenye kituo cha basi. Nilisimama kati ya mama na shangazi. Nilijisikia mdogo sana nikiwa kati yao. Nilikuwa nimevaa suruali mpya ya bluu na fulana nyekundu.', NULL);
@@ -9332,7 +9332,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059', 2, 'Simba Jike na Mbuni', 'assets/topic/asb/19205.png', 'Brigid Simiyu
- Brian Wambi', 'FF9DEDE3');
+ Brian Wambi', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059_3', 3, NULL, 'assets/topic/asb/19195.png', 'Mbuni na Simba Jike walikuwa marafiki wakati mmoja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21059_4', 3, NULL, 'assets/topic/asb/19196.png', 'Mbuni aliwalisha wanawe vyema.
 Walikuwa wenye afya nzuri.', NULL);
@@ -9413,7 +9413,7 @@ First words
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374', 2, 'Sokwe na Mamba', 'assets/topic/asb/19079.png', 'Brigid Simiyu', 'FF9DEDE3');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374', 2, 'Sokwe na Mamba', 'assets/topic/asb/19079.png', 'Brigid Simiyu', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374_3', 3, NULL, 'assets/topic/asb/19075.png', 'Sokwe alimkuta Mamba kando ya ziwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('20374_4', 3, NULL, 'assets/topic/asb/19076.png', 'Akamwuliza Mamba, "Unaishi wapi?"
 Mamba akamjibu, "Ziwani."', NULL);
@@ -9454,7 +9454,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342', 2, 'Sungura amdanganya Tembo', 'assets/topic/asb/13000.png', 'Ursula Nafula
- Wiehan de Jager', 'FFCFB5DD');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_3', 3, NULL, 'assets/topic/asb/13000.png', 'Tembo na Sungura walikuwa marafiki.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_4', 3, NULL, 'assets/topic/asb/13001.png', 'Walilisha mifugo yao sehemu iliyokuwa na nyasi na maji.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18342_5', 3, NULL, 'assets/topic/asb/13002.png', 'Walizoea kucheza mpira wa miguu.', NULL);
@@ -9493,7 +9493,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438', 2, 'Sungura chini ya mti', 'assets/topic/asb/7610.png', 'Pete Mhunzi
- Wiehan de Jager', 'FFF4E1B5');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_3', 3, NULL, 'assets/topic/asb/7595.png', 'Sungura alikuwa amelala chini ya mtofaa. Tofaa lilianguka chini kutoka tawi moja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_4', 3, NULL, 'assets/topic/asb/7596.png', 'Sungura aliisikia sauti ikisema, ''Kimbia, Sungura, kimbia!'' Sungura aliamka na bila kukawia akaanza kukimbia mbio sana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8438_5', 3, NULL, 'assets/topic/asb/7597.png', 'Sungura alikutana na Kuku. "Mbona unakimbia?" Kuku alimwuliza. Sungura akamjibu, "Sijui. Nilisikia tu kitu kikianguka nayo sauti ikasema, ''Kimbia, Sungura kimbia!''"', NULL);
@@ -9631,7 +9631,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092', 2, 'Sungura na Tembo (Tena!)', 'assets/topic/asb/13000.png', 'Agnes Gichaba
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_3', 3, NULL, 'assets/topic/asb/13000.png', 'Hapo zamani za kale, Tembo na Sungura walikuwa marafiki wakubwa sana. Walikuwa na ngamia,  ng''ombe na kondoo wengi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_4', 3, NULL, 'assets/topic/asb/13001.png', 'Waliwalisha wanyama hao katika bonde la Kingilo. Wakati mwingine waliwapeleka milimani kulikokuwa na nyasi na maji kwa wingi.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13092_5', 3, NULL, 'assets/topic/asb/13002.png', 'Wanyama walipokula, Sungura na Tembo walicheza. Walipenda sana kucheza mpira wa miguu.', NULL);
@@ -9693,7 +9693,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631', 2, 'Tamara aanza kwenda shule', 'assets/topic/asb/25447.png', 'Ursula Nafula
-Jacob Kono', 'FFB3C8FF');
+Jacob Kono', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631_3', 3, NULL, 'assets/topic/asb/25447.png', 'Tamara alikuwa msichana wa miaka mitano. Aliishi na familia yake. Kijiji chao kilikuwa karibu na msitu wenye wanyama wakali.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631_4', 3, NULL, 'assets/topic/asb/25448.png', 'Tamara aliwatii wazazi wake. Aliwasaidia kuwachunga kondoo na mbuzi wao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21631_5', 3, NULL, 'assets/topic/asb/25449.png', 'Tamara alipenda kuwasikiliza ndege wakiimba. Ndege walipoimba, aliwaiga huku akitunga nyimbo zake.', NULL);
@@ -9723,7 +9723,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003', 2, 'Tarik na rafiki yake', 'assets/topic/asb/25050.png', 'Ursula Nafula
-Isaac Okwir', 'FFF4E1B5');
+Isaac Okwir', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003_3', 3, NULL, 'assets/topic/asb/25047.png', 'Tarik na familia yake waliishi mbali na mji mkuu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22003_4', 3, NULL, 'assets/topic/asb/25048.png', 'Tarik alikuwa na mbwa aliyeitwa Buchi.
 Walikuwa marafiki wakubwa.', NULL);
@@ -9793,7 +9793,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24748', 2, 'Tembo na Kiboko', 'assets/topic/asb/27134.png', 'Ursula  Nafula
-Awwalu  Sakiwa and Idowu Abayomi Oluwasegun', 'FFB3C8FF');
+Awwalu  Sakiwa and Idowu Abayomi Oluwasegun', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24748_3', 3, NULL, 'assets/topic/asb/27133.png', 'Kuliishi mapacha wawili wa kiume, Tembo na Kiboko.
 Siku moja, Hatima iliwapatia nafasi ya kufanya uchaguzi kati ya vitu viwili. "Chagua upofu au ukoma," Hatima iliwaamrisha.
 Kiboko alitaka kuwa mwerevu. Kwa haraka, alichagua ukoma ili aweze kuendelea kuona. Tembo alichagua upofu.', NULL);
@@ -9882,7 +9882,7 @@ www.africanstorybook.org
 Original source
 www.ugcla.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914', 2, 'Uamsho wa furaha', 'assets/topic/asb/2462.png', 'Brigid Simiyu
- Catherine Groenewald', 'FF9DEDE3');
+ Catherine Groenewald', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_3', 3, NULL, 'assets/topic/asb/2463.png', 'Kwa muda mrefu Mlima Olokwango alisimama akitabasamu katikati ya sehemu Tambarare ya Kwere. Kutoka kwa vibonyeo viwili vilivyokuwa pembeni mwake, kulitoka vijito vilivyokaribiana na kuunda mto.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_4', 3, NULL, 'assets/topic/asb/2464.png', 'Mambo yalikuwa swari hadi Matata alipokuwa mkuu wa mahali hapo. Alilazimisha njia itengenezwe kutoka juu ya mlima hadi chini yake ili aweze kupanda kwa urahis na kujifiringisha hadi chini. Mlima Olokwango alikasirika na uharibifu uliofanywa lakini alivumilia.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3914_5', 3, NULL, 'assets/topic/asb/2465.png', 'Kila wikendi, watoto wa Matata na marafiki zao wangepanda mlimani kucheza. Wangekimbia kila mahali huku wakivunja vijiti na matawi, wakiwasha mioto kwa michezo yao ambayo baadaye, waliiacha ikiwaka.', NULL);
@@ -9907,7 +9907,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303', 2, 'Uamuzi', 'assets/topic/asb/10625.png', 'Ursula Nafula
- Vusi Malindi', 'FFF4E1B5');
+ Vusi Malindi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_3', 3, NULL, 'assets/topic/asb/10609.png', 'Mtaa wetu ulikuwa na matatizo mengi. Tulisimama kwenye foleni tukisubiri kuchota maji kutoka mfereji mmoja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_4', 3, NULL, 'assets/topic/asb/10616.png', 'Tulisubiri kupokea chakula cha msaada. Hatukufahamu waliokuwa wahisani wetu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('13303_5', 3, NULL, 'assets/topic/asb/10614.png', 'Usalama ulizorota kila uchao. Tulilazimika kufunga nyumba zetu mapema kwa ajili ya wizi.', NULL);
@@ -9941,7 +9941,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267', 2, 'Ubhusyö', 'assets/topic/asb/26803.png', 'Kutafsiri Biblia Mara
-Sue  Beattie', 'FFCFB5DD');
+Sue  Beattie', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_3', 3, NULL, 'assets/topic/asb/26807.png', 'Amaiso', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_4', 3, NULL, 'assets/topic/asb/26808.png', 'Ökutwë', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('30267_5', 3, NULL, 'assets/topic/asb/26802.png', 'Umunywa', NULL);
@@ -10057,7 +10057,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138', 2, 'Ujinga wa Majitu', 'assets/topic/asb/8114.png', 'Brigid Simiyu
- Natalie Propa', 'FFB3C8FF');
+ Natalie Propa', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138_3', 3, NULL, 'assets/topic/asb/8111.png', 'Kulikuwa na kiangazi.
 Mulongo na familia yake walikosa chakula.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21138_4', 3, NULL, 'assets/topic/asb/8112.png', 'Mulongo alienda na famalia yake kutafuta chakula.', NULL);
@@ -10093,7 +10093,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033', 2, 'Ulemavu si utepetevu', 'assets/topic/asb/10424.png', 'Ursula  Nafula
-Wiehan de Jager', 'FF9DEDE3');
+Wiehan de Jager', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_3', 3, NULL, 'assets/topic/asb/10419.png', 'Huyu ni Agnes. Yeye ni mwalimu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_4', 3, NULL, 'assets/topic/asb/10418.png', 'Agnes hutumia magongo kutembea.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23033_5', 3, NULL, 'assets/topic/asb/10420.png', 'Huyu ni Metobo. Metobo ni DJ wa redio nimpendaye.', NULL);
@@ -10153,7 +10153,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864', 2, 'Umuhimu wa Mtende', 'assets/topic/asb/9607.png', 'Translators without Borders and Kiondo Wilkins
-Rob Owen', 'FFB3C8FF');
+Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864_3', 3, NULL, 'assets/topic/asb/9604.png', 'Hebu nikueleze kuhusu mtende.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('15864_4', 3, NULL, 'assets/topic/asb/9605.png', 'Mtende ni mmea wa kudumu.
 Unasitawi mimea mingine inapokauka.', NULL);
@@ -10181,7 +10181,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345', 2, 'Upepo mkali', 'assets/topic/asb/14101.png', 'Ursula Nafula
-Marion Drew', 'FFB3C8FF');
+Marion Drew', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_3', 3, NULL, 'assets/topic/asb/14102.png', 'Nilikuwa nikicheza na tiara yangu. Upepo mkali ulianza kuvuma.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_4', 3, NULL, 'assets/topic/asb/14103.png', 'Upepo huo uliibandua tiara yangu. Ilirushwa mbali.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('18345_5', 3, NULL, 'assets/topic/asb/14104.png', 'Macho yangu yalijaa mchanga.', NULL);
@@ -10211,7 +10211,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572', 2, 'Upinde wa Mto wenye miujiza', 'assets/topic/asb/26828.png', 'Ursula  Nafula
-Edwin  Irabor', 'FFF4E1B5');
+Edwin  Irabor', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572_3', 3, NULL, 'assets/topic/asb/26491.png', 'Watoto watatu, Ado, Aggie, na Eddy waliisikiliza mvua ikinyesha. Walitaka sana kuchezea kwenye mvua hiyo. Walitaka kuugusa upinde ulioonekana angani. Lakini mama alisema, "La!" Walilia wakitumaini kwamba mama atabadili nia yake. Lakini, hilo halikufanyika. Eddy hata alijaribu kunyatia na kutoka nje ya nyumba ili autembelee upinde ule.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572_4', 3, NULL, 'assets/topic/asb/26492.png', 'Mama alimpata kabla hajaenda mbali. Aliipaza sauti yake ili Eddy na dada zake pia waweze kusikia. "Utapata mafua," mama alisema. "Hampendi kunywa supu iliyo na pilipili lakini mkipata mafua, lazima mtainywa," aliongezea kwa tabasamu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22572_5', 3, NULL, 'assets/topic/asb/26493.png', 'Akiwa na matumaini kwamba watamwuliza awasimulie hadithi, mama alisema, "Upinde ni mto wa miujiza ulio na nguvu za kuponya. Lakini uko mbali angani msikoweza kuufikia. Kwa hivyo mkipata mafua, upinde hautawasaidia."', NULL);
@@ -10286,7 +10286,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937', 2, 'Urithi kutoka kwa baba', 'assets/topic/asb/17228.png', 'Ursula Nafula
-Jacob Kono', 'FFCFB5DD');
+Jacob Kono', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_3', 3, NULL, 'assets/topic/asb/17218.png', 'Eba na mkewe Lelisa walifanya kazi zao kwa bidii sana. Walikuwa na watoto wawili wa kiume.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_4', 3, NULL, 'assets/topic/asb/17219.png', 'Walitimiza mahitaji yao kutokana na juhudi zao. Eba alitaka wanawe wastarehe. Hawakufanya kazi zozote.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('17937_5', 3, NULL, 'assets/topic/asb/17220.png', 'Baada ya muda, Lelisa alifariki.', NULL);
@@ -10318,7 +10318,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816', 2, 'Ushauri mbaya', 'assets/topic/asb/17057.png', 'African Storybook and Dorcas Wepukhulu
-Brian Wambi', 'FFF4E1B5');
+Brian Wambi', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816_3', 3, NULL, 'assets/topic/asb/17050.png', 'Kombe na Juma walikuwa maskini pia jirani.
 Walifanya kila kitu wenyewe.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21816_4', 3, NULL, 'assets/topic/asb/17052.png', 'Walitamani kuwa na punda.
@@ -10370,7 +10370,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690', 2, 'Usiku unatambuliwa katika kijiji cha Opio', 'assets/topic/asb/1130.png', 'Mutugi Kamundi
- Wiehan de Jager', 'FFB3C8FF');
+ Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_3', 3, NULL, 'assets/topic/asb/1131.png', 'Hapo zamani hakukuwa na majira ya usiku katika kijiji cha kina Opio. Watu walilala wakati wowote walipochoka. Walifanya kazi zao walipoamka.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_4', 3, NULL, 'assets/topic/asb/1132.png', 'Siku moja, Opio alienda na mbwa wake kuwinda. Baada ya muda mfupi, mbwa walianza kumfukuza paa. Opio aliwafuata akakimbia kwa muda wa saa nyingi. Alipochoka alipumzika halafu baadaye alianza kukimbia tena. Lakini, hakuwaona mbwa wake.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('8690_5', 3, NULL, 'assets/topic/asb/1133.png', 'Opio alijipata katika kijiji tofauti. Alimwambia mwenye nyumba, "Nimechoka. Nahitaji kupumzika." Mtu yule alimjibu, "Unakaribishwa kupumzika hapa. Je, ungependa kunywa pombe kidogo?" Opio alikuwa na kiu. Aliinywa pombe kidogo kisha akalala.', NULL);
@@ -10499,7 +10499,7 @@ www.africanstorybook.org
 Original source
 www.prathambooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440', 2, 'Viatu  vyangu vya kwanza', 'assets/topic/asb/9500.png', 'Ursula Nafula
- Rob Owen', 'FFF4E1B5');
+ Rob Owen', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_3', 3, NULL, 'assets/topic/asb/9494.png', 'Sikuwa nimewahi kuvaa viatu. Nilipowaona watoto waliovaa viatu, niliwatazama kwa hamu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_4', 3, NULL, 'assets/topic/asb/9492.png', 'Mamangu alinifariji akisema, "Utakuwa na jozi nyingi baadaye, subiri tu utaona!" Wakati mwingine sikumwamini. "Baadaye, itakuwa lini?" Nilimwuliza siku moja.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('10440_5', 3, NULL, 'assets/topic/asb/9493.png', 'Kisha ulikuwa msimu wa Krismasi. Kila mtu alijishughulisha kwenda sokoni na kurejea na vitu vipya. "Mama, je, nasi tutaenda sokoni?" Nilimwuliza.', NULL);
@@ -10527,7 +10527,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135', 2, 'Vitu nivijuavyo', 'assets/topic/asb/2550.png', 'Ursula Nafula
- Michael Nakuwa', 'FF9DEDE3');
+ Michael Nakuwa', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_3', 3, NULL, 'assets/topic/asb/2551.png', 'Hii ni manyatta. Ni kwetu nyumbani. Iko katika Kaunti ya Turkana.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_4', 3, NULL, 'assets/topic/asb/2552.png', 'Huyu ni ngamia. Katika Kaunti ya Turkana,  watu wanafuga wanyama tofauti. Lakini ngamia ni muhimu mno.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('3135_5', 3, NULL, 'assets/topic/asb/2553.png', 'Hawa ni walimu wangu. Ninapenda kwenda shuleni. Shule yangu inaitwa Shule ya Msingi ya Lolupe. Nampenda sana mwalimu wangu wa Sanaa.', NULL);
@@ -10555,7 +10555,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314', 2, 'Vituko vya Ng''ombe Shujaa', 'assets/topic/asb/858.png', 'Mutugi Kamundi
- Danielle Bruckert', 'FFCFB5DD');
+ Danielle Bruckert', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_3', 3, NULL, 'assets/topic/asb/859.png', 'Huyu ni ng''ombe mtulivu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_4', 3, NULL, 'assets/topic/asb/860.png', 'Mchana yeye ni ng''ombe wa kawaida.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('5314_5', 3, NULL, 'assets/topic/asb/861.png', 'Hupeperusha tiara.', NULL);
@@ -10584,7 +10584,7 @@ www.africanstorybook.org
 Original source
 http://freekidsbooks.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637', 2, 'Wakati basi kubwa la bluu lilipochelewa', 'assets/topic/asb/11446.png', 'Ursula  Nafula
-Mango Tree', 'FFCFB5DD');
+Mango Tree', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637_3', 3, NULL, 'assets/topic/asb/11446.png', 'Mara moja kwa siku, basi kubwa la bluu husimama katika kijiji cha akina Bobo kuwasafirisha watu hadi mjini. Bobo hajawahi kuliona basi kubwa kama hilo. Anayahesabu madirisha 9 ya abiria na moja la dereva. "Lazima kuna safu 9 za viti vya abiria, kila safu ikiwa na takriban viti 8," Bobo anawaza.
 Ikiwa ni sawa namna Bobo anavyowaza, je, basi kubwa la bluu linaweza kuwabeba abiria wangapi?', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22637_4', 3, NULL, 'assets/topic/asb/11447.png', 'Kesho, mamake Bobo atampeleka mjini kununua sare mpya ya shule. Mama huuza mayai dazeni moja kwa shilingi 120. Karibu kila juma, yeye hupata jumla ya shilingi 3600. Je, ni mayai dazeni ngapi anazohitaji kuuza ili aweze kupata shilingi 3600? Kwa majuma 4 yaliyopita, aliweka akiba nusu ya fedha zake ili amnunulie Bobo sare mpya.
@@ -10636,7 +10636,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22533', 2, 'Wanamuziki stadi', 'assets/topic/asb/25963.png', 'Ursula  Nafula
-Salim Kasamba', 'FF9DEDE3');
+Salim Kasamba', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22533_3', 3, NULL, 'assets/topic/asb/25955.png', 'Bul, Fumbo, Teke, Tongoli, Milege, Sos na Gwara walikuwa marafiki wakubwa. Pia waliimba muziki mzuri. Waliishi karibu na milima mashariki mwa Uganda. Wote walikuwa wanamuziki stadi. Kila mtu alifurahi kusikiliza nyimbo zao na kucheza kufuata mdundo wao! Hawa wanamuziki stadi walitaka kumchagua kiongozi wao. Aliyetambuliwa kwa umaarufu wake zaidi ya wote, ndiye angekuwa mfalme wao.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22533_4', 3, NULL, 'assets/topic/asb/25956.png', 'Ili kuchaguliwa kama mfalme, kila mwanamuziki alitakiwa kudhihirisha kwamba anaweza kusikika na walio karibu na vilevile walio mbali. Tongoli aliongea kwanza, "Mimi ni mfalme. Ninaimba sauti ya juu na
 vilevile ya chini. Nina nyaya nyingi zenye milio tofauti. Ninaweza kuimba peke yangu na pia katika kikundi. Vijana kwa wazee hupenda kucheza muziki wangu. Hata ninamwongoza Fumbo kwenye nyimbo."', NULL);
@@ -10700,7 +10700,7 @@ www.africanstorybook.org
 Original source
 www.ethiopianfolktales.com', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681', 2, 'Wanyama wa kufugwa', 'assets/topic/asb/1747.png', 'Ursula Nafula
-Sandy Campbell', 'FFF4E1B5');
+Sandy Campbell', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_3', 3, NULL, 'assets/topic/asb/1749.png', 'Ben anafuga wanyama.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_4', 3, NULL, 'assets/topic/asb/1750.png', 'Huyu ni ng''ombe. Anataka chakula.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9681_5', 3, NULL, 'assets/topic/asb/1751.png', 'Huyu ni mbuzi. Anakunywa maji.', NULL);
@@ -10728,7 +10728,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074', 2, 'Wanyama Wanatoroka kwao', 'assets/topic/asb/8524.png', 'Brigid Simiyu
- Magriet Brink', 'FFCFB5DD');
+ Magriet Brink', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_3', 3, NULL, 'assets/topic/asb/8517.png', 'Bi kizee mmoja alikuwa na kuku na Jogoo mzee.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_4', 3, NULL, 'assets/topic/asb/8518.png', 'Mjukuu wake alimtembelea. Aliamua kumchinja yule Jogoo mzee.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21074_5', 3, NULL, 'assets/topic/asb/8519.png', 'Jogoo alitorokea jijini ili kujiokoa.', NULL);
@@ -10758,7 +10758,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130', 2, 'Wanyama wapata miguu', 'assets/topic/asb/13910.png', 'Brigid Simiyu
-Wiehan de Jager', 'FFB3C8FF');
+Wiehan de Jager', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130_3', 3, NULL, 'assets/topic/asb/13904.png', 'Hapo zamani, wanyama hawakuwa na miguu.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130_4', 3, NULL, 'assets/topic/asb/13905.png', 'Maguru alikuwa amewapatia miguu watu pekee.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('21130_5', 3, NULL, 'assets/topic/asb/13906.png', 'Maguru aliamua kumpatia kila mnyama miguu.', NULL);
@@ -10792,7 +10792,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407', 2, 'Wanyama watoroka', 'assets/topic/asb/8524.png', 'Saidi Aziz Wamula
-Magriet Brink', 'FF9DEDE3');
+Magriet Brink', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_3', 3, NULL, 'assets/topic/asb/8517.png', 'Paliondokea mkongwe aliekuwa na kuku na kati ya hawa kuku kulikua na jogoo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_4', 3, NULL, 'assets/topic/asb/8518.png', 'Mjukuu wake akaja ku mtembelea. Mkongwe aka amua ku mchinjiaa yule jogoo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('23407_5', 3, NULL, 'assets/topic/asb/8519.png', 'Jogoo yule aka toroka hadi mjini.', NULL);
@@ -10822,7 +10822,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758', 2, 'Wapi kigoe changu?', 'assets/topic/asb/1556.png', 'Mutugi Kamundi
- Rijuta Ghate', 'FFB3C8FF');
+ Rijuta Ghate', 'FFCFB5DD');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_3', 3, NULL, 'assets/topic/asb/1557.png', 'Kigoe changu cha kuchezea tenisi kimepotea. Sijui mahali kiliko.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_4', 3, NULL, 'assets/topic/asb/1558.png', 'Nilikitafuta nyuma ya mlango. Lakini sikukiona.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2758_5', 3, NULL, 'assets/topic/asb/1559.png', 'Nilikitafuta juu ya kabati. Lakini sikukiona.', NULL);
@@ -10875,7 +10875,7 @@ www.africanstorybook.org
 Original source
 http://cae.ukzn.ac.za/resources/seedbooks.aspx', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479', 2, 'Watazame Wanyama', 'assets/topic/asb/1747.png', 'Caren Echesa
- Sandy Campbell', 'FF9DEDE3');
+ Sandy Campbell', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_3', 3, NULL, 'assets/topic/asb/1749.png', 'Tazama wanyama.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_4', 3, NULL, 'assets/topic/asb/1750.png', 'Ng''ombe anasema,  "Moo."', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('9479_5', 3, NULL, 'assets/topic/asb/1751.png', 'Mbuzi anasema,  "Me,  me."', NULL);
@@ -10903,7 +10903,7 @@ www.africanstorybook.org
 Original source
 www.read.org.za', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505', 2, 'Watoto walioumbwa kwa nta', 'assets/topic/asb/1295.png', 'Mutugi Kamundi
- Wiehan de Jager', 'FF9DEDE3');
+ Wiehan de Jager', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_3', 3, NULL, 'assets/topic/asb/1296.png', 'Hapo zamani za kale, kulikuwa na familia moja iliyoishi kwa amani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_4', 3, NULL, 'assets/topic/asb/1297.png', 'Heri, Amani na Musa waliwasaidia wazazi nyumbani na shambani.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('2505_5', 3, NULL, 'assets/topic/asb/1298.png', 'Wazazi wao hawakuwaruhusu waende karibu na moto, wala kukaa juani.', NULL);
@@ -10933,7 +10933,7 @@ Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746', 2, 'Watu waliosahau', 'assets/topic/asb/27234.png', 'Ursula  Nafula
-Edwin  Irabor', 'FFB3C8FF');
+Edwin  Irabor', 'FFF4E1B5');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746_3', 3, NULL, 'assets/topic/asb/27230.png', 'Hapo zamani za kale, kulikuwa na kijiji kilichoitwa Raha. Watu wote walikuwa vijana.
 Hapakuwa na mwanamume wala mwanamke mkongwe kijijini humo.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('24746_4', 3, NULL, 'assets/topic/asb/27231.png', 'Vijana wa kike na wa kiume kijijini Raha walicheza na kufurahi. Walikula walichopenda na kunywa chochote kilichowalevya. Walifurahi mchana kutwa na usiku kucha.
@@ -10974,7 +10974,7 @@ Longer paragraphs
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814', 2, 'What is wrong? / Kuna shida gani?', 'assets/topic/asb/10483.png', 'Ursula Nafula', 'FFCFB5DD');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814', 2, 'What is wrong? / Kuna shida gani?', 'assets/topic/asb/10483.png', 'Ursula Nafula', 'FFB3C8FF');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814_3', 3, NULL, 'assets/topic/asb/10477.png', 'This is Matende.
 Huyu ni Matende.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('14814_4', 3, NULL, 'assets/topic/asb/10478.png', 'Matende cries all the time.
@@ -11006,7 +11006,7 @@ First sentences
 Creative Commons: Attribution 4.0
 Source
 www.africanstorybook.org', NULL);
-INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111', 2, 'Zawadi ya Sisanda', 'assets/topic/asb/17355.png', 'Ursula Nafula', 'FFCFB5DD');
+INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111', 2, 'Zawadi ya Sisanda', 'assets/topic/asb/17355.png', 'Ursula Nafula', 'FF9DEDE3');
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111_3', 3, NULL, 'assets/topic/asb/17354.png', 'Sisanda ni msichana wa umri wa miaka minane. Kila siku anapotoka shule, anavua sare, anakula chakula cha mchana kisha yeye na babu yake wanacheza mchezo waupendao. Wanafurahia sana kucheza hadi Sisanda hataki kuacha.
 Babu anamkumbusha kuwa angependa kuwa meneja wa benki atakapokuwa mkubwa.', NULL);
 INSERT INTO `card` (id, type, title, header, content, option) VALUES ('22111_4', 3, NULL, NULL, 'Babu anamwuliza kwa utani, "Utawezaje kuwa meneja wa benki usipokwenda shule ya upili?"

@@ -57,7 +57,10 @@ class TileCard extends StatelessWidget {
         return _buildTile(
             context: context,
             tile: tile,
-            header: Image.asset('assets/comment_icon.png'),
+            header: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.asset('assets/comment_icon.png'),
+            ),
             title: tile.content,
             user: tile.user,
             trailer: SocialSummary(
@@ -83,7 +86,10 @@ class TileCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Provider.dispatch<RootState>(
-            context, FetchComments(parentId: tile.id, tileType: tile.type));
+            context,
+            FetchComments(
+                parentId: tile.type == TileType.card ? tile.card.id : tile.id,
+                tileType: tile.type));
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => TileDetail(tile: tile)));
       },

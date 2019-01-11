@@ -18,7 +18,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final crossAxisCount = (media.size.width / 400.0).floor();
+//    final crossAxisCount = (media.size.width / 400.0).floor();
+    final crossAxisCount = 2;
     final aspectRatio = media.size.width / (140.0 * crossAxisCount);
     return CustomScrollView(
       slivers: <Widget>[
@@ -35,10 +36,11 @@ class HomeScreen extends StatelessWidget {
                       flex: 1,
                       child: _buildBox(
                         context: context,
-                        name: Loca.of(context).discuss,
+                        name: Loca.of(context).post,
                         color: Color(0xFFE37825),
                         child: CardSummary(
                           card: frontMap['open'],
+                          showSocialSummary: false,
                           parentCardId: 'open',
                         ),
                       ),
@@ -51,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                           routeName: '/stories',
                           color: Color(0xFFEE4069),
                           child: CardSummary(
+                            showSocialSummary: false,
                             card: frontMap['story'],
                           )),
                     ),
@@ -62,6 +65,7 @@ class HomeScreen extends StatelessWidget {
                         routeName: '/topics',
                         color: Color(0xFFFED060),
                         child: CardSummary(
+                          showSocialSummary: false,
                           card: frontMap['topic'],
                         ),
                       ),
@@ -110,7 +114,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(gameNames[gameNum].item2),
+                              child: Text(Loca.of(context)
+                                  .intl(gameNames[gameNum].item1)),
                             )
                           ],
                         ),

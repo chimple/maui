@@ -7,6 +7,7 @@ import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 
@@ -56,6 +57,7 @@ class QuizResultState extends State<QuizResult> {
       score += max(0, correct);
       total += answer;
     });
+    writeLog('topic_score,$score,$total');
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Provider.dispatch<RootState>(context, UpdatePoints(points: score));
     });
@@ -124,30 +126,32 @@ class QuizResultState extends State<QuizResult> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Container(
-                          height: 100.0,
+                      total == 0
+                          ? Container()
+                          : Align(
+                              alignment: AlignmentDirectional.bottomCenter,
+                              child: Container(
+                                height: 100.0,
 
-                          width: 200.0,
+                                width: 200.0,
 
-                          // padding: EdgeInsets.only(bottom: 30.0),
+                                // padding: EdgeInsets.only(bottom: 30.0),
 
-                          decoration: ShapeDecoration(
-                              color: Colors.orangeAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(40.0),
-                                    right: Radius.circular(40.0)),
-                              )),
-                          child: Center(
-                              child: Text(
-                            '$score / $total',
-                            style:
-                                TextStyle(fontSize: 40.0, color: Colors.white),
-                          )),
-                        ),
-                      )
+                                decoration: ShapeDecoration(
+                                    color: Colors.orangeAccent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(40.0),
+                                          right: Radius.circular(40.0)),
+                                    )),
+                                child: Center(
+                                    child: Text(
+                                  '$score / $total',
+                                  style: TextStyle(
+                                      fontSize: 40.0, color: Colors.white),
+                                )),
+                              ),
+                            )
                     ],
                   ),
                 ),
