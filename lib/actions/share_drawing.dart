@@ -1,16 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/fetch_initial_data.dart';
-import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/like.dart';
-import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
-import 'package:maui/repos/card_progress_repo.dart';
-import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
-import 'package:uuid/uuid.dart';
 
 class ShareDrawing implements AsyncAction<RootState> {
   final String cardId;
