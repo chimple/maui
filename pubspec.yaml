@@ -34,7 +34,10 @@ dependencies:
   simple_permissions: ^0.1.9
   flutter_svg: ^0.6.3
   image: ^2.0.4
-  flutter_redurx: ^0.4.3
+  redux: ^3.0.0
+  flutter_redux: ^0.5.2
+  redux_logging: ^0.3.0
+  redux_thunk: ^0.2.1
   flutter_localizations:
     sdk: flutter
   tahiti:
