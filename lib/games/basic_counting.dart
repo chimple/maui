@@ -98,7 +98,7 @@ class Basic_CountingState extends State<Basic_Counting>
   bool onend = false;
   bool _isLoading = true;
   var sum = 0;
-  List<String> _all = ["5", "3", "3", "4", "5"];
+  List<String> _all = ["five", "thre", "3", "4", "5"];
   List<String> _answer = ["1", "2", "3", "4", "5"];
   var c = 0;
   var _referenceMatrix = new List.generate(_maxSize, (_) => new List(_maxSize));
@@ -396,12 +396,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
-    print({"this is 123 kiran column": widget.code});
+    print({"this is 123 kiran column": widget.text});
     return 
     
     widget.code == Code.question?
     UnitButton(
       text: widget.text,
+      primary: true,
+      bgImage: "assets/${widget.text}.png",
       unitMode: UnitMode.image,
     ): UnitButton(
       text: widget.text,
