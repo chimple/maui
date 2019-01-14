@@ -3,6 +3,8 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/show_help.dart';
+import 'package:maui/games/basic_addition.dart';
+
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -209,7 +211,8 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
-    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
+    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
   };
 
   SingleGame(this.gameName,
@@ -1126,6 +1129,18 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'connect_the_dots':
         return new Connectdots(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameConfig.gameCategoryId);
+        break;
+
+      case 'basic_addition':
+        return new BasicAddition(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,

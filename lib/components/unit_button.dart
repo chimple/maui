@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:maui/components/number_Button.dart';
+import 'package:maui/components/number_dots.dart';
+
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
@@ -204,14 +205,14 @@ class _UnitButtonState extends State<UnitButton> {
                         : Theme.of(context).primaryColor,
                     fontSize: fontSize)))
         : Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            Text("${widget.text}",
+            Text(widget.text,
                 style: new TextStyle(
                     color: widget.highlighted || !widget.primary
                         ? Colors.white
                         : Theme.of(context).primaryColor,
-                    fontSize: fontSize / 2)),
-            NumberButton(
-              text: widget.text,
+                    fontSize: 25)),
+            NumberDots(
+              number: int.tryParse(widget.text),
             )
           ]);
   }
