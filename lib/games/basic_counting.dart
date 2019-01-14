@@ -52,7 +52,7 @@ enum Status { Active, Visible }
 enum ShakeCell { Right, Wrong }
 enum ColmunCell { ColumnActive, CurveColumn }
 enum RowCell { Dance, CurveRow }
-enum Code{question,answer}
+enum Code { question, answer }
 
 class Basic_CountingState extends State<Basic_Counting>
     with SingleTickerProviderStateMixin {
@@ -98,7 +98,7 @@ class Basic_CountingState extends State<Basic_Counting>
   bool onend = false;
   bool _isLoading = true;
   var sum = 0;
-  List<String> _all = ["five", "three", "3", "4", "5"];
+  List<String> _all = ["5", "3", "3", "4", "5"];
   List<String> _answer = ["1", "2", "3", "4", "5"];
   var c = 0;
   var _referenceMatrix = new List.generate(_maxSize, (_) => new List(_maxSize));
@@ -177,8 +177,8 @@ class Basic_CountingState extends State<Basic_Counting>
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
-        code:code,
-     
+        code: code,
+
         //question unit mode
         status: status,
         onPress: () {
@@ -226,10 +226,10 @@ class Basic_CountingState extends State<Basic_Counting>
           (constraints.maxHeight - vPadding * 2) / (_maxSize + 1);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-     
+
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
       final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
       print("this is my new $_all");
       var j = 0, k = 0;
@@ -262,8 +262,8 @@ class Basic_CountingState extends State<Basic_Counting>
                     children: _all
                         .map((e) => Padding(
                             padding: EdgeInsets.all(20.0),
-                            child: _buildItem(j, e,
-                                _statuses[j++], maxChars, maxWidth,maxHeight,Code.question)))
+                            child: _buildItem(j, e, _statuses[j++], maxChars,
+                                maxWidth, maxHeight, Code.question)))
                         .toList(growable: false),
                   )),
             )),
@@ -280,7 +280,7 @@ class Basic_CountingState extends State<Basic_Counting>
                         .map((e) => Padding(
                             padding: EdgeInsets.all(20.0),
                             child: _buildItem(k, e, _statuses[k++], maxChars,
-                                maxWidth, maxHeight,Code.answer)))
+                                maxWidth, maxHeight, Code.answer)))
                         .toList(growable: false),
                   )),
             )),
@@ -299,7 +299,8 @@ class MyButton extends StatefulWidget {
       this.status,
       this.maxChars,
       this.maxWidth,
-      this.maxHeight, this.code})
+      this.maxHeight,
+      this.code})
       : super(key: key);
 
   final String text;
@@ -397,17 +398,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print({"this is 123 kiran column": widget.text});
-    return 
-    
-    widget.code == Code.question?
-    UnitButton(
-      text: widget.text,
-      primary: true,
-      bgImage: "assets/${widget.text}.png",
-      unitMode: UnitMode.image,
-    ): UnitButton(
-      text: widget.text,
-      unitMode: UnitMode.text,
-    );
+    return widget.code == Code.question
+        ? UnitButton(
+            text: '',
+            primary: true,
+            bgImage: "assets/5.png",
+            unitMode: UnitMode.image,
+          )
+        : UnitButton(
+            text: '',
+            unitMode: UnitMode.text,
+          );
   }
 }
