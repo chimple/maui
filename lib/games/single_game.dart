@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/show_help.dart';
+import 'package:maui/games/basic_counting.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -209,7 +210,8 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
-    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
+    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'basic_counting':[Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)] 
   };
 
   SingleGame(this.gameName,
@@ -1243,6 +1245,17 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'word_fight':
         return new WordFight(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
+         case 'basic_counting':
+        return new Basic_Counting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,

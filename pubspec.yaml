@@ -88,6 +88,8 @@ flutter:
     - assets/nima_animation/
     - assets/masking/
     - assets/action/
+    - assets/5.png
+    - assets/3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
