@@ -42,6 +42,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:maui/components/hud.dart';
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/word_fight.dart';
+import 'package:maui/games/sequence_the_number.dart';
 import 'package:maui/games/first_word.dart';
 import 'package:maui/quiz/quiz_pager.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
@@ -191,6 +192,11 @@ class SingleGame extends StatefulWidget {
     'guess': [Color(0xFF77DB65), Color(0xFFe58a28), Color(0xFF57C3FF)],
     'identify': [Color(0xFFA292FF), Color(0xFF9b671b), Color(0xFF52CC57)],
     'match_the_following': [
+      Color(0xFFDD4785),
+      Color(0xFF9b671b),
+      Color(0xFFf99b67)
+    ],
+    'sequence_the_number': [
       Color(0xFFDD4785),
       Color(0xFF9b671b),
       Color(0xFFf99b67)
@@ -995,6 +1001,17 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         playTime = 20000;
         maxIterations = 10;
         return new FillInTheBlanks(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameCategoryId: widget.gameConfig.gameCategoryId);
+        break;
+      case 'sequence_the_number':
+        return new SequenceTheNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
