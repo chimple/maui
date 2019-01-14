@@ -98,7 +98,7 @@ class Basic_CountingState extends State<Basic_Counting>
   bool onend = false;
   bool _isLoading = true;
   var sum = 0;
-  List<String> _all = ["5", "3", "3", "4", "5"];
+  List<String> _all = ["5", "33", "3", "4", "5"];
   List<String> _answer = ["1", "2", "3", "4", "5"];
   var c = 0;
   var _referenceMatrix = new List.generate(_maxSize, (_) => new List(_maxSize));
