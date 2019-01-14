@@ -402,7 +402,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         ? UnitButton(
             text: '',
             primary: true,
-            bgImage: "assets/5.png",
+            bgImage: "assets/${widget.text}.png",
             unitMode: UnitMode.image,
           )
         : UnitButton(
