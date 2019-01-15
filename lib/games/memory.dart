@@ -9,7 +9,6 @@ import '../components/responsive_grid_view.dart';
 import '../components/shaker.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
-import 'package:maui/components/gameaudio.dart';
 
 bool initialVisibility = false;
 
@@ -174,7 +173,6 @@ class MemoryState extends State<Memory> {
               _allLettersLowerCaseTriggred = 0;
             }
             if (_firstClickedId == _secondClickedId) {
-              print("Olaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
               new Future.delayed(const Duration(milliseconds: 250), () {
                 setState(() {
                   _letters[_pressedTileIndex] = null;
@@ -414,8 +412,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           animation:
               widget.shaker == ShakeCell.Wrong ? shakeAnimation : animation,
           child: new FlipAnimator(
+              direction: FlipDirection.HORIZONTAL,
               controller: flipController,
-              front: new ScaleTransition(
+              back: new ScaleTransition(
                   scale: animation,
                   child: new UnitButton(
                     onPress: widget.onPress,
@@ -423,7 +422,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     unitMode: widget.unitMode,
                     disabled: widget.status == Status.Disappear ? true : false,
                   )),
-              back: new UnitButton(
+              front: new UnitButton(
                 onPress: widget.onPress,
                 text: ' ',
                 unitMode: null,
