@@ -8,7 +8,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/button_state_container.dart';
 
-class Basic_Counting extends StatefulWidget {
+class Recognize_Number extends StatefulWidget {
   Function onScore;
   Function onProgress;
   Function onEnd;
@@ -17,7 +17,7 @@ class Basic_Counting extends StatefulWidget {
   GameConfig gameConfig;
   bool isRotated;
 
-  Basic_Counting(
+  Recognize_Number(
       {key,
       this.onScore,
       this.onProgress,
@@ -29,20 +29,22 @@ class Basic_Counting extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new Basic_CountingState();
+  State<StatefulWidget> createState() => new Recognize_NumberState();
 }
 
 enum Status { Active, Visible }
 
 enum Code { question, answer }
 
-class Basic_CountingState extends State<Basic_Counting>
+class Recognize_NumberState extends State<Recognize_Number>
     with SingleTickerProviderStateMixin {
+ 
+
   int _size = 2;
 
   List<Status> _statuses = [];
   static int _maxSize = 2;
-  List<String> _all = ["manu", "kiran", "3", "4", "5"];
+  // List<String> _all = ["8", "9", "3", "4", "5"];
   List<String> _answer = ["8"];
   List<String> _question = ["8", "3"];
 
@@ -50,7 +52,7 @@ class Basic_CountingState extends State<Basic_Counting>
   void initState() {
     super.initState();
     print("this are my game basic");
-    _statuses = _all.map((e) => Status.Active).toList(growable: false);
+    _statuses = _question.map((e) => Status.Active).toList(growable: false);
     _initBoard();
   }
 
@@ -87,7 +89,7 @@ class Basic_CountingState extends State<Basic_Counting>
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    print("this is my letters $_all");
+    print("this is my letters $_answer");
     MediaQueryData media = MediaQuery.of(context);
     print(media);
     print("this is after random $_question");
@@ -95,11 +97,11 @@ class Basic_CountingState extends State<Basic_Counting>
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      final maxChars = (_question != null
-          ? _question.fold(1,
-              (prev, element) => element.length > prev ? element.length : prev)
-          : 1);
-      print("$maxChars");
+final maxChars = (_question != null
+        ? _question.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+    print("$maxChars");
       double maxWidth = (constraints.maxWidth - hPadding * 2) / _maxSize;
       double maxHeight =
           (constraints.maxHeight - vPadding * 2) / (_maxSize + 1);
@@ -108,27 +110,13 @@ class Basic_CountingState extends State<Basic_Counting>
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context,maxChars, maxWidth, maxHeight);
       final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-      print("this is my new $_all");
+      print("this is my new $_answer");
       var j = 0, k = 0;
       return Container(
         child: new Column(
           children: <Widget>[
-            // new LimitedBox(
-            //     maxHeight: maxHeight,
-            //     maxWidth: maxWidth,
-            //     child: new Material(
-            //         color: Theme.of(context).accentColor,
-            //         elevation: 4.0,
-            //         textStyle: new TextStyle(
-            //             color: Colors.orangeAccent, fontSize: 20),
-            //         child: new Container(
-            //             padding: EdgeInsets.all(10.0),
-            //             child: new Center(
-            //               child: new Text(
-            //                   "Count Your Fingers and Pick the Number choice"),
-            //             )))),
             new Expanded(
                 child: Container(
               color: Colors.amberAccent,
@@ -137,23 +125,12 @@ class Basic_CountingState extends State<Basic_Counting>
                       vertical: vPadding, horizontal: hPadding),
                   child: new ResponsiveGridView(
                     rows: 1,
-                    cols: 2,
-                    children: _all
+                    cols: 1,
+                    children: _answer
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  color: Colors.blueGrey,
-                                  width: 200.0,
-                                  height: 200.0,
-                                  child: Image.asset(
-                                    "assets/$e.png",
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ],
-                            )))
+                            child: _buildItem(j, e, _statuses[j++], maxChars, maxWidth,
+                                maxHeight, Code.answer)))
                         .toList(growable: false),
                   )),
             )),
@@ -169,8 +146,8 @@ class Basic_CountingState extends State<Basic_Counting>
                     children: _question
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(k, e, _statuses[k++], maxChars,
-                                maxWidth, maxHeight, Code.question)))
+                            child: _buildItem(k, e, _statuses[k++], maxChars, maxWidth,
+                                maxHeight, Code.question)))
                         .toList(growable: false),
                   )),
             )),
@@ -221,10 +198,17 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print({"this is 123 kiran column": widget.text});
-    return UnitButton(
-      text: widget.text,
-      onPress: widget.onPress,
-      unitMode: UnitMode.text,
-    );
+    return widget.code == Code.answer
+        ? UnitButton(
+            text: widget.text,
+            primary: true,
+            onPress: widget.onPress,
+            unitMode: UnitMode.audio,
+          )
+        : UnitButton(
+            text: widget.text,
+            onPress: widget.onPress,
+            unitMode: UnitMode.text,
+          );
   }
 }
