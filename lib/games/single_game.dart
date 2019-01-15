@@ -212,7 +212,8 @@ class SingleGame extends StatefulWidget {
       Color(0xFFFE6677)
     ],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
-    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
+    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
   };
 
   SingleGame(this.gameName,
@@ -1275,7 +1276,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
-            gameConfig: widget.gameConfig);
+            gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
     }
     return null;
