@@ -212,7 +212,6 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
-    'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'find_size_game': [Color(0xFFFF7D8F), Color(0xFFDAECF7), Color(0xFFFFCB57)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
   };
