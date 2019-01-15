@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:maui/components/number_dots.dart';
+
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
@@ -10,12 +12,11 @@ import 'package:maui/state/button_state_container.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 
-import 'flash_card.dart';
-
 class UnitButton extends StatefulWidget {
   final String text;
   final VoidCallback onPress;
   final UnitMode unitMode;
+
   final bool disabled;
   final bool highlighted;
   final bool primary;
@@ -83,6 +84,7 @@ class _UnitButtonState extends State<UnitButton> {
   void initState() {
     super.initState();
     _unitMode = widget.unitMode;
+
     _getData();
   }
 
@@ -119,42 +121,68 @@ class _UnitButtonState extends State<UnitButton> {
   }
 
   Widget _buildButton(BuildContext context) {
+    // double affectHeight=widget.maxWidth ?? buttonConfig.width;
     final buttonConfig = ButtonStateContainer.of(context)?.buttonConfig;
-    return Container(
+    double affectwidth = widget.maxWidth ?? buttonConfig.width;
+    double affectHeight = widget.maxHeight ?? buttonConfig.height;
+    double widthOfButton = affectwidth - 10;
+    double heightOfButton = affectHeight - 5;
+    return Stack(children: [
+      Container(
+        margin: EdgeInsets.only(top: 8.0, left: 5.0, right: 5.0),
         constraints: BoxConstraints.tightFor(
-            height: widget.maxHeight ?? buttonConfig.height,
-            width: widget.maxWidth ?? buttonConfig.width),
+            height: widget.maxHeight ?? heightOfButton,
+            width: widget.maxWidth ?? widthOfButton),
+        // color: Colors.white,
         decoration: new BoxDecoration(
-            image: widget.bgImage != null
-                ? new DecorationImage(
-                    image: new AssetImage(widget.bgImage), fit: BoxFit.contain)
-                : null),
-        child: FlatButton(
-            color: widget.highlighted
-                ? Theme.of(context).primaryColor
-                : Colors.transparent,
-            splashColor: Theme.of(context).accentColor,
-            highlightColor: Theme.of(context).accentColor,
-            disabledColor: Color(0xFFDDDDDD),
-            onPressed: widget.disabled
-                ? null
-                : () {
-                    AppStateContainer.of(context)
-                        .play(widget.text.toLowerCase());
-                    widget.onPress();
-                  },
-            padding: EdgeInsets.all(0.0),
-            shape: new RoundedRectangleBorder(
-                side: new BorderSide(
-                    color: widget.disabled
-                        ? Color(0xFFDDDDDD)
-                        : widget.primary
-                            ? Theme.of(context).primaryColor
-                            : Colors.white,
-                    width: 4.0),
+            shape: BoxShape.rectangle,
+            color: Colors.black,
+            borderRadius:
+                BorderRadius.all(Radius.circular(buttonConfig?.radius ?? 8.0))),
+      ),
+      Container(
+          constraints: BoxConstraints.tightFor(
+              height: widget.maxHeight ?? buttonConfig.height,
+              width: widget.maxWidth ?? buttonConfig.width),
+          decoration: new BoxDecoration(
+              image: widget.bgImage != null
+                  ? new DecorationImage(
+                      image: new AssetImage(widget.bgImage),
+                      fit: BoxFit.contain)
+                  : null),
+          child: Card(
+            shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(buttonConfig?.radius ?? 8.0))),
-            child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)));
+            elevation: 5.0,
+            child: FlatButton(
+                color: widget.highlighted
+                    ? Theme.of(context).primaryColor
+                    : Colors.transparent,
+                splashColor: Theme.of(context).accentColor,
+                highlightColor: Theme.of(context).accentColor,
+                disabledColor: Color(0xFFDDDDDD),
+                onPressed: widget.disabled
+                    ? null
+                    : () {
+                        AppStateContainer.of(context)
+                            .play(widget.text.toLowerCase());
+                        widget.onPress();
+                      },
+                padding: EdgeInsets.all(0.0),
+                shape: new RoundedRectangleBorder(
+                    side: new BorderSide(
+                        color: widget.disabled
+                            ? Color(0xFFDDDDDD)
+                            : widget.primary
+                                ? Theme.of(context).primaryColor
+                                : Colors.white,
+                        width: 4.0),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(buttonConfig?.radius ?? 8.0))),
+                child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)),
+          )),
+    ]);
   }
 
   Widget _buildUnit(double fontSize) {
@@ -168,13 +196,25 @@ class _UnitButtonState extends State<UnitButton> {
               fit: BoxFit.cover,
             );
     }
-    return Center(
-        child: Text(widget.text,
-            style: new TextStyle(
-                color: widget.highlighted || !widget.primary
-                    ? Colors.white
-                    : Theme.of(context).primaryColor,
-                fontSize: fontSize)));
+    return int.tryParse(widget.text) == null || int.tryParse(widget.text) == 0
+        ? Center(
+            child: Text(widget.text,
+                style: new TextStyle(
+                    color: widget.highlighted || !widget.primary
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
+                    fontSize: fontSize)))
+        : Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Text(widget.text,
+                style: new TextStyle(
+                    color: widget.highlighted || !widget.primary
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
+                    fontSize: 25)),
+            NumberDots(
+              number: int.tryParse(widget.text),
+            )
+          ]);
   }
 
   @override
